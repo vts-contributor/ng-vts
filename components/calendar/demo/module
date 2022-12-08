@@ -1,0 +1,5 @@
+import { VtsCalendarModule } from '@ui-vts/ng-vts/calendar';
+import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { VtsAlertModule } from '@ui-vts/ng-vts/alert';
+
+export const moduleList = [ VtsCalendarModule, VtsBadgeModule, VtsAlertModule ];

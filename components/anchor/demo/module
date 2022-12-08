@@ -1,0 +1,3 @@
+import { VtsAnchorModule } from '@ui-vts/ng-vts/anchor';
+
+export const moduleList = [ VtsAnchorModule ];

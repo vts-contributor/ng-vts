@@ -1,0 +1,7 @@
+import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsCardModule } from '@ui-vts/ng-vts/card';
+
+export const moduleList = [ VtsBadgeModule, VtsButtonModule, VtsSwitchModule, VtsIconModule, VtsCardModule ];

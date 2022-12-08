@@ -1,0 +1,4 @@
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+
+export const moduleList = [ VtsInputNumberModule, VtsButtonModule ];

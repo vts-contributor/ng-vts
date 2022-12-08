@@ -1,0 +1,5 @@
+import { VtsPopoverModule } from '@ui-vts/ng-vts/popover';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsPopoverModule, VtsButtonModule, VtsIconModule ];

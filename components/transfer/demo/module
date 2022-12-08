@@ -1,0 +1,17 @@
+import { VtsTransferModule } from '@ui-vts/ng-vts/transfer';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
+import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsTreeModule } from '@ui-vts/ng-vts/tree';
+
+export const moduleList = [
+  VtsTransferModule,
+  VtsButtonModule,
+  VtsSwitchModule,
+  VtsIconModule,
+  VtsTableModule,
+  VtsTagModule,
+  VtsTreeModule
+];

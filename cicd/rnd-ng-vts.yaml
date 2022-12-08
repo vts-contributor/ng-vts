@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rnd-ng-vts-deployment
+  namespace: vts-design-system
+  labels:
+    app: rnd-ng-vts
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rnd-ng-vts
+  template:
+    metadata:
+      labels:
+        app: rnd-ng-vts
+    spec:   
+      volumes:
+      - name: rnd-ng-vts-config
+        configMap:
+          name: rnd-ng-vts-config
+      containers:
+      - name: rnd-ng-vts-container
+        image: 10.60.156.72/vbcs/ng-vts:1.0.4_u141
+        volumeMounts:
+          - name: rnd-ng-vts-config
+            mountPath: /usr/share/nginx/html/uikit/rnd_config
+        env:
+            - name: TZ
+              value: Asia/Ho_Chi_Minh
+            - name: CONTEXT_PATH
+              value: '/uikit'
+      imagePullSecrets:
+      - name: phuhk-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rnd-ng-vts-svc
+  namespace: vts-design-system
+  labels:
+    app: rnd-ng-vts
+spec:
+  ports:
+  - name: rnd-ng-vts-webapp-port
+    protocol: TCP
+    port: 80
+    nodePort: 9804
+  selector:
+    app: rnd-ng-vts
+  type: NodePort

@@ -1,0 +1,8 @@
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsPipesModule } from '@ui-vts/ng-vts/pipes';
+import { VtsSliderModule } from '@ui-vts/ng-vts/slider';
+import { VtsStatisticModule } from '@ui-vts/ng-vts/statistic';
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
+
+export const moduleList = [ VtsPipesModule, VtsTableModule, VtsSliderModule, VtsInputModule, VtsStatisticModule, VtsGridModule ];

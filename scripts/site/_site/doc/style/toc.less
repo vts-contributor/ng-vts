@@ -1,0 +1,149 @@
+.toc {
+  margin: 16px 0;
+  padding-left: 0;
+  font-size: 12px;
+  list-style: none;
+  border-left: 1px solid @site-border-color-split;
+
+  .page-wrapper-rtl & {
+    border-right: 1px solid @site-border-color-split;
+    border-left: none;
+  }
+}
+
+ul.toc > li {
+  margin-left: 0;
+  padding-left: 0;
+  line-height: 1.5;
+  list-style: none;
+  &:not(:last-child) {
+    margin-bottom: 4px;
+  }
+
+  .page-wrapper-rtl & {
+    margin-right: 0;
+    padding-right: 0;
+  }
+}
+
+.toc li > ul {
+  display: none;
+  font-size: 12px;
+  text-indent: 8px;
+}
+
+.toc a {
+  display: block;
+  width: 110px;
+  margin-left: -1px;
+  padding-left: 16px;
+  overflow: hidden;
+  color: @site-text-color;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-left: 1px solid transparent;
+  transition: all 0.3s ease;
+
+  .page-wrapper-rtl & {
+    margin-right: -1px;
+    margin-left: 0;
+    padding-right: 16px;
+    padding-left: 0;
+    border-right: 1px solid transparent;
+    border-left: none;
+  }
+}
+
+.toc a:hover {
+  color: @primary-color;
+}
+
+.toc a.current {
+  color: @primary-color;
+  border-color: @primary-color;
+}
+
+.toc-affix {
+  position: absolute;
+  // top: 8px;
+  // right: 20px;
+
+  top: calc(@header-height + @content-append-top + 17px) !important;
+  right: 10px;
+  width: @toc-width !important;
+  left: unset !important;
+  z-index: 10;
+
+  > div {
+    padding-right: @toc-padding-right !important;
+  }
+
+  > div {
+    // position: fixed;
+    // width: @toc-width !important;
+    // right: 0 !important;
+    // padding-right: 50px !important;
+    // left: unset !important;
+    // top: calc(@header-height + @content-append-top + 17px) !important;
+    // z-index: 10;
+  }
+
+  .vts-anchor {
+    &-ink {
+      display: none;
+    }
+
+    &-link {
+      color: #000;
+      font-style: normal;
+      font-size: 15px;
+      line-height: 36px;
+      font-family: 'Sarabun';
+      font-weight: bold;
+      cursor: pointer;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0px;
+      padding-left: 0px;
+      margin-bottom: 3px;
+
+      &-title {
+        padding-left: 15px;
+        padding-right: 3px;
+        transition: none;
+        color: inherit;
+
+        &:hover {
+            background: #F2F2F2;
+            border-radius: 3px;
+            color: unset;
+        }
+
+      }
+
+      &-active {
+        background: #D8D8D8;
+        color: unset;
+      }
+    }
+  }
+
+  .page-wrapper-rtl & {
+    right: auto;
+    left: 20px;
+  }
+}
+
+.toc-affix-bottom {
+  position: absolute;
+  right: 20px;
+  bottom: 88px;
+  .vts-affix {
+    background: @body-background;
+  }
+
+  .page-wrapper-rtl & {
+    right: auto;
+    left: 20px;
+  }
+}

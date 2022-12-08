@@ -1,0 +1,57 @@
+<ng-template #list>
+  <vts-upload-list
+    *ngIf="locale && !vtsFileListRender"
+    #listComp
+    [style.display]="vtsShowUploadList ? '' : 'none'"
+    [locale]="locale"
+    [listType]="vtsListType"
+    [items]="vtsFileList || []"
+    [icons]="$any(vtsShowUploadList)"
+    [iconRender]="vtsIconRender"
+    [previewFile]="vtsPreviewFile"
+    [previewIsImage]="vtsPreviewIsImage"
+    [onPreview]="vtsPreview"
+    [onRemove]="onRemove"
+    [onEdit]="onEdit"
+    [onDownload]="vtsDownload"
+    [dir]="dir"
+  ></vts-upload-list>
+  <ng-container *ngIf="vtsFileListRender">
+    <ng-container
+      *ngTemplateOutlet="vtsFileListRender; context: { $implicit: vtsFileList }"
+    ></ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #con><ng-content></ng-content></ng-template>
+<ng-template #btn>
+  <div [ngClass]="classList" [style.display]="vtsShowButton ? '' : 'none'">
+    <div vts-upload-btn #uploadComp [options]="_btnOptions!">
+      <ng-template [ngTemplateOutlet]="con"></ng-template>
+    </div>
+  </div>
+</ng-template>
+<ng-container *ngIf="vtsType === 'drag'; else select">
+  <div
+    [ngClass]="classList"
+    (drop)="fileDrop($event)"
+    (dragover)="fileDrop($event)"
+    (dragleave)="fileDrop($event)"
+  >
+    <div vts-upload-btn #uploadComp [options]="_btnOptions!" class="vts-upload-btn">
+      <div class="vts-upload-drag-container">
+        <ng-template [ngTemplateOutlet]="con"></ng-template>
+      </div>
+    </div>
+  </div>
+  <ng-template [ngTemplateOutlet]="list"></ng-template>
+</ng-container>
+<ng-template #select>
+  <ng-container *ngIf="vtsListType === 'picture-card'; else pic">
+    <ng-template [ngTemplateOutlet]="list"></ng-template>
+    <ng-template [ngTemplateOutlet]="btn"></ng-template>
+  </ng-container>
+</ng-template>
+<ng-template #pic>
+  <ng-template [ngTemplateOutlet]="btn"></ng-template>
+  <ng-template [ngTemplateOutlet]="list"></ng-template>
+</ng-template>

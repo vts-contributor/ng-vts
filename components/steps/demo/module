@@ -1,0 +1,7 @@
+import { VtsStepsModule } from '@ui-vts/ng-vts/steps';
+import { VtsPopoverModule } from '@ui-vts/ng-vts/popover';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsStepsModule, VtsPopoverModule, VtsButtonModule, VtsDividerModule, VtsIconModule ];

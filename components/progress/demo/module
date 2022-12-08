@@ -1,0 +1,5 @@
+import { VtsProgressModule } from '@ui-vts/ng-vts/progress';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsProgressModule, VtsButtonModule, VtsIconModule ];

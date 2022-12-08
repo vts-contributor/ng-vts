@@ -1,0 +1,19 @@
+import { VtsResizableModule } from '@ui-vts/ng-vts/resizable';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsDrawerModule } from '@ui-vts/ng-vts/drawer';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [
+  VtsResizableModule,
+  VtsButtonModule,
+  VtsFormModule,
+  VtsDrawerModule,
+  VtsGridModule,
+  VtsTableModule,
+  VtsLayoutModule,
+  VtsIconModule
+];

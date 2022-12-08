@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="keywords" content="angular, ng, vts, ng-vts">
+    <meta name="author" content="VTS">
+    <meta name="description" content="UI Components Framework">
+
+    <link rel="icon shortcut" href="assets/icons/apple-icon-200.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-icon-180.ico">
+    <link rel="apple-touch-icon" sizes="167x167" href="assets/icons/apple-icon-167.ico">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/apple-icon-152.ico">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/icons/apple-icon-120.ico">
+    <link rel="manifest" href="manifest.json">
+    <title>VTS Design System - Development Framework</title>
+    <base href="/">
+
+    <style type="text/css">
+       /* Prevent trigger animations before page load, will be removed when the page is ready */
+      .preload * {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -ms-transition: none !important;
+        -o-transition: none !important;
+      }
+    </style>
+  </head>
+  <body class="preload">
+    <app-root></app-root>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D4V349E5VJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-D4V349E5VJ');
+    </script>
+    <noscript>Please enable JavaScript to continue using this application.</noscript>
+  </body>
+</html>

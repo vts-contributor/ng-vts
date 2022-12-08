@@ -1,0 +1,50 @@
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+import { BidiModule } from '@angular/cdk/bidi';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PlatformModule } from '@angular/cdk/platform';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
+import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsMenuDividerDirective } from './menu-divider.directive';
+import { VtsMenuGroupComponent } from './menu-group.component';
+import { VtsMenuItemDirective } from './menu-item.directive';
+import { VtsMenuDirective } from './menu.directive';
+import { VtsSubmenuInlineChildComponent } from './submenu-inline-child.component';
+import { VtsSubmenuNoneInlineChildComponent } from './submenu-non-inline-child.component';
+import { VtsSubMenuTitleComponent } from './submenu-title.component';
+import { VtsSubMenuComponent } from './submenu.component';
+
+@NgModule({
+  imports: [
+    BidiModule,
+    CommonModule,
+    PlatformModule,
+    OverlayModule,
+    VtsIconModule,
+    VtsNoAnimationModule,
+    VtsOutletModule
+  ],
+  declarations: [
+    VtsMenuDirective,
+    VtsMenuItemDirective,
+    VtsSubMenuComponent,
+    VtsMenuDividerDirective,
+    VtsMenuGroupComponent,
+    VtsSubMenuTitleComponent,
+    VtsSubmenuInlineChildComponent,
+    VtsSubmenuNoneInlineChildComponent
+  ],
+  exports: [
+    VtsMenuDirective,
+    VtsMenuItemDirective,
+    VtsSubMenuComponent,
+    VtsMenuDividerDirective,
+    VtsMenuGroupComponent
+  ]
+})
+export class VtsMenuModule {}

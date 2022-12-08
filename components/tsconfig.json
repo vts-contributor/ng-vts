@@ -1,0 +1,15 @@
+// Configuration for IDEs only.
+
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@ui-vts/ng-vts/*": ["./*"]
+    }
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}

@@ -1,0 +1,17 @@
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsCardModule } from '@ui-vts/ng-vts/card';
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+import { VtsListModule } from '@ui-vts/ng-vts/list';
+import { VtsMessageModule } from '@ui-vts/ng-vts/message';
+import { VtsPaginationModule } from '@ui-vts/ng-vts/pagination';
+import { VtsSkeletonModule } from '@ui-vts/ng-vts/skeleton';
+
+export const moduleList = [
+  VtsListModule,
+  VtsCardModule,
+  VtsSkeletonModule,
+  VtsPaginationModule,
+  VtsButtonModule,
+  VtsGridModule,
+  VtsMessageModule
+];

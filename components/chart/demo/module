@@ -1,0 +1,7 @@
+import { FormsModule } from '@angular/forms';
+import { VtsChartModule } from '@ui-vts/ng-vts/chart';
+
+export const moduleList = [
+  FormsModule,
+  VtsChartModule,
+ ];

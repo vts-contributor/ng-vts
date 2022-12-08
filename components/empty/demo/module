@@ -1,0 +1,25 @@
+import { VtsEmptyModule } from '@ui-vts/ng-vts/empty';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsCascaderModule } from '@ui-vts/ng-vts/cascader';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsTreeSelectModule } from '@ui-vts/ng-vts/tree-select';
+import { VtsSelectModule } from '@ui-vts/ng-vts/select';
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
+import { VtsListModule } from '@ui-vts/ng-vts/list';
+import { VtsTransferModule } from '@ui-vts/ng-vts/transfer';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [
+  VtsEmptyModule,
+  VtsIconModule,
+  VtsSwitchModule,
+  VtsCascaderModule,
+  VtsDividerModule,
+  VtsTreeSelectModule,
+  VtsSelectModule,
+  VtsTableModule,
+  VtsTransferModule,
+  VtsListModule,
+  VtsButtonModule
+];

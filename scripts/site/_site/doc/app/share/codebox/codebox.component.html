@@ -1,0 +1,50 @@
+<section class="code-box" [ngClass]="{ expand: vtsExpanded }" [attr.id]="vtsId">
+  <section class="code-box-demo">
+    <div class="code-box-title">
+      <a (click)="navigateToFragment()"
+      >{{ vtsTitle }}
+      </a>
+    </div>
+    
+    <div
+      *ngIf="!showIframe"
+      [class.simulate-iframe]="simulateIFrame"
+      [class.browser-mockup]="simulateIFrame"
+      [class.with-url]="simulateIFrame"
+      [style.height.px]="simulateIFrame && vtsIframeHeight"
+    >
+      <ng-content select="[demo]"></ng-content>
+    </div>
+    <div class="browser-mockup with-url" *ngIf="showIframe">
+      <iframe [src]="iframe" [height]="vtsIframeHeight" title="demo"></iframe>
+    </div>
+
+    <div class="code-box-actions">
+      <span
+        class="code-box-code-copy code-box-code-action"
+        (click)="copyCode()"
+        vts-tooltip
+        [vtsTooltipTitle]="copied ? 'Done' : 'Copy Code'"
+      >
+        <i vts-icon [vtsType]="copied ? 'Done' : 'FlipToFront'"></i>
+      </span>
+      <span
+        class="code-expand-icon code-box-code-action"
+        (click)="expandCode(!vtsExpanded)"
+        vts-tooltip
+        [vtsTooltipTitle]="vtsExpanded ? 'Hide Code' : 'Show Code'">
+        <i vts-icon [vtsType]="vtsExpanded ? 'code:unexpand' : 'code:expand'"></i>
+      </span>
+    </div>
+  </section>
+  <section class="highlight-wrapper" [ngClass]="{ 'highlight-wrapper-expand': vtsExpanded }">
+    <div class="highlight">
+      <ng-content select="[code]"></ng-content>
+      <vts-highlight [vtsCode]="codeLoaded ?
+      highlightCode! :
+      language === 'zh' ? '加载中' : 'Loading...'"
+                    [vtsLanguage]="'typescript'">
+      </vts-highlight>
+    </div>
+  </section>
+</section>

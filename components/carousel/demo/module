@@ -1,0 +1,4 @@
+import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+
+export const moduleList = [ VtsCarouselModule, VtsRadioModule ];

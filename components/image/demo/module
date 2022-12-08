@@ -1,0 +1,5 @@
+import { VtsImageModule } from '@ui-vts/ng-vts/image';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+
+export const moduleList = [ VtsImageModule, VtsButtonModule, VtsSpaceModule ];

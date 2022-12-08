@@ -1,0 +1,7 @@
+import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsElementPatchModule } from '@ui-vts/ng-vts/core/element-patch'
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+
+export const moduleList = [ VtsToolTipModule, VtsButtonModule, VtsIconModule, VtsElementPatchModule, VtsDividerModule ];

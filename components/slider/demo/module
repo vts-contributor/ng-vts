@@ -1,0 +1,13 @@
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsSliderModule } from '@ui-vts/ng-vts/slider';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
+
+export const moduleList = [
+  VtsIconModule,
+  VtsSliderModule,
+  VtsSwitchModule,
+  VtsInputNumberModule,
+  VtsButtonModule
+];

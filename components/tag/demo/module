@@ -1,0 +1,5 @@
+import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsTagModule, VtsInputModule, VtsIconModule ];

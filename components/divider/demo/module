@@ -1,0 +1,4 @@
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsDividerModule, VtsIconModule ];

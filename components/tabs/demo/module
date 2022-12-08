@@ -1,0 +1,9 @@
+import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSelectModule } from '@ui-vts/ng-vts/select';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
+import { VtsModalModule } from '@ui-vts/ng-vts/modal';
+
+export const moduleList = [ VtsTabsModule, VtsIconModule, VtsSelectModule, VtsRadioModule, VtsInputNumberModule, VtsButtonModule, VtsModalModule ];

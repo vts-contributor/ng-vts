@@ -1,0 +1,106 @@
+.example-cell {
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid #E9E9E9;
+    border-radius: 8px;
+    padding: 20px 20px 30px 20px;
+    margin-bottom: 30px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    &-title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 30px;
+        margin: 0 !important;
+    }
+
+    &-content {
+        margin-top: 30px;
+    }
+
+    .require {
+        color: #ee0033;
+        margin-left: 5px;
+    }
+
+    .badge {
+        line-height: 30px;
+        padding: 0 8px;
+        border-radius: 5px;
+        border: 1px solid;
+        display: inline-block;
+        font-weight: 600;
+
+        &[type="Success"] {
+            border-color: #00884F;
+            background: #E5FCF2;
+            color: #006339;
+        }
+
+        &[type="Danger"] {
+            border-color: #B50026;
+            background: #FCE5EA;
+            color: #88001D;
+        }
+
+        &[type="Pending"] {
+            border-color: #AF8612;
+            background: #FBF6E7;
+            color: #83650D;
+        }
+
+        &[type="Info"] {
+            border-color: #0593CF;
+            background: #E8F8FF;
+            color: #004E7A;
+        }
+    }
+
+    .prefix {
+        padding-left: 15px;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            height: 4px;
+            width: 4px;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        &[type="Online"] {
+            color: #CB002B;
+
+            &::before {
+                background: #CB002B;
+            }
+        }
+
+        &[type="Retail"] {
+            color: #0072B2;
+
+            &::before {
+                background: #0072B2;
+            }
+        }
+
+        &[type="Direct"] {
+            color: #00884F;
+
+            &::before {
+                background: #00884F;
+            }
+        }
+    }
+    
+    .actions .vtsicon {
+        font-size: 20px;
+        color: #73777A;
+    }
+}

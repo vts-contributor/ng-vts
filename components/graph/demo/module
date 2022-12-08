@@ -1,0 +1,7 @@
+import { VtsGraphModule } from '@ui-vts/ng-vts/graph';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
+
+export const moduleList = [ VtsGraphModule, VtsButtonModule, VtsIconModule, VtsRadioModule, VtsNoAnimationModule ];

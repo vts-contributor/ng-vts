@@ -1,0 +1,3 @@
+import { VtsBackTopModule } from '@ui-vts/ng-vts/back-top';
+
+export const moduleList = [ VtsBackTopModule ];

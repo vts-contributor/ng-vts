@@ -1,0 +1,17 @@
+import { VtsDatePickerModule } from '@ui-vts/ng-vts/date-picker';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSelectModule } from '@ui-vts/ng-vts/select';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+
+export const moduleList = [ 
+    VtsDatePickerModule, 
+    VtsRadioModule, 
+    VtsButtonModule, 
+    VtsSelectModule, 
+    VtsSpaceModule, 
+    VtsTabsModule, 
+    VtsFormModule 
+];

@@ -1,0 +1,9 @@
+import { VtsCommentModule } from '@ui-vts/ng-vts/comment';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsListModule } from '@ui-vts/ng-vts/list';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+
+export const moduleList = [ VtsCommentModule, VtsIconModule, VtsListModule, VtsFormModule, VtsAvatarModule, VtsButtonModule, VtsInputModule ];

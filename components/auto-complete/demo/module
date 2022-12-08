@@ -1,0 +1,6 @@
+import { VtsAutocompleteModule } from '@ui-vts/ng-vts/auto-complete';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsAutocompleteModule, VtsInputModule, VtsButtonModule, VtsIconModule ];

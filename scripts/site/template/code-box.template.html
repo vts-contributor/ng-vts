@@ -1,0 +1,15 @@
+<vts-code-box
+  vtsTitle="{{title}}"
+  [vtsId]="'components-{{component}}-demo-{{key}}'"
+  vtsSelector="vts-demo-{{component}}-{{key}}"
+  [vtsLink]="'components-{{component}}-demo-{{key}}'"
+  vtsGenerateCommand="{{vtsGenerateCommand}}"
+  vtsComponentName="{{componentName}}"
+  vtsIframeSource="{{iframeSource}}"
+  [vtsIframeHeight]="{{iframeHeight}}"
+  [vtsHref]="'https://github.com/NG-ZORRO/ng-zorro-antd/edit/master/components/{{component}}/demo/{{key}}.md'">
+	<vts-demo-{{component}}-{{key}} demo></vts-demo-{{component}}-{{key}}>
+	<div intro ngNonBindable>
+		{{doc}}
+	</div>
+</vts-code-box>

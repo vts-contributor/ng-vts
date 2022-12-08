@@ -1,0 +1,6 @@
+import { VtsSpinModule } from '@ui-vts/ng-vts/spin';
+import { VtsAlertModule } from '@ui-vts/ng-vts/alert';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+
+export const moduleList = [ VtsSpinModule, VtsAlertModule, VtsIconModule, VtsSwitchModule ];

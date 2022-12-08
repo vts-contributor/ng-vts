@@ -1,0 +1,8 @@
+import { VtsMentionModule } from '@ui-vts/ng-vts/mention';
+import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+
+export const moduleList = [ VtsMentionModule, VtsAvatarModule, VtsFormModule, VtsInputModule, VtsTabsModule, VtsButtonModule ];

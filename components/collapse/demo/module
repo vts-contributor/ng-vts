@@ -1,0 +1,4 @@
+import { VtsCollapseModule } from '@ui-vts/ng-vts/collapse';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsCollapseModule, VtsIconModule ];

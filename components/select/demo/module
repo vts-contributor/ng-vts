@@ -1,0 +1,21 @@
+import { VtsSelectModule } from '@ui-vts/ng-vts/select';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsSpinModule } from '@ui-vts/ng-vts/spin';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { FormsModule } from '@angular/forms';
+import { HttpClientJsonpModule } from '@angular/common/http';
+
+export const moduleList = [ 
+    FormsModule, 
+    VtsSpinModule, 
+    HttpClientJsonpModule, 
+    VtsSelectModule, 
+    VtsDividerModule, 
+    VtsRadioModule, 
+    VtsIconModule, 
+    VtsInputModule,
+    VtsFormModule
+];

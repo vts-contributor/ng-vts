@@ -1,0 +1,21 @@
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsCardModule } from '@ui-vts/ng-vts/card';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsSliderModule } from '@ui-vts/ng-vts/slider';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
+
+export const moduleList = [
+  VtsRadioModule,
+  VtsSliderModule,
+  VtsUploadModule,
+  VtsButtonModule,
+  VtsSpaceModule,
+  VtsIconModule,
+  VtsPopconfirmModule,
+  VtsCardModule,
+  VtsDividerModule,
+];

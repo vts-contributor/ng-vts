@@ -1,0 +1,6 @@
+import { VtsDescriptionsModule } from '@ui-vts/ng-vts/descriptions';
+import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+
+export const moduleList = [ VtsDescriptionsModule, VtsBadgeModule, VtsRadioModule, VtsButtonModule ];

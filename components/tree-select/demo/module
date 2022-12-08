@@ -1,0 +1,5 @@
+import { VtsTreeSelectModule } from '@ui-vts/ng-vts/tree-select';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { FormsModule } from '@angular/forms';
+
+export const moduleList = [ FormsModule, VtsTreeSelectModule, VtsIconModule ];

@@ -1,0 +1,66 @@
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, NgZone, OnDestroy } from '@angular/core';
+import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { isTouchEvent } from '@ui-vts/ng-vts/core/util';
+
+import { Subject } from 'rxjs';
+
+import { VtsResizeHandleMouseDownEvent } from './resize-handle.component';
+
+@Injectable()
+export class VtsResizableService implements OnDestroy {
+  private document: Document;
+  private listeners = new Map<string, (event: MouseEvent | TouchEvent) => void>();
+
+  handleMouseDown$ = new Subject<VtsResizeHandleMouseDownEvent>();
+  documentMouseUp$ = new Subject<MouseEvent | TouchEvent>();
+  documentMouseMove$ = new Subject<MouseEvent | TouchEvent>();
+  mouseEntered$ = new Subject<boolean>();
+
+  constructor(private ngZone: NgZone, @Inject(DOCUMENT) document: VtsSafeAny) {
+    this.document = document;
+  }
+
+  startResizing(event: MouseEvent | TouchEvent): void {
+    const _isTouchEvent = isTouchEvent(event);
+    this.clearListeners();
+    const moveEvent = _isTouchEvent ? 'touchmove' : 'mousemove';
+    const upEvent = _isTouchEvent ? 'touchend' : 'mouseup';
+    const moveEventHandler = (e: MouseEvent | TouchEvent) => {
+      this.documentMouseMove$.next(e);
+    };
+    const upEventHandler = (e: MouseEvent | TouchEvent) => {
+      this.documentMouseUp$.next(e);
+      this.clearListeners();
+    };
+
+    this.listeners.set(moveEvent, moveEventHandler);
+    this.listeners.set(upEvent, upEventHandler);
+
+    this.ngZone.runOutsideAngular(() => {
+      this.listeners.forEach((handler, name) => {
+        this.document.addEventListener(name, handler as EventListener);
+      });
+    });
+  }
+
+  private clearListeners(): void {
+    this.listeners.forEach((handler, name) => {
+      this.document.removeEventListener(name, handler as EventListener);
+    });
+    this.listeners.clear();
+  }
+
+  ngOnDestroy(): void {
+    this.handleMouseDown$.complete();
+    this.documentMouseUp$.complete();
+    this.documentMouseMove$.complete();
+    this.mouseEntered$.complete();
+    this.clearListeners();
+  }
+}

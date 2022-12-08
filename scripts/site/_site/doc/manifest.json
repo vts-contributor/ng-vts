@@ -1,0 +1,53 @@
+{
+  "name": "NG-VTS",
+  "short_name": "NG-VTS",
+  "theme_color": "#1976d2",
+  "background_color": "#fafafa",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "assets/icons/icon-72.ico",
+      "sizes": "72x72",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-96.ico",
+      "sizes": "96x96",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-128.ico",
+      "sizes": "128x128",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-144.ico",
+      "sizes": "144x144",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-152.ico",
+      "sizes": "152x152",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/manifest-icon-192.ico",
+      "sizes": "192x192",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/manifest-icon-512.ico",
+      "sizes": "512x512",
+      "type": "image/ico",
+      "purpose": "any maskable"
+    }
+  ]
+}

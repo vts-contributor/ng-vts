@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "esnext",
+    "types": [],
+    "paths": {
+      "@ui-vts/ng-vts": [ "../components/ng-vts.module.ts" ],
+      "@ui-vts/ng-vts/*": [ "../components/*" ],
+      "ngx-color/sketch": [ "../node_modules/ngx-color/sketch" ]
+    }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

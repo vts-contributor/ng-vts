@@ -1,0 +1,31 @@
+{
+  "name": "@ui-vts/ng-vts",
+  "version": "1.0.16",
+  "description": "An Angular enterprise-class UI components",
+  "author": "Viettel Solutions",
+  "license": "Viettel Solutions",
+  "keywords": [
+    "ng",
+    "vts",
+    "ng-vts",
+    "angular",
+    "ui",
+    "framework",
+    "frontend"
+  ],
+  "dependencies": {
+    "@angular/cdk": "^12.1.0",
+    "@ui-vts/icons-angular": "1.0.0",
+    "date-fns": "^2.10.0",
+    "apexcharts": "^3.27.3",
+    "@ui-vts/theme": "^1.0.7"
+  },
+  "peerDependencies": {
+    "@angular/animations": "^12.1.0",
+    "@angular/common": "^12.1.0",
+    "@angular/forms": "^12.1.0",
+    "@angular/core": "^12.1.0",
+    "@angular/platform-browser": "^12.1.0",
+    "@angular/router": "^12.1.0"
+  }
+}

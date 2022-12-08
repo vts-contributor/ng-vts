@@ -1,0 +1,25 @@
+import { VtsPageHeaderModule } from '@ui-vts/ng-vts/page-header';
+import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
+import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
+import { VtsDescriptionsModule } from '@ui-vts/ng-vts/descriptions';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsStatisticModule } from '@ui-vts/ng-vts/statistic';
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+
+export const moduleList = [
+  VtsPageHeaderModule,
+  VtsTagModule,
+  VtsTabsModule,
+  VtsBreadCrumbModule,
+  VtsButtonModule,
+  VtsDescriptionsModule,
+  VtsAvatarModule,
+  VtsDropDownModule,
+  VtsIconModule,
+  VtsStatisticModule,
+  VtsGridModule
+];

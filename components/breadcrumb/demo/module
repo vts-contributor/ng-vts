@@ -1,0 +1,5 @@
+import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsBreadCrumbModule, VtsDropDownModule, VtsIconModule ];

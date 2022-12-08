@@ -1,0 +1,11 @@
+import { VtsTimePickerModule } from '@ui-vts/ng-vts/time-picker';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+
+export const moduleList = [ 
+    VtsTimePickerModule, 
+    VtsButtonModule,
+    VtsFormModule,
+    VtsRadioModule
+];

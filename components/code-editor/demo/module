@@ -1,0 +1,7 @@
+import { VtsCodeEditorModule } from '@ui-vts/ng-vts/code-editor';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsSpinModule } from '@ui-vts/ng-vts/spin';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch'
+import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
+
+export const moduleList = [ VtsCodeEditorModule, VtsSpinModule, VtsIconModule, VtsSwitchModule, VtsToolTipModule ];

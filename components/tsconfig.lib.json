@@ -1,0 +1,28 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "../release",
+    "alwaysStrict": true,
+    "declaration": true,
+    "inlineSources": true,
+    "declarationMap": true,
+    "lib": ["es2018", "dom"],
+    "sourceMap": true,
+    "strictFunctionTypes": true,
+    "stripInternal": true,
+    "target": "es2015"
+  },
+  "angularCompilerOptions": {
+    "strictInputAccessModifiers": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true,
+    "fullTemplateTypeCheck": true,
+    "strictTemplates": true,
+    "strictInjectionParameters": true
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}

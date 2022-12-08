@@ -1,0 +1,10 @@
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsCheckboxModule } from '@ui-vts/ng-vts/checkbox';
+import { VtsHighlightModule } from '@ui-vts/ng-vts/core/highlight';
+import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsTreeViewModule } from '@ui-vts/ng-vts/tree-view';
+
+export const moduleList = [ VtsTreeViewModule, VtsIconModule, VtsCheckboxModule, VtsInputModule, VtsSwitchModule, VtsButtonModule, VtsNoAnimationModule, VtsHighlightModule ];

@@ -1,0 +1,25 @@
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsSelectModule } from '@ui-vts/ng-vts/select';
+import { VtsCascaderModule } from '@ui-vts/ng-vts/cascader';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
+import { VtsDatePickerModule } from '@ui-vts/ng-vts/date-picker';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { FormsModule } from '@angular/forms';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+
+export const moduleList = [
+  FormsModule,
+  VtsFormModule,
+  VtsInputModule,
+  VtsSelectModule,
+  VtsCascaderModule,
+  VtsInputNumberModule,
+  VtsDatePickerModule,
+  VtsIconModule,
+  VtsToolTipModule,
+  VtsButtonModule,
+  VtsRadioModule,
+ ];

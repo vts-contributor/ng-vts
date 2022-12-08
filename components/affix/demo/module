@@ -1,0 +1,5 @@
+import { VtsAffixModule } from '@ui-vts/ng-vts/affix';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsAnchorModule } from '@ui-vts/ng-vts/anchor';
+
+export const moduleList = [ VtsAffixModule, VtsButtonModule, VtsAnchorModule ];

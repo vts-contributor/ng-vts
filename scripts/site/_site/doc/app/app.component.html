@@ -1,0 +1,86 @@
+<div id="ng-content">
+  <div class="page-wrapper" [class.page-wrapper-rtl]="direction === 'rtl'" [dir]="direction">
+
+    <vts-layout>
+      <vts-sider 
+        [vtsWidth]="286" 
+        [vtsTrigger]="null"
+        [vtsCollapsedWidth]="0"
+        (vtsCollapsedChange)="toggleResize()"
+        vtsBreakpoint="lg"
+        id="sideMenu"
+      > 
+        <ng-template [ngTemplateOutlet]="sidebar"></ng-template>
+      </vts-sider>
+      
+      <vts-drawer
+        [vtsClosable]="false"
+        [vtsVisible]="drawerVisible"
+        vtsPlacement="left"
+        id="sideDrawer"
+        [vtsCloseOnNavigation]="true"
+        vtsWrapClassName="sideDrawWrapper"
+      >
+        <ng-template [ngTemplateOutlet]="sidebar"></ng-template>
+      </vts-drawer>
+
+      <div [class.drawer-visible]="drawerVisible" (click)="drawerVisible = !drawerVisible" id="drawerToggle">
+        <i vts-icon vtsType="List"></i>
+      </div>
+
+      <span *ngIf="displayBacktop" (click)="scrollTop()" id="backTopArrow">
+        <svg viewBox="64 64 896 896" focusable="false" data-icon="arrow-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M868 545.5L536.1 163a31.96 31.96 0 00-48.3 0L156 545.5a7.97 7.97 0 006 13.2h81c4.6 0 9-2 12.1-5.5L474 300.9V864c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V300.9l218.9 252.3c3 3.5 7.4 5.5 12.1 5.5h81c6.8 0 10.5-8 6-13.2z"></path></svg>
+      </span>
+      <!-- <i *ngIf="displayBacktop" (click)="scrollTop()" vts-icon id="backTopArrow" vtsType="ArrowUpOutline"></i> -->
+
+      <vts-layout style="max-width:100%">
+
+      <div class="main-wrapper">
+        <div vts-row>
+          <app-header
+            [windowWidth]="windowWidth"
+            [page]="page"
+            [(language)]="language"
+            (languageChange)="switchLanguage($event)"
+            (versionChange)="navigateToVersion($event)"
+            (directionChange)="switchDirection($event)"
+            [(sidebarCollapse)]="sidebarCollapse"
+            (sidebarCollapseChange)="toggleResize()"
+          ></app-header>
+
+          <vts-content style="max-width:100%">
+            <div
+              vts-col
+              class="main-container main-container-component"
+              [vtsFlex]="1"
+            >
+              <router-outlet></router-outlet>
+            </div>
+          </vts-content>
+
+        </div>
+
+        <div vts-row style="margin-top: auto;">
+          <div vts-col [vtsFlex]="1">
+            <vts-nav-bottom></vts-nav-bottom>
+            <app-footer></app-footer>
+          </div>
+        </div>
+      </div>
+
+      </vts-layout>
+
+    </vts-layout>
+
+  </div>
+</div>
+
+<ng-template #sidebar>
+  <app-side
+      [page]="page"
+      [routerList]="routerList"
+      [sideCollapsed]="sidebarCollapse"
+      [language]="language"
+      [onItemClick]="onNavigateClick.bind(this)">
+  </app-side>
+</ng-template>

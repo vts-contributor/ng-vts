@@ -1,0 +1,5 @@
+import { VtsStatisticModule } from '@ui-vts/ng-vts/statistic';
+import { VtsCardModule } from '@ui-vts/ng-vts/card';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsStatisticModule, VtsCardModule, VtsIconModule ];

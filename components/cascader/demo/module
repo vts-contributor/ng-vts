@@ -1,0 +1,5 @@
+import { VtsCascaderModule } from '@ui-vts/ng-vts/cascader';
+import { VtsModalModule } from '@ui-vts/ng-vts/modal';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+
+export const moduleList = [ VtsCascaderModule, VtsModalModule, VtsButtonModule ];

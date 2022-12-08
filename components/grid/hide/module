@@ -1,0 +1,5 @@
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+import { VtsSliderModule } from '@ui-vts/ng-vts/slider';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+
+export const moduleList = [ VtsGridModule, VtsSliderModule, VtsDividerModule ];

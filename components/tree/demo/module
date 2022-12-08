@@ -1,0 +1,6 @@
+import { VtsTreeModule } from '@ui-vts/ng-vts/tree';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+
+export const moduleList = [ VtsTreeModule, VtsIconModule, VtsDropDownModule, VtsInputModule ];

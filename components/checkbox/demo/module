@@ -1,0 +1,11 @@
+import { VtsCheckboxModule } from '@ui-vts/ng-vts/checkbox';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+
+export const moduleList = [ 
+    VtsCheckboxModule, 
+    VtsButtonModule,
+    VtsSpaceModule,
+    VtsFormModule
+];

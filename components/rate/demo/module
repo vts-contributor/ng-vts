@@ -1,0 +1,4 @@
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsRateModule } from '@ui-vts/ng-vts/rate';
+
+export const moduleList = [ VtsIconModule, VtsRateModule ];
