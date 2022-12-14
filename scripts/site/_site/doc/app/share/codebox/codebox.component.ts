@@ -15,7 +15,6 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService, DemoCode } from '../../app.service';
-import { OnlineIdeService } from '../../online-ide/online-ide.service';
 
 @Component({
   selector: 'vts-code-box',
@@ -119,30 +118,6 @@ export class VtsCodeBoxComponent implements OnInit, OnDestroy {
     }
   }
 
-  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
-    setTimeout(() => {
-      this.onlineIDELoading = !this.codeLoaded;
-      this.check();
-    }, 120);
-    this.getDemoCode().subscribe(data => {
-      this.onlineIDELoading = false;
-      this.check();
-      if (ide === 'StackBlitz') {
-        this.onlineIdeService.openOnStackBlitz(
-          this.vtsComponentName,
-          data.rawCode,
-          this.vtsSelector
-        );
-      } else {
-        this.onlineIdeService.openOnCodeSandbox(
-          this.vtsComponentName,
-          data.rawCode,
-          this.vtsSelector
-        );
-      }
-    });
-  }
-
   check(): void {
     this.cdr.markForCheck();
   }
@@ -154,7 +129,6 @@ export class VtsCodeBoxComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private appService: AppService,
     private platform: Platform,
-    private onlineIdeService: OnlineIdeService
   ) {}
 
   ngOnInit(): void {

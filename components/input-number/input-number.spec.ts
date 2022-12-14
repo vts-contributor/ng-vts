@@ -4,11 +4,7 @@ import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import {
-  createKeyboardEvent,
-  dispatchEvent,
-  dispatchFakeEvent
-} from '@ui-vts/ng-vts/core/testing';
+import { createKeyboardEvent, dispatchEvent, dispatchFakeEvent } from '@ui-vts/ng-vts/core/testing';
 
 import { VtsInputNumberComponent } from './input-number.component';
 import { VtsInputNumberModule } from './input-number.module';

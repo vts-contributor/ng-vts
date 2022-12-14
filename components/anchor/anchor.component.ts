@@ -25,12 +25,7 @@ import {
 } from '@angular/core';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsScrollService } from '@ui-vts/ng-vts/core/services';
-import {
-  BooleanInput,
-  NgStyleInterface,
-  NumberInput,
-  VtsSafeAny
-} from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, NgStyleInterface, NumberInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil, throttleTime } from 'rxjs/operators';
