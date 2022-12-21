@@ -1,6 +1,6 @@
 {
   "name": "@ui-vts/ng-vts",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "An Angular enterprise-class UI components",
   "author": "Viettel Solutions",
   "license": "Viettel Solutions",
@@ -18,7 +18,7 @@
     "@ui-vts/icons-angular": "1.0.0",
     "date-fns": "^2.10.0",
     "apexcharts": "^3.27.3",
-    "@ui-vts/theme": "1.1.0"
+    "@ui-vts/theme": "1.1.1"
   },
   "peerDependencies": {
     "@angular/animations": "^12.1.0",
