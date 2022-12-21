@@ -21,14 +21,12 @@ import { VtsDrawerModule } from './drawer.module';
 import { VtsDrawerService } from './drawer.service';
 
 describe('VtsDrawerComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsDrawerModule, NoopAnimationsModule, VtsNoAnimationModule],
-        declarations: [VtsTestDrawerComponent, VtsTestDrawerRtlComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsDrawerModule, NoopAnimationsModule, VtsNoAnimationModule],
+      declarations: [VtsTestDrawerComponent, VtsTestDrawerRtlComponent]
+    }).compileComponents();
+  }));
   describe('default', () => {
     let component: VtsTestDrawerComponent;
     let fixture: ComponentFixture<VtsTestDrawerComponent>;
@@ -746,23 +744,19 @@ describe('VtsDrawerService', () => {
   let drawerService: VtsDrawerService;
   let overlayContainerElement: HTMLElement;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsDrawerModule, NoopAnimationsModule],
-        providers: [VtsDrawerService],
-        declarations: [VtsTestDrawerWithServiceComponent, VtsDrawerCustomComponent]
-      });
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsDrawerModule, NoopAnimationsModule],
+      providers: [VtsDrawerService],
+      declarations: [VtsTestDrawerWithServiceComponent, VtsDrawerCustomComponent]
+    });
+  }));
 
-  beforeEach(
-    waitForAsync(() => {
-      fixture = TestBed.createComponent(VtsTestDrawerWithServiceComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    fixture = TestBed.createComponent(VtsTestDrawerWithServiceComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   beforeEach(inject(
     [OverlayContainer, VtsDrawerService],

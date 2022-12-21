@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-calendar-select',
   template: `
     <vts-alert
-      vtsMessage="Your selected date: {{ selectedValue | date: 'yyyy-MM-dd' }}"
+      vtsMessage="Your selected date: {{ selectedValue | date : 'yyyy-MM-dd' }}"
     ></vts-alert>
     <vts-calendar
       [(ngModel)]="selectedValue"

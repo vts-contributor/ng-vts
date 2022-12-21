@@ -35,7 +35,9 @@ import { VtsCascaderOption } from './typings';
     </ng-container>
     <ng-template #defaultOptionTemplate>
       <span
-        [innerHTML]="optionLabel | vtsHighlight: highlightText:'g':'vts-cascader-menu-item-keyword'"
+        [innerHTML]="
+          optionLabel | vtsHighlight : highlightText : 'g' : 'vts-cascader-menu-item-keyword'
+        "
       ></span>
     </ng-template>
     <span

@@ -56,52 +56,50 @@ describe('auto-complete', () => {
   const scrolledSubject = new Subject();
   let zone: MockNgZone;
 
-  beforeEach(
-    waitForAsync(() => {
-      const dir = 'ltr';
-      TestBed.configureTestingModule({
-        imports: [
-          VtsAutocompleteModule,
-          NoopAnimationsModule,
-          FormsModule,
-          ReactiveFormsModule,
-          VtsInputModule
-        ],
-        declarations: [
-          VtsTestSimpleAutocompleteComponent,
-          VtsTestAutocompletePropertyComponent,
-          VtsTestAutocompleteWithoutPanelComponent,
-          VtsTestAutocompleteGroupComponent,
-          VtsTestAutocompleteWithOnPushDelayComponent,
-          VtsTestAutocompleteWithFormComponent,
-          VtsTestAutocompleteWithObjectOptionComponent,
-          VtsTestAutocompleteDifferentValueWithFormComponent,
-          VtsTestAutocompleteWithGroupInputComponent
-        ],
-        providers: [
-          { provide: Directionality, useFactory: () => ({ value: dir }) },
-          {
-            provide: ScrollDispatcher,
-            useFactory: () => ({ scrolled: () => scrolledSubject })
-          },
-          {
-            provide: NgZone,
-            useFactory: () => {
-              zone = new MockNgZone();
-              return zone;
-            }
+  beforeEach(waitForAsync(() => {
+    const dir = 'ltr';
+    TestBed.configureTestingModule({
+      imports: [
+        VtsAutocompleteModule,
+        NoopAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        VtsInputModule
+      ],
+      declarations: [
+        VtsTestSimpleAutocompleteComponent,
+        VtsTestAutocompletePropertyComponent,
+        VtsTestAutocompleteWithoutPanelComponent,
+        VtsTestAutocompleteGroupComponent,
+        VtsTestAutocompleteWithOnPushDelayComponent,
+        VtsTestAutocompleteWithFormComponent,
+        VtsTestAutocompleteWithObjectOptionComponent,
+        VtsTestAutocompleteDifferentValueWithFormComponent,
+        VtsTestAutocompleteWithGroupInputComponent
+      ],
+      providers: [
+        { provide: Directionality, useFactory: () => ({ value: dir }) },
+        {
+          provide: ScrollDispatcher,
+          useFactory: () => ({ scrolled: () => scrolledSubject })
+        },
+        {
+          provide: NgZone,
+          useFactory: () => {
+            zone = new MockNgZone();
+            return zone;
           }
-        ]
-      });
+        }
+      ]
+    });
 
-      TestBed.compileComponents();
+    TestBed.compileComponents();
 
-      inject([OverlayContainer], (oc: OverlayContainer) => {
-        overlayContainer = oc;
-        overlayContainerElement = oc.getContainerElement();
-      })();
-    })
-  );
+    inject([OverlayContainer], (oc: OverlayContainer) => {
+      overlayContainer = oc;
+      overlayContainerElement = oc.getContainerElement();
+    })();
+  }));
   afterEach(inject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
     currentOverlayContainer.ngOnDestroy();
     overlayContainer.ngOnDestroy();

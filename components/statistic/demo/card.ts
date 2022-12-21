@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
         <vts-col [vtsSpan]="12">
           <vts-card>
             <vts-statistic
-              [vtsValue]="(11.28 | number: '1.0-2')!"
+              [vtsValue]="(11.28 | number : '1.0-2')!"
               [vtsTitle]="'Active'"
               [vtsPrefix]="prefixTplOne"
               [vtsSuffix]="'%'"
@@ -22,7 +22,7 @@ import { Component } from '@angular/core';
         <vts-col [vtsSpan]="12">
           <vts-card>
             <vts-statistic
-              [vtsValue]="(9.3 | number: '1.0-2')!"
+              [vtsValue]="(9.3 | number : '1.0-2')!"
               [vtsTitle]="'Idle'"
               [vtsPrefix]="prefixTplTwo"
               [vtsSuffix]="'%'"

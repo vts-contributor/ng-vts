@@ -10,23 +10,21 @@ import { VtsCheckboxComponent } from './checkbox.component';
 import { VtsCheckboxModule } from './checkbox.module';
 
 describe('checkbox', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsCheckboxModule, FormsModule, ReactiveFormsModule],
-        declarations: [
-          VtsTestCheckboxSingleComponent,
-          VtsTestCheckboxGroupComponent,
-          VtsTestCheckboxFormComponent,
-          VtsTestCheckboxGroupFormComponent,
-          VtsTestCheckboxWrapperComponent,
-          VtsTestCheckboxSingleRtlComponent,
-          VtsTestCheckboxGroupRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsCheckboxModule, FormsModule, ReactiveFormsModule],
+      declarations: [
+        VtsTestCheckboxSingleComponent,
+        VtsTestCheckboxGroupComponent,
+        VtsTestCheckboxFormComponent,
+        VtsTestCheckboxGroupFormComponent,
+        VtsTestCheckboxWrapperComponent,
+        VtsTestCheckboxSingleRtlComponent,
+        VtsTestCheckboxGroupRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
   describe('checkbox basic', () => {
     let fixture: ComponentFixture<VtsTestCheckboxSingleComponent>;
     let testComponent: VtsTestCheckboxSingleComponent;

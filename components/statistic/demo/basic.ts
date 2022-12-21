@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       </vts-col>
       <vts-col [vtsSpan]="12">
         <vts-statistic
-          [vtsValue]="(2019.111 | number: '1.0-2')!"
+          [vtsValue]="(2019.111 | number : '1.0-2')!"
           [vtsTitle]="'Account Balance (CNY)'"
         ></vts-statistic>
       </vts-col>

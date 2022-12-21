@@ -1,41 +1,52 @@
 ---
 category: Components
-type: Feedback
+type: Components
 title: Result
 cols: 1
+order: 17
 cover: https://gw.alipayobjects.com/zos/alicdn/9nepwjaLa/Result.svg
 ---
-
-Used to feed back the results of a series of operational tasks.
-
-## When To Use
-
-Use when important operations need to inform the user to process the results and the feedback is more complicated.
 
 ```ts
 import { VtsResultModule } from '@ui-vts/ng-vts/result';
 ```
 
+
 ## API
 
 ### vts-result
 
-| Property     | Description                             | Type                                                                              | Default  |
-| ------------ | --------------------------------------- | --------------------------------------------------------------------------------- | -------- |
-| `vtsTitle`    | title                                   | `TemplateRef<void>` \| `string`                                                   | -        |
-| `vtsSubTitle` | subTitle                                | `TemplateRef<void>` \| `string`                                                   | -        |
-| `vtsStatus`   | result status, decides icons and colors | `'success' \| 'error' \| 'info' \| 'warning'\| '404' \| '403' \| '500'` \| 'info' | `'info'` |
-| `vtsIcon`     | custom icon                             | `TemplateRef<void>` \| `string`                                                   | -        |
-| `vtsExtra`    | operating area                          | `TemplateRef<void>` \| `string`                                                   | -        |
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| vtsTemplate | Template icon | One of `403` `404` `500` `bad-connection` | `404`
+| vtsLayout | Layout of result | One of `icon-first` `content-first` | `icon-first`
+| vtsOkText | OK button label | `boolean` | `false`
+| vtsOkType | OK button type | One of `primary` `default` `link` `text` | `primary`
+| vtsOkLoading | OK button loading status | `boolean` | `false`
+| vtsOkDisabled | OK button disable status | `boolean` | `false`
+| vtsOnOk | Emit on OK button click | `EventEmitter` | 
+| vtsCancelText | cancel button label | `boolean` | `false`
+| vtsCancelType | cancel button type | One of `primary` `default` `link` `text` | `default`
+| vtsCancelLoading | cancel button loading status | `boolean` | `false`
+| vtsCancelDisabled | cancel button disable status | `boolean` | `false`
+| vtsCancelOk | Emit on cancel button click | `EventEmitter` | 
 
-### Counter Parts
 
-You can use these directives as children of vts-result.
+### div[vts-result-title]
 
-| Directive                                | Description                              |
-| ---------------------------------------- | ---------------------------------------- |
-| `i[vts-result-icon], div[vts-result-icon]` | custom icon                              |
-| `div[vts-result-title]`                   | title                                    |
-| `div[vts-result-subtitle]`                | subtitle                                 |
-| `div[vts-result-content]`                 | contents, for detailed explanations      |
-| `div[vts-result-extra]`                   | extra content, usually an operating area |
+Declare result title template
+
+
+### div[vts-result-subtitle]
+
+Declare result subtitle template
+
+
+### div[vts-result-content]
+
+Declare result content template
+
+
+### div[vts-result-action]
+
+Overwrite result action template

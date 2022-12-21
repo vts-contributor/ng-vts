@@ -27,18 +27,16 @@ describe('layout', () => {
     let siders: DebugElement[];
     let layouts: DebugElement[];
 
-    beforeEach(
-      waitForAsync(() => {
-        testBed = createComponentBed(VtsLayoutBasicComponent, {
-          imports: [VtsLayoutModule]
-        });
-        headers = testBed.fixture.debugElement.queryAll(By.directive(VtsHeaderComponent));
-        contents = testBed.fixture.debugElement.queryAll(By.directive(VtsContentComponent));
-        footers = testBed.fixture.debugElement.queryAll(By.directive(VtsFooterComponent));
-        siders = testBed.fixture.debugElement.queryAll(By.directive(VtsSiderComponent));
-        layouts = testBed.fixture.debugElement.queryAll(By.directive(VtsLayoutComponent));
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      testBed = createComponentBed(VtsLayoutBasicComponent, {
+        imports: [VtsLayoutModule]
+      });
+      headers = testBed.fixture.debugElement.queryAll(By.directive(VtsHeaderComponent));
+      contents = testBed.fixture.debugElement.queryAll(By.directive(VtsContentComponent));
+      footers = testBed.fixture.debugElement.queryAll(By.directive(VtsFooterComponent));
+      siders = testBed.fixture.debugElement.queryAll(By.directive(VtsSiderComponent));
+      layouts = testBed.fixture.debugElement.queryAll(By.directive(VtsLayoutComponent));
+    }));
 
     it('should have correct class', () => {
       expect(

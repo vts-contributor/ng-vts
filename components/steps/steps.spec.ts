@@ -21,24 +21,22 @@ import { VtsStepsComponent } from './steps.component';
 import { VtsStepsModule } from './steps.module';
 
 describe('steps', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsStepsModule, VtsIconTestModule, VtsDividerModule],
-        declarations: [
-          VtsTestOuterStepsComponent,
-          VtsDemoStepsClickableComponent,
-          VtsTestInnerStepStringComponent,
-          VtsTestInnerStepTemplateComponent,
-          VtsTestStepForComponent,
-          VtsTestStepAsyncComponent,
-          VtsDemoStepsNavComponent,
-          VtsTestOuterStepsRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsStepsModule, VtsIconTestModule, VtsDividerModule],
+      declarations: [
+        VtsTestOuterStepsComponent,
+        VtsDemoStepsClickableComponent,
+        VtsTestInnerStepStringComponent,
+        VtsTestInnerStepTemplateComponent,
+        VtsTestStepForComponent,
+        VtsTestStepAsyncComponent,
+        VtsDemoStepsNavComponent,
+        VtsTestOuterStepsRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
   describe('outer steps', () => {
     let fixture: ComponentFixture<VtsTestOuterStepsComponent>;
     let testComponent: VtsTestOuterStepsComponent;
