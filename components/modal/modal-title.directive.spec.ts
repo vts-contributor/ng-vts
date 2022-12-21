@@ -24,21 +24,19 @@ describe('modal title directive', () => {
   let testComponent: TestDirectiveTitleComponent;
   let modalService: VtsModalService;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsModalModule, NoopAnimationsModule],
-        declarations: [
-          TestDirectiveTitleComponent,
-          TestDirectiveTitleInServiceComponent,
-          TestDirectiveTitleWithInitOpenedComponent
-        ],
-        providers: [VtsModalService]
-      });
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsModalModule, NoopAnimationsModule],
+      declarations: [
+        TestDirectiveTitleComponent,
+        TestDirectiveTitleInServiceComponent,
+        TestDirectiveTitleWithInitOpenedComponent
+      ],
+      providers: [VtsModalService]
+    });
 
-      TestBed.compileComponents();
-    })
-  );
+    TestBed.compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestDirectiveTitleComponent);

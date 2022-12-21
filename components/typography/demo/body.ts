@@ -4,22 +4,22 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-typography-body',
   template: `
     <div class="example-line">
-      <p class="vts-typo-body1">Body 1 : 16</p>
+      <p vts-typography vtsType="body1">Body 1 : 16</p>
       <div>(Sarabun - Regular - 16px)</div>
     </div>
     <div class="example-line">
-      <p class="vts-typo-body2">Body 2 : 14</p>
+      <p vts-typography vtsType="body2">Body 2 : 14</p>
       <div>(Sarabun - Regular - 14px)</div>
     </div>
     <div class="example-line">
-      <p class="vts-typo-link">Link text</p>
+      <a vts-typography vtsType="link" href="javascript:void(0)">Link text</a>
       <div>(Sarabun - Regular - 16px)</div>
     </div>
   `,
   styles: [
     `
       * {
-        margin: 15px 0;
+        margin: 10px 0;
       }
     `,
     `

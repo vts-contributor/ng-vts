@@ -8,19 +8,17 @@ import { VtsAlertComponent } from './alert.component';
 import { VtsAlertModule } from './alert.module';
 
 describe('alert', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsAlertModule, NoopAnimationsModule, VtsIconTestModule],
-        declarations: [
-          VtsDemoTestBasicComponent,
-          VtsDemoTestBannerComponent,
-          VtsTestAlertRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsAlertModule, NoopAnimationsModule, VtsIconTestModule],
+      declarations: [
+        VtsDemoTestBasicComponent,
+        VtsDemoTestBannerComponent,
+        VtsTestAlertRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
 
   describe('basic alert', () => {
     let fixture: ComponentFixture<VtsDemoTestBasicComponent>;

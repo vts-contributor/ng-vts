@@ -9,20 +9,18 @@ import { VtsCollapseComponent } from './collapse.component';
 import { VtsCollapseModule } from './collapse.module';
 
 describe('collapse', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsCollapseModule, NoopAnimationsModule],
-        declarations: [
-          VtsTestCollapseBasicComponent,
-          VtsTestCollapseTemplateComponent,
-          VtsTestCollapseIconComponent,
-          VtsTestCollapseRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsCollapseModule, NoopAnimationsModule],
+      declarations: [
+        VtsTestCollapseBasicComponent,
+        VtsTestCollapseTemplateComponent,
+        VtsTestCollapseIconComponent,
+        VtsTestCollapseRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
   describe('collapse basic', () => {
     let fixture: ComponentFixture<VtsTestCollapseBasicComponent>;
     let testComponent: VtsTestCollapseBasicComponent;

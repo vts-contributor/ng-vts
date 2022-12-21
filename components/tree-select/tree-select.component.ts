@@ -143,7 +143,7 @@ const TREE_SELECT_DEFAULT_CLASS = 'vts-select-dropdown vts-select-tree-dropdown'
     <div cdkOverlayOrigin class="vts-select-selector">
       <ng-container *ngIf="isMultiple">
         <vts-select-item
-          *ngFor="let node of selectedNodes | slice: 0:vtsMaxTagCount; trackBy: trackValue"
+          *ngFor="let node of selectedNodes | slice : 0 : vtsMaxTagCount; trackBy: trackValue"
           [deletable]="true"
           [disabled]="node.isDisabled || vtsDisabled"
           [label]="vtsDisplayWith(node)"
@@ -153,7 +153,7 @@ const TREE_SELECT_DEFAULT_CLASS = 'vts-select-dropdown vts-select-tree-dropdown'
         <vts-select-item
           *ngIf="selectedNodes.length > vtsMaxTagCount"
           [contentTemplateOutlet]="vtsMaxTagPlaceholder"
-          [contentTemplateOutletContext]="selectedNodes | slice: vtsMaxTagCount"
+          [contentTemplateOutletContext]="selectedNodes | slice : vtsMaxTagCount"
           [deletable]="false"
           [disabled]="false"
           [label]="'+ ' + (selectedNodes.length - vtsMaxTagCount) + ' ...'"

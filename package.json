@@ -24,13 +24,8 @@
     "lint": "tslint --project components/tsconfig.lib.json -c tslint.json"
   },
   "dependencies": {
-    "@angular/cdk": "^12.1.0",
-    "@ui-vts/icons-angular": "^1.0.0",
-    "@ui-vts/theme": "^1.0.7",
-    "apexcharts": "^3.27.3",
-    "date-fns": "^2.16.1",
-    "ngx-hover-preload": "0.0.3",
-    "resize-observer-polyfill": "^1.5.1"
+    "@ui-vts/ng-vts": "file:components",
+    "ngx-hover-preload": "0.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.1.0",
@@ -54,7 +49,6 @@
     "@nguniversal/builders": "^12.1.0",
     "@nguniversal/express-engine": "^12.1.0",
     "@schematics/angular": "^12.1.0",
-    "@stackblitz/sdk": "^1.5.2",
     "@types/d3": "^6.2.0",
     "@types/fs-extra": "^9.0.5",
     "@types/gulp": "^4.0.7",
@@ -127,21 +121,5 @@
     "typescript": "~4.2.4",
     "yaml-front-matter": "^4.1.1",
     "zone.js": "~0.11.3"
-  },
-  "lint-staged": {
-    "components/**/*.{html,ts}": [
-      "./node_modules/.bin/prettier --write",
-      "git add"
-    ],
-    "components/**/!(testing)/!(polyfills).ts": [
-      "tslint --project components/tsconfig.lib.json -c tslint.json --fix",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   }
 }

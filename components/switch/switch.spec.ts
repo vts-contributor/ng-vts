@@ -10,20 +10,18 @@ import { VtsSwitchComponent } from './switch.component';
 import { VtsSwitchModule } from './switch.module';
 
 describe('switch', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsSwitchModule, FormsModule, ReactiveFormsModule, VtsIconTestModule],
-        declarations: [
-          VtsTestSwitchBasicComponent,
-          VtsTestSwitchFormComponent,
-          VtsTestSwitchTemplateComponent,
-          VtsTestSwitchRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsSwitchModule, FormsModule, ReactiveFormsModule, VtsIconTestModule],
+      declarations: [
+        VtsTestSwitchBasicComponent,
+        VtsTestSwitchFormComponent,
+        VtsTestSwitchTemplateComponent,
+        VtsTestSwitchRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
   describe('basic switch', () => {
     let fixture: ComponentFixture<VtsTestSwitchBasicComponent>;
     let testComponent: VtsTestSwitchBasicComponent;

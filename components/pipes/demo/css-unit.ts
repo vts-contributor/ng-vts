@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 
     <div class="wrap">
       <div class="box" [style.border-radius]="radiusValue | vtsToCssUnit">Default</div>
-      <div class="box" [style.border-radius]="radiusValue | vtsToCssUnit: '%'">%</div>
-      <div class="box" [style.border-radius]="radiusValue | vtsToCssUnit: 'rem'">rem</div>
+      <div class="box" [style.border-radius]="radiusValue | vtsToCssUnit : '%'">%</div>
+      <div class="box" [style.border-radius]="radiusValue | vtsToCssUnit : 'rem'">rem</div>
     </div>
   `,
   styles: [

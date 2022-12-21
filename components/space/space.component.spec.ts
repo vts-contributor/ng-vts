@@ -11,14 +11,12 @@ describe('Space Legacy', () => {
   let component: SpaceLegacyTestComponent;
   let fixture: ComponentFixture<SpaceLegacyTestComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsSpaceModule],
-        declarations: [SpaceLegacyTestComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsSpaceModule],
+      declarations: [SpaceLegacyTestComponent]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SpaceLegacyTestComponent);
@@ -148,14 +146,12 @@ describe('Space', () => {
   let component: SpaceTestComponent;
   let fixture: ComponentFixture<SpaceTestComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsSpaceModule],
-        declarations: [SpaceTestComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsSpaceModule],
+      declarations: [SpaceTestComponent]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SpaceTestComponent);

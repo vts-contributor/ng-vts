@@ -3,34 +3,24 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  ElementRef,
+  ContentChild,
+  EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Optional,
-  TemplateRef,
+  Output,
   ViewEncapsulation
 } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { VtsButtonType } from '@ui-vts/ng-vts/button';
+import { BooleanInput } from '@ui-vts/ng-vts/core/types';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
+import { VtsResultActionDirective, VtsResultIconDirective } from './result-cells';
 
-export type VtsResultIconType = 'success' | 'error' | 'info' | 'warning';
-export type VtsExceptionStatusType = '404' | '500' | '403';
-export type VtsResultStatusType = VtsExceptionStatusType | VtsResultIconType;
-
-const IconMap = {
-  success: 'check-circle',
-  error: 'Close',
-  info: 'exclamation-circle',
-  warning: 'warning'
-};
-const ExceptionStatus = ['404', '500', '403'];
+export type VtsSuccessTemplateType = '';
+export type VtsExceptionTemplateType = '404' | '403' | '500' | 'bad-connection';
+export type VtsResultTemplateType = VtsExceptionTemplateType | VtsSuccessTemplateType;
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,101 +29,98 @@ const ExceptionStatus = ['404', '500', '403'];
   exportAs: 'vtsResult',
   template: `
     <div class="vts-result-icon">
-      <ng-container *ngIf="!isException; else exceptionTpl">
-        <ng-container *ngIf="icon">
-          <ng-container *vtsStringTemplateOutlet="icon; let icon">
-            <i vts-icon [vtsType]="icon"></i>
-          </ng-container>
-        </ng-container>
-        <ng-content *ngIf="!icon" select="[vts-result-icon]"></ng-content>
+      <ng-container *ngIf="iconTemplate; else resultTpl">
+        <ng-content select="vts-result-icon, [vts-result-icon]"></ng-content>
       </ng-container>
     </div>
-    <ng-container *ngIf="vtsTitle">
-      <div class="vts-result-title" *vtsStringTemplateOutlet="vtsTitle">
-        {{ vtsTitle }}
-      </div>
-    </ng-container>
-    <ng-content *ngIf="!vtsTitle" select="div[vts-result-title]"></ng-content>
-    <ng-container *ngIf="vtsSubTitle">
-      <div class="vts-result-subtitle" *vtsStringTemplateOutlet="vtsSubTitle">
-        {{ vtsSubTitle }}
-      </div>
-    </ng-container>
-    <ng-content *ngIf="!vtsSubTitle" select="div[vts-result-subtitle]"></ng-content>
-    <ng-content select="vts-result-content, [vts-result-content]"></ng-content>
-    <div class="vts-result-extra" *ngIf="vtsExtra">
-      <ng-container *vtsStringTemplateOutlet="vtsExtra">
-        {{ vtsExtra }}
+    <ng-content select="div[vts-result-title]"></ng-content>
+    <ng-content select="div[vts-result-subtitle]"></ng-content>
+    <ng-content select="div[vts-result-content]"></ng-content>
+    <div class="vts-result-action">
+      <ng-container *ngIf="actionTemplate; else actionTpl">
+        <ng-content select="div[vts-result-action]"></ng-content>
       </ng-container>
     </div>
-    <ng-content *ngIf="!vtsExtra" select="div[vts-result-extra]"></ng-content>
 
-    <ng-template #exceptionTpl>
-      <ng-container [ngSwitch]="vtsStatus">
-        <vts-result-not-found *ngSwitchCase="'404'"></vts-result-not-found>
-        <vts-result-server-error *ngSwitchCase="'500'"></vts-result-server-error>
-        <vts-result-unauthorized *ngSwitchCase="'403'"></vts-result-unauthorized>
+    <ng-template #resultTpl>
+      <ng-container [ngSwitch]="vtsTemplate">
+        <vts-result-403 *ngSwitchCase="'403'"></vts-result-403>
+        <vts-result-404 *ngSwitchCase="'404'"></vts-result-404>
+        <vts-result-500 *ngSwitchCase="'500'"></vts-result-500>
+        <vts-result-bad-connection *ngSwitchCase="'bad-connection'"></vts-result-bad-connection>
       </ng-container>
+    </ng-template>
+
+    <ng-template #actionTpl>
+      <div>
+        <div vts-row [vtsGutter]="[20, 16]" vtsJustify="center">
+          <div vts-col *ngIf="vtsOkText != null" vtsXXXs="24" vtsXXs="auto">
+            <button
+              vts-button
+              vtsBlock
+              [vtsType]="vtsOkType!"
+              (click)="vtsOnOk.emit()"
+              [vtsLoading]="!!vtsOkLoading"
+              [disabled]="vtsOkDisabled"
+            >
+              {{ vtsOkText }}
+            </button>
+          </div>
+          <div vts-col *ngIf="vtsCancelText != null" vtsXXXs="24" vtsXXs="auto">
+            <button
+              vts-button
+              vtsBlock
+              [vtsType]="vtsCancelType!"
+              (click)="vtsOnCancel.emit()"
+              [vtsLoading]="!!vtsCancelLoading"
+              [disabled]="vtsCancelDisabled"
+            >
+              {{ vtsCancelText }}
+            </button>
+          </div>
+        </div>
+      </div>
     </ng-template>
   `,
   host: {
-    '[class.vts-result-success]': `vtsStatus === 'success'`,
-    '[class.vts-result-error]': `vtsStatus === 'error'`,
-    '[class.vts-result-info]': `vtsStatus === 'info'`,
-    '[class.vts-result-warning]': `vtsStatus === 'warning'`,
-    '[class.vts-result-rtl]': `dir === 'rtl'`
+    '[class.vts-result]': 'true',
+    '[class.vts-result-layout-icon-first]': `vtsLayout === 'icon-first'`,
+    '[class.vts-result-layout-content-first]': `vtsLayout === 'content-first'`,
+    '[class.vts-result-404]': `vtsTemplate === '404'`,
+    '[class.vts-result-403]': `vtsTemplate === '403'`,
+    '[class.vts-result-500]': `vtsTemplate === '500'`,
+    '[class.vts-result-bad-connection]': `vtsTemplate === 'bad-connection'`
   }
 })
-export class VtsResultComponent implements OnChanges, OnDestroy, OnInit {
-  @Input() vtsIcon?: string | TemplateRef<void>;
-  @Input() vtsTitle?: string | TemplateRef<void>;
-  @Input() vtsStatus: VtsResultStatusType = 'info';
-  @Input() vtsSubTitle?: string | TemplateRef<void>;
-  @Input() vtsExtra?: string | TemplateRef<void>;
+export class VtsResultComponent {
+  static ngAcceptInputType_vtsOkLoading: BooleanInput;
+  static ngAcceptInputType_vtsOkDisabled: BooleanInput;
+  static ngAcceptInputType_vtsCancelDisabled: BooleanInput;
+  static ngAcceptInputType_vtsCancelLoading: BooleanInput;
 
-  icon?: string | TemplateRef<void>;
-  isException = false;
-  dir: Direction = 'ltr';
+  @Input() vtsTemplate: VtsResultTemplateType = '404';
+  @Input() vtsLayout: 'icon-first' | 'content-first' = 'icon-first';
 
+  @Input() @InputBoolean() vtsOkLoading: boolean = false;
+  @Input() @InputBoolean() vtsOkDisabled: boolean = false;
+  @Input() vtsOkText?: string | null;
+  @Input() vtsOkType: VtsButtonType = 'primary';
+  @Output() readonly vtsOnOk = new EventEmitter<MouseEvent>();
+
+  @Input() @InputBoolean() vtsCancelDisabled: boolean = false;
+  @Input() @InputBoolean() vtsCancelLoading: boolean = false;
+  @Input() vtsCancelText?: string | null;
+  @Input() vtsCancelType: VtsButtonType = 'default';
+  @Output() readonly vtsOnCancel = new EventEmitter<MouseEvent>();
+
+  @ContentChild(VtsResultIconDirective) iconTemplate?: VtsResultIconDirective;
+  @ContentChild(VtsResultActionDirective) actionTemplate?: VtsResultActionDirective;
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private elementRef: ElementRef,
-    private cdr: ChangeDetectorRef,
-    @Optional() private directionality: Directionality
-  ) {
-    // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-result');
-  }
-
-  ngOnInit(): void {
-    this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
-      this.dir = direction;
-      this.cdr.detectChanges();
-    });
-
-    this.dir = this.directionality.value;
-  }
-
-  ngOnChanges(): void {
-    this.setStatusIcon();
-  }
+  constructor() {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private setStatusIcon(): void {
-    const icon = this.vtsIcon;
-
-    this.isException = ExceptionStatus.indexOf(this.vtsStatus) !== -1;
-    this.icon = icon
-      ? typeof icon === 'string'
-        ? IconMap[icon as VtsResultIconType] || icon
-        : icon
-      : this.isException
-      ? undefined
-      : IconMap[this.vtsStatus as VtsResultIconType];
   }
 }

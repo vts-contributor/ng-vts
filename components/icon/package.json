@@ -3,6 +3,6 @@
     "lib": {
       "entryFile": "public-api.ts"
     },
-    "whitelistedNonPeerDependencies": ["tslib", "@ant-design-git/icons-angular"]
+    "whitelistedNonPeerDependencies": ["tslib", "@ui-vts/icons-angular"]
   }
 }

@@ -104,7 +104,8 @@ export class VtsAutocompleteComponent
   @Input() vtsCustomCompareFn: CompareWith = (o1, o2) => o1 === o2;
   @Input() vtsDataSource?: AutocompleteDataSource;
   @Output()
-  readonly selectionChange: EventEmitter<VtsAutocompleteOptionComponent> = new EventEmitter<VtsAutocompleteOptionComponent>();
+  readonly selectionChange: EventEmitter<VtsAutocompleteOptionComponent> =
+    new EventEmitter<VtsAutocompleteOptionComponent>();
 
   showPanel: boolean = true;
   isOpen: boolean = false;

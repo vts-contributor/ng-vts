@@ -12,21 +12,19 @@ import { VtsCommentComponent } from './comment.component';
 import { VtsCommentModule } from './comment.module';
 
 describe('VtsCommentComponent', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsCommentModule, VtsListModule],
-        schemas: [NO_ERRORS_SCHEMA],
-        declarations: [
-          VtsDemoCommentBasicComponent,
-          VtsDemoCommentEditorComponent,
-          VtsDemoCommentListComponent,
-          VtsDemoCommentNestedComponent,
-          VtsTestCommentRtlComponent
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsCommentModule, VtsListModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [
+        VtsDemoCommentBasicComponent,
+        VtsDemoCommentEditorComponent,
+        VtsDemoCommentListComponent,
+        VtsDemoCommentNestedComponent,
+        VtsTestCommentRtlComponent
+      ]
+    }).compileComponents();
+  }));
 
   describe('default', () => {
     it('should basic work', () => {

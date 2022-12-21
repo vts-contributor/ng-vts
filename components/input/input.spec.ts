@@ -7,19 +7,17 @@ import { VtsInputDirective } from './input.directive';
 import { VtsInputModule } from './input.module';
 
 describe('input', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsInputModule, FormsModule, ReactiveFormsModule, VtsIconTestModule],
-        declarations: [
-          VtsTestInputWithInputComponent,
-          VtsTestInputWithTextAreaComponent,
-          VtsTestInputFormComponent
-        ],
-        providers: []
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsInputModule, FormsModule, ReactiveFormsModule, VtsIconTestModule],
+      declarations: [
+        VtsTestInputWithInputComponent,
+        VtsTestInputWithTextAreaComponent,
+        VtsTestInputFormComponent
+      ],
+      providers: []
+    }).compileComponents();
+  }));
   describe('single input', () => {
     describe('input with input element', () => {
       let fixture: ComponentFixture<VtsTestInputWithInputComponent>;

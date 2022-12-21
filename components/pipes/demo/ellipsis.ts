@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <input type="text" vts-input [(ngModel)]="str" />
     <br />
-    <p>{{ str | vtsEllipsis: 36:'...' }}</p>
+    <p>{{ str | vtsEllipsis : 36 : '...' }}</p>
   `,
   styles: [
     `

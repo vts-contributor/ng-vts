@@ -63,7 +63,7 @@ export type VtsTimePickerUnit = 'hour' | 'minute' | 'second' | '12-hour';
             [class.vts-picker-time-panel-cell-disabled]="hour.disabled"
           >
             <div class="vts-picker-time-panel-cell-inner">
-              {{ hour.index | number: '2.0-0' }}
+              {{ hour.index | number : '2.0-0' }}
             </div>
           </li>
         </ng-container>
@@ -83,7 +83,7 @@ export type VtsTimePickerUnit = 'hour' | 'minute' | 'second' | '12-hour';
             [class.vts-picker-time-panel-cell-disabled]="minute.disabled"
           >
             <div class="vts-picker-time-panel-cell-inner">
-              {{ minute.index | number: '2.0-0' }}
+              {{ minute.index | number : '2.0-0' }}
             </div>
           </li>
         </ng-container>
@@ -103,7 +103,7 @@ export type VtsTimePickerUnit = 'hour' | 'minute' | 'second' | '12-hour';
             [class.vts-picker-time-panel-cell-disabled]="second.disabled"
           >
             <div class="vts-picker-time-panel-cell-inner">
-              {{ second.index | number: '2.0-0' }}
+              {{ second.index | number : '2.0-0' }}
             </div>
           </li>
         </ng-container>

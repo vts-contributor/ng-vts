@@ -15,36 +15,32 @@ import { VtsCalendarModule } from './calendar.module';
 registerLocaleData(zh);
 
 describe('Calendar', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, FormsModule, VtsCalendarModule, NoopAnimationsModule],
-        declarations: [
-          VtsTestCalendarModeComponent,
-          VtsTestCalendarValueComponent,
-          VtsTestCalendarFullscreenComponent,
-          VtsTestCalendarDateCellComponent,
-          VtsTestCalendarDateFullCellComponent,
-          VtsTestCalendarMonthCellComponent,
-          VtsTestCalendarMonthFullCellComponent,
-          VtsTestCalendarChangesComponent,
-          VtsTestCalendarRtlComponent
-        ],
-        providers: [{ provide: VTS_DATE_CONFIG, useValue: { firstDayOfWeek: 0 } }]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, FormsModule, VtsCalendarModule, NoopAnimationsModule],
+      declarations: [
+        VtsTestCalendarModeComponent,
+        VtsTestCalendarValueComponent,
+        VtsTestCalendarFullscreenComponent,
+        VtsTestCalendarDateCellComponent,
+        VtsTestCalendarDateFullCellComponent,
+        VtsTestCalendarMonthCellComponent,
+        VtsTestCalendarMonthFullCellComponent,
+        VtsTestCalendarChangesComponent,
+        VtsTestCalendarRtlComponent
+      ],
+      providers: [{ provide: VTS_DATE_CONFIG, useValue: { firstDayOfWeek: 0 } }]
+    }).compileComponents();
+  }));
 
   describe('mode', () => {
     let fixture: ComponentFixture<VtsTestCalendarModeComponent>;
     let component: VtsTestCalendarModeComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarModeComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarModeComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should be month by default', () => {
       fixture.detectChanges();
@@ -104,12 +100,10 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<VtsTestCalendarValueComponent>;
     let component: VtsTestCalendarValueComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarValueComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarValueComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should be now by default', () => {
       const now = new Date();
@@ -245,12 +239,10 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<VtsTestCalendarFullscreenComponent>;
     let component: VtsTestCalendarFullscreenComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarFullscreenComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarFullscreenComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should be true by default', () => {
       fixture.detectChanges();
@@ -288,11 +280,9 @@ describe('Calendar', () => {
   describe('dateCell', () => {
     let fixture: ComponentFixture<VtsTestCalendarDateCellComponent>;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarDateCellComponent);
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarDateCellComponent);
+    }));
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -316,11 +306,9 @@ describe('Calendar', () => {
   describe('dateFullCell', () => {
     let fixture: ComponentFixture<VtsTestCalendarDateFullCellComponent>;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarDateFullCellComponent);
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarDateFullCellComponent);
+    }));
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -343,11 +331,9 @@ describe('Calendar', () => {
   describe('monthCell', () => {
     let fixture: ComponentFixture<VtsTestCalendarMonthCellComponent>;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarMonthCellComponent);
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarMonthCellComponent);
+    }));
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -369,11 +355,9 @@ describe('Calendar', () => {
   describe('monthFullCell', () => {
     let fixture: ComponentFixture<VtsTestCalendarMonthFullCellComponent>;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarMonthFullCellComponent);
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarMonthFullCellComponent);
+    }));
 
     it('should work when passed via property', () => {
       fixture.detectChanges();
@@ -396,12 +380,10 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<VtsTestCalendarChangesComponent>;
     let component: VtsTestCalendarChangesComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarChangesComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarChangesComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should panelChange work', fakeAsync(() => {
       fixture.detectChanges();
@@ -441,13 +423,11 @@ describe('Calendar', () => {
     let fixture: ComponentFixture<VtsTestCalendarRtlComponent>;
     let componentElement: HTMLElement;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarRtlComponent);
-        componentElement = fixture.debugElement.query(By.directive(Calendar)).nativeElement;
-        fixture.detectChanges();
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarRtlComponent);
+      componentElement = fixture.debugElement.query(By.directive(Calendar)).nativeElement;
+      fixture.detectChanges();
+    }));
 
     it('should className correct on dir change', fakeAsync(() => {
       expect(componentElement.classList).toContain('vts-picker-calendar-rtl');

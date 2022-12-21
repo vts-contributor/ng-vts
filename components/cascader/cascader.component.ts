@@ -40,12 +40,7 @@ import { slideMotion } from '@ui-vts/ng-vts/core/animation';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
 import { DEFAULT_CASCADER_POSITIONS } from '@ui-vts/ng-vts/core/overlay';
-import {
-  BooleanInput,
-  NgClassType,
-  NgStyleInterface,
-  VtsSafeAny
-} from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, NgClassType, NgStyleInterface, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, toArray } from '@ui-vts/ng-vts/core/util';
 
 import { VtsCascaderI18nInterface, VtsI18nService } from '@ui-vts/ng-vts/i18n';

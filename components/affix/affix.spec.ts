@@ -48,28 +48,26 @@ describe('affix', () => {
   const height = 100;
   const width = 100;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsAffixModule],
-        declarations: [TestAffixComponent],
-        providers: [
-          {
-            provide: VtsScrollService,
-            useClass: VtsScrollService
-          }
-        ]
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsAffixModule],
+      declarations: [TestAffixComponent],
+      providers: [
+        {
+          provide: VtsScrollService,
+          useClass: VtsScrollService
+        }
+      ]
+    }).compileComponents();
 
-      fixture = TestBed.createComponent(TestAffixComponent);
-      context = fixture.componentInstance;
-      component = context.vtsAffixComponent;
-      scrollService = TestBed.inject(VtsScrollService);
-      componentObject = new VtsAffixPageObject();
-      debugElement = fixture.debugElement;
-      componentObject.wrap().id = 'wrap';
-    })
-  );
+    fixture = TestBed.createComponent(TestAffixComponent);
+    context = fixture.componentInstance;
+    component = context.vtsAffixComponent;
+    scrollService = TestBed.inject(VtsScrollService);
+    componentObject = new VtsAffixPageObject();
+    debugElement = fixture.debugElement;
+    componentObject.wrap().id = 'wrap';
+  }));
   afterEach(fakeAsync(() => {
     setupInitialState();
   }));
@@ -523,17 +521,15 @@ describe('affix RTL', () => {
   let context: TestAffixRtlComponent;
   let dl: DebugElement;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsAffixModule],
-        declarations: [TestAffixRtlComponent]
-      }).compileComponents();
-      fixture = TestBed.createComponent(TestAffixRtlComponent);
-      context = fixture.componentInstance;
-      dl = fixture.debugElement;
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsAffixModule],
+      declarations: [TestAffixRtlComponent]
+    }).compileComponents();
+    fixture = TestBed.createComponent(TestAffixRtlComponent);
+    context = fixture.componentInstance;
+    dl = fixture.debugElement;
+  }));
   it('should className correct on dir change', fakeAsync(() => {
     const value = 10;
     context.newOffsetBottom = value;

@@ -83,14 +83,14 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource" vtsNoAnimation>
       <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodePadding>
         <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
-        <span [innerHTML]="node.name | vtsHighlight: searchValue:'i':'highlight'"></span>
+        <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
       </vts-tree-node>
 
       <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodePadding>
         <vts-tree-node-toggle>
           <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
         </vts-tree-node-toggle>
-        <span [innerHTML]="node.name | vtsHighlight: searchValue:'i':'highlight'"></span>
+        <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
       </vts-tree-node>
     </vts-tree-view>
   `,
