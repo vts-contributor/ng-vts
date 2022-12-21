@@ -24,21 +24,19 @@ describe('modal footer directive', () => {
   let testComponent: TestDirectiveFooterComponent;
   let modalService: VtsModalService;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsModalModule, NoopAnimationsModule],
-        declarations: [
-          TestDirectiveFooterComponent,
-          TestDirectiveFooterInServiceComponent,
-          TestDirectiveFooterWithInitOpenedComponent
-        ],
-        providers: [VtsModalService]
-      });
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsModalModule, NoopAnimationsModule],
+      declarations: [
+        TestDirectiveFooterComponent,
+        TestDirectiveFooterInServiceComponent,
+        TestDirectiveFooterWithInitOpenedComponent
+      ],
+      providers: [VtsModalService]
+    });
 
-      TestBed.compileComponents();
-    })
-  );
+    TestBed.compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestDirectiveFooterComponent);

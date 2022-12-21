@@ -16,27 +16,25 @@ import { VtsInputModule } from './input.module';
 describe('autoresize', () => {
   let zone: MockNgZone;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsInputModule, FormsModule, ReactiveFormsModule],
-        declarations: [
-          VtsTestInputWithTextAreaAutoSizeStringComponent,
-          VtsTestInputWithTextAreaAutoSizeObjectComponent,
-          VtsTestInputWithTextAreaAutoSizeBooleanComponent
-        ],
-        providers: [
-          {
-            provide: NgZone,
-            useFactory: () => {
-              zone = new MockNgZone();
-              return zone;
-            }
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsInputModule, FormsModule, ReactiveFormsModule],
+      declarations: [
+        VtsTestInputWithTextAreaAutoSizeStringComponent,
+        VtsTestInputWithTextAreaAutoSizeObjectComponent,
+        VtsTestInputWithTextAreaAutoSizeBooleanComponent
+      ],
+      providers: [
+        {
+          provide: NgZone,
+          useFactory: () => {
+            zone = new MockNgZone();
+            return zone;
           }
-        ]
-      }).compileComponents();
-    })
-  );
+        }
+      ]
+    }).compileComponents();
+  }));
 
   describe('single input', () => {
     describe('textarea autosize string', () => {

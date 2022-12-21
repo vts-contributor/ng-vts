@@ -64,30 +64,28 @@ describe('cascader', () => {
     return overlayContainerElement.querySelectorAll(`.vts-cascader-menu`);
   }
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          BidiModule,
-          FormsModule,
-          ReactiveFormsModule,
-          NoopAnimationsModule,
-          VtsCascaderModule,
-          VtsIconTestModule
-        ],
-        declarations: [
-          VtsDemoCascaderDefaultComponent,
-          VtsDemoCascaderLoadDataComponent,
-          VtsDemoCascaderRtlComponent
-        ]
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        BidiModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        VtsCascaderModule,
+        VtsIconTestModule
+      ],
+      declarations: [
+        VtsDemoCascaderDefaultComponent,
+        VtsDemoCascaderLoadDataComponent,
+        VtsDemoCascaderRtlComponent
+      ]
+    }).compileComponents();
 
-      inject([OverlayContainer], (oc: OverlayContainer) => {
-        overlayContainer = oc;
-        overlayContainerElement = oc.getContainerElement();
-      })();
-    })
-  );
+    inject([OverlayContainer], (oc: OverlayContainer) => {
+      overlayContainer = oc;
+      overlayContainerElement = oc.getContainerElement();
+    })();
+  }));
 
   afterEach(inject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
     currentOverlayContainer.ngOnDestroy();

@@ -8,21 +8,19 @@ import { VtsInputGroupComponent } from './input-group.component';
 import { VtsInputModule } from './input.module';
 
 describe('input-group', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsInputModule, FormsModule, ReactiveFormsModule, VtsIconTestModule],
-        declarations: [
-          VtsTestInputGroupAddonComponent,
-          VtsTestInputGroupAffixComponent,
-          VtsTestInputGroupMultipleComponent,
-          VtsTestInputGroupColComponent,
-          VtsTestInputGroupMixComponent
-        ],
-        providers: []
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsInputModule, FormsModule, ReactiveFormsModule, VtsIconTestModule],
+      declarations: [
+        VtsTestInputGroupAddonComponent,
+        VtsTestInputGroupAffixComponent,
+        VtsTestInputGroupMultipleComponent,
+        VtsTestInputGroupColComponent,
+        VtsTestInputGroupMixComponent
+      ],
+      providers: []
+    }).compileComponents();
+  }));
   describe('input group', () => {
     describe('addon', () => {
       let testComponent: VtsTestInputGroupAddonComponent;

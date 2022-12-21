@@ -18,37 +18,27 @@ import {
 registerLocaleData(zh);
 
 describe('Calendar Header', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          FormsModule,
-          VtsI18nModule,
-          VtsRadioModule,
-          VtsSelectModule,
-          NoopAnimationsModule
-        ],
-        declarations: [
-          CalendarHeader,
-          VtsTestCalendarHeaderModeComponent,
-          VtsTestCalendarHeaderFullscreenComponent,
-          VtsTestCalendarHeaderActiveDateComponent,
-          VtsTestCalendarHeaderChangesComponent
-        ]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule, VtsI18nModule, VtsRadioModule, VtsSelectModule, NoopAnimationsModule],
+      declarations: [
+        CalendarHeader,
+        VtsTestCalendarHeaderModeComponent,
+        VtsTestCalendarHeaderFullscreenComponent,
+        VtsTestCalendarHeaderActiveDateComponent,
+        VtsTestCalendarHeaderChangesComponent
+      ]
+    }).compileComponents();
+  }));
 
   describe('mode', () => {
     let fixture: ComponentFixture<VtsTestCalendarHeaderModeComponent>;
     let component: VtsTestCalendarHeaderModeComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarHeaderModeComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarHeaderModeComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should be month by default', () => {
       fixture.detectChanges();
@@ -89,12 +79,10 @@ describe('Calendar Header', () => {
     let fixture: ComponentFixture<VtsTestCalendarHeaderFullscreenComponent>;
     let component: VtsTestCalendarHeaderFullscreenComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarHeaderFullscreenComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarHeaderFullscreenComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should be true by default', () => {
       fixture.detectChanges();
@@ -130,11 +118,9 @@ describe('Calendar Header', () => {
   describe('activeDate', () => {
     let fixture: ComponentFixture<VtsTestCalendarHeaderActiveDateComponent>;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarHeaderActiveDateComponent);
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarHeaderActiveDateComponent);
+    }));
 
     it('should be now by default', () => {
       const now = new Date();
@@ -169,12 +155,10 @@ describe('Calendar Header', () => {
     let fixture: ComponentFixture<VtsTestCalendarHeaderChangesComponent>;
     let component: VtsTestCalendarHeaderChangesComponent;
 
-    beforeEach(
-      waitForAsync(() => {
-        fixture = TestBed.createComponent(VtsTestCalendarHeaderChangesComponent);
-        component = fixture.componentInstance;
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      fixture = TestBed.createComponent(VtsTestCalendarHeaderChangesComponent);
+      component = fixture.componentInstance;
+    }));
 
     it('should emit yearChange when year changed', () => {
       const header = fixture.debugElement.queryAll(By.directive(CalendarHeader))[0];

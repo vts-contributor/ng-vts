@@ -32,8 +32,8 @@ import { VtsGridModule } from '@ui-vts/ng-vts/grid';
 | vtsPull | Number of cells that raster is moved to the left | `number` | `0` |
 | vtsPush | Number of cells that raster is moved to the right | `number` | `0` |
 | vtsXXXs | Breakpoint options on screen `<360px` | `number \| object \| 'auto'`<br>&nbsp;Object example: `{span: 1, pull: 1, push: 1, offset: 1, order: 1 }` | |
-| vtsXXS | Breakpoint options on screen `≥360px` | Same as `vtsXXXs` | |
-| vtsXS | Breakpoint options on screen `≥600px` | Same as `vtsXXXs` | |
+| vtsXXs | Breakpoint options on screen `≥360px` | Same as `vtsXXXs` | |
+| vtsXs | Breakpoint options on screen `≥600px` | Same as `vtsXXXs` | |
 | vtsSm | Breakpoint options on screen `≥768px` | Same as `vtsXXXs` | |
 | vtsMd | Breakpoint options on screen `≥1024px` | Same as `vtsXXXs` | |
 | vtsLg | Breakpoint options on screen `≥1200px` | Same as `vtsXXXs` | |

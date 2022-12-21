@@ -128,7 +128,7 @@ export class VtsCodeBoxComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private appService: AppService,
-    private platform: Platform,
+    private platform: Platform
   ) {}
 
   ngOnInit(): void {

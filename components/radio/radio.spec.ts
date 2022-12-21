@@ -16,26 +16,24 @@ import { VtsRadioComponent } from './radio.component';
 import { VtsRadioModule } from './radio.module';
 
 describe('radio', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsRadioModule, FormsModule, ReactiveFormsModule],
-        declarations: [
-          VtsTestRadioSingleComponent,
-          VtsTestRadioButtonComponent,
-          VtsTestRadioGroupComponent,
-          VtsTestRadioFormComponent,
-          VtsTestRadioGroupFormComponent,
-          VtsTestRadioGroupDisabledComponent,
-          VtsTestRadioGroupDisabledFormComponent,
-          VtsTestRadioSingleRtlComponent,
-          VtsTestRadioGroupRtlComponent,
-          VtsTestRadioButtonRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsRadioModule, FormsModule, ReactiveFormsModule],
+      declarations: [
+        VtsTestRadioSingleComponent,
+        VtsTestRadioButtonComponent,
+        VtsTestRadioGroupComponent,
+        VtsTestRadioFormComponent,
+        VtsTestRadioGroupFormComponent,
+        VtsTestRadioGroupDisabledComponent,
+        VtsTestRadioGroupDisabledFormComponent,
+        VtsTestRadioSingleRtlComponent,
+        VtsTestRadioGroupRtlComponent,
+        VtsTestRadioButtonRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
   describe('single radio basic', () => {
     let fixture: ComponentFixture<VtsTestRadioSingleComponent>;
     let testComponent: VtsTestRadioSingleComponent;

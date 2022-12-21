@@ -24,14 +24,12 @@ describe('vts global config', () => {
   let buttonEl: HTMLButtonElement;
 
   describe('without config', () => {
-    beforeEach(
-      waitForAsync(() => {
-        TestBed.configureTestingModule({
-          imports: [VtsButtonModule],
-          declarations: [VtsGlobalConfigTestBasicComponent]
-        }).compileComponents();
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [VtsButtonModule],
+        declarations: [VtsGlobalConfigTestBasicComponent]
+      }).compileComponents();
+    }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(VtsGlobalConfigTestBasicComponent);
@@ -51,24 +49,22 @@ describe('vts global config', () => {
   });
 
   describe('with config', () => {
-    beforeEach(
-      waitForAsync(() => {
-        TestBed.configureTestingModule({
-          imports: [VtsButtonModule],
-          declarations: [VtsGlobalConfigTestBasicComponent],
-          providers: [
-            {
-              provide: VTS_CONFIG,
-              useValue: {
-                button: {
-                  vtsSize: 'large'
-                }
+    beforeEach(waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [VtsButtonModule],
+        declarations: [VtsGlobalConfigTestBasicComponent],
+        providers: [
+          {
+            provide: VTS_CONFIG,
+            useValue: {
+              button: {
+                vtsSize: 'large'
               }
             }
-          ]
-        }).compileComponents();
-      })
-    );
+          }
+        ]
+      }).compileComponents();
+    }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(VtsGlobalConfigTestBasicComponent);

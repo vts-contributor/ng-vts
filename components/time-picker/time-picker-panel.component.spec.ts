@@ -20,22 +20,20 @@ import { VtsI18nModule } from '../i18n/vts-i18n.module';
 import { VtsTimePickerPanelComponent } from './time-picker-panel.component';
 
 describe('time-picker-panel', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [FormsModule, VtsI18nModule],
-        schemas: [NO_ERRORS_SCHEMA],
-        declarations: [
-          VtsTimePickerPanelComponent,
-          VtsTestTimePanelComponent,
-          VtsTestTimePanelDisabledComponent,
-          VtsTest12HourTimePanelComponent,
-          VtsTest12HourTimePanelDisabeledComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [FormsModule, VtsI18nModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [
+        VtsTimePickerPanelComponent,
+        VtsTestTimePanelComponent,
+        VtsTestTimePanelDisabledComponent,
+        VtsTest12HourTimePanelComponent,
+        VtsTest12HourTimePanelDisabeledComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
 
   describe('basic time-picker-panel', () => {
     let fixture: ComponentFixture<VtsTestTimePanelComponent>;

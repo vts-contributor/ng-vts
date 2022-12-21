@@ -7,15 +7,13 @@ import { VtsTagComponent } from './tag.component';
 import { VtsTagModule } from './tag.module';
 
 describe('tag', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsTagModule, NoopAnimationsModule],
-        declarations: [VtsTestTagBasicComponent, VtsTestTagPreventComponent, VtsTestTagRtlComponent]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsTagModule, NoopAnimationsModule],
+      declarations: [VtsTestTagBasicComponent, VtsTestTagPreventComponent, VtsTestTagRtlComponent]
+    });
+    TestBed.compileComponents();
+  }));
   describe('basic tag', () => {
     let fixture: ComponentFixture<VtsTestTagBasicComponent>;
     let testComponent: VtsTestTagBasicComponent;

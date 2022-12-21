@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
         <tr *ngFor="let data of basicTable.data">
           <td>{{ data.name }}</td>
           <td>{{ data.age }}</td>
-          <td>{{ data.address | vtsSafeNull: '-' }}</td>
+          <td>{{ data.address | vtsSafeNull : '-' }}</td>
         </tr>
       </tbody>
     </vts-table>

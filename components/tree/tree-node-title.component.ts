@@ -44,7 +44,7 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
       </span>
       <span
         class="vts-tree-title"
-        [innerHTML]="title | vtsHighlight: matchedValue:'i':'font-highlight'"
+        [innerHTML]="title | vtsHighlight : matchedValue : 'i' : 'font-highlight'"
       ></span>
       <vts-tree-drop-indicator
         *ngIf="showIndicator"

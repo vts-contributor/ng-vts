@@ -17,14 +17,12 @@ import { VtsDemoBreadcrumbBasicComponent } from './demo/basic';
 import { VtsDemoBreadcrumbSeparatorComponent } from './demo/separator';
 
 describe('breadcrumb', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsBreadCrumbModule],
-        declarations: [VtsDemoBreadcrumbBasicComponent, VtsTestBreadcrumbRtlComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsBreadCrumbModule],
+      declarations: [VtsDemoBreadcrumbBasicComponent, VtsTestBreadcrumbRtlComponent]
+    }).compileComponents();
+  }));
 
   describe('basic', () => {
     let fixture: ComponentFixture<VtsDemoBreadcrumbBasicComponent>;
@@ -57,15 +55,13 @@ describe('breadcrumb', () => {
     let fixture: ComponentFixture<VtsDemoBreadcrumbDropdownComponent>;
     let items: DebugElement[];
 
-    beforeEach(
-      waitForAsync(() => {
-        TestBed.configureTestingModule({
-          imports: [VtsBreadCrumbModule, VtsDropDownModule],
-          declarations: [VtsDemoBreadcrumbDropdownComponent],
-          providers: []
-        }).compileComponents();
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [VtsBreadCrumbModule, VtsDropDownModule],
+        declarations: [VtsDemoBreadcrumbDropdownComponent],
+        providers: []
+      }).compileComponents();
+    }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(VtsDemoBreadcrumbDropdownComponent);
@@ -87,14 +83,12 @@ describe('breadcrumb', () => {
     let items: DebugElement[];
     let breadcrumbs: DebugElement[];
 
-    beforeEach(
-      waitForAsync(() => {
-        TestBed.configureTestingModule({
-          imports: [VtsBreadCrumbModule, VtsIconTestModule],
-          declarations: [VtsDemoBreadcrumbSeparatorComponent]
-        }).compileComponents();
-      })
-    );
+    beforeEach(waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [VtsBreadCrumbModule, VtsIconTestModule],
+        declarations: [VtsDemoBreadcrumbSeparatorComponent]
+      }).compileComponents();
+    }));
 
     beforeEach(() => {
       fixture = TestBed.createComponent(VtsDemoBreadcrumbSeparatorComponent);

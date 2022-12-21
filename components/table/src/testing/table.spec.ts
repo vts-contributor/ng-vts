@@ -17,20 +17,18 @@ import { VtsTableComponent } from '../table/table.component';
 describe('vts-table', () => {
   let injector: Injector;
 
-  beforeEach(
-    waitForAsync(() => {
-      injector = TestBed.configureTestingModule({
-        imports: [BidiModule, VtsTableModule],
-        declarations: [
-          VtsTestTableBasicComponent,
-          VtsTestTableScrollComponent,
-          VtsTableSpecCrashComponent,
-          VtsTestTableRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    injector = TestBed.configureTestingModule({
+      imports: [BidiModule, VtsTableModule],
+      declarations: [
+        VtsTestTableBasicComponent,
+        VtsTestTableScrollComponent,
+        VtsTableSpecCrashComponent,
+        VtsTestTableRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
 
   describe('basic vts-table', () => {
     let fixture: ComponentFixture<VtsTestTableBasicComponent>;

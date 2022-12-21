@@ -25,20 +25,18 @@ describe('time-picker', () => {
   let overlayContainer: OverlayContainer;
   let overlayContainerElement: HTMLElement;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [NoopAnimationsModule, FormsModule, VtsI18nModule, VtsTimePickerModule],
-        schemas: [NO_ERRORS_SCHEMA],
-        declarations: [VtsTestTimePickerComponent]
-      });
-      TestBed.compileComponents();
-      inject([OverlayContainer], (oc: OverlayContainer) => {
-        overlayContainer = oc;
-        overlayContainerElement = oc.getContainerElement();
-      })();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, FormsModule, VtsI18nModule, VtsTimePickerModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [VtsTestTimePickerComponent]
+    });
+    TestBed.compileComponents();
+    inject([OverlayContainer], (oc: OverlayContainer) => {
+      overlayContainer = oc;
+      overlayContainerElement = oc.getContainerElement();
+    })();
+  }));
 
   afterEach(inject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
     currentOverlayContainer.ngOnDestroy();

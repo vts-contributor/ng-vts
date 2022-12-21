@@ -213,23 +213,21 @@ describe('vts-timeline', () => {
     let timeline: DebugElement;
     let items: HTMLDivElement[] = [];
 
-    beforeEach(
-      waitForAsync(() => {
-        testBed = createComponentBed(VtsTestTimelineRtlComponent, {
-          imports: [BidiModule, VtsTimelineModule],
-          declarations: [VtsTestTimelineBasicComponent]
-        });
+    beforeEach(waitForAsync(() => {
+      testBed = createComponentBed(VtsTestTimelineRtlComponent, {
+        imports: [BidiModule, VtsTimelineModule],
+        declarations: [VtsTestTimelineBasicComponent]
+      });
 
-        fixture = testBed.fixture;
+      fixture = testBed.fixture;
 
-        fixture.detectChanges();
+      fixture.detectChanges();
 
-        timeline = fixture.debugElement.query(By.directive(VtsTimelineComponent));
-        items = Array.from(
-          (fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.vts-timeline-item')
-        );
-      })
-    );
+      timeline = fixture.debugElement.query(By.directive(VtsTimelineComponent));
+      items = Array.from(
+        (fixture.debugElement.nativeElement as HTMLElement).querySelectorAll('.vts-timeline-item')
+      );
+    }));
 
     it('should init className correct', () => {
       expect(timeline.nativeElement.firstElementChild!.classList).toContain('vts-timeline-rtl');

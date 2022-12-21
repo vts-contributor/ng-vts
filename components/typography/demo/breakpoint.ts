@@ -1,19 +1,22 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'vts-demo-typography-body',
+  selector: 'vts-demo-typography-breakpoint',
   template: `
     <div class="example-line">
-      <p vts-typography vtsType="body1">Body 1 : 16</p>
-      <div>(Sarabun - Regular - 16px)</div>
+      <p vts-typography vtsTransform="uppercase" [vtsMd]="{ transform: 'lowercase' }">
+        Upper case below 1024px
+      </p>
     </div>
     <div class="example-line">
-      <p vts-typography vtsType="body2">Body 2 : 14</p>
-      <div>(Sarabun - Regular - 14px)</div>
-    </div>
-    <div class="example-line">
-      <a vts-typography vtsType="link" href="javascript:void(0)">Link text</a>
-      <div>(Sarabun - Regular - 16px)</div>
+      <p
+        vts-typography
+        vtsColor="error"
+        vtsWeight="bold"
+        [vtsSm]="{ weight: 'normal', color: 'default' }"
+      >
+        Bold and red below 768px
+      </p>
     </div>
   `,
   styles: [
@@ -38,4 +41,4 @@ import { Component } from '@angular/core';
     `
   ]
 })
-export class VtsDemoTypographyBodyComponent {}
+export class VtsDemoTypographyBreakpointComponent {}

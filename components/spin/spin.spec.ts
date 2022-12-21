@@ -8,15 +8,13 @@ import { VtsSpinComponent } from './spin.component';
 import { VtsSpinModule } from './spin.module';
 
 describe('spin', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsSpinModule, VtsIconTestModule],
-        declarations: [VtsTestSpinBasicComponent, VtsTestSpinRtlComponent]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsSpinModule, VtsIconTestModule],
+      declarations: [VtsTestSpinBasicComponent, VtsTestSpinRtlComponent]
+    });
+    TestBed.compileComponents();
+  }));
 
   describe('spin basic', () => {
     let fixture: ComponentFixture<VtsTestSpinBasicComponent>;

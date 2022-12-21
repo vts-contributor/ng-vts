@@ -6,18 +6,16 @@ import { VtsInputModule } from '@ui-vts/ng-vts/input/input.module';
 import { VtsTextareaCountComponent } from '@ui-vts/ng-vts/input/textarea-count.component';
 
 describe('textarea-count', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [VtsInputModule, FormsModule, ReactiveFormsModule],
-        declarations: [
-          VtsTestInputTextareaCountWithoutMaxComponent,
-          VtsTestInputTextareaCountWithMaxComponent
-        ],
-        providers: []
-      }).compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [VtsInputModule, FormsModule, ReactiveFormsModule],
+      declarations: [
+        VtsTestInputTextareaCountWithoutMaxComponent,
+        VtsTestInputTextareaCountWithMaxComponent
+      ],
+      providers: []
+    }).compileComponents();
+  }));
   describe('without-max-length', () => {
     let fixture: ComponentFixture<VtsTestInputTextareaCountWithoutMaxComponent>;
     let testComponent: VtsTestInputTextareaCountWithoutMaxComponent;

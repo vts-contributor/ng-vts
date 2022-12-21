@@ -19,30 +19,28 @@ import { VtsPageHeaderModule } from './page-header.module';
 
 describe('VtsPageHeaderComponent', () => {
   let location: Location;
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          BidiModule,
-          VtsPageHeaderModule,
-          VtsDropDownModule,
-          VtsIconTestModule,
-          RouterTestingModule
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-        declarations: [
-          VtsDemoPageHeaderBasicComponent,
-          VtsDemoPageHeaderBreadcrumbComponent,
-          VtsDemoPageHeaderContentComponent,
-          VtsDemoPageHeaderActionsComponent,
-          VtsDemoPageHeaderResponsiveComponent,
-          VtsDemoPageHeaderGhostComponent,
-          VtsDemoPageHeaderRtlComponent
-        ]
-      }).compileComponents();
-      location = TestBed.inject(Location);
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        BidiModule,
+        VtsPageHeaderModule,
+        VtsDropDownModule,
+        VtsIconTestModule,
+        RouterTestingModule
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [
+        VtsDemoPageHeaderBasicComponent,
+        VtsDemoPageHeaderBreadcrumbComponent,
+        VtsDemoPageHeaderContentComponent,
+        VtsDemoPageHeaderActionsComponent,
+        VtsDemoPageHeaderResponsiveComponent,
+        VtsDemoPageHeaderGhostComponent,
+        VtsDemoPageHeaderRtlComponent
+      ]
+    }).compileComponents();
+    location = TestBed.inject(Location);
+  }));
 
   it('should basic work', () => {
     const fixture = TestBed.createComponent(VtsDemoPageHeaderBasicComponent);

@@ -6,7 +6,7 @@ import { VtsPipesModule } from '@ui-vts/ng-vts/core/pipe';
 
 @Component({
   template: `
-    {{ diff | vtsTimeRange: format }}
+    {{ diff | vtsTimeRange : format }}
   `
 })
 export class VtsTestTimeRangeComponent {

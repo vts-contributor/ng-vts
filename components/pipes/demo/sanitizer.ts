@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-pipes-sanitizer',
   template: `
-    <div [innerHTML]="html | vtsSanitizer: 'html'"></div>
+    <div [innerHTML]="html | vtsSanitizer : 'html'"></div>
   `
 })
 export class VtsDemoPipesSanitizerComponent {

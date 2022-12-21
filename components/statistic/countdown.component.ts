@@ -42,7 +42,7 @@ const REFRESH_INTERVAL = 1000 / 30;
     ></vts-statistic>
 
     <ng-template #countDownTpl>
-      {{ diff | vtsTimeRange: vtsFormat }}
+      {{ diff | vtsTimeRange : vtsFormat }}
     </ng-template>
   `
 })
