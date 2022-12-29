@@ -205,7 +205,7 @@ def bootstrapPushCommitBuild() {
 					  "Build Details...</a></i></h4><br/>Sonar Result: ${env.SONAR_QUBE_SCAN_RESULT_STR}", 
 				mimeType: 'text/html', 
 				cc: "${env.mailCC}", 
-				from: 'vtsjenkinsadmin@viettel.com.vn', 
+				from: 'jenkins', 
 				replyTo: '', 
 				subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!", 
 				to: "${env.mailTo}"
@@ -328,7 +328,7 @@ def bootstrapMergeRequestBuild() {
             body: "${mergeRequestBuildStr}", 
             mimeType: 'text/html',
             cc: "${env.mailCC}", 
-            from: 'vtsjenkinsadmin@viettel.com.vn', 
+            from: 'enkins', 
             replyTo: '', 
             subject: "$JOB_NAME - Build # $BUILD_NUMBER - $currentBuild.result!", 
             to: "${env.mailTo}"
