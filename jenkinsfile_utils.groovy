@@ -28,7 +28,7 @@ def checkoutSourceCode(checkoutType){
             branches                         : [[name: "${env.gitlabAfter}"]],
             doGenerateSubmoduleConfigurations: false,
             extensions                       : [[$class: 'UserIdentity',
-                                                 email : 'phuhk@viettel.com.vn', name: 'phuhk'],
+                                                 email : 'phuhk', name: 'phuhk'],
                                                 [$class: 'CleanBeforeCheckout']],
             submoduleCfg                     : [],
             userRemoteConfigs                : [[credentialsId: "a6299eee-80ab-41bc-992a-1745f51a264b",
@@ -47,7 +47,7 @@ def checkoutSourceCode(checkoutType){
                                                      mergeTarget    : "${env.gitlabTargetBranch}"
                                                  ]],
                                                 [$class: 'UserIdentity',
-                                                    email : 'phuhk@viettel.com.vn', name: 'phuhk'],
+                                                    email : 'phuhk', name: 'phuhk'],
                                                 [$class: 'CleanBeforeCheckout']],
             submoduleCfg                     : [],
             userRemoteConfigs                : [[credentialsId: "a6299eee-80ab-41bc-992a-1745f51a264b",
