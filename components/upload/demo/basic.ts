@@ -12,7 +12,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
             #container
             vtsAccept=".png, .jpg, .pdf"
             [vtsMultiple]="true"
-            vtsAction="http://10.60.156.110:9090/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/"
+            vtsAction="http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/"
             (vtsChange)="handleChange($event)"
           >
             <div vts-row>

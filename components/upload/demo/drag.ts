@@ -9,7 +9,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
       vtsAccept=".png, .jpg, .jpeg, .svg"
       [vtsMultiple]="true"
       [vtsOpenFileDialogOnClick]="false"
-      vtsAction="http://10.60.156.110:9090/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/"
+      vtsAction="http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/"
       (vtsChange)="handleChange($event)"
       #container
     >
