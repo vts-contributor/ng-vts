@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
         <i vts-icon vtsType="ViewModule"></i>
         Navigation Two
       </li>
-      <li vts-submenu vtsTitle="Navigation Three - Submenu" vtsIcon="setting">
+      <li vts-submenu vtsTitle="Navigation Three - Submenu" vtsIcon="Settings">
         <ul>
           <li vts-menu-group vtsTitle="Item 1">
             <ul>
