@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
           <i vts-icon vtsType="Mail"></i>
           <span>Navigation One</span>
         </li>
-        <li vts-submenu vtsTitle="Navigation Two" vtsIcon="appstore">
+        <li vts-submenu vtsTitle="Navigation Two" vtsIcon="Extension">
           <ul>
             <li vts-menu-item>Option 5</li>
             <li vts-menu-item>Option 6</li>
@@ -30,7 +30,7 @@ import { Component } from '@angular/core';
             </li>
           </ul>
         </li>
-        <li vts-submenu vtsTitle="Navigation Three" vtsIcon="setting">
+        <li vts-submenu vtsTitle="Navigation Three" vtsIcon="Settings">
           <ul>
             <li vts-menu-item>Option 9</li>
             <li vts-menu-item>Option 10</li>

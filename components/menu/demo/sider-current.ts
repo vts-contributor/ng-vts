@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
         [(vtsOpen)]="openMap.sub1"
         (vtsOpenChange)="openHandler('sub1')"
         vtsTitle="Navigation One"
-        vtsIcon="mail"
+        vtsIcon="Mail"
       >
         <ul>
           <li vts-menu-group vtsTitle="Item 1">
@@ -31,7 +31,7 @@ import { Component } from '@angular/core';
         [(vtsOpen)]="openMap.sub2"
         (vtsOpenChange)="openHandler('sub2')"
         vtsTitle="Navigation Two"
-        vtsIcon="appstore"
+        vtsIcon="Extension"
       >
         <ul>
           <li vts-menu-item>Option 5</li>
@@ -49,7 +49,7 @@ import { Component } from '@angular/core';
         [(vtsOpen)]="openMap.sub3"
         (vtsOpenChange)="openHandler('sub3')"
         vtsTitle="Navigation Three"
-        vtsIcon="setting"
+        vtsIcon="Settings"
       >
         <ul>
           <li vts-menu-item>Option 9</li>
