@@ -25,6 +25,8 @@ import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | `[vtsSeparator]` | Custom separator | `string \| TemplateRef<void> \| null` | `'/'` |
+| `[vtsHome]` | (optional) Custom home menu. Default icon: Home icon | `BreadcrumbItem` | `null` |
+| `[vtsBreadcrumbArray]` | (optional) An array of breadcrumb items | `array` | `[]` |
 | `[vtsAutoGenerate]` | Auto generate breadcrumb | `boolean` | `false` |
 | `[vtsRouteLabel]` | Name of property that determines displayed text in routing config. It should be used when `vtsAutoGenerate` is `true` | `string` | `'breadcrumb'` |
 | `[vtsRouteLabelFn]` | Format breadcrumb item label text，normally used in international app to translate i18n key. It should be used when `vtsAutoGenerate` is `true` | `(label:string) => string` | `label => label` |
