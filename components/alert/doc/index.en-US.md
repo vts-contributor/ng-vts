@@ -27,6 +27,7 @@ import { VtsAlertModule } from '@ui-vts/ng-vts/alert';
 | `[vtsCloseText]` | Close text to show | `string \| TemplateRef<void>` | - |
 | `[vtsDescription]` | Additional content of Alert | `string \| TemplateRef<void>` | - |
 | `[vtsMessage]` | Content of Alert | `string \| TemplateRef<void>` | - |
+| `[vtsForm]` | Whether to show in form mode | `boolean` | `false` |
 | `[vtsShowIcon]` | Whether to show icon, in `vtsBanner` mode default is `true` | `boolean` | `false` | ✅ |
 | `[vtsIconType]` | Icon type, effective when `vtsShowIcon` is `true` | `string` | - |
 | `[vtsType]` | Type of Alert styles, in `vtsBanner` mode default is `'warning'` | `'success' \| 'info' \| 'warning' \| 'error'` | `'info'` |
