@@ -29,7 +29,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
+import { CarouselConfig, VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsDragService, VtsResizeService } from '@ui-vts/ng-vts/core/services';
 import { BooleanInput, NumberInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
@@ -62,6 +62,10 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'carousel';
       class="slick-initialized slick-slider"
       [class.slick-vertical]="vtsDotPosition === 'left' || vtsDotPosition === 'right'"
     >
+      <ng-container *ngIf="vtsNavigation">
+        <div class="slick-button-prev" (click)="pre()"></div>
+        <div class="slick-button-next" (click)="next()"></div>
+      </ng-container>
       <div
         #slickList
         class="slick-list"
@@ -115,6 +119,10 @@ export class VtsCarouselComponent
   static ngAcceptInputType_vtsAutoPlay: BooleanInput;
   static ngAcceptInputType_vtsAutoPlaySpeed: NumberInput;
   static ngAcceptInputType_vtsTransitionSpeed: NumberInput;
+  static ngAcceptInputType_vtsRtl: BooleanInput;
+  static ngAcceptInputType_vtsItems: NumberInput;
+  static ngAcceptInputType_vtsSlideMargin: NumberInput;
+  static ngAcceptInputType_vtsVertical: BooleanInput;
 
   @ContentChildren(VtsCarouselContentDirective)
   carouselContents!: QueryList<VtsCarouselContentDirective>;
@@ -125,10 +133,15 @@ export class VtsCarouselComponent
   @Input() vtsDotRender?: TemplateRef<{ $implicit: number }>;
   @Input() @WithConfig() vtsEffect: VtsCarouselEffects = 'scrollx';
   @Input() @WithConfig() @InputBoolean() vtsEnableSwipe: boolean = true;
-  @Input() @WithConfig() @InputBoolean() vtsDots: boolean = true;
+  @Input() @WithConfig() @InputBoolean() vtsDots: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsAutoPlay: boolean = false;
   @Input() @WithConfig() @InputNumber() vtsAutoPlaySpeed: number = 3000;
   @Input() @InputNumber() vtsTransitionSpeed = 500;
+  @Input() @InputBoolean() vtsNavigation: boolean = false;
+  @Input() @InputBoolean() vtsRtl: boolean = true;
+  @Input() @InputBoolean() vtsVertical: boolean = false;
+  @Input() @WithConfig() @InputNumber() vtsItems: number = 1;
+  @Input() @WithConfig() @InputNumber() vtsSlideMargin: number = 10;
 
   /**
    * this property is passed directly to an VtsCarouselBaseStrategy
@@ -163,7 +176,8 @@ export class VtsCarouselComponent
   strategy?: VtsCarouselBaseStrategy;
   vertical = false;
   transitionInProgress: number | null = null;
-  dir: Direction = 'ltr';
+  dir: Direction = 'rtl';
+  config!: CarouselConfig;
 
   private destroy$ = new Subject<void>();
   private gestureRect: ClientRect | null = null;
@@ -192,6 +206,12 @@ export class VtsCarouselComponent
   ngOnInit(): void {
     this.dir = this.directionality.value;
 
+    this.config = {
+      vtsItems : this.vtsItems,
+      vtsSlideMargin: this.vtsSlideMargin,
+      vtsVertical: this.vtsVertical
+    }
+
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
       this.markContentActive(this.activeIndex);
@@ -206,6 +226,16 @@ export class VtsCarouselComponent
   ngAfterViewInit(): void {
     this.slickListEl = this.slickList!.nativeElement;
     this.slickTrackEl = this.slickTrack!.nativeElement;
+    var slickItem = this.slickTrack!.nativeElement.querySelectorAll(".slick-slide");
+    let isMultipleCarousel = this.vtsItems > 1;
+
+    if (isMultipleCarousel) {
+      for (let i = 0; i < slickItem.length; i++) {
+        var itemCloneRight = slickItem[i].cloneNode(true);
+        itemCloneRight.classList.add("clone-right");
+        this.slickTrackEl.append(itemCloneRight);
+      }
+    }
 
     this.carouselContents.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.markContentActive(0);
@@ -295,7 +325,7 @@ export class VtsCarouselComponent
       const to = (index + length) % length;
       this.isTransiting = true;
       this.vtsBeforeChange.emit({ from, to });
-      this.strategy!.switch(this.activeIndex, index).subscribe(() => {
+      this.strategy!.switch(this.activeIndex, index, this.config).subscribe(() => {
         this.scheduleNextTransition();
         this.vtsAfterChange.emit(index);
         this.isTransiting = false;
@@ -334,7 +364,10 @@ export class VtsCarouselComponent
     this.clearScheduledTransition();
     if (this.vtsAutoPlay && this.vtsAutoPlaySpeed > 0 && this.platform.isBrowser) {
       this.transitionInProgress = setTimeout(() => {
-        this.goTo(this.activeIndex + 1);
+        if (this.vtsRtl)
+          this.goTo(this.activeIndex + 1);
+        else 
+          this.goTo(this.activeIndex - 1);
       }, this.vtsAutoPlaySpeed);
     }
   }
@@ -374,7 +407,7 @@ export class VtsCarouselComponent
         delta => {
           this.pointerDelta = delta;
           this.isDragging = true;
-          this.strategy?.dragging(this.pointerDelta);
+          this.strategy?.dragging(this.pointerDelta, this.config);
         },
         () => {},
         () => {
@@ -400,7 +433,27 @@ export class VtsCarouselComponent
 
   layout(): void {
     if (this.strategy) {
-      this.strategy.withCarouselContents(this.carouselContents);
+      this.strategy.withCarouselContents(this.carouselContents, this.config);
+      
+      var rect = this.slickTrack!.nativeElement.querySelector(".slick-slide").getBoundingClientRect();
+      var slickSlideWidth = rect.width;
+      var slickSlideHeight = rect.height;
+      var slickCloneRight = this.slickTrack!.nativeElement.querySelectorAll(".clone-right");
+      var slickSlideAll = this.slickTrack!.nativeElement.querySelectorAll(".slick-slide");
+      for (let i = 0; i < slickCloneRight.length; i++) {
+        slickCloneRight[i].style.width = slickSlideWidth + "px";
+        slickCloneRight[i].style.height = slickSlideHeight + "px";
+        slickCloneRight[i].style.position = "relative";
+      }
+
+      
+      for (let i = 0; i < slickSlideAll.length; i++) {
+        if (this.config.vtsVertical) {
+          slickSlideAll[i].style.marginBottom = this.vtsSlideMargin + "px";
+        } else {
+          slickSlideAll[i].style.marginRight = this.vtsSlideMargin + "px";
+        }
+      }
     }
   }
 }
