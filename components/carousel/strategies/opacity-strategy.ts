@@ -4,6 +4,7 @@
  */
 
 import { QueryList } from '@angular/core';
+import { CarouselConfig } from '@ui-vts/ng-vts/core/config';
 import { Observable, Subject } from 'rxjs';
 
 import { VtsCarouselContentDirective } from '../carousel-content.directive';
@@ -11,11 +12,14 @@ import { VtsCarouselContentDirective } from '../carousel-content.directive';
 import { VtsCarouselBaseStrategy } from './base-strategy';
 
 export class VtsCarouselOpacityStrategy extends VtsCarouselBaseStrategy {
-  withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null): void {
-    super.withCarouselContents(contents);
+  withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null, config: CarouselConfig): void {
+    super.withCarouselContents(contents, config);
 
     if (this.contents) {
-      this.slickTrackEl.style.width = `${this.length * this.unitWidth}px`;
+      if (config.vtsItems > 1)
+        this.renderer.setStyle(this.slickTrackEl, 'width', `${this.length * 2 * (this.unitWidth + config.vtsSlideMargin)}px`);
+      else 
+        this.renderer.setStyle(this.slickTrackEl, 'width', `${this.length * (this.unitWidth + config.vtsSlideMargin)}px`);
 
       this.contents.forEach((content: VtsCarouselContentDirective, i: number) => {
         this.renderer.setStyle(
@@ -25,7 +29,7 @@ export class VtsCarouselOpacityStrategy extends VtsCarouselBaseStrategy {
         );
         this.renderer.setStyle(content.el, 'position', 'relative');
         this.renderer.setStyle(content.el, 'width', `${this.unitWidth}px`);
-        this.renderer.setStyle(content.el, 'left', `${-this.unitWidth * i}px`);
+        this.renderer.setStyle(content.el, 'left', `${-(this.unitWidth + config.vtsSlideMargin) * i}px`);
         this.renderer.setStyle(content.el, 'transition', [
           'opacity 500ms ease 0s',
           'visibility 500ms ease 0s'

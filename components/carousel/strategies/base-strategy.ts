@@ -5,6 +5,7 @@
 
 import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectorRef, QueryList, Renderer2 } from '@angular/core';
+import { CarouselConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { Observable } from 'rxjs';
 
@@ -15,6 +16,7 @@ export abstract class VtsCarouselBaseStrategy<T = VtsSafeAny> {
   // Properties that strategies may want to use.
   protected carouselComponent: VtsCarouselComponentAsSource | null;
   protected contents!: VtsCarouselContentDirective[];
+  protected items!: number;
   protected slickListEl!: HTMLElement;
   protected slickTrackEl!: HTMLElement;
   protected length!: number;
@@ -46,8 +48,9 @@ export abstract class VtsCarouselBaseStrategy<T = VtsSafeAny> {
   /**
    * Initialize dragging sequences.
    * @param contents
+   * 
    */
-  withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null): void {
+  withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null, config: CarouselConfig): void {
     const carousel = this.carouselComponent!;
     this.slickListEl = carousel.slickListEl;
     this.slickTrackEl = carousel.slickTrackEl;
@@ -56,8 +59,13 @@ export abstract class VtsCarouselBaseStrategy<T = VtsSafeAny> {
 
     if (this.platform.isBrowser) {
       const rect = carousel.el.getBoundingClientRect();
-      this.unitWidth = rect.width;
-      this.unitHeight = rect.height;
+      if (config.vtsVertical) {
+        this.unitHeight = (rect.height - (config.vtsItems - 1) * config.vtsSlideMargin) / config.vtsItems;
+        this.unitWidth = rect.width;
+      } else {
+        this.unitWidth = (rect.width - (config.vtsItems - 1) * config.vtsSlideMargin) / config.vtsItems;
+        this.unitHeight = rect.height;
+      }
     } else {
       // Since we cannot call getBoundingClientRect in server, we just hide all items except for the first one.
       contents?.forEach((content, index) => {
@@ -73,13 +81,13 @@ export abstract class VtsCarouselBaseStrategy<T = VtsSafeAny> {
   /**
    * Trigger transition.
    */
-  abstract switch(_f: number, _t: number): Observable<void>;
+  abstract switch(_f: number, _t: number, _config: CarouselConfig): Observable<void>;
 
   /**
    * When user drag the carousel component.
    * @optional
    */
-  dragging(_vector: PointerVector): void {}
+  dragging(_vector: PointerVector, _config: CarouselConfig): void {}
 
   /**
    * Destroy a scroll strategy.
