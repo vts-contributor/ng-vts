@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       <label vts-radio-button vtsValue="left">Left</label>
       <label vts-radio-button vtsValue="right">Right</label>
     </vts-radio-group>
-    <vts-carousel [vtsDotPosition]="dotPosition">
+    <vts-carousel [vtsDotPosition]="dotPosition" [vtsDots]="enableDot">
       <div vts-carousel-content *ngFor="let index of array">
         <h3>{{ index }}</h3>
       </div>
@@ -40,4 +40,5 @@ import { Component } from '@angular/core';
 export class VtsDemoCarouselPositionComponent {
   array = [1, 2, 3, 4];
   dotPosition = 'bottom';
+  enableDot = true;
 }

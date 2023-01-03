@@ -129,6 +129,10 @@ export interface CarouselConfig {
   vtsEffect?: 'scrollx' | 'fade' | string;
   vtsEnableSwipe?: boolean;
   vtsVertical?: boolean;
+  vtsNavigation?: boolean;
+  vtsRtl?: boolean;
+  vtsItems: number;
+  vtsSlideMargin: number;
 }
 
 export interface CascaderConfig {

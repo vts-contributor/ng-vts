@@ -2,6 +2,8 @@
 category: Components
 type: Data Display
 title: Carousel
+cols: 1
+order: 18
 cover: https://gw.alipayobjects.com/zos/antfincdn/%24C9tmj978R/Carousel.svg
 ---
 
@@ -30,6 +32,11 @@ import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 | `[vtsDots]` | Whether to show the dots at the bottom of the gallery | `boolean` | `true` | ✅ |
 | `[vtsEffect]` | Transition effect | `'scrollx'\|'fade'` | `'scrollx'` | ✅ |
 | `[vtsEnableSwipe]` | Whether to support swipe gesture | `boolean` | `true` | ✅ |
+| `[vtsNavigation]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
+| `[vtsRtl]` | Whether to scroll from right to left | `boolean` | `true` | ✅ |
+| `[vtsItems]` | Number of slides is shown | `boolean` | 1 | ✅ |
+| `[vtsSlideMargin]` | Margin between slides | `number` | 10 | ✅ |
+| `[vtsVertical]` | Whether to show slides vertical | `boolean` | `false` | ✅ |
 | `(vtsAfterChange)` | Callback function called after the current index changes | `EventEmitter<number>` | - |
 | `(vtsBeforeChange)` | Callback function called before the current index changes | `EventEmitter{ from: number; to: number }>` | - |
 
