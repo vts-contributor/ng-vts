@@ -13,7 +13,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
     </vts-radio-group>
     <br />
     <br />
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form>
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <div vts-row [vtsGutter]="iconGutter">
           <vts-form-label vtsFlex="1">From Date</vts-form-label>
@@ -48,9 +48,6 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
           ></vts-range-picker-multiple>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <div vts-row [vtsGutter]="iconGutter">
           <vts-form-label vtsFlex="1">From Date</vts-form-label>

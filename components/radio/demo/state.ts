@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
 @Component({
   selector: 'vts-demo-radio-state',
   template: `
-    <form [vtsLayout]="'vertical'" vts-form>
+    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Label</vts-form-label>
         <vts-form-control>
@@ -31,9 +31,6 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
           </vts-radio-group>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Label</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">
