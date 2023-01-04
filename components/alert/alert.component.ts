@@ -37,6 +37,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'alert';
       *ngIf="!closed"
       class="vts-alert"
       [class.vts-alert-rtl]="dir === 'rtl'"
+      [class.vts-alert-no-border]="!vtsForm"
+      [class.vts-alert-box-shadow]="!vtsForm"
       [class.vts-alert-success]="vtsType === 'success' && !vtsForm"
       [class.vts-alert-form-success]="vtsType === 'success' && vtsForm"
       [class.vts-alert-info]="vtsType === 'info' && !vtsForm"

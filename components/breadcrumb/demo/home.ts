@@ -5,7 +5,8 @@ interface BreadcrumbItem {
   label: string;
   params: Params;
   url: string;
-  icon?: string
+  icon?: string;
+  disabled?: boolean
 }
 @Component({
   selector: 'vts-demo-breadcrumb-home',

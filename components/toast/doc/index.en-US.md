@@ -1,25 +1,12 @@
 ---
 category: Components
-type: Feedback
+type: Components
 noinstant: true
 title: Toast
 cover: ''
 ---
 
 Display a toast message globally.
-
-## When To Use
-
-To display a toast message at any of the four corners of the viewport. Typically it can be
-used in the following cases:
-
-- A toast with complex content.
-- A toast that is pushed by the application.
-- A toast that is in a form.
-
-```ts
-import { VtsToastModule } from '@ui-vts/ng-vts/toast';
-```
 
 ## API
 
