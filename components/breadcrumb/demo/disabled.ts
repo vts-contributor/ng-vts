@@ -10,15 +10,15 @@ interface BreadcrumbItem {
 }
 
 @Component({
-  selector: 'vts-demo-breadcrumb-breadcrumbs-array',
+  selector: 'vts-demo-breadcrumb-disabled',
   template: `
     <vts-breadcrumb [vtsBreadcrumbArray]="arrayMenuItem"></vts-breadcrumb>
   `
 })
-export class VtsDemoBreadcrumbBreadcrumbsArrayComponent {
+export class VtsDemoBreadcrumbDisabledComponent {
   arrayMenuItem: BreadcrumbItem[] = [
     { label: 'Home', params: {}, url: '', icon: ''},
-    { label: 'Content', params: {}, url: '', icon: ''},
+    { label: 'Content', params: {}, url: '', icon: '', disabled: true},
     { label: 'Application', params: {}, url: '', icon: ''}
   ];
 }
