@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 1
 title:
   zh-CN: 可关闭的警告提示
   en-US: Closable

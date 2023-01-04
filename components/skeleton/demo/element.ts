@@ -10,31 +10,31 @@ import {
 @Component({
   selector: 'vts-demo-skeleton-element',
   template: `
-    <vts-space vtsSize="middle">
-      <vts-space-item>
+    <vts-space>
+      <div vts-space-item>
         <vts-skeleton-element
           vtsType="button"
           [vtsActive]="elementActive"
           [vtsSize]="elementSize"
           [vtsShape]="buttonShape"
         ></vts-skeleton-element>
-      </vts-space-item>
-      <vts-space-item>
+      </div>
+      <div vts-space-item>
         <vts-skeleton-element
           vtsType="avatar"
           [vtsActive]="elementActive"
           [vtsSize]="elementSize"
           [vtsShape]="avatarShape"
         ></vts-skeleton-element>
-      </vts-space-item>
-      <vts-space-item>
+      </div>
+      <div vts-space-item>
         <vts-skeleton-element
           vtsType="input"
           [vtsActive]="elementActive"
           [vtsSize]="elementSize"
           style="width:200px"
         ></vts-skeleton-element>
-      </vts-space-item>
+      </div>
     </vts-space>
     <br />
     <br />
@@ -73,7 +73,14 @@ import {
         </vts-radio-group>
       </div>
     </div>
-  `
+  `,
+  styles: [
+    `
+      .vts-radio-button-wrapper {
+        width: max-content
+      }
+    `
+  ]
 })
 export class VtsDemoSkeletonElementComponent {
   buttonActive = false;

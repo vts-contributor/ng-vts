@@ -1,22 +1,11 @@
 ---
 category: Components
-type: Navigation
+type: Components
 title: Breadcrumb
 cover: https://gw.alipayobjects.com/zos/alicdn/9Ltop8JwH/Breadcrumb.svg
 ---
 
 A breadcrumb displays the current location within a hierarchy. It allows going back to states higher up in the hierarchy.
-
-## When To Use
-
-- When the system has more than two layers in a hierarchy.
-- When you need to inform the user of where they are.
-- When the user may need to navigate back to a higher level.
-- When the application has multi-layer architecture.
-
-```ts
-import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
-```
 
 ## API
 
@@ -25,6 +14,8 @@ import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | `[vtsSeparator]` | Custom separator | `string \| TemplateRef<void> \| null` | `'/'` |
+| `[vtsHome]` | (optional) Custom home menu. Default icon: Home icon | `BreadcrumbItem` | `null` |
+| `[vtsBreadcrumbArray]` | (optional) An array of breadcrumb items | `array` | `[]` |
 | `[vtsAutoGenerate]` | Auto generate breadcrumb | `boolean` | `false` |
 | `[vtsRouteLabel]` | Name of property that determines displayed text in routing config. It should be used when `vtsAutoGenerate` is `true` | `string` | `'breadcrumb'` |
 | `[vtsRouteLabelFn]` | Format breadcrumb item label text，normally used in international app to translate i18n key. It should be used when `vtsAutoGenerate` is `true` | `(label:string) => string` | `label => label` |

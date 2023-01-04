@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 6
 
 iframe:
   source: https://stackblitz.com/edit/ng-zorro-breadcrumb-auto?embed=1&file=src/app/app.component.html&hideExplorer=1&hideNavigation=1&view=preview

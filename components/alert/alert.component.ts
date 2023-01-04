@@ -37,10 +37,16 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'alert';
       *ngIf="!closed"
       class="vts-alert"
       [class.vts-alert-rtl]="dir === 'rtl'"
-      [class.vts-alert-success]="vtsType === 'success'"
-      [class.vts-alert-info]="vtsType === 'info'"
-      [class.vts-alert-warning]="vtsType === 'warning'"
-      [class.vts-alert-error]="vtsType === 'error'"
+      [class.vts-alert-no-border]="!vtsForm"
+      [class.vts-alert-box-shadow]="!vtsForm"
+      [class.vts-alert-success]="vtsType === 'success' && !vtsForm"
+      [class.vts-alert-form-success]="vtsType === 'success' && vtsForm"
+      [class.vts-alert-info]="vtsType === 'info' && !vtsForm"
+      [class.vts-alert-form-info]="vtsType === 'info' && vtsForm"
+      [class.vts-alert-warning]="vtsType === 'warning' && !vtsForm"
+      [class.vts-alert-form-warning]="vtsType === 'warning' && vtsForm"
+      [class.vts-alert-error]="vtsType === 'error' && !vtsForm"
+      [class.vts-alert-form-error]="vtsType === 'error' && vtsForm"
       [class.vts-alert-no-icon]="!vtsShowIcon"
       [class.vts-alert-banner]="vtsBanner"
       [class.vts-alert-closable]="vtsCloseable"
@@ -49,16 +55,40 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'alert';
       [@slideAlertMotion]
       (@slideAlertMotion.done)="onFadeAnimationDone()"
     >
-      <ng-container *ngIf="vtsShowIcon">
-        <i vts-icon class="vts-alert-icon" [vtsType]="vtsIconType || inferredIconType"></i>
+      <ng-container *ngIf="vtsShowIcon" [ngSwitch]="vtsType">
+        <i *ngSwitchCase="'success'"
+          class="vts-alert-icon" 
+          [class.vts-alert-icon-size]="!vtsForm && vtsDescription" 
+          [class.vts-alert-form-size]="vtsForm || !vtsDescription" vts-icon 
+          [vtsType]="vtsIconType || 'CheckCircleDoutone'"></i>
+        <i *ngSwitchCase="'info'"
+          class="vts-alert-icon" 
+          [class.vts-alert-icon-size]="!vtsForm && vtsDescription" 
+          [class.vts-alert-form-size]="vtsForm || !vtsDescription" vts-icon 
+          [vtsType]="vtsIconType || 'InfoDoutone'"></i>
+        <i *ngSwitchCase="'warning'"
+          class="vts-alert-icon" 
+          [class.vts-alert-icon-size]="!vtsForm && vtsDescription" 
+          [class.vts-alert-form-size]="vtsForm || !vtsDescription" vts-icon 
+          [vtsType]="vtsIconType || 'ReportProblemDoutone'"></i>
+        <i *ngSwitchCase="'error'" 
+          class="vts-alert-icon" 
+          [class.vts-alert-icon-size]="!vtsForm && vtsDescription" 
+          [class.vts-alert-form-size]="vtsForm || !vtsDescription" vts-icon 
+          [vtsType]="vtsIconType || 'HighlightOffDoutone'"></i>
+        <i *ngSwitchDefault 
+          class="vts-alert-icon" 
+          [class.vts-alert-icon-size]="!vtsForm && vtsDescription" 
+          [class.vts-alert-form-size]="vtsForm || !vtsDescription" vts-icon 
+          [vtsType]="vtsIconType || inferredIconType"></i>
       </ng-container>
-      <div class="vts-alert-content" *ngIf="vtsMessage || vtsDescription">
-        <span class="vts-alert-message" *ngIf="vtsMessage">
+      <div [class.vts-alert-content]="!vtsForm" [class.vts-alert-form-content]="vtsForm" *ngIf="vtsMessage || vtsDescription">
+        <span class="vts-alert-message" [class.vts-alert-form-message]="vtsForm" *ngIf="vtsMessage">
           <ng-container *vtsStringTemplateOutlet="vtsMessage">
             {{ vtsMessage }}
           </ng-container>
         </span>
-        <span class="vts-alert-description" *ngIf="vtsDescription">
+        <span class="vts-alert-description" [class.vts-alert-form-message]="vtsForm" *ngIf="vtsDescription">
           <ng-container *vtsStringTemplateOutlet="vtsDescription">
             {{ vtsDescription }}
           </ng-container>
@@ -68,7 +98,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'alert';
         type="button"
         tabindex="0"
         *ngIf="vtsCloseable || vtsCloseText"
-        class="vts-alert-close-icon"
+        class="vts-alert-close-icon vts-alert-icon"
         (click)="closeAlert()"
       >
         <ng-template #closeDefaultTemplate>
@@ -92,9 +122,10 @@ export class VtsAlertComponent implements OnChanges, OnDestroy, OnInit {
   static ngAcceptInputType_vtsShowIcon: BooleanInput;
   static ngAcceptInputType_vtsBanner: BooleanInput;
   static ngAcceptInputType_vtsNoAnimation: BooleanInput;
+  static ngAcceptInputType_vtsForm: BooleanInput;
 
   @Input() vtsCloseText: string | TemplateRef<void> | null = null;
-  @Input() vtsIconType: string | null = null;
+  @Input() vtsIconType: string | null = '';
   @Input() vtsMessage: string | TemplateRef<void> | null = null;
   @Input() vtsDescription: string | TemplateRef<void> | null = null;
   @Input() vtsType: 'success' | 'info' | 'warning' | 'error' = 'info';
@@ -102,6 +133,7 @@ export class VtsAlertComponent implements OnChanges, OnDestroy, OnInit {
   @Input() @WithConfig() @InputBoolean() vtsShowIcon: boolean = false;
   @Input() @InputBoolean() vtsBanner = false;
   @Input() @InputBoolean() vtsNoAnimation = false;
+  @Input() @WithConfig() @InputBoolean() vtsForm: boolean = false;
   @Output() readonly vtsOnClose = new EventEmitter<boolean>();
   closed = false;
   iconTheme: 'outline' | 'fill' = 'fill';

@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 7
 title:
   zh-CN: 自定义关闭
   en-US: Customized Close Text
