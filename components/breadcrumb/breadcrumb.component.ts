@@ -31,7 +31,8 @@ export interface BreadcrumbItem {
   label: string;
   params: Params;
   url: string;
-  icon?: string
+  icon?: string;
+  disabled?: boolean
 }
 
 @Component({
@@ -43,13 +44,13 @@ export interface BreadcrumbItem {
   template: `
     <ng-content></ng-content>
     <ng-container *ngIf="(vtsAutoGenerate && vtsBreadcrumbArray.length) || vtsBreadcrumbArray.length">
-      <vts-breadcrumb-item *ngIf="vtsHome">
+      <vts-breadcrumb-item *ngIf="vtsHome" [class.vts-breadcrumb-disabled]="vtsHome.disabled">
         <i vts-icon [vtsType]="vtsHome.icon || 'Home'"></i>
         <a [attr.href]="vtsHome.url" (click)="navigate(vtsHome.url, $event)">
         {{ vtsHome.label }}
         </a>
       </vts-breadcrumb-item>
-      <vts-breadcrumb-item *ngFor="let breadcrumb of vtsBreadcrumbArray">
+      <vts-breadcrumb-item *ngFor="let breadcrumb of vtsBreadcrumbArray" [class.vts-breadcrumb-disabled]="breadcrumb.disabled">
         <a [attr.href]="breadcrumb.url" (click)="navigate(breadcrumb.url, $event)">
           {{ breadcrumb.label }}
         </a>

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 2
 title: 
   zh-CN: 分隔符
   en-US: Configuring home menu item
