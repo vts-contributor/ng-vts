@@ -1,0 +1,21 @@
+import { VtsCardLayoutModule } from '@ui-vts/ng-vts/card-layout';
+import { VtsCardModule } from '@ui-vts/ng-vts/card';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsSkeletonModule } from '@ui-vts/ng-vts/skeleton';
+import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsImageModule } from '@ui-vts/ng-vts/image';
+
+export const moduleList = [
+VtsCardLayoutModule,
+VtsCardModule,
+VtsAvatarModule,
+VtsSwitchModule,
+VtsSkeletonModule,
+VtsTabsModule,
+VtsIconModule,
+VtsButtonModule,
+VtsImageModule
+ ];

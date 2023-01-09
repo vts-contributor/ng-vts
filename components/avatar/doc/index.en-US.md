@@ -1,6 +1,6 @@
 ---
 category: Components
-type: Data Display
+type: Components
 title: Avatar
 cover: https://gw.alipayobjects.com/zos/antfincdn/aBcnbw68hP/Avatar.svg
 ---

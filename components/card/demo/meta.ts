@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
     >
       <vts-card-meta
         vtsTitle="Card title"
-        vtsDescription="This is the description"
+        vtsDescription="This is the edited description"
         [vtsAvatar]="avatarTemplate"
       ></vts-card-meta>
     </vts-card>
