@@ -53,16 +53,22 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'card';
         <ng-template [ngTemplateOutlet]="listOfVtsCardTabComponent.template"></ng-template>
       </ng-container>
     </div>
-    <div class="vts-card-cover" *ngIf="vtsCover">
+    <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'top'">
       <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
     </div>
     <div class="vts-card-body" [ngStyle]="vtsBodyStyle">
       <ng-container *ngIf="!vtsLoading; else loadingTemplate">
         <ng-content></ng-content>
+        <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'fluid'">
+          <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
+        </div>
       </ng-container>
       <ng-template #loadingTemplate>
         <vts-card-loading></vts-card-loading>
       </ng-template>
+    </div>
+    <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'bottom'">
+      <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
     </div>
     <ul class="vts-card-actions" *ngIf="vtsActions.length">
       <li *ngFor="let action of vtsActions" [style.width.%]="100 / vtsActions.length">
@@ -78,7 +84,10 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'card';
       'listOfVtsCardGridDirective && listOfVtsCardGridDirective.length',
     '[class.vts-card-type-inner]': 'vtsType === "inner"',
     '[class.vts-card-contain-tabs]': '!!listOfVtsCardTabComponent',
-    '[class.vts-card-rtl]': `dir === 'rtl'`
+    '[class.vts-card-rtl]': `dir === 'rtl'`,
+    '[class.vts-card-cover-fluid]': `vtsCoverPosition === 'fluid'`,
+    '[class.vts-card-cover-bottom]': `vtsCoverPosition === 'bottom'`,
+    '[class.vts-card-cover-top]': `vtsCoverPosition === 'top'`
   }
 })
 export class VtsCardComponent implements OnDestroy, OnInit {
@@ -91,9 +100,10 @@ export class VtsCardComponent implements OnDestroy, OnInit {
   @Input() @WithConfig() @InputBoolean() vtsBordered: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsBorderless: boolean = false;
   @Input() @InputBoolean() vtsLoading = false;
-  @Input() @WithConfig() @InputBoolean() vtsHoverable: boolean = false;
+  @Input() @WithConfig() @InputBoolean() vtsHoverable: boolean = true;
   @Input() vtsBodyStyle: NgStyleInterface | null = null;
   @Input() vtsCover?: TemplateRef<void>;
+  @Input() vtsCoverPosition?: 'top' | 'bottom' | 'fluid' = 'top';
   @Input() vtsActions: Array<TemplateRef<void>> = [];
   @Input() vtsType: string | 'inner' | null = null;
   @Input() @WithConfig() vtsSize: VtsSizeDSType = 'md';
