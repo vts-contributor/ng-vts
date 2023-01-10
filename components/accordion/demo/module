@@ -1,0 +1,4 @@
+import { VtsAccordionModule } from '@ui-vts/ng-vts/accordion';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
+export const moduleList = [ VtsAccordionModule, VtsIconModule ];

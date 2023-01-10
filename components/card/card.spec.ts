@@ -18,27 +18,29 @@ import { VtsDemoCardSimpleComponent } from './demo/simple';
 import { VtsDemoCardTabsComponent } from './demo/tabs';
 
 describe('card', () => {
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [BidiModule, VtsCardModule],
-      schemas: [NO_ERRORS_SCHEMA],
-      declarations: [
-        VtsDemoCardBasicComponent,
-        VtsDemoCardBorderLessComponent,
-        VtsDemoCardFlexibleContentComponent,
-        VtsDemoCardGridCardComponent,
-        VtsDemoCardInColumnComponent,
-        VtsDemoCardInnerComponent,
-        VtsDemoCardLoadingComponent,
-        VtsDemoCardMetaComponent,
-        VtsDemoCardSimpleComponent,
-        VtsDemoCardTabsComponent,
-        TestCardSizeComponent,
-        VtsTestCardRtlComponent
-      ]
-    });
-    TestBed.compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [BidiModule, VtsCardModule],
+        schemas: [NO_ERRORS_SCHEMA],
+        declarations: [
+          VtsDemoCardBasicComponent,
+          VtsDemoCardBorderLessComponent,
+          VtsDemoCardFlexibleContentComponent,
+          VtsDemoCardGridCardComponent,
+          VtsDemoCardInColumnComponent,
+          VtsDemoCardInnerComponent,
+          VtsDemoCardLoadingComponent,
+          VtsDemoCardMetaComponent,
+          VtsDemoCardSimpleComponent,
+          VtsDemoCardTabsComponent,
+          TestCardSizeComponent,
+          VtsTestCardRtlComponent
+        ]
+      });
+      TestBed.compileComponents();
+    })
+  );
   it('should basic work', () => {
     const fixture = TestBed.createComponent(VtsDemoCardBasicComponent);
     const card = fixture.debugElement.query(By.directive(VtsCardComponent));

@@ -36,39 +36,53 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'card';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <div class="vts-card-head" *ngIf="vtsTitle || vtsExtra || listOfVtsCardTabComponent">
-      <div class="vts-card-head-wrapper">
-        <div class="vts-card-head-title" *ngIf="vtsTitle">
-          <ng-container *vtsStringTemplateOutlet="vtsTitle">
-            {{ vtsTitle }}
-          </ng-container>
-        </div>
-        <div class="vts-card-extra" *ngIf="vtsExtra">
-          <ng-container *vtsStringTemplateOutlet="vtsExtra">
-            {{ vtsExtra }}
-          </ng-container>
-        </div>
-      </div>
-      <ng-container *ngIf="listOfVtsCardTabComponent">
-        <ng-template [ngTemplateOutlet]="listOfVtsCardTabComponent.template"></ng-template>
-      </ng-container>
-    </div>
-    <div class="vts-card-cover" *ngIf="vtsCover">
+    <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'left'">
       <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
     </div>
-    <div class="vts-card-body" [ngStyle]="vtsBodyStyle">
-      <ng-container *ngIf="!vtsLoading; else loadingTemplate">
-        <ng-content></ng-content>
-      </ng-container>
-      <ng-template #loadingTemplate>
-        <vts-card-loading></vts-card-loading>
-      </ng-template>
+    <div>
+      <div class="vts-card-head" *ngIf="vtsTitle || vtsExtra || listOfVtsCardTabComponent">
+        <div class="vts-card-head-wrapper">
+          <div class="vts-card-head-title" *ngIf="vtsTitle">
+            <ng-container *vtsStringTemplateOutlet="vtsTitle">
+              {{ vtsTitle }}
+            </ng-container>
+          </div>
+          <div class="vts-card-extra" *ngIf="vtsExtra">
+            <ng-container *vtsStringTemplateOutlet="vtsExtra">
+              {{ vtsExtra }}
+            </ng-container>
+          </div>
+        </div>
+        <ng-container *ngIf="listOfVtsCardTabComponent">
+          <ng-template [ngTemplateOutlet]="listOfVtsCardTabComponent.template"></ng-template>
+        </ng-container>
+      </div>
+      <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'top'">
+        <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
+      </div>
+      <div class="vts-card-body" [ngStyle]="vtsBodyStyle">
+        <ng-container *ngIf="!vtsLoading; else loadingTemplate">
+          <ng-content></ng-content>
+          <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'fluid'">
+            <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
+          </div>
+        </ng-container>
+        <ng-template #loadingTemplate>
+          <vts-card-loading></vts-card-loading>
+        </ng-template>
+      </div>
+      <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'bottom'">
+        <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
+      </div>
+      <ul class="vts-card-actions" *ngIf="vtsActions.length">
+        <li *ngFor="let action of vtsActions" [style.width.%]="100 / vtsActions.length">
+          <span><ng-template [ngTemplateOutlet]="action"></ng-template></span>
+        </li>
+      </ul>
     </div>
-    <ul class="vts-card-actions" *ngIf="vtsActions.length">
-      <li *ngFor="let action of vtsActions" [style.width.%]="100 / vtsActions.length">
-        <span><ng-template [ngTemplateOutlet]="action"></ng-template></span>
-      </li>
-    </ul>
+    <div class="vts-card-cover" *ngIf="vtsCover && vtsCoverPosition === 'right'">
+      <ng-template [ngTemplateOutlet]="vtsCover"></ng-template>
+    </div>
   `,
   host: {
     '[class.vts-card-loading]': 'vtsLoading',
@@ -78,7 +92,20 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'card';
       'listOfVtsCardGridDirective && listOfVtsCardGridDirective.length',
     '[class.vts-card-type-inner]': 'vtsType === "inner"',
     '[class.vts-card-contain-tabs]': '!!listOfVtsCardTabComponent',
-    '[class.vts-card-rtl]': `dir === 'rtl'`
+    '[class.vts-card-rtl]': `dir === 'rtl'`,
+    '[class.vts-card-cover-fluid]': `vtsCoverPosition === 'fluid'`,
+    '[class.vts-card-cover-bottom]': `vtsCoverPosition === 'bottom'`,
+    '[class.vts-card-cover-top]': `vtsCoverPosition === 'top'`,
+    '[class.vts-card-cover-right]': `vtsCoverPosition === 'right'`,
+    '[class.vts-card-cover-left]': `vtsCoverPosition === 'left'`,
+
+    '[class.vts-card-layout-basic]': `vtsCardLayout === 'basic'`,
+    '[class.vts-card-layout-cover]': `vtsCardLayout === 'cover'`,
+    '[class.vts-card-layout-container]': `vtsType === 'container'`,
+    '[class.vts-card-layout-avatar]': `vtsType === 'avatar'`,
+    '[class.vts-card-layout-align-left]': `vtsAlign === 'left' && vtsType === 'container'`,
+    '[class.vts-card-layout-align-center]': `vtsAlign === 'center' && vtsType === 'container'`,
+    '[class.vts-card-layout-align-right]': `vtsAlign === 'right' && vtsType === 'container'`
   }
 })
 export class VtsCardComponent implements OnDestroy, OnInit {
@@ -91,11 +118,14 @@ export class VtsCardComponent implements OnDestroy, OnInit {
   @Input() @WithConfig() @InputBoolean() vtsBordered: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsBorderless: boolean = false;
   @Input() @InputBoolean() vtsLoading = false;
-  @Input() @WithConfig() @InputBoolean() vtsHoverable: boolean = false;
+  @Input() @WithConfig() @InputBoolean() vtsHoverable: boolean = true;
   @Input() vtsBodyStyle: NgStyleInterface | null = null;
   @Input() vtsCover?: TemplateRef<void>;
+  @Input() vtsCoverPosition?: 'top' | 'bottom' | 'fluid' | 'left' | 'right' = 'top';
+  @Input() vtsCardLayout: 'basic' | 'cover' | null = null;
+  @Input() vtsType: 'container' | 'avatar' | 'inner' | null  = 'avatar';
+  @Input() vtsAlign: 'left' | 'center' | 'right' | null = null;
   @Input() vtsActions: Array<TemplateRef<void>> = [];
-  @Input() vtsType: string | 'inner' | null = null;
   @Input() @WithConfig() vtsSize: VtsSizeDSType = 'md';
   @Input() vtsTitle?: string | TemplateRef<void>;
   @Input() vtsExtra?: string | TemplateRef<void>;
@@ -115,6 +145,7 @@ export class VtsCardComponent implements OnDestroy, OnInit {
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-card');
+    this.elementRef.nativeElement.classList.add('vts-card-layout');
 
     this.vtsConfigService
       .getConfigChangeEventForComponent(VTS_CONFIG_MODULE_NAME)

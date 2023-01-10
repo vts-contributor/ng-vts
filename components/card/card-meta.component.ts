@@ -3,14 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  TemplateRef,
-  ViewEncapsulation
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'vts-card-meta',
@@ -34,12 +27,16 @@ import {
         </ng-container>
       </div>
     </div>
+    <div class="vts-card-meta-action" *ngIf="vtsAction">
+      <ng-template [ngTemplateOutlet]="vtsAction"></ng-template>
+    </div>
   `
 })
 export class VtsCardMetaComponent {
   @Input() vtsTitle: string | TemplateRef<void> | null = null;
   @Input() vtsDescription: string | TemplateRef<void> | null = null;
   @Input() vtsAvatar: TemplateRef<void> | null = null;
+  @Input() vtsAction: TemplateRef<void> | null = null;
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation

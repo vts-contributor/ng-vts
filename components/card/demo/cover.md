@@ -1,8 +1,8 @@
 ---
-order: 0
+order: 1
 title:
   zh-CN: 典型卡片
-  en-US: Basic avatar card
+  en-US: Cover image card
 ---
 
 ## zh-CN
@@ -11,4 +11,4 @@ title:
 
 ## en-US
 
-A basic card containing a title, an avatar and content.
+A basic card containing a title, content and a cover image.

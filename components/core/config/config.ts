@@ -28,6 +28,7 @@ export interface VtsConfig {
   badge?: BadgeConfig;
   button?: ButtonConfig;
   card?: CardConfig;
+  cardLayout?: CardLayoutConfig;
   carousel?: CarouselConfig;
   cascader?: CascaderConfig;
   codeEditor?: CodeEditorConfig;
@@ -120,6 +121,11 @@ export interface CardConfig {
   vtsHoverable?: boolean;
   vtsBordered?: boolean;
   vtsBorderless?: boolean;
+}
+
+export interface CardLayoutConfig {
+  vtsCardLayout?: 'basic' | 'cover';
+  vtsAlign?: 'left' | 'center' | 'right';
 }
 
 export interface CarouselConfig {
