@@ -27,7 +27,6 @@
     "@stackblitz/sdk": "^1.8.1",
     "@ui-vts/ng-vts": "file:components",
     "@ui-vts/icons-angular": "^1.0.0",
-    "@ui-vts/ng-vts": "file:components",
     "@ui-vts/theme": "file:../ui-vts-theme",
     "apexcharts": "^3.27.3",
     "date-fns": "^2.16.1",
