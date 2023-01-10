@@ -21,10 +21,10 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   BooleanInput,
-  VtsSafeAny,
-  VtsSizeLDSType,
   OnChangeType,
-  OnTouchedType
+  OnTouchedType,
+  VtsSafeAny,
+  VtsSizeLDSType
 } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';

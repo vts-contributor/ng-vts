@@ -1,6 +1,6 @@
 ---
 category: Components
-type: Data Display
+type: Components
 title: Card
 cols: 1
 cover: https://gw.alipayobjects.com/zos/alicdn/keNB-R8Y9/Card.svg
@@ -19,32 +19,38 @@ import { VtsCardModule } from '@ui-vts/ng-vts/card';
 ## API
 
 ```html
-<vts-card vtsTitle="card title">card content</vts-card>
+<vts-card vtsTitle="card title">Card content</vts-card>
 ```
 
 ### vts-card
 
-| Property | Description | Type | Default | Global Config |
-| -------- | ----------- | ---- | ------- | ------------- |
-| `[vtsActions]` | The action list, shows at the bottom of the Card. | `Array<TemplateRef<void>>` | - |
-| `[vtsBodyStyle]` | Inline style to apply to the card content | `{ [key: string]: string }` | - |
-| `[vtsBorderless]` | Remove border around the card | `boolean` | `false` | ✅ |
-| `[vtsCover]` | Card cover | `TemplateRef<void>` | - |
-| `[vtsExtra]` | Content to render in the top-right corner of the card | `string\|TemplateRef<void>` | - |
-| `[vtsHoverable]` | Lift up when hovering card | `boolean` | `false` | ✅ |
-| `[vtsLoading]` | Shows a loading indicator while the contents of the card are being fetched | `boolean` | `false` |
-| `[vtsTitle]` | Card title | `string\|TemplateRef<void>` | - |
-| `[vtsType]` | Card style type, can be set to `inner` or not set | `'inner'` | - |
-| `[vtsSize]` | Size of card | `'default'\|'small'` | `'default'` | ✅ |
+| Property             | Description                                                                | Type                                         | Default | Global Config |
+|----------------------|----------------------------------------------------------------------------|----------------------------------------------|---------|---------------|
+| `[vtsActions]`       | The action list, shows at the bottom of the Card.                          | `Array<TemplateRef<void>>`                   | -       |               |
+| `[vtsAlign]`         | Use when `'vtsType'` is `'container'` to align card content                | One of `left` `center` `right`               | -       |               |
+| `[vtsBodyStyle]`     | Inline style to apply to the card content                                  | `{ [key: string]: string }`                  | -       |               |
+| `[vtsBordered]`      | Add border around the card                                                 | `boolean`                                    | `true`  |               |
+| `[vtsBorderless]`    | Remove border around the card                                              | `boolean`                                    | `false` | ✅             |
+| `[vtsCover]`         | Card cover                                                                 | `TemplateRef<void>`                          | -       |               |
+| `[vtsCoverPosition]` | Card cover position                                                        | One of `top` `bottom` `fluid` `left` `right` | `top`   |               |
+| `[vtsCardLayout]`    | Display card image type                                                    | One of `basic` `cover`                       | -       |               |
+| `[vtsType]`          | List of display card content type                                          | One of `container` `avatar` `inner`          | -       |               |
+| `[vtsExtra]`         | Content to render in the top-right corner of the card                      | `string` or `TemplateRef<void>`              | -       |
+| `[vtsHoverable]`     | Lift up when hovering card                                                 | `boolean`                                    | `false` | ✅             |
+| `[vtsLoading]`       | Shows a loading indicator while the contents of the card are being fetched | `boolean`                                    | `false` |               |
+| `[vtsTitle]`         | Card title                                                                 | `string` or `TemplateRef<void>`              | -       |
+| `[vtsType]`          | Card style type, can be set to `inner` or not set                          | `'inner'`                                    | -       |               |
+| `[vtsSize]`          | Size of card                                                               | One of `md` `sm`                             | `md`    | ✅             |
 
 
 ### vts-card-meta
 
-| Property | Description | Type | Default |
-| -------- | ----------- | ---- | ------- |
-| `[vtsAvatar]` | avatar or icon | `TemplateRef<void>` | - |
-| `[vtsDescription]` | description content | `string\|TemplateRef<void>` | - |
-| `[vtsTitle]` | title content | `string\|TemplateRef<void>` | - |
+| Property           | Description         | Type                            | Default |
+|--------------------|---------------------|---------------------------------|---------|
+| `[vtsAvatar]`      | avatar or icon      | `TemplateRef<void>`             | -       |
+| `[vtsDescription]` | description content | `string` or `TemplateRef<void>` | -       |
+| `[vtsTitle]`       | title content       | `string` or `TemplateRef<void>` | -       |
+| `[vtsAction]`      | custom meta action  | `string` or `TemplateRef<void>` | -       |
 
 ### [vts-card-grid]
 
@@ -53,6 +59,14 @@ import { VtsCardModule } from '@ui-vts/ng-vts/card';
 | `[vtsHoverable]` | Lift up when hovering card | `boolean` | `true` | - |
 
 Area for grid style card
+
+### [vts-card-group]
+
+| Property | Description | Type | Default | Global Config |
+| -------- | ----------- | ---- | ------- | ------------- |
+| `[vtsHoverable]` | Lift up when hovering card | `boolean` | `true` | - |
+
+Area for display group of card, card body will automatically line up.
 
 ### vts-card-tab
 Area for tab card
