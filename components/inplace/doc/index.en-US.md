@@ -22,6 +22,7 @@ Inplace provides an easy to do editing and display at the same time where clicki
 | active | Whether the content is displayed or not. | `boolean`  | `false`
 | preventClick| When enabled, instead of click events, the component can be controlled full programmatic with activate() and deactivate() functions. | `boolean` | `false`
 | disabled | When present, it specifies that the element should be disabled. | `boolean`  | `false`
+| closable | Displays a button to switch back to display mode. | `boolean` | `false`
 
 
 ### vtsInplaceDisplay

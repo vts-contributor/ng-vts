@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <h4>Basic</h4>
     <div class="container">
-        <vts-inplace vtsIcon="Edit">
+        <vts-inplace vtsIcon="Edit" [closable]="true">
         <div vtsInplaceDisplay>
           Click to edit
         </div>

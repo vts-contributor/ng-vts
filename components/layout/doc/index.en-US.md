@@ -1,12 +1,10 @@
 ---
 category: Components
-type: Layout
+type: Components
 cols: 1
 title: Layout
 cover: https://gw.alipayobjects.com/zos/alicdn/hzEndUVEx/Layout.svg
 ---
-
-Handling the overall layout of a page.
 
 ```ts
 import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';

@@ -17,10 +17,8 @@ import { BooleanInput } from '@ui-vts/ng-vts/core/types';
                 <ng-content select="[vtsInplaceDisplay]"></ng-content>
             </div>
             <div class="vts-inplace-content" *ngIf="active" >
-                <div style="display: flex">
                     <ng-content select="[vtsInplaceContent]"></ng-content>
                     <button vts-button vtsType="primary" (click)="onDeactivateClick($event)" *ngIf="closable" tabindex="1"><i vts-icon vtsType="Close"></i></button>
-                </div>
             </div>
         </div>
     `,
@@ -32,7 +30,7 @@ export class VtsInplaceComponent {
 
     @Input() @InputBoolean() active: boolean = false;
 
-    @Input() closable: boolean = true;
+    @Input() closable: boolean = false;
 
     @Input() @InputBoolean() disabled: boolean = false;
 
