@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
     <br />
     <br />
     <ul vts-menu [vtsMode]="mode ? 'vertical' : 'inline'" [vtsTheme]="dark ? 'dark' : 'light'">
-      <li vts-submenu vtsTitle="Navigation One" vtsIcon="mail">
+      <li vts-submenu vtsTitle="Navigation One" vtsIcon="Mail">
         <ul>
           <li vts-menu-group vtsTitle="Item 1">
             <ul>
@@ -27,7 +27,7 @@ import { Component } from '@angular/core';
           </li>
         </ul>
       </li>
-      <li vts-submenu vtsTitle="Navigation Two" vtsIcon="appstore">
+      <li vts-submenu vtsTitle="Navigation Two" vtsIcon="Extension">
         <ul>
           <li vts-menu-item>Option 5</li>
           <li vts-menu-item>Option 6</li>
@@ -39,7 +39,7 @@ import { Component } from '@angular/core';
           </li>
         </ul>
       </li>
-      <li vts-submenu vtsTitle="Navigation Three" vtsIcon="setting">
+      <li vts-submenu vtsTitle="Navigation Three" vtsIcon="Settings">
         <ul>
           <li vts-menu-item>Option 9</li>
           <li vts-menu-item>Option 10</li>

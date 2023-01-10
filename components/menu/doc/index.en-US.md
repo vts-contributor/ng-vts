@@ -1,18 +1,10 @@
 ---
 category: Components
 cols: 1
-type: Navigation
+type: Components
 title: Menu
 cover: https://gw.alipayobjects.com/zos/alicdn/3XZcjGpvK/Menu.svg
 ---
-
-Menu list of Navigation.
-
-## When To Use
-
-Navigation menu is important for a website, it helps users jump from one site section to another quickly. Mostly, it includes top navigation and side navigation. Top navigation provides all the category and functions of the website. Side navigation provides the Multi-level structure of the website.
-
-More layouts with navigation: [layout](/components/layout/en).
 
 ```ts
 import { VtsMenuModule } from '@ui-vts/ng-vts/menu';

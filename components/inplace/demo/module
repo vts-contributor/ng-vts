@@ -1,0 +1,7 @@
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
+import { VtsInplaceModule } from '@ui-vts/ng-vts/inplace'
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsInputModule} from '@ui-vts/ng-vts/input';
+
+
+export const moduleList = [ VtsInplaceModule, VtsButtonModule, VtsInputModule, VtsTableModule];

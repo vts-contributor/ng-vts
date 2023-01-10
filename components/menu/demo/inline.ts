@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-menu-inline',
   template: `
     <ul vts-menu vtsMode="inline">
-      <li vts-submenu vtsTitle="Navigation One" vtsIcon="mail" vtsOpen>
+      <li vts-submenu vtsTitle="Navigation One" vtsIcon="Mail" vtsOpen>
         <ul>
           <li vts-menu-group vtsTitle="Item 1">
             <ul>
@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
           </li>
         </ul>
       </li>
-      <li vts-submenu vtsTitle="Navigation Two" vtsIcon="appstore">
+      <li vts-submenu vtsTitle="Navigation Two" vtsIcon="Extension">
         <ul>
           <li vts-menu-item>Option 5</li>
           <li vts-menu-item>Option 6</li>
@@ -38,7 +38,7 @@ import { Component } from '@angular/core';
           </li>
         </ul>
       </li>
-      <li vts-submenu vtsTitle="Navigation Three" vtsIcon="setting">
+      <li vts-submenu vtsTitle="Navigation Three" vtsIcon="Settings">
         <ul>
           <li vts-menu-item>Option 11</li>
           <li vts-menu-item>Option 12</li>
