@@ -1,23 +1,12 @@
 ---
 category: Components
-type: Feedback
+type: Components
 title: Skeleton
 cols: 1
 cover: https://gw.alipayobjects.com/zos/alicdn/KpcciCJgv/Skeleton.svg
 ---
 
 Provide a placeholder while you wait for content to load, or to visualise content that doesn't exist yet.
-
-## When To Use
-
-- When resource need long time loading, like low network speed.
-- The component contains much information, such as List or Card.
-- Only works when loading data for the first time.
-- Could be replaced by Spin in any situation, but can provide a better user experience.
-
-```ts
-import { VtsSkeletonModule } from '@ui-vts/ng-vts/skeleton';
-```
 
 ## API
 
