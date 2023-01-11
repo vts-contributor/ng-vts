@@ -52,6 +52,7 @@ export interface VtsConfig {
   table?: TableConfig;
   tabs?: TabsConfig;
   timePicker?: TimePickerConfig;
+  toast?: NotificationConfig;
   tree?: TreeConfig;
   treeSelect?: TreeSelectConfig;
   typography?: TypographyConfig;
