@@ -1,11 +1,11 @@
 ---
 category: Components
 type: Components
+cols: 1
 title: Breadcrumb
-cover: https://gw.alipayobjects.com/zos/alicdn/9Ltop8JwH/Breadcrumb.svg
+cover: ''
+order: 100
 ---
-
-A breadcrumb displays the current location within a hierarchy. It allows going back to states higher up in the hierarchy.
 
 ## API
 
@@ -13,13 +13,24 @@ A breadcrumb displays the current location within a hierarchy. It allows going b
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[vtsSeparator]` | Custom separator | `string \| TemplateRef<void> \| null` | `'/'` |
-| `[vtsHome]` | (optional) Custom home menu. Default icon: Home icon | `BreadcrumbItem` | `null` |
-| `[vtsBreadcrumbArray]` | (optional) An array of breadcrumb items | `array` | `[]` |
-| `[vtsAutoGenerate]` | Auto generate breadcrumb | `boolean` | `false` |
-| `[vtsRouteLabel]` | Name of property that determines displayed text in routing config. It should be used when `vtsAutoGenerate` is `true` | `string` | `'breadcrumb'` |
-| `[vtsRouteLabelFn]` | Format breadcrumb item label text，normally used in international app to translate i18n key. It should be used when `vtsAutoGenerate` is `true` | `(label:string) => string` | `label => label` |
+| vtsSeparator | Custom separator | `string \| TemplateRef<void> \| null` | `❯` |
+| vtsBreadcrumbArray | An array of breadcrumb items | `{ label: string, url: string \| UrlTree \| string[], icon: string, disabled: boolean }[]` |
+| vtsAutoGenerate | Auto generate breadcrumb using Route Data | `boolean` | `false` |
+| vtsRouteLabel | Only usable when `vtsAutoGenerate` is `true`.<br /> Name of property that determines displayed text in routing config | `string` | `breadcrumb` |
+| vtsRouteLabelFn | Only usable when `vtsAutoGenerate` is `true`.<br />Format function for breadcrumb item label text | `(label:string) => string` | `label => label` |
+| vtsRouteIcon | Only usable when `vtsAutoGenerate` is `true`.<br /> Name of property that determines displayed icon in routing config | `string` | `breadcrumbIcon` |
 
+### vts-breadcrumb-item
+
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| vtsLabel | Breadcrumb label | `string` |
+| vtsIcon | Breadcrumb icon type | `string` |
+| vtsUrl | Navigation for breadcrumb | `string \| UrlTree \| string[]` |
+| vtsOverlay | Breadcrumb overlay menu | `VtsDropdownMenuComponent` |
+| vtsDisabled | Breadcrumb disabled state | `boolean` | `false`
+
+<br />
 Using `[vtsAutoGenerate]` by configuring `data` like this:
 
 ```ts
@@ -27,7 +38,8 @@ Using `[vtsAutoGenerate]` by configuring `data` like this:
   path: '/path',
   component: SomeComponent,
   data: {
-    breadcrumb: 'Display Name'
+    breadcrumb: 'Display Name',
+    breadcrumbIcon: 'Home'
   }
 }
 ```
@@ -39,12 +51,13 @@ For lazy loading modules, you should write `data` in parent module like this:
   path: 'first',
   loadChildren: './first/first.module#FirstModule',
   data: {
-    breadcrumb: 'First'
+    breadcrumb: 'Display Name',
+    breadcrumbIcon: 'Home'
   },
 }
 ```
 
-use `vtsRouteLabel` to custom `data` breadcrumb label:
+Use `vtsRouteLabel` and `vtsRouteIcon` to custom property key for label and icon:
 
 ```html
 <vts-breadcrumb [vtsAutoGenerate]="true" [vtsRouteLabel]="'customBreadcrumb'"></vts-breadcrumb>
@@ -60,7 +73,7 @@ use `vtsRouteLabel` to custom `data` breadcrumb label:
 }
 ```
 
-use `vtsRouteLabelFn` to format breadcrumb label in international application:
+Use `vtsRouteLabelFn` to format breadcrumb label:
 
 ```html
 <vts-breadcrumb [vtsAutoGenerate]="true" [vtsRouteLabel]="'breadcrumbI18nKey'" [vtsRouteLabelFn]="translateFn"></vts-breadcrumb>
