@@ -1,0 +1,5 @@
+import { VtsSplitterModule } from '@ui-vts/ng-vts/splitter';
+
+export const moduleList = [
+    VtsSplitterModule
+];
