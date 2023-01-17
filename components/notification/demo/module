@@ -1,8 +1,0 @@
-import { VtsNotificationModule } from '@ui-vts/ng-vts/notification';
-import { VtsButtonModule } from '@ui-vts/ng-vts/button';
-import { VtsIconModule } from '@ui-vts/ng-vts/icon';
-import { VtsSelectModule } from '@ui-vts/ng-vts/select';
-import { VtsTagModule } from '@ui-vts/ng-vts/tag';
-import { VtsDividerModule } from '@ui-vts/ng-vts/divider'
-
-export const moduleList = [ VtsNotificationModule, VtsButtonModule, VtsIconModule, VtsSelectModule, VtsTagModule, VtsDividerModule];

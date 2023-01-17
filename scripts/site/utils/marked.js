@@ -113,7 +113,7 @@ renderer.heading = function (text, level) {
   let displayText = text;
   const lowerText = text.toLowerCase().replace(/ /g, '-').replace(/\./g, '-').replace(/\?/g, '');
   const isMarkedLabel = level === 3 && text.indexOf('vts-') === 0;
-  const isDirective = text[text.length - 1] === ']';
+  const isDirective = text[text.length - 1] === ']' && !text.startsWith('vts');
   // displayText = isDirective ? displayText.slice(1, -1) : displayText;
   const isComponent = isMarkedLabel && !isDirective;
   const isService = text.indexOf('Vts') === 0 && text.indexOf('Service') > -1;

@@ -4,15 +4,13 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-breadcrumb-separator-independent',
   template: `
     <vts-breadcrumb [vtsSeparator]="null">
-      <vts-breadcrumb-item>Location</vts-breadcrumb-item>
-      <vts-breadcrumb-separator>:</vts-breadcrumb-separator>
-      <vts-breadcrumb-item>
-        <a>Application Center</a>
-      </vts-breadcrumb-item>
-      <vts-breadcrumb-separator>/</vts-breadcrumb-separator>
-      <vts-breadcrumb-item>Application List</vts-breadcrumb-item>
-      <vts-breadcrumb-separator>/</vts-breadcrumb-separator>
-      <vts-breadcrumb-item>An Application</vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Location" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-separator>❯❯❯❯</vts-breadcrumb-separator>
+      <vts-breadcrumb-item vtsLabel="Application Center" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-separator>❯❯</vts-breadcrumb-separator>
+      <vts-breadcrumb-item vtsLabel="Application List" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-separator>❯❯</vts-breadcrumb-separator>
+      <vts-breadcrumb-item vtsLabel="An Application"></vts-breadcrumb-item>
     </vts-breadcrumb>
   `
 })

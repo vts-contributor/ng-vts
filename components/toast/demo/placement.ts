@@ -4,39 +4,31 @@ import { VtsToastPlacement, VtsToastService } from '@ui-vts/ng-vts/toast';
 @Component({
   selector: 'vts-demo-toast-placement',
   template: `
-    <button vts-button (click)="createBasicToast('topLeft')" vtsType="primary">
-      <i vts-icon vtsType="radius-upleft"></i>
-      topLeft
-    </button>
-    <button vts-button (click)="createBasicToast('topRight')" vtsType="primary">
-      <i vts-icon vtsType="radius-upright"></i>
-      topRight
-    </button>
-    <vts-divider></vts-divider>
-    <button vts-button (click)="createBasicToast('bottomLeft')" vtsType="primary">
-      <i vts-icon vtsType="radius-bottomleft"></i>
-      bottomLeft
-    </button>
-    <button vts-button (click)="createBasicToast('bottomRight')" vtsType="primary">
-      <i vts-icon vtsType="radius-bottomright"></i>
-      bottomRight
-    </button>
-  `,
-  styles: [
-    `
-      button {
-        margin-right: 1em;
-      }
-    `
-  ]
+    <div vts-space [vtsPreset]="2" vtsWrap>
+      <button *vtsSpaceItem vts-button [vtsType]="'default'" (click)="createToast('topLeft')">
+        Success
+      </button>
+      <button *vtsSpaceItem vts-button [vtsType]="'default'" (click)="createToast('topRight')">
+        Error
+      </button>
+      <button *vtsSpaceItem vts-button [vtsType]="'default'" (click)="createToast('bottomLeft')">
+        Info
+      </button>
+      <button *vtsSpaceItem vts-button [vtsType]="'default'" (click)="createToast('bottomRight')">
+        Warning
+      </button>
+    </div>
+  `
 })
 export class VtsDemoToastPlacementComponent {
-  
-  createBasicToast(position: VtsToastPlacement): void {
-    this.toast.blank(
+  createToast(position: VtsToastPlacement): void {
+    this.toast.create(
+      'info',
       'Toast Title',
-      'This is the content of the toast. This is the content of the toast. This is the content of the toast.',
-      { vtsPlacement: position }
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      {
+        vtsPlacement: position
+      }
     );
   }
 
