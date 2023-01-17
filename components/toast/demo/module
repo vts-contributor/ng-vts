@@ -1,0 +1,6 @@
+import { VtsToastModule } from '@ui-vts/ng-vts/toast';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+
+export const moduleList = [ VtsToastModule, VtsButtonModule, VtsIconModule, VtsSpaceModule];
