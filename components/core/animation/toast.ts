@@ -12,7 +12,7 @@ import {
   trigger
 } from '@angular/animations';
 
-export const notificationMotion: AnimationTriggerMetadata = trigger('notificationMotion', [
+export const toastMotion: AnimationTriggerMetadata = trigger('toastMotion', [
   state('enterRight', style({ opacity: 1, transform: 'translateX(0)' })),
   transition('* => enterRight', [
     style({ opacity: 0, transform: 'translateX(5%)' }),

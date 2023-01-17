@@ -41,7 +41,6 @@ export interface VtsConfig {
   icon?: IconConfig;
   message?: MessageConfig;
   modal?: ModalConfig;
-  notification?: NotificationConfig;
   pageHeader?: PageHeaderConfig;
   pagination?: PaginationConfig;
   progress?: ProgressConfig;
@@ -52,7 +51,7 @@ export interface VtsConfig {
   table?: TableConfig;
   tabs?: TabsConfig;
   timePicker?: TimePickerConfig;
-  toast?: NotificationConfig;
+  toast?: ToastConfig;
   tree?: TreeConfig;
   treeSelect?: TreeSelectConfig;
   typography?: TypographyConfig;
@@ -198,7 +197,7 @@ export interface ModalConfig {
   vtsDirection?: Direction;
 }
 
-export interface NotificationConfig extends MessageConfig {
+export interface ToastConfig extends MessageConfig {
   vtsTop?: string | number;
   vtsBottom?: string | number;
   vtsPlacement?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';

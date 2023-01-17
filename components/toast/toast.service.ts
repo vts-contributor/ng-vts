@@ -25,43 +25,38 @@ export class VtsToastService extends VtsMNService {
     super(vtsSingletonService, overlay, injector);
   }
 
-  success(
-    title: string,
-    content: string,
-    options?: VtsToastDataOptions
-  ): VtsToastRef {
-    return this.createInstance({ type: 'success', title, content, form: false, showIcon: true }, options);
+  success(title: string, content: string, options?: VtsToastDataOptions): VtsToastRef {
+    return this.createInstance(
+      { type: 'success', title, content },
+      { ...options, vtsShowIcon: true }
+    );
   }
 
   error(title: string, content: string, options?: VtsToastDataOptions): VtsToastRef {
-    return this.createInstance({ type: 'error', title, content, form: false, showIcon: true }, options);
+    return this.createInstance(
+      { type: 'error', title, content },
+      { ...options, vtsShowIcon: true }
+    );
   }
 
   info(title: string, content: string, options?: VtsToastDataOptions): VtsToastRef {
-    return this.createInstance({ type: 'info', title, content, form: false, showIcon: true }, options);
+    return this.createInstance({ type: 'info', title, content }, { ...options, vtsShowIcon: true });
   }
 
-  warning(
-    title: string,
-    content: string,
-    options?: VtsToastDataOptions
-  ): VtsToastRef {
-    return this.createInstance({ type: 'warning', title, content, form: false, showIcon: true }, options);
-  }
-
-  blank(title: string, content: string, options?: VtsToastDataOptions): VtsToastRef {
-    return this.createInstance({ type: 'blank', title, content, form: false, showIcon: false }, options);
+  warning(title: string, content: string, options?: VtsToastDataOptions): VtsToastRef {
+    return this.createInstance(
+      { type: 'warning', title, content },
+      { ...options, vtsShowIcon: true }
+    );
   }
 
   create(
-    type: 'success' | 'info' | 'warning' | 'error' | 'blank' | string,
+    type: 'success' | 'info' | 'warning' | 'error',
     title: string,
     content: string,
-    showIcon: boolean,
-    form: boolean,
     options?: VtsToastDataOptions
   ): VtsToastRef {
-    return this.createInstance({ type, title, content, showIcon, form }, options);
+    return this.createInstance({ type, title, content }, options);
   }
 
   template(template: TemplateRef<{}>, options?: VtsToastDataOptions): VtsToastRef {
@@ -72,10 +67,7 @@ export class VtsToastService extends VtsMNService {
     return `${this.componentPrefix}-${toastId++}`;
   }
 
-  private createInstance(
-    message: VtsToastData,
-    options?: VtsToastDataOptions
-  ): VtsToastRef {
+  private createInstance(message: VtsToastData, options?: VtsToastDataOptions): VtsToastRef {
     this.container = this.withContainer(VtsToastContainerComponent);
 
     return this.container.create({
@@ -84,7 +76,11 @@ export class VtsToastService extends VtsMNService {
         createdAt: new Date(),
         messageId: this.generateMessageId(),
         options
-      }
+      },
+      theme: options?.vtsTheme || 'outline',
+      showIcon: options?.vtsShowIcon || true,
+      closeText: options?.vtsCloseText,
+      iconType: options?.vtsIconType
     });
   }
 }

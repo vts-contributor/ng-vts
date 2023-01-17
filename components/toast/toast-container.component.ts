@@ -10,7 +10,7 @@ import {
   Component,
   ViewEncapsulation
 } from '@angular/core';
-import { NotificationConfig, VtsConfigService } from '@ui-vts/ng-vts/core/config';
+import { ToastConfig, VtsConfigService } from '@ui-vts/ng-vts/core/config';
 import { toCssPixel } from '@ui-vts/ng-vts/core/util';
 
 import { VtsMNContainerComponent } from '@ui-vts/ng-vts/message';
@@ -21,11 +21,11 @@ import { VtsToastData, VtsToastDataOptions } from './typings';
 
 const VTS_CONFIG_MODULE_NAME = 'toast';
 
-const VTS_TOAST_DEFAULT_CONFIG: Required<NotificationConfig> = {
+const VTS_TOAST_DEFAULT_CONFIG: Required<ToastConfig> = {
   vtsTop: '24px',
   vtsBottom: '24px',
   vtsPlacement: 'topRight',
-  vtsDuration: 4500,
+  vtsDuration: 5000,
   vtsMaxStack: 7,
   vtsPauseOnHover: true,
   vtsAnimate: true,
@@ -97,7 +97,7 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
   dir: Direction = 'ltr';
   bottom?: string | null;
   top?: string | null;
-  config!: Required<NotificationConfig>; // initialized by parent class constructor
+  config!: Required<ToastConfig>; // initialized by parent class constructor
   instances: Array<Required<VtsToastData>> = [];
   topLeftInstances: Array<Required<VtsToastData>> = [];
   topRightInstances: Array<Required<VtsToastData>> = [];
@@ -114,8 +114,7 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
     const tost = this.onCreate(toast);
     const key = tost.options.vtsKey;
     const toastWithSameKey = this.instances.find(
-      msg =>
-        msg.options.vtsKey === (toast.options as Required<VtsToastDataOptions>).vtsKey
+      msg => msg.options.vtsKey === (toast.options as Required<VtsToastDataOptions>).vtsKey
     );
     if (key && toastWithSameKey) {
       this.replaceToast(toastWithSameKey, tost);

@@ -12,7 +12,7 @@ import {
   Output,
   ViewEncapsulation
 } from '@angular/core';
-import { notificationMotion } from '@ui-vts/ng-vts/core/animation';
+import { toastMotion } from '@ui-vts/ng-vts/core/animation';
 import { VtsMNComponent } from '@ui-vts/ng-vts/message';
 
 import { VtsToastData } from './typings';
@@ -22,39 +22,63 @@ import { VtsToastData } from './typings';
   selector: 'vts-toast',
   exportAs: 'vtsToast',
   preserveWhitespaces: false,
-  animations: [notificationMotion],
+  animations: [toastMotion],
   template: `
     <div
-      class="vts-toast-notice-closable"
+      class="vts-toast-notice vts-toast-notice-closable"
       [ngStyle]="instance.options?.vtsStyle || null"
       [ngClass]="instance.options?.vtsClass || ''"
-      [@notificationMotion]="state"
-      (@notificationMotion.done)="animationStateChanged.next($event)"
+      [@toastMotion]="state"
+      (@toastMotion.done)="animationStateChanged.next($event)"
       (click)="onClick($event)"
       (mouseenter)="onEnter()"
       (mouseleave)="onLeave()"
     >
       <ng-container [ngSwitch]="instance.type">
-        <vts-alert *ngSwitchCase="'success'" vtsType="success" 
-          [vtsMessage]="instance.title" [vtsDescription]="instance.content" 
-          [vtsShowIcon]="instance.showIcon" [vtsForm]="instance.form" vtsCloseable>
-        </vts-alert>
-          <vts-alert *ngSwitchCase="'info'" vtsType="info" 
-          [vtsMessage]="instance.title" [vtsDescription]="instance.content" 
-          [vtsShowIcon]="instance.showIcon" [vtsForm]="instance.form" vtsCloseable>
-        </vts-alert>
-        <vts-alert *ngSwitchCase="'warning'" vtsType="warning" 
-          [vtsMessage]="instance.title" [vtsDescription]="instance.content" 
-          [vtsShowIcon]="instance.showIcon" [vtsForm]="instance.form" vtsCloseable>
-        </vts-alert>
-        <vts-alert *ngSwitchCase="'error'" vtsType="error" 
-          [vtsMessage]="instance.title" [vtsDescription]="instance.content" 
-          [vtsShowIcon]="instance.showIcon" [vtsForm]="instance.form" vtsCloseable>
-        </vts-alert>
-        <vts-alert *ngSwitchDefault vtsType="info" 
-          [vtsMessage]="instance.title" [vtsDescription]="instance.content" 
-          [vtsShowIcon]="instance.showIcon" [vtsForm]="instance.form" vtsCloseable>
-        </vts-alert>
+        <vts-alert
+          *ngSwitchCase="'success'"
+          vtsType="success"
+          [vtsMessage]="instance.title"
+          [vtsDescription]="instance.content"
+          [vtsTheme]="instance.theme"
+          [vtsShowIcon]="instance.showIcon"
+          [vtsCloseText]="instance.closeText"
+          [vtsIconType]="instance.iconType"
+          vtsCloseable
+        ></vts-alert>
+        <vts-alert
+          *ngSwitchCase="'info'"
+          vtsType="info"
+          [vtsMessage]="instance.title"
+          [vtsDescription]="instance.content"
+          [vtsTheme]="instance.theme"
+          [vtsShowIcon]="instance.showIcon"
+          [vtsCloseText]="instance.closeText"
+          [vtsIconType]="instance.iconType"
+          vtsCloseable
+        ></vts-alert>
+        <vts-alert
+          *ngSwitchCase="'warning'"
+          vtsType="warning"
+          [vtsMessage]="instance.title"
+          [vtsDescription]="instance.content"
+          [vtsTheme]="instance.theme"
+          [vtsShowIcon]="instance.showIcon"
+          [vtsCloseText]="instance.closeText"
+          [vtsIconType]="instance.iconType"
+          vtsCloseable
+        ></vts-alert>
+        <vts-alert
+          *ngSwitchCase="'error'"
+          vtsType="error"
+          [vtsMessage]="instance.title"
+          [vtsDescription]="instance.content"
+          [vtsTheme]="instance.theme"
+          [vtsShowIcon]="instance.showIcon"
+          [vtsCloseText]="instance.closeText"
+          [vtsIconType]="instance.iconType"
+          vtsCloseable
+        ></vts-alert>
       </ng-container>
     </div>
   `

@@ -10,31 +10,28 @@ import {
 @Component({
   selector: 'vts-demo-skeleton-element',
   template: `
-    <vts-space>
-      <div vts-space-item>
-        <vts-skeleton-element
-          vtsType="button"
-          [vtsActive]="elementActive"
-          [vtsSize]="elementSize"
-          [vtsShape]="buttonShape"
-        ></vts-skeleton-element>
-      </div>
-      <div vts-space-item>
-        <vts-skeleton-element
-          vtsType="avatar"
-          [vtsActive]="elementActive"
-          [vtsSize]="elementSize"
-          [vtsShape]="avatarShape"
-        ></vts-skeleton-element>
-      </div>
-      <div vts-space-item>
-        <vts-skeleton-element
-          vtsType="input"
-          [vtsActive]="elementActive"
-          [vtsSize]="elementSize"
-          style="width:200px"
-        ></vts-skeleton-element>
-      </div>
+    <vts-space vtsPreset="3">
+      <vts-skeleton-element
+        *vtsSpaceItem
+        vtsType="button"
+        [vtsActive]="elementActive"
+        [vtsSize]="elementSize"
+        [vtsShape]="buttonShape"
+      ></vts-skeleton-element>
+      <vts-skeleton-element
+        *vtsSpaceItem
+        vtsType="avatar"
+        [vtsActive]="elementActive"
+        [vtsSize]="elementSize"
+        [vtsShape]="avatarShape"
+      ></vts-skeleton-element>
+      <vts-skeleton-element
+        *vtsSpaceItem
+        vtsType="input"
+        [vtsActive]="elementActive"
+        [vtsSize]="elementSize"
+        style="width:200px"
+      ></vts-skeleton-element>
     </vts-space>
     <br />
     <br />
@@ -77,7 +74,7 @@ import {
   styles: [
     `
       .vts-radio-button-wrapper {
-        width: max-content
+        width: max-content;
       }
     `
   ]
