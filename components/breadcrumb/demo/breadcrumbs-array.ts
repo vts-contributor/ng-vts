@@ -1,13 +1,5 @@
 import { Component } from '@angular/core';
-import { Params } from '@angular/router';
-
-interface BreadcrumbItem {
-  label: string;
-  params: Params;
-  url: string;
-  icon?: string;
-  disabled?: boolean
-}
+import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 
 @Component({
   selector: 'vts-demo-breadcrumb-breadcrumbs-array',
@@ -16,9 +8,10 @@ interface BreadcrumbItem {
   `
 })
 export class VtsDemoBreadcrumbBreadcrumbsArrayComponent {
-  arrayMenuItem: BreadcrumbItem[] = [
-    { label: 'Home', params: {}, url: '', icon: ''},
-    { label: 'Content', params: {}, url: '', icon: ''},
-    { label: 'Application', params: {}, url: '', icon: ''}
+  arrayMenuItem: VtsBreadcrumbItem[] = [
+    { label: 'Home', url: '', icon: 'HomeOutline' },
+    { label: 'Content', url: '', icon: 'LayerOutline', disabled: true },
+    { label: 'An Application', url: ['/components', 'button', 'en'], icon: 'ViewWeekOutline' },
+    { label: 'Application 1' }
   ];
 }

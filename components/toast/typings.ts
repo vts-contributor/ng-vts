@@ -14,12 +14,16 @@ export interface VtsToastDataOptions<T = {}> {
   vtsKey?: string;
   vtsStyle?: NgStyleInterface;
   vtsClass?: NgClassInterface | string;
-  vtsCloseIcon?: TemplateRef<void> | string;
   vtsPlacement?: VtsToastPlacement;
   vtsData?: T;
   vtsDuration?: number;
   vtsAnimate?: boolean;
   vtsPauseOnHover?: boolean;
+  // Alert options
+  vtsShowIcon?: boolean;
+  vtsTheme?: 'outline' | 'fill';
+  vtsCloseText?: TemplateRef<void> | string;
+  vtsIconType?: string;
 }
 
 export interface VtsToastData {
@@ -30,15 +34,15 @@ export interface VtsToastData {
   state?: 'enter' | 'leave';
   template?: TemplateRef<{}>;
   title?: string;
-  type?: 'success' | 'info' | 'warning' | 'error' | 'blank' | string;
-  showIcon?: boolean;
-  form?: boolean;
-  // observables exposed to users
+  type?: 'success' | 'info' | 'warning' | 'error';
+  // Observables exposed to users
   onClose?: Subject<boolean>;
   onClick?: Subject<MouseEvent>;
+  // Alert options
+  showIcon?: boolean;
+  theme?: 'outline' | 'fill';
+  closeText?: TemplateRef<void> | string;
+  iconType?: string;
 }
 
-export type VtsToastRef = Pick<
-  Required<VtsToastData>,
-  'onClose' | 'onClick' | 'messageId'
->;
+export type VtsToastRef = Pick<Required<VtsToastData>, 'onClose' | 'onClick' | 'messageId'>;
