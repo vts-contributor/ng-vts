@@ -150,6 +150,7 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
   static ngAcceptInputType_vtsAllowClear: BooleanInput;
   static ngAcceptInputType_vtsAutoFocus: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsBorderless: BooleanInput;
   static ngAcceptInputType_vtsInputReadOnly: BooleanInput;
@@ -185,6 +186,9 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
   // --- Common API
   @Input() @InputBoolean() vtsAllowClear: boolean = true;
   @Input() @InputBoolean() vtsAutoFocus: boolean = false;
+  @Input() @InputBoolean() set disabled(value: boolean) {
+    this.vtsDisabled = value;
+  }
   @Input() @InputBoolean() vtsDisabled: boolean = false;
   @Input() @InputBoolean() vtsBorderless: boolean = false;
   @Input() @InputBoolean() vtsInputReadOnly: boolean = false;

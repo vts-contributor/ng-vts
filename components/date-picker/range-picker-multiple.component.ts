@@ -124,13 +124,17 @@ export class VtsRangePickerMultipleComponent
   @ViewChild('endDatePicker') endDatePicker!: VtsDatePickerComponent;
 
   static ngAcceptInputType_disabled: BooleanInput;
+  static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsShowTime: BooleanInput | null | undefined;
   static ngAcceptInputType_vtsAutoOpen: BooleanInput | null | undefined;
 
   @Input() gutter: Number = 26;
   @Input() vtsSize: VtsSizeLDSType = 'md';
   @Input() vtsPlaceHolder: string[] = ['', ''];
-  @Input() @InputBoolean() disabled: boolean = false;
+  @Input() @InputBoolean() set disabled(value: boolean) {
+    this.vtsDisabled = value;
+  }
+  @Input() @InputBoolean() vtsDisabled: boolean = false;
   @Input() @InputBoolean() vtsShowTime: boolean = false;
   @Input() @InputBoolean() vtsAutoOpen: boolean = true;
   @Input() vtsFormat!: string;
