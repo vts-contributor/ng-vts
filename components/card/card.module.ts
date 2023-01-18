@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 
 import { VtsCardGridDirective } from './card-grid.directive';
+import { VtsCardGroupComponent } from './card-group.component';
 import { VtsCardLoadingComponent } from './card-loading.component';
 import { VtsCardMetaComponent } from './card-meta.component';
 import { VtsCardTabComponent } from './card-tab.component';
@@ -21,7 +22,8 @@ import { VtsCardComponent } from './card.component';
     VtsCardGridDirective,
     VtsCardMetaComponent,
     VtsCardLoadingComponent,
-    VtsCardTabComponent
+    VtsCardTabComponent,
+    VtsCardGroupComponent
   ],
   exports: [
     BidiModule,
@@ -29,7 +31,8 @@ import { VtsCardComponent } from './card.component';
     VtsCardGridDirective,
     VtsCardMetaComponent,
     VtsCardLoadingComponent,
-    VtsCardTabComponent
+    VtsCardTabComponent,
+    VtsCardGroupComponent
   ]
 })
 export class VtsCardModule {}

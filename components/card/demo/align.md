@@ -1,8 +1,8 @@
 ---
-order: 0
+order: 1
 title:
   zh-CN: 典型卡片
-  en-US: Basic avatar card
+  en-US: Basic container card
 ---
 
 ## zh-CN
