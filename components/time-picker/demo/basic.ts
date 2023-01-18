@@ -35,7 +35,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
             [vtsSize]="size"
             [(ngModel)]="value"
             (ngModelChange)="print($event)"
-            disabled
+            vtsDisabled
           ></vts-time-picker>
         </vts-form-control>
       </vts-form-item>
