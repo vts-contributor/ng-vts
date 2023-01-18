@@ -89,7 +89,7 @@ export class VtsWaveRenderer {
 
       this.styleForPseudo.innerHTML = `
       [vts-click-animating-without-extra-node='true']::after, .vts-click-animating-node {
-        --antd-wave-shadow-color: ${waveColor};
+        --vts-wave-shadow-color: ${waveColor};
       }`;
       document.body.appendChild(this.styleForPseudo);
     }

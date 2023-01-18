@@ -3,8 +3,8 @@ category: Components
 type: Components
 cols: 1
 title: Splitter
-order: 18
-cover: 'https://gw.alipayobjects.com/zos/antfincdn/wc6%263gJ0Y8/Splitter.svg'
+order: 100
+cover: ''
 ---
 
 ```ts
