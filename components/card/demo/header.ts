@@ -7,105 +7,46 @@ import { Component } from '@angular/core';
       <div vts-col [vtsSpan]="8">
         <vts-card
           [vtsCardLayout]="'basic'"
-          [vtsTitle]="'Card name'"
-          vtsCoverPosition="top"
-          [vtsCover]="coverTemplate"
+          [vtsType]="'container'"
+          [vtsAlign]="'left'"
+          [vtsActions]="[actionCount]"
         >
-          <vts-card-meta
-            vtsDescription="Each design is a new, unique piece of art birthed into this world, and while you have the opportunity to be creative and make your unpleasant for the reader."
+        <vts-card-meta
+            vtsTitle="Card title"
+            vtsDescription="Lorem ipsum dolor sit amet, consectu adipis scling elit. Amet sed vel leo erati. Amet sed vel leo erati."
           ></vts-card-meta>
-          <span>Last updated 3 mins ago</span>
         </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://avatars.githubusercontent.com/u/43126830"
-          />
-        </ng-template>
-      </div>
 
+        <ng-template #actionCount>
+          <div style="display: flex; justify-content: space-between; width: 100%;">
+            <span style="width: fit-content;">1 day ago</span>
+            <button vts-button vtsType="text" style="color: red;">
+              <strong>Read more<i vts-icon vtsType="ArrowForward" style="margin-left: 2px; font-size: 14px;"></i></strong>
+            </button>
+          </div>
+        </ng-template>
+
+        <vts-card-header vtsTitle="something">
+          <vts-card-header-extra>
+            <button vts-button vtsType="text">
+              <i vts-icon vtsType="Close"></i>
+            </button>
+          </vts-card-header-extra>
+        </vts-card-header>
+      </div>
       <div vts-col [vtsSpan]="8">
         <vts-card
           [vtsCardLayout]="'basic'"
-          [vtsTitle]="'Card name'"
-          vtsCoverPosition="bottom"
-          [vtsCover]="coverTemplate"
         >
           <vts-card-meta
             vtsDescription="Each design is a new, unique piece of art birthed into this world, and while you have the opportunity to be creative and make your unpleasant for the reader."
           ></vts-card-meta>
           <span>Last updated 3 mins ago</span>
+          <vts-card-header vtsTitle="something">
+          </vts-card-header>
         </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://avatars.githubusercontent.com/u/43126830"
-          />
-        </ng-template>
       </div>
-
-      <div vts-col [vtsSpan]="8">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-          [vtsTitle]="'Card name'"
-          [vtsCover]="coverTemplate"
-          [vtsCoverPosition]="'fluid'"
-          [vtsActions]="[actionFooter]"
-        >
-          <vts-card-meta
-            vtsDescription="Each design is a new, unique piece of art birthed into this world, and while you have the opportunity to be creative and make your unpleasant for the reader."
-          ></vts-card-meta>
-        </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://avatars.githubusercontent.com/u/43126830"
-          />
-        </ng-template>
-        <ng-template #actionFooter>
-          <span>Last updated 3 minutes ago</span>
-        </ng-template>
-      </div>
-    </div>
-    <div vts-row [vtsGutter]="[16, 8]">
-      <div vts-col [vtsSpan]="12">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-          [vtsTitle]="'Card name'"
-          [vtsCoverPosition]="'left'"
-          [vtsCover]="coverTemplate"
-        >
-          <vts-card-meta
-            vtsDescription="Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee."
-          ></vts-card-meta>
-          <span>Last updated 3 mins ago</span>
-        </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://avatars.githubusercontent.com/u/43126830"
-          />
-        </ng-template>
-      </div>
-      <div vts-col [vtsSpan]="12">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-          [vtsTitle]="'Card name'"
-          [vtsCoverPosition]="'right'"
-          [vtsCover]="coverTemplate"
-        >
-          <vts-card-meta
-            vtsDescription="Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee."
-          ></vts-card-meta>
-          <span>Last updated 3 mins ago</span>
-        </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://avatars.githubusercontent.com/u/43126830"
-          />
-        </ng-template>
-      </div>
+      
     </div>
   `
 })

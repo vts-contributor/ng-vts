@@ -10,9 +10,11 @@ import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 
 import { VtsCardGridDirective } from './card-grid.directive';
 import { VtsCardGroupComponent } from './card-group.component';
+import { VtsCardHeaderComponent, VtsCardHeaderExtraComponent, VtsCardHeaderTitleComponent } from './card-header.component';
 import { VtsCardLoadingComponent } from './card-loading.component';
 import { VtsCardMetaComponent } from './card-meta.component';
 import { VtsCardTabComponent } from './card-tab.component';
+import { VtsCardThumbnailComponent } from './card-thumbnail.component';
 import { VtsCardComponent } from './card.component';
 
 @NgModule({
@@ -23,7 +25,12 @@ import { VtsCardComponent } from './card.component';
     VtsCardMetaComponent,
     VtsCardLoadingComponent,
     VtsCardTabComponent,
-    VtsCardGroupComponent
+    VtsCardGroupComponent,
+
+    VtsCardThumbnailComponent,
+    VtsCardHeaderComponent,
+    VtsCardHeaderTitleComponent,
+    VtsCardHeaderExtraComponent,
   ],
   exports: [
     BidiModule,
@@ -32,7 +39,12 @@ import { VtsCardComponent } from './card.component';
     VtsCardMetaComponent,
     VtsCardLoadingComponent,
     VtsCardTabComponent,
-    VtsCardGroupComponent
+    VtsCardGroupComponent,
+    
+    VtsCardThumbnailComponent,
+    VtsCardHeaderComponent,
+    VtsCardHeaderTitleComponent,
+    VtsCardHeaderExtraComponent,
   ]
 })
 export class VtsCardModule {}

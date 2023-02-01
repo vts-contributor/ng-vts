@@ -15,7 +15,7 @@ import {
 } from '@angular/animations';
 import { AnimationCurves } from './animation-consts';
 
-export const collapseMotion: AnimationTriggerMetadata = trigger('collapseMotion', [
+export const accordionMotion: AnimationTriggerMetadata = trigger('accordionMotion', [
   state('expanded', style({ height: '*' })),
   state('collapsed', style({ height: 0, overflow: 'hidden' })),
   state('hidden', style({ height: 0, overflow: 'hidden', borderTopWidth: '0' })),
@@ -25,7 +25,7 @@ export const collapseMotion: AnimationTriggerMetadata = trigger('collapseMotion'
   transition('hidden => expanded', animate(`150ms ${AnimationCurves.EASE_IN_OUT}`))
 ]);
 
-export const treeCollapseMotion: AnimationTriggerMetadata = trigger('treeCollapseMotion', [
+export const treeAccordionMotion: AnimationTriggerMetadata = trigger('treeAccordionMotion', [
   transition('* => *', [
     query(
       'vts-tree-node:leave,vts-tree-builtin-node:leave',

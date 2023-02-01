@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
         <vts-card
           [vtsCardLayout]="'cover'"
           [vtsActions]="[actionReadMore]"
-          [vtsCover]="coverTemplate"
         >
           <vts-card-meta
             vtsTitle="Card title"
@@ -30,7 +29,6 @@ import { Component } from '@angular/core';
       <div vts-col [vtsSpan]="8">
         <vts-card
           [vtsCardLayout]="'cover'"
-          [vtsCover]="coverTemplate"
         >
           <vts-card-meta
             vtsTitle="Card title"
@@ -49,7 +47,6 @@ import { Component } from '@angular/core';
       <div vts-col [vtsSpan]="8">
         <vts-card
           [vtsCardLayout]="'cover'"
-          [vtsCover]="coverTemplate"
           [vtsActions]="[actionTitle]"
         >
           <vts-card-meta

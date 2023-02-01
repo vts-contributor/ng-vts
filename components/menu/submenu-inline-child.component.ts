@@ -18,7 +18,7 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { collapseMotion } from '@ui-vts/ng-vts/core/animation';
+import { accordionMotion } from '@ui-vts/ng-vts/core/animation';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -26,7 +26,7 @@ import { VtsMenuModeType } from './menu.types';
 
 @Component({
   selector: '[vts-submenu-inline-child]',
-  animations: [collapseMotion],
+  animations: [accordionMotion],
   exportAs: 'vtsSubmenuInlineChild',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,7 +35,7 @@ import { VtsMenuModeType } from './menu.types';
   `,
   host: {
     '[class.vts-menu-rtl]': `dir === 'rtl'`,
-    '[@collapseMotion]': 'expandState'
+    '[@accordionMotion]': 'expandState'
   }
 })
 export class VtsSubmenuInlineChildComponent implements OnDestroy, OnInit, OnChanges {

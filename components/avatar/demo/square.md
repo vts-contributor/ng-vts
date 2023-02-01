@@ -1,5 +1,5 @@
 ---
 order: 1
 title:
-  en-US: Flush
+  en-US: Square
 ---
