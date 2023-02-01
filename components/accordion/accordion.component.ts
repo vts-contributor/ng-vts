@@ -44,13 +44,14 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'accordion';
 export class VtsAccordionComponent implements OnDestroy, OnInit {
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
   static ngAcceptInputType_vtsFlush: BooleanInput;
+  static ngAcceptInputType_vtsMultiple: BooleanInput;
 
   @Input() vtsExpandIconPosition: 'left' | 'right' = 'right';
   @Input() @WithConfig() @InputBoolean() vtsFlush = false;
-
+  @Input() vtsMultiple: boolean = true;
+  
   dir: Direction = 'ltr';
-  vtsAccordion: boolean = true;
-  private listOfVtsCollapsePanelComponent: VtsAccordionPanelComponent[] = [];
+  private listOfVtsAccordionPanelComponent: VtsAccordionPanelComponent[] = [];
   private destroy$ = new Subject();
   constructor(
     public vtsConfigService: VtsConfigService,
@@ -79,19 +80,19 @@ export class VtsAccordionComponent implements OnDestroy, OnInit {
   }
 
   addPanel(value: VtsAccordionPanelComponent): void {
-    this.listOfVtsCollapsePanelComponent.push(value);
+    this.listOfVtsAccordionPanelComponent.push(value);
   }
 
   removePanel(value: VtsAccordionPanelComponent): void {
-    this.listOfVtsCollapsePanelComponent.splice(
-      this.listOfVtsCollapsePanelComponent.indexOf(value),
+    this.listOfVtsAccordionPanelComponent.splice(
+      this.listOfVtsAccordionPanelComponent.indexOf(value),
       1
     );
   }
 
   click(collapse: VtsAccordionPanelComponent): void {
-    if (this.vtsAccordion && !collapse.vtsActive) {
-      this.listOfVtsCollapsePanelComponent
+    if (this.vtsMultiple && !collapse.vtsActive) {
+      this.listOfVtsAccordionPanelComponent
         .filter(item => item !== collapse)
         .forEach(item => {
           if (item.vtsActive && !item.vtsDisabled) {

@@ -4,15 +4,15 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { VtsCollapsePanelComponent } from './accordion-panel.component';
-import { VtsCollapseComponent } from './accordion.component';
-import { VtsCollapseModule } from './accordion.module';
+import { VtsAccordionPanelComponent } from './accordion-panel.component';
+import { VtsAccordionComponent } from './accordion.component';
+import { VtsAccordionModule } from './accordion.module';
 
 describe('collapse', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [BidiModule, VtsCollapseModule, NoopAnimationsModule],
+        imports: [BidiModule, VtsAccordionModule, NoopAnimationsModule],
         declarations: [
           VtsTestCollapseBasicComponent,
           VtsTestCollapseTemplateComponent,
@@ -33,8 +33,8 @@ describe('collapse', () => {
       fixture = TestBed.createComponent(VtsTestCollapseBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      collapse = fixture.debugElement.query(By.directive(VtsCollapseComponent));
-      panels = fixture.debugElement.queryAll(By.directive(VtsCollapsePanelComponent));
+      collapse = fixture.debugElement.query(By.directive(VtsAccordionComponent));
+      panels = fixture.debugElement.queryAll(By.directive(VtsAccordionPanelComponent));
     });
     it('should className correct', () => {
       fixture.detectChanges();
@@ -160,7 +160,7 @@ describe('collapse', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(VtsTestCollapseTemplateComponent);
       fixture.detectChanges();
-      panels = fixture.debugElement.queryAll(By.directive(VtsCollapsePanelComponent));
+      panels = fixture.debugElement.queryAll(By.directive(VtsAccordionPanelComponent));
     });
     it('should header work', () => {
       fixture.detectChanges();
@@ -176,7 +176,7 @@ describe('collapse', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(VtsTestCollapseIconComponent);
       fixture.detectChanges();
-      panels = fixture.debugElement.queryAll(By.directive(VtsCollapsePanelComponent));
+      panels = fixture.debugElement.queryAll(By.directive(VtsAccordionPanelComponent));
     });
     it('should icon work', () => {
       fixture.detectChanges();
@@ -189,7 +189,7 @@ describe('collapse', () => {
   describe('RTL', () => {
     it('should className correct on dir change', () => {
       const fixture = TestBed.createComponent(VtsTestCollapseRtlComponent);
-      const collapse = fixture.debugElement.query(By.directive(VtsCollapseComponent));
+      const collapse = fixture.debugElement.query(By.directive(VtsAccordionComponent));
       fixture.detectChanges();
       expect(collapse.nativeElement!.classList).toContain('vts-collapse-rtl');
 
@@ -206,7 +206,7 @@ describe('collapse', () => {
   template: `
     <ng-template #headerTemplate>template</ng-template>
     <vts-collapse [vtsAccordion]="accordion" [vtsBordered]="bordered">
-      <vts-collapse-panel
+      <vts-accordion-panel
         [(vtsActive)]="active01"
         (vtsActiveChange)="active01Change($event)"
         [vtsHeader]="header"
@@ -214,14 +214,14 @@ describe('collapse', () => {
         [vtsExtra]="showExtra"
       >
         <p>Panel01</p>
-      </vts-collapse-panel>
-      <vts-collapse-panel
+      </vts-accordion-panel>
+      <vts-accordion-panel
         [(vtsActive)]="active02"
         (vtsActiveChange)="active02Change($event)"
         [vtsDisabled]="disabled"
       >
         <p>Panel02</p>
-      </vts-collapse-panel>
+      </vts-accordion-panel>
     </vts-collapse>
   `
 })
@@ -244,9 +244,9 @@ export class VtsTestCollapseBasicComponent {
   template: `
     <ng-template #headerTemplate>template</ng-template>
     <vts-collapse>
-      <vts-collapse-panel [vtsHeader]="headerTemplate">
+      <vts-accordion-panel [vtsHeader]="headerTemplate">
         <p>Panel01</p>
-      </vts-collapse-panel>
+      </vts-accordion-panel>
     </vts-collapse>
   `
 })
@@ -255,15 +255,15 @@ export class VtsTestCollapseTemplateComponent {}
 @Component({
   template: `
     <vts-collapse>
-      <vts-collapse-panel>
+      <vts-accordion-panel>
         <p>Panel01</p>
-      </vts-collapse-panel>
-      <vts-collapse-panel [vtsExpandedIcon]="'double-right'">
+      </vts-accordion-panel>
+      <vts-accordion-panel [vtsExpandedIcon]="'double-right'">
         <p>Panel02</p>
-      </vts-collapse-panel>
-      <vts-collapse-panel [vtsExpandedIcon]="expandedIcon">
+      </vts-accordion-panel>
+      <vts-accordion-panel [vtsExpandedIcon]="expandedIcon">
         <p>Panel01</p>
-      </vts-collapse-panel>
+      </vts-accordion-panel>
       <ng-template #expandedIcon>
         <i vts-icon vtsType="caret-right" class="vts-collapse-arrow"></i>
       </ng-template>

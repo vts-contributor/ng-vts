@@ -23,11 +23,12 @@ import {
   NgStyleInterface,
   NumberInput,
   VtsShapeSCType,
-  VtsSizeLDSType
 } from '@ui-vts/ng-vts/core/types';
 import { InputNumber } from '@ui-vts/ng-vts/core/util';
 
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'avatar';
+
+export type VtsAvatarSize = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 @Component({
   selector: 'vts-avatar',
@@ -46,8 +47,12 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'avatar';
     </span>
   `,
   host: {
-    '[class.vts-avatar-lg]': `vtsSize === 'lg'`,
+    '[class.vts-avatar-xxs]': `vtsSize === 'xxs'`,
+    '[class.vts-avatar-xs]': `vtsSize === 'xs'`,
     '[class.vts-avatar-sm]': `vtsSize === 'sm'`,
+    '[class.vts-avatar-md]': `vtsSize === 'md'`,
+    '[class.vts-avatar-lg]': `vtsSize === 'lg'`,
+    '[class.vts-avatar-xl]': `vtsSize === 'xl'`,
     '[class.vts-avatar-square]': `vtsShape === 'square'`,
     '[class.vts-avatar-circle]': `vtsShape === 'circle'`,
     '[class.vts-avatar-icon]': `vtsIcon`,
@@ -55,7 +60,6 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'avatar';
     '[style.width]': 'customSize',
     '[style.height]': 'customSize',
     '[style.line-height]': 'customSize',
-    // vtsSize type is number when customSize is true
     '[style.font-size.px]': '(hasIcon && customSize) ? $any(vtsSize) / 2 : null'
   },
   preserveWhitespaces: false,
@@ -67,7 +71,7 @@ export class VtsAvatarComponent implements OnChanges {
 
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
   @Input() @WithConfig() vtsShape: VtsShapeSCType = 'circle';
-  @Input() @WithConfig() vtsSize: VtsSizeLDSType | number = 'md';
+  @Input() @WithConfig() vtsSize: VtsAvatarSize | number = 'xs';
   @Input() @WithConfig() @InputNumber() vtsGap = 4;
   @Input() vtsText?: string;
   @Input() vtsSrc?: string;
