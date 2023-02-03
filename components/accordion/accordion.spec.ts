@@ -9,20 +9,18 @@ import { VtsAccordionComponent } from './accordion.component';
 import { VtsAccordionModule } from './accordion.module';
 
 describe('collapse', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [BidiModule, VtsAccordionModule, NoopAnimationsModule],
-        declarations: [
-          VtsTestCollapseBasicComponent,
-          VtsTestCollapseTemplateComponent,
-          VtsTestCollapseIconComponent,
-          VtsTestCollapseRtlComponent
-        ]
-      });
-      TestBed.compileComponents();
-    })
-  );
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [BidiModule, VtsAccordionModule, NoopAnimationsModule],
+      declarations: [
+        VtsTestCollapseBasicComponent,
+        VtsTestCollapseTemplateComponent,
+        VtsTestCollapseIconComponent,
+        VtsTestCollapseRtlComponent
+      ]
+    });
+    TestBed.compileComponents();
+  }));
   describe('collapse basic', () => {
     let fixture: ComponentFixture<VtsTestCollapseBasicComponent>;
     let testComponent: VtsTestCollapseBasicComponent;

@@ -1,19 +1,21 @@
 import { VtsSkeletonModule } from '@ui-vts/ng-vts/skeleton';
-import { VtsListModule } from '@ui-vts/ng-vts/list';
 import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
-import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
 import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+import { VtsCardModule } from '@ui-vts/ng-vts/card';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 
 export const moduleList = [
     VtsSkeletonModule,
-    VtsListModule,
     VtsSwitchModule,
     VtsIconModule,
     VtsButtonModule,
     VtsRadioModule,
-    VtsDividerModule,
-    VtsSpaceModule
+    VtsSpaceModule,
+    VtsGridModule,
+    VtsCardModule,
+    VtsInputNumberModule
 ];

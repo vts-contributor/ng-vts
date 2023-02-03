@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-image-preview-group',
   template: `
-    <vts-image-group> 
+    <vts-image-group>
       <img
         vts-image
         width="200px"

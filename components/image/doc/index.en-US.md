@@ -16,6 +16,7 @@ import { VtsImageModule } from '@ui-vts/ng-vts/image';
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | vtsSrc | Image path | `string` | |
+| vtsShape | Image shape | One of `square` `rounded` `circle` | `square` |
 | vtsFallback | Load failure fault-tolerant src | `string` |  |
 | vtsPlaceholder | Load placeholder src | `string` |  |
 | vtsPreview | Whether to enable preview | `boolean` | `false` |

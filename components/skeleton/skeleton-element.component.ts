@@ -7,7 +7,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   Directive,
-  ElementRef,
   Input,
   OnChanges,
   SimpleChanges
@@ -23,17 +22,20 @@ import {
 @Directive({
   selector: 'vts-skeleton-element',
   host: {
-    '[class.vts-skeleton-active]': 'vtsActive'
+    '[class.vts-skeleton]': 'true',
+    '[class.vts-skeleton-element]': 'true',
+    '[class.vts-skeleton-active]': 'vtsActive',
+    '[class.vts-skeleton-type-button]': 'vtsType === "button"',
+    '[class.vts-skeleton-type-input]': 'vtsType === "input"',
+    '[class.vts-skeleton-type-avatar]': 'vtsType === "avatar"',
+    '[class.vts-skeleton-type-image]': 'vtsType === "image"'
   }
 })
 export class VtsSkeletonElementDirective {
   @Input() vtsActive: boolean = false;
   @Input() vtsType!: 'button' | 'input' | 'avatar' | 'image';
 
-  constructor(private elementRef: ElementRef) {
-    // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-skeleton', 'vts-skeleton-element');
-  }
+  constructor() {}
 }
 
 @Component({
@@ -42,16 +44,20 @@ export class VtsSkeletonElementDirective {
   template: `
     <span
       class="vts-skeleton-button"
-      [class.vts-skeleton-button-round]="vtsShape === 'round'"
+      [class.vts-skeleton-button-square]="vtsShape === 'square'"
+      [class.vts-skeleton-button-rounded]="vtsShape === 'rounded'"
       [class.vts-skeleton-button-circle]="vtsShape === 'circle'"
-      [class.vts-skeleton-button-lg]="vtsSize === 'large'"
-      [class.vts-skeleton-button-sm]="vtsSize === 'small'"
+      [class.vts-skeleton-button-xs]="vtsSize === 'xs'"
+      [class.vts-skeleton-button-sm]="vtsSize === 'sm'"
+      [class.vts-skeleton-button-md]="vtsSize === 'md'"
+      [class.vts-skeleton-button-lg]="vtsSize === 'lg'"
+      [class.vts-skeleton-button-xl]="vtsSize === 'xl'"
     ></span>
   `
 })
 export class VtsSkeletonElementButtonComponent {
-  @Input() vtsShape: VtsSkeletonButtonShape = 'default';
-  @Input() vtsSize: VtsSkeletonButtonSize = 'default';
+  @Input() vtsShape: VtsSkeletonButtonShape = 'square';
+  @Input() vtsSize: VtsSkeletonButtonSize = 'md';
 }
 
 @Component({
@@ -61,16 +67,21 @@ export class VtsSkeletonElementButtonComponent {
     <span
       class="vts-skeleton-avatar"
       [class.vts-skeleton-avatar-square]="vtsShape === 'square'"
+      [class.vts-skeleton-avatar-rounded]="vtsShape === 'rounded'"
       [class.vts-skeleton-avatar-circle]="vtsShape === 'circle'"
-      [class.vts-skeleton-avatar-lg]="vtsSize === 'large'"
-      [class.vts-skeleton-avatar-sm]="vtsSize === 'small'"
+      [class.vts-skeleton-avatar-xl]="vtsSize === 'xl'"
+      [class.vts-skeleton-avatar-lg]="vtsSize === 'lg'"
+      [class.vts-skeleton-avatar-md]="vtsSize === 'md'"
+      [class.vts-skeleton-avatar-sm]="vtsSize === 'sm'"
+      [class.vts-skeleton-avatar-xs]="vtsSize === 'xs'"
+      [class.vts-skeleton-avatar-xxs]="vtsSize === 'xxs'"
       [ngStyle]="styleMap"
     ></span>
   `
 })
 export class VtsSkeletonElementAvatarComponent implements OnChanges {
   @Input() vtsShape: VtsSkeletonAvatarShape = 'circle';
-  @Input() vtsSize: VtsSkeletonAvatarSize = 'default';
+  @Input() vtsSize: VtsSkeletonAvatarSize = 'xs';
 
   styleMap = {};
 
@@ -94,13 +105,15 @@ export class VtsSkeletonElementAvatarComponent implements OnChanges {
   template: `
     <span
       class="vts-skeleton-input"
-      [class.vts-skeleton-input-lg]="vtsSize === 'large'"
-      [class.vts-skeleton-input-sm]="vtsSize === 'small'"
+      [class.vts-skeleton-input-sm]="vtsSize === 'sm'"
+      [class.vts-skeleton-input-md]="vtsSize === 'md'"
+      [class.vts-skeleton-input-lg]="vtsSize === 'lg'"
+      [class.vts-skeleton-input-xl]="vtsSize === 'xl'"
     ></span>
   `
 })
 export class VtsSkeletonElementInputComponent {
-  @Input() vtsSize: VtsSkeletonInputSize = 'default';
+  @Input() vtsSize: VtsSkeletonInputSize = 'md';
 }
 
 @Component({
