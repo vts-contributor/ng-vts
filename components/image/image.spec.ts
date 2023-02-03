@@ -426,12 +426,7 @@ describe('Preview', () => {
 
 @Component({
   template: `
-    <img
-      vts-image
-      [vtsSrc]="src"
-      [vtsPlaceholder]="placeholder"
-      [vtsPreview]="!disablePreview"
-    />
+    <img vts-image [vtsSrc]="src" [vtsPlaceholder]="placeholder" [vtsPreview]="!disablePreview" />
   `
 })
 export class TestImagePlaceholderComponent {

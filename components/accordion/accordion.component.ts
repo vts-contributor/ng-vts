@@ -49,7 +49,7 @@ export class VtsAccordionComponent implements OnDestroy, OnInit {
   @Input() vtsExpandIconPosition: 'left' | 'right' = 'right';
   @Input() @WithConfig() @InputBoolean() vtsFlush = false;
   @Input() vtsMultiple: boolean = true;
-  
+
   dir: Direction = 'ltr';
   private listOfVtsAccordionPanelComponent: VtsAccordionPanelComponent[] = [];
   private destroy$ = new Subject();

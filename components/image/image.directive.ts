@@ -26,7 +26,7 @@ import { VtsImageService } from './image.service';
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'image';
 
 export type ImageStatusType = 'error' | 'loading' | 'normal';
-export type VtsImageType = 'rounded' | 'circle' | 'square'
+export type VtsImageShape = 'rounded' | 'circle' | 'square';
 
 @Directive({
   selector: 'img[vts-image]',
@@ -34,9 +34,9 @@ export type VtsImageType = 'rounded' | 'circle' | 'square'
   host: {
     '(click)': 'onPreview()',
     '[class.vts-image]': 'true',
-    '[class.vts-image-square]': 'vtsType === "square"',
-    '[class.vts-image-circle]': 'vtsType === "circle"',
-    '[class.vts-image-rounded]': 'vtsType === "rounded"',
+    '[class.vts-image-square]': 'vtsShape === "square"',
+    '[class.vts-image-circle]': 'vtsShape === "circle"',
+    '[class.vts-image-rounded]': 'vtsShape === "rounded"',
     '[class.vts-image-thumbnail]': 'vtsThumbnail',
     '[style.objectFit]': 'vtsFit'
   }
@@ -51,10 +51,9 @@ export class VtsImageDirective implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() @WithConfig() vtsPreview: boolean = false;
   @Input() @WithConfig() vtsFallback: string | null = null;
   @Input() @WithConfig() vtsPlaceholder: string | null = null;
-  @Input() vtsType: VtsImageType = 'square';
+  @Input() vtsShape: VtsImageShape = 'square';
   @Input() vtsFit: string | null = null;
   @Input() @InputBoolean() vtsThumbnail: boolean = false;
-
 
   dir?: Direction;
   backLoadImage!: HTMLImageElement;
@@ -67,7 +66,7 @@ export class VtsImageDirective implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     public vtsConfigService: VtsConfigService,
-    private elementRef: ElementRef,
+    public elementRef: ElementRef,
     private vtsImageService: VtsImageService,
     protected cdr: ChangeDetectorRef,
     @Optional() private parentGroup: VtsImageGroupComponent,

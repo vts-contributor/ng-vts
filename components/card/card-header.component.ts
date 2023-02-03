@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input, Optional, ViewEncapsulation, OnInit, OnChanges, SimpleChanges, ContentChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  Optional,
+  ViewEncapsulation,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  ContentChild
+} from '@angular/core';
 import { VtsCardComponent } from './card.component';
+import { BooleanInput } from '@ui-vts/ng-vts/core/types';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
 @Component({
   selector: 'vts-card-header-title',
@@ -47,27 +59,29 @@ export class VtsCardHeaderExtraComponent {}
     </div>
   `,
   host: {
-    '[class.vts-card-head]': 'true'
+    '[class.vts-card-head]': 'true',
+    '[class.vts-card-head-bordered]': 'vtsBordered'
   }
 })
 export class VtsCardHeaderComponent implements OnInit, OnChanges {
-  @Input() vtsTitle?: string;
+  static ngAcceptInputType_vtsBordered: BooleanInput;
+
+  @Input() vtsTitle?: string | null;
+  @Input() @InputBoolean() vtsBordered?: boolean = true;
   @ContentChild(VtsCardHeaderTitleComponent) titleTemplate?: VtsCardHeaderTitleComponent;
   @ContentChild(VtsCardHeaderExtraComponent) extraTemplate?: VtsCardHeaderExtraComponent;
 
-  constructor(
-    @Optional() private parent: VtsCardComponent,
-  ) {}
+  constructor(@Optional() private parent: VtsCardComponent) {}
 
   ngOnInit(): void {
-    this.setParentProperty()
+    this.setParentProperty();
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
-    this.setParentProperty()
+    this.setParentProperty();
   }
 
   setParentProperty() {
-    this.parent.cdr.markForCheck()
+    this.parent.cdr.markForCheck();
   }
 }

@@ -21,7 +21,9 @@ export class VtsImagePreviewRef {
         filter(
           event =>
             (this.config.vtsKeyboard as boolean) &&
-            (event.keyCode === ESCAPE || event.keyCode === LEFT_ARROW || event.keyCode === RIGHT_ARROW) &&
+            (event.keyCode === ESCAPE ||
+              event.keyCode === LEFT_ARROW ||
+              event.keyCode === RIGHT_ARROW) &&
             !hasModifierKey(event)
         )
       )

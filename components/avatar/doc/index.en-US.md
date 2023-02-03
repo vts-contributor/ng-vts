@@ -17,8 +17,8 @@ import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
 | -------- | ----------- | ---- | ------- |
 | vtsIcon | The `VtsIcon` type for an icon avatar | `string` | |
 | vtsText | Text content for text avatar | `string` | |
-| vtsShape | The shape of avatar | `'circle' \| 'square'` | `'circle'` |
-| vtsSize | The size of the avatar | One of `xxs` `xs` `sm` `md` `lg` `xl` | `xs`
+| vtsShape | The shape of avatar | One of `square` `rounded` `circle` | `circle` |
+| vtsSize | The size of the avatar | `number` or one of `xxs` `xs` `sm` `md` `lg` `xl` | `xs`
 | vtsGap | Letter type unit distance between left and right sides | `number` | `4` |
 | vtsSrc | The image src for an image avatar | `string` | |
 | vtsSrcSet | Srcset property to use for different screen resolutions | `string` |  |

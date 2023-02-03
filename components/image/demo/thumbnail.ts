@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       width="400px"
       height="200px"
       vtsSrc="https://picsum.photos/400/200?v=5"
-      vtsType="square"
+      vtsShape="square"
       vtsThumbnail
       alt=""
     />
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
       width="400px"
       height="200px"
       vtsSrc="https://picsum.photos/400/200?v=6"
-      vtsType="rounded"
+      vtsShape="rounded"
       vtsThumbnail
       alt=""
     />
@@ -29,17 +29,18 @@ import { Component } from '@angular/core';
       width="200px"
       height="200px"
       vtsSrc="https://picsum.photos/200/200?v=7"
-      vtsType="circle"
+      vtsShape="circle"
       vtsThumbnail
       alt=""
     />
   `,
   styles: [
-    `p {
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }`
+    `
+      p {
+        margin-top: 16px;
+        margin-bottom: 8px;
+      }
+    `
   ]
 })
-export class VtsDemoImageThumbnailComponent {
-}
+export class VtsDemoImageThumbnailComponent {}

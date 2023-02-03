@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       width="400px"
       height="200px"
       vtsSrc="https://picsum.photos/400/200?v=1"
-      vtsType="square"
+      vtsShape="square"
       alt=""
     />
     <p>Rounded</p>
@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
       width="400px"
       height="200px"
       vtsSrc="https://picsum.photos/400/200?v=2"
-      vtsType="rounded"
+      vtsShape="rounded"
       alt=""
     />
     <p>Circle</p>
@@ -27,16 +27,17 @@ import { Component } from '@angular/core';
       width="200px"
       height="200px"
       vtsSrc="https://picsum.photos/200/200?v=3"
-      vtsType="circle"
+      vtsShape="circle"
       alt=""
     />
   `,
   styles: [
-    `p {
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }`
+    `
+      p {
+        margin-top: 16px;
+        margin-bottom: 8px;
+      }
+    `
   ]
 })
-export class VtsDemoImageTypeComponent {
-}
+export class VtsDemoImageTypeComponent {}

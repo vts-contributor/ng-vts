@@ -55,9 +55,12 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'accordionPanel';
 
       <ng-container *ngIf="vtsShowArrow">
         <ng-container *vtsStringTemplateOutlet="vtsExpandedIcon; let expandedIcon">
-          <i vts-icon [vtsType]="expandedIcon ? expandedIcon : 'ArrowDownOutline'"
-             class="vts-accordion-arrow"
-             [vtsRotate]="vtsActive ? 0 : 180"></i>
+          <i
+            vts-icon
+            [vtsType]="expandedIcon ? expandedIcon : 'ArrowDownOutline'"
+            class="vts-accordion-arrow"
+            [vtsRotate]="vtsActive ? 0 : 180"
+          ></i>
         </ng-container>
       </ng-container>
     </div>
