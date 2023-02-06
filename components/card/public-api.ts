@@ -5,4 +5,5 @@ export * from './card-meta.component';
 
 export * from './card-thumbnail.component';
 export * from './card-header.component';
+export * from './card-body.component';
 export * from './card-footer.component';

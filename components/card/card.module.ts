@@ -26,6 +26,7 @@ import {
 } from './card-meta.component';
 import { VtsCardThumbnailComponent } from './card-thumbnail.component';
 import { VtsCardComponent } from './card.component';
+import { VtsCardBodyComponent } from './card-body.component';
 
 @NgModule({
   imports: [CommonModule, VtsOutletModule, VtsTypographyModule, VtsImageModule, VtsIconModule],
@@ -36,6 +37,7 @@ import { VtsCardComponent } from './card.component';
     VtsCardHeaderComponent,
     VtsCardHeaderTitleComponent,
     VtsCardHeaderExtraComponent,
+    VtsCardBodyComponent,
     VtsCardMetaComponent,
     VtsCardMetaAvatarComponent,
     VtsCardMetaDescriptionComponent,
@@ -52,6 +54,7 @@ import { VtsCardComponent } from './card.component';
     VtsCardHeaderComponent,
     VtsCardHeaderTitleComponent,
     VtsCardHeaderExtraComponent,
+    VtsCardBodyComponent,
     VtsCardMetaComponent,
     VtsCardMetaAvatarComponent,
     VtsCardMetaDescriptionComponent,
