@@ -47,6 +47,7 @@ function generateNav(componentsDocMap) {
     "icon",
     "image",
     "input",
+    "panel",
     "radio",
     "result",
     "select",

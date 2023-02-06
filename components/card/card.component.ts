@@ -22,6 +22,7 @@ import { BooleanInput, NgStyleInterface, VtsSizeDSType } from '@ui-vts/ng-vts/co
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { VtsCardBodyComponent } from './card-body.component';
 import { VtsCardFooterComponent } from './card-footer.component';
 import { VtsCardHeaderComponent } from './card-header.component';
 import { VtsCardMetaAvatarComponent, VtsCardMetaComponent } from './card-meta.component';
@@ -48,12 +49,9 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'card';
           <ng-container *ngIf="vtsThumbnail && vtsThumbnailPosition === 'top'">
             <ng-container *ngTemplateOutlet="thumbnail"></ng-container>
           </ng-container>
-          <div class="vts-card-body" [ngStyle]="vtsBodyStyle">
-            <ng-container *ngIf="vtsMeta">
-              <ng-container *ngTemplateOutlet="meta"></ng-container>
-            </ng-container>
-            <ng-content></ng-content>
-          </div>
+          <ng-container *ngIf="vtsBody; else defaultBody">
+            <ng-container *ngTemplateOutlet="customBody"></ng-container>
+          </ng-container>
           <ng-container *ngIf="vtsThumbnail && vtsThumbnailPosition === 'bottom'">
             <ng-container *ngTemplateOutlet="thumbnail"></ng-container>
           </ng-container>
@@ -72,6 +70,16 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'card';
     </ng-template>
     <ng-template #header>
       <ng-content select="vts-card-header"></ng-content>
+    </ng-template>
+    <ng-template #customBody>
+      <ng-content select="vts-card-body"></ng-content>
+    </ng-template>
+    <ng-template #defaultBody>
+      <vts-card-body [vtsMeta]="vtsMeta && meta" [vtsContent]="content">
+        <ng-template #content>
+          <ng-content></ng-content>
+        </ng-template>
+      </vts-card-body>
     </ng-template>
     <ng-template #meta>
       <ng-content select="vts-card-meta"></ng-content>
@@ -119,6 +127,7 @@ export class VtsCardComponent implements OnDestroy, OnInit {
   @ContentChild(VtsCardMetaComponent) vtsMeta?: VtsCardMetaComponent;
   @ContentChild(VtsCardFooterComponent) vtsFooter?: VtsCardFooterComponent;
   @ContentChild(VtsCardMetaAvatarComponent) vtsMetaAvatar?: VtsCardMetaAvatarComponent;
+  @ContentChild(VtsCardBodyComponent) vtsBody?: VtsCardBodyComponent;
 
   private destroy$ = new Subject();
 
