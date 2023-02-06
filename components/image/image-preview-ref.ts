@@ -2,7 +2,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
-import { ESCAPE, hasModifierKey } from '@angular/cdk/keycodes';
+import { ESCAPE, hasModifierKey, LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { filter, take } from 'rxjs/operators';
 
@@ -18,17 +18,26 @@ export class VtsImagePreviewRef {
     overlayRef
       .keydownEvents()
       .pipe(
-        filter(event => {
-          return (
+        filter(
+          event =>
             (this.config.vtsKeyboard as boolean) &&
-            event.keyCode === ESCAPE &&
+            (event.keyCode === ESCAPE ||
+              event.keyCode === LEFT_ARROW ||
+              event.keyCode === RIGHT_ARROW) &&
             !hasModifierKey(event)
-          );
-        })
+        )
       )
       .subscribe(event => {
         event.preventDefault();
-        this.close();
+        if (event.keyCode === ESCAPE) {
+          this.close();
+        }
+        if (event.keyCode === LEFT_ARROW) {
+          this.prev();
+        }
+        if (event.keyCode === RIGHT_ARROW) {
+          this.next();
+        }
       });
 
     overlayRef.detachments().subscribe(() => {

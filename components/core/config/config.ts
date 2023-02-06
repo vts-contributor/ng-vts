@@ -32,8 +32,8 @@ export interface VtsConfig {
   carousel?: CarouselConfig;
   cascader?: CascaderConfig;
   codeEditor?: CodeEditorConfig;
-  collapse?: CollapseConfig;
-  collapsePanel?: CollapsePanelConfig;
+  accordion?: AccordionConfig;
+  accordionPanel?: AccordionPanelConfig;
   datePicker?: DatePickerConfig;
   descriptions?: DescriptionsConfig;
   drawer?: DrawerConfig;
@@ -142,13 +142,13 @@ export interface CascaderConfig {
   vtsBackdrop?: boolean;
 }
 
-export interface CollapseConfig {
+export interface AccordionConfig {
   vtsAccordion?: boolean;
   vtsBordered?: boolean;
   vtsGhost?: boolean;
 }
 
-export interface CollapsePanelConfig {
+export interface AccordionPanelConfig {
   vtsShowArrow?: boolean;
 }
 
@@ -313,7 +313,6 @@ export interface TypographyConfig {
 export interface ImageConfig {
   vtsFallback?: string;
   vtsPlaceholder?: string;
-  vtsDisablePreview?: string;
   vtsCloseOnNavigation?: boolean;
   vtsDirection?: Direction;
 }

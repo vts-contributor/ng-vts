@@ -7,32 +7,56 @@ import { BidiModule } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
+import { VtsTypographyModule } from '@ui-vts/ng-vts/typography';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsImageModule } from '@ui-vts/ng-vts/image';
+import { VtsCardFooterComponent } from './card-footer.component';
 
-import { VtsCardGridDirective } from './card-grid.directive';
-import { VtsCardGroupComponent } from './card-group.component';
+import {
+  VtsCardHeaderComponent,
+  VtsCardHeaderExtraComponent,
+  VtsCardHeaderTitleComponent
+} from './card-header.component';
 import { VtsCardLoadingComponent } from './card-loading.component';
-import { VtsCardMetaComponent } from './card-meta.component';
-import { VtsCardTabComponent } from './card-tab.component';
+import {
+  VtsCardMetaAvatarComponent,
+  VtsCardMetaComponent,
+  VtsCardMetaDescriptionComponent,
+  VtsCardMetaTitleComponent
+} from './card-meta.component';
+import { VtsCardThumbnailComponent } from './card-thumbnail.component';
 import { VtsCardComponent } from './card.component';
 
 @NgModule({
-  imports: [CommonModule, VtsOutletModule],
+  imports: [CommonModule, VtsOutletModule, VtsTypographyModule, VtsImageModule, VtsIconModule],
   declarations: [
     VtsCardComponent,
-    VtsCardGridDirective,
-    VtsCardMetaComponent,
     VtsCardLoadingComponent,
-    VtsCardTabComponent,
-    VtsCardGroupComponent
+    VtsCardThumbnailComponent,
+    VtsCardHeaderComponent,
+    VtsCardHeaderTitleComponent,
+    VtsCardHeaderExtraComponent,
+    VtsCardMetaComponent,
+    VtsCardMetaAvatarComponent,
+    VtsCardMetaDescriptionComponent,
+    VtsCardMetaTitleComponent,
+    VtsCardFooterComponent
   ],
   exports: [
     BidiModule,
     VtsCardComponent,
-    VtsCardGridDirective,
-    VtsCardMetaComponent,
     VtsCardLoadingComponent,
-    VtsCardTabComponent,
-    VtsCardGroupComponent
+
+    VtsTypographyModule,
+    VtsCardThumbnailComponent,
+    VtsCardHeaderComponent,
+    VtsCardHeaderTitleComponent,
+    VtsCardHeaderExtraComponent,
+    VtsCardMetaComponent,
+    VtsCardMetaAvatarComponent,
+    VtsCardMetaDescriptionComponent,
+    VtsCardMetaTitleComponent,
+    VtsCardFooterComponent
   ]
 })
 export class VtsCardModule {}

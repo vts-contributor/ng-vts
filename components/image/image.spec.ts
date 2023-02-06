@@ -172,41 +172,6 @@ describe('Preview', () => {
     fixture.detectChanges();
   }
 
-  describe('vtsDisablePreview', () => {
-    it('should vtsDisablePreview work outside group', fakeAsync(() => {
-      context.firstSrc = QUICK_SRC;
-      context.disablePreview = true;
-      fixture.detectChanges();
-      context.vtsImage.getElement().nativeElement.click();
-      tickChanges();
-      previewElement = getPreviewElement();
-      expect(previewElement).not.toBeTruthy();
-      context.disablePreview = false;
-      fixture.detectChanges();
-      context.vtsImage.getElement().nativeElement.click();
-      tickChanges();
-      previewElement = getPreviewElement();
-      expect(previewElement).toBeTruthy();
-    }));
-
-    it('should vtsDisablePreview work inside group', fakeAsync(() => {
-      context.firstSrc = QUICK_SRC;
-      context.disablePreview = true;
-      fixture.detectChanges();
-      const image = debugElement.nativeElement.querySelector('img');
-      image.click();
-      tickChanges();
-      previewElement = getPreviewElement();
-      expect(previewElement).not.toBeTruthy();
-      context.disablePreview = false;
-      fixture.detectChanges();
-      image.click();
-      tickChanges();
-      previewElement = getPreviewElement();
-      expect(previewElement).toBeTruthy();
-    }));
-  });
-
   describe('ImagePreview', () => {
     it('should rotate, zoom and close work', fakeAsync(() => {
       context.firstSrc = QUICK_SRC;
@@ -461,12 +426,7 @@ describe('Preview', () => {
 
 @Component({
   template: `
-    <img
-      vts-image
-      [vtsSrc]="src"
-      [vtsPlaceholder]="placeholder"
-      [vtsDisablePreview]="disablePreview"
-    />
+    <img vts-image [vtsSrc]="src" [vtsPlaceholder]="placeholder" [vtsPreview]="!disablePreview" />
   `
 })
 export class TestImagePlaceholderComponent {
@@ -490,10 +450,10 @@ export class TestImageFallbackComponent {
 @Component({
   template: `
     <vts-image-group>
-      <img vts-image [vtsSrc]="firstSrc" [vtsDisablePreview]="disablePreview" />
-      <img vts-image [vtsSrc]="secondSrc" [vtsDisablePreview]="disablePreview" />
+      <img vts-image [vtsSrc]="firstSrc" [vtsPreview]="!disablePreview" />
+      <img vts-image [vtsSrc]="secondSrc" [vtsPreview]="!disablePreview" />
     </vts-image-group>
-    <img vts-image [vtsSrc]="firstSrc" [vtsDisablePreview]="disablePreview" />
+    <img vts-image [vtsSrc]="firstSrc" [vtsPreview]="!disablePreview" />
   `
 })
 export class TestImagePreviewGroupComponent {

@@ -3,103 +3,77 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-card-basic',
   template: `
-    <div vts-row [vtsGutter]="[16, 16]">
-      <div vts-col vtsSpan="6">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-        >
-          <vts-card-meta
-            vtsTitle="Card title"
-            vtsDescription="Lorem ipsum dolor sit"
-            [vtsAvatar]="avatarTemplate"
-          ></vts-card-meta>
-          <div>$15.548</div>
-          <div>Expense Account</div>
-          <button style="width: 100%; margin-top: 0.5rem;" vts-button vtsType="primary">See detail</button>
-        </vts-card>
-        <ng-template #avatarTemplate>
-          <vts-avatar
-            vtsSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          ></vts-avatar>
-        </ng-template>
-      </div>
+    <vts-row [vtsGutter]="[32, 32]">
+      <div vts-col vtsFlex="400px">
+        <p>Using properties (With partial templates)</p>
+        <vts-card>
+          <vts-card-header vtsTitle="Header Title">
+            <vts-card-header-extra>
+              <button vts-button vtsType="text">
+                <i vts-icon vtsType="Close"></i>
+              </button>
+            </vts-card-header-extra>
+          </vts-card-header>
+          <vts-card-meta vtsTitle="Meta Title" vtsDescription="Meta Description">
+            <vts-card-meta-avatar [vtsSize]="50" vtsText="xxs"></vts-card-meta-avatar>
+          </vts-card-meta>
 
-      <div vts-col vtsSpan="6">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-          vtsCoverPosition="top"
-          [vtsCover]="coverTemplate"
-        >
-          <vts-card-meta
-            vtsTitle="Card title"
-            vtsDescription="Lorem ipsum dolor sit amet, consectu adipis scling elit. Amet sed vel leo erati."
-          ></vts-card-meta>
-          <div style="display: flex; justify-content: flex-end;">
-            <button vts-button vtsType="primary">Submit</button>
+          <div>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+            has been the industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley of type and scrambled it to make a type specimen book. It has
+            survived not only five centuries
           </div>
-        </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://www.primefaces.org/primeng/assets/showcase/images/galleria/galleria1.jpg"
-          />
-        </ng-template>
-      </div>
 
-      <div vts-col vtsSpan="6">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-          vtsCoverPosition="top"
-          [vtsCover]="coverTemplate"
-          [vtsActions]="[actionFooter]"
-        >
-          <vts-card-meta
-            vtsTitle="Card title"
-            vtsDescription="Lorem ipsum dolor sit amet, consectu adipis scling elit. Amet sed vel leo erati."
-          ></vts-card-meta>
+          <vts-card-footer>
+            <vts-space vtsPreset="4">
+              <a *vtsSpaceItem vts-typography vtsType="link">Read more ❯</a>
+              <a *vtsSpaceItem vts-typography vtsType="link">Save ❯</a>
+            </vts-space>
+          </vts-card-footer>
         </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://www.primefaces.org/primeng/assets/showcase/images/galleria/galleria1.jpg"
-          />
-        </ng-template>
-        <ng-template #actionFooter>
-          <div style="display: flex;">
-            <button vts-button vtsType="text" style="color: red;">
-              Readmore<i vts-icon vtsType="ArrowForward" style="margin-left: 2px; font-size: 14px;"></i>
-            </button>
-            <button vts-button vtsType="text" style="color: red;">
-              Bookmark<i vts-icon vtsType="Bookmark" style="margin-left: 2px; font-size: 14px;"></i>
-            </button>
+      </div>
+      <div vts-col vtsFlex="400px">
+        <p>Using templates</p>
+        <vts-card>
+          <vts-card-header>
+            <vts-card-header-title vtsColor="info">
+              <i vts-icon vtsType="CarWash" style="font-size: 24px"></i>
+              &nbsp;
+              <u>Header Title</u>
+            </vts-card-header-title>
+            <vts-card-header-extra>
+              <button vts-button vtsType="text">
+                <i vts-icon vtsType="Close"></i>
+              </button>
+            </vts-card-header-extra>
+          </vts-card-header>
+          <vts-card-meta>
+            <vts-card-meta-title vtsWeight="semi-bold">
+              <s>Meta Title</s>
+            </vts-card-meta-title>
+            <vts-card-meta-description vtsColor="error">
+              <s>Meta Description</s>
+            </vts-card-meta-description>
+            <vts-card-meta-avatar [vtsSize]="50" vtsText="xxs"></vts-card-meta-avatar>
+          </vts-card-meta>
+
+          <div>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+            has been the industry's standard dummy text ever since the 1500s, when an unknown
+            printer took a galley of type and scrambled it to make a type specimen book. It has
+            survived not only five centuries
           </div>
-        </ng-template>
-      </div>
 
-      <div vts-col vtsSpan="6">
-        <vts-card
-          [vtsCardLayout]="'basic'"
-          vtsCoverPosition="top"
-          [vtsCover]="coverTemplate"
-        >
-          <vts-card-meta
-            vtsTitle="Card title"
-            vtsDescription="Lorem ipsum dolor sit amet, consectu adipis scling elit. Amet sed vel leo erati."
-          ></vts-card-meta>
-          <span>Lorem ipsum dolor sit amet.</span>
-          <vts-divider style="margin: 10px 0;"></vts-divider>
-          <span>Lorem ipsum dolor sit amet.</span>
-          <vts-divider style="margin: 10px 0;"></vts-divider>
-          <span>Lorem ipsum dolor sit amet.</span>
+          <vts-card-footer>
+            <vts-space vtsPreset="4">
+              <a *vtsSpaceItem vts-typography vtsType="link">Read more ❯</a>
+              <a *vtsSpaceItem vts-typography vtsType="link">Save ❯</a>
+            </vts-space>
+          </vts-card-footer>
         </vts-card>
-        <ng-template #coverTemplate>
-          <img
-            alt="example"
-            src="https://www.primefaces.org/primeng/assets/showcase/images/galleria/galleria1.jpg"
-          />
-        </ng-template>
       </div>
-    </div>
+    </vts-row>
   `
 })
 export class VtsDemoCardBasicComponent {}
