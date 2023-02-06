@@ -4,7 +4,7 @@
  */
 
 export * from './animation-consts';
-export * from './collapse';
+export * from './accordion';
 export * from './fade';
 export * from './help';
 export * from './move';
