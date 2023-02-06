@@ -12,7 +12,7 @@ import {
 import { VtsCardComponent } from './card.component';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
-import { VtsAvatarComponent } from '../avatar';
+import { VtsAvatarComponent } from '@ui-vts/ng-vts/avatar';
 
 @Component({
   selector: 'vts-card-meta-title',

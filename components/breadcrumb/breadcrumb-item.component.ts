@@ -13,8 +13,8 @@ import {
 import { Router, UrlTree } from '@angular/router';
 
 import { VtsDropdownMenuComponent } from '@ui-vts/ng-vts/dropdown';
-import { BooleanInput } from '../core/types';
-import { InputBoolean } from '../core/util';
+import { BooleanInput } from '@ui-vts/ng-vts/core/types';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
 import { VtsBreadCrumbComponent } from './breadcrumb.component';
 

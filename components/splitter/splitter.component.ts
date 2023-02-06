@@ -12,7 +12,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { NgStyleInterface } from '../core/types';
+import { NgStyleInterface } from '@ui-vts/ng-vts/core/types';
 import { VtsSplitterItemDirective } from './splitter-item.directive';
 
 @Component({
