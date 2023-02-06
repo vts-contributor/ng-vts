@@ -16,14 +16,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { toCssPixel } from '@ui-vts/ng-vts/core/util';
-import {
-  VtsSkeletonAvatar,
-  VtsSkeletonAvatarShape,
-  VtsSkeletonAvatarSize,
-  VtsSkeletonParagraph,
-  VtsSkeletonTitle
-} from './skeleton.type';
+import { InputBoolean, toCssPixel } from '@ui-vts/ng-vts/core/util';
+import { BooleanInput } from '@ui-vts/ng-vts/core/types';
+import { VtsSkeletonAvatar, VtsSkeletonParagraph, VtsSkeletonTitle } from './skeleton.type';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,14 +28,15 @@ import {
   host: {
     '[class.vts-skeleton-with-avatar]': '!!vtsAvatar',
     '[class.vts-skeleton-active]': 'vtsActive',
-    '[class.vts-skeleton-round]': '!!vtsRound'
+    '[class.vts-skeleton-rounded]': '!!vtsRounded',
+    '[class.vts-skeleton-only-title]': '!!vtsTitle && !shouldDisplayParagraph()'
   },
   template: `
     <ng-container *ngIf="vtsLoading">
       <div class="vts-skeleton-header" *ngIf="!!vtsAvatar">
         <vts-skeleton-element
           vtsType="avatar"
-          [vtsSize]="avatar.size || 'default'"
+          [vtsSize]="avatar.size || 'xs'"
           [vtsShape]="avatar.shape || 'circle'"
         ></vts-skeleton-element>
       </div>
@@ -50,7 +46,7 @@ import {
           class="vts-skeleton-title"
           [style.width]="toCSSUnit(title.width)"
         ></h3>
-        <ul *ngIf="!!vtsParagraph" class="vts-skeleton-paragraph">
+        <ul *ngIf="shouldDisplayParagraph()" class="vts-skeleton-paragraph">
           <li
             *ngFor="let row of rowsList; let i = index"
             [style.width]="toCSSUnit(widthList[i])"
@@ -64,9 +60,13 @@ import {
   `
 })
 export class VtsSkeletonComponent implements OnInit, OnChanges {
-  @Input() vtsActive = false;
-  @Input() vtsLoading = true;
-  @Input() vtsRound = false;
+  static ngAcceptInputType_vtsActive: BooleanInput;
+  static ngAcceptInputType_vtsLoading: BooleanInput;
+  static ngAcceptInputType_vtsRounded: BooleanInput;
+
+  @Input() @InputBoolean() vtsActive = false;
+  @Input() @InputBoolean() vtsLoading = true;
+  @Input() @InputBoolean() vtsRounded = false;
   @Input() vtsTitle: VtsSkeletonTitle | boolean = true;
   @Input() vtsAvatar: VtsSkeletonAvatar | boolean = false;
   @Input() vtsParagraph: VtsSkeletonParagraph | boolean = true;
@@ -85,6 +85,12 @@ export class VtsSkeletonComponent implements OnInit, OnChanges {
     return toCssPixel(value);
   }
 
+  public shouldDisplayParagraph() {
+    if (typeof this.vtsParagraph === 'object') {
+      return this.vtsParagraph?.rows !== 0;
+    } else return !!this.vtsParagraph;
+  }
+
   private getTitleProps(): VtsSkeletonTitle {
     const hasAvatar: boolean = !!this.vtsAvatar;
     const hasParagraph: boolean = !!this.vtsParagraph;
@@ -98,10 +104,7 @@ export class VtsSkeletonComponent implements OnInit, OnChanges {
   }
 
   private getAvatarProps(): VtsSkeletonAvatar {
-    const shape: VtsSkeletonAvatarShape =
-      !!this.vtsTitle && !this.vtsParagraph ? 'square' : 'circle';
-    const size: VtsSkeletonAvatarSize = 'large';
-    return { shape, size, ...this.getProps(this.vtsAvatar) };
+    return { ...this.getProps(this.vtsAvatar) };
   }
 
   private getParagraphProps(): VtsSkeletonParagraph {

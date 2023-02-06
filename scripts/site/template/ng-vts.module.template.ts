@@ -14,7 +14,7 @@ import { VtsCardModule } from '@ui-vts/ng-vts/card';
 import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 import { VtsCascaderModule } from '@ui-vts/ng-vts/cascader';
 import { VtsCheckboxModule } from '@ui-vts/ng-vts/checkbox';
-import { VtsCollapseModule } from '@ui-vts/ng-vts/collapse';
+import { VtsAccordionModule } from '@ui-vts/ng-vts/accordion';
 import { VtsCommentModule } from '@ui-vts/ng-vts/comment';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsTransButtonModule } from '@ui-vts/ng-vts/core/trans-button';
@@ -80,7 +80,7 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsCarouselModule,
     VtsCascaderModule,
     VtsCheckboxModule,
-    VtsCollapseModule,
+    VtsAccordionModule,
     VtsCommentModule,
     VtsDatePickerModule,
     VtsDescriptionsModule,

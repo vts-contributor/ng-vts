@@ -12,7 +12,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-import { treeCollapseMotion } from '@ui-vts/ng-vts/core/animation';
+import { treeAccordionMotion } from '@ui-vts/ng-vts/core/animation';
 
 import { VtsTreeNodeOutletDirective } from './outlet';
 import { VtsTreeView } from './tree';
@@ -24,7 +24,7 @@ import { VtsTreeView } from './tree';
     <div class="vts-tree-list-holder">
       <div
         [@.disabled]="!_afterViewInit || noAnimation?.vtsNoAnimation"
-        [@treeCollapseMotion]="_nodeOutlet.viewContainer.length"
+        [@treeAccordionMotion]="_nodeOutlet.viewContainer.length"
         class="vts-tree-list-holder-inner"
       >
         <ng-container vtsTreeNodeOutlet></ng-container>
@@ -43,7 +43,7 @@ import { VtsTreeView } from './tree';
     '[class.vts-tree-directory]': 'vtsDirectoryTree',
     '[class.vts-tree-rtl]': `dir === 'rtl'`
   },
-  animations: [treeCollapseMotion]
+  animations: [treeAccordionMotion]
 })
 export class VtsTreeViewComponent<T> extends VtsTreeView<T> implements AfterViewInit {
   @ViewChild(VtsTreeNodeOutletDirective, { static: true })

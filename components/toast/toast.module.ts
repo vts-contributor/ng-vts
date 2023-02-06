@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
-import { VtsAlertModule } from '../alert';
+import { VtsAlertModule } from '@ui-vts/ng-vts/alert';
 import { VtsToastContainerComponent } from './toast-container.component';
 import { VtsToastComponent } from './toast.component';
 import { VtsToastServiceModule } from './toast.service.module';

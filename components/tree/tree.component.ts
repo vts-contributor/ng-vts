@@ -25,7 +25,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { treeCollapseMotion } from '@ui-vts/ng-vts/core/animation';
+import { treeAccordionMotion } from '@ui-vts/ng-vts/core/animation';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
 import {
@@ -57,7 +57,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
 @Component({
   selector: 'vts-tree',
   exportAs: 'vtsTree',
-  animations: [treeCollapseMotion],
+  animations: [treeAccordionMotion],
   template: `
     <div role="tree">
       <input [ngStyle]="HIDDEN_STYLE" />
@@ -87,7 +87,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
           [class.vts-tree-list-holder-inner]="!vtsSelectMode"
           [@.disabled]="beforeInit || noAnimation?.vtsNoAnimation"
           [vtsNoAnimation]="noAnimation?.vtsNoAnimation"
-          [@treeCollapseMotion]="vtsFlattenNodes.length"
+          [@treeAccordionMotion]="vtsFlattenNodes.length"
         >
           <ng-container *ngFor="let node of vtsFlattenNodes; trackBy: trackByFlattenNode">
             <ng-template

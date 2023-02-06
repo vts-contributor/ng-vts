@@ -18,7 +18,7 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { collapseMotion } from '@ui-vts/ng-vts/core/animation';
+import { accordionMotion } from '@ui-vts/ng-vts/core/animation';
 
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
@@ -36,7 +36,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'accordionPanel';
   exportAs: 'vtsAccordionPanel',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  animations: [collapseMotion],
+  animations: [accordionMotion],
   template: `
     <div
       role="tab"
@@ -55,9 +55,12 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'accordionPanel';
 
       <ng-container *ngIf="vtsShowArrow">
         <ng-container *vtsStringTemplateOutlet="vtsExpandedIcon; let expandedIcon">
-          <i vts-icon [vtsType]="expandedIcon ? expandedIcon : 'ArrowDownOutline'"
-             class="vts-accordion-arrow"
-             [vtsRotate]="vtsActive ? 0 : 180"></i>
+          <i
+            vts-icon
+            [vtsType]="expandedIcon ? expandedIcon : 'ArrowDownOutline'"
+            class="vts-accordion-arrow"
+            [vtsRotate]="vtsActive ? 0 : 180"
+          ></i>
         </ng-container>
       </ng-container>
     </div>
@@ -65,7 +68,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'accordionPanel';
       class="vts-accordion-content"
       [class.vts-accordion-content-active]="vtsActive"
       [@.disabled]="noAnimation?.vtsNoAnimation"
-      [@collapseMotion]="vtsActive ? 'expanded' : 'hidden'"
+      [@accordionMotion]="vtsActive ? 'expanded' : 'hidden'"
     >
       <div class="vts-accordion-content-box">
         <ng-content></ng-content>
