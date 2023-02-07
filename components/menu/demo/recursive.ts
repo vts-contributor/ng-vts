@@ -44,7 +44,7 @@ export class VtsDemoMenuRecursiveComponent {
     {
       level: 1,
       title: 'Mail Group',
-      icon: 'mail',
+      icon: 'Mail',
       open: true,
       selected: false,
       disabled: false,
@@ -90,7 +90,7 @@ export class VtsDemoMenuRecursiveComponent {
     {
       level: 1,
       title: 'Team Group',
-      icon: 'team',
+      icon: 'AccountCircle',
       open: false,
       selected: false,
       disabled: false,
