@@ -10,7 +10,6 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -18,7 +17,6 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
 import {
@@ -42,22 +40,9 @@ import { takeUntil } from 'rxjs/operators';
     <div class="vts-layout-sider-children">
       <ng-content></ng-content>
     </div>
-    <div
-      *ngIf="vtsCollapsible && vtsTrigger !== null"
-      vts-sider-trigger
-      [matchBreakPoint]="matchBreakPoint"
-      [vtsCollapsedWidth]="vtsCollapsedWidth"
-      [vtsCollapsed]="vtsCollapsed"
-      [vtsBreakpoint]="vtsBreakpoint"
-      [vtsReverseArrow]="vtsReverseArrow"
-      [vtsTrigger]="vtsTrigger"
-      [vtsZeroTrigger]="vtsZeroTrigger"
-      [siderWidth]="widthSetting"
-      (click)="setCollapsed(!vtsCollapsed)"
-    ></div>
   `,
   host: {
-    '[class.vts-layout-sider-zero-width]': `vtsCollapsed && vtsCollapsedWidth === 0`,
+    '[class.vts-layout-sider]': 'true',
     '[class.vts-layout-sider-collapsed]': `vtsCollapsed`,
     '[style.flex]': 'flexSetting',
     '[style.maxWidth]': 'widthSetting',
@@ -66,7 +51,6 @@ import { takeUntil } from 'rxjs/operators';
   }
 })
 export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterContentInit {
-  static ngAcceptInputType_vtsReverseArrow: BooleanInput;
   static ngAcceptInputType_vtsCollapsible: BooleanInput;
   static ngAcceptInputType_vtsCollapsed: BooleanInput;
 
@@ -74,23 +58,10 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @ContentChild(VtsMenuDirective)
   vtsMenuDirective: VtsMenuDirective | null = null;
   @Output() readonly vtsCollapsedChange = new EventEmitter();
-  @Input() vtsWidth: string | number = 200;
+  @Input() vtsCollapsedWidth: null | number = null;
+  @Input() vtsWidth: string | number = 240;
 
-  // NG-vTS: force light theme, check origin
-  private _vtsTheme = 'light';
-  @Input()
-  get vtsTheme() {
-    return this._vtsTheme;
-  }
-  set vtsTheme(_value) {
-    this._vtsTheme = 'light';
-  }
-  @Input() vtsCollapsedWidth = 70;
   @Input() vtsBreakpoint: VtsBreakpointKey | null = null;
-  @Input() vtsZeroTrigger: TemplateRef<void> | null = null;
-  @Input() vtsTrigger: TemplateRef<void> | undefined | null = undefined;
-  @Input() @InputBoolean() vtsReverseArrow = false;
-  @Input() @InputBoolean() vtsCollapsible = false;
   @Input() @InputBoolean() vtsCollapsed = false;
   matchBreakPoint = false;
   flexSetting: string | null = null;
@@ -98,18 +69,16 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
 
   updateStyleMap(): void {
     this.widthSetting = this.vtsCollapsed
-      ? `${this.vtsCollapsedWidth}px`
+      ? this.vtsCollapsedWidth != null
+        ? `${this.vtsCollapsedWidth}px`
+        : 'auto'
       : toCssPixel(this.vtsWidth);
     this.flexSetting = `0 0 ${this.widthSetting}`;
     this.cdr.markForCheck();
   }
 
   updateMenuInlineCollapsed(): void {
-    if (
-      this.vtsMenuDirective &&
-      this.vtsMenuDirective.vtsMode === 'inline' &&
-      this.vtsCollapsedWidth !== 0
-    ) {
+    if (this.vtsMenuDirective && this.vtsMenuDirective.vtsMode === 'inline') {
       this.vtsMenuDirective.setInlineCollapsed(this.vtsCollapsed);
     }
   }
@@ -124,17 +93,25 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     }
   }
 
+  calculateCollapsedWidth() {
+    try {
+      const variable = getComputedStyle(document.documentElement)?.getPropertyValue(
+        '--vts-menu-collapsed-width--'
+      );
+      if (!variable) return;
+      const value = Number(variable.trim().replace('px', ''));
+      if (this.vtsCollapsedWidth === null) this.vtsCollapsedWidth = value;
+    } catch {}
+  }
+
   constructor(
     private platform: Platform,
     private cdr: ChangeDetectorRef,
-    private breakpointService: VtsBreakpointService,
-    private elementRef: ElementRef
-  ) {
-    // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-layout-sider');
-  }
+    private breakpointService: VtsBreakpointService
+  ) {}
 
   ngOnInit(): void {
+    this.calculateCollapsedWidth();
     this.updateStyleMap();
 
     if (this.platform.isBrowser) {
@@ -155,10 +132,12 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth } = changes;
-    if (vtsCollapsed || vtsCollapsedWidth || vtsWidth) {
+    const { vtsCollapsed, vtsWidth, vtsCollapsedWidth } = changes;
+
+    if (vtsCollapsed || vtsWidth || vtsCollapsedWidth) {
       this.updateStyleMap();
     }
+
     if (vtsCollapsed) {
       this.updateMenuInlineCollapsed();
     }

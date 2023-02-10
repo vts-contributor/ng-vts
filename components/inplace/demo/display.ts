@@ -15,29 +15,29 @@ interface Item {
     <div class="container">
       <h5>Normal</h5>
       <vts-inplace vtsIcon="Image">
-        <div vtsInplaceDisplay >
-          Show Image
-        </div>
+        <div vtsInplaceDisplay>Show Image</div>
         <div vtsInplaceContent>
-          <img src="http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTQKSKVyESbPlXtw51d39QIZGu3ZpL69V5zSaJLFW8jcr3_eVrEbgfD9ycB0T9h8eVT-AIkOT5HbUzaJCONvnE">
+          <img
+            src="http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTQKSKVyESbPlXtw51d39QIZGu3ZpL69V5zSaJLFW8jcr3_eVrEbgfD9ycB0T9h8eVT-AIkOT5HbUzaJCONvnE"
+          />
         </div>
       </vts-inplace>
       <h5>Disabled</h5>
       <vts-inplace disabled vtsIcon="Image">
-        <div vtsInplaceDisplay >
-          Show Image
-        </div>
+        <div vtsInplaceDisplay>Show Image</div>
         <div vtsInplaceContent>
-          <img src="http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTQKSKVyESbPlXtw51d39QIZGu3ZpL69V5zSaJLFW8jcr3_eVrEbgfD9ycB0T9h8eVT-AIkOT5HbUzaJCONvnE">
+          <img
+            src="http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTQKSKVyESbPlXtw51d39QIZGu3ZpL69V5zSaJLFW8jcr3_eVrEbgfD9ycB0T9h8eVT-AIkOT5HbUzaJCONvnE"
+          />
         </div>
       </vts-inplace>
       <h5>Actived</h5>
       <vts-inplace active vtsIcon="Image">
-        <div vtsInplaceDisplay >
-          Show Image
-        </div>
+        <div vtsInplaceDisplay>Show Image</div>
         <div vtsInplaceContent>
-          <img src="http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTQKSKVyESbPlXtw51d39QIZGu3ZpL69V5zSaJLFW8jcr3_eVrEbgfD9ycB0T9h8eVT-AIkOT5HbUzaJCONvnE">
+          <img
+            src="http://t0.gstatic.com/licensed-image?q=tbn:ANd9GcTQKSKVyESbPlXtw51d39QIZGu3ZpL69V5zSaJLFW8jcr3_eVrEbgfD9ycB0T9h8eVT-AIkOT5HbUzaJCONvnE"
+          />
         </div>
       </vts-inplace>
     </div>
@@ -45,74 +45,90 @@ interface Item {
     <div class="container">
       <h5>Normal</h5>
       <vts-inplace vtsIcon="Table">
-        <div vtsInplaceDisplay>
-          Show Table
-        </div>
+        <div vtsInplaceDisplay>Show Table</div>
         <div vtsInplaceContent>
-            <vts-table
-          #basicTable
-          [vtsData]="filteredList"
-          [vtsPageSize]="pageSize"
-          [vtsPageIndex]="pageIndex"
-          vtsShowPagination
-          vtsShowSizeChanger
-        >
-          <thead>
-            <tr>
-              <th
-                [vtsChecked]="checked"
-                [vtsIndeterminate]="indeterminate"
-                (vtsCheckedChange)="onAllChecked($event)"
-              ></th>
-              <th vtsWidth="1%" vtsAlign="center">#</th>
-              <th>Table header</th>
-              <th>Table header</th>
-              <th vtsAlign="center">Table header</th>
-              <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Table header</th>
-              <th>Table header</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>
-                <input name="filter1" ngModel (ngModelChange)="filter($event, 'content1')" vts-input />
-              </td>
-              <td>
-                <input name="filter2" ngModel (ngModelChange)="filter($event, 'content2')" vts-input />
-              </td>
-              <td>
-                <input name="filter3" ngModel (ngModelChange)="filter($event, 'content3')" vts-input />
-              </td>
-              <td>
-                <input name="filter4" ngModel (ngModelChange)="filter($event, 'content4')" vts-input />
-              </td>
-              <td></td>
-            </tr>
-            <tr *ngFor="let data of basicTable.data; index as i">
-              <td
-                [vtsChecked]="setOfCheckedId.has(data.id)"
-                (vtsCheckedChange)="onItemChecked(data.id, $event)"
-              ></td>
-              <td vtsAlign="center">{{ data.id }}</td>
-              <td>{{ data.content1 }}</td>
-              <td>{{ data.content2 }}</td>
-              <td vtsAlign="center">{{ data.content3 }}</td>
-              <td vtsAlign="right">{{ data.content4 }}</td>
-              <td>
-                <a>Delete</a>
-              </td>
-            </tr>
-          </tbody>
-        </vts-table>
+          <vts-table
+            #basicTable
+            [vtsData]="filteredList"
+            [vtsPageSize]="pageSize"
+            [vtsPageIndex]="pageIndex"
+            vtsShowPagination
+            vtsShowSizeChanger
+          >
+            <thead>
+              <tr>
+                <th
+                  [vtsChecked]="checked"
+                  [vtsIndeterminate]="indeterminate"
+                  (vtsCheckedChange)="onAllChecked($event)"
+                ></th>
+                <th vtsWidth="1%" vtsAlign="center">#</th>
+                <th>Table header</th>
+                <th>Table header</th>
+                <th vtsAlign="center">Table header</th>
+                <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Table header</th>
+                <th>Table header</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <input
+                    name="filter1"
+                    ngModel
+                    (ngModelChange)="filter($event, 'content1')"
+                    vts-input
+                  />
+                </td>
+                <td>
+                  <input
+                    name="filter2"
+                    ngModel
+                    (ngModelChange)="filter($event, 'content2')"
+                    vts-input
+                  />
+                </td>
+                <td>
+                  <input
+                    name="filter3"
+                    ngModel
+                    (ngModelChange)="filter($event, 'content3')"
+                    vts-input
+                  />
+                </td>
+                <td>
+                  <input
+                    name="filter4"
+                    ngModel
+                    (ngModelChange)="filter($event, 'content4')"
+                    vts-input
+                  />
+                </td>
+                <td></td>
+              </tr>
+              <tr *ngFor="let data of basicTable.data; index as i">
+                <td
+                  [vtsChecked]="setOfCheckedId.has(data.id)"
+                  (vtsCheckedChange)="onItemChecked(data.id, $event)"
+                ></td>
+                <td vtsAlign="center">{{ data.id }}</td>
+                <td>{{ data.content1 }}</td>
+                <td>{{ data.content2 }}</td>
+                <td vtsAlign="center">{{ data.content3 }}</td>
+                <td vtsAlign="right">{{ data.content4 }}</td>
+                <td>
+                  <a>Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </vts-table>
         </div>
       </vts-inplace>
       <h5>Disable</h5>
       <vts-inplace disabled vtsIcon="Table">
-        <div vtsInplaceDisplay>
-          Show Table
-        </div>
+        <div vtsInplaceDisplay>Show Table</div>
         <div vtsInplaceContent>
           <table>
             <tr>
@@ -134,7 +150,7 @@ interface Item {
         </div>
       </vts-inplace>
     </div>
-  `,
+  `
 })
 export class VtsDemoInplaceDisplayComponent {
   listOfData: Item[] = [
