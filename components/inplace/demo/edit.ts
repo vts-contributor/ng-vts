@@ -5,20 +5,16 @@ import { Component } from '@angular/core';
   template: `
     <h4>Basic</h4>
     <div class="container">
-        <vts-inplace vtsIcon="Edit" [closable]="true">
-        <div vtsInplaceDisplay>
-          Click to edit
-        </div>
+      <vts-inplace vtsIcon="Edit" [closable]="true">
+        <div vtsInplaceDisplay>Click to edit</div>
         <div vtsInplaceContent>
-          <input type="text" value="VtsInplace">
+          <input type="text" value="VtsInplace" />
         </div>
       </vts-inplace>
       <vts-inplace disabled vtsIcon="Edit">
-        <div vtsInplaceDisplay>
-          Click to edit (disabled)
-        </div>
+        <div vtsInplaceDisplay>Click to edit (disabled)</div>
         <div vtsInplaceContent>
-          <input type="text" value="VtsInplace">
+          <input type="text" value="VtsInplace" />
         </div>
       </vts-inplace>
     </div>
@@ -35,6 +31,5 @@ import { Component } from '@angular/core';
       }
     `
   ]
-  
 })
 export class VtsDemoInplaceEditComponent {}

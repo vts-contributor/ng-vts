@@ -11,35 +11,23 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
- import { VtsOverlayModule } from '@ui-vts/ng-vts/core/overlay';
- 
- import { VtsInplaceComponent } from './inplace.component';
- import { VtsInplaceDisplayComponent } from './inplace-display.component';
- import { VtsInplaceContentComponent } from './inplace-content.component';
- 
+import { VtsOverlayModule } from '@ui-vts/ng-vts/core/overlay';
 
- 
- @NgModule({
-   imports: [
-     CommonModule,
-     VtsOutletModule,
-     OverlayModule,
-     VtsOverlayModule,
-     VtsDropDownModule,
-     VtsIconModule,
-     VtsButtonModule
-   ],
-   declarations: [
-    VtsInplaceComponent,
-    VtsInplaceDisplayComponent,
-    VtsInplaceContentComponent
-   ],
-   exports: [
-     BidiModule,
-     VtsInplaceComponent,
-     VtsInplaceDisplayComponent,
-     VtsInplaceContentComponent
-   ]
- })
- export class VtsInplaceModule {}
- 
+import { VtsInplaceComponent } from './inplace.component';
+import { VtsInplaceDisplayComponent } from './inplace-display.component';
+import { VtsInplaceContentComponent } from './inplace-content.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    VtsOutletModule,
+    OverlayModule,
+    VtsOverlayModule,
+    VtsDropDownModule,
+    VtsIconModule,
+    VtsButtonModule
+  ],
+  declarations: [VtsInplaceComponent, VtsInplaceDisplayComponent, VtsInplaceContentComponent],
+  exports: [BidiModule, VtsInplaceComponent, VtsInplaceDisplayComponent, VtsInplaceContentComponent]
+})
+export class VtsInplaceModule {}

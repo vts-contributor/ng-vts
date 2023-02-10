@@ -2,5 +2,7 @@ import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
 import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
+import { VtsTypographyModule } from '@ui-vts/ng-vts/typography';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 
-export const moduleList = [ VtsLayoutModule, VtsMenuModule, VtsIconModule, VtsBreadCrumbModule ];
+export const moduleList = [ VtsLayoutModule, VtsMenuModule, VtsIconModule, VtsBreadCrumbModule, VtsTypographyModule, VtsButtonModule ];
