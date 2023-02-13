@@ -3,198 +3,200 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-card-meta',
   template: `
-    <vts-row [vtsGutter]="[32, 32]">
-      <div vts-col vtsFlex="400px">
-        <p>Direction Vertical - Align Left</p>
-        <vts-card>
-          <vts-card-header vtsTitle="Card name">
-            <vts-card-header-extra>
-              <button vts-button vtsType="text">
-                <i vts-icon vtsType="Close"></i>
-              </button>
-            </vts-card-header-extra>
-          </vts-card-header>
-          <vts-card-meta
-            vtsTitle="Gabriel Palmer"
-            vtsDescription="Graphic Designer"
-            vtsDirection="vertical"
-            vtsAlign="left"
-          >
-            <vts-card-meta-avatar
-              vtsShape="rounded"
-              [vtsSize]="72"
-              [vtsSrc]="image"
-              style="background: #00AB76"
-            ></vts-card-meta-avatar>
-          </vts-card-meta>
-          <vts-card-footer vtsBordered>
-            <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="fb"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="linkedin"></ng-container>
-              </ng-container>
-            </vts-space>
-          </vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="400px">
-        <p>Direction Vertical - Align Center</p>
-        <vts-card>
-          <vts-card-header vtsTitle="Card name">
-            <vts-card-header-extra>
-              <button vts-button vtsType="text">
-                <i vts-icon vtsType="Close"></i>
-              </button>
-            </vts-card-header-extra>
-          </vts-card-header>
-          <vts-card-meta
-            vtsTitle="Gabriel Palmer"
-            vtsDescription="Graphic Designer"
-            vtsDirection="vertical"
-            vtsAlign="center"
-          >
-            <vts-card-meta-avatar
-              vtsShape="rounded"
-              [vtsSize]="72"
-              [vtsSrc]="image"
-              style="background: #00AB76"
-            ></vts-card-meta-avatar>
-          </vts-card-meta>
-          <vts-card-footer vtsBordered>
-            <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="fb"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="linkedin"></ng-container>
-              </ng-container>
-            </vts-space>
-          </vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="400px">
-        <p>Direction Vertical - Align Right</p>
-        <vts-card>
-          <vts-card-header vtsTitle="Card name">
-            <vts-card-header-extra>
-              <button vts-button vtsType="text">
-                <i vts-icon vtsType="Close"></i>
-              </button>
-            </vts-card-header-extra>
-          </vts-card-header>
-          <vts-card-meta
-            vtsTitle="Gabriel Palmer"
-            vtsDescription="Graphic Designer"
-            vtsDirection="vertical"
-            vtsAlign="right"
-          >
-            <vts-card-meta-avatar
-              vtsShape="rounded"
-              [vtsSize]="72"
-              [vtsSrc]="image"
-              style="background: #00AB76"
-            ></vts-card-meta-avatar>
-          </vts-card-meta>
-          <vts-card-footer vtsBordered>
-            <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="fb"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="linkedin"></ng-container>
-              </ng-container>
-            </vts-space>
-          </vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="400px">
-        <p>Direction Horizontal - Align Left</p>
-        <vts-card>
-          <vts-card-header vtsTitle="Card name">
-            <vts-card-header-extra>
-              <button vts-button vtsType="text">
-                <i vts-icon vtsType="Close"></i>
-              </button>
-            </vts-card-header-extra>
-          </vts-card-header>
-          <vts-card-meta
-            vtsTitle="Gabriel Palmer"
-            vtsDescription="Graphic Designer"
-            vtsDirection="horizontal"
-            vtsAlign="left"
-          >
-            <vts-card-meta-avatar
-              vtsShape="rounded"
-              [vtsSize]="72"
-              [vtsSrc]="image"
-              style="background: #00AB76"
-            ></vts-card-meta-avatar>
-          </vts-card-meta>
-          <vts-card-footer vtsBordered>
-            <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="fb"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="linkedin"></ng-container>
-              </ng-container>
-            </vts-space>
-          </vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="400px">
-        <p>Direction Horizontal - Align Right</p>
-        <vts-card>
-          <vts-card-header vtsTitle="Card name">
-            <vts-card-header-extra>
-              <button vts-button vtsType="text">
-                <i vts-icon vtsType="Close"></i>
-              </button>
-            </vts-card-header-extra>
-          </vts-card-header>
-          <vts-card-meta
-            vtsTitle="Gabriel Palmer"
-            vtsDescription="Graphic Designer"
-            vtsDirection="horizontal"
-            vtsAlign="right"
-          >
-            <vts-card-meta-avatar
-              vtsShape="rounded"
-              [vtsSize]="72"
-              [vtsSrc]="image"
-              style="background: #00AB76"
-            ></vts-card-meta-avatar>
-          </vts-card-meta>
-          <vts-card-footer vtsBordered>
-            <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="fb"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
-              </ng-container>
-              <ng-container *vtsSpaceItem>
-                <ng-container *ngTemplateOutlet="linkedin"></ng-container>
-              </ng-container>
-            </vts-space>
-          </vts-card-footer>
-        </vts-card>
-      </div>
-    </vts-row>
+    <div style="padding: 16px">
+      <vts-row [vtsGutter]="[32, 32]">
+        <div vts-col vtsFlex="400px">
+          <p>Direction Vertical - Align Left</p>
+          <vts-card>
+            <vts-card-header vtsTitle="Card name">
+              <vts-card-header-extra>
+                <button vts-button vtsType="text">
+                  <i vts-icon vtsType="Close"></i>
+                </button>
+              </vts-card-header-extra>
+            </vts-card-header>
+            <vts-card-meta
+              vtsTitle="Gabriel Palmer"
+              vtsDescription="Graphic Designer"
+              vtsDirection="vertical"
+              vtsAlign="left"
+            >
+              <vts-card-meta-avatar
+                vtsShape="rounded"
+                [vtsSize]="72"
+                [vtsSrc]="image"
+                style="background: #00AB76"
+              ></vts-card-meta-avatar>
+            </vts-card-meta>
+            <vts-card-footer vtsBordered>
+              <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="fb"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="linkedin"></ng-container>
+                </ng-container>
+              </vts-space>
+            </vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="400px">
+          <p>Direction Vertical - Align Center</p>
+          <vts-card>
+            <vts-card-header vtsTitle="Card name">
+              <vts-card-header-extra>
+                <button vts-button vtsType="text">
+                  <i vts-icon vtsType="Close"></i>
+                </button>
+              </vts-card-header-extra>
+            </vts-card-header>
+            <vts-card-meta
+              vtsTitle="Gabriel Palmer"
+              vtsDescription="Graphic Designer"
+              vtsDirection="vertical"
+              vtsAlign="center"
+            >
+              <vts-card-meta-avatar
+                vtsShape="rounded"
+                [vtsSize]="72"
+                [vtsSrc]="image"
+                style="background: #00AB76"
+              ></vts-card-meta-avatar>
+            </vts-card-meta>
+            <vts-card-footer vtsBordered>
+              <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="fb"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="linkedin"></ng-container>
+                </ng-container>
+              </vts-space>
+            </vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="400px">
+          <p>Direction Vertical - Align Right</p>
+          <vts-card>
+            <vts-card-header vtsTitle="Card name">
+              <vts-card-header-extra>
+                <button vts-button vtsType="text">
+                  <i vts-icon vtsType="Close"></i>
+                </button>
+              </vts-card-header-extra>
+            </vts-card-header>
+            <vts-card-meta
+              vtsTitle="Gabriel Palmer"
+              vtsDescription="Graphic Designer"
+              vtsDirection="vertical"
+              vtsAlign="right"
+            >
+              <vts-card-meta-avatar
+                vtsShape="rounded"
+                [vtsSize]="72"
+                [vtsSrc]="image"
+                style="background: #00AB76"
+              ></vts-card-meta-avatar>
+            </vts-card-meta>
+            <vts-card-footer vtsBordered>
+              <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="fb"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="linkedin"></ng-container>
+                </ng-container>
+              </vts-space>
+            </vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="400px">
+          <p>Direction Horizontal - Align Left</p>
+          <vts-card>
+            <vts-card-header vtsTitle="Card name">
+              <vts-card-header-extra>
+                <button vts-button vtsType="text">
+                  <i vts-icon vtsType="Close"></i>
+                </button>
+              </vts-card-header-extra>
+            </vts-card-header>
+            <vts-card-meta
+              vtsTitle="Gabriel Palmer"
+              vtsDescription="Graphic Designer"
+              vtsDirection="horizontal"
+              vtsAlign="left"
+            >
+              <vts-card-meta-avatar
+                vtsShape="rounded"
+                [vtsSize]="72"
+                [vtsSrc]="image"
+                style="background: #00AB76"
+              ></vts-card-meta-avatar>
+            </vts-card-meta>
+            <vts-card-footer vtsBordered>
+              <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="fb"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="linkedin"></ng-container>
+                </ng-container>
+              </vts-space>
+            </vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="400px">
+          <p>Direction Horizontal - Align Right</p>
+          <vts-card>
+            <vts-card-header vtsTitle="Card name">
+              <vts-card-header-extra>
+                <button vts-button vtsType="text">
+                  <i vts-icon vtsType="Close"></i>
+                </button>
+              </vts-card-header-extra>
+            </vts-card-header>
+            <vts-card-meta
+              vtsTitle="Gabriel Palmer"
+              vtsDescription="Graphic Designer"
+              vtsDirection="horizontal"
+              vtsAlign="right"
+            >
+              <vts-card-meta-avatar
+                vtsShape="rounded"
+                [vtsSize]="72"
+                [vtsSrc]="image"
+                style="background: #00AB76"
+              ></vts-card-meta-avatar>
+            </vts-card-meta>
+            <vts-card-footer vtsBordered>
+              <vts-space vtsPreset="2" vtsJustify="center" style="width: 100%">
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="fb"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="whatsapp"></ng-container>
+                </ng-container>
+                <ng-container *vtsSpaceItem>
+                  <ng-container *ngTemplateOutlet="linkedin"></ng-container>
+                </ng-container>
+              </vts-space>
+            </vts-card-footer>
+          </vts-card>
+        </div>
+      </vts-row>
+    </div>
 
     <ng-template #fb>
       <svg

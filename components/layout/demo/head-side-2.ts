@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'vts-demo-layout-custom-trigger',
+  selector: 'vts-demo-layout-head-side-2',
   template: `
     <vts-layout>
-      <vts-sider vtsWidth="240px" [vtsCollapsed]="isCollapsed">
+      <vts-sider vtsWidth="240px">
         <div class="logo"></div>
         <ul vts-menu vtsMode="inline">
           <ul vts-submenu vtsOpen vtsTitle="Menu item name" vtsIcon="Settings">
@@ -24,15 +24,12 @@ import { Component } from '@angular/core';
           </ul>
           <li vts-menu-item>
             <i vts-icon vtsType="Delete"></i>
-            <span>Menu item name</span>
+            Menu item name
           </li>
         </ul>
       </vts-sider>
       <vts-layout>
         <vts-header>
-          <button vts-button vtsType="primary" class="trigger" (click)="toggleCollapsed()">
-            <i vts-icon [vtsType]="'NotesDoutone-1'"></i>
-          </button>
           <ul vts-menu vtsMode="horizontal">
             <ul vts-submenu vtsTitle="Menu 1">
               <li vts-menu-item>Sub menu 1</li>
@@ -122,10 +119,6 @@ import { Component } from '@angular/core';
         margin-top: 8px;
       }
 
-      .vts-layout-sider-collapsed .logo {
-        display: none;
-      }
-
       vts-breadcrumb {
         margin-bottom: 24px;
       }
@@ -137,19 +130,7 @@ import { Component } from '@angular/core';
       .vts-layout-sider .vts-menu {
         height: 100%;
       }
-
-      .trigger {
-        float: left;
-        margin-top: calc((56px - 32px) / 2);
-        margin-right: 24px;
-      }
     `
   ]
 })
-export class VtsDemoLayoutCustomTriggerComponent {
-  isCollapsed = false;
-
-  toggleCollapsed() {
-    this.isCollapsed = !this.isCollapsed;
-  }
-}
+export class VtsDemoLayoutHeadSide2Component {}
