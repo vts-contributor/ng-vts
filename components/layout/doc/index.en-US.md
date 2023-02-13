@@ -20,7 +20,6 @@ import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
 | vtsCollapsedWidth | Width of the collapsed sidebar | `number` | |
 | [(vtsCollapsed)] | Collapsed status of sider | `boolean` | `false` |
 | vtsWidth | Width of the sidebar | `number \| string` | `240` |
-| (vtsCollapsedChange) | Emit on side collapse status changed | `EventEmitter<boolean>` | |
 
 #### breakpoint width
 

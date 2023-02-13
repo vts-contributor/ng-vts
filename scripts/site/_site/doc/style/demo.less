@@ -10,6 +10,7 @@
 .code-box {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   overflow: auto;
   width: 100%;
   margin: 0 0 16px;
@@ -253,10 +254,13 @@
   .highlight-wrapper {
     display: none;
     overflow: auto;
+    width: 100%;
+    min-width: 400px;
     border-radius: 0 0 @border-radius-base @border-radius-base;
+    border: 1px solid @site-border-color-split;
 
     &-expand {
-      display: block;
+      display: flex;
     }
   }
 

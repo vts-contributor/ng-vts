@@ -5,100 +5,126 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
   ViewEncapsulation,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ContentChild
 } from '@angular/core';
 import { InputBoolean } from '../core/util';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
+import { VtsInplaceCollapseComponent } from './inplace-collapse.component';
+import { VtsInplacePlaceholderComponent } from './inplace-placeholder.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   selector: 'vts-inplace',
   host: {
-    // '[class.vts-inplace-display-disabled]': `disabled`,
+    '[class.vts-inplace]': 'true',
+    '[class.vts-inplace-disabled]': 'vtsDisabled',
+    '[class.vts-inplace-active]': 'vtsActive'
   },
   template: `
-    <div [ngClass]="{ 'vts-inplace': true }">
-      <div
-        class="vts-inplace-display"
-        (click)="onActivateClick($event)"
-        (keydown)="onKeydown($event)"
-        *ngIf="!active"
-        tabindex="1"
-        [ngClass]="{ 'vts-inplace-disabled': disabled }"
-      >
-        <i vts-icon [vtsType]="vtsIcon" *ngIf="vtsIcon"></i>
-        <ng-content select="[vtsInplaceDisplay]"></ng-content>
-      </div>
-      <div class="vts-inplace-content" *ngIf="active">
-        <ng-content select="[vtsInplaceContent]"></ng-content>
-        <button
-          vts-button
-          vtsType="primary"
-          (click)="onDeactivateClick($event)"
-          *ngIf="closable"
+    <ng-container *ngIf="!vtsActive">
+      <ng-container *ngTemplateOutlet="expand"></ng-container>
+    </ng-container>
+    <div class="vts-inplace-content" *ngIf="vtsActive">
+      <ng-content></ng-content>
+    </div>
+    <ng-container *ngIf="vtsActive && vtsClosable">
+      <ng-container *ngTemplateOutlet="collapse"></ng-container>
+    </ng-container>
+
+    <ng-template #expand>
+      <ng-container *ngIf="expandTpl; else defaultExpandTpl">
+        <ng-content select="vts-inplace-placeholder"></ng-content>
+      </ng-container>
+      <ng-template #defaultExpandTpl>
+        <div
+          class="vts-inplace-placeholder"
+          (click)="activate()"
+          (keydown)="onKeydown($event)"
+          *ngIf="!vtsActive"
           tabindex="1"
         >
-          <i vts-icon vtsType="Close"></i>
-        </button>
-      </div>
-    </div>
+          <ng-container *ngIf="vtsIcon">
+            <button [disabled]="vtsDisabled" vts-button vtsType="text">
+              <i vts-icon [vtsType]="vtsIcon"></i>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="vtsText && !vtsIcon">
+            <span
+              vts-typo
+              [vtsType]="!vtsDisabled ? 'link' : null"
+              [vtsColor]="vtsDisabled ? 'disabled' : null"
+            >
+              {{ vtsText }}
+            </span>
+          </ng-container>
+        </div>
+      </ng-template>
+    </ng-template>
+    <ng-template #collapse>
+      <ng-container *ngIf="collapseTpl; else defaultCollapseTpl">
+        <ng-content select="vts-inplace-collapse"></ng-content>
+      </ng-container>
+      <ng-template #defaultCollapseTpl>
+        <div class="vts-inplace-collapse" (click)="deactivate()" tabindex="1">
+          <ng-container *ngIf="vtsCollapseIcon">
+            <button [disabled]="vtsDisabled" vts-button vtsType="text">
+              <i vts-icon [vtsType]="vtsCollapseIcon"></i>
+            </button>
+          </ng-container>
+          <ng-container *ngIf="vtsCollapseText && !vtsCollapseIcon">
+            <span
+              vts-typo
+              [vtsType]="!vtsDisabled ? 'link' : null"
+              [vtsColor]="vtsDisabled ? 'disabled' : null"
+            >
+              {{ vtsCollapseText }}
+            </span>
+          </ng-container>
+        </div>
+      </ng-template>
+    </ng-template>
   `
 })
 export class VtsInplaceComponent {
-  static ngAcceptInputType_disabled: BooleanInput;
-  static ngAcceptInputType_active: BooleanInput;
+  static ngAcceptInputType_vtsDisabled: BooleanInput;
+  static ngAcceptInputType_vtsActive: BooleanInput;
+  static ngAcceptInputType_vtsClosable: BooleanInput;
 
-  @Input() @InputBoolean() active: boolean = false;
-
-  @Input() closable: boolean = false;
-
-  @Input() @InputBoolean() disabled: boolean = false;
-
-  @Input() preventClick: boolean = false;
-
-  @Input() style: any;
-
-  @Input() styleClass: string = '';
-
+  @Input() @InputBoolean() vtsActive: boolean = false;
+  @Input() @InputBoolean() vtsClosable: boolean = false;
+  @Input() @InputBoolean() vtsDisabled: boolean = false;
   @Input() vtsIcon: string | null = null;
+  @Input() vtsText: string | null = null;
+  @Input() vtsCollapseIcon: string | null = null;
+  @Input() vtsCollapseText: string | null = null;
+  @Output() vtsActiveChange: EventEmitter<any> = new EventEmitter();
 
-  @Output() onActivate: EventEmitter<any> = new EventEmitter();
-
-  @Output() onDeactivate: EventEmitter<any> = new EventEmitter();
-
-  hover: boolean = true;
+  @ContentChild(VtsInplacePlaceholderComponent) expandTpl?: VtsInplacePlaceholderComponent;
+  @ContentChild(VtsInplaceCollapseComponent) collapseTpl?: VtsInplaceCollapseComponent;
 
   constructor(public cd: ChangeDetectorRef) {}
 
-  onActivateClick(event: Event | undefined) {
-    if (!this.preventClick) this.activate(event);
-  }
-
-  onDeactivateClick(event: Event | undefined) {
-    if (!this.preventClick) this.deactivate(event);
-  }
-
-  activate(event?: Event) {
-    if (!this.disabled) {
-      this.active = true;
-      this.onActivate.emit(event);
+  activate() {
+    if (!this.vtsDisabled) {
+      this.vtsActive = true;
+      this.vtsActiveChange.emit(true);
       this.cd.markForCheck();
     }
   }
 
-  deactivate(event?: Event) {
-    if (!this.disabled) {
-      this.active = false;
-      this.hover = false;
-      this.onDeactivate.emit(event);
+  deactivate() {
+    if (!this.vtsDisabled) {
+      this.vtsActive = false;
+      this.vtsActiveChange.emit(false);
       this.cd.markForCheck();
     }
   }
 
   onKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      this.activate(event);
+      this.activate();
       event.preventDefault();
     }
   }
