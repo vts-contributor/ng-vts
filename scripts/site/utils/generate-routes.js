@@ -47,6 +47,7 @@ function generateNav(componentsDocMap) {
     "icon",
     "inplace",
     "image",
+    "inplace",
     "input",
     "layout",
     "menu",
