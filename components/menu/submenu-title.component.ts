@@ -57,8 +57,7 @@ import { VtsMenuModeType } from './menu.types';
   host: {
     '[class.vts-dropdown-menu-submenu-title]': 'isMenuInsideDropDown',
     '[class.vts-menu-submenu-title]': '!isMenuInsideDropDown',
-    '[style.paddingLeft.px]': `dir === 'rtl' ? null : paddingLeft `,
-    '[style.paddingRight.px]': `dir === 'rtl' ? paddingLeft : null`,
+    '[style.marginLeft.px]': `dir === 'rtl' ? null : marginLeft `,
     '(click)': 'clickTitle()',
     '(mouseenter)': 'setMouseState(true)',
     '(mouseleave)': 'setMouseState(false)'
@@ -69,7 +68,7 @@ export class VtsSubMenuTitleComponent implements OnDestroy, OnInit {
   @Input() vtsTitle: string | TemplateRef<void> | null = null;
   @Input() isMenuInsideDropDown = false;
   @Input() vtsDisabled = false;
-  @Input() paddingLeft: number | null = null;
+  @Input() marginLeft: number | null = null;
   @Input() mode: VtsMenuModeType = 'vertical';
   @Output() readonly toggleSubMenu = new EventEmitter();
   @Output() readonly subMenuMouseState = new EventEmitter<boolean>();

@@ -3,116 +3,118 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-card-thumbnail-position',
   template: `
-    <vts-row [vtsGutter]="[32, 32]">
-      <div vts-col vtsFlex="400px">
-        <p>Top (default)</p>
-        <vts-card>
-          <vts-card-thumbnail
-            width="100%"
-            [vtsSrc]="image"
-            vtsShape="circle"
-            vtsFit="cover"
-            alt=""
-          ></vts-card-thumbnail>
-          <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
-          <vts-card-meta>
-            <vts-card-meta-description vtsColor="secondary">
-              Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
-              artisan four loko farm-to-table craft beer twee.
-            </vts-card-meta-description>
-          </vts-card-meta>
-          <div>Last updated 3 mins ago</div>
-          <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="400px">
-        <p>Bottom</p>
-        <vts-card>
-          <vts-card-thumbnail
-            width="100%"
-            [vtsSrc]="image"
-            vtsShape="circle"
-            vtsFit="cover"
-            vtsPosition="bottom"
-            alt=""
-          ></vts-card-thumbnail>
-          <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
-          <vts-card-meta>
-            <vts-card-meta-description vtsColor="secondary">
-              Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
-              artisan four loko farm-to-table craft beer twee.
-            </vts-card-meta-description>
-          </vts-card-meta>
-          <div>Last updated 3 mins ago</div>
-          <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="400px">
-        <p>Bottom (No footer)</p>
-        <vts-card>
-          <vts-card-thumbnail
-            width="100%"
-            [vtsSrc]="image"
-            vtsShape="circle"
-            vtsFit="cover"
-            vtsPosition="bottom"
-            alt=""
-          ></vts-card-thumbnail>
-          <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
-          <vts-card-meta>
-            <vts-card-meta-description vtsColor="secondary">
-              Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
-              artisan four loko farm-to-table craft beer twee.
-            </vts-card-meta-description>
-          </vts-card-meta>
-          <div>Last updated 3 mins ago</div>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="780px">
-        <p>Left</p>
-        <vts-card>
-          <vts-card-thumbnail
-            width="366px"
-            [vtsSrc]="image"
-            vtsShape="circle"
-            vtsFit="cover"
-            vtsPosition="left"
-            alt=""
-          ></vts-card-thumbnail>
-          <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
-          <vts-card-meta>
-            <vts-card-meta-description vtsColor="secondary">
-              Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
-              artisan four loko farm-to-table craft beer twee.
-            </vts-card-meta-description>
-          </vts-card-meta>
-          <div>Last updated 3 mins ago</div>
-          <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
-        </vts-card>
-      </div>
-      <div vts-col vtsFlex="780px">
-        <p>Right</p>
-        <vts-card>
-          <vts-card-thumbnail
-            width="366px"
-            [vtsSrc]="image"
-            vtsShape="circle"
-            vtsFit="cover"
-            vtsPosition="right"
-            alt=""
-          ></vts-card-thumbnail>
-          <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
-          <vts-card-meta>
-            <vts-card-meta-description vtsColor="secondary">
-              Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
-              artisan four loko farm-to-table craft beer twee.
-            </vts-card-meta-description>
-          </vts-card-meta>
-          <div>Last updated 3 mins ago</div>
-          <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
-        </vts-card>
-      </div>
-    </vts-row>
+    <div style="padding: 16px">
+      <vts-row [vtsGutter]="[32, 32]">
+        <div vts-col vtsFlex="400px">
+          <p>Top (default)</p>
+          <vts-card>
+            <vts-card-thumbnail
+              width="100%"
+              [vtsSrc]="image"
+              vtsShape="circle"
+              vtsFit="cover"
+              alt=""
+            ></vts-card-thumbnail>
+            <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
+            <vts-card-meta>
+              <vts-card-meta-description vtsColor="secondary">
+                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
+                artisan four loko farm-to-table craft beer twee.
+              </vts-card-meta-description>
+            </vts-card-meta>
+            <div>Last updated 3 mins ago</div>
+            <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="400px">
+          <p>Bottom</p>
+          <vts-card>
+            <vts-card-thumbnail
+              width="100%"
+              [vtsSrc]="image"
+              vtsShape="circle"
+              vtsFit="cover"
+              vtsPosition="bottom"
+              alt=""
+            ></vts-card-thumbnail>
+            <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
+            <vts-card-meta>
+              <vts-card-meta-description vtsColor="secondary">
+                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
+                artisan four loko farm-to-table craft beer twee.
+              </vts-card-meta-description>
+            </vts-card-meta>
+            <div>Last updated 3 mins ago</div>
+            <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="400px">
+          <p>Bottom (No footer)</p>
+          <vts-card>
+            <vts-card-thumbnail
+              width="100%"
+              [vtsSrc]="image"
+              vtsShape="circle"
+              vtsFit="cover"
+              vtsPosition="bottom"
+              alt=""
+            ></vts-card-thumbnail>
+            <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
+            <vts-card-meta>
+              <vts-card-meta-description vtsColor="secondary">
+                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
+                artisan four loko farm-to-table craft beer twee.
+              </vts-card-meta-description>
+            </vts-card-meta>
+            <div>Last updated 3 mins ago</div>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="780px">
+          <p>Left</p>
+          <vts-card>
+            <vts-card-thumbnail
+              width="366px"
+              [vtsSrc]="image"
+              vtsShape="circle"
+              vtsFit="cover"
+              vtsPosition="left"
+              alt=""
+            ></vts-card-thumbnail>
+            <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
+            <vts-card-meta>
+              <vts-card-meta-description vtsColor="secondary">
+                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
+                artisan four loko farm-to-table craft beer twee.
+              </vts-card-meta-description>
+            </vts-card-meta>
+            <div>Last updated 3 mins ago</div>
+            <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
+          </vts-card>
+        </div>
+        <div vts-col vtsFlex="780px">
+          <p>Right</p>
+          <vts-card>
+            <vts-card-thumbnail
+              width="366px"
+              [vtsSrc]="image"
+              vtsShape="circle"
+              vtsFit="cover"
+              vtsPosition="right"
+              alt=""
+            ></vts-card-thumbnail>
+            <vts-card-header vtsTitle="Card name" vtsBordered></vts-card-header>
+            <vts-card-meta>
+              <vts-card-meta-description vtsColor="secondary">
+                Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson
+                artisan four loko farm-to-table craft beer twee.
+              </vts-card-meta-description>
+            </vts-card-meta>
+            <div>Last updated 3 mins ago</div>
+            <vts-card-footer vtsBordered>Lorem ipsum</vts-card-footer>
+          </vts-card>
+        </div>
+      </vts-row>
+    </div>
   `
 })
 export class VtsDemoCardThumbnailPositionComponent {

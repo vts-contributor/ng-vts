@@ -13,7 +13,6 @@ import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
 import { VtsHeaderComponent } from './header.component';
 import { VtsLayoutComponent } from './layout.component';
-import { VtsSiderTriggerComponent } from './sider-trigger.component';
 import { VtsSiderComponent } from './sider.component';
 
 @NgModule({
@@ -22,8 +21,7 @@ import { VtsSiderComponent } from './sider.component';
     VtsHeaderComponent,
     VtsContentComponent,
     VtsFooterComponent,
-    VtsSiderComponent,
-    VtsSiderTriggerComponent
+    VtsSiderComponent
   ],
   exports: [
     VtsLayoutComponent,

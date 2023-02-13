@@ -7,7 +7,6 @@ import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -23,7 +22,7 @@ import { slideMotion, zoomBigMotion } from '@ui-vts/ng-vts/core/animation';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { VtsMenuModeType, VtsMenuThemeType } from './menu.types';
+import { VtsMenuModeType } from './menu.types';
 
 @Component({
   selector: '[vts-submenu-none-inline-child]',
@@ -36,7 +35,6 @@ import { VtsMenuModeType, VtsMenuThemeType } from './menu.types';
       [class.vts-dropdown-menu]="isMenuInsideDropDown"
       [class.vts-menu]="!isMenuInsideDropDown"
       [class.vts-dropdown-menu-vertical]="isMenuInsideDropDown"
-      [class.vts-menu-vertical]="!isMenuInsideDropDown"
       [class.vts-dropdown-menu-sub]="isMenuInsideDropDown"
       [class.vts-menu-sub]="!isMenuInsideDropDown"
       [class.vts-menu-rtl]="dir === 'rtl'"
@@ -46,33 +44,39 @@ import { VtsMenuModeType, VtsMenuThemeType } from './menu.types';
     </div>
   `,
   host: {
-    '[class.vts-menu-light]': "theme === 'light'",
-    '[class.vts-menu-dark]': "theme === 'dark'",
+    '[class.vts-menu-submenu]': 'true',
+    '[class.vts-menu-submenu-popup]': 'true',
+    '[class.vts-menu-of-horizontal]': "rootMode === 'horizontal'",
+    '[class.vts-menu-of-vertical]': "rootMode === 'vertical'",
     '[class.vts-menu-submenu-placement-bottom]': "mode === 'horizontal'",
     '[class.vts-menu-submenu-placement-right]': "mode === 'vertical' && position === 'right'",
     '[class.vts-menu-submenu-placement-left]': "mode === 'vertical' && position === 'left'",
     '[class.vts-menu-submenu-rtl]': 'dir ==="rtl"',
+    '[class.vts-menu-submenu-sub-level]': 'level > 1',
+    '[class.vts-menu-submenu-sub-level-first]': 'isFirst',
+    '[class.vts-menu-submenu-sub-level-latest]': 'isLasted',
     '[@slideMotion]': 'expandState',
     '[@zoomBigMotion]': 'expandState',
     '(mouseenter)': 'setMouseState(true)',
-    '(mouseleave)': 'setMouseState(false)'
+    '(mouseleave)': 'setMouseState(false)',
+    '[attr.level]': 'level'
   }
 })
 export class VtsSubmenuNoneInlineChildComponent implements OnDestroy, OnInit, OnChanges {
   @Input() menuClass: string = '';
-  @Input() theme: VtsMenuThemeType = 'light';
   @Input() templateOutlet: TemplateRef<VtsSafeAny> | null = null;
   @Input() isMenuInsideDropDown = false;
   @Input() mode: VtsMenuModeType = 'vertical';
+  @Input() rootMode?: VtsMenuModeType | null;
   @Input() position = 'right';
   @Input() vtsDisabled = false;
   @Input() vtsOpen = false;
+  @Input() level: number = 1;
+  @Input() isFirst: boolean | null = null;
+  @Input() isLasted: boolean | null = null;
   @Output() readonly subMenuMouseState = new EventEmitter<boolean>();
 
-  constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
-    // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-menu-submenu', 'vts-menu-submenu-popup');
-  }
+  constructor(@Optional() private directionality: Directionality) {}
 
   setMouseState(state: boolean): void {
     if (!this.vtsDisabled) {
