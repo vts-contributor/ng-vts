@@ -128,7 +128,7 @@ const listOfHorizontalPositions = [POSITION_MAP.bottomLeft];
     '[class.vts-menu-submenu-disabled]': `!isMenuInsideDropDown && vtsDisabled`,
     '[class.vts-menu-submenu-open]': `!isMenuInsideDropDown && vtsOpen`,
     '[class.vts-menu-submenu-selected]': `!isMenuInsideDropDown && isSelected`,
-    '[class.vts-menu-submenu-vertical]': `!isMenuInsideDropDown && !isInsidePopup && mode === 'vertical'`,
+    '[class.vts-menu-submenu-vertical]': `!isMenuInsideDropDown && mode === 'vertical'`,
     '[class.vts-menu-submenu-horizontal]': `!isMenuInsideDropDown && mode === 'horizontal'`,
     '[class.vts-menu-submenu-inline]': `!isMenuInsideDropDown && mode === 'inline'`,
     '[class.vts-menu-submenu-active]': `!isMenuInsideDropDown && isActive`,

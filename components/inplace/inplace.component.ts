@@ -8,7 +8,7 @@ import {
   ChangeDetectorRef,
   ContentChild
 } from '@angular/core';
-import { InputBoolean } from '../core/util';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { VtsInplaceCollapseComponent } from './inplace-collapse.component';
 import { VtsInplacePlaceholderComponent } from './inplace-placeholder.component';
