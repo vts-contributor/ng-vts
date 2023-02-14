@@ -1,11 +1,9 @@
 ---
 category: Components
-type: Data Display
+type: Components
 title: Avatar
-cover: https://gw.alipayobjects.com/zos/antfincdn/aBcnbw68hP/Avatar.svg
+cover: ''
 ---
-
-Avatars can be used to represent people or objects. It supports images, `Icon`s, or letters.
 
 ```ts
 import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
@@ -15,22 +13,22 @@ import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
 
 ### vts-avatar
 
-| Property | Description | Type | Default | Global Config |
-| -------- | ----------- | ---- | ------- | ------------- |
-| `[vtsIcon]` | The `Icon` type for an icon avatar, see `Icon` | `string` | - |
-| `[vtsShape]` | The shape of avatar | `'circle' \| 'square'` | `'circle'` | ✅ |
-| `[vtsSize]` | The size of the avatar | `'large' \| 'small' \| 'default' \| number` | `'default'` | ✅ |
-| `[vtsGap]` | Letter type unit distance between left and right sides | `number` | `4` | ✅ |
-| `[vtsSrc]` | The address of the image for an image avatar | `string` | - |
-| `[vtsSrcSet]` | a list of sources to use for different screen resolutions | string | - |
-| `[vtsAlt]` | This attribute defines the alternative text describing the image | string | - |
-| `[vtsText]` | Letter type avatar | `string` | - |
-| `(vtsError)` | Handler when img load error, call the `preventDefault` method to prevent default fallback behavior | `EventEmitter<Event>` | - |
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| vtsIcon | The `VtsIcon` type for an icon avatar | `string` | |
+| vtsText | Text content for text avatar | `string` | |
+| vtsShape | The shape of avatar | One of `square` `rounded` `circle` | `circle` |
+| vtsSize | The size of the avatar | `number` or one of `xxs` `xs` `sm` `md` `lg` `xl` | `xs`
+| vtsGap | Letter type unit distance between left and right sides | `number` | `4` |
+| vtsSrc | The image src for an image avatar | `string` | |
+| vtsSrcSet | Srcset property to use for different screen resolutions | `string` |  |
+| vtsAlt | Alternative text describing the image | string | |
+| (vtsError) | Handler when img load error, call the `preventDefault` method to prevent default fallback behavior | `EventEmitter<Event>` | |
 
 ### vts-avatar-group
 
 ```html
- <vts-avatar-group>
+<vts-avatar-group>
   <vts-avatar vtsIcon="user"></vts-avatar>
   ...
 </vts-avatar-group>

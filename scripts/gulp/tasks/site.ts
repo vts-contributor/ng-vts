@@ -91,8 +91,7 @@ task('build:site-iframe', done => {
   const command = [
     'build', 
     '--project=ng-vts-iframe',
-    '--configuration=production',
-    ...(path ? ['--base-href', path] : [])
+    '--configuration=production'
   ];
   execNodeTask('@angular/cli', 'ng', command)(done);
 }); 

@@ -13,7 +13,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
     </vts-radio-group>
     <br />
     <br />
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form>
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Time Label</vts-form-label>
         <vts-form-control>
@@ -35,13 +35,10 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
             [vtsSize]="size"
             [(ngModel)]="value"
             (ngModelChange)="print($event)"
-            disabled
+            vtsDisabled
           ></vts-time-picker>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Time Label</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">

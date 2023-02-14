@@ -151,6 +151,7 @@ export class VtsTimePickerComponent
   static ngAcceptInputType_vtsUse12Hours: BooleanInput;
   static ngAcceptInputType_vtsHideDisabledOptions: BooleanInput;
   static ngAcceptInputType_vtsAllowEmpty: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsAutoFocus: BooleanInput;
   static ngAcceptInputType_vtsInputReadOnly: BooleanInput;
@@ -203,6 +204,9 @@ export class VtsTimePickerComponent
 
   @Input() @InputBoolean() vtsHideDisabledOptions = false;
   @Input() @WithConfig() @InputBoolean() vtsAllowEmpty: boolean = true;
+  @Input() @InputBoolean() set disabled(value: boolean) {
+    this.vtsDisabled = value;
+  }
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() @InputBoolean() vtsAutoFocus = false;
   @Input() @WithConfig() vtsBackdrop = false;

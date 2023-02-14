@@ -1,18 +1,10 @@
 ---
 category: Components
 cols: 1
-type: Navigation
+type: Components
 title: Menu
-cover: https://gw.alipayobjects.com/zos/alicdn/3XZcjGpvK/Menu.svg
+cover: ''
 ---
-
-Menu list of Navigation.
-
-## When To Use
-
-Navigation menu is important for a website, it helps users jump from one site section to another quickly. Mostly, it includes top navigation and side navigation. Top navigation provides all the category and functions of the website. Side navigation provides the Multi-level structure of the website.
-
-More layouts with navigation: [layout](/components/layout/en).
 
 ```ts
 import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
@@ -20,17 +12,36 @@ import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 
 ## API
 
+Structure
+
 ```html
 <ul vts-menu>
-  <li vts-menu-item>Menu 1</li>
-  <li vts-menu-item>Menu 2</li>
-  <li vts-submenu vtsTitle="SubMenu Title">
-    <ul>
+  <li vts-menu-item>
+    <i vts-icon vtsType="Time"></i>
+    Item 1
+  </li>
+  <li vts-menu-item>
+    <i vts-icon vtsType="Time"></i>
+    Item 2
+  </li>
+  <ul vts-submenu vtsTitle="Submenu Title">
+    <li vts-menu-item>SubMenu Item 1</li>
+    <li vts-menu-item>SubMenu Item 2</li>
+  </ul>
+  <ul vts-menu-group vtsTitle="Group Title">
+    <li vts-menu-item>
+      <i vts-icon vtsType="Time"></i>
+      Item 1
+    </li>
+    <ul vts-submenu vtsTitle="Submenu Title">
       <li vts-menu-item>SubMenu Item 1</li>
       <li vts-menu-item>SubMenu Item 2</li>
-      <li vts-menu-item>SubMenu Item 3</li>
+      <ul vts-submenu vtsTitle="Submenu Title">
+        <li vts-menu-item>SubMenu Item 1</li>
+        <li vts-menu-item>SubMenu Item 2</li>
+      </ul>
     </ul>
-  </li>
+  </ul>
 </ul>
 ```
 
@@ -38,63 +49,31 @@ import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 
 | Param | Description | Type | Default value |
 | ----- | ----------- | ---- | ------------- |
-| `[vtsInlineCollapsed]` | specifies the collapsed status when menu is inline mode | `boolean` | - |
-| `[vtsInlineIndent]` | indent px of inline menu item on each level | `number` | `24` |
-| `[vtsMode]` | type of the menu; `vertical`, `horizontal`, and `inline` modes are supported | `'vertical' \| 'horizontal' \| 'inline'` | `'vertical'` |
-| `[vtsSelectable]` | allow selecting menu items | `boolean` | `true` |
-| `[vtsTheme]` | color theme of the menu | `'light' \| 'dark'` | `'light'` |
-| `(vtsClick)` | the Output when click vts-menu-item inside vts-menu | `EventEmitter<VtsMenuItemDirective>` | |
+| vtsInlineCollapsed | The collapsed status when menu is inline mode | `boolean` | `false` |
+| vtsMode | Type of the menu | One of `vertical` `horizontal` `inline` | `vertical` |
+| (vtsClick) | Emit on `vts-menu-item` selected | `EventEmitter<VtsMenuItemDirective>` | |
 
 ### [vts-menu-item]
 
 | Param | Description | Type | Default value |
 | ----- | ----------- | ---- | ------------- |
-| `[vtsDisabled]` | whether menu item is disabled or not | `boolean` | `false` |
-| `[vtsSelected]` | whether menu item is selected or not | `boolean` | `false` |
-| `[vtsMatchRouter]` | whether auto set `vtsSelected` according to [routerLink](https://www.angular.cn/api/router/RouterLink) | `boolean` | `false` |
-| `[vtsMatchRouterExact]` | only match when the url matches the link exactly, same as [routerLinkActiveOptions](https://angular.io/api/router/RouterLinkActive#routerLinkActiveOptions) | `boolean` | `false` |
-| `[vtsDanger]` | display the danger style | `boolean` | `false` |
+| vtsDisabled | Disabled state of menu item | `boolean` | `false` |
+| vtsSelected | Selected state of menu item | `boolean` | `false` |
+| vtsMatchRouter | Whether to auto set `vtsSelected` according to [routerLink] | `boolean` | `false` |
+| vtsMatchRouterExact | Same as `vtsMatchRouter` but only match when the url matches the link exactly | `boolean` | `false` |
 
 ### [vts-submenu]
 
-You can set the title of `[vts-submenu]` in the following ways.
-
-```html
-<li vts-submenu vtsTitle="SubTitle" vtsIcon="appstore"></li>
-
-<li vts-submenu><span title><i vts-icon vtsType="ViewModule"></i><span>SubTitle</span></span></li>
-
-<li vts-submenu [vtsTitle]="titleTpl"></li>
-<ng-template #titleTpl><i vts-icon vtsType="ViewModule"></i><span>SubTitle</span></ng-template>
-```
-
 | Param | Description | Type | Default value |
 | ----- | ----------- | ---- | ------------- |
-| `[vtsOpen]` | whether sub menu is open or not, double binding | `boolean` | `false` |
-| `[vtsDisabled]` | whether sub menu is disabled or not | `boolean` | `false` |
-| `[vtsTitle]` | set submenu title | `string \| TemplateRef<void>` | - |
-| `[vtsIcon]` | icon type in title | `string` | - |
-| `[vtsMenuClassName]` | Custom the submenu container's class name | `string` | - |
-| `(vtsOpenChange)` | vtsOpen callback | `EventEmitter<boolean>` | - |
+| [(vtsOpen)] | Binding open state of sub menu | `boolean` | `false` |
+| vtsDisabled | Disabled state of sub menu | `boolean` | `false` |
+| vtsTitle | Submenu title | `string \| TemplateRef<void>` | |
+| vtsIcon | Submenu icon | `string` | |
+| vtsMenuClassName | Submenu container's class name | `string` | |
 
 ### [vts-menu-group]
 
-You can set the title of `[vts-menu-group]` in the following ways.
-
-```html
-<li vts-menu-group vtsTitle="SubTitle" vtsIcon="appstore"></li>
-
-<li vts-menu-group><span title><i vts-icon vtsType="ViewModule"></i><span>SubTitle</span></span></li>
-
-<li vts-menu-group [vtsTitle]="titleTpl"></li>
-<ng-template #titleTpl><i vts-icon vtsType="ViewModule"></i><span>SubTitle</span></ng-template>
-```
-
 | Param | Description | Type | Default value |
 | ----- | ----------- | ---- | ------------- |
-| `[vtsTitle]` | set menu group title | `string \| TemplateRef<void>` | - |
-
-
-### [vts-menu-divider]
-
-Divider line in between menu items, only used in vertical popup Menu or Dropdown Menu.
+| vtsTitle | Menu group title | `string \| TemplateRef<void>` | |
