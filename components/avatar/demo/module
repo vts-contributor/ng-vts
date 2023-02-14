@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
-import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
 import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
-import { VtsPopoverModule } from '@ui-vts/ng-vts/popover';
 import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
 
-export const moduleList = [ CommonModule, VtsAvatarModule, VtsBadgeModule, VtsButtonModule, VtsToolTipModule, VtsPopoverModule, VtsDividerModule, VtsInputNumberModule ];
+export const moduleList = [ CommonModule, VtsAvatarModule, VtsBadgeModule, VtsButtonModule, VtsToolTipModule, VtsInputNumberModule, VtsSpaceModule ];

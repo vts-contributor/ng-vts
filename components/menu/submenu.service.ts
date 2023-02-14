@@ -5,12 +5,13 @@
 
 import { Inject, Injectable, OnDestroy, Optional, SkipSelf } from '@angular/core';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, merge, Observable, of, Subject } from 'rxjs';
 import {
   auditTime,
   distinctUntilChanged,
   filter,
   map,
+  switchMap,
   mapTo,
   mergeMap,
   takeUntil
@@ -33,7 +34,16 @@ export class VtsSubmenuService implements OnDestroy {
       }
     })
   );
+  rootMode$: Observable<VtsMenuModeType> = this.vtsMenuService.mode$.pipe(
+    switchMap(mode => {
+      if (this.vtsHostSubmenuService) return this.vtsHostSubmenuService.rootMode$;
+      return of(mode);
+    })
+  );
   level = 1;
+  isFirst$ = new BehaviorSubject<boolean>(true);
+  isLasted$ = new BehaviorSubject<boolean>(true);
+  isInsidePopup: boolean = false;
   isCurrentSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   private isChildSubMenuOpen$ = new BehaviorSubject<boolean>(false);
   /** submenu title & overlay mouse enter status **/
@@ -47,11 +57,25 @@ export class VtsSubmenuService implements OnDestroy {
   onChildMenuItemClick(menu: VtsSafeAny): void {
     this.childMenuItemClick$.next(menu);
   }
+  setOpenStateRecursive(): void {
+    if (this.vtsHostSubmenuService) {
+      this.vtsHostSubmenuService.setOpenStateRecursive();
+    }
+    this.setOpenStateWithoutDebounce(true);
+  }
   setOpenStateWithoutDebounce(value: boolean): void {
     this.isCurrentSubMenuOpen$.next(value);
   }
   setMouseEnterTitleOrOverlayState(value: boolean): void {
     this.isMouseEnterTitleOrOverlay$.next(value);
+  }
+
+  trackOrder() {
+    if (this.vtsHostSubmenuService) {
+      this.vtsHostSubmenuService.isLasted$.next(false);
+      this.isFirst$.next(false);
+    }
+    if (this.level === 1) this.isFirst$.next(true);
   }
 
   constructor(
@@ -61,6 +85,8 @@ export class VtsSubmenuService implements OnDestroy {
   ) {
     if (this.vtsHostSubmenuService) {
       this.level = this.vtsHostSubmenuService.level + 1;
+      this.isInsidePopup = true;
+      this.trackOrder();
     }
     /** close if menu item clicked **/
     const isClosedByMenuItemClick = this.childMenuItemClick$.pipe(

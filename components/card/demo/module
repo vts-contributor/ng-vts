@@ -1,8 +1,23 @@
 import { VtsCardModule } from '@ui-vts/ng-vts/card';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
 import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsSkeletonModule } from '@ui-vts/ng-vts/skeleton';
 import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsImageModule } from '@ui-vts/ng-vts/image';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
 
-export const moduleList = [ VtsCardModule, VtsAvatarModule, VtsSwitchModule, VtsSkeletonModule, VtsTabsModule, VtsIconModule ];
+export const moduleList = [
+    VtsCardModule,
+    VtsAvatarModule,
+    VtsSwitchModule,
+    VtsSkeletonModule,
+    VtsTabsModule,
+    VtsIconModule,
+    VtsButtonModule,
+    VtsImageModule,
+    VtsDividerModule,
+    VtsSpaceModule
+];

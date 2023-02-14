@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
 @Component({
   selector: 'vts-demo-textarea-basic',
   template: `
-    <form [vtsLayout]="'vertical'" vts-form>
+    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Input Label</vts-form-label>
         <vts-form-control>
@@ -31,9 +31,6 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
           ></textarea>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Input Label</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">

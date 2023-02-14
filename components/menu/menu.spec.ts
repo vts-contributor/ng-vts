@@ -129,12 +129,12 @@ describe('menu', () => {
         fixture.detectChanges();
         const firstLevelItems = items;
         const secondLevelItems = firstLevelItems.splice(6, 2);
-        expect(firstLevelItems.every(item => item.nativeElement.style.paddingLeft === '48px')).toBe(
+        expect(firstLevelItems.every(item => item.nativeElement.style.marginLeft === '48px')).toBe(
           true
         );
-        expect(
-          secondLevelItems.every(item => item.nativeElement.style.paddingLeft === '72px')
-        ).toBe(true);
+        expect(secondLevelItems.every(item => item.nativeElement.style.marginLeft === '72px')).toBe(
+          true
+        );
       });
       it('should click expand', fakeAsync(() => {
         fixture.detectChanges();
@@ -824,7 +824,7 @@ export class VtsTestNgIfMenuComponent {
 // https://github.com/NG-ZORRO/ng-zorro-antd/issues/3345
 @Component({
   template: `
-    <ul vts-menu vtsMode="inline" vtsTheme="dark" vtsInlineCollapsed>
+    <ul vts-menu vtsMode="inline" vtsInlineCollapsed>
       <li vts-menu-item>
         <i vts-icon vtsType="Mail"></i>
         <span>Navigation One</span>
@@ -846,7 +846,7 @@ export class VtsTestSubMenuSelectedComponent {}
       <button vts-button vtsType="primary" (click)="toggleCollapsed()">
         <i vts-icon [vtsType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
       </button>
-      <ul vts-menu vtsMode="inline" vtsTheme="dark" [vtsInlineCollapsed]="isCollapsed">
+      <ul vts-menu vtsMode="inline" [vtsInlineCollapsed]="isCollapsed">
         <li vts-menu-item vtsSelected>
           <i vts-icon vtsType="Mail"></i>
           <span>Navigation One</span>
@@ -970,7 +970,7 @@ export class VtsTestMenuSiderCurrentComponent {
 
 @Component({
   template: `
-    <ul vts-menu [vtsMode]="mode ? 'vertical' : 'inline'" [vtsTheme]="dark ? 'dark' : 'light'">
+    <ul vts-menu [vtsMode]="mode ? 'vertical' : 'inline'">
       <li vts-submenu vtsTitle="Navigation One" vtsIcon="mail">
         <ul>
           <li vts-menu-group vtsTitle="Item 1">
@@ -1023,7 +1023,7 @@ export class VtsTestMenuSwitchModeComponent {
 
 @Component({
   template: `
-    <ul vts-menu vtsMode="inline" style="width: 240px;" [vtsTheme]="theme ? 'dark' : 'light'">
+    <ul vts-menu vtsMode="inline" style="width: 240px;">
       <li vts-submenu vtsOpen vtsTitle="Navigation One" vtsIcon="mail">
         <ul>
           <li vts-menu-group vtsTitle="Item 1">

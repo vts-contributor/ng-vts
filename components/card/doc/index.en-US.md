@@ -1,16 +1,10 @@
 ---
 category: Components
-type: Data Display
+type: Components
 title: Card
 cols: 1
-cover: https://gw.alipayobjects.com/zos/alicdn/keNB-R8Y9/Card.svg
+cover: ''
 ---
-
-Simple rectangular container.
-
-## When To Use
-
-A card can be used to display content related to a single subject. The content can consist of multiple elements of varying types and sizes.
 
 ```ts
 import { VtsCardModule } from '@ui-vts/ng-vts/card';
@@ -18,41 +12,95 @@ import { VtsCardModule } from '@ui-vts/ng-vts/card';
 
 ## API
 
+Structure (Can be shuffled)
+
 ```html
-<vts-card vtsTitle="card title">card content</vts-card>
+<vts-card>
+    /** Thumbnail **/
+    <vts-card-thumbnail></vts-card-thumbnail>
+
+    /** Header **/
+    <vts-card-header>
+        /** If using template **/
+        <vts-card-header-title></vts-card-header-title>
+        <vts-card-header-extra></vts-card-header-extra>
+    </vts-card-header>
+
+    /** Meta **/
+    <vts-card-meta>
+        /** If using template **/
+        <vts-card-header-title></vts-card-header-title>
+        <vts-card-header-description></vts-card-header-description>
+        <vts-card-header-avatar></vts-card-header-avatar>
+    </vts-card-meta>
+
+    /** Body **/
+    // Anything
+
+    /** Footer **/
+    <vts-card-footer>
+        // Anything
+    </vts-card-footer>
+</vts-card>
 ```
 
 ### vts-card
 
-| Property | Description | Type | Default | Global Config |
-| -------- | ----------- | ---- | ------- | ------------- |
-| `[vtsActions]` | The action list, shows at the bottom of the Card. | `Array<TemplateRef<void>>` | - |
-| `[vtsBodyStyle]` | Inline style to apply to the card content | `{ [key: string]: string }` | - |
-| `[vtsBorderless]` | Remove border around the card | `boolean` | `false` | ✅ |
-| `[vtsCover]` | Card cover | `TemplateRef<void>` | - |
-| `[vtsExtra]` | Content to render in the top-right corner of the card | `string\|TemplateRef<void>` | - |
-| `[vtsHoverable]` | Lift up when hovering card | `boolean` | `false` | ✅ |
-| `[vtsLoading]` | Shows a loading indicator while the contents of the card are being fetched | `boolean` | `false` |
-| `[vtsTitle]` | Card title | `string\|TemplateRef<void>` | - |
-| `[vtsType]` | Card style type, can be set to `inner` or not set | `'inner'` | - |
-| `[vtsSize]` | Size of card | `'default'\|'small'` | `'default'` | ✅ |
+| Property             | Description                                                                | Type                                         | Default |
+|----------------------|----------------------------------------------------------------------------|----------------------------------------------|---------|
+| vtsBordered          | Whether to set border for card                                             | `boolean`                                    | `true`  |
+| vtsBorderless        | Whether to unset border for card (shorthand for `[vtsBordered]="false"`)   | `boolean`                                    | `false` |
+| vtsNoRadius          | Whether to unset border radius for card                                    | `boolean`                                    | `false` |
+| vtsLoading           | Whether to display loading state                                           | `boolean`                                    | `false` |
+| vtsHoverable         | Whether to allow hovering                                                  | `boolean`                                    | `true`  |
+| vtsBodyStyle         | Set NgStyle for body                                                       | `NgStyleInterface`                           |         |
 
+### vts-card-thumbnail
+
+All property of [vts-image](./components/avatar/en)
+
+| Property           | Description                      | Type                                     | Default |
+|--------------------|---------------------------------|-------------------------------------------|---------|
+| vtsPosition        | Position of thumbnail           | One of `top` `left` `right` `bottom`      | `top`   |
+| vtsTemplate        | Custom template for thumbnail   | `TemplateRef`                             |         |
+
+### vts-card-header
+
+| Property           | Description         | Type                            | Default |
+|--------------------|---------------------|---------------------------------|---------|
+| vtsTitle           | Card header title   | `string`                        |         |
+
+### vts-card-header-title
+
+Custom template for header title
+
+### vts-card-header-extra
+
+Custom template for header extra actions at left
 
 ### vts-card-meta
 
-| Property | Description | Type | Default |
-| -------- | ----------- | ---- | ------- |
-| `[vtsAvatar]` | avatar or icon | `TemplateRef<void>` | - |
-| `[vtsDescription]` | description content | `string\|TemplateRef<void>` | - |
-| `[vtsTitle]` | title content | `string\|TemplateRef<void>` | - |
+| Property       | Description                                                                                              | Type                           | Default      |
+| -------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------ | ------------ |
+| vtsTitle       | Card meta title                                                                                          | `string`                       |              |
+| vtsDescription | Card meta description                                                                                    | `string`                       |              |
+| vtsBordered    | Whether to display border at bottom                                                                      | `boolean`                      | `false`      |
+| vtsDirection   | Direction for meta display                                                                               | One of `vertical` `horizontal` | `horizontal` |
+| vtsAlign       | Alignment for meta display<br />Note: `center` has no effect if used with `vtsDirection` of `horizontal` | One of `left` `center` `right` | `left`       |
 
-### [vts-card-grid]
+### vts-card-meta-title
 
-| Property | Description | Type | Default | Global Config |
-| -------- | ----------- | ---- | ------- | ------------- |
-| `[vtsHoverable]` | Lift up when hovering card | `boolean` | `true` | - |
+Custom template for meta title
 
-Area for grid style card
+### vts-card-meta-description
 
-### vts-card-tab
-Area for tab card
+Custom template for meta description
+
+### vts-card-meta-avatar
+
+Meta avatar template
+All property of [vts-avatar](/uikit/components/avatar/en)
+
+### vts-card-footer
+
+Card footer template

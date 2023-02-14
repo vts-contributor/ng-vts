@@ -33,9 +33,40 @@ function generateLanguageData(itemData, language, reverseMap, key) {
 function generateNav(componentsDocMap) {
   const reverseMap = {};
   let routes = '';
-
-  const filters = ['table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 
-                    'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result']
+  const filters = [
+    "accordion",
+    "alert",
+    "avatar",
+    "breadcrumb",
+    "button",
+    "card",
+    "chart",
+    "checkbox",
+    "date-picker",
+    "grid",
+    "icon",
+    "inplace",
+    "image",
+    "inplace",
+    "input",
+    "layout",
+    "menu",
+    "panel",
+    "radio",
+    "result",
+    "select",
+    "skeleton",
+    "slider",
+    "space",
+    "splitter",
+    "table",
+    "textarea",
+    "time-picker",
+    "toast",
+    "tooltip",
+    "typography",
+    "upload"
+  ]
   console.log(filters)
   for (const key in componentsDocMap) {
     if (!filters.includes(key))

@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
 import { VtsMenuItemDirective } from './menu-item.directive';
 import { MenuService } from './menu.service';
 import { VtsIsMenuInsideDropDownToken, VtsMenuServiceLocalToken } from './menu.token';
-import { VtsMenuModeType, VtsMenuThemeType } from './menu.types';
+import { VtsMenuModeType } from './menu.types';
 import { VtsSubMenuComponent } from './submenu.component';
 
 export function MenuServiceFactory(
@@ -86,8 +86,6 @@ export class VtsMenuDirective implements AfterContentInit, OnInit, OnChanges, On
   listOfVtsMenuItemDirective!: QueryList<VtsMenuItemDirective>;
   @ContentChildren(VtsSubMenuComponent, { descendants: true })
   listOfVtsSubMenuComponent!: QueryList<VtsSubMenuComponent>;
-  @Input() vtsInlineIndent = 24;
-  @Input() vtsTheme: VtsMenuThemeType = 'light';
   @Input() vtsMode: VtsMenuModeType = 'vertical';
   @Input() @InputBoolean() vtsInlineCollapsed = false;
   @Input() @InputBoolean() vtsSelectable = !this.isMenuInsideDropDown;
@@ -160,17 +158,9 @@ export class VtsMenuDirective implements AfterContentInit, OnInit, OnChanges, On
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { vtsInlineCollapsed, vtsInlineIndent, vtsTheme, vtsMode } = changes;
+    const { vtsInlineCollapsed, vtsMode } = changes;
     if (vtsInlineCollapsed) {
       this.inlineCollapsed$.next(this.vtsInlineCollapsed);
-    }
-    if (vtsInlineIndent) {
-      this.vtsMenuService.setInlineIndent(this.vtsInlineIndent);
-    }
-    if (vtsTheme) {
-      // NG-VTS: force light theme, check origin
-      this.vtsTheme = 'light';
-      this.vtsMenuService.setTheme(this.vtsTheme);
     }
     if (vtsMode) {
       this.mode$.next(this.vtsMode);

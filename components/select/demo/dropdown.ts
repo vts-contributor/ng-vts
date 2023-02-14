@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     </vts-radio-group>
     <br />
     <br />
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form>
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Label Name</vts-form-label>
         <vts-form-control>
@@ -48,9 +48,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
           </vts-select>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
         <vts-form-label>Label Name</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">

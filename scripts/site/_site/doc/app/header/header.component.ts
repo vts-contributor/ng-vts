@@ -201,7 +201,7 @@ export class HeaderComponent implements OnChanges, OnInit {
     this.vtsConfigService.set('modal', { vtsDirection: this.nextDirection });
     this.vtsConfigService.set('drawer', { vtsDirection: this.nextDirection });
     this.vtsConfigService.set('message', { vtsDirection: this.nextDirection });
-    this.vtsConfigService.set('notification', { vtsDirection: this.nextDirection });
+    this.vtsConfigService.set('toast', { vtsDirection: this.nextDirection });
     this.vtsConfigService.set('image', { vtsDirection: this.nextDirection });
     if (this.nextDirection === 'rtl') {
       this.nextDirection = 'ltr';

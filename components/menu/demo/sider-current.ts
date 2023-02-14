@@ -4,59 +4,47 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-menu-sider-current',
   template: `
     <ul vts-menu vtsMode="inline" style="width: 240px;">
-      <li
+      <ul
         vts-submenu
         [(vtsOpen)]="openMap.sub1"
         (vtsOpenChange)="openHandler('sub1')"
-        vtsTitle="Navigation One"
-        vtsIcon="mail"
+        vtsTitle="Menu 1"
+        vtsIcon="Settings"
       >
-        <ul>
-          <li vts-menu-group vtsTitle="Item 1">
-            <ul>
-              <li vts-menu-item>Option 1</li>
-              <li vts-menu-item>Option 2</li>
-            </ul>
-          </li>
-          <li vts-menu-group vtsTitle="Item 2">
-            <ul>
-              <li vts-menu-item>Option 3</li>
-              <li vts-menu-item>Option 4</li>
-            </ul>
-          </li>
+        <ul vts-menu-group vtsTitle="Group 1">
+          <li vts-menu-item>Option 1</li>
+          <li vts-menu-item>Option 2</li>
         </ul>
-      </li>
-      <li
+        <ul vts-menu-group vtsTitle="Group 2">
+          <li vts-menu-item>Option 3</li>
+          <li vts-menu-item>Option 4</li>
+        </ul>
+      </ul>
+      <ul
         vts-submenu
         [(vtsOpen)]="openMap.sub2"
         (vtsOpenChange)="openHandler('sub2')"
-        vtsTitle="Navigation Two"
-        vtsIcon="appstore"
+        vtsTitle="Menu 2"
+        vtsIcon="Time"
       >
-        <ul>
-          <li vts-menu-item>Option 5</li>
-          <li vts-menu-item>Option 6</li>
-          <li vts-submenu vtsTitle="Submenu">
-            <ul>
-              <li vts-menu-item>Option 7</li>
-              <li vts-menu-item>Option 8</li>
-            </ul>
-          </li>
+        <li vts-menu-item>Option 5</li>
+        <li vts-menu-item>Option 6</li>
+        <ul vts-submenu vtsTitle="Submenu">
+          <li vts-menu-item>Option 7</li>
+          <li vts-menu-item>Option 8</li>
         </ul>
-      </li>
-      <li
+      </ul>
+      <ul
         vts-submenu
         [(vtsOpen)]="openMap.sub3"
         (vtsOpenChange)="openHandler('sub3')"
-        vtsTitle="Navigation Three"
-        vtsIcon="setting"
+        vtsTitle="Menu 3"
+        vtsIcon="Settings"
       >
-        <ul>
-          <li vts-menu-item>Option 9</li>
-          <li vts-menu-item>Option 10</li>
-          <li vts-menu-item>Option 11</li>
-        </ul>
-      </li>
+        <li vts-menu-item>Option 9</li>
+        <li vts-menu-item>Option 10</li>
+        <li vts-menu-item>Option 11</li>
+      </ul>
     </ul>
   `
 })

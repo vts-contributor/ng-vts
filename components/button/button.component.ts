@@ -32,7 +32,7 @@ import { filter, startWith, takeUntil } from 'rxjs/operators';
 type VtsLegacyButtonType = 'primary' | 'default' | 'link' | 'text' | null;
 
 export type VtsButtonType = VtsLegacyButtonType;
-export type VtsButtonShape = 'circle' | 'round' | null;
+export type VtsButtonShape = 'circle' | 'rounded' | 'square';
 export type VtsButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'button';
@@ -55,7 +55,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'button';
     '[class.vts-btn-link]': `vtsType === 'link'`,
     '[class.vts-btn-text]': `vtsType === 'text'`,
     '[class.vts-btn-circle]': `vtsShape === 'circle'`,
-    '[class.vts-btn-round]': `vtsShape === 'round'`,
+    '[class.vts-btn-rounded]': `vtsShape === 'rounded'`,
+    '[class.vts-btn-square]': `vtsShape === 'square'`,
     '[class.vts-btn-xl]': `vtsSize === 'xl'`,
     '[class.vts-btn-lg]': `vtsSize === 'lg'`,
     '[class.vts-btn-md]': `vtsSize === 'md'`,
@@ -89,7 +90,7 @@ export class VtsButtonComponent
   @Input() @InputBoolean() disabled: boolean = false;
   @Input() tabIndex: number | string | null = null;
   @Input() vtsType: VtsButtonType = null;
-  @Input() vtsShape: VtsButtonShape = null;
+  @Input() vtsShape: VtsButtonShape = 'square';
   @Input() @WithConfig() vtsSize: VtsButtonSize = 'md';
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();

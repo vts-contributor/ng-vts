@@ -7,16 +7,28 @@ import { Component } from '@angular/core';
       <img
         vts-image
         width="200px"
-        vtsSrc="https://img.alicdn.com/tfs/TB1g.mWZAL0gK0jSZFtXXXQCXXa-200-200.svg"
+        height="100px"
+        vtsSrc="https://picsum.photos/1000/500?v=7"
         alt=""
+        vtsPreview
       />
+      &nbsp;
       <img
         vts-image
         width="200px"
-        vtsSrc="https://img.alicdn.com/tfs/TB1Z0PywTtYBeNjy1XdXXXXyVXa-186-200.svg"
+        height="100px"
+        vtsSrc="https://picsum.photos/1000/500?v=8"
         alt=""
+        vtsPreview
       />
     </vts-image-group>
-  `
+  `,
+  styles: [
+    `
+      .vts-image {
+        cursor: pointer;
+      }
+    `
+  ]
 })
 export class VtsDemoImagePreviewGroupComponent {}
