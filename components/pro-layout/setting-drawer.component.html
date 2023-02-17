@@ -1,0 +1,25 @@
+<div id="test">
+  <ng-template *ngIf="open; else closed">
+    <button vts-button>
+      <i vts-icon vtsType="Settings"></i>
+    </button>
+  </ng-template>
+  <ng-template #closed>
+    <button vts-button>
+      <i vts-icon vtsType="Search" (click)="openDrawer()"></i>
+    </button>
+  </ng-template>
+</div>
+<vts-drawer
+  [vtsClosable]="true"
+  [vtsVisible]="open"
+  vtsPlacement="right"
+  vtsTitle="Basic Drawer"
+  (vtsOnClose)="closeDrawer()"
+>
+  <ng-template *vtsDrawerContent>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+    <p>Some contents...</p>
+  </ng-template>
+</vts-drawer>
