@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'vts-demo-layout-basic',
+  selector: 'vts-demo-pro-layout-basic',
   template: `
     <vts-pro-layout>
-      <vts-prolayout-sider>Sider</vts-prolayout-sider>
-      <vts-pro-layout>
-        <vts-prolayout-header>Header</vts-prolayout-header>
-        <vts-prolayout-content>Content</vts-prolayout-content>
-        <vts-prolayout-footer>Footer</vts-prolayout-footer>
-      </vts-pro-layout>
+      <vts-prolayout-header>Header</vts-prolayout-header>
+      <vts-prolayout-content>Content</vts-prolayout-content>
+      <vts-prolayout-footer>Footer</vts-prolayout-footer>
       <vts-setting-drawer></vts-setting-drawer>
     </vts-pro-layout>
   `,
@@ -52,4 +49,4 @@ import { Component } from '@angular/core';
     `
   ]
 })
-export class VtsDemoLayoutBasicComponent {}
+export class VtsDemoProLayoutBasicComponent {}
