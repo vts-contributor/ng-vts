@@ -1,7 +1,8 @@
 ---
 category: Components
-type: Data Entry
+type: Components
 cols: 1
+order: 19
 title: Form
 cover: https://gw.alipayobjects.com/zos/alicdn/ORmcdeaoO/Form.svg
 ---

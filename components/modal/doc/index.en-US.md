@@ -1,7 +1,9 @@
 ---
-type: Feedback
+type: Components
 category: Components
 title: Modal
+col: 1
+order: 18
 cover: https://gw.alipayobjects.com/zos/alicdn/3StSdUlSH/Modal.svg
 ---
 

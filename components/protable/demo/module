@@ -1,0 +1,27 @@
+import { VtsProTableModule } from '@ui-vts/ng-vts/protable';
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
+
+export const moduleList = [
+  VtsProTableModule,
+  VtsTableModule,
+  VtsDividerModule,
+  VtsDropDownModule,
+  VtsSwitchModule,
+  VtsFormModule,
+  VtsRadioModule,
+  VtsBadgeModule,
+  VtsButtonModule,
+  VtsInputModule,
+  VtsIconModule,
+  VtsPopconfirmModule
+];

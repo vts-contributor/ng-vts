@@ -1,7 +1,9 @@
 ---
-type: Feedback
+type: Components
 category: Components
 subtitle:
+col: 1
+order: 20
 title: Drawer
 cover: https://gw.alipayobjects.com/zos/alicdn/7z8NJQhFb/Drawer.svg
 ---
