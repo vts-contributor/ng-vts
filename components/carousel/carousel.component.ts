@@ -18,9 +18,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 // @ts-ignore
-import Swiper from '../swiper';
+import Swiper from './lib/swiper';
 import { Observable, of, Subject } from 'rxjs';
-import { getParams } from './lib/utils/get-params';
+import { getParams } from './lib/angular/utils/get-params';
 import { SwiperSlideDirective } from './carousel-slide.directive';
 import { EventsParams } from './carousel-events';
 import { ThumbsOptions } from './lib/types/modules/thumbs';
@@ -33,7 +33,7 @@ import {
   coerceBooleanProperty,
   isShowEl,
   isEnabled,
-} from './lib/utils/utils';
+} from './lib/angular/utils/utils';
 import {
   SwiperOptions,
   SwiperEvents,
@@ -60,7 +60,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class VtsCarouselComponent implements OnInit {
   @Input() enabled?: boolean;
-  //@Input() on: "on";
+  // @Input() on?: "on";
   @Input() direction?: 'horizontal' | 'vertical';
   //@Input() touchEventsTarget: "touchEventsTarget";
   //@Input() initialSlide: "initialSlide";
@@ -86,7 +86,7 @@ export class VtsCarouselComponent implements OnInit {
     [width: number]: SwiperOptions;
     [ratio: string]: SwiperOptions;
   };
-  // @Input() spaceBetween: "spaceBetween";
+  @Input() spaceBetween?: number;
   @Input() slidesPerView?: number | "auto";
   // @Input() maxBackfaceHiddenSlides: "maxBackfaceHiddenSlides";
   // @Input() grid: "grid";
@@ -144,12 +144,12 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() slideActiveClass: "slideActiveClass";
   // @Input() slideDuplicateActiveClass: "slideDuplicateActiveClass";
   // @Input() slideVisibleClass: "slideVisibleClass";
-  // @Input() slideDuplicateClass: "slideDuplicateClass";
+  @Input() slideDuplicateClass: string = "slideDuplicateClass";
   // @Input() slideNextClass: "slideNextClass";
   // @Input() slideDuplicateNextClass: "slideDuplicateNextClass";
   // @Input() slidePrevClass: "slidePrevClass";
   // @Input() slideDuplicatePrevClass: "slideDuplicatePrevClass";
-  // @Input() wrapperClass: "wrapperClass'] = 'swiper-wrapper';
+  @Input() wrapperClass: string = 'swiper-wrapper';
   // @Input() runCallbacksOnInit: "runCallbacksOnInit";
   // @Input() observeParents: "observeParents";
   // @Input() observeSlideChildren: "observeSlideChildren";
@@ -590,7 +590,8 @@ export class VtsCarouselComponent implements OnInit {
   }
 
   initSwiper() {
-    const { params: swiperParams, passedParams } = getParams(this);
+    // const { params: swiperParams, passedParams } = getParams(this);
+    const { params: swiperParams} = getParams(this);
     Object.assign(this, swiperParams);
     this._ngZone.runOutsideAngular(() => {
       swiperParams.init = false;
@@ -712,11 +713,11 @@ export class VtsCarouselComponent implements OnInit {
 
     this._ngZone.runOutsideAngular(() => {
       const {
-        params: currentParams,
+        // params: currentParams,
         pagination,
         navigation,
         scrollbar,
-        virtual,
+        // virtual,
         thumbs,
       } = this.swiperRef!;
 

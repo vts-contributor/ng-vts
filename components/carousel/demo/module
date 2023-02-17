@@ -1,0 +1,3 @@
+import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
+
+export const moduleList = [VtsCarouselModule];

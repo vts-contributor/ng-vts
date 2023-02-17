@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
-import { coerceBooleanProperty } from './lib/utils/utils';
+import { coerceBooleanProperty } from './lib/angular/utils/utils';
 @Directive({
   selector: 'ng-template[swiperSlide]',
 })
