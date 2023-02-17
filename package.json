@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@ui-vts/ng-vts": "file:components",
+    "dom7": "^4.0.4",
     "ngx-hover-preload": "0.0.3"
   },
   "devDependencies": {
@@ -64,6 +65,7 @@
     "classlist.js": "^1.1.20150312",
     "clean-css": "~4.2.3",
     "codecov": "^3.8.1",
+    "ssr-window": "^4.0.0",
     "codelyzer": "^6.0.1",
     "codesandbox": "^2.2.1",
     "conventional-changelog-cli": "^2.1.1",
