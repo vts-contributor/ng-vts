@@ -9,7 +9,7 @@ cover: https://gw.alipayobjects.com/zos/alicdn/hzEndUVEx/Layout.svg
 Handling the overall layout of a page.
 
 ```ts
-import { VtsProLayoutModule } from '@ui-vts/ng-vts/pro-layout';
+import { VtsProLayoutModule } from '@ui-vts/ng-vts/prolayout';
 ```
 
 ## Specification

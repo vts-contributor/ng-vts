@@ -1,6 +1,0 @@
-import { VtsProLayoutModule } from '@ui-vts/ng-vts/pro-layout';
-import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
-import { VtsIconModule } from '@ui-vts/ng-vts/icon';
-import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
-
-export const moduleList = [ VtsProLayoutModule, VtsMenuModule, VtsIconModule, VtsBreadCrumbModule ];
