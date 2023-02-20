@@ -34,7 +34,7 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'vts-prolayout-sider',
-  exportAs: 'vtsSider',
+  exportAs: 'vtsProlayoutSider',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

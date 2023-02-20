@@ -20,7 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 import { VtsSiderComponent } from './sider.component';
 
 @Component({
-  selector: 'vts-pro-layout',
+  selector: 'vts-prolayout',
   exportAs: 'vtsProLayout',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +42,7 @@ export class VtsProLayoutComponent implements OnDestroy, OnInit {
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-pro-layout');
+    this.elementRef.nativeElement.classList.add('vts-prolayout');
   }
   ngOnInit(): void {
     this.dir = this.directionality.value;

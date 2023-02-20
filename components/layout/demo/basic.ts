@@ -3,15 +3,38 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-layout-basic',
   template: `
-    <vts-pro-layout>
-      <vts-prolayout-sider>Sider</vts-prolayout-sider>
-      <vts-pro-layout>
-        <vts-prolayout-header>Header</vts-prolayout-header>
-        <vts-prolayout-content>Content</vts-prolayout-content>
-        <vts-prolayout-footer>Footer</vts-prolayout-footer>
-      </vts-pro-layout>
-      <vts-setting-drawer></vts-setting-drawer>
-    </vts-pro-layout>
+    <vts-layout>
+      <vts-header>Header</vts-header>
+      <vts-content>Content</vts-content>
+      <vts-footer>Footer</vts-footer>
+    </vts-layout>
+
+    <vts-layout>
+      <vts-header>Header</vts-header>
+      <vts-layout>
+        <vts-sider>Sider</vts-sider>
+        <vts-content>Content</vts-content>
+      </vts-layout>
+      <vts-footer>Footer</vts-footer>
+    </vts-layout>
+
+    <vts-layout>
+      <vts-header>Header</vts-header>
+      <vts-layout>
+        <vts-content>Content</vts-content>
+        <vts-sider>Sider</vts-sider>
+      </vts-layout>
+      <vts-footer>Footer</vts-footer>
+    </vts-layout>
+
+    <vts-layout>
+      <vts-sider>Sider</vts-sider>
+      <vts-layout>
+        <vts-header>Header</vts-header>
+        <vts-content>Content</vts-content>
+        <vts-footer>Footer</vts-footer>
+      </vts-layout>
+    </vts-layout>
   `,
   styles: [
     `

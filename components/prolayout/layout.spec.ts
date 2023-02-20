@@ -52,7 +52,7 @@ describe('layout', () => {
         footers.every(footer => footer.nativeElement.classList.contains('vts-layout-footer'))
       ).toBe(true);
       expect(
-        siders.every(sider => sider.nativeElement.classList.contains('vts-layout-sider'))
+        siders.every(sider => sider.nativeElement.classList.contains('vts-prolayout-sider'))
       ).toBe(true);
       expect(
         siders.every(
@@ -83,7 +83,7 @@ describe('layout', () => {
     it('should vtsCollapsed work', () => {
       testComponent.isCollapsed = false;
       testBed.fixture.detectChanges();
-      trigger = testBed.fixture.debugElement.query(By.css('.vts-layout-sider-trigger'));
+      trigger = testBed.fixture.debugElement.query(By.css('.vts-prolayout-sider-trigger'));
       expect(
         sider.nativeElement.style.cssText ===
           'flex: 0 0 200px; max-width: 200px; min-width: 200px; width: 200px;'
@@ -124,7 +124,7 @@ describe('layout', () => {
       testComponent.isCollapsed = false;
       testComponent.width = 300;
       testBed.fixture.detectChanges();
-      trigger = testBed.fixture.debugElement.query(By.css('.vts-layout-sider-trigger'));
+      trigger = testBed.fixture.debugElement.query(By.css('.vts-prolayout-sider-trigger'));
       expect(
         sider.nativeElement.style.cssText ===
           'flex: 0 0 300px; max-width: 300px; min-width: 300px; width: 300px;'
@@ -165,7 +165,7 @@ describe('layout', () => {
     it('should vtsReverseArrow work', () => {
       testComponent.isCollapsed = false;
       testBed.fixture.detectChanges();
-      trigger = testBed.fixture.debugElement.query(By.css('.vts-layout-sider-trigger'));
+      trigger = testBed.fixture.debugElement.query(By.css('.vts-prolayout-sider-trigger'));
       expect(trigger.nativeElement.firstElementChild!.classList.contains('vtsicon-left')).toBe(
         true
       );
@@ -199,13 +199,13 @@ describe('layout', () => {
     });
     it('should not display trigger', () => {
       testBed.fixture.detectChanges();
-      const trigger = testBed.fixture.debugElement.query(By.css('.vts-layout-sider-trigger'));
+      const trigger = testBed.fixture.debugElement.query(By.css('.vts-prolayout-sider-trigger'));
       expect(trigger).toBeNull();
     });
     it('should display trigger', () => {
       testComponent.changeTrigger();
       testBed.fixture.detectChanges();
-      const trigger = testBed.fixture.debugElement.query(By.css('.vts-layout-sider-trigger'));
+      const trigger = testBed.fixture.debugElement.query(By.css('.vts-prolayout-sider-trigger'));
       expect(trigger.nativeElement.firstElementChild!.classList.contains('vtsicon-up')).toBe(true);
       expect(trigger).not.toBeNull();
     });
@@ -234,7 +234,7 @@ describe('layout', () => {
       );
       expect(
         sider.nativeElement
-          .querySelector('.vts-layout-sider-zero-width-trigger')
+          .querySelector('.vts-prolayout-sider-zero-width-trigger')
           .firstElementChild.getAttribute('vtsType')
       ).toBe('menu-fold');
       viewport.reset();
