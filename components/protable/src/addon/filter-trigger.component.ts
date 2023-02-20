@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -24,14 +19,14 @@ import { VtsDropdownMenuComponent } from '@ui-vts/ng-vts/dropdown';
   template: `
     <span
       vts-dropdown
-      class="vts-table-filter-trigger"
+      class="vts-protable-filter-trigger"
       vtsTrigger="click"
       vtsPlacement="bottomRight"
       [vtsHasBackdrop]="vtsHasBackdrop"
       [vtsClickHide]="false"
       [vtsDropdownMenu]="vtsDropdownMenu"
       [class.active]="vtsActive"
-      [class.vts-table-filter-open]="vtsVisible"
+      [class.vts-protable-filter-open]="vtsVisible"
       [vtsVisible]="vtsVisible"
       (vtsVisibleChange)="onVisibleChange($event)"
       (click)="onFilterClick($event)"
@@ -72,6 +67,6 @@ export class VtsFilterTriggerComponent {
 
   constructor(private cdr: ChangeDetectorRef, private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-table-filter-trigger-container');
+    this.elementRef.nativeElement.classList.add('vts-protable-filter-trigger-container');
   }
 }

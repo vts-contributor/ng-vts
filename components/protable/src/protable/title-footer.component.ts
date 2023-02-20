@@ -13,7 +13,7 @@ import {
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 
 @Component({
-  selector: 'vts-table-title-footer',
+  selector: 'vts-protable-title-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -25,7 +25,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     '[class.vts-table-footer]': `footer !== null`
   }
 })
-export class VtsTableTitleFooterComponent {
+export class VtsProTableTitleFooterComponent {
   @Input() title: string | TemplateRef<VtsSafeAny> | null = null;
   @Input() footer: string | TemplateRef<VtsSafeAny> | null = null;
 }

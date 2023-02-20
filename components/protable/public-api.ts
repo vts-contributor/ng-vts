@@ -1,25 +1,20 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 export * from './src/protable.module';
-export * from './src/table.types';
-export * from './src/table-data.service';
-export * from './src/table-style.service';
-export * from './src/table/table.component';
-export * from './src/table/table-content.component';
-export * from './src/table/table-fixed-row.component';
-export * from './src/table/table-inner-default.component';
-export * from './src/table/table-inner-scroll.component';
-export * from './src/table/table-virtual-scroll.directive';
-export * from './src/table/table-fixed-row.component';
-export * from './src/table/tbody.component';
-export * from './src/table/thead.component';
-export * from './src/table/tr.directive';
-export * from './src/table/tr-expand.directive';
-export * from './src/table/title-footer.component';
-export * from './src/table/tr-measure.component';
+export * from './src/protable.types';
+export * from './src/protable-data.service';
+export * from './src/protable-style.service';
+export * from './src/protable/protable.component';
+export * from './src/protable/protable-content.component';
+export * from './src/protable/protable-fixed-row.component';
+export * from './src/protable/protable-inner-default.component';
+export * from './src/protable/protable-inner-scroll.component';
+export * from './src/protable/protable-virtual-scroll.directive';
+export * from './src/protable/protable-fixed-row.component';
+export * from './src/protable/tbody.component';
+export * from './src/protable/thead.component';
+export * from './src/protable/tr.directive';
+export * from './src/protable/tr-expand.directive';
+export * from './src/protable/title-footer.component';
+export * from './src/protable/tr-measure.component';
 export * from './src/cell/cell-fixed.directive';
 export * from './src/cell/cell.directive';
 export * from './src/cell/th-measure.directive';

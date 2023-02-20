@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -16,32 +11,32 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { VtsTableStyleService } from '../table-style.service';
+import { VtsProTableStyleService } from '../protable-style.service';
 
 @Component({
-  selector: 'tr[vts-table-fixed-row], tr[vtsExpand]',
+  selector: 'tr[vts-protable-fixed-row], tr[vtsExpand]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <td class="vts-disable-td vts-table-cell" #tdElement>
-      <div
-        class="vts-table-expanded-row-fixed"
-        *ngIf="enableAutoMeasure$ | async; else contentTemplate"
-        style="position: sticky; left: 0px; overflow: hidden;"
-        [style.width.px]="hostWidth$ | async"
-      >
-        <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
-      </div>
-    </td>
-    <ng-template #contentTemplate><ng-content></ng-content></ng-template>
-  `
+      <td class="vts-disable-td vts-table-cell" #tdElement>
+        <div
+          class="vts-table-expanded-row-fixed"
+          *ngIf="enableAutoMeasure$ | async; else contentTemplate"
+          style="position: sticky; left: 0px; overflow: hidden;"
+          [style.width.px]="hostWidth$ | async"
+        >
+          <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+        </div>
+      </td>
+      <ng-template #contentTemplate><ng-content></ng-content></ng-template>
+    `
 })
-export class VtsTableFixedRowComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VtsProTableFixedRowComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tdElement') tdElement!: ElementRef;
   hostWidth$ = new BehaviorSubject<number | null>(null);
   enableAutoMeasure$ = new BehaviorSubject<boolean>(false);
   private destroy$ = new Subject();
-  constructor(private vtsTableStyleService: VtsTableStyleService, private renderer: Renderer2) {}
+  constructor(private vtsTableStyleService: VtsProTableStyleService, private renderer: Renderer2) { }
   ngOnInit(): void {
     if (this.vtsTableStyleService) {
       const { enableAutoMeasure$, hostWidth$ } = this.vtsTableStyleService;

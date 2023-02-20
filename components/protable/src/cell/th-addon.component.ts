@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-/* tslint:disable:component-selector */
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -22,12 +17,12 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import {
-  VtsTableFilterFn,
-  VtsTableFilterList,
-  VtsTableFilterValue,
-  VtsTableSortFn,
-  VtsTableSortOrder
-} from '../table.types';
+  VtsProTableFilterFn,
+  VtsProTableFilterList,
+  VtsProTableFilterValue,
+  VtsProTableSortFn,
+  VtsProTableSortOrder
+} from '../protable.types';
 
 @Component({
   selector:
@@ -36,7 +31,7 @@ import {
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <vts-table-filter
+    <vts-protable-filter
       *ngIf="vtsShowFilter || vtsCustomFilter; else notFilterTemplate"
       [contentTemplate]="notFilterTemplate"
       [extraTemplate]="extraTemplate"
@@ -44,7 +39,7 @@ import {
       [filterMultiple]="vtsFilterMultiple"
       [listOfFilter]="vtsFilters"
       (filterChange)="onFilterValueChange($event)"
-    ></vts-table-filter>
+    ></vts-protable-filter>
     <ng-template #notFilterTemplate>
       <ng-template [ngTemplateOutlet]="vtsShowSort ? sortTemplate : contentTemplate"></ng-template>
     </ng-template>
@@ -53,11 +48,11 @@ import {
       <ng-content select="vts-filter-trigger"></ng-content>
     </ng-template>
     <ng-template #sortTemplate>
-      <vts-table-sorters
+      <vts-protable-sorters
         [sortOrder]="sortOrder"
         [sortDirections]="sortDirections"
         [contentTemplate]="contentTemplate"
-      ></vts-table-sorters>
+      ></vts-protable-sorters>
     </ng-template>
     <ng-template #contentTemplate>
       <ng-content></ng-content>
@@ -76,32 +71,32 @@ export class VtsThAddOnComponent implements OnChanges, OnInit, OnDestroy {
 
   manualClickOrder$ = new Subject<VtsThAddOnComponent>();
   calcOperatorChange$ = new Subject();
-  vtsFilterValue: VtsTableFilterValue = null;
-  sortOrder: VtsTableSortOrder = null;
-  sortDirections: VtsTableSortOrder[] = ['ascend', 'descend', null];
-  private sortOrderChange$ = new Subject<VtsTableSortOrder>();
+  vtsFilterValue: VtsProTableFilterValue = null;
+  sortOrder: VtsProTableSortOrder = null;
+  sortDirections: VtsProTableSortOrder[] = ['ascend', 'descend', null];
+  private sortOrderChange$ = new Subject<VtsProTableSortOrder>();
   private destroy$ = new Subject();
   private isVtsShowSortChanged = false;
   private isVtsShowFilterChanged = false;
   @Input() vtsColumnKey?: string;
   @Input() vtsFilterMultiple = true;
-  @Input() vtsSortOrder: VtsTableSortOrder = null;
+  @Input() vtsSortOrder: VtsProTableSortOrder = null;
   @Input() vtsSortPriority: number | boolean = false;
-  @Input() vtsSortDirections: VtsTableSortOrder[] = ['ascend', 'descend', null];
-  @Input() vtsFilters: VtsTableFilterList = [];
-  @Input() vtsSortFn: VtsTableSortFn | boolean | null = null;
-  @Input() vtsFilterFn: VtsTableFilterFn | boolean | null = null;
+  @Input() vtsSortDirections: VtsProTableSortOrder[] = ['ascend', 'descend', null];
+  @Input() vtsFilters: VtsProTableFilterList = [];
+  @Input() vtsSortFn: VtsProTableSortFn | boolean | null = null;
+  @Input() vtsFilterFn: VtsProTableFilterFn | boolean | null = null;
   @Input() @InputBoolean() vtsShowSort = false;
   @Input() @InputBoolean() vtsShowFilter = false;
   @Input() @InputBoolean() vtsCustomFilter = false;
   @Output() readonly vtsCheckedChange = new EventEmitter<boolean>();
   @Output() readonly vtsSortOrderChange = new EventEmitter<string | null>();
-  @Output() readonly vtsFilterChange = new EventEmitter<VtsTableFilterValue>();
+  @Output() readonly vtsFilterChange = new EventEmitter<VtsProTableFilterValue>();
 
   getNextSortDirection(
-    sortDirections: VtsTableSortOrder[],
-    current: VtsTableSortOrder
-  ): VtsTableSortOrder {
+    sortDirections: VtsProTableSortOrder[],
+    current: VtsProTableSortOrder
+  ): VtsProTableSortOrder {
     const index = sortDirections.indexOf(current);
     if (index === sortDirections.length - 1) {
       return sortDirections[0];
@@ -118,7 +113,7 @@ export class VtsThAddOnComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  setSortOrder(order: VtsTableSortOrder): void {
+  setSortOrder(order: VtsProTableSortOrder): void {
     this.sortOrderChange$.next(order);
   }
 
@@ -128,7 +123,7 @@ export class VtsThAddOnComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  onFilterValueChange(value: VtsTableFilterValue): void {
+  onFilterValueChange(value: VtsProTableFilterValue): void {
     this.vtsFilterChange.emit(value);
     this.vtsFilterValue = value;
     this.updateCalcOperator();

@@ -42,7 +42,7 @@ import { VtsSelectModeType } from './select.types';
     <div
       *ngIf="showState && selected"
       class="vts-select-item-option-state"
-      style="user-select: none"
+      style="user-select: none; display: inherit"
       unselectable="on"
     >
       <i

@@ -1,9 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-/* tslint:disable:component-selector */
-
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -23,7 +17,7 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { debounceTime, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'tr[vts-table-measure-row]',
+  selector: 'tr[vts-protable-measure-row]',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -47,7 +41,7 @@ export class VtsTrMeasureComponent implements AfterViewInit, OnDestroy {
     private elementRef: ElementRef
   ) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-table-measure-now');
+    this.elementRef.nativeElement.classList.add('vts-protable-measure-now');
   }
   trackByFunc(_: number, key: string): string {
     return key;

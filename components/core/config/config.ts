@@ -58,6 +58,7 @@ export interface VtsConfig {
   image?: ImageConfig;
   popconfirm?: PopConfirmConfig;
   popover?: PopoverConfig;
+  protable?: ProTableConfig;
 }
 
 export interface SelectConfig {
@@ -244,6 +245,16 @@ export interface SwitchConfig {
 }
 
 export interface TableConfig {
+  vtsBordered?: boolean;
+  vtsSize?: VtsSizeMDSType;
+  vtsShowQuickJumper?: boolean;
+  vtsLoadingIndicator?: TemplateRef<VtsSafeAny>;
+  vtsShowSizeChanger?: boolean;
+  vtsSimple?: boolean;
+  vtsHidePaginationOnSinglePage?: boolean;
+}
+
+export interface ProTableConfig {
   vtsBordered?: boolean;
   vtsSize?: VtsSizeMDSType;
   vtsShowQuickJumper?: boolean;

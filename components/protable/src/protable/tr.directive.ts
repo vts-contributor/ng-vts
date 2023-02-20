@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 import {
   AfterContentInit,
   ContentChildren,
@@ -15,11 +10,11 @@ import { combineLatest, merge, Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { VtsCellFixedDirective } from '../cell/cell-fixed.directive';
 import { VtsThMeasureDirective } from '../cell/th-measure.directive';
-import { VtsTableStyleService } from '../table-style.service';
+import { VtsProTableStyleService } from '../protable-style.service';
 
 @Directive({
   selector:
-    'tr:not([mat-row]):not([mat-header-row]):not([vts-table-measure-row]):not([vtsExpand]):not([vts-table-fixed-row])',
+    'tr:not([mat-row]):not([mat-header-row]):not([vts-protable-measure-row]):not([vtsExpand]):not([vts-protable-fixed-row])',
   host: {
     '[class.vts-table-row]': 'isInsideTable'
   }
@@ -56,7 +51,7 @@ export class VtsTrDirective implements AfterContentInit, OnDestroy {
   );
   isInsideTable = false;
 
-  constructor(@Optional() private vtsTableStyleService: VtsTableStyleService) {
+  constructor(@Optional() private vtsTableStyleService: VtsProTableStyleService) {
     this.isInsideTable = !!vtsTableStyleService;
   }
 

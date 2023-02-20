@@ -1,5 +1,3 @@
-import { VtsTableModule } from './table.module';
-import { VtsTableComponent } from './../../table/src/table/table.component';
 /**
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
@@ -23,13 +21,13 @@ import { VtsPaginationModule } from '@ui-vts/ng-vts/pagination';
 import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
 import { VtsSpinModule } from '@ui-vts/ng-vts/spin';
 import { VtsFilterTriggerComponent } from './addon/filter-trigger.component';
-import { VtsTableFilterComponent } from './addon/filter.component';
+import { VtsProTableFilterComponent } from './addon/filter.component';
 import { VtsRowExpandButtonComponent } from './addon/row-expand-button.directive';
 import { VtsRowIndentDirective } from './addon/row-indent.directive';
-import { VtsTableSelectionComponent } from './addon/selection.component';
-import { VtsTableSortersComponent } from './addon/sorters.component';
+import { VtsProTableSelectionComponent } from './addon/selection.component';
+import { VtsProTableSortersComponent } from './addon/sorters.component';
 import { VtsCellFixedDirective } from './cell/cell-fixed.directive';
-import { VtsTableCellDirective } from './cell/cell.directive';
+import { VtsProTableCellDirective } from './cell/cell.directive';
 import { VtsTdAddOnComponent } from './cell/td-addon.component';
 import { VtsThAddOnComponent } from './cell/th-addon.component';
 import { VtsThMeasureDirective } from './cell/th-measure.directive';
@@ -37,67 +35,66 @@ import { VtsThSelectionComponent } from './cell/th-selection.component';
 import { VtsCellAlignDirective } from './styled/align.directive';
 import { VtsCellEllipsisDirective } from './styled/ellipsis.directive';
 import { VtsCellBreakWordDirective } from './styled/word-break.directive';
-import { VtsTableContentComponent } from './table/table-content.component';
-import { VtsTableFixedRowComponent } from './table/table-fixed-row.component';
-import { VtsTableInnerDefaultComponent } from './table/table-inner-default.component';
-import { VtsTableInnerScrollComponent } from './table/table-inner-scroll.component';
-import { VtsTableVirtualScrollDirective } from './table/table-virtual-scroll.directive';
-import { VtsTbodyComponent } from './table/tbody.component';
-import { VtsTheadComponent } from './table/thead.component';
-import { VtsTableTitleFooterComponent } from './table/title-footer.component';
-import { VtsTrExpandDirective } from './table/tr-expand.directive';
-import { VtsTrMeasureComponent } from './table/tr-measure.component';
-import { VtsTrDirective } from './table/tr.directive';
+import { VtsProTableContentComponent } from './protable/protable-content.component';
+import { VtsProTableFixedRowComponent } from './protable/protable-fixed-row.component';
+import { VtsProTableInnerDefaultComponent } from './protable/protable-inner-default.component';
+import { VtsProTableInnerScrollComponent } from './protable/protable-inner-scroll.component';
+import { VtsProTableVirtualScrollDirective } from './protable/protable-virtual-scroll.directive';
+import { VtsTbodyComponent } from './protable/tbody.component';
+import { VtsTheadComponent } from './protable/thead.component';
+import { VtsProTableTitleFooterComponent } from './protable/title-footer.component';
+import { VtsTrExpandDirective } from './protable/tr-expand.directive';
+import { VtsTrMeasureComponent } from './protable/tr-measure.component';
+import { VtsTrDirective } from './protable/tr.directive';
 import { VtsProTableComponent } from './protable/protable.component';
 
 @NgModule({
   declarations: [
     VtsProTableComponent,
-    VtsTableComponent,
     VtsThAddOnComponent,
-    VtsTableCellDirective,
+    VtsProTableCellDirective,
     VtsThMeasureDirective,
     VtsTdAddOnComponent,
     VtsTheadComponent,
     VtsTbodyComponent,
     VtsTrDirective,
     VtsTrExpandDirective,
-    VtsTableVirtualScrollDirective,
+    VtsProTableVirtualScrollDirective,
     VtsCellFixedDirective,
-    VtsTableContentComponent,
-    VtsTableTitleFooterComponent,
-    VtsTableInnerDefaultComponent,
-    VtsTableInnerScrollComponent,
+    VtsProTableContentComponent,
+    VtsProTableTitleFooterComponent,
+    VtsProTableInnerDefaultComponent,
+    VtsProTableInnerScrollComponent,
     VtsTrMeasureComponent,
     VtsRowIndentDirective,
     VtsRowExpandButtonComponent,
     VtsCellBreakWordDirective,
     VtsCellAlignDirective,
-    VtsTableSortersComponent,
-    VtsTableFilterComponent,
-    VtsTableSelectionComponent,
+    VtsProTableSortersComponent,
+    VtsProTableFilterComponent,
+    VtsProTableSelectionComponent,
     VtsCellEllipsisDirective,
     VtsFilterTriggerComponent,
-    VtsTableFixedRowComponent,
+    VtsProTableFixedRowComponent,
     VtsThSelectionComponent
   ],
   exports: [
     VtsProTableComponent,
     VtsThAddOnComponent,
-    VtsTableCellDirective,
+    VtsProTableCellDirective,
     VtsThMeasureDirective,
     VtsTdAddOnComponent,
     VtsTheadComponent,
     VtsTbodyComponent,
     VtsTrDirective,
-    VtsTableVirtualScrollDirective,
+    VtsProTableVirtualScrollDirective,
     VtsCellFixedDirective,
     VtsFilterTriggerComponent,
     VtsTrExpandDirective,
     VtsCellBreakWordDirective,
     VtsCellAlignDirective,
     VtsCellEllipsisDirective,
-    VtsTableFixedRowComponent,
+    VtsProTableFixedRowComponent,
     VtsThSelectionComponent
   ],
   imports: [
@@ -118,8 +115,7 @@ import { VtsProTableComponent } from './protable/protable.component';
     VtsIconModule,
     VtsEmptyModule,
     ScrollingModule,
-    VtsResizeObserverModule,
-    VtsTableModule
+    VtsResizeObserverModule
   ]
 })
 export class VtsProTableModule {}

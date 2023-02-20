@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,10 +9,10 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { VtsTableSortOrder } from '../table.types';
+import { VtsProTableSortOrder } from '../protable.types';
 
 @Component({
-  selector: 'vts-table-sorters',
+  selector: 'vts-protable-sorters',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -25,29 +20,29 @@ import { VtsTableSortOrder } from '../table.types';
     <span>
       <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
     </span>
-    <span class="vts-table-column-sorter" [class.vts-table-column-sorter-full]="isDown && isUp">
-      <span class="vts-table-column-sorter-inner">
+    <span class="vts-protable-column-sorter" [class.vts-protable-column-sorter-full]="isDown && isUp">
+      <span class="vts-protable-column-sorter-inner">
         <i
           vts-icon
           vtsType="ArrowUpOutline"
           *ngIf="isUp"
-          class="vts-table-column-sorter-up"
+          class="vts-protable-column-sorter-up"
           [class.active]="sortOrder == 'ascend'"
         ></i>
         <i
           vts-icon
           vtsType="ArrowDownOutline"
           *ngIf="isDown"
-          class="vts-table-column-sorter-down"
+          class="vts-protable-column-sorter-down"
           [class.active]="sortOrder == 'descend'"
         ></i>
       </span>
     </span>
   `
 })
-export class VtsTableSortersComponent implements OnChanges {
-  @Input() sortDirections: VtsTableSortOrder[] = ['ascend', 'descend', null];
-  @Input() sortOrder: VtsTableSortOrder = null;
+export class VtsProTableSortersComponent implements OnChanges {
+  @Input() sortDirections: VtsProTableSortOrder[] = ['ascend', 'descend', null];
+  @Input() sortOrder: VtsProTableSortOrder = null;
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
   isUp = false;
   isDown = false;

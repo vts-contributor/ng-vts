@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -23,7 +18,7 @@ import { arraysEqual } from '@ui-vts/ng-vts/core/util';
 import { VtsI18nService, VtsTableI18nInterface } from '@ui-vts/ng-vts/i18n';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { VtsTableFilterList } from '../table.types';
+import { VtsProTableFilterList } from '../protable.types';
 
 interface VtsThItemInterface {
   text: string;
@@ -32,12 +27,12 @@ interface VtsThItemInterface {
 }
 
 @Component({
-  selector: 'vts-table-filter',
+  selector: 'vts-protable-filter',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <span class="vts-table-filter-column-title">
+    <span class="vts-protable-filter-column-title">
       <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
     </span>
     <ng-container *ngIf="!customFilter; else extraTemplate">
@@ -50,7 +45,7 @@ interface VtsThItemInterface {
         <i vts-icon vtsType="filter"></i>
       </vts-filter-trigger>
       <vts-dropdown-menu #filterMenu="vtsDropdownMenu">
-        <div class="vts-table-filter-dropdown">
+        <div class="vts-protable-filter-dropdown">
           <ul vts-menu>
             <li
               vts-menu-item
@@ -73,7 +68,7 @@ interface VtsThItemInterface {
               <span>{{ f.text }}</span>
             </li>
           </ul>
-          <div class="vts-table-filter-dropdown-btns">
+          <div class="vts-protable-filter-dropdown-btns">
             <button
               vts-button
               vtsType="link"
@@ -92,12 +87,12 @@ interface VtsThItemInterface {
     </ng-container>
   `
 })
-export class VtsTableFilterComponent implements OnChanges, OnDestroy, OnInit {
+export class VtsProTableFilterComponent implements OnChanges, OnDestroy, OnInit {
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
   @Input() customFilter = false;
   @Input() extraTemplate: TemplateRef<VtsSafeAny> | null = null;
   @Input() filterMultiple = true;
-  @Input() listOfFilter: VtsTableFilterList = [];
+  @Input() listOfFilter: VtsProTableFilterList = [];
   @Output() readonly filterChange = new EventEmitter<VtsSafeAny[] | VtsSafeAny>();
   private destroy$ = new Subject();
   locale!: VtsTableI18nInterface;
@@ -164,7 +159,7 @@ export class VtsTableFilterComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
-  parseListOfFilter(listOfFilter: VtsTableFilterList, reset?: boolean): VtsThItemInterface[] {
+  parseListOfFilter(listOfFilter: VtsProTableFilterList, reset?: boolean): VtsThItemInterface[] {
     return listOfFilter.map(item => {
       const checked = reset ? false : !!item.byDefault;
       return { text: item.text, value: item.value, checked };
@@ -181,7 +176,7 @@ export class VtsTableFilterComponent implements OnChanges, OnDestroy, OnInit {
     private elementRef: ElementRef
   ) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-table-filter-column');
+    this.elementRef.nativeElement.classList.add('vts-protable-filter-column');
   }
 
   ngOnInit(): void {

@@ -1,8 +1,3 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-/* tslint:disable:component-selector */
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,7 +19,7 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <vts-table-selection
+    <vts-protable-selection
       [checked]="vtsChecked"
       [disabled]="vtsDisabled"
       [indeterminate]="vtsIndeterminate"
@@ -32,7 +27,7 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
       [showCheckbox]="vtsShowCheckbox"
       [showRowSelection]="vtsShowRowSelection"
       (checkedChange)="onCheckedChange($event)"
-    ></vts-table-selection>
+    ></vts-protable-selection>
     <ng-content></ng-content>
   `
 })
@@ -56,7 +51,7 @@ export class VtsThSelectionComponent implements OnChanges {
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-table-selection-column');
+    this.elementRef.nativeElement.classList.add('vts-protable-selection-column');
   }
 
   onCheckedChange(checked: boolean): void {

@@ -3,8 +3,8 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 export type VtsProTableData =
   | VtsSafeAny
   | {
-      [key: string]: VtsProTableData;
-    };
+    [key: string]: VtsProTableData;
+  };
 export type VtsProTableLayout = 'fixed' | 'auto';
 export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';
 export type VtsProTablePaginationType = 'default' | 'small';

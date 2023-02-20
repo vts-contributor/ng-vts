@@ -13,16 +13,15 @@ interface Item {
   selector: 'vts-demo-protable-basic',
   template: `
     <ng-template #showTotal let-current let-range="range">
-      <p>{{ range[0] }}-{{ range[1] }} on total {{ current }}</p>
+      <p>{{ range[0] }} - {{ range[1] }} / {{ current }} items</p>
     </ng-template>
-    <vts-table
+    <vts-protable
       #basicTable
       [vtsData]="filteredList"
       [vtsPageSize]="pageSize"
       [vtsPageIndex]="pageIndex"
       [vtsShowTotal]="showTotal"
       vtsShowPagination
-      vtsShowSizeChanger
     >
       <thead>
         <tr>
@@ -57,7 +56,7 @@ interface Item {
           </td>
         </tr>
       </tbody>
-    </vts-table>
+    </vts-protable>
   `
 })
 export class VtsDemoProtableBasicComponent {

@@ -15,7 +15,7 @@ import {
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 
 @Component({
-  selector: 'vts-table-selection',
+  selector: 'vts-protable-selection',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -23,23 +23,23 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     <label
       *ngIf="showCheckbox"
       vts-checkbox
-      [class.vts-table-selection-select-all-custom]="showRowSelection"
+      [class.vts-protable-selection-select-all-custom]="showRowSelection"
       [ngModel]="checked"
       [vtsDisabled]="disabled"
       [vtsIndeterminate]="indeterminate"
       (ngModelChange)="onCheckedChange($event)"
     ></label>
-    <div class="vts-table-selection-extra" *ngIf="showRowSelection">
+    <div class="vts-protable-selection-extra" *ngIf="showRowSelection">
       <span
         vts-dropdown
-        class="vts-table-selection-down"
+        class="vts-protable-selection-down"
         vtsPlacement="bottomLeft"
         [vtsDropdownMenu]="selectionMenu"
       >
         <i vts-icon vtsType="ArrowMiniDown"></i>
       </span>
       <vts-dropdown-menu #selectionMenu="vtsDropdownMenu">
-        <ul vts-menu class="vts-table-selection-menu">
+        <ul vts-menu class="vts-protable-selection-menu">
           <li
             vts-menu-item
             *ngFor="let selection of listOfSelections"
@@ -52,7 +52,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     </div>
   `
 })
-export class VtsTableSelectionComponent {
+export class VtsProTableSelectionComponent {
   @Input() listOfSelections: Array<{
     text: string;
     onSelect(...args: VtsSafeAny[]): VtsSafeAny;
@@ -66,10 +66,11 @@ export class VtsTableSelectionComponent {
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-table-selection');
+    this.elementRef.nativeElement.classList.add('vts-protable-selection');
   }
 
   onCheckedChange(checked: boolean): void {
+    console.log(checked);
     this.checked = checked;
     this.checkedChange.emit(checked);
   }
