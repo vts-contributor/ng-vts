@@ -1,13 +1,14 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
+import { VtsUploadModule } from './../../upload/upload.module';
+import { VtsSelectModule } from './../../select/select.module';
+import { VtsDrawerModule } from './../../drawer/drawer.module';
+import { VtsModalModule } from '@ui-vts/ng-vts/modal';
+import { VtsProTableConfiguration } from './features/config.component';
 import { BidiModule } from '@angular/cdk/bidi';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsCheckboxModule } from '@ui-vts/ng-vts/checkbox';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
@@ -47,6 +48,8 @@ import { VtsTrExpandDirective } from './protable/tr-expand.directive';
 import { VtsTrMeasureComponent } from './protable/tr-measure.component';
 import { VtsTrDirective } from './protable/tr.directive';
 import { VtsProTableComponent } from './protable/protable.component';
+import { VtsFormModule } from './../../form/form.module';
+import { VtsSearchFormProTableComponent } from './features/search.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +79,9 @@ import { VtsProTableComponent } from './protable/protable.component';
     VtsCellEllipsisDirective,
     VtsFilterTriggerComponent,
     VtsProTableFixedRowComponent,
-    VtsThSelectionComponent
+    VtsThSelectionComponent,
+    VtsSearchFormProTableComponent,
+    VtsProTableConfiguration
   ],
   exports: [
     VtsProTableComponent,
@@ -95,7 +100,9 @@ import { VtsProTableComponent } from './protable/protable.component';
     VtsCellAlignDirective,
     VtsCellEllipsisDirective,
     VtsProTableFixedRowComponent,
-    VtsThSelectionComponent
+    VtsThSelectionComponent,
+    VtsSearchFormProTableComponent,
+    VtsProTableConfiguration
   ],
   imports: [
     BidiModule,
@@ -115,7 +122,14 @@ import { VtsProTableComponent } from './protable/protable.component';
     VtsIconModule,
     VtsEmptyModule,
     ScrollingModule,
-    VtsResizeObserverModule
+    VtsResizeObserverModule,
+    VtsFormModule,
+    ReactiveFormsModule,
+    VtsModalModule,
+    VtsDrawerModule,
+    VtsFormModule,
+    VtsSelectModule,
+    VtsUploadModule
   ]
 })
 export class VtsProTableModule {}

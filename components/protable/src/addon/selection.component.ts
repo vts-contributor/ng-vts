@@ -70,7 +70,6 @@ export class VtsProTableSelectionComponent {
   }
 
   onCheckedChange(checked: boolean): void {
-    console.log(checked);
     this.checked = checked;
     this.checkedChange.emit(checked);
   }

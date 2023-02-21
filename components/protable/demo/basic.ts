@@ -30,7 +30,7 @@ interface Item {
             [vtsIndeterminate]="indeterminate"
             (vtsCheckedChange)="onAllChecked($event)"
           ></th>
-          <th vtsWidth="1%" vtsAlign="center">#</th>
+          <th vtsWidth="1%" vtsAlign="left">#</th>
           <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 1</th>
           <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 2</th>
           <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 3</th>
@@ -40,17 +40,17 @@ interface Item {
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of basicTable.data; index as i">
+        <tr *ngFor="let data of basicTable.data; index as i" style="height: 80px;">
           <td
             [vtsChecked]="setOfCheckedId.has(data.id)"
             (vtsCheckedChange)="onItemChecked(data.id, $event)"
           ></td>
-          <td vtsAlign="center">{{ data.id }}</td>
-          <td>{{ data.content1 }}</td>
-          <td>{{ data.content2 }}</td>
-          <td vtsAlign="center">{{ data.content3 }}</td>
-          <td vtsAlign="right">{{ data.content4 }}</td>
-          <td vtsAlign="right">{{ data.content5 }}</td>
+          <td vtsAlign="left">{{ data.id }}</td>
+          <td vtsAlign="left">{{ data.content1 }}</td>
+          <td vtsAlign="left">{{ data.content2 }}</td>
+          <td vtsAlign="left">{{ data.content3 }}</td>
+          <td vtsAlign="left">{{ data.content4 }}</td>
+          <td vtsAlign="left">{{ data.content5 }}</td>
           <td>
             <a>View</a>
           </td>

@@ -28,7 +28,7 @@ import {
       <ng-content></ng-content>
       <tr class="vts-table-placeholder" vts-table-fixed-row *ngIf="showEmpty$ | async">
         <vts-embed-empty
-          vtsComponentName="table"
+          vtsComponentName="protable"
           [specificContent]="(noResult$ | async)!"
         ></vts-embed-empty>
       </tr>

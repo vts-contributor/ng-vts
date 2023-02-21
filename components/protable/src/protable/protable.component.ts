@@ -43,6 +43,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
+    <vts-search-form-protable></vts-search-form-protable>
+    <vts-protable-configuration [vtsNoSelectedItems]="4"></vts-protable-configuration>
     <vts-spin
       [vtsDelay]="vtsLoadingDelay"
       [vtsSpinning]="vtsLoading"
@@ -51,16 +53,6 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
       <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'top'">
         <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
       </ng-container>
-      <ng-container *ngIf="true">
-        <ng-template [ngTemplateOutlet]="selectedInfo"></ng-template>
-      </ng-container>
-      <ng-template #selectedInfo>
-        <div style="background: #FCE5EA; border: 0.5px solid #CB002B; border-radius: 10px;" class="vts-table-pagination">
-          <span>
-            <span style="color: #CB002B">1</span> items is selected <span style="color: #CB002B">| <a>Clear selected</a></span>
-          </span>
-        </div>
-      </ng-template>
       <div
         #tableMainElement
         class="vts-table"
