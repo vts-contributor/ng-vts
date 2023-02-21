@@ -8,6 +8,9 @@ import { getBrowser } from '../shared/get-browser.js';
 
 import Resize from './modules/resize/resize.js';
 import Observer from './modules/observer/observer.js';
+import Autoplay from './modules/autoplay/autoplay.js';
+import Navigation from './modules/navigation/navigation.js';
+import Pagination from './modules/pagination/pagination.js'
 
 import eventsEmitter from './events-emitter.js';
 
@@ -695,6 +698,6 @@ Object.keys(prototypes).forEach((prototypeGroup) => {
   });
 });
 
-Swiper.use([Resize, Observer]);
+Swiper.use([Resize, Observer, Autoplay, Navigation, Pagination]);
 
 export default Swiper;
