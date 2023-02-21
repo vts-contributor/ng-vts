@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'vts-demo-carousel-basic',
+  selector: 'vts-demo-carousel-autoplay',
   template: `
     <vts-carousel
      [slidesPerView]="slidesPerView"
      [spaceBetween]="spaceBetween"
      [navigation]="navigation"
-     [autoplay]="true"
+     [autoplay]="autoplay"
+     [pagination]="pagination"
     >
       <ng-template swiperSlide>Slide 1</ng-template>
       <ng-template swiperSlide>Slide 2</ng-template>
@@ -18,9 +19,10 @@ import { Component } from '@angular/core';
     </vts-carousel>
   `
 })
-export class VtsDemoCarouselBasicComponent {
+export class VtsDemoCarouselAutoplayComponent {
     slidesPerView = 3
     spaceBetween = 50;
     navigation= true;
     autoplay=true;
+    pagination=true;
 }

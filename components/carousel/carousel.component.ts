@@ -154,7 +154,7 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() observeParents: "observeParents";
   // @Input() observeSlideChildren: "observeSlideChildren";
   // @Input() a11y: "a11y";
-  // @Input() autoplay: "autoplay";
+  @Input() autoplay?: boolean;
   @Input() controller?: ControllerOptions;
   // @Input() coverflowEffect: "coverflowEffect";
   // @Input() cubeEffect: "cubeEffect";
