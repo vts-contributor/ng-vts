@@ -1,8 +1,8 @@
 ---
-order: 1
+order: 0
 title:
   zh-CN: 基本
-  en-US: Autoplay
+  en-US: With controls
 ---
 
 ## zh-CN

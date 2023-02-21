@@ -20,7 +20,7 @@ import {
 // @ts-ignore
 import Swiper from './lib/swiper';
 import { Observable, of, Subject } from 'rxjs';
-import { getParams } from './lib/angular/utils/get-params';
+import { getParams } from './lib/utils/get-params';
 import { SwiperSlideDirective } from './carousel-slide.directive';
 import { EventsParams } from './carousel-events';
 import { ThumbsOptions } from './lib/types/modules/thumbs';
@@ -33,7 +33,7 @@ import {
   coerceBooleanProperty,
   isShowEl,
   isEnabled,
-} from './lib/angular/utils/utils';
+} from './lib/utils/utils';
 import {
   SwiperOptions,
   SwiperEvents,
@@ -88,6 +88,7 @@ export class VtsCarouselComponent implements OnInit {
   };
   @Input() spaceBetween?: number;
   @Input() slidesPerView?: number | "auto";
+  @Input() vtsDotPosition?: string | "inside";
   // @Input() maxBackfaceHiddenSlides: "maxBackfaceHiddenSlides";
   // @Input() grid: "grid";
   // @Input() slidesPerGroup: "slidesPerGroup";

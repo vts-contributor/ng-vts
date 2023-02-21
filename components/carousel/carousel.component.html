@@ -4,7 +4,11 @@
   <div class="swiper-button-next" #nextElRef></div>
 </ng-container>
 <div *ngIf="scrollbar && showScrollbar" class="swiper-scrollbar" #scrollbarElRef></div>
-<div *ngIf="pagination && showPagination" class="swiper-pagination" #paginationElRef></div>
+<div *ngIf="pagination && showPagination" class="swiper-pagination"
+  [class.vts-carousel-dots-inside]="vtsDotPosition === 'inside'"
+  [class.vts-carousel-dots-outside]="vtsDotPosition === 'outside'"
+  #paginationElRef>
+</div>
 <div [ngClass]="wrapperClass" [attr.id]="id">
   <ng-content select="[slot=wrapper-start]"></ng-content>
   <ng-template
