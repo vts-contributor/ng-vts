@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class VtsSettingDrawerComponent implements OnInit {
     open: boolean = false;
+    drawerWrapClassName: string = "test-prolayout"
 
     ngOnInit() { }
 

@@ -5,8 +5,8 @@
     </button>
   </ng-template>
   <ng-template #closed>
-    <button vts-button>
-      <i vts-icon vtsType="Search" (click)="openDrawer()"></i>
+    <button vts-button (click)="openDrawer()">
+      <i vts-icon vtsType="Search"></i>
     </button>
   </ng-template>
 </div>
@@ -14,6 +14,7 @@
   [vtsClosable]="true"
   [vtsVisible]="open"
   vtsPlacement="right"
+  [vtsWrapClassName]="drawerWrapClassName"
   vtsTitle="Basic Drawer"
   (vtsOnClose)="closeDrawer()"
 >

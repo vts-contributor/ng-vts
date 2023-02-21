@@ -1,6 +1,7 @@
 ---
 order: 21
-col: 1
+iframe:
+  height: 650
 title:
   zh-CN: 基本结构
   en-US: Basic Structure
