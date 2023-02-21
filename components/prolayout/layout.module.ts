@@ -9,6 +9,7 @@ import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsButtonModule } from '../button';
 import { VtsDrawerModule } from '../drawer';
 import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
@@ -36,6 +37,6 @@ import { VtsSiderComponent } from './sider.component';
     VtsProLayoutComponent,
     VtsSettingDrawerComponent
   ],
-  imports: [BidiModule, CommonModule, VtsIconModule, LayoutModule, PlatformModule, VtsDrawerModule]
+  imports: [BidiModule, CommonModule, VtsIconModule, LayoutModule, PlatformModule, VtsDrawerModule, VtsButtonModule]
 })
 export class VtsProLayoutModule {}
