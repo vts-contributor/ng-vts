@@ -1,8 +1,8 @@
 ---
-order: 0
+order: 3
 title:
   zh-CN: 基本
-  en-US: Basic
+  en-US: With captions
 ---
 
 ## zh-CN
