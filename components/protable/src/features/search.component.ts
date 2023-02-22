@@ -25,7 +25,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
           <button vts-button [vtsType]="'primary'" [vtsSize]="'xs'" (click)="mockFn()">Search</button>
           <button vts-button [vtsSize]="'xs'" (click)="resetForm()">Reset</button>
           <button vts-button [vtsSize]="'xs'" (click)="toggleCollapse()">Collapse
-            <i class="collapse-icon" vts-icon [vtsType]="isCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
+            <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
           </button>
         </div>
       </div>
@@ -65,16 +65,16 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class VtsSearchFormProTableComponent implements OnInit {
   validateForm!: FormGroup;
   controlArray: Array<{ index: number; show: boolean }> = [];
-  @Input() isCollapse = true;
-  @Input() noDisplayProperty: number = 3;
-  @Input() totalProperty: number = 7;
+  @Input() vtsIsCollapse = true;
+  @Input() vtsNoDisplayProperties: number = 3;
+  @Input() vtsTotalProperties: number = 7;
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({});
-    for (let i = 1; i <= this.totalProperty; i++) {
-      this.controlArray.push({ index: i, show: i <= this.noDisplayProperty });
+    for (let i = 1; i <= this.vtsTotalProperties; i++) {
+      this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties });
       this.validateForm.addControl(`property${i}`, new FormControl());
     }
   }
@@ -84,9 +84,9 @@ export class VtsSearchFormProTableComponent implements OnInit {
   }
 
   toggleCollapse(): void {
-    this.isCollapse = !this.isCollapse;
+    this.vtsIsCollapse = !this.vtsIsCollapse;
     this.controlArray.forEach((c, index) => {
-      c.show = this.isCollapse ? index < this.noDisplayProperty : true;
+      c.show = this.vtsIsCollapse ? index < this.vtsNoDisplayProperties : true;
     });
   }
 

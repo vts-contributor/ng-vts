@@ -40,7 +40,7 @@ interface Item {
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let data of basicTable.data; index as i" style="height: 80px;">
+        <tr *ngFor="let data of basicTable.data; index as i">
           <td
             [vtsChecked]="setOfCheckedId.has(data.id)"
             (vtsCheckedChange)="onItemChecked(data.id, $event)"

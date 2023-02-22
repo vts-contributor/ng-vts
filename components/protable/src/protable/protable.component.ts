@@ -43,7 +43,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <vts-search-form-protable></vts-search-form-protable>
+    <vts-search-form-protable [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-form-protable>
     <vts-protable-configuration [vtsNoSelectedItems]="4"></vts-protable-configuration>
     <vts-spin
       [vtsDelay]="vtsLoadingDelay"
