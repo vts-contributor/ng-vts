@@ -7,9 +7,9 @@ import { Component } from '@angular/core';
      [slidesPerView]="slidesPerView"
      [navigation]="navigation"
     >
-      <ng-template swiperSlide> <div class="item">Slide 1</div> </ng-template>
-      <ng-template swiperSlide> <div class="item">Slide 2</div> </ng-template>
-      <ng-template swiperSlide> <div class="item">Slide 3</div> </ng-template>
+      <ng-template vts-carousel-slide *ngFor="let item of array">
+        <img src={{item.src}} alt="">
+      </ng-template>
     </vts-carousel>
   `,
   styles: [
@@ -17,19 +17,19 @@ import { Component } from '@angular/core';
       vts-carousel {
         height: 200px;
       }
-
-      .item {
-        background-color: #7ad2d1;
-        width: 100%;
+      img {
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 100%;
       }
     `
   ]
 })
 export class VtsDemoCarouselWithControlComponent {
-    slidesPerView = 1;
-    navigation= true;
+  slidesPerView = 1;
+  navigation= true;
+  array= [
+    {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
+    {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
+    {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
+  ];
 }
