@@ -1,16 +1,16 @@
 import Swiper from 'swiper';
 
 export const calcLoopedSlides = (slides, swiperParams) => {
-  let slidesPerViewParams = swiperParams.slidesPerView;
+  let vtsSlidesPerViewParams = swiperParams.vtsSlidesPerView;
   if (swiperParams.breakpoints) {
     const breakpoint = Swiper.prototype.getBreakpoint(swiperParams.breakpoints);
     const breakpointOnlyParams =
       breakpoint in swiperParams.breakpoints ? swiperParams.breakpoints[breakpoint] : undefined;
-    if (breakpointOnlyParams && breakpointOnlyParams.slidesPerView) {
-      slidesPerViewParams = breakpointOnlyParams.slidesPerView;
+    if (breakpointOnlyParams && breakpointOnlyParams.vtsSlidesPerView) {
+      vtsSlidesPerViewParams = breakpointOnlyParams.vtsSlidesPerView;
     }
   }
-  let loopedSlides = Math.ceil(parseFloat(swiperParams.loopedSlides || slidesPerViewParams, 10));
+  let loopedSlides = Math.ceil(parseFloat(swiperParams.loopedSlides || vtsSlidesPerViewParams, 10));
 
   loopedSlides += swiperParams.loopAdditionalSlides;
 

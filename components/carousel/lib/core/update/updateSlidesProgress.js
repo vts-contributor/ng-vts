@@ -27,13 +27,13 @@ export default function updateSlidesProgress(translate = (this && this.translate
 
     const slideProgress =
       (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0) - slideOffset) /
-      (slide.swiperSlideSize + params.spaceBetween);
+      (slide.swiperSlideSize + params.vtsSpaceBetween);
     const originalSlideProgress =
       (offsetCenter -
         snapGrid[0] +
         (params.centeredSlides ? swiper.minTranslate() : 0) -
         slideOffset) /
-      (slide.swiperSlideSize + params.spaceBetween);
+      (slide.swiperSlideSize + params.vtsSpaceBetween);
     const slideBefore = -(offsetCenter - slideOffset);
     const slideAfter = slideBefore + swiper.slidesSizesGrid[i];
     const isVisible =

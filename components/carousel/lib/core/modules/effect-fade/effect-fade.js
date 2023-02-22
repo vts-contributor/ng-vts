@@ -49,10 +49,10 @@ export default function EffectFade({ swiper, extendParams, on }) {
     setTranslate,
     setTransition,
     overwriteParams: () => ({
-      slidesPerView: 1,
+      vtsSlidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
-      spaceBetween: 0,
+      vtsSpaceBetween: 0,
       virtualTranslate: !swiper.params.cssMode,
     }),
   });

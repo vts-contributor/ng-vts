@@ -5,8 +5,8 @@ export default function slideToClickedSlide() {
   const swiper = this;
   const { params, $wrapperEl } = swiper;
 
-  const slidesPerView =
-    params.slidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.slidesPerView;
+  const vtsSlidesPerView =
+    params.vtsSlidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.vtsSlidesPerView;
   let slideToIndex = swiper.clickedIndex;
   let realIndex;
   if (params.loop) {
@@ -14,8 +14,8 @@ export default function slideToClickedSlide() {
     realIndex = parseInt($(swiper.clickedSlide).attr('data-swiper-slide-index'), 10);
     if (params.centeredSlides) {
       if (
-        slideToIndex < swiper.loopedSlides - slidesPerView / 2 ||
-        slideToIndex > swiper.slides.length - swiper.loopedSlides + slidesPerView / 2
+        slideToIndex < swiper.loopedSlides - vtsSlidesPerView / 2 ||
+        slideToIndex > swiper.slides.length - swiper.loopedSlides + vtsSlidesPerView / 2
       ) {
         swiper.loopFix();
         slideToIndex = $wrapperEl
@@ -31,7 +31,7 @@ export default function slideToClickedSlide() {
       } else {
         swiper.slideTo(slideToIndex);
       }
-    } else if (slideToIndex > swiper.slides.length - slidesPerView) {
+    } else if (slideToIndex > swiper.slides.length - vtsSlidesPerView) {
       swiper.loopFix();
       slideToIndex = $wrapperEl
         .children(

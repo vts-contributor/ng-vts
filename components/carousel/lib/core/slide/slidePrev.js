@@ -37,7 +37,7 @@ export default function slidePrev(speed = this.params.speed, runCallbacks = true
     prevIndex = slidesGrid.indexOf(prevSnap);
     if (prevIndex < 0) prevIndex = swiper.activeIndex - 1;
     if (
-      params.slidesPerView === 'auto' &&
+      params.vtsSlidesPerView === 'auto' &&
       params.slidesPerGroup === 1 &&
       params.slidesPerGroupAuto
     ) {

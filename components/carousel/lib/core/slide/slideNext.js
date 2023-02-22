@@ -4,7 +4,7 @@ export default function slideNext(speed = this.params.speed, runCallbacks = true
   const { animating, enabled, params } = swiper;
   if (!enabled) return swiper;
   let perGroup = params.slidesPerGroup;
-  if (params.slidesPerView === 'auto' && params.slidesPerGroup === 1 && params.slidesPerGroupAuto) {
+  if (params.vtsSlidesPerView === 'auto' && params.slidesPerGroup === 1 && params.slidesPerGroupAuto) {
     perGroup = Math.max(swiper.slidesPerViewDynamic('current', true), 1);
   }
   const increment = swiper.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;

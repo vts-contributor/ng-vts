@@ -182,11 +182,11 @@ export default function EffectCube({ swiper, extendParams, on }) {
     getEffectParams: () => swiper.params.cubeEffect,
     perspective: () => true,
     overwriteParams: () => ({
-      slidesPerView: 1,
+      vtsSlidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
       resistanceRatio: 0,
-      spaceBetween: 0,
+      vtsSpaceBetween: 0,
       centeredSlides: false,
       virtualTranslate: true,
     }),

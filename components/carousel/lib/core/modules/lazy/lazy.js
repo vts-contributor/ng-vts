@@ -125,9 +125,9 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
     const isVirtual = swiper.virtual && swiperParams.virtual.enabled;
     const params = swiperParams.lazy;
 
-    let slidesPerView = swiperParams.slidesPerView;
-    if (slidesPerView === 'auto') {
-      slidesPerView = 0;
+    let vtsSlidesPerView = swiperParams.vtsSlidesPerView;
+    if (vtsSlidesPerView === 'auto') {
+      vtsSlidesPerView = 0;
     }
 
     function slideExist(index) {
@@ -155,17 +155,17 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
         const index = isVirtual ? $(slideEl).attr('data-swiper-slide-index') : $(slideEl).index();
         loadInSlide(index);
       });
-    } else if (slidesPerView > 1) {
-      for (let i = activeIndex; i < activeIndex + slidesPerView; i += 1) {
+    } else if (vtsSlidesPerView > 1) {
+      for (let i = activeIndex; i < activeIndex + vtsSlidesPerView; i += 1) {
         if (slideExist(i)) loadInSlide(i);
       }
     } else {
       loadInSlide(activeIndex);
     }
     if (params.loadPrevNext) {
-      if (slidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
+      if (vtsSlidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
         const amount = params.loadPrevNextAmount;
-        const spv = Math.ceil(slidesPerView);
+        const spv = Math.ceil(vtsSlidesPerView);
         const maxIndex = Math.min(activeIndex + spv + Math.max(amount, spv), slides.length);
         const minIndex = Math.max(activeIndex - Math.max(spv, amount), 0);
         // Next Slides

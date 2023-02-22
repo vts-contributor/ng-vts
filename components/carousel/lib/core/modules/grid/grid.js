@@ -11,7 +11,7 @@ export default function Grid({ swiper, extendParams }) {
   let numFullColumns;
 
   const initSlides = (slidesLength) => {
-    const { slidesPerView } = swiper.params;
+    const { vtsSlidesPerView } = swiper.params;
     const { rows, fill } = swiper.params.grid;
     slidesPerRow = slidesNumberEvenToRows / rows;
     numFullColumns = Math.floor(slidesLength / rows);
@@ -20,13 +20,13 @@ export default function Grid({ swiper, extendParams }) {
     } else {
       slidesNumberEvenToRows = Math.ceil(slidesLength / rows) * rows;
     }
-    if (slidesPerView !== 'auto' && fill === 'row') {
-      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, slidesPerView * rows);
+    if (vtsSlidesPerView !== 'auto' && fill === 'row') {
+      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, vtsSlidesPerView * rows);
     }
   };
 
   const updateSlide = (i, slide, slidesLength, getDirectionLabel) => {
-    const { slidesPerGroup, spaceBetween } = swiper.params;
+    const { slidesPerGroup, vtsSpaceBetween } = swiper.params;
     const { rows, fill } = swiper.params.grid;
     // Set slides order
     let newSlideOrderIndex;
@@ -66,17 +66,17 @@ export default function Grid({ swiper, extendParams }) {
     }
     slide.css(
       getDirectionLabel('margin-top'),
-      row !== 0 ? spaceBetween && `${spaceBetween}px` : '',
+      row !== 0 ? vtsSpaceBetween && `${vtsSpaceBetween}px` : '',
     );
   };
 
   const updateWrapperSize = (slideSize, snapGrid, getDirectionLabel) => {
-    const { spaceBetween, centeredSlides, roundLengths } = swiper.params;
+    const { vtsSpaceBetween, centeredSlides, roundLengths } = swiper.params;
     const { rows } = swiper.params.grid;
-    swiper.virtualSize = (slideSize + spaceBetween) * slidesNumberEvenToRows;
-    swiper.virtualSize = Math.ceil(swiper.virtualSize / rows) - spaceBetween;
+    swiper.virtualSize = (slideSize + vtsSpaceBetween) * slidesNumberEvenToRows;
+    swiper.virtualSize = Math.ceil(swiper.virtualSize / rows) - vtsSpaceBetween;
     swiper.$wrapperEl.css({
-      [getDirectionLabel('width')]: `${swiper.virtualSize + spaceBetween}px`,
+      [getDirectionLabel('width')]: `${swiper.virtualSize + vtsSpaceBetween}px`,
     });
     if (centeredSlides) {
       snapGrid.splice(0, snapGrid.length);

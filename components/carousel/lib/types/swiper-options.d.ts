@@ -259,9 +259,9 @@ export interface SwiperOptions {
    *
    * @default 0
    *
-   * @note If you use "margin" css property to the elements which go into Swiper in which you pass "spaceBetween" into, navigation might not work properly.
+   * @note If you use "margin" css property to the elements which go into Swiper in which you pass "vtsSpaceBetween" into, navigation might not work properly.
    */
-  spaceBetween?: number;
+  vtsSpaceBetween?: number;
 
   /**
    * Number of slides per view (slides visible at the same time on slider's container).
@@ -270,7 +270,7 @@ export interface SwiperOptions {
    *
    * @default 1
    */
-  slidesPerView?: number | 'auto';
+  vtsSlidesPerView?: number | 'auto';
 
   /**
    * If total number of slides less than specified here value, then Swiper will enable `backface-visibility: hidden` on slide elements to reduce visual "flicker" in Safari.
@@ -653,30 +653,30 @@ export interface SwiperOptions {
   loopPreventsSlide?: boolean;
 
   /**
-   * Allows to set different parameter for different responsive breakpoints (screen sizes). Not all parameters can be changed in breakpoints, only those which do not require different layout and logic, like `slidesPerView`, `slidesPerGroup`, `spaceBetween`, `grid.rows`. Such parameters like `loop` and `effect` won't work
+   * Allows to set different parameter for different responsive breakpoints (screen sizes). Not all parameters can be changed in breakpoints, only those which do not require different layout and logic, like `slidesPerView`, `slidesPerGroup`, `vtsSpaceBetween`, `grid.rows`. Such parameters like `loop` and `effect` won't work
    *
    * @example
    * ```js
    * const swiper = new Swiper('.swiper', {
    *   // Default parameters
    *   slidesPerView: 1,
-   *   spaceBetween: 10,
+   *   vtsSpaceBetween: 10,
    *   // Responsive breakpoints
    *   breakpoints: {
    *     // when window width is >= 320px
    *     320: {
    *       slidesPerView: 2,
-   *       spaceBetween: 20
+   *       vtsSpaceBetween: 20
    *     },
    *     // when window width is >= 480px
    *     480: {
    *       slidesPerView: 3,
-   *       spaceBetween: 30
+   *       vtsSpaceBetween: 30
    *     },
    *     // when window width is >= 640px
    *     640: {
    *       slidesPerView: 4,
-   *       spaceBetween: 40
+   *       vtsSpaceBetween: 40
    *     }
    *   }
    * })
@@ -686,20 +686,20 @@ export interface SwiperOptions {
    * ```js
    * const swiper = new Swiper('.swiper', {
    *   slidesPerView: 1,
-   *   spaceBetween: 10,
+   *   vtsSpaceBetween: 10,
    *   // using "ratio" endpoints
    *   breakpoints: {
    *     '@0.75': {
    *       slidesPerView: 2,
-   *       spaceBetween: 20,
+   *       vtsSpaceBetween: 20,
    *     },
    *     '@1.00': {
    *       slidesPerView: 3,
-   *       spaceBetween: 40,
+   *       vtsSpaceBetween: 40,
    *     },
    *     '@1.50': {
    *       slidesPerView: 4,
-   *       spaceBetween: 50,
+   *       vtsSpaceBetween: 50,
    *     },
    *   }
    * });

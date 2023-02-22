@@ -42,7 +42,7 @@ export default function Virtual({ swiper, extendParams, on, emit }) {
   }
 
   function update(force) {
-    const { slidesPerView, slidesPerGroup, centeredSlides } = swiper.params;
+    const { vtsSlidesPerView, slidesPerGroup, centeredSlides } = swiper.params;
     const { addSlidesBefore, addSlidesAfter } = swiper.params.virtual;
     const {
       from: previousFrom,
@@ -64,10 +64,10 @@ export default function Virtual({ swiper, extendParams, on, emit }) {
     let slidesAfter;
     let slidesBefore;
     if (centeredSlides) {
-      slidesAfter = Math.floor(slidesPerView / 2) + slidesPerGroup + addSlidesAfter;
-      slidesBefore = Math.floor(slidesPerView / 2) + slidesPerGroup + addSlidesBefore;
+      slidesAfter = Math.floor(vtsSlidesPerView / 2) + slidesPerGroup + addSlidesAfter;
+      slidesBefore = Math.floor(vtsSlidesPerView / 2) + slidesPerGroup + addSlidesBefore;
     } else {
-      slidesAfter = slidesPerView + (slidesPerGroup - 1) + addSlidesAfter;
+      slidesAfter = vtsSlidesPerView + (slidesPerGroup - 1) + addSlidesAfter;
       slidesBefore = slidesPerGroup + addSlidesBefore;
     }
     const from = Math.max((activeIndex || 0) - slidesBefore, 0);

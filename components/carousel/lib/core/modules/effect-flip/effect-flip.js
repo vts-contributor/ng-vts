@@ -100,10 +100,10 @@ export default function EffectFlip({ swiper, extendParams, on }) {
     getEffectParams: () => swiper.params.flipEffect,
     perspective: () => true,
     overwriteParams: () => ({
-      slidesPerView: 1,
+      vtsSlidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
-      spaceBetween: 0,
+      vtsSpaceBetween: 0,
       virtualTranslate: !swiper.params.cssMode,
     }),
   });

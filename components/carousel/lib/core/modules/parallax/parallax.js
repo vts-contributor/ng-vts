@@ -64,7 +64,7 @@ export default function Parallax({ swiper, extendParams, on }) {
       });
     slides.each((slideEl, slideIndex) => {
       let slideProgress = slideEl.progress;
-      if (swiper.params.slidesPerGroup > 1 && swiper.params.slidesPerView !== 'auto') {
+      if (swiper.params.slidesPerGroup > 1 && swiper.params.vtsSlidesPerView !== 'auto') {
         slideProgress += Math.ceil(slideIndex / 2) - progress * (snapGrid.length - 1);
       }
       slideProgress = Math.min(Math.max(slideProgress, -1), 1);

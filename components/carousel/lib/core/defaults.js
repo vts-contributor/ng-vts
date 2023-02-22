@@ -44,8 +44,8 @@ export default {
   breakpointsBase: 'window',
 
   // Slides grid
-  spaceBetween: 0,
-  slidesPerView: 1,
+  vtsSpaceBetween: 0,
+  vtsSlidesPerView: 1,
   slidesPerGroup: 1,
   slidesPerGroupSkip: 0,
   slidesPerGroupAuto: false,

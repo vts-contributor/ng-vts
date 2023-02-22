@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-multiple',
   template: `
     <vts-carousel
-     [slidesPerView]="slidesPerView"
+     [vtsSlidesPerView]="vtsSlidesPerView"
      [navigation]="navigation"
      [pagination]="pagination"
      [vtsSpaceBetween]="vtsSpaceBetween"
@@ -27,7 +27,7 @@ import { Component } from '@angular/core';
   ]
 })
 export class VtsDemoCarouselMultipleComponent {
-    slidesPerView = 3;
+    vtsSlidesPerView = 3;
     vtsSpaceBetween = 20;
     navigation= true;
     pagination= {clickable: true};
