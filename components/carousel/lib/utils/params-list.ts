@@ -96,7 +96,7 @@ export const paramsList = [
 
   // modules
   'a11y',
-  'autoplay',
+  '_vtsAutoplay',
   '_controller',
   'coverflowEffect',
   'cubeEffect',

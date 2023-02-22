@@ -1,45 +1,45 @@
 export default function onResize() {
-  const swiper = this;
+  const Carousel = this;
 
-  const { params, el } = swiper;
+  const { params, el } = Carousel;
 
   if (el && el.offsetWidth === 0) return;
 
   // Breakpoints
   if (params.breakpoints) {
-    swiper.setBreakpoint();
+    Carousel.setBreakpoint();
   }
 
   // Save locks
-  const { allowSlideNext, allowSlidePrev, snapGrid } = swiper;
+  const { allowSlideNext, allowSlidePrev, snapGrid } = Carousel;
 
   // Disable locks on resize
-  swiper.allowSlideNext = true;
-  swiper.allowSlidePrev = true;
+  Carousel.allowSlideNext = true;
+  Carousel.allowSlidePrev = true;
 
-  swiper.updateSize();
-  swiper.updateSlides();
+  Carousel.updateSize();
+  Carousel.updateSlides();
 
-  swiper.updateSlidesClasses();
+  Carousel.updateSlidesClasses();
   if (
     (params.vtsSlidesPerView === 'auto' || params.vtsSlidesPerView > 1) &&
-    swiper.isEnd &&
-    !swiper.isBeginning &&
-    !swiper.params.centeredSlides
+    Carousel.isEnd &&
+    !Carousel.isBeginning &&
+    !Carousel.params.centeredSlides
   ) {
-    swiper.slideTo(swiper.slides.length - 1, 0, false, true);
+    Carousel.slideTo(Carousel.slides.length - 1, 0, false, true);
   } else {
-    swiper.slideTo(swiper.activeIndex, 0, false, true);
+    Carousel.slideTo(Carousel.activeIndex, 0, false, true);
   }
 
-  if (swiper.autoplay && swiper.autoplay.running && swiper.autoplay.paused) {
-    swiper.autoplay.run();
+  if (Carousel.autoplay && Carousel.autoplay.running && Carousel.autoplay.paused) {
+    Carousel.autoplay.run();
   }
   // Return locks after resize
-  swiper.allowSlidePrev = allowSlidePrev;
-  swiper.allowSlideNext = allowSlideNext;
+  Carousel.allowSlidePrev = allowSlidePrev;
+  Carousel.allowSlideNext = allowSlideNext;
 
-  if (swiper.params.watchOverflow && snapGrid !== swiper.snapGrid) {
-    swiper.checkOverflow();
+  if (Carousel.params.watchOverflow && snapGrid !== Carousel.snapGrid) {
+    Carousel.checkOverflow();
   }
 }

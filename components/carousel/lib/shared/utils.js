@@ -111,14 +111,14 @@ function extend(...args) {
         const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
         if (desc !== undefined && desc.enumerable) {
           if (isObject(to[nextKey]) && isObject(nextSource[nextKey])) {
-            if (nextSource[nextKey].__swiper__) {
+            if (nextSource[nextKey].__Carousel__) {
               to[nextKey] = nextSource[nextKey];
             } else {
               extend(to[nextKey], nextSource[nextKey]);
             }
           } else if (!isObject(to[nextKey]) && isObject(nextSource[nextKey])) {
             to[nextKey] = {};
-            if (nextSource[nextKey].__swiper__) {
+            if (nextSource[nextKey].__Carousel__) {
               to[nextKey] = nextSource[nextKey];
             } else {
               extend(to[nextKey], nextSource[nextKey]);
@@ -137,15 +137,15 @@ function setCSSProperty(el, varName, varValue) {
   el.style.setProperty(varName, varValue);
 }
 
-function animateCSSModeScroll({ swiper, targetPosition, side }) {
+function animateCSSModeScroll({ Carousel, targetPosition, side }) {
   const window = getWindow();
-  const startPosition = -swiper.translate;
+  const startPosition = -Carousel.translate;
   let startTime = null;
   let time;
-  const duration = swiper.params.speed;
+  const duration = Carousel.params.speed;
 
-  swiper.wrapperEl.style.scrollSnapType = 'none';
-  window.cancelAnimationFrame(swiper.cssModeFrameID);
+  Carousel.wrapperEl.style.scrollSnapType = 'none';
+  window.cancelAnimationFrame(Carousel.cssModeFrameID);
 
   const dir = targetPosition > startPosition ? 'next' : 'prev';
 
@@ -166,22 +166,22 @@ function animateCSSModeScroll({ swiper, targetPosition, side }) {
     if (isOutOfBound(currentPosition, targetPosition)) {
       currentPosition = targetPosition;
     }
-    swiper.wrapperEl.scrollTo({
+    Carousel.wrapperEl.scrollTo({
       [side]: currentPosition,
     });
     if (isOutOfBound(currentPosition, targetPosition)) {
-      swiper.wrapperEl.style.overflow = 'hidden';
-      swiper.wrapperEl.style.scrollSnapType = '';
+      Carousel.wrapperEl.style.overflow = 'hidden';
+      Carousel.wrapperEl.style.scrollSnapType = '';
       setTimeout(() => {
-        swiper.wrapperEl.style.overflow = '';
-        swiper.wrapperEl.scrollTo({
+        Carousel.wrapperEl.style.overflow = '';
+        Carousel.wrapperEl.scrollTo({
           [side]: currentPosition,
         });
       });
-      window.cancelAnimationFrame(swiper.cssModeFrameID);
+      window.cancelAnimationFrame(Carousel.cssModeFrameID);
       return;
     }
-    swiper.cssModeFrameID = window.requestAnimationFrame(animate);
+    Carousel.cssModeFrameID = window.requestAnimationFrame(animate);
   };
   animate();
 }

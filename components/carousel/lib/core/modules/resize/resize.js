@@ -1,25 +1,25 @@
 import { getWindow } from 'ssr-window';
 
-export default function Resize({ swiper, on, emit }) {
+export default function Resize({ Carousel, on, emit }) {
   const window = getWindow();
   let observer = null;
   let animationFrame = null;
 
   const resizeHandler = () => {
-    if (!swiper || swiper.destroyed || !swiper.initialized) return;
+    if (!Carousel || Carousel.destroyed || !Carousel.initialized) return;
     emit('beforeResize');
     emit('resize');
   };
 
   const createObserver = () => {
-    if (!swiper || swiper.destroyed || !swiper.initialized) return;
+    if (!Carousel || Carousel.destroyed || !Carousel.initialized) return;
     observer = new ResizeObserver((entries) => {
       animationFrame = window.requestAnimationFrame(() => {
-        const { width, height } = swiper;
+        const { width, height } = Carousel;
         let newWidth = width;
         let newHeight = height;
         entries.forEach(({ contentBoxSize, contentRect, target }) => {
-          if (target && target !== swiper.el) return;
+          if (target && target !== Carousel.el) return;
           newWidth = contentRect
             ? contentRect.width
             : (contentBoxSize[0] || contentBoxSize).inlineSize;
@@ -32,26 +32,26 @@ export default function Resize({ swiper, on, emit }) {
         }
       });
     });
-    observer.observe(swiper.el);
+    observer.observe(Carousel.el);
   };
 
   const removeObserver = () => {
     if (animationFrame) {
       window.cancelAnimationFrame(animationFrame);
     }
-    if (observer && observer.unobserve && swiper.el) {
-      observer.unobserve(swiper.el);
+    if (observer && observer.unobserve && Carousel.el) {
+      observer.unobserve(Carousel.el);
       observer = null;
     }
   };
 
   const orientationChangeHandler = () => {
-    if (!swiper || swiper.destroyed || !swiper.initialized) return;
+    if (!Carousel || Carousel.destroyed || !Carousel.initialized) return;
     emit('orientationchange');
   };
 
   on('init', () => {
-    if (swiper.params.resizeObserver && typeof window.ResizeObserver !== 'undefined') {
+    if (Carousel.params.resizeObserver && typeof window.ResizeObserver !== 'undefined') {
       createObserver();
       return;
     }

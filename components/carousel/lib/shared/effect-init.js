@@ -1,7 +1,7 @@
 export default function effectInit(params) {
   const {
     effect,
-    swiper,
+    Carousel,
     on,
     setTranslate,
     setTransition,
@@ -12,36 +12,36 @@ export default function effectInit(params) {
   } = params;
 
   on('beforeInit', () => {
-    if (swiper.params.effect !== effect) return;
-    swiper.classNames.push(`${swiper.params.containerModifierClass}${effect}`);
+    if (Carousel.params.effect !== effect) return;
+    Carousel.classNames.push(`${Carousel.params.containerModifierClass}${effect}`);
     if (perspective && perspective()) {
-      swiper.classNames.push(`${swiper.params.containerModifierClass}3d`);
+      Carousel.classNames.push(`${Carousel.params.containerModifierClass}3d`);
     }
 
     const overwriteParamsResult = overwriteParams ? overwriteParams() : {};
 
-    Object.assign(swiper.params, overwriteParamsResult);
-    Object.assign(swiper.originalParams, overwriteParamsResult);
+    Object.assign(Carousel.params, overwriteParamsResult);
+    Object.assign(Carousel.originalParams, overwriteParamsResult);
   });
   on('setTranslate', () => {
-    if (swiper.params.effect !== effect) return;
+    if (Carousel.params.effect !== effect) return;
     setTranslate();
   });
   on('setTransition', (_s, duration) => {
-    if (swiper.params.effect !== effect) return;
+    if (Carousel.params.effect !== effect) return;
     setTransition(duration);
   });
 
   on('transitionEnd', () => {
-    if (swiper.params.effect !== effect) return;
+    if (Carousel.params.effect !== effect) return;
     if (recreateShadows) {
       if (!getEffectParams || !getEffectParams().slideShadows) return;
       // remove shadows
-      swiper.slides.each((slideEl) => {
-        const $slideEl = swiper.$(slideEl);
+      Carousel.slides.each((slideEl) => {
+        const $slideEl = Carousel.$(slideEl);
         $slideEl
           .find(
-            '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left',
+            '.Carousel-slide-shadow-top, .Carousel-slide-shadow-right, .Carousel-slide-shadow-bottom, .Carousel-slide-shadow-left',
           )
           .remove();
       });
@@ -52,12 +52,12 @@ export default function effectInit(params) {
 
   let requireUpdateOnVirtual;
   on('virtualUpdate', () => {
-    if (swiper.params.effect !== effect) return;
-    if (!swiper.slides.length) {
+    if (Carousel.params.effect !== effect) return;
+    if (!Carousel.slides.length) {
       requireUpdateOnVirtual = true;
     }
     requestAnimationFrame(() => {
-      if (requireUpdateOnVirtual && swiper.slides && swiper.slides.length) {
+      if (requireUpdateOnVirtual && Carousel.slides && Carousel.slides.length) {
         setTranslate();
         requireUpdateOnVirtual = false;
       }

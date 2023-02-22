@@ -1,55 +1,55 @@
 import { isObject } from '../../shared/utils.js';
 import $ from '../../shared/dom.js';
 
-export default function Thumb({ swiper, extendParams, on }) {
+export default function Thumb({ Carousel, extendParams, on }) {
   extendParams({
     thumbs: {
-      swiper: null,
+      Carousel: null,
       multipleActiveThumbs: true,
       autoScrollOffset: 0,
-      slideThumbActiveClass: 'swiper-slide-thumb-active',
-      thumbsContainerClass: 'swiper-thumbs',
+      slideThumbActiveClass: 'Carousel-slide-thumb-active',
+      thumbsContainerClass: 'Carousel-thumbs',
     },
   });
 
   let initialized = false;
-  let swiperCreated = false;
+  let CarouselCreated = false;
 
-  swiper.thumbs = {
-    swiper: null,
+  Carousel.thumbs = {
+    Carousel: null,
   };
 
   function onThumbClick() {
-    const thumbsSwiper = swiper.thumbs.swiper;
-    if (!thumbsSwiper || thumbsSwiper.destroyed) return;
+    const thumbsCarousel = Carousel.thumbs.Carousel;
+    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
 
-    const clickedIndex = thumbsSwiper.clickedIndex;
-    const clickedSlide = thumbsSwiper.clickedSlide;
-    if (clickedSlide && $(clickedSlide).hasClass(swiper.params.thumbs.slideThumbActiveClass))
+    const clickedIndex = thumbsCarousel.clickedIndex;
+    const clickedSlide = thumbsCarousel.clickedSlide;
+    if (clickedSlide && $(clickedSlide).hasClass(Carousel.params.thumbs.slideThumbActiveClass))
       return;
     if (typeof clickedIndex === 'undefined' || clickedIndex === null) return;
     let slideToIndex;
-    if (thumbsSwiper.params.loop) {
-      slideToIndex = parseInt($(thumbsSwiper.clickedSlide).attr('data-swiper-slide-index'), 10);
+    if (thumbsCarousel.params.loop) {
+      slideToIndex = parseInt($(thumbsCarousel.clickedSlide).attr('data-Carousel-slide-index'), 10);
     } else {
       slideToIndex = clickedIndex;
     }
-    if (swiper.params.loop) {
-      let currentIndex = swiper.activeIndex;
-      if (swiper.slides.eq(currentIndex).hasClass(swiper.params.slideDuplicateClass)) {
-        swiper.loopFix();
+    if (Carousel.params.loop) {
+      let currentIndex = Carousel.activeIndex;
+      if (Carousel.slides.eq(currentIndex).hasClass(Carousel.params.slideDuplicateClass)) {
+        Carousel.loopFix();
         // eslint-disable-next-line
-        swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
-        currentIndex = swiper.activeIndex;
+        Carousel._clientLeft = Carousel.$wrapperEl[0].clientLeft;
+        currentIndex = Carousel.activeIndex;
       }
-      const prevIndex = swiper.slides
+      const prevIndex = Carousel.slides
         .eq(currentIndex)
-        .prevAll(`[data-swiper-slide-index="${slideToIndex}"]`)
+        .prevAll(`[data-Carousel-slide-index="${slideToIndex}"]`)
         .eq(0)
         .index();
-      const nextIndex = swiper.slides
+      const nextIndex = Carousel.slides
         .eq(currentIndex)
-        .nextAll(`[data-swiper-slide-index="${slideToIndex}"]`)
+        .nextAll(`[data-Carousel-slide-index="${slideToIndex}"]`)
         .eq(0)
         .index();
       if (typeof prevIndex === 'undefined') slideToIndex = nextIndex;
@@ -57,103 +57,103 @@ export default function Thumb({ swiper, extendParams, on }) {
       else if (nextIndex - currentIndex < currentIndex - prevIndex) slideToIndex = nextIndex;
       else slideToIndex = prevIndex;
     }
-    swiper.slideTo(slideToIndex);
+    Carousel.slideTo(slideToIndex);
   }
 
   function init() {
-    const { thumbs: thumbsParams } = swiper.params;
+    const { thumbs: thumbsParams } = Carousel.params;
     if (initialized) return false;
     initialized = true;
-    const SwiperClass = swiper.constructor;
-    if (thumbsParams.swiper instanceof SwiperClass) {
-      swiper.thumbs.swiper = thumbsParams.swiper;
-      Object.assign(swiper.thumbs.swiper.originalParams, {
+    const CarouselClass = Carousel.constructor;
+    if (thumbsParams.Carousel instanceof CarouselClass) {
+      Carousel.thumbs.Carousel = thumbsParams.Carousel;
+      Object.assign(Carousel.thumbs.Carousel.originalParams, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-      Object.assign(swiper.thumbs.swiper.params, {
+      Object.assign(Carousel.thumbs.Carousel.params, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-    } else if (isObject(thumbsParams.swiper)) {
-      const thumbsSwiperParams = Object.assign({}, thumbsParams.swiper);
-      Object.assign(thumbsSwiperParams, {
+    } else if (isObject(thumbsParams.Carousel)) {
+      const thumbsCarouselParams = Object.assign({}, thumbsParams.Carousel);
+      Object.assign(thumbsCarouselParams, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-      swiper.thumbs.swiper = new SwiperClass(thumbsSwiperParams);
-      swiperCreated = true;
+      Carousel.thumbs.Carousel = new CarouselClass(thumbsCarouselParams);
+      CarouselCreated = true;
     }
-    swiper.thumbs.swiper.$el.addClass(swiper.params.thumbs.thumbsContainerClass);
-    swiper.thumbs.swiper.on('tap', onThumbClick);
+    Carousel.thumbs.Carousel.$el.addClass(Carousel.params.thumbs.thumbsContainerClass);
+    Carousel.thumbs.Carousel.on('tap', onThumbClick);
     return true;
   }
 
   function update(initial) {
-    const thumbsSwiper = swiper.thumbs.swiper;
-    if (!thumbsSwiper || thumbsSwiper.destroyed) return;
+    const thumbsCarousel = Carousel.thumbs.Carousel;
+    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
 
     const vtsSlidesPerView =
-      thumbsSwiper.params.vtsSlidesPerView === 'auto'
-        ? thumbsSwiper.slidesPerViewDynamic()
-        : thumbsSwiper.params.vtsSlidesPerView;
+      thumbsCarousel.params.vtsSlidesPerView === 'auto'
+        ? thumbsCarousel.slidesPerViewDynamic()
+        : thumbsCarousel.params.vtsSlidesPerView;
 
     // Activate thumbs
     let thumbsToActivate = 1;
-    const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
+    const thumbActiveClass = Carousel.params.thumbs.slideThumbActiveClass;
 
-    if (swiper.params.vtsSlidesPerView > 1 && !swiper.params.centeredSlides) {
-      thumbsToActivate = swiper.params.vtsSlidesPerView;
+    if (Carousel.params.vtsSlidesPerView > 1 && !Carousel.params.centeredSlides) {
+      thumbsToActivate = Carousel.params.vtsSlidesPerView;
     }
 
-    if (!swiper.params.thumbs.multipleActiveThumbs) {
+    if (!Carousel.params.thumbs.multipleActiveThumbs) {
       thumbsToActivate = 1;
     }
 
     thumbsToActivate = Math.floor(thumbsToActivate);
 
-    thumbsSwiper.slides.removeClass(thumbActiveClass);
+    thumbsCarousel.slides.removeClass(thumbActiveClass);
     if (
-      thumbsSwiper.params.loop ||
-      (thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled)
+      thumbsCarousel.params.loop ||
+      (thumbsCarousel.params.virtual && thumbsCarousel.params.virtual.enabled)
     ) {
       for (let i = 0; i < thumbsToActivate; i += 1) {
-        thumbsSwiper.$wrapperEl
-          .children(`[data-swiper-slide-index="${swiper.realIndex + i}"]`)
+        thumbsCarousel.$wrapperEl
+          .children(`[data-Carousel-slide-index="${Carousel.realIndex + i}"]`)
           .addClass(thumbActiveClass);
       }
     } else {
       for (let i = 0; i < thumbsToActivate; i += 1) {
-        thumbsSwiper.slides.eq(swiper.realIndex + i).addClass(thumbActiveClass);
+        thumbsCarousel.slides.eq(Carousel.realIndex + i).addClass(thumbActiveClass);
       }
     }
 
-    const autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
-    const useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
-    if (swiper.realIndex !== thumbsSwiper.realIndex || useOffset) {
-      let currentThumbsIndex = thumbsSwiper.activeIndex;
+    const autoScrollOffset = Carousel.params.thumbs.autoScrollOffset;
+    const useOffset = autoScrollOffset && !thumbsCarousel.params.loop;
+    if (Carousel.realIndex !== thumbsCarousel.realIndex || useOffset) {
+      let currentThumbsIndex = thumbsCarousel.activeIndex;
       let newThumbsIndex;
       let direction;
-      if (thumbsSwiper.params.loop) {
+      if (thumbsCarousel.params.loop) {
         if (
-          thumbsSwiper.slides
+          thumbsCarousel.slides
             .eq(currentThumbsIndex)
-            .hasClass(thumbsSwiper.params.slideDuplicateClass)
+            .hasClass(thumbsCarousel.params.slideDuplicateClass)
         ) {
-          thumbsSwiper.loopFix();
+          thumbsCarousel.loopFix();
           // eslint-disable-next-line
-          thumbsSwiper._clientLeft = thumbsSwiper.$wrapperEl[0].clientLeft;
-          currentThumbsIndex = thumbsSwiper.activeIndex;
+          thumbsCarousel._clientLeft = thumbsCarousel.$wrapperEl[0].clientLeft;
+          currentThumbsIndex = thumbsCarousel.activeIndex;
         }
         // Find actual thumbs index to slide to
-        const prevThumbsIndex = thumbsSwiper.slides
+        const prevThumbsIndex = thumbsCarousel.slides
           .eq(currentThumbsIndex)
-          .prevAll(`[data-swiper-slide-index="${swiper.realIndex}"]`)
+          .prevAll(`[data-Carousel-slide-index="${Carousel.realIndex}"]`)
           .eq(0)
           .index();
-        const nextThumbsIndex = thumbsSwiper.slides
+        const nextThumbsIndex = thumbsCarousel.slides
           .eq(currentThumbsIndex)
-          .nextAll(`[data-swiper-slide-index="${swiper.realIndex}"]`)
+          .nextAll(`[data-Carousel-slide-index="${Carousel.realIndex}"]`)
           .eq(0)
           .index();
         if (typeof prevThumbsIndex === 'undefined') {
@@ -162,26 +162,26 @@ export default function Thumb({ swiper, extendParams, on }) {
           newThumbsIndex = prevThumbsIndex;
         } else if (nextThumbsIndex - currentThumbsIndex === currentThumbsIndex - prevThumbsIndex) {
           newThumbsIndex =
-            thumbsSwiper.params.slidesPerGroup > 1 ? nextThumbsIndex : currentThumbsIndex;
+            thumbsCarousel.params.slidesPerGroup > 1 ? nextThumbsIndex : currentThumbsIndex;
         } else if (nextThumbsIndex - currentThumbsIndex < currentThumbsIndex - prevThumbsIndex) {
           newThumbsIndex = nextThumbsIndex;
         } else {
           newThumbsIndex = prevThumbsIndex;
         }
-        direction = swiper.activeIndex > swiper.previousIndex ? 'next' : 'prev';
+        direction = Carousel.activeIndex > Carousel.previousIndex ? 'next' : 'prev';
       } else {
-        newThumbsIndex = swiper.realIndex;
-        direction = newThumbsIndex > swiper.previousIndex ? 'next' : 'prev';
+        newThumbsIndex = Carousel.realIndex;
+        direction = newThumbsIndex > Carousel.previousIndex ? 'next' : 'prev';
       }
       if (useOffset) {
         newThumbsIndex += direction === 'next' ? autoScrollOffset : -1 * autoScrollOffset;
       }
 
       if (
-        thumbsSwiper.visibleSlidesIndexes &&
-        thumbsSwiper.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0
+        thumbsCarousel.visibleSlidesIndexes &&
+        thumbsCarousel.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0
       ) {
-        if (thumbsSwiper.params.centeredSlides) {
+        if (thumbsCarousel.params.centeredSlides) {
           if (newThumbsIndex > currentThumbsIndex) {
             newThumbsIndex = newThumbsIndex - Math.floor(vtsSlidesPerView / 2) + 1;
           } else {
@@ -189,18 +189,18 @@ export default function Thumb({ swiper, extendParams, on }) {
           }
         } else if (
           newThumbsIndex > currentThumbsIndex &&
-          thumbsSwiper.params.slidesPerGroup === 1
+          thumbsCarousel.params.slidesPerGroup === 1
         ) {
           // newThumbsIndex = newThumbsIndex - vtsSlidesPerView + 1;
         }
-        thumbsSwiper.slideTo(newThumbsIndex, initial ? 0 : undefined);
+        thumbsCarousel.slideTo(newThumbsIndex, initial ? 0 : undefined);
       }
     }
   }
 
   on('beforeInit', () => {
-    const { thumbs } = swiper.params;
-    if (!thumbs || !thumbs.swiper) return;
+    const { thumbs } = Carousel.params;
+    if (!thumbs || !thumbs.Carousel) return;
     init();
     update(true);
   });
@@ -208,19 +208,19 @@ export default function Thumb({ swiper, extendParams, on }) {
     update();
   });
   on('setTransition', (_s, duration) => {
-    const thumbsSwiper = swiper.thumbs.swiper;
-    if (!thumbsSwiper || thumbsSwiper.destroyed) return;
-    thumbsSwiper.setTransition(duration);
+    const thumbsCarousel = Carousel.thumbs.Carousel;
+    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
+    thumbsCarousel.setTransition(duration);
   });
   on('beforeDestroy', () => {
-    const thumbsSwiper = swiper.thumbs.swiper;
-    if (!thumbsSwiper || thumbsSwiper.destroyed) return;
-    if (swiperCreated) {
-      thumbsSwiper.destroy();
+    const thumbsCarousel = Carousel.thumbs.Carousel;
+    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
+    if (CarouselCreated) {
+      thumbsCarousel.destroy();
     }
   });
 
-  Object.assign(swiper.thumbs, {
+  Object.assign(Carousel.thumbs, {
     init,
     update,
   });

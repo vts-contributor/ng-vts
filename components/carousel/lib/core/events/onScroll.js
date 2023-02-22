@@ -1,29 +1,29 @@
 export default function onScroll() {
-  const swiper = this;
-  const { wrapperEl, rtlTranslate, enabled } = swiper;
+  const Carousel = this;
+  const { wrapperEl, rtlTranslate, enabled } = Carousel;
   if (!enabled) return;
-  swiper.previousTranslate = swiper.translate;
-  if (swiper.isHorizontal()) {
-    swiper.translate = -wrapperEl.scrollLeft;
+  Carousel.previousTranslate = Carousel.translate;
+  if (Carousel.isHorizontal()) {
+    Carousel.translate = -wrapperEl.scrollLeft;
   } else {
-    swiper.translate = -wrapperEl.scrollTop;
+    Carousel.translate = -wrapperEl.scrollTop;
   }
   // eslint-disable-next-line
-  if (swiper.translate === 0) swiper.translate = 0;
+  if (Carousel.translate === 0) Carousel.translate = 0;
 
-  swiper.updateActiveIndex();
-  swiper.updateSlidesClasses();
+  Carousel.updateActiveIndex();
+  Carousel.updateSlidesClasses();
 
   let newProgress;
-  const translatesDiff = swiper.maxTranslate() - swiper.minTranslate();
+  const translatesDiff = Carousel.maxTranslate() - Carousel.minTranslate();
   if (translatesDiff === 0) {
     newProgress = 0;
   } else {
-    newProgress = (swiper.translate - swiper.minTranslate()) / translatesDiff;
+    newProgress = (Carousel.translate - Carousel.minTranslate()) / translatesDiff;
   }
-  if (newProgress !== swiper.progress) {
-    swiper.updateProgress(rtlTranslate ? -swiper.translate : swiper.translate);
+  if (newProgress !== Carousel.progress) {
+    Carousel.updateProgress(rtlTranslate ? -Carousel.translate : Carousel.translate);
   }
 
-  swiper.emit('setTranslate', swiper.translate, false);
+  Carousel.emit('setTranslate', Carousel.translate, false);
 }

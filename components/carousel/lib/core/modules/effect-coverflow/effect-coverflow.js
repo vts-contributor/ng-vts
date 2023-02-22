@@ -2,7 +2,7 @@ import createShadow from '../../shared/create-shadow.js';
 import effectInit from '../../shared/effect-init.js';
 import effectTarget from '../../shared/effect-target.js';
 
-export default function EffectCoverflow({ swiper, extendParams, on }) {
+export default function EffectCoverflow({ Carousel, extendParams, on }) {
   extendParams({
     coverflowEffect: {
       rotate: 50,
@@ -16,18 +16,18 @@ export default function EffectCoverflow({ swiper, extendParams, on }) {
   });
 
   const setTranslate = () => {
-    const { width: swiperWidth, height: swiperHeight, slides, slidesSizesGrid } = swiper;
-    const params = swiper.params.coverflowEffect;
-    const isHorizontal = swiper.isHorizontal();
-    const transform = swiper.translate;
-    const center = isHorizontal ? -transform + swiperWidth / 2 : -transform + swiperHeight / 2;
+    const { width: CarouselWidth, height: CarouselHeight, slides, slidesSizesGrid } = Carousel;
+    const params = Carousel.params.coverflowEffect;
+    const isHorizontal = Carousel.isHorizontal();
+    const transform = Carousel.translate;
+    const center = isHorizontal ? -transform + CarouselWidth / 2 : -transform + CarouselHeight / 2;
     const rotate = isHorizontal ? params.rotate : -params.rotate;
     const translate = params.depth;
     // Each slide offset from center
     for (let i = 0, length = slides.length; i < length; i += 1) {
       const $slideEl = slides.eq(i);
       const slideSize = slidesSizesGrid[i];
-      const slideOffset = $slideEl[0].swiperSlideOffset;
+      const slideOffset = $slideEl[0].CarouselSlideOffset;
       const centerOffset = (center - slideOffset - slideSize / 2) / slideSize;
       const offsetMultiplier =
         typeof params.modifier === 'function'
@@ -66,11 +66,11 @@ export default function EffectCoverflow({ swiper, extendParams, on }) {
       if (params.slideShadows) {
         // Set shadows
         let $shadowBeforeEl = isHorizontal
-          ? $slideEl.find('.swiper-slide-shadow-left')
-          : $slideEl.find('.swiper-slide-shadow-top');
+          ? $slideEl.find('.Carousel-slide-shadow-left')
+          : $slideEl.find('.Carousel-slide-shadow-top');
         let $shadowAfterEl = isHorizontal
-          ? $slideEl.find('.swiper-slide-shadow-right')
-          : $slideEl.find('.swiper-slide-shadow-bottom');
+          ? $slideEl.find('.Carousel-slide-shadow-right')
+          : $slideEl.find('.Carousel-slide-shadow-bottom');
         if ($shadowBeforeEl.length === 0) {
           $shadowBeforeEl = createShadow(params, $slideEl, isHorizontal ? 'left' : 'top');
         }
@@ -85,19 +85,19 @@ export default function EffectCoverflow({ swiper, extendParams, on }) {
     }
   };
   const setTransition = (duration) => {
-    const { transformEl } = swiper.params.coverflowEffect;
-    const $transitionElements = transformEl ? swiper.slides.find(transformEl) : swiper.slides;
+    const { transformEl } = Carousel.params.coverflowEffect;
+    const $transitionElements = transformEl ? Carousel.slides.find(transformEl) : Carousel.slides;
     $transitionElements
       .transition(duration)
       .find(
-        '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left',
+        '.Carousel-slide-shadow-top, .Carousel-slide-shadow-right, .Carousel-slide-shadow-bottom, .Carousel-slide-shadow-left',
       )
       .transition(duration);
   };
 
   effectInit({
     effect: 'coverflow',
-    swiper,
+    Carousel,
     on,
     setTranslate,
     setTransition,

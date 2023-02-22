@@ -1,4 +1,4 @@
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface AutoplayMethods {
   /**
@@ -36,23 +36,23 @@ export interface AutoplayEvents {
   /**
    * Event will be fired in when autoplay started
    */
-  autoplayStart: (swiper: Swiper) => void;
+  autoplayStart: (Carousel: Carousel) => void;
   /**
    * Event will be fired when autoplay stopped
    */
-  autoplayStop: (swiper: Swiper) => void;
+  autoplayStop: (Carousel: Carousel) => void;
   /**
    * Event will be fired on autoplay pause (on mouse/pointer enter), when `pauseOnMouseEnter` enabled
    */
-  autoplayPause: (swiper: Swiper) => void;
+  autoplayPause: (Carousel: Carousel) => void;
   /**
    * Event will be fired on autoplay resume (on mouse/pointer leave), when `pauseOnMouseEnter` enabled
    */
-  autoplayResume: (swiper: Swiper) => void;
+  autoplayResume: (Carousel: Carousel) => void;
   /**
    * Event will be fired when slide changed with autoplay
    */
-  autoplay: (swiper: Swiper) => void;
+  autoplay: (Carousel: Carousel) => void;
 }
 
 /**
@@ -60,7 +60,7 @@ export interface AutoplayEvents {
  *
  * @example
  * ```js
- * const swiper = new Swiper('.swiper', {
+ * const Carousel = new Carousel('.Carousel', {
  *   autoplay: {
  *     delay: 5000,
  *   },
@@ -72,12 +72,12 @@ export interface AutoplayOptions {
    * Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
    *
    * If you need to specify different delay for specific slides you can do it by using
-   * `data-swiper-autoplay` (in ms) attribute on slide.
+   * `data-Carousel-autoplay` (in ms) attribute on slide.
    *
    * @example
    * ```html
    * <!-- hold this slide for 2 seconds -->
-   * <div class="swiper-slide" data-swiper-autoplay="2000">
+   * <div class="Carousel-slide" data-Carousel-autoplay="2000">
    * ```
    *
    * @default 3000
@@ -116,7 +116,7 @@ export interface AutoplayOptions {
   waitForTransition?: boolean;
 
   /**
-   * When enabled autoplay will be paused on mouse enter over Swiper container. If `disableOnInteraction` is also enabled, it will stop autoplay instead of pause
+   * When enabled autoplay will be paused on mouse enter over Carousel container. If `disableOnInteraction` is also enabled, it will stop autoplay instead of pause
    *
    * @default false
    */

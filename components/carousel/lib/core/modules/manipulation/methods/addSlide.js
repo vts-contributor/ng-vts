@@ -1,26 +1,26 @@
 export default function addSlide(index, slides) {
-  const swiper = this;
-  const { $wrapperEl, params, activeIndex } = swiper;
+  const Carousel = this;
+  const { $wrapperEl, params, activeIndex } = Carousel;
   let activeIndexBuffer = activeIndex;
   if (params.loop) {
-    activeIndexBuffer -= swiper.loopedSlides;
-    swiper.loopDestroy();
-    swiper.slides = $wrapperEl.children(`.${params.slideClass}`);
+    activeIndexBuffer -= Carousel.loopedSlides;
+    Carousel.loopDestroy();
+    Carousel.slides = $wrapperEl.children(`.${params.slideClass}`);
   }
-  const baseLength = swiper.slides.length;
+  const baseLength = Carousel.slides.length;
   if (index <= 0) {
-    swiper.prependSlide(slides);
+    Carousel.prependSlide(slides);
     return;
   }
   if (index >= baseLength) {
-    swiper.appendSlide(slides);
+    Carousel.appendSlide(slides);
     return;
   }
   let newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + 1 : activeIndexBuffer;
 
   const slidesBuffer = [];
   for (let i = baseLength - 1; i >= index; i -= 1) {
-    const currentSlide = swiper.slides.eq(i);
+    const currentSlide = Carousel.slides.eq(i);
     currentSlide.remove();
     slidesBuffer.unshift(currentSlide);
   }
@@ -40,14 +40,14 @@ export default function addSlide(index, slides) {
   }
 
   if (params.loop) {
-    swiper.loopCreate();
+    Carousel.loopCreate();
   }
   if (!params.observer) {
-    swiper.update();
+    Carousel.update();
   }
   if (params.loop) {
-    swiper.slideTo(newActiveIndex + swiper.loopedSlides, 0, false);
+    Carousel.slideTo(newActiveIndex + Carousel.loopedSlides, 0, false);
   } else {
-    swiper.slideTo(newActiveIndex, 0, false);
+    Carousel.slideTo(newActiveIndex, 0, false);
   }
 }

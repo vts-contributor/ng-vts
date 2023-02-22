@@ -1,7 +1,7 @@
 /* eslint no-bitwise: ["error", { "allow": [">>"] }] */
 import { nextTick } from '../../shared/utils.js';
 
-export default function Controller({ swiper, extendParams, on }) {
+export default function Controller({ Carousel, extendParams, on }) {
   extendParams({
     controller: {
       control: undefined,
@@ -10,7 +10,7 @@ export default function Controller({ swiper, extendParams, on }) {
     },
   });
 
-  swiper.controller = {
+  Carousel.controller = {
     control: undefined,
   };
 
@@ -59,60 +59,60 @@ export default function Controller({ swiper, extendParams, on }) {
   }
   // xxx: for now i will just save one spline function to to
   function getInterpolateFunction(c) {
-    if (!swiper.controller.spline) {
-      swiper.controller.spline = swiper.params.loop
-        ? new LinearSpline(swiper.slidesGrid, c.slidesGrid)
-        : new LinearSpline(swiper.snapGrid, c.snapGrid);
+    if (!Carousel.controller.spline) {
+      Carousel.controller.spline = Carousel.params.loop
+        ? new LinearSpline(Carousel.slidesGrid, c.slidesGrid)
+        : new LinearSpline(Carousel.snapGrid, c.snapGrid);
     }
   }
   function setTranslate(_t, byController) {
-    const controlled = swiper.controller.control;
+    const controlled = Carousel.controller.control;
     let multiplier;
     let controlledTranslate;
-    const Swiper = swiper.constructor;
+    const Carousel = Carousel.constructor;
     function setControlledTranslate(c) {
       // this will create an Interpolate function based on the snapGrids
       // x is the Grid of the scrolled scroller and y will be the controlled scroller
       // it makes sense to create this only once and recall it for the interpolation
       // the function does a lot of value caching for performance
-      const translate = swiper.rtlTranslate ? -swiper.translate : swiper.translate;
-      if (swiper.params.controller.by === 'slide') {
+      const translate = Carousel.rtlTranslate ? -Carousel.translate : Carousel.translate;
+      if (Carousel.params.controller.by === 'slide') {
         getInterpolateFunction(c);
         // i am not sure why the values have to be multiplicated this way, tried to invert the snapGrid
         // but it did not work out
-        controlledTranslate = -swiper.controller.spline.interpolate(-translate);
+        controlledTranslate = -Carousel.controller.spline.interpolate(-translate);
       }
 
-      if (!controlledTranslate || swiper.params.controller.by === 'container') {
+      if (!controlledTranslate || Carousel.params.controller.by === 'container') {
         multiplier =
-          (c.maxTranslate() - c.minTranslate()) / (swiper.maxTranslate() - swiper.minTranslate());
-        controlledTranslate = (translate - swiper.minTranslate()) * multiplier + c.minTranslate();
+          (c.maxTranslate() - c.minTranslate()) / (Carousel.maxTranslate() - Carousel.minTranslate());
+        controlledTranslate = (translate - Carousel.minTranslate()) * multiplier + c.minTranslate();
       }
 
-      if (swiper.params.controller.inverse) {
+      if (Carousel.params.controller.inverse) {
         controlledTranslate = c.maxTranslate() - controlledTranslate;
       }
       c.updateProgress(controlledTranslate);
-      c.setTranslate(controlledTranslate, swiper);
+      c.setTranslate(controlledTranslate, Carousel);
       c.updateActiveIndex();
       c.updateSlidesClasses();
     }
     if (Array.isArray(controlled)) {
       for (let i = 0; i < controlled.length; i += 1) {
-        if (controlled[i] !== byController && controlled[i] instanceof Swiper) {
+        if (controlled[i] !== byController && controlled[i] instanceof Carousel) {
           setControlledTranslate(controlled[i]);
         }
       }
-    } else if (controlled instanceof Swiper && byController !== controlled) {
+    } else if (controlled instanceof Carousel && byController !== controlled) {
       setControlledTranslate(controlled);
     }
   }
   function setTransition(duration, byController) {
-    const Swiper = swiper.constructor;
-    const controlled = swiper.controller.control;
+    const Carousel = Carousel.constructor;
+    const controlled = Carousel.controller.control;
     let i;
     function setControlledTransition(c) {
-      c.setTransition(duration, swiper);
+      c.setTransition(duration, Carousel);
       if (duration !== 0) {
         c.transitionStart();
         if (c.params.autoHeight) {
@@ -122,7 +122,7 @@ export default function Controller({ swiper, extendParams, on }) {
         }
         c.$wrapperEl.transitionEnd(() => {
           if (!controlled) return;
-          if (c.params.loop && swiper.params.controller.by === 'slide') {
+          if (c.params.loop && Carousel.params.controller.by === 'slide') {
             c.loopFix();
           }
           c.transitionEnd();
@@ -131,24 +131,24 @@ export default function Controller({ swiper, extendParams, on }) {
     }
     if (Array.isArray(controlled)) {
       for (i = 0; i < controlled.length; i += 1) {
-        if (controlled[i] !== byController && controlled[i] instanceof Swiper) {
+        if (controlled[i] !== byController && controlled[i] instanceof Carousel) {
           setControlledTransition(controlled[i]);
         }
       }
-    } else if (controlled instanceof Swiper && byController !== controlled) {
+    } else if (controlled instanceof Carousel && byController !== controlled) {
       setControlledTransition(controlled);
     }
   }
 
   function removeSpline() {
-    if (!swiper.controller.control) return;
-    if (swiper.controller.spline) {
-      swiper.controller.spline = undefined;
-      delete swiper.controller.spline;
+    if (!Carousel.controller.control) return;
+    if (Carousel.controller.spline) {
+      Carousel.controller.spline = undefined;
+      delete Carousel.controller.spline;
     }
   }
   on('beforeInit', () => {
-    swiper.controller.control = swiper.params.controller.control;
+    Carousel.controller.control = Carousel.params.controller.control;
   });
   on('update', () => {
     removeSpline();
@@ -160,15 +160,15 @@ export default function Controller({ swiper, extendParams, on }) {
     removeSpline();
   });
   on('setTranslate', (_s, translate, byController) => {
-    if (!swiper.controller.control) return;
-    swiper.controller.setTranslate(translate, byController);
+    if (!Carousel.controller.control) return;
+    Carousel.controller.setTranslate(translate, byController);
   });
   on('setTransition', (_s, duration, byController) => {
-    if (!swiper.controller.control) return;
-    swiper.controller.setTransition(duration, byController);
+    if (!Carousel.controller.control) return;
+    Carousel.controller.setTransition(duration, byController);
   });
 
-  Object.assign(swiper.controller, {
+  Object.assign(Carousel.controller, {
     setTranslate,
     setTransition,
   });

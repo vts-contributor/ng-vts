@@ -1,10 +1,10 @@
 <ng-content select="[slot=container-start]"></ng-content>
 <ng-container *ngIf="navigation && showNavigation">
-  <div class="swiper-button-prev" #prevElRef></div>
-  <div class="swiper-button-next" #nextElRef></div>
+  <div class="Carousel-button-prev" #prevElRef></div>
+  <div class="Carousel-button-next" #nextElRef></div>
 </ng-container>
-<div *ngIf="scrollbar && showScrollbar" class="swiper-scrollbar" #scrollbarElRef></div>
-<div *ngIf="pagination && showPagination" class="swiper-pagination"
+<div *ngIf="scrollbar && showScrollbar" class="Carousel-scrollbar" #scrollbarElRef></div>
+<div *ngIf="pagination && showPagination" class="Carousel-pagination"
   #paginationElRef>
 </div>
 <div [ngClass]="wrapperClass" [attr.id]="id">
@@ -48,8 +48,8 @@
       slideClass +
       (slideKey !== '' ? ' ' + slideDuplicateClass : '')
     "
-    [attr.data-swiper-slide-index]="slide.virtualIndex ? slide.virtualIndex : slide.slideIndex"
-    [attr.data-swiper-autoplay]="slide.autoplayDelay"
+    [attr.data-Carousel-slide-index]="slide.virtualIndex ? slide.virtualIndex : slide.slideIndex"
+    [attr.data-Carousel-autoplay]="slide.autoplayDelay"
     [style]="style"
     [ngSwitch]="slide.zoom"
   >

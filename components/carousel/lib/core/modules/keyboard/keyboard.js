@@ -2,10 +2,10 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../shared/dom.js';
 
-export default function Keyboard({ swiper, extendParams, on, emit }) {
+export default function Keyboard({ Carousel, extendParams, on, emit }) {
   const document = getDocument();
   const window = getWindow();
-  swiper.keyboard = {
+  Carousel.keyboard = {
     enabled: false,
   };
   extendParams({
@@ -17,13 +17,13 @@ export default function Keyboard({ swiper, extendParams, on, emit }) {
   });
 
   function handle(event) {
-    if (!swiper.enabled) return;
+    if (!Carousel.enabled) return;
 
-    const { rtlTranslate: rtl } = swiper;
+    const { rtlTranslate: rtl } = Carousel;
     let e = event;
     if (e.originalEvent) e = e.originalEvent; // jquery fix
     const kc = e.keyCode || e.charCode;
-    const pageUpDown = swiper.params.keyboard.pageUpDown;
+    const pageUpDown = Carousel.params.keyboard.pageUpDown;
     const isPageUp = pageUpDown && kc === 33;
     const isPageDown = pageUpDown && kc === 34;
     const isArrowLeft = kc === 37;
@@ -32,16 +32,16 @@ export default function Keyboard({ swiper, extendParams, on, emit }) {
     const isArrowDown = kc === 40;
     // Directions locks
     if (
-      !swiper.allowSlideNext &&
-      ((swiper.isHorizontal() && isArrowRight) ||
-        (swiper.isVertical() && isArrowDown) ||
+      !Carousel.allowSlideNext &&
+      ((Carousel.isHorizontal() && isArrowRight) ||
+        (Carousel.isVertical() && isArrowDown) ||
         isPageDown)
     ) {
       return false;
     }
     if (
-      !swiper.allowSlidePrev &&
-      ((swiper.isHorizontal() && isArrowLeft) || (swiper.isVertical() && isArrowUp) || isPageUp)
+      !Carousel.allowSlidePrev &&
+      ((Carousel.isHorizontal() && isArrowLeft) || (Carousel.isVertical() && isArrowUp) || isPageUp)
     ) {
       return false;
     }
@@ -57,33 +57,33 @@ export default function Keyboard({ swiper, extendParams, on, emit }) {
       return undefined;
     }
     if (
-      swiper.params.keyboard.onlyInViewport &&
+      Carousel.params.keyboard.onlyInViewport &&
       (isPageUp || isPageDown || isArrowLeft || isArrowRight || isArrowUp || isArrowDown)
     ) {
       let inView = false;
-      // Check that swiper should be inside of visible area of window
+      // Check that Carousel should be inside of visible area of window
       if (
-        swiper.$el.parents(`.${swiper.params.slideClass}`).length > 0 &&
-        swiper.$el.parents(`.${swiper.params.slideActiveClass}`).length === 0
+        Carousel.$el.parents(`.${Carousel.params.slideClass}`).length > 0 &&
+        Carousel.$el.parents(`.${Carousel.params.slideActiveClass}`).length === 0
       ) {
         return undefined;
       }
 
-      const $el = swiper.$el;
-      const swiperWidth = $el[0].clientWidth;
-      const swiperHeight = $el[0].clientHeight;
+      const $el = Carousel.$el;
+      const CarouselWidth = $el[0].clientWidth;
+      const CarouselHeight = $el[0].clientHeight;
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
-      const swiperOffset = swiper.$el.offset();
-      if (rtl) swiperOffset.left -= swiper.$el[0].scrollLeft;
-      const swiperCoord = [
-        [swiperOffset.left, swiperOffset.top],
-        [swiperOffset.left + swiperWidth, swiperOffset.top],
-        [swiperOffset.left, swiperOffset.top + swiperHeight],
-        [swiperOffset.left + swiperWidth, swiperOffset.top + swiperHeight],
+      const CarouselOffset = Carousel.$el.offset();
+      if (rtl) CarouselOffset.left -= Carousel.$el[0].scrollLeft;
+      const CarouselCoord = [
+        [CarouselOffset.left, CarouselOffset.top],
+        [CarouselOffset.left + CarouselWidth, CarouselOffset.top],
+        [CarouselOffset.left, CarouselOffset.top + CarouselHeight],
+        [CarouselOffset.left + CarouselWidth, CarouselOffset.top + CarouselHeight],
       ];
-      for (let i = 0; i < swiperCoord.length; i += 1) {
-        const point = swiperCoord[i];
+      for (let i = 0; i < CarouselCoord.length; i += 1) {
+        const point = CarouselCoord[i];
         if (point[0] >= 0 && point[0] <= windowWidth && point[1] >= 0 && point[1] <= windowHeight) {
           if (point[0] === 0 && point[1] === 0) continue; // eslint-disable-line
           inView = true;
@@ -91,49 +91,49 @@ export default function Keyboard({ swiper, extendParams, on, emit }) {
       }
       if (!inView) return undefined;
     }
-    if (swiper.isHorizontal()) {
+    if (Carousel.isHorizontal()) {
       if (isPageUp || isPageDown || isArrowLeft || isArrowRight) {
         if (e.preventDefault) e.preventDefault();
         else e.returnValue = false;
       }
       if (((isPageDown || isArrowRight) && !rtl) || ((isPageUp || isArrowLeft) && rtl))
-        swiper.slideNext();
+        Carousel.slideNext();
       if (((isPageUp || isArrowLeft) && !rtl) || ((isPageDown || isArrowRight) && rtl))
-        swiper.slidePrev();
+        Carousel.slidePrev();
     } else {
       if (isPageUp || isPageDown || isArrowUp || isArrowDown) {
         if (e.preventDefault) e.preventDefault();
         else e.returnValue = false;
       }
-      if (isPageDown || isArrowDown) swiper.slideNext();
-      if (isPageUp || isArrowUp) swiper.slidePrev();
+      if (isPageDown || isArrowDown) Carousel.slideNext();
+      if (isPageUp || isArrowUp) Carousel.slidePrev();
     }
     emit('keyPress', kc);
     return undefined;
   }
   function enable() {
-    if (swiper.keyboard.enabled) return;
+    if (Carousel.keyboard.enabled) return;
     $(document).on('keydown', handle);
-    swiper.keyboard.enabled = true;
+    Carousel.keyboard.enabled = true;
   }
   function disable() {
-    if (!swiper.keyboard.enabled) return;
+    if (!Carousel.keyboard.enabled) return;
     $(document).off('keydown', handle);
-    swiper.keyboard.enabled = false;
+    Carousel.keyboard.enabled = false;
   }
 
   on('init', () => {
-    if (swiper.params.keyboard.enabled) {
+    if (Carousel.params.keyboard.enabled) {
       enable();
     }
   });
   on('destroy', () => {
-    if (swiper.keyboard.enabled) {
+    if (Carousel.keyboard.enabled) {
       disable();
     }
   });
 
-  Object.assign(swiper.keyboard, {
+  Object.assign(Carousel.keyboard, {
     enable,
     disable,
   });

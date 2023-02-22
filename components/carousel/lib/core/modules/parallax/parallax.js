@@ -1,6 +1,6 @@
 import $ from '../../shared/dom.js';
 
-export default function Parallax({ swiper, extendParams, on }) {
+export default function Parallax({ Carousel, extendParams, on }) {
   extendParams({
     parallax: {
       enabled: false,
@@ -8,21 +8,21 @@ export default function Parallax({ swiper, extendParams, on }) {
   });
 
   const setTransform = (el, progress) => {
-    const { rtl } = swiper;
+    const { rtl } = Carousel;
 
     const $el = $(el);
     const rtlFactor = rtl ? -1 : 1;
 
-    const p = $el.attr('data-swiper-parallax') || '0';
-    let x = $el.attr('data-swiper-parallax-x');
-    let y = $el.attr('data-swiper-parallax-y');
-    const scale = $el.attr('data-swiper-parallax-scale');
-    const opacity = $el.attr('data-swiper-parallax-opacity');
+    const p = $el.attr('data-Carousel-parallax') || '0';
+    let x = $el.attr('data-Carousel-parallax-x');
+    let y = $el.attr('data-Carousel-parallax-y');
+    const scale = $el.attr('data-Carousel-parallax-scale');
+    const opacity = $el.attr('data-Carousel-parallax-opacity');
 
     if (x || y) {
       x = x || '0';
       y = y || '0';
-    } else if (swiper.isHorizontal()) {
+    } else if (Carousel.isHorizontal()) {
       x = p;
       y = '0';
     } else {
@@ -54,23 +54,23 @@ export default function Parallax({ swiper, extendParams, on }) {
   };
 
   const setTranslate = () => {
-    const { $el, slides, progress, snapGrid } = swiper;
+    const { $el, slides, progress, snapGrid } = Carousel;
     $el
       .children(
-        '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]',
+        '[data-Carousel-parallax], [data-Carousel-parallax-x], [data-Carousel-parallax-y], [data-Carousel-parallax-opacity], [data-Carousel-parallax-scale]',
       )
       .each((el) => {
         setTransform(el, progress);
       });
     slides.each((slideEl, slideIndex) => {
       let slideProgress = slideEl.progress;
-      if (swiper.params.slidesPerGroup > 1 && swiper.params.vtsSlidesPerView !== 'auto') {
+      if (Carousel.params.slidesPerGroup > 1 && Carousel.params.vtsSlidesPerView !== 'auto') {
         slideProgress += Math.ceil(slideIndex / 2) - progress * (snapGrid.length - 1);
       }
       slideProgress = Math.min(Math.max(slideProgress, -1), 1);
       $(slideEl)
         .find(
-          '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]',
+          '[data-Carousel-parallax], [data-Carousel-parallax-x], [data-Carousel-parallax-y], [data-Carousel-parallax-opacity], [data-Carousel-parallax-scale]',
         )
         .each((el) => {
           setTransform(el, slideProgress);
@@ -78,36 +78,36 @@ export default function Parallax({ swiper, extendParams, on }) {
     });
   };
 
-  const setTransition = (duration = swiper.params.speed) => {
-    const { $el } = swiper;
+  const setTransition = (duration = Carousel.params.speed) => {
+    const { $el } = Carousel;
     $el
       .find(
-        '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]',
+        '[data-Carousel-parallax], [data-Carousel-parallax-x], [data-Carousel-parallax-y], [data-Carousel-parallax-opacity], [data-Carousel-parallax-scale]',
       )
       .each((parallaxEl) => {
         const $parallaxEl = $(parallaxEl);
         let parallaxDuration =
-          parseInt($parallaxEl.attr('data-swiper-parallax-duration'), 10) || duration;
+          parseInt($parallaxEl.attr('data-Carousel-parallax-duration'), 10) || duration;
         if (duration === 0) parallaxDuration = 0;
         $parallaxEl.transition(parallaxDuration);
       });
   };
 
   on('beforeInit', () => {
-    if (!swiper.params.parallax.enabled) return;
-    swiper.params.watchSlidesProgress = true;
-    swiper.originalParams.watchSlidesProgress = true;
+    if (!Carousel.params.parallax.enabled) return;
+    Carousel.params.watchSlidesProgress = true;
+    Carousel.originalParams.watchSlidesProgress = true;
   });
   on('init', () => {
-    if (!swiper.params.parallax.enabled) return;
+    if (!Carousel.params.parallax.enabled) return;
     setTranslate();
   });
   on('setTranslate', () => {
-    if (!swiper.params.parallax.enabled) return;
+    if (!Carousel.params.parallax.enabled) return;
     setTranslate();
   });
-  on('setTransition', (_swiper, duration) => {
-    if (!swiper.params.parallax.enabled) return;
+  on('setTransition', (_Carousel, duration) => {
+    if (!Carousel.params.parallax.enabled) return;
     setTransition(duration);
   });
 }

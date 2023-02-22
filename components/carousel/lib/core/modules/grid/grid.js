@@ -1,4 +1,4 @@
-export default function Grid({ swiper, extendParams }) {
+export default function Grid({ Carousel, extendParams }) {
   extendParams({
     grid: {
       rows: 1,
@@ -11,8 +11,8 @@ export default function Grid({ swiper, extendParams }) {
   let numFullColumns;
 
   const initSlides = (slidesLength) => {
-    const { vtsSlidesPerView } = swiper.params;
-    const { rows, fill } = swiper.params.grid;
+    const { vtsSlidesPerView } = Carousel.params;
+    const { rows, fill } = Carousel.params.grid;
     slidesPerRow = slidesNumberEvenToRows / rows;
     numFullColumns = Math.floor(slidesLength / rows);
     if (Math.floor(slidesLength / rows) === slidesLength / rows) {
@@ -26,8 +26,8 @@ export default function Grid({ swiper, extendParams }) {
   };
 
   const updateSlide = (i, slide, slidesLength, getDirectionLabel) => {
-    const { slidesPerGroup, vtsSpaceBetween } = swiper.params;
-    const { rows, fill } = swiper.params.grid;
+    const { slidesPerGroup, vtsSpaceBetween } = Carousel.params;
+    const { rows, fill } = Carousel.params.grid;
     // Set slides order
     let newSlideOrderIndex;
     let column;
@@ -71,12 +71,12 @@ export default function Grid({ swiper, extendParams }) {
   };
 
   const updateWrapperSize = (slideSize, snapGrid, getDirectionLabel) => {
-    const { vtsSpaceBetween, centeredSlides, roundLengths } = swiper.params;
-    const { rows } = swiper.params.grid;
-    swiper.virtualSize = (slideSize + vtsSpaceBetween) * slidesNumberEvenToRows;
-    swiper.virtualSize = Math.ceil(swiper.virtualSize / rows) - vtsSpaceBetween;
-    swiper.$wrapperEl.css({
-      [getDirectionLabel('width')]: `${swiper.virtualSize + vtsSpaceBetween}px`,
+    const { vtsSpaceBetween, centeredSlides, roundLengths } = Carousel.params;
+    const { rows } = Carousel.params.grid;
+    Carousel.virtualSize = (slideSize + vtsSpaceBetween) * slidesNumberEvenToRows;
+    Carousel.virtualSize = Math.ceil(Carousel.virtualSize / rows) - vtsSpaceBetween;
+    Carousel.$wrapperEl.css({
+      [getDirectionLabel('width')]: `${Carousel.virtualSize + vtsSpaceBetween}px`,
     });
     if (centeredSlides) {
       snapGrid.splice(0, snapGrid.length);
@@ -84,13 +84,13 @@ export default function Grid({ swiper, extendParams }) {
       for (let i = 0; i < snapGrid.length; i += 1) {
         let slidesGridItem = snapGrid[i];
         if (roundLengths) slidesGridItem = Math.floor(slidesGridItem);
-        if (snapGrid[i] < swiper.virtualSize + snapGrid[0]) newSlidesGrid.push(slidesGridItem);
+        if (snapGrid[i] < Carousel.virtualSize + snapGrid[0]) newSlidesGrid.push(slidesGridItem);
       }
       snapGrid.push(...newSlidesGrid);
     }
   };
 
-  swiper.grid = {
+  Carousel.grid = {
     initSlides,
     updateSlide,
     updateWrapperSize,

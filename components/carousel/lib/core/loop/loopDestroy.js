@@ -1,10 +1,10 @@
 export default function loopDestroy() {
-  const swiper = this;
-  const { $wrapperEl, params, slides } = swiper;
+  const Carousel = this;
+  const { $wrapperEl, params, slides } = Carousel;
   $wrapperEl
     .children(
       `.${params.slideClass}.${params.slideDuplicateClass},.${params.slideClass}.${params.slideBlankClass}`,
     )
     .remove();
-  slides.removeAttr('data-swiper-slide-index');
+  slides.removeAttr('data-Carousel-slide-index');
 }

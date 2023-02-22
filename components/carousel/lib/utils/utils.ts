@@ -35,7 +35,7 @@ export function extend(target: any, src: any) {
         return;
       }
       if (isObject(src[key]) && isObject(target[key]) && Object.keys(src[key]).length > 0) {
-        if (src[key].__swiper__) target[key] = src[key];
+        if (src[key].__Carousel__) target[key] = src[key];
         else extend(target[key], src[key]);
       } else {
         target[key] = src[key];

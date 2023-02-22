@@ -2,51 +2,51 @@ import $ from '../../shared/dom.js';
 import { nextTick } from '../../shared/utils.js';
 
 export default function slideToClickedSlide() {
-  const swiper = this;
-  const { params, $wrapperEl } = swiper;
+  const Carousel = this;
+  const { params, $wrapperEl } = Carousel;
 
   const vtsSlidesPerView =
-    params.vtsSlidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.vtsSlidesPerView;
-  let slideToIndex = swiper.clickedIndex;
+    params.vtsSlidesPerView === 'auto' ? Carousel.slidesPerViewDynamic() : params.vtsSlidesPerView;
+  let slideToIndex = Carousel.clickedIndex;
   let realIndex;
   if (params.loop) {
-    if (swiper.animating) return;
-    realIndex = parseInt($(swiper.clickedSlide).attr('data-swiper-slide-index'), 10);
+    if (Carousel.animating) return;
+    realIndex = parseInt($(Carousel.clickedSlide).attr('data-Carousel-slide-index'), 10);
     if (params.centeredSlides) {
       if (
-        slideToIndex < swiper.loopedSlides - vtsSlidesPerView / 2 ||
-        slideToIndex > swiper.slides.length - swiper.loopedSlides + vtsSlidesPerView / 2
+        slideToIndex < Carousel.loopedSlides - vtsSlidesPerView / 2 ||
+        slideToIndex > Carousel.slides.length - Carousel.loopedSlides + vtsSlidesPerView / 2
       ) {
-        swiper.loopFix();
+        Carousel.loopFix();
         slideToIndex = $wrapperEl
           .children(
-            `.${params.slideClass}[data-swiper-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`,
+            `.${params.slideClass}[data-Carousel-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`,
           )
           .eq(0)
           .index();
 
         nextTick(() => {
-          swiper.slideTo(slideToIndex);
+          Carousel.slideTo(slideToIndex);
         });
       } else {
-        swiper.slideTo(slideToIndex);
+        Carousel.slideTo(slideToIndex);
       }
-    } else if (slideToIndex > swiper.slides.length - vtsSlidesPerView) {
-      swiper.loopFix();
+    } else if (slideToIndex > Carousel.slides.length - vtsSlidesPerView) {
+      Carousel.loopFix();
       slideToIndex = $wrapperEl
         .children(
-          `.${params.slideClass}[data-swiper-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`,
+          `.${params.slideClass}[data-Carousel-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`,
         )
         .eq(0)
         .index();
 
       nextTick(() => {
-        swiper.slideTo(slideToIndex);
+        Carousel.slideTo(slideToIndex);
       });
     } else {
-      swiper.slideTo(slideToIndex);
+      Carousel.slideTo(slideToIndex);
     }
   } else {
-    swiper.slideTo(slideToIndex);
+    Carousel.slideTo(slideToIndex);
   }
 }

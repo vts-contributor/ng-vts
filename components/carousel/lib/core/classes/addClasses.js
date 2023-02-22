@@ -15,14 +15,14 @@ function prepareClasses(entries, prefix) {
 }
 
 export default function addClasses() {
-  const swiper = this;
-  const { classNames, params, rtl, $el, device, support } = swiper;
+  const Carousel = this;
+  const { classNames, params, rtl, $el, device, support } = Carousel;
   // prettier-ignore
   const suffixes = prepareClasses([
     'initialized',
     params.direction,
     { 'pointer-events': !support.touch },
-    { 'free-mode': swiper.params.freeMode && params.freeMode.enabled },
+    { 'free-mode': Carousel.params.freeMode && params.freeMode.enabled },
     { 'autoheight': params.autoHeight },
     { 'rtl': rtl },
     { 'grid': params.grid && params.grid.rows > 1 },
@@ -35,5 +35,5 @@ export default function addClasses() {
   ], params.containerModifierClass);
   classNames.push(...suffixes);
   $el.addClass([...classNames].join(' '));
-  swiper.emitContainerClasses();
+  Carousel.emitContainerClasses();
 }

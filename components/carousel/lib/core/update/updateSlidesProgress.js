@@ -1,13 +1,13 @@
 import $ from '../../shared/dom.js';
 
 export default function updateSlidesProgress(translate = (this && this.translate) || 0) {
-  const swiper = this;
-  const params = swiper.params;
+  const Carousel = this;
+  const params = Carousel.params;
 
-  const { slides, rtlTranslate: rtl, snapGrid } = swiper;
+  const { slides, rtlTranslate: rtl, snapGrid } = Carousel;
 
   if (slides.length === 0) return;
-  if (typeof slides[0].swiperSlideOffset === 'undefined') swiper.updateSlidesOffset();
+  if (typeof slides[0].CarouselSlideOffset === 'undefined') Carousel.updateSlidesOffset();
 
   let offsetCenter = -translate;
   if (rtl) offsetCenter = translate;
@@ -15,38 +15,38 @@ export default function updateSlidesProgress(translate = (this && this.translate
   // Visible Slides
   slides.removeClass(params.slideVisibleClass);
 
-  swiper.visibleSlidesIndexes = [];
-  swiper.visibleSlides = [];
+  Carousel.visibleSlidesIndexes = [];
+  Carousel.visibleSlides = [];
 
   for (let i = 0; i < slides.length; i += 1) {
     const slide = slides[i];
-    let slideOffset = slide.swiperSlideOffset;
+    let slideOffset = slide.CarouselSlideOffset;
     if (params.cssMode && params.centeredSlides) {
-      slideOffset -= slides[0].swiperSlideOffset;
+      slideOffset -= slides[0].CarouselSlideOffset;
     }
 
     const slideProgress =
-      (offsetCenter + (params.centeredSlides ? swiper.minTranslate() : 0) - slideOffset) /
-      (slide.swiperSlideSize + params.vtsSpaceBetween);
+      (offsetCenter + (params.centeredSlides ? Carousel.minTranslate() : 0) - slideOffset) /
+      (slide.CarouselSlideSize + params.vtsSpaceBetween);
     const originalSlideProgress =
       (offsetCenter -
         snapGrid[0] +
-        (params.centeredSlides ? swiper.minTranslate() : 0) -
+        (params.centeredSlides ? Carousel.minTranslate() : 0) -
         slideOffset) /
-      (slide.swiperSlideSize + params.vtsSpaceBetween);
+      (slide.CarouselSlideSize + params.vtsSpaceBetween);
     const slideBefore = -(offsetCenter - slideOffset);
-    const slideAfter = slideBefore + swiper.slidesSizesGrid[i];
+    const slideAfter = slideBefore + Carousel.slidesSizesGrid[i];
     const isVisible =
-      (slideBefore >= 0 && slideBefore < swiper.size - 1) ||
-      (slideAfter > 1 && slideAfter <= swiper.size) ||
-      (slideBefore <= 0 && slideAfter >= swiper.size);
+      (slideBefore >= 0 && slideBefore < Carousel.size - 1) ||
+      (slideAfter > 1 && slideAfter <= Carousel.size) ||
+      (slideBefore <= 0 && slideAfter >= Carousel.size);
     if (isVisible) {
-      swiper.visibleSlides.push(slide);
-      swiper.visibleSlidesIndexes.push(i);
+      Carousel.visibleSlides.push(slide);
+      Carousel.visibleSlidesIndexes.push(i);
       slides.eq(i).addClass(params.slideVisibleClass);
     }
     slide.progress = rtl ? -slideProgress : slideProgress;
     slide.originalProgress = rtl ? -originalSlideProgress : originalSlideProgress;
   }
-  swiper.visibleSlides = $(swiper.visibleSlides);
+  Carousel.visibleSlides = $(Carousel.visibleSlides);
 }

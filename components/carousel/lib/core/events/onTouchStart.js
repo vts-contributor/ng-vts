@@ -17,26 +17,26 @@ function closestElement(selector, base = this) {
 }
 
 export default function onTouchStart(event) {
-  const swiper = this;
+  const Carousel = this;
   const document = getDocument();
   const window = getWindow();
 
-  const data = swiper.touchEventsData;
-  const { params, touches, enabled } = swiper;
+  const data = Carousel.touchEventsData;
+  const { params, touches, enabled } = Carousel;
   if (!enabled) return;
 
-  if (swiper.animating && params.preventInteractionOnTransition) {
+  if (Carousel.animating && params.preventInteractionOnTransition) {
     return;
   }
-  if (!swiper.animating && params.cssMode && params.loop) {
-    swiper.loopFix();
+  if (!Carousel.animating && params.cssMode && params.loop) {
+    Carousel.loopFix();
   }
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
   let $targetEl = $(e.target);
 
   if (params.touchEventsTarget === 'wrapper') {
-    if (!$targetEl.closest(swiper.wrapperEl).length) return;
+    if (!$targetEl.closest(Carousel.wrapperEl).length) return;
   }
   data.isTouchEvent = e.type === 'touchstart';
   if (!data.isTouchEvent && 'which' in e && e.which === 3) return;
@@ -63,7 +63,7 @@ export default function onTouchStart(event) {
       ? closestElement(noSwipingSelector, $targetEl[0])
       : $targetEl.closest(noSwipingSelector)[0])
   ) {
-    swiper.allowClick = true;
+    Carousel.allowClick = true;
     return;
   }
 
@@ -102,9 +102,9 @@ export default function onTouchStart(event) {
   touches.startX = startX;
   touches.startY = startY;
   data.touchStartTime = now();
-  swiper.allowClick = true;
-  swiper.updateSize();
-  swiper.swipeDirection = undefined;
+  Carousel.allowClick = true;
+  Carousel.updateSize();
+  Carousel.swipeDirection = undefined;
   if (params.threshold > 0) data.allowThresholdMove = false;
   if (e.type !== 'touchstart') {
     let preventDefault = true;
@@ -123,7 +123,7 @@ export default function onTouchStart(event) {
     }
 
     const shouldPreventDefault =
-      preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
+      preventDefault && Carousel.allowTouchMove && params.touchStartPreventDefault;
     if (
       (params.touchStartForcePreventDefault || shouldPreventDefault) &&
       !$targetEl[0].isContentEditable
@@ -132,13 +132,13 @@ export default function onTouchStart(event) {
     }
   }
   if (
-    swiper.params.freeMode &&
-    swiper.params.freeMode.enabled &&
-    swiper.freeMode &&
-    swiper.animating &&
+    Carousel.params.freeMode &&
+    Carousel.params.freeMode.enabled &&
+    Carousel.freeMode &&
+    Carousel.animating &&
     !params.cssMode
   ) {
-    swiper.freeMode.onTouchStart();
+    Carousel.freeMode.onTouchStart();
   }
-  swiper.emit('touchStart', e);
+  Carousel.emit('touchStart', e);
 }

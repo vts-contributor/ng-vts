@@ -1,4 +1,4 @@
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface HashNavigationMethods {}
 
@@ -6,11 +6,11 @@ export interface HashNavigationEvents {
   /**
    * Event will be fired on window hash change
    */
-  hashChange: (swiper: Swiper) => void;
+  hashChange: (Carousel: Carousel) => void;
   /**
-   * Event will be fired when swiper updates the hash
+   * Event will be fired when Carousel updates the hash
    */
-  hashSet: (swiper: Swiper) => void;
+  hashSet: (Carousel: Carousel) => void;
 }
 
 export interface HashNavigationOptions {

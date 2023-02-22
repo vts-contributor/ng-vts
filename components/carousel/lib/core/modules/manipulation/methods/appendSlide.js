@@ -1,8 +1,8 @@
 export default function appendSlide(slides) {
-  const swiper = this;
-  const { $wrapperEl, params } = swiper;
+  const Carousel = this;
+  const { $wrapperEl, params } = Carousel;
   if (params.loop) {
-    swiper.loopDestroy();
+    Carousel.loopDestroy();
   }
   if (typeof slides === 'object' && 'length' in slides) {
     for (let i = 0; i < slides.length; i += 1) {
@@ -12,9 +12,9 @@ export default function appendSlide(slides) {
     $wrapperEl.append(slides);
   }
   if (params.loop) {
-    swiper.loopCreate();
+    Carousel.loopCreate();
   }
   if (!params.observer) {
-    swiper.update();
+    Carousel.update();
   }
 }

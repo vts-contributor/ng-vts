@@ -25,14 +25,14 @@ export interface A11yOptions {
   nextSlideMessage?: string;
 
   /**
-   * Message for screen readers for previous button when swiper is on first slide
+   * Message for screen readers for previous button when Carousel is on first slide
    *
    * @default 'This is the first slide'
    */
   firstSlideMessage?: string;
 
   /**
-   * Message for screen readers for next button when swiper is on last slide
+   * Message for screen readers for next button when Carousel is on last slide
    *
    * @default 'This is the last slide'
    */
@@ -48,19 +48,19 @@ export interface A11yOptions {
   /**
    * CSS class name of A11y notification
    *
-   * @default 'swiper-notification'
+   * @default 'Carousel-notification'
    */
   notificationClass?: string;
 
   /**
-   * Message for screen readers for outer swiper container
+   * Message for screen readers for outer Carousel container
    *
    * @default null
    */
   containerMessage?: string | null;
 
   /**
-   * Message for screen readers describing the role of outer swiper container
+   * Message for screen readers describing the role of outer Carousel container
    *
    * @default null
    */
@@ -81,14 +81,14 @@ export interface A11yOptions {
   slideLabelMessage?: string;
 
   /**
-   * Value of swiper slide `role` attribute
+   * Value of Carousel slide `role` attribute
    *
    * @default 'group'
    */
   slideRole?: string;
 
   /**
-   * Value of `id` attribute to be set on swiper-wrapper. If `null` will be generated automatically
+   * Value of `id` attribute to be set on Carousel-wrapper. If `null` will be generated automatically
    *
    * @default null
    */

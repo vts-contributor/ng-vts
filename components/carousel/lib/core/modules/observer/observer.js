@@ -1,6 +1,6 @@
 import { getWindow } from 'ssr-window';
 
-export default function Observer({ swiper, extendParams, on, emit }) {
+export default function Observer({ Carousel, extendParams, on, emit }) {
   const observers = [];
   const window = getWindow();
   const attach = (target, options = {}) => {
@@ -33,20 +33,20 @@ export default function Observer({ swiper, extendParams, on, emit }) {
     observers.push(observer);
   };
   const init = () => {
-    if (!swiper.params.observer) return;
-    if (swiper.params.observeParents) {
-      const containerParents = swiper.$el.parents();
+    if (!Carousel.params.observer) return;
+    if (Carousel.params.observeParents) {
+      const containerParents = Carousel.$el.parents();
       for (let i = 0; i < containerParents.length; i += 1) {
         attach(containerParents[i]);
       }
     }
     // Observe container
-    attach(swiper.$el[0], {
-      childList: swiper.params.observeSlideChildren,
+    attach(Carousel.$el[0], {
+      childList: Carousel.params.observeSlideChildren,
     });
 
     // Observe wrapper
-    attach(swiper.$wrapperEl[0], { attributes: false });
+    attach(Carousel.$wrapperEl[0], { attributes: false });
   };
   const destroy = () => {
     observers.forEach((observer) => {

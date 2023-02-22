@@ -1,7 +1,7 @@
 export default function removeClasses() {
-  const swiper = this;
-  const { $el, classNames } = swiper;
+  const Carousel = this;
+  const { $el, classNames } = Carousel;
 
   $el.removeClass(classNames.join(' '));
-  swiper.emitContainerClasses();
+  Carousel.emitContainerClasses();
 }

@@ -1,9 +1,9 @@
 export default function setTransition(duration, byController) {
-  const swiper = this;
+  const Carousel = this;
 
-  if (!swiper.params.cssMode) {
-    swiper.$wrapperEl.transition(duration);
+  if (!Carousel.params.cssMode) {
+    Carousel.$wrapperEl.transition(duration);
   }
 
-  swiper.emit('setTransition', duration, byController);
+  Carousel.emit('setTransition', duration, byController);
 }

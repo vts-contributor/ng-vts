@@ -1,5 +1,5 @@
 import { CSSSelector } from '../shared';
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface ScrollbarMethods {
   /**
@@ -37,17 +37,17 @@ export interface ScrollbarEvents {
   /**
    * Event will be fired on draggable scrollbar drag start
    */
-  scrollbarDragStart: (swiper: Swiper, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  scrollbarDragStart: (Carousel: Carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired on draggable scrollbar drag move
    */
-  scrollbarDragMove: (swiper: Swiper, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  scrollbarDragMove: (Carousel: Carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired on draggable scrollbar drag end
    */
-  scrollbarDragEnd: (swiper: Swiper, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  scrollbarDragEnd: (Carousel: Carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 }
 
 /**
@@ -55,9 +55,9 @@ export interface ScrollbarEvents {
  *
  * @example
  * ```js
- * const swiper = new Swiper('.swiper', {
+ * const Carousel = new Carousel('.Carousel', {
  *   scrollbar: {
- *     el: '.swiper-scrollbar',
+ *     el: '.Carousel-scrollbar',
  *     draggable: true,
  *   },
  * });
@@ -106,35 +106,35 @@ export interface ScrollbarOptions {
   /**
    * Scrollbar element additional CSS class when it is disabled
    *
-   * @default 'swiper-scrollbar-lock'
+   * @default 'Carousel-scrollbar-lock'
    */
   lockClass?: string;
 
   /**
    * Scrollbar draggable element CSS class
    *
-   * @default 'swiper-scrollbar-drag'
+   * @default 'Carousel-scrollbar-drag'
    */
   dragClass?: string;
 
   /**
-   * CSS class name added on swiper container and scrollbar element when scrollbar is disabled by breakpoint
+   * CSS class name added on Carousel container and scrollbar element when scrollbar is disabled by breakpoint
    *
-   * @default 'swiper-scrollbar-disabled'
+   * @default 'Carousel-scrollbar-disabled'
    */
   scrollbarDisabledClass?: string;
 
   /**
-   * CSS class name set to scrollbar in horizontal Swiper
+   * CSS class name set to scrollbar in horizontal Carousel
    *
-   * @default 'swiper-scrollbar-horizontal'
+   * @default 'Carousel-scrollbar-horizontal'
    */
   horizontalClass?: string;
 
   /**
-   * CSS class name set to scrollbar in vertical Swiper
+   * CSS class name set to scrollbar in vertical Carousel
    *
-   * @default 'swiper-scrollbar-vertical'
+   * @default 'Carousel-scrollbar-vertical'
    */
   verticalClass?: string;
 }

@@ -1,7 +1,7 @@
 import { getWindow } from 'ssr-window';
 import $ from '../../shared/dom.js';
 
-export default function Lazy({ swiper, extendParams, on, emit }) {
+export default function Lazy({ Carousel, extendParams, on, emit }) {
   extendParams({
     lazy: {
       checkInView: false,
@@ -11,29 +11,29 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
       loadOnTransitionStart: false,
       scrollingElement: '',
 
-      elementClass: 'swiper-lazy',
-      loadingClass: 'swiper-lazy-loading',
-      loadedClass: 'swiper-lazy-loaded',
-      preloaderClass: 'swiper-lazy-preloader',
+      elementClass: 'Carousel-lazy',
+      loadingClass: 'Carousel-lazy-loading',
+      loadedClass: 'Carousel-lazy-loaded',
+      preloaderClass: 'Carousel-lazy-preloader',
     },
   });
 
-  swiper.lazy = {};
+  Carousel.lazy = {};
 
   let scrollHandlerAttached = false;
   let initialImageLoaded = false;
 
   function loadInSlide(index, loadInDuplicate = true) {
-    const params = swiper.params.lazy;
+    const params = Carousel.params.lazy;
     if (typeof index === 'undefined') return;
-    if (swiper.slides.length === 0) return;
-    const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+    if (Carousel.slides.length === 0) return;
+    const isVirtual = Carousel.virtual && Carousel.params.virtual.enabled;
 
     const $slideEl = isVirtual
-      ? swiper.$wrapperEl.children(
-          `.${swiper.params.slideClass}[data-swiper-slide-index="${index}"]`,
+      ? Carousel.$wrapperEl.children(
+          `.${Carousel.params.slideClass}[data-Carousel-slide-index="${index}"]`,
         )
-      : swiper.slides.eq(index);
+      : Carousel.slides.eq(index);
 
     const $images = $slideEl.find(
       `.${params.elementClass}:not(.${params.loadedClass}):not(.${params.loadingClass})`,
@@ -57,13 +57,13 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
       const sizes = $imageEl.attr('data-sizes');
       const $pictureEl = $imageEl.parent('picture');
 
-      swiper.loadImage($imageEl[0], src || background, srcset, sizes, false, () => {
+      Carousel.loadImage($imageEl[0], src || background, srcset, sizes, false, () => {
         if (
-          typeof swiper === 'undefined' ||
-          swiper === null ||
-          !swiper ||
-          (swiper && !swiper.params) ||
-          swiper.destroyed
+          typeof Carousel === 'undefined' ||
+          Carousel === null ||
+          !Carousel ||
+          (Carousel && !Carousel.params) ||
+          Carousel.destroyed
         )
           return;
         if (background) {
@@ -96,23 +96,23 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
 
         $imageEl.addClass(params.loadedClass).removeClass(params.loadingClass);
         $slideEl.find(`.${params.preloaderClass}`).remove();
-        if (swiper.params.loop && loadInDuplicate) {
-          const slideOriginalIndex = $slideEl.attr('data-swiper-slide-index');
-          if ($slideEl.hasClass(swiper.params.slideDuplicateClass)) {
-            const originalSlide = swiper.$wrapperEl.children(
-              `[data-swiper-slide-index="${slideOriginalIndex}"]:not(.${swiper.params.slideDuplicateClass})`,
+        if (Carousel.params.loop && loadInDuplicate) {
+          const slideOriginalIndex = $slideEl.attr('data-Carousel-slide-index');
+          if ($slideEl.hasClass(Carousel.params.slideDuplicateClass)) {
+            const originalSlide = Carousel.$wrapperEl.children(
+              `[data-Carousel-slide-index="${slideOriginalIndex}"]:not(.${Carousel.params.slideDuplicateClass})`,
             );
             loadInSlide(originalSlide.index(), false);
           } else {
-            const duplicatedSlide = swiper.$wrapperEl.children(
-              `.${swiper.params.slideDuplicateClass}[data-swiper-slide-index="${slideOriginalIndex}"]`,
+            const duplicatedSlide = Carousel.$wrapperEl.children(
+              `.${Carousel.params.slideDuplicateClass}[data-Carousel-slide-index="${slideOriginalIndex}"]`,
             );
             loadInSlide(duplicatedSlide.index(), false);
           }
         }
         emit('lazyImageReady', $slideEl[0], $imageEl[0]);
-        if (swiper.params.autoHeight) {
-          swiper.updateAutoHeight();
+        if (Carousel.params.autoHeight) {
+          Carousel.updateAutoHeight();
         }
       });
 
@@ -121,11 +121,11 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
   }
 
   function load() {
-    const { $wrapperEl, params: swiperParams, slides, activeIndex } = swiper;
-    const isVirtual = swiper.virtual && swiperParams.virtual.enabled;
-    const params = swiperParams.lazy;
+    const { $wrapperEl, params: CarouselParams, slides, activeIndex } = Carousel;
+    const isVirtual = Carousel.virtual && CarouselParams.virtual.enabled;
+    const params = CarouselParams.lazy;
 
-    let vtsSlidesPerView = swiperParams.vtsSlidesPerView;
+    let vtsSlidesPerView = CarouselParams.vtsSlidesPerView;
     if (vtsSlidesPerView === 'auto') {
       vtsSlidesPerView = 0;
     }
@@ -133,7 +133,7 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
     function slideExist(index) {
       if (isVirtual) {
         if (
-          $wrapperEl.children(`.${swiperParams.slideClass}[data-swiper-slide-index="${index}"]`)
+          $wrapperEl.children(`.${CarouselParams.slideClass}[data-Carousel-slide-index="${index}"]`)
             .length
         ) {
           return true;
@@ -144,15 +144,15 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
 
     function slideIndex(slideEl) {
       if (isVirtual) {
-        return $(slideEl).attr('data-swiper-slide-index');
+        return $(slideEl).attr('data-Carousel-slide-index');
       }
       return $(slideEl).index();
     }
 
     if (!initialImageLoaded) initialImageLoaded = true;
-    if (swiper.params.watchSlidesProgress) {
-      $wrapperEl.children(`.${swiperParams.slideVisibleClass}`).each((slideEl) => {
-        const index = isVirtual ? $(slideEl).attr('data-swiper-slide-index') : $(slideEl).index();
+    if (Carousel.params.watchSlidesProgress) {
+      $wrapperEl.children(`.${CarouselParams.slideVisibleClass}`).each((slideEl) => {
+        const index = isVirtual ? $(slideEl).attr('data-Carousel-slide-index') : $(slideEl).index();
         loadInSlide(index);
       });
     } else if (vtsSlidesPerView > 1) {
@@ -177,37 +177,37 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
           if (slideExist(i)) loadInSlide(i);
         }
       } else {
-        const nextSlide = $wrapperEl.children(`.${swiperParams.slideNextClass}`);
+        const nextSlide = $wrapperEl.children(`.${CarouselParams.slideNextClass}`);
         if (nextSlide.length > 0) loadInSlide(slideIndex(nextSlide));
 
-        const prevSlide = $wrapperEl.children(`.${swiperParams.slidePrevClass}`);
+        const prevSlide = $wrapperEl.children(`.${CarouselParams.slidePrevClass}`);
         if (prevSlide.length > 0) loadInSlide(slideIndex(prevSlide));
       }
     }
   }
   function checkInViewOnLoad() {
     const window = getWindow();
-    if (!swiper || swiper.destroyed) return;
-    const $scrollElement = swiper.params.lazy.scrollingElement
-      ? $(swiper.params.lazy.scrollingElement)
+    if (!Carousel || Carousel.destroyed) return;
+    const $scrollElement = Carousel.params.lazy.scrollingElement
+      ? $(Carousel.params.lazy.scrollingElement)
       : $(window);
     const isWindow = $scrollElement[0] === window;
     const scrollElementWidth = isWindow ? window.innerWidth : $scrollElement[0].offsetWidth;
     const scrollElementHeight = isWindow ? window.innerHeight : $scrollElement[0].offsetHeight;
-    const swiperOffset = swiper.$el.offset();
-    const { rtlTranslate: rtl } = swiper;
+    const CarouselOffset = Carousel.$el.offset();
+    const { rtlTranslate: rtl } = Carousel;
 
     let inView = false;
 
-    if (rtl) swiperOffset.left -= swiper.$el[0].scrollLeft;
-    const swiperCoord = [
-      [swiperOffset.left, swiperOffset.top],
-      [swiperOffset.left + swiper.width, swiperOffset.top],
-      [swiperOffset.left, swiperOffset.top + swiper.height],
-      [swiperOffset.left + swiper.width, swiperOffset.top + swiper.height],
+    if (rtl) CarouselOffset.left -= Carousel.$el[0].scrollLeft;
+    const CarouselCoord = [
+      [CarouselOffset.left, CarouselOffset.top],
+      [CarouselOffset.left + Carousel.width, CarouselOffset.top],
+      [CarouselOffset.left, CarouselOffset.top + Carousel.height],
+      [CarouselOffset.left + Carousel.width, CarouselOffset.top + Carousel.height],
     ];
-    for (let i = 0; i < swiperCoord.length; i += 1) {
-      const point = swiperCoord[i];
+    for (let i = 0; i < CarouselCoord.length; i += 1) {
+      const point = CarouselCoord[i];
       if (
         point[0] >= 0 &&
         point[0] <= scrollElementWidth &&
@@ -220,9 +220,9 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
     }
 
     const passiveListener =
-      swiper.touchEvents.start === 'touchstart' &&
-      swiper.support.passiveListener &&
-      swiper.params.passiveListeners
+      Carousel.touchEvents.start === 'touchstart' &&
+      Carousel.support.passiveListener &&
+      Carousel.params.passiveListeners
         ? { passive: true, capture: false }
         : false;
 
@@ -236,13 +236,13 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
   }
 
   on('beforeInit', () => {
-    if (swiper.params.lazy.enabled && swiper.params.preloadImages) {
-      swiper.params.preloadImages = false;
+    if (Carousel.params.lazy.enabled && Carousel.params.preloadImages) {
+      Carousel.params.preloadImages = false;
     }
   });
   on('init', () => {
-    if (swiper.params.lazy.enabled) {
-      if (swiper.params.lazy.checkInView) {
+    if (Carousel.params.lazy.enabled) {
+      if (Carousel.params.lazy.checkInView) {
         checkInViewOnLoad();
       } else {
         load();
@@ -251,16 +251,16 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
   });
   on('scroll', () => {
     if (
-      swiper.params.freeMode &&
-      swiper.params.freeMode.enabled &&
-      !swiper.params.freeMode.sticky
+      Carousel.params.freeMode &&
+      Carousel.params.freeMode.enabled &&
+      !Carousel.params.freeMode.sticky
     ) {
       load();
     }
   });
   on('scrollbarDragMove resize _freeModeNoMomentumRelease', () => {
-    if (swiper.params.lazy.enabled) {
-      if (swiper.params.lazy.checkInView) {
+    if (Carousel.params.lazy.enabled) {
+      if (Carousel.params.lazy.checkInView) {
         checkInViewOnLoad();
       } else {
         load();
@@ -268,12 +268,12 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
     }
   });
   on('transitionStart', () => {
-    if (swiper.params.lazy.enabled) {
+    if (Carousel.params.lazy.enabled) {
       if (
-        swiper.params.lazy.loadOnTransitionStart ||
-        (!swiper.params.lazy.loadOnTransitionStart && !initialImageLoaded)
+        Carousel.params.lazy.loadOnTransitionStart ||
+        (!Carousel.params.lazy.loadOnTransitionStart && !initialImageLoaded)
       ) {
-        if (swiper.params.lazy.checkInView) {
+        if (Carousel.params.lazy.checkInView) {
           checkInViewOnLoad();
         } else {
           load();
@@ -282,8 +282,8 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
     }
   });
   on('transitionEnd', () => {
-    if (swiper.params.lazy.enabled && !swiper.params.lazy.loadOnTransitionStart) {
-      if (swiper.params.lazy.checkInView) {
+    if (Carousel.params.lazy.enabled && !Carousel.params.lazy.loadOnTransitionStart) {
+      if (Carousel.params.lazy.checkInView) {
         checkInViewOnLoad();
       } else {
         load();
@@ -292,7 +292,7 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
   });
   on('slideChange', () => {
     const { lazy, cssMode, watchSlidesProgress, touchReleaseOnEdges, resistanceRatio } =
-      swiper.params;
+      Carousel.params;
     if (
       lazy.enabled &&
       (cssMode || (watchSlidesProgress && (touchReleaseOnEdges || resistanceRatio === 0)))
@@ -302,13 +302,13 @@ export default function Lazy({ swiper, extendParams, on, emit }) {
   });
 
   on('destroy', () => {
-    if (!swiper.$el) return;
-    swiper.$el
-      .find(`.${swiper.params.lazy.loadingClass}`)
-      .removeClass(swiper.params.lazy.loadingClass);
+    if (!Carousel.$el) return;
+    Carousel.$el
+      .find(`.${Carousel.params.lazy.loadingClass}`)
+      .removeClass(Carousel.params.lazy.loadingClass);
   });
 
-  Object.assign(swiper.lazy, {
+  Object.assign(Carousel.lazy, {
     load,
     loadInSlide,
   });

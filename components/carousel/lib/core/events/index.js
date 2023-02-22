@@ -10,45 +10,45 @@ import onScroll from './onScroll.js';
 let dummyEventAttached = false;
 function dummyEventListener() {}
 
-const events = (swiper, method) => {
+const events = (Carousel, method) => {
   const document = getDocument();
-  const { params, touchEvents, el, wrapperEl, device, support } = swiper;
+  const { params, touchEvents, el, wrapperEl, device, support } = Carousel;
   const capture = !!params.nested;
   const domMethod = method === 'on' ? 'addEventListener' : 'removeEventListener';
-  const swiperMethod = method;
+  const CarouselMethod = method;
 
   // Touch Events
   if (!support.touch) {
-    el[domMethod](touchEvents.start, swiper.onTouchStart, false);
-    document[domMethod](touchEvents.move, swiper.onTouchMove, capture);
-    document[domMethod](touchEvents.end, swiper.onTouchEnd, false);
+    el[domMethod](touchEvents.start, Carousel.onTouchStart, false);
+    document[domMethod](touchEvents.move, Carousel.onTouchMove, capture);
+    document[domMethod](touchEvents.end, Carousel.onTouchEnd, false);
   } else {
     const passiveListener =
       touchEvents.start === 'touchstart' && support.passiveListener && params.passiveListeners
         ? { passive: true, capture: false }
         : false;
-    el[domMethod](touchEvents.start, swiper.onTouchStart, passiveListener);
+    el[domMethod](touchEvents.start, Carousel.onTouchStart, passiveListener);
     el[domMethod](
       touchEvents.move,
-      swiper.onTouchMove,
+      Carousel.onTouchMove,
       support.passiveListener ? { passive: false, capture } : capture,
     );
-    el[domMethod](touchEvents.end, swiper.onTouchEnd, passiveListener);
+    el[domMethod](touchEvents.end, Carousel.onTouchEnd, passiveListener);
     if (touchEvents.cancel) {
-      el[domMethod](touchEvents.cancel, swiper.onTouchEnd, passiveListener);
+      el[domMethod](touchEvents.cancel, Carousel.onTouchEnd, passiveListener);
     }
   }
   // Prevent Links Clicks
   if (params.preventClicks || params.preventClicksPropagation) {
-    el[domMethod]('click', swiper.onClick, true);
+    el[domMethod]('click', Carousel.onClick, true);
   }
   if (params.cssMode) {
-    wrapperEl[domMethod]('scroll', swiper.onScroll);
+    wrapperEl[domMethod]('scroll', Carousel.onScroll);
   }
 
   // Resize handler
   if (params.updateOnWindowResize) {
-    swiper[swiperMethod](
+    Carousel[CarouselMethod](
       device.ios || device.android
         ? 'resize orientationchange observerUpdate'
         : 'resize observerUpdate',
@@ -56,36 +56,36 @@ const events = (swiper, method) => {
       true,
     );
   } else {
-    swiper[swiperMethod]('observerUpdate', onResize, true);
+    Carousel[CarouselMethod]('observerUpdate', onResize, true);
   }
 };
 
 function attachEvents() {
-  const swiper = this;
+  const Carousel = this;
   const document = getDocument();
-  const { params, support } = swiper;
+  const { params, support } = Carousel;
 
-  swiper.onTouchStart = onTouchStart.bind(swiper);
-  swiper.onTouchMove = onTouchMove.bind(swiper);
-  swiper.onTouchEnd = onTouchEnd.bind(swiper);
+  Carousel.onTouchStart = onTouchStart.bind(Carousel);
+  Carousel.onTouchMove = onTouchMove.bind(Carousel);
+  Carousel.onTouchEnd = onTouchEnd.bind(Carousel);
 
   if (params.cssMode) {
-    swiper.onScroll = onScroll.bind(swiper);
+    Carousel.onScroll = onScroll.bind(Carousel);
   }
 
-  swiper.onClick = onClick.bind(swiper);
+  Carousel.onClick = onClick.bind(Carousel);
 
   if (support.touch && !dummyEventAttached) {
     document.addEventListener('touchstart', dummyEventListener);
     dummyEventAttached = true;
   }
 
-  events(swiper, 'on');
+  events(Carousel, 'on');
 }
 
 function detachEvents() {
-  const swiper = this;
-  events(swiper, 'off');
+  const Carousel = this;
+  events(Carousel, 'off');
 }
 
 export default {

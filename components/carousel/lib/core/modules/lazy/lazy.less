@@ -1,10 +1,10 @@
 /* Preloader */
 :root {
   /*
-  --swiper-preloader-color: var(--swiper-theme-color);
+  --Carousel-preloader-color: var(--Carousel-theme-color);
   */
 }
-.swiper-lazy-preloader {
+.Carousel-lazy-preloader {
   width: 42px;
   height: 42px;
   position: absolute;
@@ -15,23 +15,23 @@
   z-index: 10;
   transform-origin: 50%;
   box-sizing: border-box;
-  border: 4px solid var(--swiper-preloader-color, var(--swiper-theme-color));
+  border: 4px solid var(--Carousel-preloader-color, var(--Carousel-theme-color));
   border-radius: 50%;
   border-top-color: transparent;
 }
-.swiper:not(.swiper-watch-progress),
-.swiper-watch-progress .swiper-slide-visible {
-  .swiper-lazy-preloader {
-    animation: swiper-preloader-spin 1s infinite linear;
+.Carousel:not(.Carousel-watch-progress),
+.Carousel-watch-progress .Carousel-slide-visible {
+  .Carousel-lazy-preloader {
+    animation: Carousel-preloader-spin 1s infinite linear;
   }
 }
-.swiper-lazy-preloader-white {
-  --swiper-preloader-color: #fff;
+.Carousel-lazy-preloader-white {
+  --Carousel-preloader-color: #fff;
 }
-.swiper-lazy-preloader-black {
-  --swiper-preloader-color: #000;
+.Carousel-lazy-preloader-black {
+  --Carousel-preloader-color: #000;
 }
-@keyframes swiper-preloader-spin {
+@keyframes Carousel-preloader-spin {
   0% {
     transform: rotate(0deg);
   }

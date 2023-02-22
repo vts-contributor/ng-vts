@@ -1,10 +1,10 @@
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface ThumbsMethods {
   /**
-   * Swiper instance of thumbs swiper
+   * Carousel instance of thumbs Carousel
    */
-  swiper: Swiper;
+  Carousel: Carousel;
 
   /**
    * Update thumbs
@@ -21,21 +21,21 @@ export interface ThumbsEvents {}
 
 export interface ThumbsOptions {
   /**
-   * Swiper instance of swiper used as thumbs or object with Swiper parameters to initialize thumbs swiper
+   * Carousel instance of Carousel used as thumbs or object with Carousel parameters to initialize thumbs Carousel
    *
    * @default null
    */
-  swiper?: Swiper | null;
+  Carousel?: Carousel | null;
   /**
-   * Additional class that will be added to activated thumbs swiper slide
+   * Additional class that will be added to activated thumbs Carousel slide
    *
-   * @default 'swiper-slide-thumb-active'
+   * @default 'Carousel-slide-thumb-active'
    */
   slideThumbActiveClass?: string;
   /**
-   * Additional class that will be added to thumbs swiper
+   * Additional class that will be added to thumbs Carousel
    *
-   * @default 'swiper-thumbs'
+   * @default 'Carousel-thumbs'
    */
   thumbsContainerClass?: string;
   /**
