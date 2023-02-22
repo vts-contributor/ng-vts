@@ -97,24 +97,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "ng-vts-doc:build",
-            "optimization": false,
-            "sourceMap": true
           },
           "configurations": {
             "production": {
               "browserTarget": "ng-vts-doc:build:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "site/doc/tsconfig.app.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         },
         "serve-ssr": {
@@ -196,17 +183,6 @@
             "production": {
               "browserTarget": "ng-vts-iframe:build:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "site/iframe/tsconfig.app.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

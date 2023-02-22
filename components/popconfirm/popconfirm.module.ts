@@ -19,20 +19,19 @@ import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 import { VtsPopconfirmComponent, VtsPopconfirmDirective } from './popconfirm';
 
 @NgModule({
-  declarations: [VtsPopconfirmComponent, VtsPopconfirmDirective],
-  exports: [VtsPopconfirmComponent, VtsPopconfirmDirective],
-  entryComponents: [VtsPopconfirmComponent],
-  imports: [
-    BidiModule,
-    CommonModule,
-    VtsButtonModule,
-    OverlayModule,
-    VtsI18nModule,
-    VtsIconModule,
-    VtsOutletModule,
-    VtsOverlayModule,
-    VtsNoAnimationModule,
-    VtsToolTipModule
-  ]
+    declarations: [VtsPopconfirmComponent, VtsPopconfirmDirective],
+    exports: [VtsPopconfirmComponent, VtsPopconfirmDirective],
+    imports: [
+        BidiModule,
+        CommonModule,
+        VtsButtonModule,
+        OverlayModule,
+        VtsI18nModule,
+        VtsIconModule,
+        VtsOutletModule,
+        VtsOverlayModule,
+        VtsNoAnimationModule,
+        VtsToolTipModule
+    ]
 })
 export class VtsPopconfirmModule {}

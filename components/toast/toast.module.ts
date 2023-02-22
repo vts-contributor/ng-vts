@@ -15,16 +15,15 @@ import { VtsToastComponent } from './toast.component';
 import { VtsToastServiceModule } from './toast.service.module';
 
 @NgModule({
-  imports: [
-    BidiModule,
-    CommonModule,
-    OverlayModule,
-    VtsIconModule,
-    VtsOutletModule,
-    VtsToastServiceModule,
-    VtsAlertModule
-  ],
-  declarations: [VtsToastComponent, VtsToastContainerComponent],
-  entryComponents: [VtsToastContainerComponent]
+    imports: [
+        BidiModule,
+        CommonModule,
+        OverlayModule,
+        VtsIconModule,
+        VtsOutletModule,
+        VtsToastServiceModule,
+        VtsAlertModule
+    ],
+    declarations: [VtsToastComponent, VtsToastContainerComponent]
 })
 export class VtsToastModule {}

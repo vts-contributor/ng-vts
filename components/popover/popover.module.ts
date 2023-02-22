@@ -16,17 +16,16 @@ import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 import { VtsPopoverComponent, VtsPopoverDirective } from './popover';
 
 @NgModule({
-  exports: [VtsPopoverDirective, VtsPopoverComponent],
-  entryComponents: [VtsPopoverComponent],
-  declarations: [VtsPopoverDirective, VtsPopoverComponent],
-  imports: [
-    BidiModule,
-    CommonModule,
-    OverlayModule,
-    VtsOutletModule,
-    VtsOverlayModule,
-    VtsNoAnimationModule,
-    VtsToolTipModule
-  ]
+    exports: [VtsPopoverDirective, VtsPopoverComponent],
+    declarations: [VtsPopoverDirective, VtsPopoverComponent],
+    imports: [
+        BidiModule,
+        CommonModule,
+        OverlayModule,
+        VtsOutletModule,
+        VtsOverlayModule,
+        VtsNoAnimationModule,
+        VtsToolTipModule
+    ]
 })
 export class VtsPopoverModule {}
