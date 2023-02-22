@@ -7,13 +7,13 @@
     "node": "^12.14.1 || ^14.0.0"
   },
   "scripts": {
-    "start": "cross-env PORT='4200' CONTEXT_PATH='/' gulp start:dev",
+    "start": "cross-env PORT='4200' CONTEXT_PATH='/' gulp start:dev --inspect",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI --code-coverage",
     "test:watch": "gulp test:watch --tags",
     "test:schematics": "gulp build:schematics && gulp test:schematics",
     "build": "cross-env CONTEXT_PATH='/uikit/' gulp build:release",
     "build:lib": "gulp build:library",
-    "build:doc": "cross-env CONTEXT_PATH='/uikit/' gulp build:site-doc-iframe",
+    "build:doc": "gulp build:site-doc-iframe",
     "publish": "npm run build:lib && npm publish publish",
     "doc": "gulp build:preview",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg components/package.json && node ./scripts/site/replace-scope-prefix.js",
