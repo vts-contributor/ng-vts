@@ -1,9 +1,9 @@
 import { setCSSProperty } from '../../shared/utils.js';
 
 export default function updateSlides() {
-  const swiper = this;
+  const Carousel = this;
   function getDirectionLabel(property) {
-    if (swiper.isHorizontal()) {
+    if (Carousel.isHorizontal()) {
       return property;
     }
     // prettier-ignore
@@ -22,42 +22,42 @@ export default function updateSlides() {
     return parseFloat(node.getPropertyValue(getDirectionLabel(label)) || 0);
   }
 
-  const params = swiper.params;
+  const params = Carousel.params;
 
-  const { $wrapperEl, size: swiperSize, rtlTranslate: rtl, wrongRTL } = swiper;
-  const isVirtual = swiper.virtual && params.virtual.enabled;
-  const previousSlidesLength = isVirtual ? swiper.virtual.slides.length : swiper.slides.length;
-  const slides = $wrapperEl.children(`.${swiper.params.slideClass}`);
-  const slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
+  const { $wrapperEl, size: CarouselSize, rtlTranslate: rtl, wrongRTL } = Carousel;
+  const isVirtual = Carousel.virtual && params.virtual.enabled;
+  const previousSlidesLength = isVirtual ? Carousel.virtual.slides.length : Carousel.slides.length;
+  const slides = $wrapperEl.children(`.${Carousel.params.slideClass}`);
+  const slidesLength = isVirtual ? Carousel.virtual.slides.length : slides.length;
   let snapGrid = [];
   const slidesGrid = [];
   const slidesSizesGrid = [];
 
   let offsetBefore = params.slidesOffsetBefore;
   if (typeof offsetBefore === 'function') {
-    offsetBefore = params.slidesOffsetBefore.call(swiper);
+    offsetBefore = params.slidesOffsetBefore.call(Carousel);
   }
 
   let offsetAfter = params.slidesOffsetAfter;
   if (typeof offsetAfter === 'function') {
-    offsetAfter = params.slidesOffsetAfter.call(swiper);
+    offsetAfter = params.slidesOffsetAfter.call(Carousel);
   }
 
-  const previousSnapGridLength = swiper.snapGrid.length;
-  const previousSlidesGridLength = swiper.slidesGrid.length;
+  const previousSnapGridLength = Carousel.snapGrid.length;
+  const previousSlidesGridLength = Carousel.slidesGrid.length;
 
   let vtsSpaceBetween = params.vtsSpaceBetween;
   let slidePosition = -offsetBefore;
   let prevSlideSize = 0;
   let index = 0;
-  if (typeof swiperSize === 'undefined') {
+  if (typeof CarouselSize === 'undefined') {
     return;
   }
   if (typeof vtsSpaceBetween === 'string' && vtsSpaceBetween.indexOf('%') >= 0) {
-    vtsSpaceBetween = (parseFloat(vtsSpaceBetween.replace('%', '')) / 100) * swiperSize;
+    vtsSpaceBetween = (parseFloat(vtsSpaceBetween.replace('%', '')) / 100) * CarouselSize;
   }
 
-  swiper.virtualSize = -vtsSpaceBetween;
+  Carousel.virtualSize = -vtsSpaceBetween;
 
   // reset margins
   if (rtl) slides.css({ marginLeft: '', marginBottom: '', marginTop: '' });
@@ -65,13 +65,13 @@ export default function updateSlides() {
 
   // reset cssMode offsets
   if (params.centeredSlides && params.cssMode) {
-    setCSSProperty(swiper.wrapperEl, '--swiper-centered-offset-before', '');
-    setCSSProperty(swiper.wrapperEl, '--swiper-centered-offset-after', '');
+    setCSSProperty(Carousel.wrapperEl, '--Carousel-centered-offset-before', '');
+    setCSSProperty(Carousel.wrapperEl, '--Carousel-centered-offset-after', '');
   }
 
-  const gridEnabled = params.grid && params.grid.rows > 1 && swiper.grid;
+  const gridEnabled = params.grid && params.grid.rows > 1 && Carousel.grid;
   if (gridEnabled) {
-    swiper.grid.initSlides(slidesLength);
+    Carousel.grid.initSlides(slidesLength);
   }
 
   // Calc slides
@@ -88,7 +88,7 @@ export default function updateSlides() {
     slideSize = 0;
     const slide = slides.eq(i);
     if (gridEnabled) {
-      swiper.grid.updateSlide(i, slide, slidesLength, getDirectionLabel);
+      Carousel.grid.updateSlide(i, slide, slidesLength, getDirectionLabel);
     }
     if (slide.css('display') === 'none') continue; // eslint-disable-line
 
@@ -106,7 +106,7 @@ export default function updateSlides() {
         slide[0].style.webkitTransform = 'none';
       }
       if (params.roundLengths) {
-        slideSize = swiper.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
+        slideSize = Carousel.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
       } else {
         // eslint-disable-next-line
         const width = getDirectionPropertyValue(slideStyles, 'width');
@@ -136,7 +136,7 @@ export default function updateSlides() {
       }
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
-      slideSize = (swiperSize - (params.vtsSlidesPerView - 1) * vtsSpaceBetween) / params.vtsSlidesPerView;
+      slideSize = (CarouselSize - (params.vtsSlidesPerView - 1) * vtsSpaceBetween) / params.vtsSlidesPerView;
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
       if (slides[i]) {
@@ -144,15 +144,15 @@ export default function updateSlides() {
       }
     }
     if (slides[i]) {
-      slides[i].swiperSlideSize = slideSize;
+      slides[i].CarouselSlideSize = slideSize;
     }
     slidesSizesGrid.push(slideSize);
 
     if (params.centeredSlides) {
       slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + vtsSpaceBetween;
       if (prevSlideSize === 0 && i !== 0)
-        slidePosition = slidePosition - swiperSize / 2 - vtsSpaceBetween;
-      if (i === 0) slidePosition = slidePosition - swiperSize / 2 - vtsSpaceBetween;
+        slidePosition = slidePosition - CarouselSize / 2 - vtsSpaceBetween;
+      if (i === 0) slidePosition = slidePosition - CarouselSize / 2 - vtsSpaceBetween;
       if (Math.abs(slidePosition) < 1 / 1000) slidePosition = 0;
       if (params.roundLengths) slidePosition = Math.floor(slidePosition);
       if (index % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
@@ -160,8 +160,8 @@ export default function updateSlides() {
     } else {
       if (params.roundLengths) slidePosition = Math.floor(slidePosition);
       if (
-        (index - Math.min(swiper.params.slidesPerGroupSkip, index)) %
-          swiper.params.slidesPerGroup ===
+        (index - Math.min(Carousel.params.slidesPerGroupSkip, index)) %
+          Carousel.params.slidesPerGroup ===
         0
       )
         snapGrid.push(slidePosition);
@@ -169,25 +169,25 @@ export default function updateSlides() {
       slidePosition = slidePosition + slideSize + vtsSpaceBetween;
     }
 
-    swiper.virtualSize += slideSize + vtsSpaceBetween;
+    Carousel.virtualSize += slideSize + vtsSpaceBetween;
 
     prevSlideSize = slideSize;
 
     index += 1;
   }
-  swiper.virtualSize = Math.max(swiper.virtualSize, swiperSize) + offsetAfter;
+  Carousel.virtualSize = Math.max(Carousel.virtualSize, CarouselSize) + offsetAfter;
 
   if (rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
-    $wrapperEl.css({ width: `${swiper.virtualSize + params.vtsSpaceBetween}px` });
+    $wrapperEl.css({ width: `${Carousel.virtualSize + params.vtsSpaceBetween}px` });
   }
   if (params.setWrapperSize) {
     $wrapperEl.css({
-      [getDirectionLabel('width')]: `${swiper.virtualSize + params.vtsSpaceBetween}px`,
+      [getDirectionLabel('width')]: `${Carousel.virtualSize + params.vtsSpaceBetween}px`,
     });
   }
 
   if (gridEnabled) {
-    swiper.grid.updateWrapperSize(slideSize, snapGrid, getDirectionLabel);
+    Carousel.grid.updateWrapperSize(slideSize, snapGrid, getDirectionLabel);
   }
 
   // Remove last grid elements depending on width
@@ -196,23 +196,23 @@ export default function updateSlides() {
     for (let i = 0; i < snapGrid.length; i += 1) {
       let slidesGridItem = snapGrid[i];
       if (params.roundLengths) slidesGridItem = Math.floor(slidesGridItem);
-      if (snapGrid[i] <= swiper.virtualSize - swiperSize) {
+      if (snapGrid[i] <= Carousel.virtualSize - CarouselSize) {
         newSlidesGrid.push(slidesGridItem);
       }
     }
     snapGrid = newSlidesGrid;
 
     if (
-      Math.floor(swiper.virtualSize - swiperSize) - Math.floor(snapGrid[snapGrid.length - 1]) >
+      Math.floor(Carousel.virtualSize - CarouselSize) - Math.floor(snapGrid[snapGrid.length - 1]) >
       1
     ) {
-      snapGrid.push(swiper.virtualSize - swiperSize);
+      snapGrid.push(Carousel.virtualSize - CarouselSize);
     }
   }
   if (snapGrid.length === 0) snapGrid = [0];
 
   if (params.vtsSpaceBetween !== 0) {
-    const key = swiper.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
+    const key = Carousel.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
     slides
       .filter((_, slideIndex) => {
         if (!params.cssMode) return true;
@@ -230,7 +230,7 @@ export default function updateSlides() {
       allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
     });
     allSlidesSize -= params.vtsSpaceBetween;
-    const maxSnap = allSlidesSize - swiperSize;
+    const maxSnap = allSlidesSize - CarouselSize;
     snapGrid = snapGrid.map((snap) => {
       if (snap < 0) return -offsetBefore;
       if (snap > maxSnap) return maxSnap + offsetAfter;
@@ -244,8 +244,8 @@ export default function updateSlides() {
       allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
     });
     allSlidesSize -= params.vtsSpaceBetween;
-    if (allSlidesSize < swiperSize) {
-      const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+    if (allSlidesSize < CarouselSize) {
+      const allSlidesOffset = (CarouselSize - allSlidesSize) / 2;
       snapGrid.forEach((snap, snapIndex) => {
         snapGrid[snapIndex] = snap - allSlidesOffset;
       });
@@ -255,7 +255,7 @@ export default function updateSlides() {
     }
   }
 
-  Object.assign(swiper, {
+  Object.assign(Carousel, {
     slides,
     snapGrid,
     slidesGrid,
@@ -263,40 +263,40 @@ export default function updateSlides() {
   });
 
   if (params.centeredSlides && params.cssMode && !params.centeredSlidesBounds) {
-    setCSSProperty(swiper.wrapperEl, '--swiper-centered-offset-before', `${-snapGrid[0]}px`);
+    setCSSProperty(Carousel.wrapperEl, '--Carousel-centered-offset-before', `${-snapGrid[0]}px`);
     setCSSProperty(
-      swiper.wrapperEl,
-      '--swiper-centered-offset-after',
-      `${swiper.size / 2 - slidesSizesGrid[slidesSizesGrid.length - 1] / 2}px`,
+      Carousel.wrapperEl,
+      '--Carousel-centered-offset-after',
+      `${Carousel.size / 2 - slidesSizesGrid[slidesSizesGrid.length - 1] / 2}px`,
     );
-    const addToSnapGrid = -swiper.snapGrid[0];
-    const addToSlidesGrid = -swiper.slidesGrid[0];
-    swiper.snapGrid = swiper.snapGrid.map((v) => v + addToSnapGrid);
-    swiper.slidesGrid = swiper.slidesGrid.map((v) => v + addToSlidesGrid);
+    const addToSnapGrid = -Carousel.snapGrid[0];
+    const addToSlidesGrid = -Carousel.slidesGrid[0];
+    Carousel.snapGrid = Carousel.snapGrid.map((v) => v + addToSnapGrid);
+    Carousel.slidesGrid = Carousel.slidesGrid.map((v) => v + addToSlidesGrid);
   }
 
   if (slidesLength !== previousSlidesLength) {
-    swiper.emit('slidesLengthChange');
+    Carousel.emit('slidesLengthChange');
   }
   if (snapGrid.length !== previousSnapGridLength) {
-    if (swiper.params.watchOverflow) swiper.checkOverflow();
-    swiper.emit('snapGridLengthChange');
+    if (Carousel.params.watchOverflow) Carousel.checkOverflow();
+    Carousel.emit('snapGridLengthChange');
   }
   if (slidesGrid.length !== previousSlidesGridLength) {
-    swiper.emit('slidesGridLengthChange');
+    Carousel.emit('slidesGridLengthChange');
   }
 
   if (params.watchSlidesProgress) {
-    swiper.updateSlidesOffset();
+    Carousel.updateSlidesOffset();
   }
 
   if (!isVirtual && !params.cssMode && (params.effect === 'slide' || params.effect === 'fade')) {
     const backFaceHiddenClass = `${params.containerModifierClass}backface-hidden`;
-    const hasClassBackfaceClassAdded = swiper.$el.hasClass(backFaceHiddenClass);
+    const hasClassBackfaceClassAdded = Carousel.$el.hasClass(backFaceHiddenClass);
     if (slidesLength <= params.maxBackfaceHiddenSlides) {
-      if (!hasClassBackfaceClassAdded) swiper.$el.addClass(backFaceHiddenClass);
+      if (!hasClassBackfaceClassAdded) Carousel.$el.addClass(backFaceHiddenClass);
     } else if (hasClassBackfaceClassAdded) {
-      swiper.$el.removeClass(backFaceHiddenClass);
+      Carousel.$el.removeClass(backFaceHiddenClass);
     }
   }
 }

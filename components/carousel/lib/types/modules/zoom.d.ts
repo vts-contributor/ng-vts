@@ -1,4 +1,4 @@
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface ZoomMethods {
   /**
@@ -41,7 +41,7 @@ export interface ZoomEvents {
   /**
    * Event will be fired on zoom change
    */
-  zoomChange: (swiper: Swiper, scale: number, imageEl: HTMLElement, slideEl: HTMLElement) => void;
+  zoomChange: (Carousel: Carousel, scale: number, imageEl: HTMLElement, slideEl: HTMLElement) => void;
 }
 
 export interface ZoomOptions {
@@ -66,13 +66,13 @@ export interface ZoomOptions {
   /**
    * CSS class name of zoom container
    *
-   * @default 'swiper-zoom-container'
+   * @default 'Carousel-zoom-container'
    */
   containerClass?: string;
   /**
    * CSS class name of zoomed in container
    *
-   * @default 'swiper-slide-zoomed'
+   * @default 'Carousel-slide-zoomed'
 
    */
   zoomedSlideClass?: string;

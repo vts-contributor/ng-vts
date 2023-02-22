@@ -56,7 +56,7 @@ export default {
   normalizeSlideIndex: true,
   centerInsufficientSlides: false,
 
-  // Disable swiper and hide navigation when container not overflow
+  // Disable Carousel and hide navigation when container not overflow
   watchOverflow: true,
 
   // Round length
@@ -116,7 +116,7 @@ export default {
   allowSlideNext: true,
   swipeHandler: null, // '.swipe-handler',
   noSwiping: true,
-  noSwipingClass: 'swiper-no-swiping',
+  noSwipingClass: 'Carousel-no-swiping',
   noSwipingSelector: null,
 
   // Passive Listeners
@@ -125,18 +125,18 @@ export default {
   maxBackfaceHiddenSlides: 10,
 
   // NS
-  containerModifierClass: 'swiper-', // NEW
-  slideClass: 'swiper-slide',
-  slideBlankClass: 'swiper-slide-invisible-blank',
-  slideActiveClass: 'swiper-slide-active',
-  slideDuplicateActiveClass: 'swiper-slide-duplicate-active',
-  slideVisibleClass: 'swiper-slide-visible',
-  slideDuplicateClass: 'swiper-slide-duplicate',
-  slideNextClass: 'swiper-slide-next',
-  slideDuplicateNextClass: 'swiper-slide-duplicate-next',
-  slidePrevClass: 'swiper-slide-prev',
-  slideDuplicatePrevClass: 'swiper-slide-duplicate-prev',
-  wrapperClass: 'swiper-wrapper',
+  containerModifierClass: 'Carousel-', // NEW
+  slideClass: 'Carousel-slide',
+  slideBlankClass: 'Carousel-slide-invisible-blank',
+  slideActiveClass: 'Carousel-slide-active',
+  slideDuplicateActiveClass: 'Carousel-slide-duplicate-active',
+  slideVisibleClass: 'Carousel-slide-visible',
+  slideDuplicateClass: 'Carousel-slide-duplicate',
+  slideNextClass: 'Carousel-slide-next',
+  slideDuplicateNextClass: 'Carousel-slide-duplicate-next',
+  slidePrevClass: 'Carousel-slide-prev',
+  slideDuplicatePrevClass: 'Carousel-slide-duplicate-prev',
+  wrapperClass: 'Carousel-wrapper',
 
   // Callbacks
   runCallbacksOnInit: true,

@@ -1,21 +1,21 @@
-.swiper-virtual .swiper-slide {
+.Carousel-virtual .Carousel-slide {
   -webkit-backface-visibility: hidden;
   transform: translateZ(0);
 }
-.swiper-virtual.swiper-css-mode {
-  .swiper-wrapper::after {
+.Carousel-virtual.Carousel-css-mode {
+  .Carousel-wrapper::after {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
     pointer-events: none;
   }
-  &.swiper-horizontal .swiper-wrapper::after {
+  &.Carousel-horizontal .Carousel-wrapper::after {
     height: 1px;
-    width: var(--swiper-virtual-size);
+    width: var(--Carousel-virtual-size);
   }
-  &.swiper-vertical .swiper-wrapper::after {
+  &.Carousel-vertical .Carousel-wrapper::after {
     width: 1px;
-    height: var(--swiper-virtual-size);
+    height: var(--Carousel-virtual-size);
   }
 }

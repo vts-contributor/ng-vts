@@ -26,7 +26,8 @@
   "dependencies": {
     "@ui-vts/ng-vts": "file:components",
     "dom7": "^4.0.4",
-    "ngx-hover-preload": "0.0.3"
+    "ngx-hover-preload": "0.0.3",
+    "@ui-vts/theme": "file:../ui-vts-theme"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^12.1.0",

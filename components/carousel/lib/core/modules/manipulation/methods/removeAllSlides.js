@@ -1,9 +1,9 @@
 export default function removeAllSlides() {
-  const swiper = this;
+  const Carousel = this;
 
   const slidesIndexes = [];
-  for (let i = 0; i < swiper.slides.length; i += 1) {
+  for (let i = 0; i < Carousel.slides.length; i += 1) {
     slidesIndexes.push(i);
   }
-  swiper.removeSlide(slidesIndexes);
+  Carousel.removeSlide(slidesIndexes);
 }

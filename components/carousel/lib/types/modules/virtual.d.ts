@@ -110,7 +110,7 @@ export interface VirtualOptions {
    */
   addSlidesAfter?: number;
   /**
-   * Function to render slide. As an argument it accepts current slide item for `slides` array and index number of the current slide. Function must return an outter HTML of the swiper slide.
+   * Function to render slide. As an argument it accepts current slide item for `slides` array and index number of the current slide. Function must return an outter HTML of the Carousel slide.
    *
    * @default null
    */
@@ -127,7 +127,7 @@ export interface VirtualOptions {
    */
   renderExternal?: (data: VirtualData) => any | null;
   /**
-   * When enabled (by default) it will update Swiper layout right after renderExternal called. Useful to disable and update swiper manually when used with render libraries that renders asynchronously
+   * When enabled (by default) it will update Carousel layout right after renderExternal called. Useful to disable and update Carousel manually when used with render libraries that renders asynchronously
    *
    * @default true
    */

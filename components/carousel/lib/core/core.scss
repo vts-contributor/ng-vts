@@ -1,9 +1,9 @@
 @at-root {
   :root {
-    --swiper-theme-color: red;
+    --Carousel-theme-color: red;
   }
 }
-.swiper {
+.Carousel {
   margin-left: auto;
   margin-right: auto;
   position: relative;
@@ -13,10 +13,10 @@
   /* Fix of Webkit flickering */
   z-index: 1;
 }
-.swiper-vertical > .swiper-wrapper {
+.Carousel-vertical > .Carousel-wrapper {
   flex-direction: column;
 }
-.swiper-wrapper {
+.Carousel-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
@@ -25,63 +25,63 @@
   transition-property: transform;
   box-sizing: content-box;
 }
-.swiper-android .swiper-slide,
-.swiper-wrapper {
+.Carousel-android .Carousel-slide,
+.Carousel-wrapper {
   transform: translate3d(0px, 0, 0);
 }
-.swiper-pointer-events {
+.Carousel-pointer-events {
   touch-action: pan-y;
-  &.swiper-vertical {
+  &.Carousel-vertical {
     touch-action: pan-x;
   }
 }
-.swiper-slide {
+.Carousel-slide {
   flex-shrink: 0;
   width: 100%;
   height: 100%;
   position: relative;
   transition-property: transform;
 }
-.swiper-slide-invisible-blank {
+.Carousel-slide-invisible-blank {
   visibility: hidden;
 }
 /* Auto Height */
-.swiper-autoheight {
+.Carousel-autoheight {
   &,
-  .swiper-slide {
+  .Carousel-slide {
     height: auto;
   }
 
-  .swiper-wrapper {
+  .Carousel-wrapper {
     align-items: flex-start;
     transition-property: transform, height;
   }
 }
-.swiper-backface-hidden .swiper-slide {
+.Carousel-backface-hidden .Carousel-slide {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
 /* 3D Effects */
-.swiper-3d {
+.Carousel-3d {
   &,
-  &.swiper-css-mode .swiper-wrapper {
+  &.Carousel-css-mode .Carousel-wrapper {
     perspective: 1200px;
   }
-  .swiper-wrapper,
-  .swiper-slide,
-  .swiper-slide-shadow,
-  .swiper-slide-shadow-left,
-  .swiper-slide-shadow-right,
-  .swiper-slide-shadow-top,
-  .swiper-slide-shadow-bottom,
-  .swiper-cube-shadow {
+  .Carousel-wrapper,
+  .Carousel-slide,
+  .Carousel-slide-shadow,
+  .Carousel-slide-shadow-left,
+  .Carousel-slide-shadow-right,
+  .Carousel-slide-shadow-top,
+  .Carousel-slide-shadow-bottom,
+  .Carousel-cube-shadow {
     transform-style: preserve-3d;
   }
-  .swiper-slide-shadow,
-  .swiper-slide-shadow-left,
-  .swiper-slide-shadow-right,
-  .swiper-slide-shadow-top,
-  .swiper-slide-shadow-bottom {
+  .Carousel-slide-shadow,
+  .Carousel-slide-shadow-left,
+  .Carousel-slide-shadow-right,
+  .Carousel-slide-shadow-top,
+  .Carousel-slide-shadow-bottom {
     position: absolute;
     left: 0;
     top: 0;
@@ -90,26 +90,26 @@
     pointer-events: none;
     z-index: 10;
   }
-  .swiper-slide-shadow {
+  .Carousel-slide-shadow {
     background: rgba(0, 0, 0, 0.15);
   }
-  .swiper-slide-shadow-left {
+  .Carousel-slide-shadow-left {
     background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   }
-  .swiper-slide-shadow-right {
+  .Carousel-slide-shadow-right {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   }
-  .swiper-slide-shadow-top {
+  .Carousel-slide-shadow-top {
     background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   }
-  .swiper-slide-shadow-bottom {
+  .Carousel-slide-shadow-bottom {
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   }
 }
 
 /* CSS Mode */
-.swiper-css-mode {
-  > .swiper-wrapper {
+.Carousel-css-mode {
+  > .Carousel-wrapper {
     overflow: auto;
     scrollbar-width: none; /* For Firefox */
     -ms-overflow-style: none; /* For Internet Explorer and Edge */
@@ -117,46 +117,46 @@
       display: none;
     }
   }
-  > .swiper-wrapper > .swiper-slide {
+  > .Carousel-wrapper > .Carousel-slide {
     scroll-snap-align: start start;
   }
 }
-.swiper-horizontal.swiper-css-mode {
-  > .swiper-wrapper {
+.Carousel-horizontal.Carousel-css-mode {
+  > .Carousel-wrapper {
     scroll-snap-type: x mandatory;
   }
 }
-.swiper-vertical.swiper-css-mode {
-  > .swiper-wrapper {
+.Carousel-vertical.Carousel-css-mode {
+  > .Carousel-wrapper {
     scroll-snap-type: y mandatory;
   }
 }
-.swiper-centered {
-  > .swiper-wrapper::before {
+.Carousel-centered {
+  > .Carousel-wrapper::before {
     content: '';
     flex-shrink: 0;
     order: 9999;
   }
-  &.swiper-horizontal {
-    > .swiper-wrapper > .swiper-slide:first-child {
-      margin-inline-start: var(--swiper-centered-offset-before);
+  &.Carousel-horizontal {
+    > .Carousel-wrapper > .Carousel-slide:first-child {
+      margin-inline-start: var(--Carousel-centered-offset-before);
     }
-    > .swiper-wrapper::before {
+    > .Carousel-wrapper::before {
       height: 100%;
-      width: var(--swiper-centered-offset-after);
+      width: var(--Carousel-centered-offset-after);
     }
   }
-  &.swiper-vertical {
-    > .swiper-wrapper > .swiper-slide:first-child {
-      margin-block-start: var(--swiper-centered-offset-before);
+  &.Carousel-vertical {
+    > .Carousel-wrapper > .Carousel-slide:first-child {
+      margin-block-start: var(--Carousel-centered-offset-before);
     }
-    > .swiper-wrapper::before {
+    > .Carousel-wrapper::before {
       width: 100%;
-      height: var(--swiper-centered-offset-after);
+      height: var(--Carousel-centered-offset-after);
     }
   }
 
-  > .swiper-wrapper > .swiper-slide {
+  > .Carousel-wrapper > .Carousel-slide {
     scroll-snap-align: center center;
   }
 }

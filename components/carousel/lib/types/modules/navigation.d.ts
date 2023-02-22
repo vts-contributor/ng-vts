@@ -1,5 +1,5 @@
 import { CSSSelector } from '../shared';
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface NavigationMethods {
   /**
@@ -32,19 +32,19 @@ export interface NavigationEvents {
   /**
    * Event will be fired on navigation hide
    */
-  navigationHide: (swiper: Swiper) => void;
+  navigationHide: (Carousel: Carousel) => void;
   /**
    * Event will be fired on navigation show
    */
-  navigationShow: (swiper: Swiper) => void;
+  navigationShow: (Carousel: Carousel) => void;
   /**
    * Event will be fired on navigation prev button click
    */
-  navigationPrev: (swiper: Swiper) => void;
+  navigationPrev: (Carousel: Carousel) => void;
   /**
    * Event will be fired on navigation next button click
    */
-  navigationNext: (swiper: Swiper) => void;
+  navigationNext: (Carousel: Carousel) => void;
 }
 
 export interface NavigationOptions {
@@ -78,28 +78,28 @@ export interface NavigationOptions {
   /**
    * CSS class name added to navigation button when it becomes disabled
    *
-   * @default 'swiper-button-disabled'
+   * @default 'Carousel-button-disabled'
    */
   disabledClass?: string;
 
   /**
    * CSS class name added to navigation button when it becomes hidden
    *
-   * @default 'swiper-button-hidden'
+   * @default 'Carousel-button-hidden'
    */
   hiddenClass?: string;
 
   /**
    * CSS class name added to navigation button when it is disabled
    *
-   * @default 'swiper-button-lock'
+   * @default 'Carousel-button-lock'
    */
   lockClass?: string;
 
   /**
-   * CSS class name added on swiper container when navigation is disabled by breakpoint
+   * CSS class name added on Carousel container when navigation is disabled by breakpoint
    *
-   * @default 'swiper-navigation-disabled'
+   * @default 'Carousel-navigation-disabled'
    */
   navigationDisabledClass?: string;
 }

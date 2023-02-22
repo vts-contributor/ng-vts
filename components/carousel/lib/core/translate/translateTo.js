@@ -7,31 +7,31 @@ export default function translateTo(
   translateBounds = true,
   internal,
 ) {
-  const swiper = this;
+  const Carousel = this;
 
-  const { params, wrapperEl } = swiper;
+  const { params, wrapperEl } = Carousel;
 
-  if (swiper.animating && params.preventInteractionOnTransition) {
+  if (Carousel.animating && params.preventInteractionOnTransition) {
     return false;
   }
 
-  const minTranslate = swiper.minTranslate();
-  const maxTranslate = swiper.maxTranslate();
+  const minTranslate = Carousel.minTranslate();
+  const maxTranslate = Carousel.maxTranslate();
   let newTranslate;
   if (translateBounds && translate > minTranslate) newTranslate = minTranslate;
   else if (translateBounds && translate < maxTranslate) newTranslate = maxTranslate;
   else newTranslate = translate;
 
   // Update progress
-  swiper.updateProgress(newTranslate);
+  Carousel.updateProgress(newTranslate);
 
   if (params.cssMode) {
-    const isH = swiper.isHorizontal();
+    const isH = Carousel.isHorizontal();
     if (speed === 0) {
       wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
     } else {
-      if (!swiper.support.smoothScroll) {
-        animateCSSModeScroll({ swiper, targetPosition: -newTranslate, side: isH ? 'left' : 'top' });
+      if (!Carousel.support.smoothScroll) {
+        animateCSSModeScroll({ Carousel, targetPosition: -newTranslate, side: isH ? 'left' : 'top' });
         return true;
       }
       wrapperEl.scrollTo({
@@ -43,47 +43,47 @@ export default function translateTo(
   }
 
   if (speed === 0) {
-    swiper.setTransition(0);
-    swiper.setTranslate(newTranslate);
+    Carousel.setTransition(0);
+    Carousel.setTranslate(newTranslate);
     if (runCallbacks) {
-      swiper.emit('beforeTransitionStart', speed, internal);
-      swiper.emit('transitionEnd');
+      Carousel.emit('beforeTransitionStart', speed, internal);
+      Carousel.emit('transitionEnd');
     }
   } else {
-    swiper.setTransition(speed);
-    swiper.setTranslate(newTranslate);
+    Carousel.setTransition(speed);
+    Carousel.setTranslate(newTranslate);
     if (runCallbacks) {
-      swiper.emit('beforeTransitionStart', speed, internal);
-      swiper.emit('transitionStart');
+      Carousel.emit('beforeTransitionStart', speed, internal);
+      Carousel.emit('transitionStart');
     }
-    if (!swiper.animating) {
-      swiper.animating = true;
-      if (!swiper.onTranslateToWrapperTransitionEnd) {
-        swiper.onTranslateToWrapperTransitionEnd = function transitionEnd(e) {
-          if (!swiper || swiper.destroyed) return;
+    if (!Carousel.animating) {
+      Carousel.animating = true;
+      if (!Carousel.onTranslateToWrapperTransitionEnd) {
+        Carousel.onTranslateToWrapperTransitionEnd = function transitionEnd(e) {
+          if (!Carousel || Carousel.destroyed) return;
           if (e.target !== this) return;
-          swiper.$wrapperEl[0].removeEventListener(
+          Carousel.$wrapperEl[0].removeEventListener(
             'transitionend',
-            swiper.onTranslateToWrapperTransitionEnd,
+            Carousel.onTranslateToWrapperTransitionEnd,
           );
-          swiper.$wrapperEl[0].removeEventListener(
+          Carousel.$wrapperEl[0].removeEventListener(
             'webkitTransitionEnd',
-            swiper.onTranslateToWrapperTransitionEnd,
+            Carousel.onTranslateToWrapperTransitionEnd,
           );
-          swiper.onTranslateToWrapperTransitionEnd = null;
-          delete swiper.onTranslateToWrapperTransitionEnd;
+          Carousel.onTranslateToWrapperTransitionEnd = null;
+          delete Carousel.onTranslateToWrapperTransitionEnd;
           if (runCallbacks) {
-            swiper.emit('transitionEnd');
+            Carousel.emit('transitionEnd');
           }
         };
       }
-      swiper.$wrapperEl[0].addEventListener(
+      Carousel.$wrapperEl[0].addEventListener(
         'transitionend',
-        swiper.onTranslateToWrapperTransitionEnd,
+        Carousel.onTranslateToWrapperTransitionEnd,
       );
-      swiper.$wrapperEl[0].addEventListener(
+      Carousel.$wrapperEl[0].addEventListener(
         'webkitTransitionEnd',
-        swiper.onTranslateToWrapperTransitionEnd,
+        Carousel.onTranslateToWrapperTransitionEnd,
       );
     }
   }

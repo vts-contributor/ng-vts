@@ -1,17 +1,17 @@
 export default function preloadImages() {
-  const swiper = this;
-  swiper.imagesToLoad = swiper.$el.find('img');
+  const Carousel = this;
+  Carousel.imagesToLoad = Carousel.$el.find('img');
   function onReady() {
-    if (typeof swiper === 'undefined' || swiper === null || !swiper || swiper.destroyed) return;
-    if (swiper.imagesLoaded !== undefined) swiper.imagesLoaded += 1;
-    if (swiper.imagesLoaded === swiper.imagesToLoad.length) {
-      if (swiper.params.updateOnImagesReady) swiper.update();
-      swiper.emit('imagesReady');
+    if (typeof Carousel === 'undefined' || Carousel === null || !Carousel || Carousel.destroyed) return;
+    if (Carousel.imagesLoaded !== undefined) Carousel.imagesLoaded += 1;
+    if (Carousel.imagesLoaded === Carousel.imagesToLoad.length) {
+      if (Carousel.params.updateOnImagesReady) Carousel.update();
+      Carousel.emit('imagesReady');
     }
   }
-  for (let i = 0; i < swiper.imagesToLoad.length; i += 1) {
-    const imageEl = swiper.imagesToLoad[i];
-    swiper.loadImage(
+  for (let i = 0; i < Carousel.imagesToLoad.length; i += 1) {
+    const imageEl = Carousel.imagesToLoad[i];
+    Carousel.loadImage(
       imageEl,
       imageEl.currentSrc || imageEl.getAttribute('src'),
       imageEl.srcset || imageEl.getAttribute('srcset'),

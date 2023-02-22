@@ -1,21 +1,21 @@
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface ControllerMethods {
   /**
-   * Pass here another Swiper instance or array with Swiper instances that should be controlled
-   * by this Swiper
+   * Pass here another Carousel instance or array with Carousel instances that should be controlled
+   * by this Carousel
    */
-  control?: Swiper | Swiper[];
+  control?: Carousel | Carousel[];
 }
 
 export interface ControllerEvents {}
 
 export interface ControllerOptions {
   /**
-   * Pass here another Swiper instance or array with Swiper instances that should be controlled
-   * by this Swiper
+   * Pass here another Carousel instance or array with Carousel instances that should be controlled
+   * by this Carousel
    */
-  control?: Swiper | Swiper[];
+  control?: Carousel | Carousel[];
 
   /**
    * Set to `true` and controlling will be in inverse direction

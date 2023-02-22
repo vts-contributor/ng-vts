@@ -1,57 +1,57 @@
-@import '../../swiper-vars.scss';
+@import '../../Carousel-vars.scss';
 @at-root {
   :root {
-    --swiper-navigation-size: 44px;
+    --Carousel-navigation-size: 44px;
     /*
-  --swiper-navigation-color: var(--swiper-theme-color);
+  --Carousel-navigation-color: var(--Carousel-theme-color);
   */
   }
 }
-.swiper-button-prev,
-.swiper-button-next {
+.Carousel-button-prev,
+.Carousel-button-next {
   position: absolute;
   top: 50%;
-  width: calc(var(--swiper-navigation-size) / 44 * 27);
-  height: var(--swiper-navigation-size);
-  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  width: calc(var(--Carousel-navigation-size) / 44 * 27);
+  height: var(--Carousel-navigation-size);
+  margin-top: calc(0px - (var(--Carousel-navigation-size) / 2));
   z-index: 10;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--swiper-navigation-color, var(--swiper-theme-color));
-  &.swiper-button-disabled {
+  color: var(--Carousel-navigation-color, var(--Carousel-theme-color));
+  &.Carousel-button-disabled {
     opacity: 0.35;
     cursor: auto;
     pointer-events: none;
   }
-  &.swiper-button-hidden {
+  &.Carousel-button-hidden {
     opacity: 0;
     cursor: auto;
     pointer-events: none;
   }
-  .swiper-navigation-disabled & {
+  .Carousel-navigation-disabled & {
     display: none !important;
   }
   &:after {
-    font-family: swiper-icons;
-    font-size: var(--swiper-navigation-size);
+    font-family: Carousel-icons;
+    font-size: var(--Carousel-navigation-size);
     text-transform: none !important;
     letter-spacing: 0;
     font-variant: initial;
     line-height: 1;
   }
 }
-.swiper-button-prev,
-.swiper-rtl .swiper-button-next {
+.Carousel-button-prev,
+.Carousel-rtl .Carousel-button-next {
   &:after {
     content: 'prev';
   }
   left: 10px;
   right: auto;
 }
-.swiper-button-next,
-.swiper-rtl .swiper-button-prev {
+.Carousel-button-next,
+.Carousel-rtl .Carousel-button-prev {
   &:after {
     content: 'next';
   }
@@ -59,6 +59,6 @@
   left: auto;
 }
 
-.swiper-button-lock {
+.Carousel-button-lock {
   display: none;
 }

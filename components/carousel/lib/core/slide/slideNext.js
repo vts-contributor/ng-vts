@@ -1,21 +1,21 @@
 /* eslint no-unused-vars: "off" */
 export default function slideNext(speed = this.params.speed, runCallbacks = true, internal) {
-  const swiper = this;
-  const { animating, enabled, params } = swiper;
-  if (!enabled) return swiper;
+  const Carousel = this;
+  const { animating, enabled, params } = Carousel;
+  if (!enabled) return Carousel;
   let perGroup = params.slidesPerGroup;
   if (params.vtsSlidesPerView === 'auto' && params.slidesPerGroup === 1 && params.slidesPerGroupAuto) {
-    perGroup = Math.max(swiper.slidesPerViewDynamic('current', true), 1);
+    perGroup = Math.max(Carousel.slidesPerViewDynamic('current', true), 1);
   }
-  const increment = swiper.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;
+  const increment = Carousel.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;
   if (params.loop) {
     if (animating && params.loopPreventsSlide) return false;
-    swiper.loopFix();
+    Carousel.loopFix();
     // eslint-disable-next-line
-    swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
+    Carousel._clientLeft = Carousel.$wrapperEl[0].clientLeft;
   }
-  if (params.rewind && swiper.isEnd) {
-    return swiper.slideTo(0, speed, runCallbacks, internal);
+  if (params.rewind && Carousel.isEnd) {
+    return Carousel.slideTo(0, speed, runCallbacks, internal);
   }
-  return swiper.slideTo(swiper.activeIndex + increment, speed, runCallbacks, internal);
+  return Carousel.slideTo(Carousel.activeIndex + increment, speed, runCallbacks, internal);
 }

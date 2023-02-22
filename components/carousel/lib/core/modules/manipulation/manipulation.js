@@ -4,12 +4,12 @@ import addSlide from './methods/addSlide.js';
 import removeSlide from './methods/removeSlide.js';
 import removeAllSlides from './methods/removeAllSlides.js';
 
-export default function Manipulation({ swiper }) {
-  Object.assign(swiper, {
-    appendSlide: appendSlide.bind(swiper),
-    prependSlide: prependSlide.bind(swiper),
-    addSlide: addSlide.bind(swiper),
-    removeSlide: removeSlide.bind(swiper),
-    removeAllSlides: removeAllSlides.bind(swiper),
+export default function Manipulation({ Carousel }) {
+  Object.assign(Carousel, {
+    appendSlide: appendSlide.bind(Carousel),
+    prependSlide: prependSlide.bind(Carousel),
+    addSlide: addSlide.bind(Carousel),
+    removeSlide: removeSlide.bind(Carousel),
+    removeAllSlides: removeAllSlides.bind(Carousel),
   });
 }

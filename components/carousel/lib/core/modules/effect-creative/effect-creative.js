@@ -3,7 +3,7 @@ import effectInit from '../../shared/effect-init.js';
 import effectTarget from '../../shared/effect-target.js';
 import effectVirtualTransitionEnd from '../../shared/effect-virtual-transition-end.js';
 
-export default function EffectCreative({ swiper, extendParams, on }) {
+export default function EffectCreative({ Carousel, extendParams, on }) {
   extendParams({
     creativeEffect: {
       transformEl: null,
@@ -32,14 +32,14 @@ export default function EffectCreative({ swiper, extendParams, on }) {
   };
 
   const setTranslate = () => {
-    const { slides, $wrapperEl, slidesSizesGrid } = swiper;
-    const params = swiper.params.creativeEffect;
+    const { slides, $wrapperEl, slidesSizesGrid } = Carousel;
+    const params = Carousel.params.creativeEffect;
     const { progressMultiplier: multiplier } = params;
 
-    const isCenteredSlides = swiper.params.centeredSlides;
+    const isCenteredSlides = Carousel.params.centeredSlides;
 
     if (isCenteredSlides) {
-      const margin = slidesSizesGrid[0] / 2 - swiper.params.slidesOffsetBefore || 0;
+      const margin = slidesSizesGrid[0] / 2 - Carousel.params.slidesOffsetBefore || 0;
       $wrapperEl.transform(`translateX(calc(50% - ${margin}px))`);
     }
 
@@ -59,11 +59,11 @@ export default function EffectCreative({ swiper, extendParams, on }) {
         );
       }
 
-      const offset = $slideEl[0].swiperSlideOffset;
-      const t = [swiper.params.cssMode ? -offset - swiper.translate : -offset, 0, 0];
+      const offset = $slideEl[0].CarouselSlideOffset;
+      const t = [Carousel.params.cssMode ? -offset - Carousel.translate : -offset, 0, 0];
       const r = [0, 0, 0];
       let custom = false;
-      if (!swiper.isHorizontal()) {
+      if (!Carousel.isHorizontal()) {
         t[1] = t[0];
         t[0] = 0;
       }
@@ -107,7 +107,7 @@ export default function EffectCreative({ swiper, extendParams, on }) {
 
       // Set shadows
       if ((custom && data.shadow) || !custom) {
-        let $shadowEl = $slideEl.children('.swiper-slide-shadow');
+        let $shadowEl = $slideEl.children('.Carousel-slide-shadow');
         if ($shadowEl.length === 0 && data.shadow) {
           $shadowEl = createShadow(params, $slideEl);
         }
@@ -128,23 +128,23 @@ export default function EffectCreative({ swiper, extendParams, on }) {
   };
 
   const setTransition = (duration) => {
-    const { transformEl } = swiper.params.creativeEffect;
-    const $transitionElements = transformEl ? swiper.slides.find(transformEl) : swiper.slides;
-    $transitionElements.transition(duration).find('.swiper-slide-shadow').transition(duration);
+    const { transformEl } = Carousel.params.creativeEffect;
+    const $transitionElements = transformEl ? Carousel.slides.find(transformEl) : Carousel.slides;
+    $transitionElements.transition(duration).find('.Carousel-slide-shadow').transition(duration);
 
-    effectVirtualTransitionEnd({ swiper, duration, transformEl, allSlides: true });
+    effectVirtualTransitionEnd({ Carousel, duration, transformEl, allSlides: true });
   };
 
   effectInit({
     effect: 'creative',
-    swiper,
+    Carousel,
     on,
     setTranslate,
     setTransition,
-    perspective: () => swiper.params.creativeEffect.perspective,
+    perspective: () => Carousel.params.creativeEffect.perspective,
     overwriteParams: () => ({
       watchSlidesProgress: true,
-      virtualTranslate: !swiper.params.cssMode,
+      virtualTranslate: !Carousel.params.cssMode,
     }),
   });
 }

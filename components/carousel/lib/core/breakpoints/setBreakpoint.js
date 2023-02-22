@@ -1,24 +1,24 @@
 import { extend } from '../../shared/utils.js';
 
-const isGridEnabled = (swiper, params) => {
-  return swiper.grid && params.grid && params.grid.rows > 1;
+const isGridEnabled = (Carousel, params) => {
+  return Carousel.grid && params.grid && params.grid.rows > 1;
 };
 
 export default function setBreakpoint() {
-  const swiper = this;
-  const { activeIndex, initialized, loopedSlides = 0, params, $el } = swiper;
+  const Carousel = this;
+  const { activeIndex, initialized, loopedSlides = 0, params, $el } = Carousel;
   const breakpoints = params.breakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
 
   // Get breakpoint for window width and update parameters
-  const breakpoint = swiper.getBreakpoint(breakpoints, swiper.params.breakpointsBase, swiper.el);
+  const breakpoint = Carousel.getBreakpoint(breakpoints, Carousel.params.breakpointsBase, Carousel.el);
 
-  if (!breakpoint || swiper.currentBreakpoint === breakpoint) return;
+  if (!breakpoint || Carousel.currentBreakpoint === breakpoint) return;
 
   const breakpointOnlyParams = breakpoint in breakpoints ? breakpoints[breakpoint] : undefined;
-  const breakpointParams = breakpointOnlyParams || swiper.originalParams;
-  const wasMultiRow = isGridEnabled(swiper, params);
-  const isMultiRow = isGridEnabled(swiper, breakpointParams);
+  const breakpointParams = breakpointOnlyParams || Carousel.originalParams;
+  const wasMultiRow = isGridEnabled(Carousel, params);
+  const isMultiRow = isGridEnabled(Carousel, breakpointParams);
 
   const wasEnabled = params.enabled;
 
@@ -26,7 +26,7 @@ export default function setBreakpoint() {
     $el.removeClass(
       `${params.containerModifierClass}grid ${params.containerModifierClass}grid-column`,
     );
-    swiper.emitContainerClasses();
+    Carousel.emitContainerClasses();
   } else if (!wasMultiRow && isMultiRow) {
     $el.addClass(`${params.containerModifierClass}grid`);
     if (
@@ -35,7 +35,7 @@ export default function setBreakpoint() {
     ) {
       $el.addClass(`${params.containerModifierClass}grid-column`);
     }
-    swiper.emitContainerClasses();
+    Carousel.emitContainerClasses();
   }
 
   // Toggle navigation, pagination, scrollbar
@@ -43,10 +43,10 @@ export default function setBreakpoint() {
     const wasModuleEnabled = params[prop] && params[prop].enabled;
     const isModuleEnabled = breakpointParams[prop] && breakpointParams[prop].enabled;
     if (wasModuleEnabled && !isModuleEnabled) {
-      swiper[prop].disable();
+      Carousel[prop].disable();
     }
     if (!wasModuleEnabled && isModuleEnabled) {
-      swiper[prop].enable();
+      Carousel[prop].enable();
     }
   });
 
@@ -56,34 +56,34 @@ export default function setBreakpoint() {
     params.loop && (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
 
   if (directionChanged && initialized) {
-    swiper.changeDirection();
+    Carousel.changeDirection();
   }
-  extend(swiper.params, breakpointParams);
+  extend(Carousel.params, breakpointParams);
 
-  const isEnabled = swiper.params.enabled;
+  const isEnabled = Carousel.params.enabled;
 
-  Object.assign(swiper, {
-    allowTouchMove: swiper.params.allowTouchMove,
-    allowSlideNext: swiper.params.allowSlideNext,
-    allowSlidePrev: swiper.params.allowSlidePrev,
+  Object.assign(Carousel, {
+    allowTouchMove: Carousel.params.allowTouchMove,
+    allowSlideNext: Carousel.params.allowSlideNext,
+    allowSlidePrev: Carousel.params.allowSlidePrev,
   });
 
   if (wasEnabled && !isEnabled) {
-    swiper.disable();
+    Carousel.disable();
   } else if (!wasEnabled && isEnabled) {
-    swiper.enable();
+    Carousel.enable();
   }
 
-  swiper.currentBreakpoint = breakpoint;
+  Carousel.currentBreakpoint = breakpoint;
 
-  swiper.emit('_beforeBreakpoint', breakpointParams);
+  Carousel.emit('_beforeBreakpoint', breakpointParams);
 
   if (needsReLoop && initialized) {
-    swiper.loopDestroy();
-    swiper.loopCreate();
-    swiper.updateSlides();
-    swiper.slideTo(activeIndex - loopedSlides + swiper.loopedSlides, 0, false);
+    Carousel.loopDestroy();
+    Carousel.loopCreate();
+    Carousel.updateSlides();
+    Carousel.slideTo(activeIndex - loopedSlides + Carousel.loopedSlides, 0, false);
   }
 
-  swiper.emit('breakpoint', breakpointParams);
+  Carousel.emit('breakpoint', breakpointParams);
 }

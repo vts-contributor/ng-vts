@@ -1,4 +1,4 @@
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 import { CSSSelector } from '../shared';
 
 export interface MousewheelMethods {
@@ -22,7 +22,7 @@ export interface MousewheelEvents {
   /**
    * Event will be fired on mousewheel scroll
    */
-  scroll: (swiper: Swiper, event: WheelEvent) => void;
+  scroll: (Carousel: Carousel, event: WheelEvent) => void;
 }
 
 export interface MousewheelOptions {
@@ -34,7 +34,7 @@ export interface MousewheelOptions {
    */
   forceToAxis?: boolean;
   /**
-   * Set to `true` and swiper will release mousewheel event and allow page scrolling when swiper is on edge positions (in the beginning or in the end)
+   * Set to `true` and Carousel will release mousewheel event and allow page scrolling when Carousel is on edge positions (in the beginning or in the end)
 
    *
    * @default false
@@ -53,21 +53,21 @@ export interface MousewheelOptions {
    */
   sensitivity?: number;
   /**
-   * String with CSS selector or HTML element of the container accepting mousewheel events. By default it is swiper
+   * String with CSS selector or HTML element of the container accepting mousewheel events. By default it is Carousel
    *
    * @default 'container'
    */
   eventsTarget?: 'container' | 'wrapper' | CSSSelector | HTMLElement;
 
   /**
-   * Minimum mousewheel scroll delta to trigger swiper slide change
+   * Minimum mousewheel scroll delta to trigger Carousel slide change
    *
    * @default null
    */
   thresholdDelta?: number | null;
 
   /**
-   * Minimum mousewheel scroll time delta (in ms) to trigger swiper slide change
+   * Minimum mousewheel scroll time delta (in ms) to trigger Carousel slide change
    *
    * @default null
    */

@@ -1,6 +1,6 @@
 import { Dom7Array } from 'dom7';
 import { CSSSelector } from '../shared';
-import Swiper from '../swiper-class';
+import Carousel from '../Carousel-class';
 
 export interface LazyMethods {
   /**
@@ -19,11 +19,11 @@ export interface LazyEvents {
   /**
    * Event will be fired in the beginning of lazy loading of image
    */
-  lazyImageLoad: (swiper: Swiper, slideEl: HTMLElement, imageEl: HTMLElement) => void;
+  lazyImageLoad: (Carousel: Carousel, slideEl: HTMLElement, imageEl: HTMLElement) => void;
   /**
    * Event will be fired when lazy loading image will be loaded
    */
-  lazyImageReady: (swiper: Swiper, slideEl: HTMLElement, imageEl: HTMLElement) => void;
+  lazyImageReady: (Carousel: Carousel, slideEl: HTMLElement, imageEl: HTMLElement) => void;
 }
 
 export interface LazyOptions {
@@ -34,7 +34,7 @@ export interface LazyOptions {
    */
   enabled?: boolean;
   /**
-   * Enables to check is the Swiper in view before lazy loading images on initial slides
+   * Enables to check is the Carousel in view before lazy loading images on initial slides
    *
    * @default false
    */
@@ -56,7 +56,7 @@ export interface LazyOptions {
    */
   loadPrevNextAmount?: number;
   /**
-   * By default, Swiper will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition
+   * By default, Carousel will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition
    *
    * @default false
    */
@@ -64,25 +64,25 @@ export interface LazyOptions {
   /**
    * CSS class name of lazy element
    *
-   * @default 'swiper-lazy'
+   * @default 'Carousel-lazy'
    */
   elementClass?: string;
   /**
    * CSS class name of lazy loading element
    *
-   * @default 'swiper-lazy-loading'
+   * @default 'Carousel-lazy-loading'
    */
   loadingClass?: string;
   /**
    * CSS class name of lazy loaded element
    *
-   * @default 'swiper-lazy-loaded'
+   * @default 'Carousel-lazy-loaded'
    */
   loadedClass?: string;
   /**
    * CSS class name of lazy preloader
    *
-   * @default 'swiper-lazy-preloader'
+   * @default 'Carousel-lazy-preloader'
    */
   preloaderClass?: string;
 }

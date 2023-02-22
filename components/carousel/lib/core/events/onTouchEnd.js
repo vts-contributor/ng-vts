@@ -1,20 +1,20 @@
 import { now, nextTick } from '../../shared/utils.js';
 
 export default function onTouchEnd(event) {
-  const swiper = this;
-  const data = swiper.touchEventsData;
+  const Carousel = this;
+  const data = Carousel.touchEventsData;
 
-  const { params, touches, rtlTranslate: rtl, slidesGrid, enabled } = swiper;
+  const { params, touches, rtlTranslate: rtl, slidesGrid, enabled } = Carousel;
   if (!enabled) return;
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
   if (data.allowTouchCallbacks) {
-    swiper.emit('touchEnd', e);
+    Carousel.emit('touchEnd', e);
   }
   data.allowTouchCallbacks = false;
   if (!data.isTouched) {
     if (data.isMoved && params.grabCursor) {
-      swiper.setGrabCursor(false);
+      Carousel.setGrabCursor(false);
     }
     data.isMoved = false;
     data.startMoving = false;
@@ -25,9 +25,9 @@ export default function onTouchEnd(event) {
     params.grabCursor &&
     data.isMoved &&
     data.isTouched &&
-    (swiper.allowSlideNext === true || swiper.allowSlidePrev === true)
+    (Carousel.allowSlideNext === true || Carousel.allowSlidePrev === true)
   ) {
-    swiper.setGrabCursor(false);
+    Carousel.setGrabCursor(false);
   }
 
   // Time diff
@@ -35,24 +35,24 @@ export default function onTouchEnd(event) {
   const timeDiff = touchEndTime - data.touchStartTime;
 
   // Tap, doubleTap, Click
-  if (swiper.allowClick) {
+  if (Carousel.allowClick) {
     const pathTree = e.path || (e.composedPath && e.composedPath());
-    swiper.updateClickedSlide((pathTree && pathTree[0]) || e.target);
-    swiper.emit('tap click', e);
+    Carousel.updateClickedSlide((pathTree && pathTree[0]) || e.target);
+    Carousel.emit('tap click', e);
     if (timeDiff < 300 && touchEndTime - data.lastClickTime < 300) {
-      swiper.emit('doubleTap doubleClick', e);
+      Carousel.emit('doubleTap doubleClick', e);
     }
   }
 
   data.lastClickTime = now();
   nextTick(() => {
-    if (!swiper.destroyed) swiper.allowClick = true;
+    if (!Carousel.destroyed) Carousel.allowClick = true;
   });
 
   if (
     !data.isTouched ||
     !data.isMoved ||
-    !swiper.swipeDirection ||
+    !Carousel.swipeDirection ||
     touches.diff === 0 ||
     data.currentTranslate === data.startTranslate
   ) {
@@ -67,7 +67,7 @@ export default function onTouchEnd(event) {
 
   let currentPos;
   if (params.followFinger) {
-    currentPos = rtl ? swiper.translate : -swiper.translate;
+    currentPos = rtl ? Carousel.translate : -Carousel.translate;
   } else {
     currentPos = -data.currentTranslate;
   }
@@ -76,14 +76,14 @@ export default function onTouchEnd(event) {
     return;
   }
 
-  if (swiper.params.freeMode && params.freeMode.enabled) {
-    swiper.freeMode.onTouchEnd({ currentPos });
+  if (Carousel.params.freeMode && params.freeMode.enabled) {
+    Carousel.freeMode.onTouchEnd({ currentPos });
     return;
   }
 
   // Find current slide
   let stopIndex = 0;
-  let groupSize = swiper.slidesSizesGrid[0];
+  let groupSize = Carousel.slidesSizesGrid[0];
   for (
     let i = 0;
     i < slidesGrid.length;
@@ -104,12 +104,12 @@ export default function onTouchEnd(event) {
   let rewindFirstIndex = null;
   let rewindLastIndex = null;
   if (params.rewind) {
-    if (swiper.isBeginning) {
+    if (Carousel.isBeginning) {
       rewindLastIndex =
-        swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual
-          ? swiper.virtual.slides.length - 1
-          : swiper.slides.length - 1;
-    } else if (swiper.isEnd) {
+        Carousel.params.virtual && Carousel.params.virtual.enabled && Carousel.virtual
+          ? Carousel.virtual.slides.length - 1
+          : Carousel.slides.length - 1;
+    } else if (Carousel.isEnd) {
       rewindFirstIndex = 0;
     }
   }
@@ -119,47 +119,47 @@ export default function onTouchEnd(event) {
   if (timeDiff > params.longSwipesMs) {
     // Long touches
     if (!params.longSwipes) {
-      swiper.slideTo(swiper.activeIndex);
+      Carousel.slideTo(Carousel.activeIndex);
       return;
     }
-    if (swiper.swipeDirection === 'next') {
+    if (Carousel.swipeDirection === 'next') {
       if (ratio >= params.longSwipesRatio)
-        swiper.slideTo(params.rewind && swiper.isEnd ? rewindFirstIndex : stopIndex + increment);
-      else swiper.slideTo(stopIndex);
+        Carousel.slideTo(params.rewind && Carousel.isEnd ? rewindFirstIndex : stopIndex + increment);
+      else Carousel.slideTo(stopIndex);
     }
-    if (swiper.swipeDirection === 'prev') {
+    if (Carousel.swipeDirection === 'prev') {
       if (ratio > 1 - params.longSwipesRatio) {
-        swiper.slideTo(stopIndex + increment);
+        Carousel.slideTo(stopIndex + increment);
       } else if (
         rewindLastIndex !== null &&
         ratio < 0 &&
         Math.abs(ratio) > params.longSwipesRatio
       ) {
-        swiper.slideTo(rewindLastIndex);
+        Carousel.slideTo(rewindLastIndex);
       } else {
-        swiper.slideTo(stopIndex);
+        Carousel.slideTo(stopIndex);
       }
     }
   } else {
     // Short swipes
     if (!params.shortSwipes) {
-      swiper.slideTo(swiper.activeIndex);
+      Carousel.slideTo(Carousel.activeIndex);
       return;
     }
     const isNavButtonTarget =
-      swiper.navigation &&
-      (e.target === swiper.navigation.nextEl || e.target === swiper.navigation.prevEl);
+      Carousel.navigation &&
+      (e.target === Carousel.navigation.nextEl || e.target === Carousel.navigation.prevEl);
     if (!isNavButtonTarget) {
-      if (swiper.swipeDirection === 'next') {
-        swiper.slideTo(rewindFirstIndex !== null ? rewindFirstIndex : stopIndex + increment);
+      if (Carousel.swipeDirection === 'next') {
+        Carousel.slideTo(rewindFirstIndex !== null ? rewindFirstIndex : stopIndex + increment);
       }
-      if (swiper.swipeDirection === 'prev') {
-        swiper.slideTo(rewindLastIndex !== null ? rewindLastIndex : stopIndex);
+      if (Carousel.swipeDirection === 'prev') {
+        Carousel.slideTo(rewindLastIndex !== null ? rewindLastIndex : stopIndex);
       }
-    } else if (e.target === swiper.navigation.nextEl) {
-      swiper.slideTo(stopIndex + increment);
+    } else if (e.target === Carousel.navigation.nextEl) {
+      Carousel.slideTo(stopIndex + increment);
     } else {
-      swiper.slideTo(stopIndex);
+      Carousel.slideTo(stopIndex);
     }
   }
 }

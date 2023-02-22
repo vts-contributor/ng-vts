@@ -1,11 +1,11 @@
 export default function unsetGrabCursor() {
-  const swiper = this;
+  const Carousel = this;
   if (
-    swiper.support.touch ||
-    (swiper.params.watchOverflow && swiper.isLocked) ||
-    swiper.params.cssMode
+    Carousel.support.touch ||
+    (Carousel.params.watchOverflow && Carousel.isLocked) ||
+    Carousel.params.cssMode
   ) {
     return;
   }
-  swiper[swiper.params.touchEventsTarget === 'container' ? 'el' : 'wrapperEl'].style.cursor = '';
+  Carousel[Carousel.params.touchEventsTarget === 'container' ? 'el' : 'wrapperEl'].style.cursor = '';
 }

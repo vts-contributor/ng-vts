@@ -1,20 +1,20 @@
-import Swiper from 'swiper';
+import Carousel from 'Carousel';
 
-export const calcLoopedSlides = (slides, swiperParams) => {
-  let vtsSlidesPerViewParams = swiperParams.vtsSlidesPerView;
-  if (swiperParams.breakpoints) {
-    const breakpoint = Swiper.prototype.getBreakpoint(swiperParams.breakpoints);
+export const calcLoopedSlides = (slides, CarouselParams) => {
+  let vtsSlidesPerViewParams = CarouselParams.vtsSlidesPerView;
+  if (CarouselParams.breakpoints) {
+    const breakpoint = Carousel.prototype.getBreakpoint(CarouselParams.breakpoints);
     const breakpointOnlyParams =
-      breakpoint in swiperParams.breakpoints ? swiperParams.breakpoints[breakpoint] : undefined;
+      breakpoint in CarouselParams.breakpoints ? CarouselParams.breakpoints[breakpoint] : undefined;
     if (breakpointOnlyParams && breakpointOnlyParams.vtsSlidesPerView) {
       vtsSlidesPerViewParams = breakpointOnlyParams.vtsSlidesPerView;
     }
   }
-  let loopedSlides = Math.ceil(parseFloat(swiperParams.loopedSlides || vtsSlidesPerViewParams, 10));
+  let loopedSlides = Math.ceil(parseFloat(CarouselParams.loopedSlides || vtsSlidesPerViewParams, 10));
 
-  loopedSlides += swiperParams.loopAdditionalSlides;
+  loopedSlides += CarouselParams.loopAdditionalSlides;
 
-  if (loopedSlides > slides.length && swiperParams.loopedSlidesLimit) {
+  if (loopedSlides > slides.length && CarouselParams.loopedSlidesLimit) {
     loopedSlides = slides.length;
   }
   return loopedSlides;

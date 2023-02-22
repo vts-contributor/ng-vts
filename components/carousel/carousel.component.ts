@@ -18,10 +18,10 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 // @ts-ignore
-import Swiper from './lib/swiper';
+import Carousel from './lib/Carousel';
 import { Observable, of, Subject } from 'rxjs';
 import { getParams } from './lib/utils/get-params';
-import { SwiperSlideDirective } from './carousel-slide.directive';
+import { CarouselSlideDirective } from './carousel-slide.directive';
 import { EventsParams } from './carousel-events';
 import { ThumbsOptions } from './lib/types/modules/thumbs';
 import { ControllerOptions } from './lib/types/modules/controller';
@@ -35,8 +35,8 @@ import {
   isEnabled,
 } from './lib/utils/utils';
 import {
-  SwiperOptions,
-  SwiperEvents,
+  CarouselOptions,
+  CarouselEvents,
   NavigationOptions,
   PaginationOptions,
   ScrollbarOptions,
@@ -52,7 +52,7 @@ import { isPlatformBrowser } from '@angular/common';
   exportAs: 'vtsCarousel',
   styles: [
     `
-      swiper {
+      Carousel {
         display: block;
       }
     `,
@@ -83,8 +83,8 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() virtualTranslate: "virtualTranslate";
   // @Input() effect: "effect";
   @Input() breakpoints?: {
-    [width: number]: SwiperOptions;
-    [ratio: string]: SwiperOptions;
+    [width: number]: CarouselOptions;
+    [ratio: string]: CarouselOptions;
   };
   @Input() vtsSpaceBetween?: number;
   @Input() vtsSlidesPerView?: number | "auto";
@@ -149,7 +149,7 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() slideDuplicateNextClass: "slideDuplicateNextClass";
   // @Input() slidePrevClass: "slidePrevClass";
   // @Input() slideDuplicatePrevClass: "slideDuplicatePrevClass";
-  @Input() wrapperClass: string = 'swiper-wrapper';
+  @Input() wrapperClass: string = 'Carousel-wrapper';
   // @Input() runCallbacksOnInit: "runCallbacksOnInit";
   // @Input() observeParents: "observeParents";
   // @Input() observeSlideChildren: "observeSlideChildren";
@@ -246,8 +246,8 @@ export class VtsCarouselComponent implements OnInit {
   private _virtual: VirtualOptions | boolean | '';
 
   @Input()
-  set config(val: SwiperOptions) {
-    this.updateSwiper(val);
+  set config(val: CarouselOptions) {
+    this.updateCarousel(val);
     const { params } = getParams(val);
     Object.assign(this, params);
   }
@@ -261,7 +261,7 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output('_slideClass') s__slideClass = new EventEmitter<EventsParams['_slideClass']>();
 
-  @Output('_swiper') s__swiper = new EventEmitter<EventsParams['_swiper']>();
+  @Output('_Carousel') s__Carousel = new EventEmitter<EventsParams['_Carousel']>();
 
   @Output('activeIndexChange') s_activeIndexChange = new EventEmitter<
     EventsParams['activeIndexChange']
@@ -465,7 +465,7 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output('zoomChange') s_zoomChange = new EventEmitter<EventsParams['zoomChange']>();
 
-  @Output('swiper') s_swiper = new EventEmitter<any>();
+  @Output('Carousel') s_Carousel = new EventEmitter<any>();
 
   @Output('lock') s_lock = new EventEmitter<EventsParams['lock']>();
 
@@ -495,15 +495,15 @@ export class VtsCarouselComponent implements OnInit {
     this._setElement(el, this.pagination, 'pagination');
   }
   _paginationElRef!: ElementRef;
-  @ContentChildren(SwiperSlideDirective, { descendants: false, emitDistinctChangesOnly: true })
-  slidesEl!: QueryList<SwiperSlideDirective>;
-  private slides!: SwiperSlideDirective[];
+  @ContentChildren(CarouselSlideDirective, { descendants: false, emitDistinctChangesOnly: true })
+  slidesEl!: QueryList<CarouselSlideDirective>;
+  private slides!: CarouselSlideDirective[];
 
-  prependSlides!: Observable<SwiperSlideDirective[]>;
-  appendSlides!: Observable<SwiperSlideDirective[]>;
+  prependSlides!: Observable<CarouselSlideDirective[]>;
+  appendSlides!: Observable<CarouselSlideDirective[]>;
 
-  swiperRef?: Swiper;
-  readonly _activeSlides = new Subject<SwiperSlideDirective[]>();
+  CarouselRef?: Carousel;
+  readonly _activeSlides = new Subject<CarouselSlideDirective[]>();
 
   get activeSlides() {
     if (this.virtual) {
@@ -515,11 +515,11 @@ export class VtsCarouselComponent implements OnInit {
   get zoomContainerClass() {
     // return this.zoom && typeof this.zoom !== 'boolean'
     //   ? this.zoom.containerClass
-    //   : 'swiper-zoom-container';
-    return 'swiper-zoom-container';
+    //   : 'Carousel-zoom-container';
+    return 'Carousel-zoom-container';
   }
 
-  @HostBinding('class') containerClasses: string = 'swiper';
+  @HostBinding('class') containerClasses: string = 'Carousel';
   constructor(
     private _ngZone: NgZone,
     private elementRef: ElementRef,
@@ -542,7 +542,7 @@ export class VtsCarouselComponent implements OnInit {
     }
     const updateObj: { [key: string]: boolean } = {};
     updateObj[update] = true;
-    this.updateInitSwiper(updateObj);
+    this.updateInitCarousel(updateObj);
   }
   ngOnInit(): void {
     const { params } = getParams(this);
@@ -550,10 +550,10 @@ export class VtsCarouselComponent implements OnInit {
   }
   ngAfterViewInit() {
     this.childrenSlidesInit();
-    this.initSwiper();
+    this.initCarousel();
     this._changeDetectorRef.detectChanges();
     setTimeout(() => {
-      this.s_swiper.emit(this.swiperRef);
+      this.s_Carousel.emit(this.CarouselRef);
     });
   }
 
@@ -562,8 +562,8 @@ export class VtsCarouselComponent implements OnInit {
     this.slidesEl.changes.subscribe(this.slidesChanges);
   }
 
-  private slidesChanges = (val: QueryList<SwiperSlideDirective>) => {
-    this.slides = val.map((slide: SwiperSlideDirective, index: number) => {
+  private slidesChanges = (val: QueryList<CarouselSlideDirective>) => {
+    this.slides = val.map((slide: CarouselSlideDirective, index: number) => {
       slide.slideIndex = index;
       slide.classNames = this.slideClass || '';
       return slide;
@@ -576,38 +576,38 @@ export class VtsCarouselComponent implements OnInit {
         this.prependSlides = of(this.slides.slice(this.slides.length - this.loopedSlides));
         this.appendSlides = of(this.slides.slice(0, this.loopedSlides));
       }
-    } else if (this.swiperRef && this.swiperRef.hasOwnProperty('virtual')) {
+    } else if (this.CarouselRef && this.CarouselRef.hasOwnProperty('virtual')) {
       this._ngZone.runOutsideAngular(() => {
-        this.swiperRef!.virtual.slides = this.slides;
-        this.swiperRef!.virtual.update(true);
+        this.CarouselRef!.virtual.slides = this.slides;
+        this.CarouselRef!.virtual.update(true);
       });
     }
     this._changeDetectorRef.detectChanges();
   };
 
-  get isSwiperActive() {
-    return this.swiperRef && !this.swiperRef.destroyed;
+  get isCarouselActive() {
+    return this.CarouselRef && !this.CarouselRef.destroyed;
   }
 
-  initSwiper() {
-    // const { params: swiperParams, passedParams } = getParams(this);
-    const { params: swiperParams} = getParams(this);
-    Object.assign(this, swiperParams);
+  initCarousel() {
+    // const { params: CarouselParams, passedParams } = getParams(this);
+    const { params: CarouselParams} = getParams(this);
+    Object.assign(this, CarouselParams);
     this._ngZone.runOutsideAngular(() => {
-      swiperParams.init = false;
-      if (!swiperParams.virtual) {
-        swiperParams.observer = true;
+      CarouselParams.init = false;
+      if (!CarouselParams.virtual) {
+        CarouselParams.observer = true;
       }
 
-      swiperParams.onAny = (eventName: keyof VtsCarouselComponent, ...args: any[]) => {
+      CarouselParams.onAny = (eventName: keyof VtsCarouselComponent, ...args: any[]) => {
         const emitter = this[('s_' + eventName) as keyof VtsCarouselComponent] as EventEmitter<any>;
         if (emitter) {
           emitter.emit([...args]);
         }
       };
-      const _slideClasses: SwiperEvents['_slideClasses'] = (_, updated) => {
+      const _slideClasses: CarouselEvents['_slideClasses'] = (_, updated) => {
         updated.forEach(({ slideEl, classNames }, index) => {
-          const dataIndex = slideEl.getAttribute('data-swiper-slide-index');
+          const dataIndex = slideEl.getAttribute('data-Carousel-slide-index');
           const slideIndex = dataIndex ? parseInt(dataIndex) : index;
           if (this.virtual) {
             const virtualSlide = this.slides.find((item) => {
@@ -625,39 +625,39 @@ export class VtsCarouselComponent implements OnInit {
         });
         this._changeDetectorRef.detectChanges();
       };
-      const _containerClasses: SwiperEvents['_containerClasses'] = (_, classes) => {
+      const _containerClasses: CarouselEvents['_containerClasses'] = (_, classes) => {
         setTimeout(() => {
           this.containerClasses = classes;
         });
       };
-      Object.assign(swiperParams.on, {
+      Object.assign(CarouselParams.on, {
         _containerClasses,
         _slideClasses,
       });
-      const swiperRef = new Swiper(swiperParams);
-      swiperRef.loopCreate = () => {};
-      swiperRef.loopDestroy = () => {};
-      if (swiperParams.loop) {
-        swiperRef.loopedSlides = this.loopedSlides!;
+      const CarouselRef = new Carousel(CarouselParams);
+      CarouselRef.loopCreate = () => {};
+      CarouselRef.loopDestroy = () => {};
+      if (CarouselParams.loop) {
+        CarouselRef.loopedSlides = this.loopedSlides!;
       }
-      const isVirtualEnabled = isEnabled(swiperRef.params.virtual!);
-      if (swiperRef.virtual && isVirtualEnabled) {
-        swiperRef.virtual.slides = this.slides;
+      const isVirtualEnabled = isEnabled(CarouselRef.params.virtual!);
+      if (CarouselRef.virtual && isVirtualEnabled) {
+        CarouselRef.virtual.slides = this.slides;
         const extendWith = {
           cache: false,
           slides: this.slides,
           renderExternal: this.updateVirtualSlides,
           renderExternalUpdate: false,
         };
-        extend(swiperRef.params.virtual, extendWith);
-        extend(swiperRef.originalParams.virtual, extendWith);
+        extend(CarouselRef.params.virtual, extendWith);
+        extend(CarouselRef.originalParams.virtual, extendWith);
       }
 
       if (isPlatformBrowser(this._platformId)) {
-        this.swiperRef = swiperRef.init(this.elementRef.nativeElement);
-        const isVirtualEnabled = isEnabled(this.swiperRef.params.virtual!);
-        if (this.swiperRef.virtual && isVirtualEnabled) {
-          this.swiperRef.virtual.update(true);
+        this.CarouselRef = CarouselRef.init(this.elementRef.nativeElement);
+        const isVirtualEnabled = isEnabled(this.CarouselRef.params.virtual!);
+        if (this.CarouselRef.virtual && isVirtualEnabled) {
+          this.CarouselRef.virtual.update(true);
         }
         this._changeDetectorRef.detectChanges();
       }
@@ -669,7 +669,7 @@ export class VtsCarouselComponent implements OnInit {
   private updateVirtualSlides = (virtualData: any) => {
     // TODO: type virtualData
     if (
-      !this.swiperRef ||
+      !this.CarouselRef ||
       (this.currentVirtualData &&
         this.currentVirtualData.from === virtualData.from &&
         this.currentVirtualData.to === virtualData.to &&
@@ -677,9 +677,9 @@ export class VtsCarouselComponent implements OnInit {
     ) {
       return;
     }
-    this.style = this.swiperRef.isHorizontal()
+    this.style = this.CarouselRef.isHorizontal()
       ? {
-          [this.swiperRef.rtlTranslate ? 'right' : 'left']: `${virtualData.offset}px`,
+          [this.CarouselRef.rtlTranslate ? 'right' : 'left']: `${virtualData.offset}px`,
         }
       : {
           top: `${virtualData.offset}px`,
@@ -690,24 +690,24 @@ export class VtsCarouselComponent implements OnInit {
       this._changeDetectorRef.detectChanges();
     });
     this._ngZone.runOutsideAngular(() => {
-      this.swiperRef!.updateSlides();
-      this.swiperRef!.updateProgress();
-      this.swiperRef!.updateSlidesClasses();
-      if (isEnabled(this.swiperRef!.params.lazy!)) {
-        this.swiperRef!.lazy.load();
+      this.CarouselRef!.updateSlides();
+      this.CarouselRef!.updateProgress();
+      this.CarouselRef!.updateSlidesClasses();
+      if (isEnabled(this.CarouselRef!.params.lazy!)) {
+        this.CarouselRef!.lazy.load();
       }
-      this.swiperRef!.virtual.update(true);
+      this.CarouselRef!.virtual.update(true);
     });
     return;
   };
 
   ngOnChanges(changedParams: SimpleChanges) {
-    this.updateSwiper(changedParams);
+    this.updateCarousel(changedParams);
     this._changeDetectorRef.detectChanges();
   }
 
-  updateInitSwiper(changedParams: any) {
-    if (!(changedParams && this.swiperRef && !this.swiperRef.destroyed)) {
+  updateInitCarousel(changedParams: any) {
+    if (!(changedParams && this.CarouselRef && !this.CarouselRef.destroyed)) {
       return;
     }
 
@@ -719,7 +719,7 @@ export class VtsCarouselComponent implements OnInit {
         scrollbar,
         // virtual,
         thumbs,
-      } = this.swiperRef!;
+      } = this.CarouselRef!;
 
       if (changedParams.pagination) {
         if (
@@ -776,26 +776,26 @@ export class VtsCarouselComponent implements OnInit {
           // navigation.prevEl = null;
         }
       }
-      if (changedParams.thumbs && this.thumbs && this.thumbs.swiper) {
+      if (changedParams.thumbs && this.thumbs && this.thumbs.Carousel) {
         this.updateParameter('thumbs', this.thumbs);
         const initialized = thumbs.init();
         if (initialized) thumbs.update(true);
       }
 
       if (changedParams.controller && this.controller && this.controller.control) {
-        this.swiperRef!.controller.control = this.controller.control;
+        this.CarouselRef!.controller.control = this.controller.control;
       }
 
-      this.swiperRef!.update();
+      this.CarouselRef!.update();
     });
   }
 
-  updateSwiper(changedParams: SimpleChanges | any) {
+  updateCarousel(changedParams: SimpleChanges | any) {
     this._ngZone.runOutsideAngular(() => {
       if (changedParams.config) {
         return;
       }
-      if (!(changedParams && this.swiperRef && !this.swiperRef.destroyed)) {
+      if (!(changedParams && this.CarouselRef && !this.CarouselRef.destroyed)) {
         return;
       }
       for (const key in changedParams) {
@@ -807,26 +807,26 @@ export class VtsCarouselComponent implements OnInit {
       }
 
       if (changedParams.allowSlideNext) {
-        this.swiperRef.allowSlideNext = this.allowSlideNext ? true : false;
+        this.CarouselRef.allowSlideNext = this.allowSlideNext ? true : false;
       }
       if (changedParams.allowSlidePrev) {
-        this.swiperRef.allowSlidePrev = this.allowSlidePrev ? true : false;
+        this.CarouselRef.allowSlidePrev = this.allowSlidePrev ? true : false;
       }
       if (changedParams.direction) {
-        this.swiperRef.changeDirection(this.direction, false);
+        this.CarouselRef.changeDirection(this.direction, false);
       }
       if (changedParams.breakpoints) {
         if (this.loop && !this.loopedSlides) {
           this.calcLoopedSlides();
         }
-        this.swiperRef.currentBreakpoint = null;
-        this.swiperRef.setBreakpoint();
+        this.CarouselRef.currentBreakpoint = null;
+        this.CarouselRef.setBreakpoint();
       }
 
       if (changedParams.thumbs || changedParams.controller) {
-        this.updateInitSwiper(changedParams);
+        this.updateInitCarousel(changedParams);
       }
-      this.swiperRef.update();
+      this.CarouselRef.update();
     });
   }
 
@@ -836,7 +836,7 @@ export class VtsCarouselComponent implements OnInit {
     }
     let vtsSlidesPerViewParams = this.vtsSlidesPerView;
     if (this.breakpoints) {
-      const breakpoint = Swiper.prototype.getBreakpoint(this.breakpoints);
+      const breakpoint = Carousel.prototype.getBreakpoint(this.breakpoints);
       const breakpointOnlyParams =
         breakpoint in this.breakpoints ? this.breakpoints[breakpoint] : undefined;
       if (breakpointOnlyParams && breakpointOnlyParams.vtsSlidesPerView) {
@@ -864,30 +864,30 @@ export class VtsCarouselComponent implements OnInit {
   }
 
   updateParameter(key: string, value: any) {
-    if (!(this.swiperRef && !this.swiperRef.destroyed)) {
+    if (!(this.CarouselRef && !this.CarouselRef.destroyed)) {
       return;
     }
-    const _key = key.replace(/^_/, '') as keyof SwiperOptions;
-    const isCurrentParamObj = isObject(this.swiperRef.params[_key]);
+    const _key = key.replace(/^_/, '') as keyof CarouselOptions;
+    const isCurrentParamObj = isObject(this.CarouselRef.params[_key]);
 
     if (_key === 'enabled') {
       if (value === true) {
-        this.swiperRef.enable();
+        this.CarouselRef.enable();
       } else if (value === false) {
-        this.swiperRef.disable();
+        this.CarouselRef.disable();
       }
       return;
     }
     if (isCurrentParamObj && isObject(value)) {
-      extend(this.swiperRef.params[_key], value);
+      extend(this.CarouselRef.params[_key], value);
     } else {
-      (this.swiperRef.params[_key] as any) = value;
+      (this.CarouselRef.params[_key] as any) = value;
     }
   }
 
   ngOnDestroy() {
     this._ngZone.runOutsideAngular(() => {
-      this.swiperRef?.destroy(true, false);
+      this.CarouselRef?.destroy(true, false);
     });
   }
 }

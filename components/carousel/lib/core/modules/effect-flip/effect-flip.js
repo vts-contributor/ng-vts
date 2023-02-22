@@ -4,7 +4,7 @@ import effectInit from '../../shared/effect-init.js';
 import effectTarget from '../../shared/effect-target.js';
 import effectVirtualTransitionEnd from '../../shared/effect-virtual-transition-end.js';
 
-export default function EffectFlip({ swiper, extendParams, on }) {
+export default function EffectFlip({ Carousel, extendParams, on }) {
   extendParams({
     flipEffect: {
       slideShadows: true,
@@ -14,17 +14,17 @@ export default function EffectFlip({ swiper, extendParams, on }) {
   });
 
   const createSlideShadows = ($slideEl, progress, params) => {
-    let shadowBefore = swiper.isHorizontal()
-      ? $slideEl.find('.swiper-slide-shadow-left')
-      : $slideEl.find('.swiper-slide-shadow-top');
-    let shadowAfter = swiper.isHorizontal()
-      ? $slideEl.find('.swiper-slide-shadow-right')
-      : $slideEl.find('.swiper-slide-shadow-bottom');
+    let shadowBefore = Carousel.isHorizontal()
+      ? $slideEl.find('.Carousel-slide-shadow-left')
+      : $slideEl.find('.Carousel-slide-shadow-top');
+    let shadowAfter = Carousel.isHorizontal()
+      ? $slideEl.find('.Carousel-slide-shadow-right')
+      : $slideEl.find('.Carousel-slide-shadow-bottom');
     if (shadowBefore.length === 0) {
-      shadowBefore = createShadow(params, $slideEl, swiper.isHorizontal() ? 'left' : 'top');
+      shadowBefore = createShadow(params, $slideEl, Carousel.isHorizontal() ? 'left' : 'top');
     }
     if (shadowAfter.length === 0) {
-      shadowAfter = createShadow(params, $slideEl, swiper.isHorizontal() ? 'right' : 'bottom');
+      shadowAfter = createShadow(params, $slideEl, Carousel.isHorizontal() ? 'right' : 'bottom');
     }
     if (shadowBefore.length) shadowBefore[0].style.opacity = Math.max(-progress, 0);
     if (shadowAfter.length) shadowAfter[0].style.opacity = Math.max(progress, 0);
@@ -32,11 +32,11 @@ export default function EffectFlip({ swiper, extendParams, on }) {
 
   const recreateShadows = () => {
     // Set shadows
-    const params = swiper.params.flipEffect;
-    swiper.slides.each((slideEl) => {
+    const params = Carousel.params.flipEffect;
+    Carousel.slides.each((slideEl) => {
       const $slideEl = $(slideEl);
       let progress = $slideEl[0].progress;
-      if (swiper.params.flipEffect.limitRotation) {
+      if (Carousel.params.flipEffect.limitRotation) {
         progress = Math.max(Math.min(slideEl.progress, 1), -1);
       }
       createSlideShadows($slideEl, progress, params);
@@ -44,21 +44,21 @@ export default function EffectFlip({ swiper, extendParams, on }) {
   };
 
   const setTranslate = () => {
-    const { slides, rtlTranslate: rtl } = swiper;
-    const params = swiper.params.flipEffect;
+    const { slides, rtlTranslate: rtl } = Carousel;
+    const params = Carousel.params.flipEffect;
     for (let i = 0; i < slides.length; i += 1) {
       const $slideEl = slides.eq(i);
       let progress = $slideEl[0].progress;
-      if (swiper.params.flipEffect.limitRotation) {
+      if (Carousel.params.flipEffect.limitRotation) {
         progress = Math.max(Math.min($slideEl[0].progress, 1), -1);
       }
-      const offset = $slideEl[0].swiperSlideOffset;
+      const offset = $slideEl[0].CarouselSlideOffset;
       const rotate = -180 * progress;
       let rotateY = rotate;
       let rotateX = 0;
-      let tx = swiper.params.cssMode ? -offset - swiper.translate : -offset;
+      let tx = Carousel.params.cssMode ? -offset - Carousel.translate : -offset;
       let ty = 0;
-      if (!swiper.isHorizontal()) {
+      if (!Carousel.isHorizontal()) {
         ty = tx;
         tx = 0;
         rotateX = -rotateY;
@@ -79,32 +79,32 @@ export default function EffectFlip({ swiper, extendParams, on }) {
   };
 
   const setTransition = (duration) => {
-    const { transformEl } = swiper.params.flipEffect;
-    const $transitionElements = transformEl ? swiper.slides.find(transformEl) : swiper.slides;
+    const { transformEl } = Carousel.params.flipEffect;
+    const $transitionElements = transformEl ? Carousel.slides.find(transformEl) : Carousel.slides;
     $transitionElements
       .transition(duration)
       .find(
-        '.swiper-slide-shadow-top, .swiper-slide-shadow-right, .swiper-slide-shadow-bottom, .swiper-slide-shadow-left',
+        '.Carousel-slide-shadow-top, .Carousel-slide-shadow-right, .Carousel-slide-shadow-bottom, .Carousel-slide-shadow-left',
       )
       .transition(duration);
-    effectVirtualTransitionEnd({ swiper, duration, transformEl });
+    effectVirtualTransitionEnd({ Carousel, duration, transformEl });
   };
 
   effectInit({
     effect: 'flip',
-    swiper,
+    Carousel,
     on,
     setTranslate,
     setTransition,
     recreateShadows,
-    getEffectParams: () => swiper.params.flipEffect,
+    getEffectParams: () => Carousel.params.flipEffect,
     perspective: () => true,
     overwriteParams: () => ({
       vtsSlidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
       vtsSpaceBetween: 0,
-      virtualTranslate: !swiper.params.cssMode,
+      virtualTranslate: !Carousel.params.cssMode,
     }),
   });
 }

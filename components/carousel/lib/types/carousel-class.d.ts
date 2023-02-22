@@ -1,7 +1,7 @@
 import { Dom7Array } from 'dom7';
-import { SwiperOptions } from './swiper-options';
-import { CSSSelector, SwiperModule } from './shared';
-import { SwiperEvents } from './swiper-events';
+import { CarouselOptions } from './Carousel-options';
+import { CSSSelector, CarouselModule } from './shared';
+import { CarouselEvents } from './Carousel-events';
 
 import { A11yMethods } from './modules/a11y';
 import { AutoplayMethods } from './modules/autoplay';
@@ -27,7 +27,7 @@ import { ZoomMethods } from './modules/zoom';
 import { FreeModeMethods } from './modules/free-mode';
 import { ManipulationMethods } from './modules/manipulation';
 
-interface SwiperClass<Events> {
+interface CarouselClass<Events> {
   /** Add event handler */
   on<E extends keyof Events>(event: E, handler: Events[E]): void;
   /** Add event handler that will be removed after it was fired */
@@ -40,19 +40,19 @@ interface SwiperClass<Events> {
   emit<E extends keyof Events>(event: E, ...args: any[]): void;
 }
 
-interface Swiper extends SwiperClass<SwiperEvents> {
+interface Carousel extends CarouselClass<CarouselEvents> {
   /**
    * Object with passed initialization parameters
    */
-  params: SwiperOptions;
+  params: CarouselOptions;
 
   /**
    * Object with original initialization parameters
    */
-  originalParams: SwiperOptions;
+  originalParams: CarouselOptions;
 
   /**
-   * Dom7 element with slider container HTML element. To get vanilla HTMLElement use `swiper.el`
+   * Dom7 element with slider container HTML element. To get vanilla HTMLElement use `Carousel.el`
    */
   $el: Dom7Array;
 
@@ -62,7 +62,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   el: HTMLElement;
 
   /**
-   * Dom7 element with slider wrapper HTML element. To get vanilla HTMLElement use `swiper.wrapperEl`
+   * Dom7 element with slider wrapper HTML element. To get vanilla HTMLElement use `Carousel.wrapperEl`
    */
   $wrapperEl: Dom7Array;
 
@@ -72,7 +72,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   wrapperEl: HTMLElement;
 
   /**
-   * Dom7 array-like collection of slides HTML elements. To get specific slide HTMLElement use `swiper.slides[1]`
+   * Dom7 array-like collection of slides HTML elements. To get specific slide HTMLElement use `Carousel.slides[1]`
    */
   slides: Dom7Array;
 
@@ -144,18 +144,18 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   isLocked: boolean;
 
   /**
-   * `true` if swiper is in transition
+   * `true` if Carousel is in transition
    */
   animating: boolean;
 
   /**
    * Object with the following touch event properties:
    *
-   * - `swiper.touches.startX`
-   * - `swiper.touches.startY`
-   * - `swiper.touches.currentX`
-   * - `swiper.touches.currentY`
-   * - `swiper.touches.diff`
+   * - `Carousel.touches.startX`
+   * - `Carousel.touches.startY`
+   * - `Carousel.touches.currentX`
+   * - `Carousel.touches.currentY`
+   * - `Carousel.touches.diff`
    */
   touches: {
     startX: number;
@@ -196,21 +196,21 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   rtlTranslate: boolean;
 
   /**
-   * Disable Swiper (if it was enabled). When Swiper is disabled, it will hide all navigation elements and won't respond to any events and interactions
+   * Disable Carousel (if it was enabled). When Carousel is disabled, it will hide all navigation elements and won't respond to any events and interactions
    *
    */
   disable(): void;
 
   /**
-   * Enable Swiper (if it was disabled)
+   * Enable Carousel (if it was disabled)
    *
    */
   enable(): void;
 
   /**
-   * Set Swiper translate progress (from 0 to 1). Where 0 - its initial position (offset) on first slide, and 1 - its maximum position (offset) on last slide
+   * Set Carousel translate progress (from 0 to 1). Where 0 - its initial position (offset) on first slide, and 1 - its maximum position (offset) on last slide
    *
-   * @param progress Swiper translate progress (from 0 to 1).
+   * @param progress Carousel translate progress (from 0 to 1).
    * @param speed Transition duration (in ms).
    */
   setProgress(progress: number, speed?: number): void;
@@ -256,7 +256,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   slideToLoop(index: number, speed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Reset swiper position to currently active slide for the duration equal to 'speed'
+   * Reset Carousel position to currently active slide for the duration equal to 'speed'
    * parameter.
    *
    * @param speed Transition duration (in ms).
@@ -266,7 +266,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   slideReset(speed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Reset swiper position to closest slide/snap point for the duration equal to 'speed' parameter.
+   * Reset Carousel position to closest slide/snap point for the duration equal to 'speed' parameter.
    *
    * @param speed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
@@ -275,7 +275,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   slideToClosest(speed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Force swiper to update its height (when autoHeight enabled) for the duration equal to
+   * Force Carousel to update its height (when autoHeight enabled) for the duration equal to
    * 'speed' parameter
    *
    * @param speed Transition duration (in ms).
@@ -285,14 +285,14 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   /**
    * You should call it after you add/remove slides
    * manually, or after you hide/show it, or do any
-   * custom DOM modifications with Swiper
+   * custom DOM modifications with Carousel
    * This method also includes subcall of the following
    * methods which you can use separately:
    */
   update(): void;
 
   /**
-   * recalculate size of swiper container
+   * recalculate size of Carousel container
    */
   updateSize(): void;
 
@@ -302,7 +302,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   updateSlides(): void;
 
   /**
-   * recalculate swiper progress
+   * recalculate Carousel progress
    */
   updateProgress(): void;
 
@@ -315,7 +315,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
    * Changes slider direction from horizontal to vertical and back.
    *
    * @param direction New direction. If not specified, then will automatically changed to opposite direction
-   * @param needUpdate Will call swiper.update(). Default true
+   * @param needUpdate Will call Carousel.update(). Default true
    */
   changeDirection(direction?: 'horizontal' | 'vertical', needUpdate?: boolean): void;
 
@@ -349,29 +349,29 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   /**
    * Initialize slider
    */
-  init(el?: HTMLElement): Swiper;
+  init(el?: HTMLElement): Carousel;
 
   /**
    * Destroy slider instance and detach all events listeners
    *
-   * @param deleteInstance Set it to false (by default it is true) to not to delete Swiper instance
+   * @param deleteInstance Set it to false (by default it is true) to not to delete Carousel instance
    * @param cleanStyles Set it to true (by default it is true) and all custom styles will be removed from slides, wrapper and container.
-   * Useful if you need to destroy Swiper and to init again with new options or in different direction
+   * Useful if you need to destroy Carousel and to init again with new options or in different direction
    */
   destroy(deleteInstance?: boolean, cleanStyles?: boolean): void;
 
   /**
-   * Set custom css3 transform's translate value for swiper wrapper
+   * Set custom css3 transform's translate value for Carousel wrapper
    */
   setTranslate(translate: any): void;
 
   /**
-   * Get current value of swiper wrapper css3 transform translate
+   * Get current value of Carousel wrapper css3 transform translate
    */
   getTranslate(): any;
 
   /**
-   * Animate custom css3 transform's translate value for swiper wrapper
+   * Animate custom css3 transform's translate value for Carousel wrapper
    *
    * @param translate Translate value (in px)
    * @param speed Transition duration (in ms)
@@ -414,7 +414,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   /**
    * !INTERNAL
    */
-  getBreakpoint(breakpoints: SwiperOptions['breakpoints']): string;
+  getBreakpoint(breakpoints: CarouselOptions['breakpoints']): string;
 
   /**
    * !INTERNAL
@@ -434,7 +434,7 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   /**
    * !INTERNAL
    */
-  modules: Array<SwiperModule>;
+  modules: Array<CarouselModule>;
 
   a11y: A11yMethods;
   autoplay: AutoplayMethods;
@@ -460,35 +460,35 @@ interface Swiper extends SwiperClass<SwiperEvents> {
   freeMode: FreeModeMethods;
 }
 
-interface Swiper extends ManipulationMethods {}
+interface Carousel extends ManipulationMethods {}
 
-declare class Swiper implements Swiper {
+declare class Carousel implements Carousel {
   /**
-   * Constructs a new Swiper instance.
+   * Constructs a new Carousel instance.
    *
-   * @param container Where Swiper applies to.
+   * @param container Where Carousel applies to.
    * @param options   Instance options.
    */
-  constructor(container: CSSSelector | HTMLElement, options?: SwiperOptions);
+  constructor(container: CSSSelector | HTMLElement, options?: CarouselOptions);
   /**
-   * Installs modules on Swiper in runtime.
+   * Installs modules on Carousel in runtime.
    */
-  static use(modules: SwiperModule[]): void;
+  static use(modules: CarouselModule[]): void;
 
   /**
-   * Swiper default options
+   * Carousel default options
    */
-  static defaults: SwiperOptions;
+  static defaults: CarouselOptions;
 
   /**
-   * Extend global Swiper defaults
+   * Extend global Carousel defaults
    */
-  static extendDefaults(options: SwiperOptions): void;
+  static extendDefaults(options: CarouselOptions): void;
 
   /**
-   * Object with global Swiper extended options
+   * Object with global Carousel extended options
    */
-  static extendedDefaults: SwiperOptions;
+  static extendedDefaults: CarouselOptions;
 }
 
-export default Swiper;
+export default Carousel;

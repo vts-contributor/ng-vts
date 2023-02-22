@@ -1,30 +1,30 @@
 function checkOverflow() {
-  const swiper = this;
-  const { isLocked: wasLocked, params } = swiper;
+  const Carousel = this;
+  const { isLocked: wasLocked, params } = Carousel;
   const { slidesOffsetBefore } = params;
 
   if (slidesOffsetBefore) {
-    const lastSlideIndex = swiper.slides.length - 1;
+    const lastSlideIndex = Carousel.slides.length - 1;
     const lastSlideRightEdge =
-      swiper.slidesGrid[lastSlideIndex] +
-      swiper.slidesSizesGrid[lastSlideIndex] +
+      Carousel.slidesGrid[lastSlideIndex] +
+      Carousel.slidesSizesGrid[lastSlideIndex] +
       slidesOffsetBefore * 2;
-    swiper.isLocked = swiper.size > lastSlideRightEdge;
+    Carousel.isLocked = Carousel.size > lastSlideRightEdge;
   } else {
-    swiper.isLocked = swiper.snapGrid.length === 1;
+    Carousel.isLocked = Carousel.snapGrid.length === 1;
   }
   if (params.allowSlideNext === true) {
-    swiper.allowSlideNext = !swiper.isLocked;
+    Carousel.allowSlideNext = !Carousel.isLocked;
   }
   if (params.allowSlidePrev === true) {
-    swiper.allowSlidePrev = !swiper.isLocked;
+    Carousel.allowSlidePrev = !Carousel.isLocked;
   }
 
-  if (wasLocked && wasLocked !== swiper.isLocked) {
-    swiper.isEnd = false;
+  if (wasLocked && wasLocked !== Carousel.isLocked) {
+    Carousel.isEnd = false;
   }
-  if (wasLocked !== swiper.isLocked) {
-    swiper.emit(swiper.isLocked ? 'lock' : 'unlock');
+  if (wasLocked !== Carousel.isLocked) {
+    Carousel.emit(Carousel.isLocked ? 'lock' : 'unlock');
   }
 }
 

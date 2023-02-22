@@ -3,7 +3,7 @@ import { getWindow } from 'ssr-window';
 import $ from '../../shared/dom.js';
 import { now, nextTick } from '../../shared/utils.js';
 
-export default function Mousewheel({ swiper, extendParams, on, emit }) {
+export default function Mousewheel({ Carousel, extendParams, on, emit }) {
   const window = getWindow();
 
   extendParams({
@@ -19,7 +19,7 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
     },
   });
 
-  swiper.mousewheel = {
+  Carousel.mousewheel = {
     enabled: false,
   };
 
@@ -103,25 +103,25 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
     };
   }
   function handleMouseEnter() {
-    if (!swiper.enabled) return;
-    swiper.mouseEntered = true;
+    if (!Carousel.enabled) return;
+    Carousel.mouseEntered = true;
   }
   function handleMouseLeave() {
-    if (!swiper.enabled) return;
-    swiper.mouseEntered = false;
+    if (!Carousel.enabled) return;
+    Carousel.mouseEntered = false;
   }
   function animateSlider(newEvent) {
     if (
-      swiper.params.mousewheel.thresholdDelta &&
-      newEvent.delta < swiper.params.mousewheel.thresholdDelta
+      Carousel.params.mousewheel.thresholdDelta &&
+      newEvent.delta < Carousel.params.mousewheel.thresholdDelta
     ) {
       // Prevent if delta of wheel scroll delta is below configured threshold
       return false;
     }
 
     if (
-      swiper.params.mousewheel.thresholdTime &&
-      now() - lastScrollTime < swiper.params.mousewheel.thresholdTime
+      Carousel.params.mousewheel.thresholdTime &&
+      now() - lastScrollTime < Carousel.params.mousewheel.thresholdTime
     ) {
       // Prevent if time between scrolls is below configured threshold
       return false;
@@ -147,12 +147,12 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
     //   Go to prev slide and
     //   emit a scroll event.
     if (newEvent.direction < 0) {
-      if ((!swiper.isEnd || swiper.params.loop) && !swiper.animating) {
-        swiper.slideNext();
+      if ((!Carousel.isEnd || Carousel.params.loop) && !Carousel.animating) {
+        Carousel.slideNext();
         emit('scroll', newEvent.raw);
       }
-    } else if ((!swiper.isBeginning || swiper.params.loop) && !swiper.animating) {
-      swiper.slidePrev();
+    } else if ((!Carousel.isBeginning || Carousel.params.loop) && !Carousel.animating) {
+      Carousel.slidePrev();
       emit('scroll', newEvent.raw);
     }
     // If you got here is because an animation has been triggered so store the current time
@@ -161,13 +161,13 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
     return false;
   }
   function releaseScroll(newEvent) {
-    const params = swiper.params.mousewheel;
+    const params = Carousel.params.mousewheel;
     if (newEvent.direction < 0) {
-      if (swiper.isEnd && !swiper.params.loop && params.releaseOnEdges) {
+      if (Carousel.isEnd && !Carousel.params.loop && params.releaseOnEdges) {
         // Return true to animate scroll on edges
         return true;
       }
-    } else if (swiper.isBeginning && !swiper.params.loop && params.releaseOnEdges) {
+    } else if (Carousel.isBeginning && !Carousel.params.loop && params.releaseOnEdges) {
       // Return true to animate scroll on edges
       return true;
     }
@@ -175,29 +175,29 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
   }
   function handle(event) {
     let e = event;
-    let disableParentSwiper = true;
-    if (!swiper.enabled) return;
-    const params = swiper.params.mousewheel;
+    let disableParentCarousel = true;
+    if (!Carousel.enabled) return;
+    const params = Carousel.params.mousewheel;
 
-    if (swiper.params.cssMode) {
+    if (Carousel.params.cssMode) {
       e.preventDefault();
     }
 
-    let target = swiper.$el;
-    if (swiper.params.mousewheel.eventsTarget !== 'container') {
-      target = $(swiper.params.mousewheel.eventsTarget);
+    let target = Carousel.$el;
+    if (Carousel.params.mousewheel.eventsTarget !== 'container') {
+      target = $(Carousel.params.mousewheel.eventsTarget);
     }
-    if (!swiper.mouseEntered && !target[0].contains(e.target) && !params.releaseOnEdges)
+    if (!Carousel.mouseEntered && !target[0].contains(e.target) && !params.releaseOnEdges)
       return true;
 
     if (e.originalEvent) e = e.originalEvent; // jquery fix
     let delta = 0;
-    const rtlFactor = swiper.rtlTranslate ? -1 : 1;
+    const rtlFactor = Carousel.rtlTranslate ? -1 : 1;
 
     const data = normalize(e);
 
     if (params.forceToAxis) {
-      if (swiper.isHorizontal()) {
+      if (Carousel.isHorizontal()) {
         if (Math.abs(data.pixelX) > Math.abs(data.pixelY)) delta = -data.pixelX * rtlFactor;
         else return true;
       } else if (Math.abs(data.pixelY) > Math.abs(data.pixelX)) delta = -data.pixelY;
@@ -212,25 +212,25 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
     if (params.invert) delta = -delta;
 
     // Get the scroll positions
-    let positions = swiper.getTranslate() + delta * params.sensitivity;
+    let positions = Carousel.getTranslate() + delta * params.sensitivity;
 
-    if (positions >= swiper.minTranslate()) positions = swiper.minTranslate();
-    if (positions <= swiper.maxTranslate()) positions = swiper.maxTranslate();
+    if (positions >= Carousel.minTranslate()) positions = Carousel.minTranslate();
+    if (positions <= Carousel.maxTranslate()) positions = Carousel.maxTranslate();
 
     // When loop is true:
-    //     the disableParentSwiper will be true.
+    //     the disableParentCarousel will be true.
     // When loop is false:
     //     if the scroll positions is not on edge,
-    //     then the disableParentSwiper will be true.
+    //     then the disableParentCarousel will be true.
     //     if the scroll on edge positions,
-    //     then the disableParentSwiper will be false.
-    disableParentSwiper = swiper.params.loop
+    //     then the disableParentCarousel will be false.
+    disableParentCarousel = Carousel.params.loop
       ? true
-      : !(positions === swiper.minTranslate() || positions === swiper.maxTranslate());
+      : !(positions === Carousel.minTranslate() || positions === Carousel.maxTranslate());
 
-    if (disableParentSwiper && swiper.params.nested) e.stopPropagation();
+    if (disableParentCarousel && Carousel.params.nested) e.stopPropagation();
 
-    if (!swiper.params.freeMode || !swiper.params.freeMode.enabled) {
+    if (!Carousel.params.freeMode || !Carousel.params.freeMode.enabled) {
       // Register the new event in a variable which stores the relevant data
       const newEvent = {
         time: now(),
@@ -291,27 +291,27 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
       if (!ignoreWheelEvents) {
         lastEventBeforeSnap = undefined;
 
-        if (swiper.params.loop) {
-          swiper.loopFix();
+        if (Carousel.params.loop) {
+          Carousel.loopFix();
         }
-        let position = swiper.getTranslate() + delta * params.sensitivity;
-        const wasBeginning = swiper.isBeginning;
-        const wasEnd = swiper.isEnd;
+        let position = Carousel.getTranslate() + delta * params.sensitivity;
+        const wasBeginning = Carousel.isBeginning;
+        const wasEnd = Carousel.isEnd;
 
-        if (position >= swiper.minTranslate()) position = swiper.minTranslate();
-        if (position <= swiper.maxTranslate()) position = swiper.maxTranslate();
+        if (position >= Carousel.minTranslate()) position = Carousel.minTranslate();
+        if (position <= Carousel.maxTranslate()) position = Carousel.maxTranslate();
 
-        swiper.setTransition(0);
-        swiper.setTranslate(position);
-        swiper.updateProgress();
-        swiper.updateActiveIndex();
-        swiper.updateSlidesClasses();
+        Carousel.setTransition(0);
+        Carousel.setTranslate(position);
+        Carousel.updateProgress();
+        Carousel.updateActiveIndex();
+        Carousel.updateSlidesClasses();
 
-        if ((!wasBeginning && swiper.isBeginning) || (!wasEnd && swiper.isEnd)) {
-          swiper.updateSlidesClasses();
+        if ((!wasBeginning && Carousel.isBeginning) || (!wasEnd && Carousel.isEnd)) {
+          Carousel.updateSlidesClasses();
         }
 
-        if (swiper.params.freeMode.sticky) {
+        if (Carousel.params.freeMode.sticky) {
           // When wheel scrolling starts with sticky (aka snap) enabled, then detect
           // the end of a momentum scroll by storing recent (N=15?) wheel events.
           // 1. do all N events have decreasing or same (absolute value) delta?
@@ -355,7 +355,7 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
             lastEventBeforeSnap = newEvent;
             recentWheelEvents.splice(0);
             timeout = nextTick(() => {
-              swiper.slideToClosest(swiper.params.speed, true, undefined, snapToThreshold);
+              Carousel.slideToClosest(Carousel.params.speed, true, undefined, snapToThreshold);
             }, 0); // no delay; move on next tick
           }
           if (!timeout) {
@@ -366,7 +366,7 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
               const snapToThreshold = 0.5;
               lastEventBeforeSnap = newEvent;
               recentWheelEvents.splice(0);
-              swiper.slideToClosest(swiper.params.speed, true, undefined, snapToThreshold);
+              Carousel.slideToClosest(Carousel.params.speed, true, undefined, snapToThreshold);
             }, 500);
           }
         }
@@ -375,10 +375,10 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
         if (!ignoreWheelEvents) emit('scroll', e);
 
         // Stop autoplay
-        if (swiper.params.autoplay && swiper.params.autoplayDisableOnInteraction)
-          swiper.autoplay.stop();
+        if (Carousel.params.autoplay && Carousel.params.autoplayDisableOnInteraction)
+          Carousel.autoplay.stop();
         // Return page scroll on edge positions
-        if (position === swiper.minTranslate() || position === swiper.maxTranslate()) return true;
+        if (position === Carousel.minTranslate() || position === Carousel.maxTranslate()) return true;
       }
     }
 
@@ -388,9 +388,9 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
   }
 
   function events(method) {
-    let target = swiper.$el;
-    if (swiper.params.mousewheel.eventsTarget !== 'container') {
-      target = $(swiper.params.mousewheel.eventsTarget);
+    let target = Carousel.$el;
+    if (Carousel.params.mousewheel.eventsTarget !== 'container') {
+      target = $(Carousel.params.mousewheel.eventsTarget);
     }
     target[method]('mouseenter', handleMouseEnter);
     target[method]('mouseleave', handleMouseLeave);
@@ -398,40 +398,40 @@ export default function Mousewheel({ swiper, extendParams, on, emit }) {
   }
 
   function enable() {
-    if (swiper.params.cssMode) {
-      swiper.wrapperEl.removeEventListener('wheel', handle);
+    if (Carousel.params.cssMode) {
+      Carousel.wrapperEl.removeEventListener('wheel', handle);
       return true;
     }
-    if (swiper.mousewheel.enabled) return false;
+    if (Carousel.mousewheel.enabled) return false;
     events('on');
-    swiper.mousewheel.enabled = true;
+    Carousel.mousewheel.enabled = true;
     return true;
   }
   function disable() {
-    if (swiper.params.cssMode) {
-      swiper.wrapperEl.addEventListener(event, handle);
+    if (Carousel.params.cssMode) {
+      Carousel.wrapperEl.addEventListener(event, handle);
       return true;
     }
-    if (!swiper.mousewheel.enabled) return false;
+    if (!Carousel.mousewheel.enabled) return false;
     events('off');
-    swiper.mousewheel.enabled = false;
+    Carousel.mousewheel.enabled = false;
     return true;
   }
 
   on('init', () => {
-    if (!swiper.params.mousewheel.enabled && swiper.params.cssMode) {
+    if (!Carousel.params.mousewheel.enabled && Carousel.params.cssMode) {
       disable();
     }
-    if (swiper.params.mousewheel.enabled) enable();
+    if (Carousel.params.mousewheel.enabled) enable();
   });
   on('destroy', () => {
-    if (swiper.params.cssMode) {
+    if (Carousel.params.cssMode) {
       enable();
     }
-    if (swiper.mousewheel.enabled) disable();
+    if (Carousel.mousewheel.enabled) disable();
   });
 
-  Object.assign(swiper.mousewheel, {
+  Object.assign(Carousel.mousewheel, {
     enable,
     disable,
   });

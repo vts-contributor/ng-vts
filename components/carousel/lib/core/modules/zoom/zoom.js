@@ -2,7 +2,7 @@ import { getWindow } from 'ssr-window';
 import $ from '../../shared/dom.js';
 import { getTranslate } from '../../shared/utils.js';
 
-export default function Zoom({ swiper, extendParams, on, emit }) {
+export default function Zoom({ Carousel, extendParams, on, emit }) {
   const window = getWindow();
   extendParams({
     zoom: {
@@ -10,12 +10,12 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
       maxRatio: 3,
       minRatio: 1,
       toggle: true,
-      containerClass: 'swiper-zoom-container',
-      zoomedSlideClass: 'swiper-slide-zoomed',
+      containerClass: 'Carousel-zoom-container',
+      zoomedSlideClass: 'Carousel-slide-zoomed',
     },
   });
 
-  swiper.zoom = {
+  Carousel.zoom = {
     enabled: false,
   };
 
@@ -57,7 +57,7 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
   };
 
   let scale = 1;
-  Object.defineProperty(swiper.zoom, 'scale', {
+  Object.defineProperty(Carousel.zoom, 'scale', {
     get() {
       return scale;
     },
@@ -83,8 +83,8 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
 
   // Events
   function onGestureStart(e) {
-    const support = swiper.support;
-    const params = swiper.params.zoom;
+    const support = Carousel.support;
+    const params = Carousel.params.zoom;
     fakeGestureTouched = false;
     fakeGestureMoved = false;
     if (!support.gestures) {
@@ -95,15 +95,15 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
       gesture.scaleStart = getDistanceBetweenTouches(e);
     }
     if (!gesture.$slideEl || !gesture.$slideEl.length) {
-      gesture.$slideEl = $(e.target).closest(`.${swiper.params.slideClass}`);
-      if (gesture.$slideEl.length === 0) gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+      gesture.$slideEl = $(e.target).closest(`.${Carousel.params.slideClass}`);
+      if (gesture.$slideEl.length === 0) gesture.$slideEl = Carousel.slides.eq(Carousel.activeIndex);
       gesture.$imageEl = gesture.$slideEl
         .find(`.${params.containerClass}`)
         .eq(0)
-        .find('picture, img, svg, canvas, .swiper-zoom-target')
+        .find('picture, img, svg, canvas, .Carousel-zoom-target')
         .eq(0);
       gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
-      gesture.maxRatio = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
+      gesture.maxRatio = gesture.$imageWrapEl.attr('data-Carousel-zoom') || params.maxRatio;
       if (gesture.$imageWrapEl.length === 0) {
         gesture.$imageEl = undefined;
         return;
@@ -115,9 +115,9 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     isScaling = true;
   }
   function onGestureChange(e) {
-    const support = swiper.support;
-    const params = swiper.params.zoom;
-    const zoom = swiper.zoom;
+    const support = Carousel.support;
+    const params = Carousel.params.zoom;
+    const zoom = Carousel.zoom;
     if (!support.gestures) {
       if (e.type !== 'touchmove' || (e.type === 'touchmove' && e.targetTouches.length < 2)) {
         return;
@@ -144,10 +144,10 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     gesture.$imageEl.transform(`translate3d(0,0,0) scale(${zoom.scale})`);
   }
   function onGestureEnd(e) {
-    const device = swiper.device;
-    const support = swiper.support;
-    const params = swiper.params.zoom;
-    const zoom = swiper.zoom;
+    const device = Carousel.device;
+    const support = Carousel.support;
+    const params = Carousel.params.zoom;
+    const zoom = Carousel.zoom;
     if (!support.gestures) {
       if (!fakeGestureTouched || !fakeGestureMoved) {
         return;
@@ -164,14 +164,14 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
     zoom.scale = Math.max(Math.min(zoom.scale, gesture.maxRatio), params.minRatio);
     gesture.$imageEl
-      .transition(swiper.params.speed)
+      .transition(Carousel.params.speed)
       .transform(`translate3d(0,0,0) scale(${zoom.scale})`);
     currentScale = zoom.scale;
     isScaling = false;
     if (zoom.scale === 1) gesture.$slideEl = undefined;
   }
   function onTouchStart(e) {
-    const device = swiper.device;
+    const device = Carousel.device;
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
     if (image.isTouched) return;
     if (device.android && e.cancelable) e.preventDefault();
@@ -180,9 +180,9 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     image.touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
   }
   function onTouchMove(e) {
-    const zoom = swiper.zoom;
+    const zoom = Carousel.zoom;
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
-    swiper.allowClick = false;
+    Carousel.allowClick = false;
     if (!image.isTouched || !gesture.$slideEl) return;
 
     if (!image.isMoved) {
@@ -210,7 +210,7 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
 
     if (!image.isMoved && !isScaling) {
       if (
-        swiper.isHorizontal() &&
+        Carousel.isHorizontal() &&
         ((Math.floor(image.minX) === Math.floor(image.startX) &&
           image.touchesCurrent.x < image.touchesStart.x) ||
           (Math.floor(image.maxX) === Math.floor(image.startX) &&
@@ -220,7 +220,7 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
         return;
       }
       if (
-        !swiper.isHorizontal() &&
+        !Carousel.isHorizontal() &&
         ((Math.floor(image.minY) === Math.floor(image.startY) &&
           image.touchesCurrent.y < image.touchesStart.y) ||
           (Math.floor(image.maxY) === Math.floor(image.startY) &&
@@ -270,7 +270,7 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     gesture.$imageWrapEl.transform(`translate3d(${image.currentX}px, ${image.currentY}px,0)`);
   }
   function onTouchEnd() {
-    const zoom = swiper.zoom;
+    const zoom = Carousel.zoom;
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
     if (!image.isTouched || !image.isMoved) {
       image.isTouched = false;
@@ -311,8 +311,8 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
       .transform(`translate3d(${image.currentX}px, ${image.currentY}px,0)`);
   }
   function onTransitionEnd() {
-    const zoom = swiper.zoom;
-    if (gesture.$slideEl && swiper.previousIndex !== swiper.activeIndex) {
+    const zoom = Carousel.zoom;
+    if (gesture.$slideEl && Carousel.previousIndex !== Carousel.activeIndex) {
       if (gesture.$imageEl) {
         gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
       }
@@ -330,25 +330,25 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
   }
 
   function zoomIn(e) {
-    const zoom = swiper.zoom;
-    const params = swiper.params.zoom;
+    const zoom = Carousel.zoom;
+    const params = Carousel.params.zoom;
 
     if (!gesture.$slideEl) {
       if (e && e.target) {
-        gesture.$slideEl = $(e.target).closest(`.${swiper.params.slideClass}`);
+        gesture.$slideEl = $(e.target).closest(`.${Carousel.params.slideClass}`);
       }
       if (!gesture.$slideEl) {
-        if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
-          gesture.$slideEl = swiper.$wrapperEl.children(`.${swiper.params.slideActiveClass}`);
+        if (Carousel.params.virtual && Carousel.params.virtual.enabled && Carousel.virtual) {
+          gesture.$slideEl = Carousel.$wrapperEl.children(`.${Carousel.params.slideActiveClass}`);
         } else {
-          gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+          gesture.$slideEl = Carousel.slides.eq(Carousel.activeIndex);
         }
       }
 
       gesture.$imageEl = gesture.$slideEl
         .find(`.${params.containerClass}`)
         .eq(0)
-        .find('picture, img, svg, canvas, .swiper-zoom-target')
+        .find('picture, img, svg, canvas, .Carousel-zoom-target')
         .eq(0);
       gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
     }
@@ -359,9 +359,9 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
       gesture.$imageWrapEl.length === 0
     )
       return;
-    if (swiper.params.cssMode) {
-      swiper.wrapperEl.style.overflow = 'hidden';
-      swiper.wrapperEl.style.touchAction = 'none';
+    if (Carousel.params.cssMode) {
+      Carousel.wrapperEl.style.overflow = 'hidden';
+      Carousel.wrapperEl.style.touchAction = 'none';
     }
 
     gesture.$slideEl.addClass(`${params.zoomedSlideClass}`);
@@ -393,8 +393,8 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
       touchY = image.touchesStart.y;
     }
 
-    zoom.scale = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
-    currentScale = gesture.$imageWrapEl.attr('data-swiper-zoom') || params.maxRatio;
+    zoom.scale = gesture.$imageWrapEl.attr('data-Carousel-zoom') || params.maxRatio;
+    currentScale = gesture.$imageWrapEl.attr('data-Carousel-zoom') || params.maxRatio;
     if (e) {
       slideWidth = gesture.$slideEl[0].offsetWidth;
       slideHeight = gesture.$slideEl[0].offsetHeight;
@@ -439,19 +439,19 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     gesture.$imageEl.transition(300).transform(`translate3d(0,0,0) scale(${zoom.scale})`);
   }
   function zoomOut() {
-    const zoom = swiper.zoom;
-    const params = swiper.params.zoom;
+    const zoom = Carousel.zoom;
+    const params = Carousel.params.zoom;
 
     if (!gesture.$slideEl) {
-      if (swiper.params.virtual && swiper.params.virtual.enabled && swiper.virtual) {
-        gesture.$slideEl = swiper.$wrapperEl.children(`.${swiper.params.slideActiveClass}`);
+      if (Carousel.params.virtual && Carousel.params.virtual.enabled && Carousel.virtual) {
+        gesture.$slideEl = Carousel.$wrapperEl.children(`.${Carousel.params.slideActiveClass}`);
       } else {
-        gesture.$slideEl = swiper.slides.eq(swiper.activeIndex);
+        gesture.$slideEl = Carousel.slides.eq(Carousel.activeIndex);
       }
       gesture.$imageEl = gesture.$slideEl
         .find(`.${params.containerClass}`)
         .eq(0)
-        .find('picture, img, svg, canvas, .swiper-zoom-target')
+        .find('picture, img, svg, canvas, .Carousel-zoom-target')
         .eq(0);
       gesture.$imageWrapEl = gesture.$imageEl.parent(`.${params.containerClass}`);
     }
@@ -462,9 +462,9 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
       gesture.$imageWrapEl.length === 0
     )
       return;
-    if (swiper.params.cssMode) {
-      swiper.wrapperEl.style.overflow = '';
-      swiper.wrapperEl.style.touchAction = '';
+    if (Carousel.params.cssMode) {
+      Carousel.wrapperEl.style.overflow = '';
+      Carousel.wrapperEl.style.touchAction = '';
     }
     zoom.scale = 1;
     currentScale = 1;
@@ -476,7 +476,7 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
 
   // Toggle Zoom
   function zoomToggle(e) {
-    const zoom = swiper.zoom;
+    const zoom = Carousel.zoom;
 
     if (zoom.scale && zoom.scale !== 1) {
       // Zoom Out
@@ -488,11 +488,11 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
   }
 
   function getListeners() {
-    const support = swiper.support;
+    const support = Carousel.support;
     const passiveListener =
-      swiper.touchEvents.start === 'touchstart' &&
+      Carousel.touchEvents.start === 'touchstart' &&
       support.passiveListener &&
-      swiper.params.passiveListeners
+      Carousel.params.passiveListeners
         ? { passive: true, capture: false }
         : false;
     const activeListenerWithCapture = support.passiveListener
@@ -502,15 +502,15 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
   }
 
   function getSlideSelector() {
-    return `.${swiper.params.slideClass}`;
+    return `.${Carousel.params.slideClass}`;
   }
 
   function toggleGestures(method) {
     const { passiveListener } = getListeners();
     const slideSelector = getSlideSelector();
-    swiper.$wrapperEl[method]('gesturestart', slideSelector, onGestureStart, passiveListener);
-    swiper.$wrapperEl[method]('gesturechange', slideSelector, onGestureChange, passiveListener);
-    swiper.$wrapperEl[method]('gestureend', slideSelector, onGestureEnd, passiveListener);
+    Carousel.$wrapperEl[method]('gesturestart', slideSelector, onGestureStart, passiveListener);
+    Carousel.$wrapperEl[method]('gesturechange', slideSelector, onGestureChange, passiveListener);
+    Carousel.$wrapperEl[method]('gestureend', slideSelector, onGestureEnd, passiveListener);
   }
   function enableGestures() {
     if (gesturesEnabled) return;
@@ -525,34 +525,34 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
 
   // Attach/Detach Events
   function enable() {
-    const zoom = swiper.zoom;
+    const zoom = Carousel.zoom;
     if (zoom.enabled) return;
     zoom.enabled = true;
-    const support = swiper.support;
+    const support = Carousel.support;
     const { passiveListener, activeListenerWithCapture } = getListeners();
     const slideSelector = getSlideSelector();
 
     // Scale image
     if (support.gestures) {
-      swiper.$wrapperEl.on(swiper.touchEvents.start, enableGestures, passiveListener);
-      swiper.$wrapperEl.on(swiper.touchEvents.end, disableGestures, passiveListener);
-    } else if (swiper.touchEvents.start === 'touchstart') {
-      swiper.$wrapperEl.on(
-        swiper.touchEvents.start,
+      Carousel.$wrapperEl.on(Carousel.touchEvents.start, enableGestures, passiveListener);
+      Carousel.$wrapperEl.on(Carousel.touchEvents.end, disableGestures, passiveListener);
+    } else if (Carousel.touchEvents.start === 'touchstart') {
+      Carousel.$wrapperEl.on(
+        Carousel.touchEvents.start,
         slideSelector,
         onGestureStart,
         passiveListener,
       );
-      swiper.$wrapperEl.on(
-        swiper.touchEvents.move,
+      Carousel.$wrapperEl.on(
+        Carousel.touchEvents.move,
         slideSelector,
         onGestureChange,
         activeListenerWithCapture,
       );
-      swiper.$wrapperEl.on(swiper.touchEvents.end, slideSelector, onGestureEnd, passiveListener);
-      if (swiper.touchEvents.cancel) {
-        swiper.$wrapperEl.on(
-          swiper.touchEvents.cancel,
+      Carousel.$wrapperEl.on(Carousel.touchEvents.end, slideSelector, onGestureEnd, passiveListener);
+      if (Carousel.touchEvents.cancel) {
+        Carousel.$wrapperEl.on(
+          Carousel.touchEvents.cancel,
           slideSelector,
           onGestureEnd,
           passiveListener,
@@ -561,17 +561,17 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     }
 
     // Move image
-    swiper.$wrapperEl.on(
-      swiper.touchEvents.move,
-      `.${swiper.params.zoom.containerClass}`,
+    Carousel.$wrapperEl.on(
+      Carousel.touchEvents.move,
+      `.${Carousel.params.zoom.containerClass}`,
       onTouchMove,
       activeListenerWithCapture,
     );
   }
   function disable() {
-    const zoom = swiper.zoom;
+    const zoom = Carousel.zoom;
     if (!zoom.enabled) return;
-    const support = swiper.support;
+    const support = Carousel.support;
     zoom.enabled = false;
 
     const { passiveListener, activeListenerWithCapture } = getListeners();
@@ -579,25 +579,25 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
 
     // Scale image
     if (support.gestures) {
-      swiper.$wrapperEl.off(swiper.touchEvents.start, enableGestures, passiveListener);
-      swiper.$wrapperEl.off(swiper.touchEvents.end, disableGestures, passiveListener);
-    } else if (swiper.touchEvents.start === 'touchstart') {
-      swiper.$wrapperEl.off(
-        swiper.touchEvents.start,
+      Carousel.$wrapperEl.off(Carousel.touchEvents.start, enableGestures, passiveListener);
+      Carousel.$wrapperEl.off(Carousel.touchEvents.end, disableGestures, passiveListener);
+    } else if (Carousel.touchEvents.start === 'touchstart') {
+      Carousel.$wrapperEl.off(
+        Carousel.touchEvents.start,
         slideSelector,
         onGestureStart,
         passiveListener,
       );
-      swiper.$wrapperEl.off(
-        swiper.touchEvents.move,
+      Carousel.$wrapperEl.off(
+        Carousel.touchEvents.move,
         slideSelector,
         onGestureChange,
         activeListenerWithCapture,
       );
-      swiper.$wrapperEl.off(swiper.touchEvents.end, slideSelector, onGestureEnd, passiveListener);
-      if (swiper.touchEvents.cancel) {
-        swiper.$wrapperEl.off(
-          swiper.touchEvents.cancel,
+      Carousel.$wrapperEl.off(Carousel.touchEvents.end, slideSelector, onGestureEnd, passiveListener);
+      if (Carousel.touchEvents.cancel) {
+        Carousel.$wrapperEl.off(
+          Carousel.touchEvents.cancel,
           slideSelector,
           onGestureEnd,
           passiveListener,
@@ -606,16 +606,16 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     }
 
     // Move image
-    swiper.$wrapperEl.off(
-      swiper.touchEvents.move,
-      `.${swiper.params.zoom.containerClass}`,
+    Carousel.$wrapperEl.off(
+      Carousel.touchEvents.move,
+      `.${Carousel.params.zoom.containerClass}`,
       onTouchMove,
       activeListenerWithCapture,
     );
   }
 
   on('init', () => {
-    if (swiper.params.zoom.enabled) {
+    if (Carousel.params.zoom.enabled) {
       enable();
     }
   });
@@ -623,35 +623,35 @@ export default function Zoom({ swiper, extendParams, on, emit }) {
     disable();
   });
   on('touchStart', (_s, e) => {
-    if (!swiper.zoom.enabled) return;
+    if (!Carousel.zoom.enabled) return;
     onTouchStart(e);
   });
   on('touchEnd', (_s, e) => {
-    if (!swiper.zoom.enabled) return;
+    if (!Carousel.zoom.enabled) return;
     onTouchEnd(e);
   });
   on('doubleTap', (_s, e) => {
     if (
-      !swiper.animating &&
-      swiper.params.zoom.enabled &&
-      swiper.zoom.enabled &&
-      swiper.params.zoom.toggle
+      !Carousel.animating &&
+      Carousel.params.zoom.enabled &&
+      Carousel.zoom.enabled &&
+      Carousel.params.zoom.toggle
     ) {
       zoomToggle(e);
     }
   });
   on('transitionEnd', () => {
-    if (swiper.zoom.enabled && swiper.params.zoom.enabled) {
+    if (Carousel.zoom.enabled && Carousel.params.zoom.enabled) {
       onTransitionEnd();
     }
   });
   on('slideChange', () => {
-    if (swiper.zoom.enabled && swiper.params.zoom.enabled && swiper.params.cssMode) {
+    if (Carousel.zoom.enabled && Carousel.params.zoom.enabled && Carousel.params.cssMode) {
       onTransitionEnd();
     }
   });
 
-  Object.assign(swiper.zoom, {
+  Object.assign(Carousel.zoom, {
     enable,
     disable,
     in: zoomIn,
