@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-  <div class="test-prolayout">
     <vts-prolayout>
       <vts-prolayout-header>
         <div class="logo"></div>
@@ -54,28 +53,26 @@ import { Component } from '@angular/core';
         <vts-prolayout-footer>NG-VTS</vts-prolayout-footer>
       </vts-prolayout-content>
     </vts-prolayout>
-  </div>
   `,
   styles: [
     `
       .logo {
         width: 120px;
-        height: 31px;
+        height: 100%;
         background: rgba(255, 255, 255, 0.2);
-        margin: 16px 28px 16px 0;
+        margin: 16px 28px 0 24px;
         float: left;
+        background-repeat: no-repeat;
+        background-size: contain;
       }
 
       .header-menu {
         line-height: 63px;
       }
 
-      .outer-content {
-        padding: 0 50px;
-      }
-
       vts-breadcrumb {
-        margin: 16px 0;
+        margin-bottom: 24px;
+        margin-left: 24px;
       }
 
       .inner-layout {

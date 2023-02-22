@@ -96,7 +96,7 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsInputModule,
     VtsInputNumberModule,
     VtsLayoutModule,
-    // VtsProLayoutModule,
+    VtsProLayoutModule,
     VtsListModule,
     VtsMentionModule,
     VtsMenuModule,
