@@ -173,52 +173,52 @@ export class VtscarouselComponent implements OnInit {
   @Input() class: string = '';
   @Input() id: string = '';
   @Input()
-  set navigation(val) {
+  set vtsNavigation(val) {
     const currentNext =
-      typeof this._navigation !== 'boolean' && this._navigation !== ''
-        ? this._navigation?.nextEl
+      typeof this._vtsNavigation !== 'boolean' && this._vtsNavigation !== ''
+        ? this._vtsNavigation?.nextEl
         : null;
     const currentPrev =
-      typeof this._navigation !== 'boolean' && this._navigation !== ''
-        ? this._navigation?.prevEl
+      typeof this._vtsNavigation !== 'boolean' && this._vtsNavigation !== ''
+        ? this._vtsNavigation?.prevEl
         : null;
-    this._navigation = setProperty(val, {
+    this._vtsNavigation = setProperty(val, {
       nextEl: currentNext || null,
       prevEl: currentPrev || null,
     });
     this.showNavigation = !(
       coerceBooleanProperty(val) !== true ||
-      (this._navigation &&
-        typeof this._navigation !== 'boolean' &&
-        this._navigation.prevEl !== this._prevElRef?.nativeElement &&
-        (this._navigation.prevEl !== null || this._navigation.nextEl !== null) &&
-        (typeof this._navigation.nextEl === 'string' ||
-          typeof this._navigation.prevEl === 'string' ||
-          typeof this._navigation.nextEl === 'object' ||
-          typeof this._navigation.prevEl === 'object'))
+      (this._vtsNavigation &&
+        typeof this._vtsNavigation !== 'boolean' &&
+        this._vtsNavigation.prevEl !== this._prevElRef?.nativeElement &&
+        (this._vtsNavigation.prevEl !== null || this._vtsNavigation.nextEl !== null) &&
+        (typeof this._vtsNavigation.nextEl === 'string' ||
+          typeof this._vtsNavigation.prevEl === 'string' ||
+          typeof this._vtsNavigation.nextEl === 'object' ||
+          typeof this._vtsNavigation.prevEl === 'object'))
     );
   }
-  get navigation() {
-    return this._navigation;
+  get vtsNavigation() {
+    return this._vtsNavigation;
   }
-  private _navigation: NavigationOptions | boolean | '';
+  private _vtsNavigation: NavigationOptions | boolean | '';
   showNavigation: boolean = true;
 
   @Input()
-  set pagination(val) {
+  set vtsPagination(val) {
     const current =
-      typeof this._pagination !== 'boolean' && this._pagination !== ''
-        ? this._pagination?.el
+      typeof this._vtsPagination !== 'boolean' && this._vtsPagination !== ''
+        ? this._vtsPagination?.el
         : null;
-    this._pagination = setProperty(val, {
+    this._vtsPagination = setProperty(val, {
       el: current || null,
     });
-    this.showPagination = isShowEl(val, this._pagination, this._paginationElRef);
+    this.showPagination = isShowEl(val, this._vtsPagination, this._paginationElRef);
   }
-  get pagination() {
-    return this._pagination;
+  get vtsPagination() {
+    return this._vtsPagination;
   }
-  private _pagination: PaginationOptions | boolean | '';
+  private _vtsPagination: PaginationOptions | boolean | '';
   showPagination: boolean = true;
 
   @Input()
@@ -474,13 +474,13 @@ export class VtscarouselComponent implements OnInit {
   @ViewChild('prevElRef', { static: false })
   set prevElRef(el: ElementRef) {
     this._prevElRef = el;
-    this._setElement(el, this.navigation, 'navigation', 'prevEl');
+    this._setElement(el, this.vtsNavigation, 'vtsNavigation', 'prevEl');
   }
   _prevElRef!: ElementRef;
   @ViewChild('nextElRef', { static: false })
   set nextElRef(el: ElementRef) {
     this._nextElRef = el;
-    this._setElement(el, this.navigation, 'navigation', 'nextEl');
+    this._setElement(el, this.vtsNavigation, 'vtsNavigation', 'nextEl');
   }
   _nextElRef!: ElementRef;
   @ViewChild('scrollbarElRef', { static: false })
@@ -492,7 +492,7 @@ export class VtscarouselComponent implements OnInit {
   @ViewChild('paginationElRef', { static: false })
   set paginationElRef(el: ElementRef) {
     this._paginationElRef = el;
-    this._setElement(el, this.pagination, 'pagination');
+    this._setElement(el, this.vtsPagination, 'pagination');
   }
   _paginationElRef!: ElementRef;
   @ContentChildren(carouselSlideDirective, { descendants: false, emitDistinctChangesOnly: true })
@@ -526,8 +526,8 @@ export class VtscarouselComponent implements OnInit {
     private _changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private _platformId: Object,
   ) {
-    this._pagination = false;
-    this._navigation = false;
+    this._vtsPagination = false;
+    this._vtsNavigation = false;
     this._scrollbar = false;
     this._virtual = false;
   }
@@ -723,13 +723,13 @@ export class VtscarouselComponent implements OnInit {
 
       if (changedParams.pagination) {
         if (
-          this.pagination &&
-          typeof this.pagination !== 'boolean' &&
-          this.pagination.el &&
+          this.vtsPagination &&
+          typeof this.vtsPagination !== 'boolean' &&
+          this.vtsPagination.el &&
           pagination &&
           !pagination.el
         ) {
-          this.updateParameter('pagination', this.pagination);
+          this.updateParameter('pagination', this.vtsPagination);
           pagination.init();
           pagination.render();
           pagination.update();
@@ -757,17 +757,17 @@ export class VtscarouselComponent implements OnInit {
         }
       }
 
-      if (changedParams.navigation) {
+      if (changedParams.vtsNavigation) {
         if (
-          this.navigation &&
-          typeof this.navigation !== 'boolean' &&
-          this.navigation.prevEl &&
-          this.navigation.nextEl &&
+          this.vtsNavigation &&
+          typeof this.vtsNavigation !== 'boolean' &&
+          this.vtsNavigation.prevEl &&
+          this.vtsNavigation.nextEl &&
           navigation &&
           !navigation.prevEl &&
           !navigation.nextEl
         ) {
-          this.updateParameter('navigation', this.navigation);
+          this.updateParameter('navigation', this.vtsNavigation);
           navigation.init();
           navigation.update();
         } else if (navigation.prevEl && navigation.nextEl) {

@@ -17,8 +17,7 @@
     "@angular/cdk": "^12.2.13",
     "@ui-vts/icons-angular": "1.0.0",
     "date-fns": "^2.10.0",
-    "apexcharts": "^3.27.3",
-    "@ui-vts/theme": "file:../../ui-vts-theme"
+    "apexcharts": "^3.27.3"
   },
   "peerDependencies": {
     "@angular/animations": "^12.1.0",

@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   template: `
     <vts-carousel
      [vtsSlidesPerView]="vtsSlidesPerView"
-     [navigation]="navigation"
-     [pagination]="pagination"
+     [vtsNavigation]="vtsNavigation"
+     [vtsPagination]="vtsPagination"
      [vtsSpaceBetween]="vtsSpaceBetween"
      [vtsAutoplay]="vtsAutoplay"
     >
@@ -69,8 +69,8 @@ import { Component } from '@angular/core';
 export class VtsDemoCarouselMultipleComponent {
     vtsSlidesPerView = 3;
     vtsSpaceBetween = 20;
-    navigation= {nextEl: '.next-btn', prevEl: '.prev-btn'};
-    pagination= {clickable: true, el: '.pagination-custom'};
+    vtsNavigation= {nextEl: '.next-btn', prevEl: '.prev-btn'};
+    vtsPagination= {clickable: true, el: '.pagination-custom'};
     vtsAutoplay = true;
     array= [
       {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},

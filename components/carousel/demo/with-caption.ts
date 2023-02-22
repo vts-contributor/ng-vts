@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   template: `
     <vts-carousel
      [vtsSlidesPerView]="vtsSlidesPerView"
-     [navigation]="navigation"
-     [pagination]="pagination"
+     [vtsNavigation]="vtsNavigation"
+     [vtsPagination]="vtsPagination"
     >
       <ng-template vts-carousel-slide *ngFor="let item of array">
         <img src='{{item.src}}' alt="" />
@@ -51,8 +51,8 @@ import { Component } from '@angular/core';
 })
 export class VtsDemoCarouselWithCaptionComponent {
   vtsSlidesPerView = 1;
-  navigation= true;
-  pagination= {clickable: true, el: '.pagination-custom'};
+  vtsNavigation= true;
+  vtsPagination= {clickable: true, el: '.pagination-custom'};
   array= [
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
