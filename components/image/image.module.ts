@@ -17,18 +17,17 @@ import { VtsImageDirective } from './image.directive';
 import { VtsImageService } from './image.service';
 
 @NgModule({
-  imports: [
-    BidiModule,
-    OverlayModule,
-    PortalModule,
-    DragDropModule,
-    CommonModule,
-    VtsIconModule,
-    VtsPipesModule
-  ],
-  exports: [VtsImageDirective, VtsImagePreviewComponent, VtsImageGroupComponent],
-  providers: [VtsImageService],
-  entryComponents: [VtsImagePreviewComponent],
-  declarations: [VtsImageDirective, VtsImagePreviewComponent, VtsImageGroupComponent]
+    imports: [
+        BidiModule,
+        OverlayModule,
+        PortalModule,
+        DragDropModule,
+        CommonModule,
+        VtsIconModule,
+        VtsPipesModule
+    ],
+    exports: [VtsImageDirective, VtsImagePreviewComponent, VtsImageGroupComponent],
+    providers: [VtsImageService],
+    declarations: [VtsImageDirective, VtsImagePreviewComponent, VtsImageGroupComponent]
 })
 export class VtsImageModule {}

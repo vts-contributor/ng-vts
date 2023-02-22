@@ -55,7 +55,7 @@ task('serve:site', done => {
     'serve', 
     ...['--port', port], 
     ...(host ? ['--host', host] : []),
-    ...(path ? ['--base-href', path] : []),
+    // ...(path ? ['--base-href', path] : []),
   ];
 
   detectPort(port).then(() => {

@@ -24,33 +24,32 @@ import { VtsDropdownMenuComponent } from './dropdown-menu.component';
 import { VtsDropDownDirective } from './dropdown.directive';
 
 @NgModule({
-  imports: [
-    BidiModule,
-    CommonModule,
-    OverlayModule,
-    FormsModule,
-    VtsButtonModule,
-    VtsMenuModule,
-    VtsIconModule,
-    VtsNoAnimationModule,
-    PlatformModule,
-    VtsOverlayModule,
-    VtsContextMenuServiceModule,
-    VtsOutletModule
-  ],
-  entryComponents: [VtsDropdownMenuComponent],
-  declarations: [
-    VtsDropDownDirective,
-    VtsDropDownADirective,
-    VtsDropdownMenuComponent,
-    VtsDropdownButtonDirective
-  ],
-  exports: [
-    VtsMenuModule,
-    VtsDropDownDirective,
-    VtsDropDownADirective,
-    VtsDropdownMenuComponent,
-    VtsDropdownButtonDirective
-  ]
+    imports: [
+        BidiModule,
+        CommonModule,
+        OverlayModule,
+        FormsModule,
+        VtsButtonModule,
+        VtsMenuModule,
+        VtsIconModule,
+        VtsNoAnimationModule,
+        PlatformModule,
+        VtsOverlayModule,
+        VtsContextMenuServiceModule,
+        VtsOutletModule
+    ],
+    declarations: [
+        VtsDropDownDirective,
+        VtsDropDownADirective,
+        VtsDropdownMenuComponent,
+        VtsDropdownButtonDirective
+    ],
+    exports: [
+        VtsMenuModule,
+        VtsDropDownDirective,
+        VtsDropDownADirective,
+        VtsDropdownMenuComponent,
+        VtsDropdownButtonDirective
+    ]
 })
 export class VtsDropDownModule {}
