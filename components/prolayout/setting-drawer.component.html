@@ -10,17 +10,16 @@
     </button>
   </ng-template>
 </div>
-<vts-drawer
-  [vtsClosable]="true"
-  [vtsVisible]="open"
-  vtsPlacement="right"
-  [vtsWrapClassName]="drawerWrapClassName"
-  vtsTitle="Basic Drawer"
-  (vtsOnClose)="closeDrawer()"
->
+<vts-drawer [vtsClosable]="true" [vtsVisible]="open" vtsPlacement="right" [vtsWrapClassName]="drawerWrapClassName"
+  vtsTitle="Basic Drawer" (vtsOnClose)="closeDrawer()">
   <ng-template *vtsDrawerContent>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
-    <p>Some contents...</p>
+    <p>
+      <vts-switch [ngModel]="isFixedHeader" (ngModelChange)="onChangeFixedHeader()" vtsCheckedChildren="Fixed Header"
+        vtsUnCheckedChildren="Fixed Header"></vts-switch>
+    </p>
+    <p>
+      <vts-switch [ngModel]="isFixedSider" (ngModelChange)="onChangeFixedSider()" vtsCheckedChildren="Fixed Sider"
+        vtsUnCheckedChildren="Fixed Sider"></vts-switch>
+    </p>
   </ng-template>
 </vts-drawer>
