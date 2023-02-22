@@ -39,7 +39,7 @@ export default function setBreakpoint() {
   }
 
   // Toggle navigation, pagination, scrollbar
-  ['navigation', 'pagination', 'scrollbar'].forEach((prop) => {
+  ['vtsNavigation', 'vtsPagination', 'scrollbar'].forEach((prop) => {
     const wasModuleEnabled = params[prop] && params[prop].enabled;
     const isModuleEnabled = breakpointParams[prop] && breakpointParams[prop].enabled;
     if (wasModuleEnabled && !isModuleEnabled) {

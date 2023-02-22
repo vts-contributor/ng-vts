@@ -5,7 +5,7 @@ import createElementIfNotDefined from '../../../shared/create-element-if-not-def
 export default function Pagination({ carousel, extendParams, on, emit }) {
   const pfx = 'carousel-pagination';
   extendParams({
-    pagination: {
+    vtsPagination: {
       el: null,
       bulletElement: 'span',
       clickable: false,
@@ -36,7 +36,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     },
   });
 
-  carousel.pagination = {
+  carousel.vtsPagination = {
     el: null,
     $el: null,
     bullets: [],
@@ -47,15 +47,15 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
 
   function isPaginationDisabled() {
     return (
-      !carousel.params.pagination.el ||
-      !carousel.pagination.el ||
-      !carousel.pagination.$el ||
-      carousel.pagination.$el.length === 0
+      !carousel.params.vtsPagination.el ||
+      !carousel.vtsPagination.el ||
+      !carousel.vtsPagination.$el ||
+      carousel.vtsPagination.$el.length === 0
     );
   }
 
   function setSideBullets($bulletEl, position) {
-    const { bulletActiveClass } = carousel.params.pagination;
+    const { bulletActiveClass } = carousel.params.vtsPagination;
     $bulletEl[position]()
       .addClass(`${bulletActiveClass}-${position}`)
       [position]()
@@ -65,13 +65,13 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
   function update() {
     // Render || Update Pagination bullets/items
     const rtl = carousel.rtl;
-    const params = carousel.params.pagination;
+    const params = carousel.params.vtsPagination;
     if (isPaginationDisabled()) return;
     const slidesLength =
       carousel.virtual && carousel.params.virtual.enabled
         ? carousel.virtual.slides.length
         : carousel.slides.length;
-    const $el = carousel.pagination.$el;
+    const $el = carousel.vtsPagination.$el;
     // Current/Total
     let current;
     const total = carousel.params.loop
@@ -85,7 +85,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
         current -= slidesLength - carousel.loopedSlides * 2;
       }
       if (current > total - 1) current -= total;
-      if (current < 0 && carousel.params.paginationType !== 'bullets') current = total + current;
+      if (current < 0 && carousel.params.vtsPaginationType !== 'bullets') current = total + current;
     } else if (typeof carousel.snapIndex !== 'undefined') {
       current = carousel.snapIndex;
     } else {
@@ -94,10 +94,10 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     // Types
     if (
       params.type === 'bullets' &&
-      carousel.pagination.bullets &&
-      carousel.pagination.bullets.length > 0
+      carousel.vtsPagination.bullets &&
+      carousel.vtsPagination.bullets.length > 0
     ) {
-      const bullets = carousel.pagination.bullets;
+      const bullets = carousel.vtsPagination.bullets;
       let firstIndex;
       let lastIndex;
       let midIndex;
@@ -217,14 +217,14 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
   }
   function render() {
     // Render Container
-    const params = carousel.params.pagination;
+    const params = carousel.params.vtsPagination;
     if (isPaginationDisabled()) return;
     const slidesLength =
       carousel.virtual && carousel.params.virtual.enabled
         ? carousel.virtual.slides.length
         : carousel.slides.length;
 
-    const $el = carousel.pagination.$el;
+    const $el = carousel.vtsPagination.$el;
     let paginationHTML = '';
     if (params.type === 'bullets') {
       let numberOfBullets = carousel.params.loop
@@ -247,7 +247,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       }
       $el.html(paginationHTML);
 
-      carousel.pagination.bullets = $el.find(classesToSelector(params.bulletClass));
+      carousel.vtsPagination.bullets = $el.find(classesToSelector(params.bulletClass));
     }
     if (params.type === 'fraction') {
       if (params.renderFraction) {
@@ -269,17 +269,17 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       $el.html(paginationHTML);
     }
     if (params.type !== 'custom') {
-      emit('paginationRender', carousel.pagination.$el[0]);
+      emit('paginationRender', carousel.vtsPagination.$el[0]);
     }
   }
   function init() {
-    carousel.params.pagination = createElementIfNotDefined(
+    carousel.params.vtsPagination = createElementIfNotDefined(
       carousel,
-      carousel.originalParams.pagination,
-      carousel.params.pagination,
+      carousel.originalParams.vtsPagination,
+      carousel.params.vtsPagination,
       { el: 'carousel-pagination' },
     );
-    const params = carousel.params.pagination;
+    const params = carousel.params.vtsPagination;
     if (!params.el) return;
 
     let $el = $(params.el);
@@ -323,7 +323,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       });
     }
 
-    Object.assign(carousel.pagination, {
+    Object.assign(carousel.vtsPagination, {
       $el,
       el: $el[0],
     });
@@ -333,22 +333,22 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     }
   }
   function destroy() {
-    const params = carousel.params.pagination;
+    const params = carousel.params.vtsPagination;
     if (isPaginationDisabled()) return;
-    const $el = carousel.pagination.$el;
+    const $el = carousel.vtsPagination.$el;
 
     $el.removeClass(params.hiddenClass);
     $el.removeClass(params.modifierClass + params.type);
     $el.removeClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
-    if (carousel.pagination.bullets && carousel.pagination.bullets.removeClass)
-      carousel.pagination.bullets.removeClass(params.bulletActiveClass);
+    if (carousel.vtsPagination.bullets && carousel.vtsPagination.bullets.removeClass)
+      carousel.vtsPagination.bullets.removeClass(params.bulletActiveClass);
     if (params.clickable) {
       $el.off('click', classesToSelector(params.bulletClass));
     }
   }
 
   on('init', () => {
-    if (carousel.params.pagination.enabled === false) {
+    if (carousel.params.vtsPagination.enabled === false) {
       // eslint-disable-next-line
       disable();
     } else {
@@ -385,9 +385,9 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     destroy();
   });
   on('enable disable', () => {
-    const { $el } = carousel.pagination;
+    const { $el } = carousel.vtsPagination;
     if ($el) {
-      $el[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.pagination.lockClass);
+      $el[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.vtsPagination.lockClass);
     }
   });
   on('lock unlock', () => {
@@ -395,34 +395,34 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
   });
   on('click', (_s, e) => {
     const targetEl = e.target;
-    const { $el } = carousel.pagination;
+    const { $el } = carousel.vtsPagination;
     if (
-      carousel.params.pagination.el &&
-      carousel.params.pagination.hideOnClick &&
+      carousel.params.vtsPagination.el &&
+      carousel.params.vtsPagination.hideOnClick &&
       $el &&
       $el.length > 0 &&
-      !$(targetEl).hasClass(carousel.params.pagination.bulletClass)
+      !$(targetEl).hasClass(carousel.params.vtsPagination.bulletClass)
     ) {
       if (
-        carousel.navigation &&
-        ((carousel.navigation.nextEl && targetEl === carousel.navigation.nextEl) ||
-          (carousel.navigation.prevEl && targetEl === carousel.navigation.prevEl))
+        carousel.vtsNavigation &&
+        ((carousel.vtsNavigation.nextEl && targetEl === carousel.vtsNavigation.nextEl) ||
+          (carousel.vtsNavigation.prevEl && targetEl === carousel.vtsNavigation.prevEl))
       )
         return;
-      const isHidden = $el.hasClass(carousel.params.pagination.hiddenClass);
+      const isHidden = $el.hasClass(carousel.params.vtsPagination.hiddenClass);
       if (isHidden === true) {
         emit('paginationShow');
       } else {
         emit('paginationHide');
       }
-      $el.toggleClass(carousel.params.pagination.hiddenClass);
+      $el.toggleClass(carousel.params.vtsPagination.hiddenClass);
     }
   });
 
   const enable = () => {
-    carousel.$el.removeClass(carousel.params.pagination.paginationDisabledClass);
-    if (carousel.pagination.$el) {
-      carousel.pagination.$el.removeClass(carousel.params.pagination.paginationDisabledClass);
+    carousel.$el.removeClass(carousel.params.vtsPagination.paginationDisabledClass);
+    if (carousel.vtsPagination.$el) {
+      carousel.vtsPagination.$el.removeClass(carousel.params.vtsPagination.paginationDisabledClass);
     }
     init();
     render();
@@ -430,14 +430,14 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
   };
 
   const disable = () => {
-    carousel.$el.addClass(carousel.params.pagination.paginationDisabledClass);
-    if (carousel.pagination.$el) {
-      carousel.pagination.$el.addClass(carousel.params.pagination.paginationDisabledClass);
+    carousel.$el.addClass(carousel.params.vtsPagination.paginationDisabledClass);
+    if (carousel.vtsPagination.$el) {
+      carousel.vtsPagination.$el.addClass(carousel.params.vtsPagination.paginationDisabledClass);
     }
     destroy();
   };
 
-  Object.assign(carousel.pagination, {
+  Object.assign(carousel.vtsPagination, {
     enable,
     disable,
     render,

@@ -1103,7 +1103,7 @@ export interface carouselOptions {
    * });
    * ```
    */
-  navigation?: NavigationOptions | boolean;
+  vtsNavigation?: NavigationOptions | boolean;
 
   /**
    * Object with pagination parameters or boolean `true` to enable with default settings.
@@ -1118,7 +1118,7 @@ export interface carouselOptions {
    * });
    * ```
    */
-  pagination?: PaginationOptions | boolean;
+  vtsPagination?: PaginationOptions | boolean;
 
   /**
    * Object with parallax parameters or boolean `true` to enable with default settings.

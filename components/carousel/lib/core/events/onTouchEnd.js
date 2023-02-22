@@ -147,8 +147,8 @@ export default function onTouchEnd(event) {
       return;
     }
     const isNavButtonTarget =
-      carousel.navigation &&
-      (e.target === carousel.navigation.nextEl || e.target === carousel.navigation.prevEl);
+      carousel.vtsNavigation &&
+      (e.target === carousel.vtsNavigation.nextEl || e.target === carousel.vtsNavigation.prevEl);
     if (!isNavButtonTarget) {
       if (carousel.swipeDirection === 'next') {
         carousel.slideTo(rewindFirstIndex !== null ? rewindFirstIndex : stopIndex + increment);
@@ -156,7 +156,7 @@ export default function onTouchEnd(event) {
       if (carousel.swipeDirection === 'prev') {
         carousel.slideTo(rewindLastIndex !== null ? rewindLastIndex : stopIndex);
       }
-    } else if (e.target === carousel.navigation.nextEl) {
+    } else if (e.target === carousel.vtsNavigation.nextEl) {
       carousel.slideTo(stopIndex + increment);
     } else {
       carousel.slideTo(stopIndex);

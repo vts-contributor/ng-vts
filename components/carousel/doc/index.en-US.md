@@ -26,8 +26,8 @@ import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 | Property | Description | Type | Default | Global Config |
 | -------- | ----------- | ---- | ------- | ------------- |
 | `[vtsAutoPlay]` | Whether to scroll automatically | `boolean` | `false` | ✅ |
-| `[navigation]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
-| `[pagination]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
+| `[vtsNavigation]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
+| `[vtsPagination]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
 | `[vtsSlidesPerView]` | Number of slides is shown | `boolean` | 1 | ✅ |
 | `[vtsSpaceBetween]` | Margin between slides | `number` | 10 | ✅ |
 

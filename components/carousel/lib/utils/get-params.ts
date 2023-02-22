@@ -37,7 +37,7 @@ export function getParams(obj: any = {}) {
       rest[_key] = obj[key];
     }
   });
-  ['navigation', 'pagination', 'scrollbar'].forEach((key) => {
+  ['vtsNavigation', 'vtsPagination', 'scrollbar'].forEach((key) => {
     if (params[key] === true) params[key] = {};
     if (params[key] === false) delete params[key];
   });
