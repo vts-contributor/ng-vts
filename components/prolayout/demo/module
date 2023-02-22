@@ -3,5 +3,6 @@ import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 
-export const moduleList = [VtsProLayoutModule, VtsMenuModule, VtsIconModule, VtsBreadCrumbModule, VtsButtonModule];
+export const moduleList = [VtsProLayoutModule, VtsMenuModule, VtsIconModule, VtsBreadCrumbModule, VtsButtonModule, VtsSwitchModule];

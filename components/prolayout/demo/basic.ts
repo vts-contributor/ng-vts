@@ -4,13 +4,7 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-prolayout-basic',
   template: `
     <vts-prolayout>
-      <vts-prolayout-header>
-        <div class="logo"></div>
-        <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
-          <li vts-menu-item>nav 1</li>
-          <li vts-menu-item vtsSelected>nav 2</li>
-          <li vts-menu-item>nav 3</li>
-        </ul>
+      <vts-prolayout-header [isFixed]="isFixedHeader" [hasSiderMenu]="hasSiderMenu">
       </vts-prolayout-header>
       <vts-prolayout-content class="outer-content">
         <vts-breadcrumb>
@@ -19,7 +13,7 @@ import { Component } from '@angular/core';
           <vts-breadcrumb-item>App</vts-breadcrumb-item>
         </vts-breadcrumb>
         <vts-prolayout class="inner-layout">
-          <vts-prolayout-sider vtsWidth="200px" vtsTheme="light">
+          <vts-prolayout-sider vtsWidth="200px" vtsTheme="light" *ngIf="hasSiderMenu">
             <ul vts-menu vtsMode="inline" class="sider-menu">
               <li vts-submenu vtsOpen vtsTitle="subnav 1" vtsIcon="user">
                 <ul>
@@ -48,7 +42,7 @@ import { Component } from '@angular/core';
             </ul>
           </vts-prolayout-sider>
           <vts-prolayout-content class="inner-content">Content</vts-prolayout-content>
-          <vts-setting-drawer></vts-setting-drawer>
+          <vts-setting-drawer (setFixedHeader)="onChangeFixedHeader($event)"></vts-setting-drawer>
         </vts-prolayout>
         <vts-prolayout-footer>NG-VTS</vts-prolayout-footer>
       </vts-prolayout-content>
@@ -94,4 +88,16 @@ import { Component } from '@angular/core';
     `
   ]
 })
-export class VtsDemoProlayoutBasicComponent {}
+export class VtsDemoProlayoutBasicComponent {
+  isFixedHeader: boolean = false;
+  isFixedSider: boolean = false;
+  hasSiderMenu: boolean = true;
+
+  onChangeFixedSider(isFixed: boolean){
+    this.isFixedSider = isFixed;
+  }
+
+  onChangeFixedHeader(isFixed: boolean){
+    this.isFixedHeader = isFixed;
+  }
+}

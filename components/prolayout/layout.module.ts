@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsButtonModule } from '../button';
 import { VtsDrawerModule } from '../drawer';
+import { VtsSwitchModule } from '../switch';
 import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
 import { VtsHeaderComponent } from './header.component';
@@ -37,6 +38,6 @@ import { VtsSiderComponent } from './sider.component';
     VtsProLayoutComponent,
     VtsSettingDrawerComponent
   ],
-  imports: [BidiModule, CommonModule, VtsIconModule, LayoutModule, PlatformModule, VtsDrawerModule, VtsButtonModule]
+  imports: [BidiModule, CommonModule, VtsIconModule, LayoutModule, PlatformModule, VtsDrawerModule, VtsButtonModule, VtsSwitchModule]
 })
 export class VtsProLayoutModule {}
