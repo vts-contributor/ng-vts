@@ -29,11 +29,11 @@ export default function slideToLoop(
     index = indexAsNumber;
   }
 
-  const Carousel = this;
+  const carousel = this;
   let newIndex = index;
-  if (Carousel.params.loop) {
-    newIndex += Carousel.loopedSlides;
+  if (carousel.params.loop) {
+    newIndex += carousel.loopedSlides;
   }
 
-  return Carousel.slideTo(newIndex, speed, runCallbacks, internal);
+  return carousel.slideTo(newIndex, speed, runCallbacks, internal);
 }

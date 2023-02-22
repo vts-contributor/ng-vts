@@ -1,4 +1,4 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface ZoomMethods {
   /**
@@ -41,7 +41,7 @@ export interface ZoomEvents {
   /**
    * Event will be fired on zoom change
    */
-  zoomChange: (Carousel: Carousel, scale: number, imageEl: HTMLElement, slideEl: HTMLElement) => void;
+  zoomChange: (carousel: carousel, scale: number, imageEl: HTMLElement, slideEl: HTMLElement) => void;
 }
 
 export interface ZoomOptions {
@@ -66,13 +66,13 @@ export interface ZoomOptions {
   /**
    * CSS class name of zoom container
    *
-   * @default 'Carousel-zoom-container'
+   * @default 'carousel-zoom-container'
    */
   containerClass?: string;
   /**
    * CSS class name of zoomed in container
    *
-   * @default 'Carousel-slide-zoomed'
+   * @default 'carousel-slide-zoomed'
 
    */
   zoomedSlideClass?: string;

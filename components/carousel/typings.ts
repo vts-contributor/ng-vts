@@ -5,14 +5,14 @@
 
 import { Direction } from '@angular/cdk/bidi';
 import { InjectionToken, QueryList } from '@angular/core';
-import { VtsCarouselContentDirective } from './carousel-content.directive';
-import { VtsCarouselBaseStrategy } from './strategies/base-strategy';
+import { VtscarouselContentDirective } from './carousel-content.directive';
+import { VtscarouselBaseStrategy } from './strategies/base-strategy';
 
-export type VtsCarouselEffects = 'fade' | 'scrollx' | string;
-export type VtsCarouselDotPosition = 'top' | 'bottom' | 'left' | 'right' | string;
+export type VtscarouselEffects = 'fade' | 'scrollx' | string;
+export type VtscarouselDotPosition = 'top' | 'bottom' | 'left' | 'right' | string;
 
-export interface VtsCarouselComponentAsSource {
-  carouselContents: QueryList<VtsCarouselContentDirective>;
+export interface VtscarouselComponentAsSource {
+  carouselContents: QueryList<VtscarouselContentDirective>;
   el: HTMLElement;
   vtsTransitionSpeed: number;
   vertical: boolean;
@@ -22,12 +22,12 @@ export interface VtsCarouselComponentAsSource {
   dir: Direction;
 }
 
-export interface VtsCarouselStrategyRegistryItem {
+export interface VtscarouselStrategyRegistryItem {
   name: string;
-  strategy: VtsCarouselBaseStrategy;
+  strategy: VtscarouselBaseStrategy;
 }
 
-export const VTS_CAROUSEL_CUSTOM_STRATEGIES = new InjectionToken<VtsCarouselStrategyRegistryItem[]>(
+export const VTS_carousel_CUSTOM_STRATEGIES = new InjectionToken<VtscarouselStrategyRegistryItem[]>(
   'vts-carousel-custom-strategies'
 );
 

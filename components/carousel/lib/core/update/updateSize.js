@@ -1,19 +1,19 @@
 export default function updateSize() {
-  const Carousel = this;
+  const carousel = this;
   let width;
   let height;
-  const $el = Carousel.$el;
-  if (typeof Carousel.params.width !== 'undefined' && Carousel.params.width !== null) {
-    width = Carousel.params.width;
+  const $el = carousel.$el;
+  if (typeof carousel.params.width !== 'undefined' && carousel.params.width !== null) {
+    width = carousel.params.width;
   } else {
     width = $el[0].clientWidth;
   }
-  if (typeof Carousel.params.height !== 'undefined' && Carousel.params.height !== null) {
-    height = Carousel.params.height;
+  if (typeof carousel.params.height !== 'undefined' && carousel.params.height !== null) {
+    height = carousel.params.height;
   } else {
     height = $el[0].clientHeight;
   }
-  if ((width === 0 && Carousel.isHorizontal()) || (height === 0 && Carousel.isVertical())) {
+  if ((width === 0 && carousel.isHorizontal()) || (height === 0 && carousel.isVertical())) {
     return;
   }
 
@@ -30,9 +30,9 @@ export default function updateSize() {
   if (Number.isNaN(width)) width = 0;
   if (Number.isNaN(height)) height = 0;
 
-  Object.assign(Carousel, {
+  Object.assign(carousel, {
     width,
     height,
-    size: Carousel.isHorizontal() ? width : height,
+    size: carousel.isHorizontal() ? width : height,
   });
 }

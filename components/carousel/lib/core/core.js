@@ -46,7 +46,7 @@ const prototypes = {
 
 const extendedDefaults = {};
 
-class Carousel {
+class carousel {
   isHorizontal() {
     throw new Error('Method not implemented.');
   }
@@ -83,66 +83,66 @@ class Carousel {
     if (el && !params.el) params.el = el;
 
     if (params.el && $(params.el).length > 1) {
-      const Carousels = [];
+      const carousels = [];
       $(params.el).each((containerEl) => {
         const newParams = extend({}, params, { el: containerEl });
-        Carousels.push(new Carousel(newParams));
+        carousels.push(new carousel(newParams));
       });
       // eslint-disable-next-line no-constructor-return
-      return Carousels;
+      return carousels;
     }
 
-    // Carousel Instance
-    const Carousel = this;
-    Carousel.__Carousel__ = true;
-    Carousel.support = getSupport();
-    Carousel.device = getDevice({ userAgent: params.userAgent });
-    Carousel.browser = getBrowser();
+    // carousel Instance
+    const carousel = this;
+    carousel.__carousel__ = true;
+    carousel.support = getSupport();
+    carousel.device = getDevice({ userAgent: params.userAgent });
+    carousel.browser = getBrowser();
 
-    Carousel.eventsListeners = {};
-    Carousel.eventsAnyListeners = [];
-    Carousel.modules = [...Carousel.__modules__];
+    carousel.eventsListeners = {};
+    carousel.eventsAnyListeners = [];
+    carousel.modules = [...carousel.__modules__];
     if (params.modules && Array.isArray(params.modules)) {
-      Carousel.modules.push(...params.modules);
+      carousel.modules.push(...params.modules);
     }
 
     const allModulesParams = {};
 
-    Carousel.modules.forEach((mod) => {
+    carousel.modules.forEach((mod) => {
       mod({
-        Carousel,
+        carousel,
         extendParams: moduleExtendParams(params, allModulesParams),
-        on: Carousel.on.bind(Carousel),
-        once: Carousel.once.bind(Carousel),
-        off: Carousel.off.bind(Carousel),
-        emit: Carousel.emit.bind(Carousel),
+        on: carousel.on.bind(carousel),
+        once: carousel.once.bind(carousel),
+        off: carousel.off.bind(carousel),
+        emit: carousel.emit.bind(carousel),
       });
     });
 
     // Extend defaults with modules params
-    const CarouselParams = extend({}, defaults, allModulesParams);
+    const carouselParams = extend({}, defaults, allModulesParams);
 
     // Extend defaults with passed params
-    Carousel.params = extend({}, CarouselParams, extendedDefaults, params);
-    Carousel.originalParams = extend({}, Carousel.params);
-    Carousel.passedParams = extend({}, params);
+    carousel.params = extend({}, carouselParams, extendedDefaults, params);
+    carousel.originalParams = extend({}, carousel.params);
+    carousel.passedParams = extend({}, params);
 
     // add event listeners
-    if (Carousel.params && Carousel.params.on) {
-      Object.keys(Carousel.params.on).forEach((eventName) => {
-        Carousel.on(eventName, Carousel.params.on[eventName]);
+    if (carousel.params && carousel.params.on) {
+      Object.keys(carousel.params.on).forEach((eventName) => {
+        carousel.on(eventName, carousel.params.on[eventName]);
       });
     }
-    if (Carousel.params && Carousel.params.onAny) {
-      Carousel.onAny(Carousel.params.onAny);
+    if (carousel.params && carousel.params.onAny) {
+      carousel.onAny(carousel.params.onAny);
     }
 
     // Save Dom lib
-    Carousel.$ = $;
+    carousel.$ = $;
 
-    // Extend Carousel
-    Object.assign(Carousel, {
-      enabled: Carousel.params.enabled,
+    // Extend carousel
+    Object.assign(carousel, {
+      enabled: carousel.params.enabled,
       el,
 
       // Classes
@@ -156,10 +156,10 @@ class Carousel {
 
       // isDirection
       isHorizontal() {
-        return Carousel.params.direction === 'horizontal';
+        return carousel.params.direction === 'horizontal';
       },
       isVertical() {
-        return Carousel.params.direction === 'vertical';
+        return carousel.params.direction === 'vertical';
       },
 
       // Indexes
@@ -178,28 +178,28 @@ class Carousel {
       animating: false,
 
       // Locks
-      allowSlideNext: Carousel.params.allowSlideNext,
-      allowSlidePrev: Carousel.params.allowSlidePrev,
+      allowSlideNext: carousel.params.allowSlideNext,
+      allowSlidePrev: carousel.params.allowSlidePrev,
 
       // Touch Events
       touchEvents: (function touchEvents() {
         const touch = ['touchstart', 'touchmove', 'touchend', 'touchcancel'];
         const desktop = ['pointerdown', 'pointermove', 'pointerup'];
 
-        Carousel.touchEventsTouch = {
+        carousel.touchEventsTouch = {
           start: touch[0],
           move: touch[1],
           end: touch[2],
           cancel: touch[3],
         };
-        Carousel.touchEventsDesktop = {
+        carousel.touchEventsDesktop = {
           start: desktop[0],
           move: desktop[1],
           end: desktop[2],
         };
-        return Carousel.support.touch || !Carousel.params.simulateTouch
-          ? Carousel.touchEventsTouch
-          : Carousel.touchEventsDesktop;
+        return carousel.support.touch || !carousel.params.simulateTouch
+          ? carousel.touchEventsTouch
+          : carousel.touchEventsDesktop;
       })(),
       touchEventsData: {
         isTouched: undefined,
@@ -211,7 +211,7 @@ class Carousel {
         startTranslate: undefined,
         allowThresholdMove: undefined,
         // Form elements to match
-        focusableElements: Carousel.params.focusableElements,
+        focusableElements: carousel.params.focusableElements,
         // Last click time
         lastClickTime: now(),
         clickTimeout: undefined,
@@ -226,7 +226,7 @@ class Carousel {
       allowClick: true,
 
       // Touches
-      allowTouchMove: Carousel.params.allowTouchMove,
+      allowTouchMove: carousel.params.allowTouchMove,
 
       touches: {
         startX: 0,
@@ -241,16 +241,16 @@ class Carousel {
       imagesLoaded: 0,
     });
 
-    Carousel.emit('_Carousel');
+    carousel.emit('_carousel');
 
     // Init
-    if (Carousel.params.init) {
-      Carousel.init();
+    if (carousel.params.init) {
+      carousel.init();
     }
 
     // Return app instance
     // eslint-disable-next-line no-constructor-return
-    return Carousel;
+    return carousel;
     this.virtual = undefined;
     this.loopCreate = undefined;
     this.loopDestroy = undefined;
@@ -263,94 +263,94 @@ class Carousel {
   }
 
   enable() {
-    const Carousel = this;
-    if (Carousel.enabled) return;
-    Carousel.enabled = true;
-    if (Carousel.params.grabCursor) {
-      Carousel.setGrabCursor();
+    const carousel = this;
+    if (carousel.enabled) return;
+    carousel.enabled = true;
+    if (carousel.params.grabCursor) {
+      carousel.setGrabCursor();
     }
-    Carousel.emit('enable');
+    carousel.emit('enable');
   }
 
   disable() {
-    const Carousel = this;
-    if (!Carousel.enabled) return;
-    Carousel.enabled = false;
-    if (Carousel.params.grabCursor) {
-      Carousel.unsetGrabCursor();
+    const carousel = this;
+    if (!carousel.enabled) return;
+    carousel.enabled = false;
+    if (carousel.params.grabCursor) {
+      carousel.unsetGrabCursor();
     }
-    Carousel.emit('disable');
+    carousel.emit('disable');
   }
 
   setProgress(progress, speed) {
-    const Carousel = this;
+    const carousel = this;
     progress = Math.min(Math.max(progress, 0), 1);
-    const min = Carousel.minTranslate();
-    const max = Carousel.maxTranslate();
+    const min = carousel.minTranslate();
+    const max = carousel.maxTranslate();
     const current = (max - min) * progress + min;
-    Carousel.translateTo(current, typeof speed === 'undefined' ? 0 : speed);
-    Carousel.updateActiveIndex();
-    Carousel.updateSlidesClasses();
+    carousel.translateTo(current, typeof speed === 'undefined' ? 0 : speed);
+    carousel.updateActiveIndex();
+    carousel.updateSlidesClasses();
   }
 
   emitContainerClasses() {
-    const Carousel = this;
-    if (!Carousel.params._emitClasses || !Carousel.el) return;
-    const cls = Carousel.el.className.split(' ').filter((className) => {
+    const carousel = this;
+    if (!carousel.params._emitClasses || !carousel.el) return;
+    const cls = carousel.el.className.split(' ').filter((className) => {
       return (
-        className.indexOf('Carousel') === 0 ||
-        className.indexOf(Carousel.params.containerModifierClass) === 0
+        className.indexOf('carousel') === 0 ||
+        className.indexOf(carousel.params.containerModifierClass) === 0
       );
     });
-    Carousel.emit('_containerClasses', cls.join(' '));
+    carousel.emit('_containerClasses', cls.join(' '));
   }
 
   getSlideClasses(slideEl) {
-    const Carousel = this;
-    if (Carousel.destroyed) return '';
+    const carousel = this;
+    if (carousel.destroyed) return '';
 
     return slideEl.className
       .split(' ')
       .filter((className) => {
         return (
-          className.indexOf('Carousel-slide') === 0 ||
-          className.indexOf(Carousel.params.slideClass) === 0
+          className.indexOf('carousel-slide') === 0 ||
+          className.indexOf(carousel.params.slideClass) === 0
         );
       })
       .join(' ');
   }
 
   emitSlidesClasses() {
-    const Carousel = this;
-    if (!Carousel.params._emitClasses || !Carousel.el) return;
+    const carousel = this;
+    if (!carousel.params._emitClasses || !carousel.el) return;
     const updates = [];
-    Carousel.slides.each((slideEl) => {
-      const classNames = Carousel.getSlideClasses(slideEl);
+    carousel.slides.each((slideEl) => {
+      const classNames = carousel.getSlideClasses(slideEl);
       updates.push({ slideEl, classNames });
-      Carousel.emit('_slideClass', slideEl, classNames);
+      carousel.emit('_slideClass', slideEl, classNames);
     });
-    Carousel.emit('_slideClasses', updates);
+    carousel.emit('_slideClasses', updates);
   }
 
   slidesPerViewDynamic(view = 'current', exact = false) {
-    const Carousel = this;
-    const { params, slides, slidesGrid, slidesSizesGrid, size: CarouselSize, activeIndex } = Carousel;
+    const carousel = this;
+    const { params, slides, slidesGrid, slidesSizesGrid, size: carouselSize, activeIndex } = carousel;
     let spv = 1;
     if (params.centeredSlides) {
-      let slideSize = slides[activeIndex].CarouselSlideSize;
+      let slideSize = slides[activeIndex].carouselSlideSize;
       let breakLoop;
       for (let i = activeIndex + 1; i < slides.length; i += 1) {
         if (slides[i] && !breakLoop) {
-          slideSize += slides[i].CarouselSlideSize;
+          slideSize += slides[i].carouselSlideSize;
           spv += 1;
-          if (slideSize > CarouselSize) breakLoop = true;
+          if (slideSize > carouselSize) breakLoop = true;
         }
       }
       for (let i = activeIndex - 1; i >= 0; i -= 1) {
         if (slides[i] && !breakLoop) {
-          slideSize += slides[i].CarouselSlideSize;
+          slideSize += slides[i].carouselSlideSize;
           spv += 1;
-          if (slideSize > CarouselSize) breakLoop = true;
+          if (slideSize > carouselSize) breakLoop = true;
         }
       }
     } else {
@@ -358,8 +358,8 @@ class Carousel {
       if (view === 'current') {
         for (let i = activeIndex + 1; i < slides.length; i += 1) {
           const slideInView = exact
-            ? slidesGrid[i] + slidesSizesGrid[i] - slidesGrid[activeIndex] < CarouselSize
-            : slidesGrid[i] - slidesGrid[activeIndex] < CarouselSize;
+            ? slidesGrid[i] + slidesSizesGrid[i] - slidesGrid[activeIndex] < carouselSize
+            : slidesGrid[i] - slidesGrid[activeIndex] < carouselSize;
           if (slideInView) {
             spv += 1;
           }
@@ -367,7 +367,7 @@ class Carousel {
       } else {
         // previous
         for (let i = activeIndex - 1; i >= 0; i -= 1) {
-          const slideInView = slidesGrid[activeIndex] - slidesGrid[i] < CarouselSize;
+          const slideInView = slidesGrid[activeIndex] - slidesGrid[i] < carouselSize;
           if (slideInView) {
             spv += 1;
           }
@@ -378,57 +378,57 @@ class Carousel {
   }
 
   update() {
-    const Carousel = this;
-    if (!Carousel || Carousel.destroyed) return;
-    const { snapGrid, params } = Carousel;
+    const carousel = this;
+    if (!carousel || carousel.destroyed) return;
+    const { snapGrid, params } = carousel;
     // Breakpoints
     if (params.breakpoints) {
-      Carousel.setBreakpoint();
+      carousel.setBreakpoint();
     }
-    Carousel.updateSize();
-    Carousel.updateSlides();
-    Carousel.updateProgress();
-    Carousel.updateSlidesClasses();
+    carousel.updateSize();
+    carousel.updateSlides();
+    carousel.updateProgress();
+    carousel.updateSlidesClasses();
 
     function setTranslate() {
-      const translateValue = Carousel.rtlTranslate ? Carousel.translate * -1 : Carousel.translate;
+      const translateValue = carousel.rtlTranslate ? carousel.translate * -1 : carousel.translate;
       const newTranslate = Math.min(
-        Math.max(translateValue, Carousel.maxTranslate()),
-        Carousel.minTranslate(),
+        Math.max(translateValue, carousel.maxTranslate()),
+        carousel.minTranslate(),
       );
-      Carousel.setTranslate(newTranslate);
-      Carousel.updateActiveIndex();
-      Carousel.updateSlidesClasses();
+      carousel.setTranslate(newTranslate);
+      carousel.updateActiveIndex();
+      carousel.updateSlidesClasses();
     }
     let translated;
-    if (Carousel.params.freeMode && Carousel.params.freeMode.enabled) {
+    if (carousel.params.freeMode && carousel.params.freeMode.enabled) {
       setTranslate();
-      if (Carousel.params.autoHeight) {
-        Carousel.updateAutoHeight();
+      if (carousel.params.autoHeight) {
+        carousel.updateAutoHeight();
       }
     } else {
       if (
-        (Carousel.params.vtsSlidesPerView === 'auto' || Carousel.params.vtsSlidesPerView > 1) &&
-        Carousel.isEnd &&
-        !Carousel.params.centeredSlides
+        (carousel.params.vtsSlidesPerView === 'auto' || carousel.params.vtsSlidesPerView > 1) &&
+        carousel.isEnd &&
+        !carousel.params.centeredSlides
       ) {
-        translated = Carousel.slideTo(Carousel.slides.length - 1, 0, false, true);
+        translated = carousel.slideTo(carousel.slides.length - 1, 0, false, true);
       } else {
-        translated = Carousel.slideTo(Carousel.activeIndex, 0, false, true);
+        translated = carousel.slideTo(carousel.activeIndex, 0, false, true);
       }
       if (!translated) {
         setTranslate();
       }
     }
-    if (params.watchOverflow && snapGrid !== Carousel.snapGrid) {
-      Carousel.checkOverflow();
+    if (params.watchOverflow && snapGrid !== carousel.snapGrid) {
+      carousel.checkOverflow();
     }
-    Carousel.emit('update');
+    carousel.emit('update');
   }
 
   changeDirection(newDirection, needUpdate = true) {
-    const Carousel = this;
-    const currentDirection = Carousel.params.direction;
+    const carousel = this;
+    const currentDirection = carousel.params.direction;
     if (!newDirection) {
       // eslint-disable-next-line
       newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
@@ -437,17 +437,17 @@ class Carousel {
       newDirection === currentDirection ||
       (newDirection !== 'horizontal' && newDirection !== 'vertical')
     ) {
-      return Carousel;
+      return carousel;
     }
 
-    Carousel.$el
-      .removeClass(`${Carousel.params.containerModifierClass}${currentDirection}`)
-      .addClass(`${Carousel.params.containerModifierClass}${newDirection}`);
-    Carousel.emitContainerClasses();
+    carousel.$el
+      .removeClass(`${carousel.params.containerModifierClass}${currentDirection}`)
+      .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
+    carousel.emitContainerClasses();
 
-    Carousel.params.direction = newDirection;
+    carousel.params.direction = newDirection;
 
-    Carousel.slides.each((slideEl) => {
+    carousel.slides.each((slideEl) => {
       if (newDirection === 'vertical') {
         slideEl.style.width = '';
       } else {
@@ -455,43 +455,43 @@ class Carousel {
       }
     });
 
-    Carousel.emit('changeDirection');
-    if (needUpdate) Carousel.update();
+    carousel.emit('changeDirection');
+    if (needUpdate) carousel.update();
 
-    return Carousel;
+    return carousel;
   }
 
   changeLanguageDirection(direction) {
-    const Carousel = this;
-    if ((Carousel.rtl && direction === 'rtl') || (!Carousel.rtl && direction === 'ltr')) return;
-    Carousel.rtl = direction === 'rtl';
-    Carousel.rtlTranslate = Carousel.params.direction === 'horizontal' && Carousel.rtl;
-    if (Carousel.rtl) {
-      Carousel.$el.addClass(`${Carousel.params.containerModifierClass}rtl`);
-      Carousel.el.dir = 'rtl';
+    const carousel = this;
+    if ((carousel.rtl && direction === 'rtl') || (!carousel.rtl && direction === 'ltr')) return;
+    carousel.rtl = direction === 'rtl';
+    carousel.rtlTranslate = carousel.params.direction === 'horizontal' && carousel.rtl;
+    if (carousel.rtl) {
+      carousel.$el.addClass(`${carousel.params.containerModifierClass}rtl`);
+      carousel.el.dir = 'rtl';
     } else {
-      Carousel.$el.removeClass(`${Carousel.params.containerModifierClass}rtl`);
-      Carousel.el.dir = 'ltr';
+      carousel.$el.removeClass(`${carousel.params.containerModifierClass}rtl`);
+      carousel.el.dir = 'ltr';
     }
-    Carousel.update();
+    carousel.update();
   }
 
   mount(el) {
-    const Carousel = this;
-    if (Carousel.mounted) return true;
+    const carousel = this;
+    if (carousel.mounted) return true;
 
     // Find el
-    const $el = $(el || Carousel.params.el);
+    const $el = $(el || carousel.params.el);
     el = $el[0];
 
     if (!el) {
       return false;
     }
 
-    el.Carousel = Carousel;
+    el.carousel = carousel;
 
     const getWrapperSelector = () => {
-      return `.${(Carousel.params.wrapperClass || '').trim().split(' ').join('.')}`;
+      return `.${(carousel.params.wrapperClass || '').trim().split(' ').join('.')}`;
     };
 
     const getWrapper = () => {
@@ -508,18 +508,18 @@ class Carousel {
     };
     // Find Wrapper
     let $wrapperEl = getWrapper();
-    if ($wrapperEl.length === 0 && Carousel.params.createElements) {
+    if ($wrapperEl.length === 0 && carousel.params.createElements) {
       const document = getDocument();
       const wrapper = document.createElement('div');
       $wrapperEl = $(wrapper);
-      wrapper.className = Carousel.params.wrapperClass;
+      wrapper.className = carousel.params.wrapperClass;
       $el.append(wrapper);
-      $el.children(`.${Carousel.params.slideClass}`).each((slideEl) => {
+      $el.children(`.${carousel.params.slideClass}`).each((slideEl) => {
         $wrapperEl.append(slideEl);
       });
     }
 
-    Object.assign(Carousel, {
+    Object.assign(carousel, {
       $el,
       el,
       $wrapperEl,
@@ -529,7 +529,7 @@ class Carousel {
       // RTL
       rtl: el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl',
       rtlTranslate:
-        Carousel.params.direction === 'horizontal' &&
+        carousel.params.direction === 'horizontal' &&
         (el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl'),
       wrongRTL: $wrapperEl.css('display') === '-webkit-box',
     });
@@ -538,96 +538,96 @@ class Carousel {
   }
 
   init(el) {
-    const Carousel = this;
-    if (Carousel.initialized) return Carousel;
+    const carousel = this;
+    if (carousel.initialized) return carousel;
 
-    const mounted = Carousel.mount(el);
-    if (mounted === false) return Carousel;
+    const mounted = carousel.mount(el);
+    if (mounted === false) return carousel;
 
-    Carousel.emit('beforeInit');
+    carousel.emit('beforeInit');
 
     // Set breakpoint
-    if (Carousel.params.breakpoints) {
-      Carousel.setBreakpoint();
+    if (carousel.params.breakpoints) {
+      carousel.setBreakpoint();
     }
 
     // Add Classes
-    Carousel.addClasses();
+    carousel.addClasses();
 
     // Create loop
-    if (Carousel.params.loop) {
-      Carousel.loopCreate();
+    if (carousel.params.loop) {
+      carousel.loopCreate();
     }
 
     // Update size
-    Carousel.updateSize();
+    carousel.updateSize();
 
     // Update slides
-    Carousel.updateSlides();
+    carousel.updateSlides();
 
-    if (Carousel.params.watchOverflow) {
-      Carousel.checkOverflow();
+    if (carousel.params.watchOverflow) {
+      carousel.checkOverflow();
     }
 
     // Set Grab Cursor
-    if (Carousel.params.grabCursor && Carousel.enabled) {
-      Carousel.setGrabCursor();
+    if (carousel.params.grabCursor && carousel.enabled) {
+      carousel.setGrabCursor();
     }
 
-    if (Carousel.params.preloadImages) {
-      Carousel.preloadImages();
+    if (carousel.params.preloadImages) {
+      carousel.preloadImages();
     }
 
     // Slide To Initial Slide
-    if (Carousel.params.loop) {
-      Carousel.slideTo(
-        Carousel.params.initialSlide + Carousel.loopedSlides,
+    if (carousel.params.loop) {
+      carousel.slideTo(
+        carousel.params.initialSlide + carousel.loopedSlides,
         0,
-        Carousel.params.runCallbacksOnInit,
+        carousel.params.runCallbacksOnInit,
         false,
         true,
       );
     } else {
-      Carousel.slideTo(Carousel.params.initialSlide, 0, Carousel.params.runCallbacksOnInit, false, true);
+      carousel.slideTo(carousel.params.initialSlide, 0, carousel.params.runCallbacksOnInit, false, true);
     }
 
     // Attach events
-    Carousel.attachEvents();
+    carousel.attachEvents();
 
     // Init Flag
-    Carousel.initialized = true;
+    carousel.initialized = true;
 
     // Emit
-    Carousel.emit('init');
-    Carousel.emit('afterInit');
+    carousel.emit('init');
+    carousel.emit('afterInit');
 
-    return Carousel;
+    return carousel;
   }
 
   destroy(deleteInstance = true, cleanStyles = true) {
-    const Carousel = this;
-    const { params, $el, $wrapperEl, slides } = Carousel;
+    const carousel = this;
+    const { params, $el, $wrapperEl, slides } = carousel;
 
-    if (typeof Carousel.params === 'undefined' || Carousel.destroyed) {
+    if (typeof carousel.params === 'undefined' || carousel.destroyed) {
       return null;
     }
 
-    Carousel.emit('beforeDestroy');
+    carousel.emit('beforeDestroy');
 
     // Init Flag
-    Carousel.initialized = false;
+    carousel.initialized = false;
 
     // Detach events
-    Carousel.detachEvents();
+    carousel.detachEvents();
 
     // Destroy loop
     if (params.loop) {
-      Carousel.loopDestroy();
+      carousel.loopDestroy();
     }
 
     // Cleanup styles
     if (cleanStyles) {
-      Carousel.removeClasses();
+      carousel.removeClasses();
       $el.removeAttr('style');
       $wrapperEl.removeAttr('style');
       if (slides && slides.length) {
@@ -641,22 +641,22 @@ class Carousel {
             ].join(' '),
           )
           .removeAttr('style')
-          .removeAttr('data-Carousel-slide-index');
+          .removeAttr('data-carousel-slide-index');
       }
     }
 
-    Carousel.emit('destroy');
+    carousel.emit('destroy');
 
     // Detach emitter events
-    Object.keys(Carousel.eventsListeners).forEach((eventName) => {
-      Carousel.off(eventName);
+    Object.keys(carousel.eventsListeners).forEach((eventName) => {
+      carousel.off(eventName);
     });
 
     if (deleteInstance !== false) {
-      Carousel.$el[0].Carousel = null;
-      deleteProps(Carousel);
+      carousel.$el[0].carousel = null;
+      deleteProps(carousel);
     }
-    Carousel.destroyed = true;
+    carousel.destroyed = true;
 
     return null;
   }
@@ -674,8 +674,8 @@ class Carousel {
   }
 
   static installModule(mod) {
-    if (!Carousel.prototype.__modules__) Carousel.prototype.__modules__ = [];
-    const modules = Carousel.prototype.__modules__;
+    if (!carousel.prototype.__modules__) carousel.prototype.__modules__ = [];
+    const modules = carousel.prototype.__modules__;
 
     if (typeof mod === 'function' && modules.indexOf(mod) < 0) {
       modules.push(mod);
@@ -684,20 +684,20 @@ class Carousel {
 
   static use(module) {
     if (Array.isArray(module)) {
-      module.forEach((m) => Carousel.installModule(m));
-      return Carousel;
+      module.forEach((m) => carousel.installModule(m));
+      return carousel;
     }
-    Carousel.installModule(module);
-    return Carousel;
+    carousel.installModule(module);
+    return carousel;
   }
 }
 
 Object.keys(prototypes).forEach((prototypeGroup) => {
   Object.keys(prototypes[prototypeGroup]).forEach((protoMethod) => {
-    Carousel.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+    carousel.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
   });
 });
 
-Carousel.use([Resize, Observer, Autoplay, Navigation, Pagination]);
+carousel.use([Resize, Observer, Autoplay, Navigation, Pagination]);
 
-export default Carousel;
+export default carousel;

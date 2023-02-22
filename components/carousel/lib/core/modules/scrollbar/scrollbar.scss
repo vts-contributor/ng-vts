@@ -1,15 +1,15 @@
 /* Scrollbar */
-.Carousel-scrollbar {
+.carousel-scrollbar {
   border-radius: 10px;
   position: relative;
   -ms-touch-action: none;
   background: rgba(0, 0, 0, 0.1);
-  .Carousel-scrollbar-disabled > &,
-  &.Carousel-scrollbar-disabled {
+  .carousel-scrollbar-disabled > &,
+  &.carousel-scrollbar-disabled {
     display: none !important;
   }
-  .Carousel-horizontal > &,
-  &.Carousel-scrollbar-horizontal {
+  .carousel-horizontal > &,
+  &.carousel-scrollbar-horizontal {
     position: absolute;
     left: 1%;
     bottom: 3px;
@@ -17,8 +17,8 @@
     height: 5px;
     width: 98%;
   }
-  .Carousel-vertical > &,
-  &.Carousel-scrollbar-vertical {
+  .carousel-vertical > &,
+  &.carousel-scrollbar-vertical {
     position: absolute;
     right: 3px;
     top: 1%;
@@ -27,7 +27,7 @@
     height: 98%;
   }
 }
-.Carousel-scrollbar-drag {
+.carousel-scrollbar-drag {
   height: 100%;
   width: 100%;
   position: relative;
@@ -36,9 +36,9 @@
   left: 0;
   top: 0;
 }
-.Carousel-scrollbar-cursor-drag {
+.carousel-scrollbar-cursor-drag {
   cursor: move;
 }
-.Carousel-scrollbar-lock {
+.carousel-scrollbar-lock {
   display: none;
 }

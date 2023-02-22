@@ -1,13 +1,13 @@
 import $ from '../../shared/dom.js';
 
 export default function updateSlidesProgress(translate = (this && this.translate) || 0) {
-  const Carousel = this;
-  const params = Carousel.params;
+  const carousel = this;
+  const params = carousel.params;
 
-  const { slides, rtlTranslate: rtl, snapGrid } = Carousel;
+  const { slides, rtlTranslate: rtl, snapGrid } = carousel;
 
   if (slides.length === 0) return;
-  if (typeof slides[0].CarouselSlideOffset === 'undefined') Carousel.updateSlidesOffset();
+  if (typeof slides[0].carouselSlideOffset === 'undefined') carousel.updateSlidesOffset();
 
   let offsetCenter = -translate;
   if (rtl) offsetCenter = translate;
@@ -15,38 +15,38 @@ export default function updateSlidesProgress(translate = (this && this.translate
   // Visible Slides
   slides.removeClass(params.slideVisibleClass);
 
-  Carousel.visibleSlidesIndexes = [];
-  Carousel.visibleSlides = [];
+  carousel.visibleSlidesIndexes = [];
+  carousel.visibleSlides = [];
 
   for (let i = 0; i < slides.length; i += 1) {
     const slide = slides[i];
-    let slideOffset = slide.CarouselSlideOffset;
+    let slideOffset = slide.carouselSlideOffset;
     if (params.cssMode && params.centeredSlides) {
-      slideOffset -= slides[0].CarouselSlideOffset;
+      slideOffset -= slides[0].carouselSlideOffset;
     }
 
     const slideProgress =
-      (offsetCenter + (params.centeredSlides ? Carousel.minTranslate() : 0) - slideOffset) /
-      (slide.CarouselSlideSize + params.vtsSpaceBetween);
+      (offsetCenter + (params.centeredSlides ? carousel.minTranslate() : 0) - slideOffset) /
+      (slide.carouselSlideSize + params.vtsSpaceBetween);
     const originalSlideProgress =
       (offsetCenter -
         snapGrid[0] +
-        (params.centeredSlides ? Carousel.minTranslate() : 0) -
+        (params.centeredSlides ? carousel.minTranslate() : 0) -
         slideOffset) /
-      (slide.CarouselSlideSize + params.vtsSpaceBetween);
+      (slide.carouselSlideSize + params.vtsSpaceBetween);
     const slideBefore = -(offsetCenter - slideOffset);
-    const slideAfter = slideBefore + Carousel.slidesSizesGrid[i];
+    const slideAfter = slideBefore + carousel.slidesSizesGrid[i];
     const isVisible =
-      (slideBefore >= 0 && slideBefore < Carousel.size - 1) ||
-      (slideAfter > 1 && slideAfter <= Carousel.size) ||
-      (slideBefore <= 0 && slideAfter >= Carousel.size);
+      (slideBefore >= 0 && slideBefore < carousel.size - 1) ||
+      (slideAfter > 1 && slideAfter <= carousel.size) ||
+      (slideBefore <= 0 && slideAfter >= carousel.size);
     if (isVisible) {
-      Carousel.visibleSlides.push(slide);
-      Carousel.visibleSlidesIndexes.push(i);
+      carousel.visibleSlides.push(slide);
+      carousel.visibleSlidesIndexes.push(i);
       slides.eq(i).addClass(params.slideVisibleClass);
     }
     slide.progress = rtl ? -slideProgress : slideProgress;
     slide.originalProgress = rtl ? -originalSlideProgress : originalSlideProgress;
   }
-  Carousel.visibleSlides = $(Carousel.visibleSlides);
+  carousel.visibleSlides = $(carousel.visibleSlides);
 }

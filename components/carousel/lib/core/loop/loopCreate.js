@@ -2,9 +2,9 @@ import { getDocument } from 'ssr-window';
 import $ from '../../shared/dom.js';
 
 export default function loopCreate() {
-  const Carousel = this;
+  const carousel = this;
   const document = getDocument();
-  const { params, $wrapperEl } = Carousel;
+  const { params, $wrapperEl } = carousel;
   // Remove duplicated slides
   const $selector =
     $wrapperEl.children().length > 0 ? $($wrapperEl.children()[0].parentNode) : $wrapperEl;
@@ -27,10 +27,10 @@ export default function loopCreate() {
 
   if (params.vtsSlidesPerView === 'auto' && !params.loopedSlides) params.loopedSlides = slides.length;
 
-  Carousel.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.vtsSlidesPerView, 10));
-  Carousel.loopedSlides += params.loopAdditionalSlides;
-  if (Carousel.loopedSlides > slides.length && Carousel.params.loopedSlidesLimit) {
-    Carousel.loopedSlides = slides.length;
+  carousel.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.vtsSlidesPerView, 10));
+  carousel.loopedSlides += params.loopAdditionalSlides;
+  if (carousel.loopedSlides > slides.length && carousel.params.loopedSlidesLimit) {
+    carousel.loopedSlides = slides.length;
   }
 
   const prependSlides = [];
@@ -38,10 +38,10 @@ export default function loopCreate() {
 
   slides.each((el, index) => {
     const slide = $(el);
-    slide.attr('data-Carousel-slide-index', index);
+    slide.attr('data-carousel-slide-index', index);
   });
 
-  for (let i = 0; i < Carousel.loopedSlides; i += 1) {
+  for (let i = 0; i < carousel.loopedSlides; i += 1) {
     const index = i - Math.floor(i / slides.length) * slides.length;
     appendSlides.push(slides.eq(index)[0]);
     prependSlides.unshift(slides.eq(slides.length - index - 1)[0]);

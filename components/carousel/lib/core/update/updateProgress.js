@@ -1,13 +1,13 @@
 export default function updateProgress(translate) {
-  const Carousel = this;
+  const carousel = this;
   if (typeof translate === 'undefined') {
-    const multiplier = Carousel.rtlTranslate ? -1 : 1;
+    const multiplier = carousel.rtlTranslate ? -1 : 1;
     // eslint-disable-next-line
-    translate = (Carousel && Carousel.translate && Carousel.translate * multiplier) || 0;
+    translate = (carousel && carousel.translate && carousel.translate * multiplier) || 0;
   }
-  const params = Carousel.params;
-  const translatesDiff = Carousel.maxTranslate() - Carousel.minTranslate();
-  let { progress, isBeginning, isEnd } = Carousel;
+  const params = carousel.params;
+  const translatesDiff = carousel.maxTranslate() - carousel.minTranslate();
+  let { progress, isBeginning, isEnd } = carousel;
   const wasBeginning = isBeginning;
   const wasEnd = isEnd;
   if (translatesDiff === 0) {
@@ -15,28 +15,28 @@ export default function updateProgress(translate) {
     isBeginning = true;
     isEnd = true;
   } else {
-    progress = (translate - Carousel.minTranslate()) / translatesDiff;
+    progress = (translate - carousel.minTranslate()) / translatesDiff;
     isBeginning = progress <= 0;
     isEnd = progress >= 1;
   }
-  Object.assign(Carousel, {
+  Object.assign(carousel, {
     progress,
     isBeginning,
     isEnd,
   });
 
   if (params.watchSlidesProgress || (params.centeredSlides && params.autoHeight))
-    Carousel.updateSlidesProgress(translate);
+    carousel.updateSlidesProgress(translate);
 
   if (isBeginning && !wasBeginning) {
-    Carousel.emit('reachBeginning toEdge');
+    carousel.emit('reachBeginning toEdge');
   }
   if (isEnd && !wasEnd) {
-    Carousel.emit('reachEnd toEdge');
+    carousel.emit('reachEnd toEdge');
   }
   if ((wasBeginning && !isBeginning) || (wasEnd && !isEnd)) {
-    Carousel.emit('fromEdge');
+    carousel.emit('fromEdge');
   }
 
-  Carousel.emit('progress', progress);
+  carousel.emit('progress', progress);
 }

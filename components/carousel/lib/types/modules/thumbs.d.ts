@@ -1,10 +1,10 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface ThumbsMethods {
   /**
-   * Carousel instance of thumbs Carousel
+   * carousel instance of thumbs carousel
    */
-  Carousel: Carousel;
+  carousel: carousel;
 
   /**
    * Update thumbs
@@ -21,21 +21,21 @@ export interface ThumbsEvents {}
 
 export interface ThumbsOptions {
   /**
-   * Carousel instance of Carousel used as thumbs or object with Carousel parameters to initialize thumbs Carousel
+   * carousel instance of carousel used as thumbs or object with carousel parameters to initialize thumbs carousel
    *
    * @default null
    */
-  Carousel?: Carousel | null;
+  carousel?: carousel | null;
   /**
-   * Additional class that will be added to activated thumbs Carousel slide
+   * Additional class that will be added to activated thumbs carousel slide
    *
-   * @default 'Carousel-slide-thumb-active'
+   * @default 'carousel-slide-thumb-active'
    */
   slideThumbActiveClass?: string;
   /**
-   * Additional class that will be added to thumbs Carousel
+   * Additional class that will be added to thumbs carousel
    *
-   * @default 'Carousel-thumbs'
+   * @default 'carousel-thumbs'
    */
   thumbsContainerClass?: string;
   /**

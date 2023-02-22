@@ -18,7 +18,8 @@ import { Component } from '@angular/core';
   styles: [
     `
       vts-carousel {
-        height: 200px;
+        height: 260px;
+        width: 33.33%;
       }
       img {
         height: 100%;
@@ -27,10 +28,23 @@ import { Component } from '@angular/core';
       .caption {
         font-size: 20px;
         font-weight: 700;
+        position: absolute;
+        bottom: 60px;
+        color: #fff;
+        width: 100%;
+        text-align: center;
       }
       .content {
         font-size: 16px;
         font-weight: 400;
+        position: absolute;
+        bottom: 40px;
+        color: #fff;
+        width: 100%;
+        text-align: center;
+      }
+      .pagination-custom {
+        text-align: center;
       }
     `
   ]
@@ -38,7 +52,7 @@ import { Component } from '@angular/core';
 export class VtsDemoCarouselWithCaptionComponent {
   vtsSlidesPerView = 1;
   navigation= true;
-  pagination= {clickable: true};
+  pagination= {clickable: true, el: '.pagination-custom'};
   array= [
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',

@@ -1,7 +1,7 @@
 import { getWindow, getDocument } from 'ssr-window';
 import $ from '../../shared/dom.js';
 
-export default function HashNavigation({ Carousel, extendParams, emit, on }) {
+export default function HashNavigation({ carousel, extendParams, emit, on }) {
   let initialized = false;
   const document = getDocument();
   const window = getWindow();
@@ -15,30 +15,30 @@ export default function HashNavigation({ Carousel, extendParams, emit, on }) {
   const onHashChange = () => {
     emit('hashChange');
     const newHash = document.location.hash.replace('#', '');
-    const activeSlideHash = Carousel.slides.eq(Carousel.activeIndex).attr('data-hash');
+    const activeSlideHash = carousel.slides.eq(carousel.activeIndex).attr('data-hash');
     if (newHash !== activeSlideHash) {
-      const newIndex = Carousel.$wrapperEl
-        .children(`.${Carousel.params.slideClass}[data-hash="${newHash}"]`)
+      const newIndex = carousel.$wrapperEl
+        .children(`.${carousel.params.slideClass}[data-hash="${newHash}"]`)
         .index();
       if (typeof newIndex === 'undefined') return;
-      Carousel.slideTo(newIndex);
+      carousel.slideTo(newIndex);
     }
   };
   const setHash = () => {
-    if (!initialized || !Carousel.params.hashNavigation.enabled) return;
+    if (!initialized || !carousel.params.hashNavigation.enabled) return;
     if (
-      Carousel.params.hashNavigation.replaceState &&
+      carousel.params.hashNavigation.replaceState &&
       window.history &&
       window.history.replaceState
     ) {
       window.history.replaceState(
         null,
         null,
-        `#${Carousel.slides.eq(Carousel.activeIndex).attr('data-hash')}` || '',
+        `#${carousel.slides.eq(carousel.activeIndex).attr('data-hash')}` || '',
       );
       emit('hashSet');
     } else {
-      const slide = Carousel.slides.eq(Carousel.activeIndex);
+      const slide = carousel.slides.eq(carousel.activeIndex);
       const hash = slide.attr('data-hash') || slide.attr('data-history');
       document.location.hash = hash || '';
       emit('hashSet');
@@ -46,40 +46,40 @@ export default function HashNavigation({ Carousel, extendParams, emit, on }) {
   };
   const init = () => {
     if (
-      !Carousel.params.hashNavigation.enabled ||
-      (Carousel.params.history && Carousel.params.history.enabled)
+      !carousel.params.hashNavigation.enabled ||
+      (carousel.params.history && carousel.params.history.enabled)
     )
       return;
     initialized = true;
     const hash = document.location.hash.replace('#', '');
     if (hash) {
       const speed = 0;
-      for (let i = 0, length = Carousel.slides.length; i < length; i += 1) {
-        const slide = Carousel.slides.eq(i);
+      for (let i = 0, length = carousel.slides.length; i < length; i += 1) {
+        const slide = carousel.slides.eq(i);
         const slideHash = slide.attr('data-hash') || slide.attr('data-history');
-        if (slideHash === hash && !slide.hasClass(Carousel.params.slideDuplicateClass)) {
+        if (slideHash === hash && !slide.hasClass(carousel.params.slideDuplicateClass)) {
           const index = slide.index();
-          Carousel.slideTo(index, speed, Carousel.params.runCallbacksOnInit, true);
+          carousel.slideTo(index, speed, carousel.params.runCallbacksOnInit, true);
         }
       }
     }
-    if (Carousel.params.hashNavigation.watchState) {
+    if (carousel.params.hashNavigation.watchState) {
       $(window).on('hashchange', onHashChange);
     }
   };
   const destroy = () => {
-    if (Carousel.params.hashNavigation.watchState) {
+    if (carousel.params.hashNavigation.watchState) {
       $(window).off('hashchange', onHashChange);
     }
   };
 
   on('init', () => {
-    if (Carousel.params.hashNavigation.enabled) {
+    if (carousel.params.hashNavigation.enabled) {
       init();
     }
   });
   on('destroy', () => {
-    if (Carousel.params.hashNavigation.enabled) {
+    if (carousel.params.hashNavigation.enabled) {
       destroy();
     }
   });
@@ -89,7 +89,7 @@ export default function HashNavigation({ Carousel, extendParams, emit, on }) {
     }
   });
   on('slideChange', () => {
-    if (initialized && Carousel.params.cssMode) {
+    if (initialized && carousel.params.cssMode) {
       setHash();
     }
   });

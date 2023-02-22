@@ -1,8 +1,8 @@
 export default function updateSlidesClasses() {
-  const Carousel = this;
+  const carousel = this;
 
-  const { slides, params, $wrapperEl, activeIndex, realIndex } = Carousel;
-  const isVirtual = Carousel.virtual && params.virtual.enabled;
+  const { slides, params, $wrapperEl, activeIndex, realIndex } = carousel;
+  const isVirtual = carousel.virtual && params.virtual.enabled;
 
   slides.removeClass(
     `${params.slideActiveClass} ${params.slideNextClass} ${params.slidePrevClass} ${params.slideDuplicateActiveClass} ${params.slideDuplicateNextClass} ${params.slideDuplicatePrevClass}`,
@@ -10,8 +10,8 @@ export default function updateSlidesClasses() {
 
   let activeSlide;
   if (isVirtual) {
-    activeSlide = Carousel.$wrapperEl.find(
-      `.${params.slideClass}[data-Carousel-slide-index="${activeIndex}"]`,
+    activeSlide = carousel.$wrapperEl.find(
+      `.${params.slideClass}[data-carousel-slide-index="${activeIndex}"]`,
     );
   } else {
     activeSlide = slides.eq(activeIndex);
@@ -25,13 +25,13 @@ export default function updateSlidesClasses() {
     if (activeSlide.hasClass(params.slideDuplicateClass)) {
       $wrapperEl
         .children(
-          `.${params.slideClass}:not(.${params.slideDuplicateClass})[data-Carousel-slide-index="${realIndex}"]`,
+          `.${params.slideClass}:not(.${params.slideDuplicateClass})[data-carousel-slide-index="${realIndex}"]`,
         )
         .addClass(params.slideDuplicateActiveClass);
     } else {
       $wrapperEl
         .children(
-          `.${params.slideClass}.${params.slideDuplicateClass}[data-Carousel-slide-index="${realIndex}"]`,
+          `.${params.slideClass}.${params.slideDuplicateClass}[data-carousel-slide-index="${realIndex}"]`,
         )
         .addClass(params.slideDuplicateActiveClass);
     }
@@ -61,7 +61,7 @@ export default function updateSlidesClasses() {
         .children(
           `.${params.slideClass}:not(.${
             params.slideDuplicateClass
-          })[data-Carousel-slide-index="${nextSlide.attr('data-Carousel-slide-index')}"]`,
+          })[data-carousel-slide-index="${nextSlide.attr('data-carousel-slide-index')}"]`,
         )
         .addClass(params.slideDuplicateNextClass);
     } else {
@@ -69,7 +69,7 @@ export default function updateSlidesClasses() {
         .children(
           `.${params.slideClass}.${
             params.slideDuplicateClass
-          }[data-Carousel-slide-index="${nextSlide.attr('data-Carousel-slide-index')}"]`,
+          }[data-carousel-slide-index="${nextSlide.attr('data-carousel-slide-index')}"]`,
         )
         .addClass(params.slideDuplicateNextClass);
     }
@@ -78,7 +78,7 @@ export default function updateSlidesClasses() {
         .children(
           `.${params.slideClass}:not(.${
             params.slideDuplicateClass
-          })[data-Carousel-slide-index="${prevSlide.attr('data-Carousel-slide-index')}"]`,
+          })[data-carousel-slide-index="${prevSlide.attr('data-carousel-slide-index')}"]`,
         )
         .addClass(params.slideDuplicatePrevClass);
     } else {
@@ -86,10 +86,10 @@ export default function updateSlidesClasses() {
         .children(
           `.${params.slideClass}.${
             params.slideDuplicateClass
-          }[data-Carousel-slide-index="${prevSlide.attr('data-Carousel-slide-index')}"]`,
+          }[data-carousel-slide-index="${prevSlide.attr('data-carousel-slide-index')}"]`,
         )
         .addClass(params.slideDuplicatePrevClass);
     }
   }
-  Carousel.emitSlidesClasses();
+  carousel.emitSlidesClasses();
 }

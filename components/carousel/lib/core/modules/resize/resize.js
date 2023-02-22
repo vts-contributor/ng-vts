@@ -1,25 +1,25 @@
 import { getWindow } from 'ssr-window';
 
-export default function Resize({ Carousel, on, emit }) {
+export default function Resize({ carousel, on, emit }) {
   const window = getWindow();
   let observer = null;
   let animationFrame = null;
 
   const resizeHandler = () => {
-    if (!Carousel || Carousel.destroyed || !Carousel.initialized) return;
+    if (!carousel || carousel.destroyed || !carousel.initialized) return;
     emit('beforeResize');
     emit('resize');
   };
 
   const createObserver = () => {
-    if (!Carousel || Carousel.destroyed || !Carousel.initialized) return;
+    if (!carousel || carousel.destroyed || !carousel.initialized) return;
     observer = new ResizeObserver((entries) => {
       animationFrame = window.requestAnimationFrame(() => {
-        const { width, height } = Carousel;
+        const { width, height } = carousel;
         let newWidth = width;
         let newHeight = height;
         entries.forEach(({ contentBoxSize, contentRect, target }) => {
-          if (target && target !== Carousel.el) return;
+          if (target && target !== carousel.el) return;
           newWidth = contentRect
             ? contentRect.width
             : (contentBoxSize[0] || contentBoxSize).inlineSize;
@@ -32,26 +32,26 @@ export default function Resize({ Carousel, on, emit }) {
         }
       });
     });
-    observer.observe(Carousel.el);
+    observer.observe(carousel.el);
   };
 
   const removeObserver = () => {
     if (animationFrame) {
       window.cancelAnimationFrame(animationFrame);
     }
-    if (observer && observer.unobserve && Carousel.el) {
-      observer.unobserve(Carousel.el);
+    if (observer && observer.unobserve && carousel.el) {
+      observer.unobserve(carousel.el);
       observer = null;
     }
   };
 
   const orientationChangeHandler = () => {
-    if (!Carousel || Carousel.destroyed || !Carousel.initialized) return;
+    if (!carousel || carousel.destroyed || !carousel.initialized) return;
     emit('orientationchange');
   };
 
   on('init', () => {
-    if (Carousel.params.resizeObserver && typeof window.ResizeObserver !== 'undefined') {
+    if (carousel.params.resizeObserver && typeof window.ResizeObserver !== 'undefined') {
       createObserver();
       return;
     }

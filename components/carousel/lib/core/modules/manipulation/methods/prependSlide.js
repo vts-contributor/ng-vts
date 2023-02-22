@@ -1,9 +1,9 @@
 export default function prependSlide(slides) {
-  const Carousel = this;
-  const { params, $wrapperEl, activeIndex } = Carousel;
+  const carousel = this;
+  const { params, $wrapperEl, activeIndex } = carousel;
 
   if (params.loop) {
-    Carousel.loopDestroy();
+    carousel.loopDestroy();
   }
   let newActiveIndex = activeIndex + 1;
   if (typeof slides === 'object' && 'length' in slides) {
@@ -15,10 +15,10 @@ export default function prependSlide(slides) {
     $wrapperEl.prepend(slides);
   }
   if (params.loop) {
-    Carousel.loopCreate();
+    carousel.loopCreate();
   }
   if (!params.observer) {
-    Carousel.update();
+    carousel.update();
   }
-  Carousel.slideTo(newActiveIndex, 0, false);
+  carousel.slideTo(newActiveIndex, 0, false);
 }

@@ -1,5 +1,5 @@
 import { CSSSelector } from '../shared';
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface ScrollbarMethods {
   /**
@@ -37,17 +37,17 @@ export interface ScrollbarEvents {
   /**
    * Event will be fired on draggable scrollbar drag start
    */
-  scrollbarDragStart: (Carousel: Carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  scrollbarDragStart: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired on draggable scrollbar drag move
    */
-  scrollbarDragMove: (Carousel: Carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  scrollbarDragMove: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired on draggable scrollbar drag end
    */
-  scrollbarDragEnd: (Carousel: Carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  scrollbarDragEnd: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 }
 
 /**
@@ -55,9 +55,9 @@ export interface ScrollbarEvents {
  *
  * @example
  * ```js
- * const Carousel = new Carousel('.Carousel', {
+ * const carousel = new carousel('.carousel', {
  *   scrollbar: {
- *     el: '.Carousel-scrollbar',
+ *     el: '.carousel-scrollbar',
  *     draggable: true,
  *   },
  * });
@@ -106,35 +106,35 @@ export interface ScrollbarOptions {
   /**
    * Scrollbar element additional CSS class when it is disabled
    *
-   * @default 'Carousel-scrollbar-lock'
+   * @default 'carousel-scrollbar-lock'
    */
   lockClass?: string;
 
   /**
    * Scrollbar draggable element CSS class
    *
-   * @default 'Carousel-scrollbar-drag'
+   * @default 'carousel-scrollbar-drag'
    */
   dragClass?: string;
 
   /**
-   * CSS class name added on Carousel container and scrollbar element when scrollbar is disabled by breakpoint
+   * CSS class name added on carousel container and scrollbar element when scrollbar is disabled by breakpoint
    *
-   * @default 'Carousel-scrollbar-disabled'
+   * @default 'carousel-scrollbar-disabled'
    */
   scrollbarDisabledClass?: string;
 
   /**
-   * CSS class name set to scrollbar in horizontal Carousel
+   * CSS class name set to scrollbar in horizontal carousel
    *
-   * @default 'Carousel-scrollbar-horizontal'
+   * @default 'carousel-scrollbar-horizontal'
    */
   horizontalClass?: string;
 
   /**
-   * CSS class name set to scrollbar in vertical Carousel
+   * CSS class name set to scrollbar in vertical carousel
    *
-   * @default 'Carousel-scrollbar-vertical'
+   * @default 'carousel-scrollbar-vertical'
    */
   verticalClass?: string;
 }

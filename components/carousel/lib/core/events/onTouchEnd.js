@@ -1,20 +1,20 @@
 import { now, nextTick } from '../../shared/utils.js';
 
 export default function onTouchEnd(event) {
-  const Carousel = this;
-  const data = Carousel.touchEventsData;
+  const carousel = this;
+  const data = carousel.touchEventsData;
 
-  const { params, touches, rtlTranslate: rtl, slidesGrid, enabled } = Carousel;
+  const { params, touches, rtlTranslate: rtl, slidesGrid, enabled } = carousel;
   if (!enabled) return;
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
   if (data.allowTouchCallbacks) {
-    Carousel.emit('touchEnd', e);
+    carousel.emit('touchEnd', e);
   }
   data.allowTouchCallbacks = false;
   if (!data.isTouched) {
     if (data.isMoved && params.grabCursor) {
-      Carousel.setGrabCursor(false);
+      carousel.setGrabCursor(false);
     }
     data.isMoved = false;
     data.startMoving = false;
@@ -25,9 +25,9 @@ export default function onTouchEnd(event) {
     params.grabCursor &&
     data.isMoved &&
     data.isTouched &&
-    (Carousel.allowSlideNext === true || Carousel.allowSlidePrev === true)
+    (carousel.allowSlideNext === true || carousel.allowSlidePrev === true)
   ) {
-    Carousel.setGrabCursor(false);
+    carousel.setGrabCursor(false);
   }
 
   // Time diff
@@ -35,24 +35,24 @@ export default function onTouchEnd(event) {
   const timeDiff = touchEndTime - data.touchStartTime;
 
   // Tap, doubleTap, Click
-  if (Carousel.allowClick) {
+  if (carousel.allowClick) {
     const pathTree = e.path || (e.composedPath && e.composedPath());
-    Carousel.updateClickedSlide((pathTree && pathTree[0]) || e.target);
-    Carousel.emit('tap click', e);
+    carousel.updateClickedSlide((pathTree && pathTree[0]) || e.target);
+    carousel.emit('tap click', e);
     if (timeDiff < 300 && touchEndTime - data.lastClickTime < 300) {
-      Carousel.emit('doubleTap doubleClick', e);
+      carousel.emit('doubleTap doubleClick', e);
     }
   }
 
   data.lastClickTime = now();
   nextTick(() => {
-    if (!Carousel.destroyed) Carousel.allowClick = true;
+    if (!carousel.destroyed) carousel.allowClick = true;
   });
 
   if (
     !data.isTouched ||
     !data.isMoved ||
-    !Carousel.swipeDirection ||
+    !carousel.swipeDirection ||
     touches.diff === 0 ||
     data.currentTranslate === data.startTranslate
   ) {
@@ -67,7 +67,7 @@ export default function onTouchEnd(event) {
 
   let currentPos;
   if (params.followFinger) {
-    currentPos = rtl ? Carousel.translate : -Carousel.translate;
+    currentPos = rtl ? carousel.translate : -carousel.translate;
   } else {
     currentPos = -data.currentTranslate;
   }
@@ -76,14 +76,14 @@ export default function onTouchEnd(event) {
     return;
   }
 
-  if (Carousel.params.freeMode && params.freeMode.enabled) {
-    Carousel.freeMode.onTouchEnd({ currentPos });
+  if (carousel.params.freeMode && params.freeMode.enabled) {
+    carousel.freeMode.onTouchEnd({ currentPos });
     return;
   }
 
   // Find current slide
   let stopIndex = 0;
-  let groupSize = Carousel.slidesSizesGrid[0];
+  let groupSize = carousel.slidesSizesGrid[0];
   for (
     let i = 0;
     i < slidesGrid.length;
@@ -104,12 +104,12 @@ export default function onTouchEnd(event) {
   let rewindFirstIndex = null;
   let rewindLastIndex = null;
   if (params.rewind) {
-    if (Carousel.isBeginning) {
+    if (carousel.isBeginning) {
       rewindLastIndex =
-        Carousel.params.virtual && Carousel.params.virtual.enabled && Carousel.virtual
-          ? Carousel.virtual.slides.length - 1
-          : Carousel.slides.length - 1;
-    } else if (Carousel.isEnd) {
+        carousel.params.virtual && carousel.params.virtual.enabled && carousel.virtual
+          ? carousel.virtual.slides.length - 1
+          : carousel.slides.length - 1;
+    } else if (carousel.isEnd) {
       rewindFirstIndex = 0;
     }
   }
@@ -119,47 +119,47 @@ export default function onTouchEnd(event) {
   if (timeDiff > params.longSwipesMs) {
     // Long touches
     if (!params.longSwipes) {
-      Carousel.slideTo(Carousel.activeIndex);
+      carousel.slideTo(carousel.activeIndex);
       return;
     }
-    if (Carousel.swipeDirection === 'next') {
+    if (carousel.swipeDirection === 'next') {
       if (ratio >= params.longSwipesRatio)
-        Carousel.slideTo(params.rewind && Carousel.isEnd ? rewindFirstIndex : stopIndex + increment);
-      else Carousel.slideTo(stopIndex);
+        carousel.slideTo(params.rewind && carousel.isEnd ? rewindFirstIndex : stopIndex + increment);
+      else carousel.slideTo(stopIndex);
     }
-    if (Carousel.swipeDirection === 'prev') {
+    if (carousel.swipeDirection === 'prev') {
       if (ratio > 1 - params.longSwipesRatio) {
-        Carousel.slideTo(stopIndex + increment);
+        carousel.slideTo(stopIndex + increment);
       } else if (
         rewindLastIndex !== null &&
         ratio < 0 &&
         Math.abs(ratio) > params.longSwipesRatio
       ) {
-        Carousel.slideTo(rewindLastIndex);
+        carousel.slideTo(rewindLastIndex);
       } else {
-        Carousel.slideTo(stopIndex);
+        carousel.slideTo(stopIndex);
       }
     }
   } else {
     // Short swipes
     if (!params.shortSwipes) {
-      Carousel.slideTo(Carousel.activeIndex);
+      carousel.slideTo(carousel.activeIndex);
       return;
     }
     const isNavButtonTarget =
-      Carousel.navigation &&
-      (e.target === Carousel.navigation.nextEl || e.target === Carousel.navigation.prevEl);
+      carousel.navigation &&
+      (e.target === carousel.navigation.nextEl || e.target === carousel.navigation.prevEl);
     if (!isNavButtonTarget) {
-      if (Carousel.swipeDirection === 'next') {
-        Carousel.slideTo(rewindFirstIndex !== null ? rewindFirstIndex : stopIndex + increment);
+      if (carousel.swipeDirection === 'next') {
+        carousel.slideTo(rewindFirstIndex !== null ? rewindFirstIndex : stopIndex + increment);
       }
-      if (Carousel.swipeDirection === 'prev') {
-        Carousel.slideTo(rewindLastIndex !== null ? rewindLastIndex : stopIndex);
+      if (carousel.swipeDirection === 'prev') {
+        carousel.slideTo(rewindLastIndex !== null ? rewindLastIndex : stopIndex);
       }
-    } else if (e.target === Carousel.navigation.nextEl) {
-      Carousel.slideTo(stopIndex + increment);
+    } else if (e.target === carousel.navigation.nextEl) {
+      carousel.slideTo(stopIndex + increment);
     } else {
-      Carousel.slideTo(stopIndex);
+      carousel.slideTo(stopIndex);
     }
   }
 }

@@ -1,5 +1,5 @@
-export default function transitionEmit({ Carousel, runCallbacks, direction, step }) {
-  const { activeIndex, previousIndex } = Carousel;
+export default function transitionEmit({ carousel, runCallbacks, direction, step }) {
+  const { activeIndex, previousIndex } = carousel;
   let dir = direction;
   if (!dir) {
     if (activeIndex > previousIndex) dir = 'next';
@@ -7,18 +7,18 @@ export default function transitionEmit({ Carousel, runCallbacks, direction, step
     else dir = 'reset';
   }
 
-  Carousel.emit(`transition${step}`);
+  carousel.emit(`transition${step}`);
 
   if (runCallbacks && activeIndex !== previousIndex) {
     if (dir === 'reset') {
-      Carousel.emit(`slideResetTransition${step}`);
+      carousel.emit(`slideResetTransition${step}`);
       return;
     }
-    Carousel.emit(`slideChangeTransition${step}`);
+    carousel.emit(`slideChangeTransition${step}`);
     if (dir === 'next') {
-      Carousel.emit(`slideNextTransition${step}`);
+      carousel.emit(`slideNextTransition${step}`);
     } else {
-      Carousel.emit(`slidePrevTransition${step}`);
+      carousel.emit(`slidePrevTransition${step}`);
     }
   }
 }

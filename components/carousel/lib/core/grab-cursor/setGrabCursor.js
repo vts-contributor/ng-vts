@@ -1,13 +1,13 @@
 export default function setGrabCursor(moving) {
-  const Carousel = this;
+  const carousel = this;
   if (
-    Carousel.support.touch ||
-    !Carousel.params.simulateTouch ||
-    (Carousel.params.watchOverflow && Carousel.isLocked) ||
-    Carousel.params.cssMode
+    carousel.support.touch ||
+    !carousel.params.simulateTouch ||
+    (carousel.params.watchOverflow && carousel.isLocked) ||
+    carousel.params.cssMode
   )
     return;
-  const el = Carousel.params.touchEventsTarget === 'container' ? Carousel.el : Carousel.wrapperEl;
+  const el = carousel.params.touchEventsTarget === 'container' ? carousel.el : carousel.wrapperEl;
   el.style.cursor = 'move';
   el.style.cursor = moving ? 'grabbing' : 'grab';
 }

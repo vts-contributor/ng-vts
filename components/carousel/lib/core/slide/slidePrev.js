@@ -1,16 +1,16 @@
 /* eslint no-unused-vars: "off" */
 export default function slidePrev(speed = this.params.speed, runCallbacks = true, internal) {
-  const Carousel = this;
-  const { params, animating, snapGrid, slidesGrid, rtlTranslate, enabled } = Carousel;
-  if (!enabled) return Carousel;
+  const carousel = this;
+  const { params, animating, snapGrid, slidesGrid, rtlTranslate, enabled } = carousel;
+  if (!enabled) return carousel;
 
   if (params.loop) {
     if (animating && params.loopPreventsSlide) return false;
-    Carousel.loopFix();
+    carousel.loopFix();
     // eslint-disable-next-line
-    Carousel._clientLeft = Carousel.$wrapperEl[0].clientLeft;
+    carousel._clientLeft = carousel.$wrapperEl[0].clientLeft;
   }
-  const translate = rtlTranslate ? Carousel.translate : -Carousel.translate;
+  const translate = rtlTranslate ? carousel.translate : -carousel.translate;
 
   function normalize(val) {
     if (val < 0) return -Math.floor(Math.abs(val));
@@ -35,22 +35,22 @@ export default function slidePrev(speed = this.params.speed, runCallbacks = true
   let prevIndex = 0;
   if (typeof prevSnap !== 'undefined') {
     prevIndex = slidesGrid.indexOf(prevSnap);
-    if (prevIndex < 0) prevIndex = Carousel.activeIndex - 1;
+    if (prevIndex < 0) prevIndex = carousel.activeIndex - 1;
     if (
       params.vtsSlidesPerView === 'auto' &&
       params.slidesPerGroup === 1 &&
       params.slidesPerGroupAuto
     ) {
-      prevIndex = prevIndex - Carousel.slidesPerViewDynamic('previous', true) + 1;
+      prevIndex = prevIndex - carousel.slidesPerViewDynamic('previous', true) + 1;
       prevIndex = Math.max(prevIndex, 0);
     }
   }
-  if (params.rewind && Carousel.isBeginning) {
+  if (params.rewind && carousel.isBeginning) {
     const lastIndex =
-      Carousel.params.virtual && Carousel.params.virtual.enabled && Carousel.virtual
-        ? Carousel.virtual.slides.length - 1
-        : Carousel.slides.length - 1;
-    return Carousel.slideTo(lastIndex, speed, runCallbacks, internal);
+      carousel.params.virtual && carousel.params.virtual.enabled && carousel.virtual
+        ? carousel.virtual.slides.length - 1
+        : carousel.slides.length - 1;
+    return carousel.slideTo(lastIndex, speed, runCallbacks, internal);
   }
-  return Carousel.slideTo(prevIndex, speed, runCallbacks, internal);
+  return carousel.slideTo(prevIndex, speed, runCallbacks, internal);
 }

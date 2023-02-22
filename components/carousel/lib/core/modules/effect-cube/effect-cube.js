@@ -1,7 +1,7 @@
 import $ from '../../shared/dom.js';
 import effectInit from '../../shared/effect-init.js';
 
-export default function EffectCube({ Carousel, extendParams, on }) {
+export default function EffectCube({ carousel, extendParams, on }) {
   extendParams({
     cubeEffect: {
       slideShadows: true,
@@ -13,18 +13,18 @@ export default function EffectCube({ Carousel, extendParams, on }) {
 
   const createSlideShadows = ($slideEl, progress, isHorizontal) => {
     let shadowBefore = isHorizontal
-      ? $slideEl.find('.Carousel-slide-shadow-left')
-      : $slideEl.find('.Carousel-slide-shadow-top');
+      ? $slideEl.find('.carousel-slide-shadow-left')
+      : $slideEl.find('.carousel-slide-shadow-top');
     let shadowAfter = isHorizontal
-      ? $slideEl.find('.Carousel-slide-shadow-right')
-      : $slideEl.find('.Carousel-slide-shadow-bottom');
+      ? $slideEl.find('.carousel-slide-shadow-right')
+      : $slideEl.find('.carousel-slide-shadow-bottom');
     if (shadowBefore.length === 0) {
-      shadowBefore = $(`<div class="Carousel-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
+      shadowBefore = $(`<div class="carousel-slide-shadow-${isHorizontal ? 'left' : 'top'}"></div>`);
       $slideEl.append(shadowBefore);
     }
     if (shadowAfter.length === 0) {
       shadowAfter = $(
-        `<div class="Carousel-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`,
+        `<div class="carousel-slide-shadow-${isHorizontal ? 'right' : 'bottom'}"></div>`,
       );
       $slideEl.append(shadowAfter);
     }
@@ -34,8 +34,8 @@ export default function EffectCube({ Carousel, extendParams, on }) {
 
   const recreateShadows = () => {
     // create new ones
-    const isHorizontal = Carousel.isHorizontal();
-    Carousel.slides.each((slideEl) => {
+    const isHorizontal = carousel.isHorizontal();
+    carousel.slides.each((slideEl) => {
       const progress = Math.max(Math.min(slideEl.progress, 1), -1);
       createSlideShadows($(slideEl), progress, isHorizontal);
     });
@@ -46,29 +46,29 @@ export default function EffectCube({ Carousel, extendParams, on }) {
       $el,
       $wrapperEl,
       slides,
-      width: CarouselWidth,
-      height: CarouselHeight,
+      width: carouselWidth,
+      height: carouselHeight,
       rtlTranslate: rtl,
-      size: CarouselSize,
+      size: carouselSize,
       browser,
-    } = Carousel;
-    const params = Carousel.params.cubeEffect;
-    const isHorizontal = Carousel.isHorizontal();
-    const isVirtual = Carousel.virtual && Carousel.params.virtual.enabled;
+    } = carousel;
+    const params = carousel.params.cubeEffect;
+    const isHorizontal = carousel.isHorizontal();
+    const isVirtual = carousel.virtual && carousel.params.virtual.enabled;
     let wrapperRotate = 0;
     let $cubeShadowEl;
     if (params.shadow) {
       if (isHorizontal) {
-        $cubeShadowEl = $wrapperEl.find('.Carousel-cube-shadow');
+        $cubeShadowEl = $wrapperEl.find('.carousel-cube-shadow');
         if ($cubeShadowEl.length === 0) {
-          $cubeShadowEl = $('<div class="Carousel-cube-shadow"></div>');
+          $cubeShadowEl = $('<div class="carousel-cube-shadow"></div>');
           $wrapperEl.append($cubeShadowEl);
         }
-        $cubeShadowEl.css({ height: `${CarouselWidth}px` });
+        $cubeShadowEl.css({ height: `${carouselWidth}px` });
       } else {
-        $cubeShadowEl = $el.find('.Carousel-cube-shadow');
+        $cubeShadowEl = $el.find('.carousel-cube-shadow');
         if ($cubeShadowEl.length === 0) {
-          $cubeShadowEl = $('<div class="Carousel-cube-shadow"></div>');
+          $cubeShadowEl = $('<div class="carousel-cube-shadow"></div>');
           $el.append($cubeShadowEl);
         }
       }
@@ -77,7 +77,7 @@ export default function EffectCube({ Carousel, extendParams, on }) {
       const $slideEl = slides.eq(i);
       let slideIndex = i;
       if (isVirtual) {
-        slideIndex = parseInt($slideEl.attr('data-Carousel-slide-index'), 10);
+        slideIndex = parseInt($slideEl.attr('data-carousel-slide-index'), 10);
       }
       let slideAngle = slideIndex * 90;
       let round = Math.floor(slideAngle / 360);
@@ -90,17 +90,17 @@ export default function EffectCube({ Carousel, extendParams, on }) {
       let ty = 0;
       let tz = 0;
       if (slideIndex % 4 === 0) {
-        tx = -round * 4 * CarouselSize;
+        tx = -round * 4 * carouselSize;
         tz = 0;
       } else if ((slideIndex - 1) % 4 === 0) {
         tx = 0;
-        tz = -round * 4 * CarouselSize;
+        tz = -round * 4 * carouselSize;
       } else if ((slideIndex - 2) % 4 === 0) {
-        tx = CarouselSize + round * 4 * CarouselSize;
-        tz = CarouselSize;
+        tx = carouselSize + round * 4 * carouselSize;
+        tz = carouselSize;
       } else if ((slideIndex - 3) % 4 === 0) {
-        tx = -CarouselSize;
-        tz = 3 * CarouselSize + CarouselSize * 4 * round;
+        tx = -carouselSize;
+        tz = 3 * carouselSize + carouselSize * 4 * round;
       }
       if (rtl) {
         tx = -tx;
@@ -124,15 +124,15 @@ export default function EffectCube({ Carousel, extendParams, on }) {
       }
     }
     $wrapperEl.css({
-      '-webkit-transform-origin': `50% 50% -${CarouselSize / 2}px`,
-      'transform-origin': `50% 50% -${CarouselSize / 2}px`,
+      '-webkit-transform-origin': `50% 50% -${carouselSize / 2}px`,
+      'transform-origin': `50% 50% -${carouselSize / 2}px`,
     });
 
     if (params.shadow) {
       if (isHorizontal) {
         $cubeShadowEl.transform(
-          `translate3d(0px, ${CarouselWidth / 2 + params.shadowOffset}px, ${
-            -CarouselWidth / 2
+          `translate3d(0px, ${carouselWidth / 2 + params.shadowOffset}px, ${
+            -carouselWidth / 2
           }px) rotateX(90deg) rotateZ(0deg) scale(${params.shadowScale})`,
         );
       } else {
@@ -145,41 +145,41 @@ export default function EffectCube({ Carousel, extendParams, on }) {
         const scale2 = params.shadowScale / multiplier;
         const offset = params.shadowOffset;
         $cubeShadowEl.transform(
-          `scale3d(${scale1}, 1, ${scale2}) translate3d(0px, ${CarouselHeight / 2 + offset}px, ${
-            -CarouselHeight / 2 / scale2
+          `scale3d(${scale1}, 1, ${scale2}) translate3d(0px, ${carouselHeight / 2 + offset}px, ${
+            -carouselHeight / 2 / scale2
           }px) rotateX(-90deg)`,
         );
       }
     }
-    const zFactor = browser.isSafari || browser.isWebView ? -CarouselSize / 2 : 0;
+    const zFactor = browser.isSafari || browser.isWebView ? -carouselSize / 2 : 0;
     $wrapperEl.transform(
       `translate3d(0px,0,${zFactor}px) rotateX(${
-        Carousel.isHorizontal() ? 0 : wrapperRotate
-      }deg) rotateY(${Carousel.isHorizontal() ? -wrapperRotate : 0}deg)`,
+        carousel.isHorizontal() ? 0 : wrapperRotate
+      }deg) rotateY(${carousel.isHorizontal() ? -wrapperRotate : 0}deg)`,
     );
-    $wrapperEl[0].style.setProperty('--Carousel-cube-translate-z', `${zFactor}px`);
+    $wrapperEl[0].style.setProperty('--carousel-cube-translate-z', `${zFactor}px`);
   };
   const setTransition = (duration) => {
-    const { $el, slides } = Carousel;
+    const { $el, slides } = carousel;
     slides
       .transition(duration)
       .find(
-        '.Carousel-slide-shadow-top, .Carousel-slide-shadow-right, .Carousel-slide-shadow-bottom, .Carousel-slide-shadow-left',
+        '.carousel-slide-shadow-top, .carousel-slide-shadow-right, .carousel-slide-shadow-bottom, .carousel-slide-shadow-left',
       )
       .transition(duration);
-    if (Carousel.params.cubeEffect.shadow && !Carousel.isHorizontal()) {
-      $el.find('.Carousel-cube-shadow').transition(duration);
+    if (carousel.params.cubeEffect.shadow && !carousel.isHorizontal()) {
+      $el.find('.carousel-cube-shadow').transition(duration);
     }
   };
 
   effectInit({
     effect: 'cube',
-    Carousel,
+    carousel,
     on,
     setTranslate,
     setTransition,
     recreateShadows,
-    getEffectParams: () => Carousel.params.cubeEffect,
+    getEffectParams: () => carousel.params.cubeEffect,
     perspective: () => true,
     overwriteParams: () => ({
       vtsSlidesPerView: 1,

@@ -1,6 +1,6 @@
 export default function updateActiveIndex(newActiveIndex) {
-  const Carousel = this;
-  const translate = Carousel.rtlTranslate ? Carousel.translate : -Carousel.translate;
+  const carousel = this;
+  const translate = carousel.rtlTranslate ? carousel.translate : -carousel.translate;
   const {
     slidesGrid,
     snapGrid,
@@ -8,7 +8,7 @@ export default function updateActiveIndex(newActiveIndex) {
     activeIndex: previousIndex,
     realIndex: previousRealIndex,
     snapIndex: previousSnapIndex,
-  } = Carousel;
+  } = carousel;
   let activeIndex = newActiveIndex;
   let snapIndex;
   if (typeof activeIndex === 'undefined') {
@@ -40,30 +40,30 @@ export default function updateActiveIndex(newActiveIndex) {
   if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
   if (activeIndex === previousIndex) {
     if (snapIndex !== previousSnapIndex) {
-      Carousel.snapIndex = snapIndex;
-      Carousel.emit('snapIndexChange');
+      carousel.snapIndex = snapIndex;
+      carousel.emit('snapIndexChange');
     }
     return;
   }
 
   // Get real index
   const realIndex = parseInt(
-    Carousel.slides.eq(activeIndex).attr('data-Carousel-slide-index') || activeIndex,
+    carousel.slides.eq(activeIndex).attr('data-carousel-slide-index') || activeIndex,
     10,
   );
 
-  Object.assign(Carousel, {
+  Object.assign(carousel, {
     snapIndex,
     realIndex,
     previousIndex,
     activeIndex,
   });
-  Carousel.emit('activeIndexChange');
-  Carousel.emit('snapIndexChange');
+  carousel.emit('activeIndexChange');
+  carousel.emit('snapIndexChange');
   if (previousRealIndex !== realIndex) {
-    Carousel.emit('realIndexChange');
+    carousel.emit('realIndexChange');
   }
-  if (Carousel.initialized || Carousel.params.runCallbacksOnInit) {
-    Carousel.emit('slideChange');
+  if (carousel.initialized || carousel.params.runCallbacksOnInit) {
+    carousel.emit('slideChange');
   }
 }

@@ -1,4 +1,4 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface KeyboardMethods {
   /**
@@ -21,7 +21,7 @@ export interface KeyboardEvents {
   /**
    * Event will be fired on key press
    */
-  keyPress: (Carousel: Carousel, keyCode: string) => void;
+  keyPress: (carousel: carousel, keyCode: string) => void;
 }
 
 export interface KeyboardOptions {

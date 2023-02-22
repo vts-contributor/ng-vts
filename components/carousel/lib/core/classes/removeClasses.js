@@ -1,7 +1,7 @@
 export default function removeClasses() {
-  const Carousel = this;
-  const { $el, classNames } = Carousel;
+  const carousel = this;
+  const { $el, classNames } = carousel;
 
   $el.removeClass(classNames.join(' '));
-  Carousel.emitContainerClasses();
+  carousel.emitContainerClasses();
 }

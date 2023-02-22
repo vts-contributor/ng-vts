@@ -1,11 +1,11 @@
 import classesToSelector from '../../shared/classes-to-selector.js';
 import $ from '../../shared/dom.js';
 
-export default function A11y({ Carousel, extendParams, on }) {
+export default function A11y({ carousel, extendParams, on }) {
   extendParams({
     a11y: {
       enabled: true,
-      notificationClass: 'Carousel-notification',
+      notificationClass: 'carousel-notification',
       prevSlideMessage: 'Previous slide',
       nextSlideMessage: 'Next slide',
       firstSlideMessage: 'This is the first slide',
@@ -20,7 +20,7 @@ export default function A11y({ Carousel, extendParams, on }) {
     },
   });
 
-  Carousel.a11y = {
+  carousel.a11y = {
     clicked: false,
   };
 
@@ -70,23 +70,23 @@ export default function A11y({ Carousel, extendParams, on }) {
 
   function onEnterOrSpaceKey(e) {
     if (e.keyCode !== 13 && e.keyCode !== 32) return;
-    const params = Carousel.params.a11y;
+    const params = carousel.params.a11y;
     const $targetEl = $(e.target);
-    if (Carousel.navigation && Carousel.navigation.$nextEl && $targetEl.is(Carousel.navigation.$nextEl)) {
-      if (!(Carousel.isEnd && !Carousel.params.loop)) {
-        Carousel.slideNext();
+    if (carousel.navigation && carousel.navigation.$nextEl && $targetEl.is(carousel.navigation.$nextEl)) {
+      if (!(carousel.isEnd && !carousel.params.loop)) {
+        carousel.slideNext();
       }
-      if (Carousel.isEnd) {
+      if (carousel.isEnd) {
         notify(params.lastSlideMessage);
       } else {
         notify(params.nextSlideMessage);
       }
     }
-    if (Carousel.navigation && Carousel.navigation.$prevEl && $targetEl.is(Carousel.navigation.$prevEl)) {
-      if (!(Carousel.isBeginning && !Carousel.params.loop)) {
-        Carousel.slidePrev();
+    if (carousel.navigation && carousel.navigation.$prevEl && $targetEl.is(carousel.navigation.$prevEl)) {
+      if (!(carousel.isBeginning && !carousel.params.loop)) {
+        carousel.slidePrev();
       }
-      if (Carousel.isBeginning) {
+      if (carousel.isBeginning) {
         notify(params.firstSlideMessage);
       } else {
         notify(params.prevSlideMessage);
@@ -94,19 +94,19 @@ export default function A11y({ Carousel, extendParams, on }) {
     }
 
     if (
-      Carousel.pagination &&
-      $targetEl.is(classesToSelector(Carousel.params.pagination.bulletClass))
+      carousel.pagination &&
+      $targetEl.is(classesToSelector(carousel.params.pagination.bulletClass))
     ) {
       $targetEl[0].click();
     }
   }
 
   function updateNavigation() {
-    if (Carousel.params.loop || Carousel.params.rewind || !Carousel.navigation) return;
-    const { $nextEl, $prevEl } = Carousel.navigation;
+    if (carousel.params.loop || carousel.params.rewind || !carousel.navigation) return;
+    const { $nextEl, $prevEl } = carousel.navigation;
 
     if ($prevEl && $prevEl.length > 0) {
-      if (Carousel.isBeginning) {
+      if (carousel.isBeginning) {
         disableEl($prevEl);
         makeElNotFocusable($prevEl);
       } else {
@@ -115,7 +115,7 @@ export default function A11y({ Carousel, extendParams, on }) {
       }
     }
     if ($nextEl && $nextEl.length > 0) {
-      if (Carousel.isEnd) {
+      if (carousel.isEnd) {
         disableEl($nextEl);
         makeElNotFocusable($nextEl);
       } else {
@@ -126,21 +126,21 @@ export default function A11y({ Carousel, extendParams, on }) {
   }
 
   function hasPagination() {
-    return Carousel.pagination && Carousel.pagination.bullets && Carousel.pagination.bullets.length;
+    return carousel.pagination && carousel.pagination.bullets && carousel.pagination.bullets.length;
   }
 
   function hasClickablePagination() {
-    return hasPagination() && Carousel.params.pagination.clickable;
+    return hasPagination() && carousel.params.pagination.clickable;
   }
 
   function updatePagination() {
-    const params = Carousel.params.a11y;
+    const params = carousel.params.a11y;
     if (!hasPagination()) return;
-    Carousel.pagination.bullets.each((bulletEl) => {
+    carousel.pagination.bullets.each((bulletEl) => {
       const $bulletEl = $(bulletEl);
-      if (Carousel.params.pagination.clickable) {
+      if (carousel.params.pagination.clickable) {
         makeElFocusable($bulletEl);
-        if (!Carousel.params.pagination.renderBullet) {
+        if (!carousel.params.pagination.renderBullet) {
           addElRole($bulletEl, 'button');
           addElLabel(
             $bulletEl,
@@ -148,7 +148,7 @@ export default function A11y({ Carousel, extendParams, on }) {
           );
         }
       }
-      if ($bulletEl.is(`.${Carousel.params.pagination.bulletActiveClass}`)) {
+      if ($bulletEl.is(`.${carousel.params.pagination.bulletActiveClass}`)) {
         $bulletEl.attr('aria-current', 'true');
       } else {
         $bulletEl.removeAttr('aria-current');
@@ -166,55 +166,55 @@ export default function A11y({ Carousel, extendParams, on }) {
     addElControls($el, wrapperId);
   };
   const handlePointerDown = () => {
-    Carousel.a11y.clicked = true;
+    carousel.a11y.clicked = true;
   };
   const handlePointerUp = () => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        if (!Carousel.destroyed) {
-          Carousel.a11y.clicked = false;
+        if (!carousel.destroyed) {
+          carousel.a11y.clicked = false;
         }
       });
     });
   };
 
   const handleFocus = (e) => {
-    if (Carousel.a11y.clicked) return;
-    const slideEl = e.target.closest(`.${Carousel.params.slideClass}`);
-    if (!slideEl || !Carousel.slides.includes(slideEl)) return;
-    const isActive = Carousel.slides.indexOf(slideEl) === Carousel.activeIndex;
+    if (carousel.a11y.clicked) return;
+    const slideEl = e.target.closest(`.${carousel.params.slideClass}`);
+    if (!slideEl || !carousel.slides.includes(slideEl)) return;
+    const isActive = carousel.slides.indexOf(slideEl) === carousel.activeIndex;
     const isVisible =
-      Carousel.params.watchSlidesProgress &&
-      Carousel.visibleSlides &&
-      Carousel.visibleSlides.includes(slideEl);
+      carousel.params.watchSlidesProgress &&
+      carousel.visibleSlides &&
+      carousel.visibleSlides.includes(slideEl);
     if (isActive || isVisible) return;
     if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
-    if (Carousel.isHorizontal()) {
-      Carousel.el.scrollLeft = 0;
+    if (carousel.isHorizontal()) {
+      carousel.el.scrollLeft = 0;
     } else {
-      Carousel.el.scrollTop = 0;
+      carousel.el.scrollTop = 0;
     }
-    Carousel.slideTo(Carousel.slides.indexOf(slideEl), 0);
+    carousel.slideTo(carousel.slides.indexOf(slideEl), 0);
   };
 
   const initSlides = () => {
-    const params = Carousel.params.a11y;
+    const params = carousel.params.a11y;
     if (params.itemRoleDescriptionMessage) {
-      addElRoleDescription($(Carousel.slides), params.itemRoleDescriptionMessage);
+      addElRoleDescription($(carousel.slides), params.itemRoleDescriptionMessage);
     }
     if (params.slideRole) {
-      addElRole($(Carousel.slides), params.slideRole);
+      addElRole($(carousel.slides), params.slideRole);
     }
 
-    const slidesLength = Carousel.params.loop
-      ? Carousel.slides.filter((el) => !el.classList.contains(Carousel.params.slideDuplicateClass))
+    const slidesLength = carousel.params.loop
+      ? carousel.slides.filter((el) => !el.classList.contains(carousel.params.slideDuplicateClass))
           .length
-      : Carousel.slides.length;
+      : carousel.slides.length;
     if (params.slideLabelMessage) {
-      Carousel.slides.each((slideEl, index) => {
+      carousel.slides.each((slideEl, index) => {
         const $slideEl = $(slideEl);
-        const slideIndex = Carousel.params.loop
-          ? parseInt($slideEl.attr('data-Carousel-slide-index'), 10)
+        const slideIndex = carousel.params.loop
+          ? parseInt($slideEl.attr('data-carousel-slide-index'), 10)
           : index;
         const ariaLabelMessage = params.slideLabelMessage
           .replace(/\{\{index\}\}/, slideIndex + 1)
@@ -225,12 +225,12 @@ export default function A11y({ Carousel, extendParams, on }) {
   };
 
   const init = () => {
-    const params = Carousel.params.a11y;
+    const params = carousel.params.a11y;
 
-    Carousel.$el.append(liveRegion);
+    carousel.$el.append(liveRegion);
 
     // Container
-    const $containerEl = Carousel.$el;
+    const $containerEl = carousel.$el;
     if (params.containerRoleDescriptionMessage) {
       addElRoleDescription($containerEl, params.containerRoleDescriptionMessage);
     }
@@ -239,9 +239,9 @@ export default function A11y({ Carousel, extendParams, on }) {
     }
 
     // Wrapper
-    const $wrapperEl = Carousel.$wrapperEl;
-    const wrapperId = params.id || $wrapperEl.attr('id') || `Carousel-wrapper-${getRandomNumber(16)}`;
-    const live = Carousel.params.autoplay && Carousel.params.autoplay.enabled ? 'off' : 'polite';
+    const $wrapperEl = carousel.$wrapperEl;
+    const wrapperId = params.id || $wrapperEl.attr('id') || `carousel-wrapper-${getRandomNumber(16)}`;
+    const live = carousel.params.vtsAutoplay && carousel.params.vtsAutoplay.enabled ? 'off' : 'polite';
     addElId($wrapperEl, wrapperId);
     addElLive($wrapperEl, live);
 
@@ -251,11 +251,11 @@ export default function A11y({ Carousel, extendParams, on }) {
     // Navigation
     let $nextEl;
     let $prevEl;
-    if (Carousel.navigation && Carousel.navigation.$nextEl) {
-      $nextEl = Carousel.navigation.$nextEl;
+    if (carousel.navigation && carousel.navigation.$nextEl) {
+      $nextEl = carousel.navigation.$nextEl;
     }
-    if (Carousel.navigation && Carousel.navigation.$prevEl) {
-      $prevEl = Carousel.navigation.$prevEl;
+    if (carousel.navigation && carousel.navigation.$prevEl) {
+      $prevEl = carousel.navigation.$prevEl;
     }
 
     if ($nextEl && $nextEl.length) {
@@ -267,28 +267,28 @@ export default function A11y({ Carousel, extendParams, on }) {
 
     // Pagination
     if (hasClickablePagination()) {
-      Carousel.pagination.$el.on(
+      carousel.pagination.$el.on(
         'keydown',
-        classesToSelector(Carousel.params.pagination.bulletClass),
+        classesToSelector(carousel.params.pagination.bulletClass),
         onEnterOrSpaceKey,
       );
     }
 
     // Tab focus
-    Carousel.$el.on('focus', handleFocus, true);
-    Carousel.$el.on('pointerdown', handlePointerDown, true);
-    Carousel.$el.on('pointerup', handlePointerUp, true);
+    carousel.$el.on('focus', handleFocus, true);
+    carousel.$el.on('pointerdown', handlePointerDown, true);
+    carousel.$el.on('pointerup', handlePointerUp, true);
   };
   function destroy() {
     if (liveRegion && liveRegion.length > 0) liveRegion.remove();
 
     let $nextEl;
     let $prevEl;
-    if (Carousel.navigation && Carousel.navigation.$nextEl) {
-      $nextEl = Carousel.navigation.$nextEl;
+    if (carousel.navigation && carousel.navigation.$nextEl) {
+      $nextEl = carousel.navigation.$nextEl;
     }
-    if (Carousel.navigation && Carousel.navigation.$prevEl) {
-      $prevEl = Carousel.navigation.$prevEl;
+    if (carousel.navigation && carousel.navigation.$prevEl) {
+      $prevEl = carousel.navigation.$prevEl;
     }
     if ($nextEl) {
       $nextEl.off('keydown', onEnterOrSpaceKey);
@@ -299,43 +299,43 @@ export default function A11y({ Carousel, extendParams, on }) {
 
     // Pagination
     if (hasClickablePagination()) {
-      Carousel.pagination.$el.off(
+      carousel.pagination.$el.off(
         'keydown',
-        classesToSelector(Carousel.params.pagination.bulletClass),
+        classesToSelector(carousel.params.pagination.bulletClass),
         onEnterOrSpaceKey,
       );
     }
 
     // Tab focus
-    Carousel.$el.off('focus', handleFocus, true);
-    Carousel.$el.off('pointerdown', handlePointerDown, true);
-    Carousel.$el.off('pointerup', handlePointerUp, true);
+    carousel.$el.off('focus', handleFocus, true);
+    carousel.$el.off('pointerdown', handlePointerDown, true);
+    carousel.$el.off('pointerup', handlePointerUp, true);
   }
 
   on('beforeInit', () => {
     liveRegion = $(
-      `<span class="${Carousel.params.a11y.notificationClass}" aria-live="assertive" aria-atomic="true"></span>`,
+      `<span class="${carousel.params.a11y.notificationClass}" aria-live="assertive" aria-atomic="true"></span>`,
     );
   });
 
   on('afterInit', () => {
-    if (!Carousel.params.a11y.enabled) return;
+    if (!carousel.params.a11y.enabled) return;
     init();
   });
   on('slidesLengthChange snapGridLengthChange slidesGridLengthChange', () => {
-    if (!Carousel.params.a11y.enabled) return;
+    if (!carousel.params.a11y.enabled) return;
     initSlides();
   });
   on('fromEdge toEdge afterInit lock unlock', () => {
-    if (!Carousel.params.a11y.enabled) return;
+    if (!carousel.params.a11y.enabled) return;
     updateNavigation();
   });
   on('paginationUpdate', () => {
-    if (!Carousel.params.a11y.enabled) return;
+    if (!carousel.params.a11y.enabled) return;
     updatePagination();
   });
   on('destroy', () => {
-    if (!Carousel.params.a11y.enabled) return;
+    if (!carousel.params.a11y.enabled) return;
     destroy();
   });
 }

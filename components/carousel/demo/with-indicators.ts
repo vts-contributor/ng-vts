@@ -16,7 +16,8 @@ import { Component } from '@angular/core';
   styles: [
     `
       vts-carousel {
-        height: 200px;
+        height: 260px;
+        width: 33.33%;
       }
       img {
         height: 100%;

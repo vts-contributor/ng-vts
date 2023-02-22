@@ -1,7 +1,7 @@
 import { Dom7Array } from 'dom7';
-import { CarouselOptions } from './Carousel-options';
-import { CSSSelector, CarouselModule } from './shared';
-import { CarouselEvents } from './Carousel-events';
+import { carouselOptions } from './carousel-options';
+import { CSSSelector, carouselModule } from './shared';
+import { carouselEvents } from './carousel-events';
 
 import { A11yMethods } from './modules/a11y';
 import { AutoplayMethods } from './modules/autoplay';
@@ -27,7 +27,7 @@ import { ZoomMethods } from './modules/zoom';
 import { FreeModeMethods } from './modules/free-mode';
 import { ManipulationMethods } from './modules/manipulation';
 
-interface CarouselClass<Events> {
+interface carouselClass<Events> {
   /** Add event handler */
   on<E extends keyof Events>(event: E, handler: Events[E]): void;
   /** Add event handler that will be removed after it was fired */
@@ -40,19 +40,19 @@ interface CarouselClass<Events> {
   emit<E extends keyof Events>(event: E, ...args: any[]): void;
 }
 
-interface Carousel extends CarouselClass<CarouselEvents> {
+interface carousel extends carouselClass<carouselEvents> {
   /**
    * Object with passed initialization parameters
    */
-  params: CarouselOptions;
+  params: carouselOptions;
 
   /**
    * Object with original initialization parameters
    */
-  originalParams: CarouselOptions;
+  originalParams: carouselOptions;
 
   /**
-   * Dom7 element with slider container HTML element. To get vanilla HTMLElement use `Carousel.el`
+   * Dom7 element with slider container HTML element. To get vanilla HTMLElement use `carousel.el`
    */
   $el: Dom7Array;
 
@@ -62,7 +62,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   el: HTMLElement;
 
   /**
-   * Dom7 element with slider wrapper HTML element. To get vanilla HTMLElement use `Carousel.wrapperEl`
+   * Dom7 element with slider wrapper HTML element. To get vanilla HTMLElement use `carousel.wrapperEl`
    */
   $wrapperEl: Dom7Array;
 
@@ -72,7 +72,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   wrapperEl: HTMLElement;
 
   /**
-   * Dom7 array-like collection of slides HTML elements. To get specific slide HTMLElement use `Carousel.slides[1]`
+   * Dom7 array-like collection of slides HTML elements. To get specific slide HTMLElement use `carousel.slides[1]`
    */
   slides: Dom7Array;
 
@@ -144,18 +144,18 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   isLocked: boolean;
 
   /**
-   * `true` if Carousel is in transition
+   * `true` if carousel is in transition
    */
   animating: boolean;
 
   /**
    * Object with the following touch event properties:
    *
-   * - `Carousel.touches.startX`
-   * - `Carousel.touches.startY`
-   * - `Carousel.touches.currentX`
-   * - `Carousel.touches.currentY`
-   * - `Carousel.touches.diff`
+   * - `carousel.touches.startX`
+   * - `carousel.touches.startY`
+   * - `carousel.touches.currentX`
+   * - `carousel.touches.currentY`
+   * - `carousel.touches.diff`
    */
   touches: {
     startX: number;
@@ -196,21 +196,21 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   rtlTranslate: boolean;
 
   /**
-   * Disable Carousel (if it was enabled). When Carousel is disabled, it will hide all navigation elements and won't respond to any events and interactions
+   * Disable carousel (if it was enabled). When carousel is disabled, it will hide all navigation elements and won't respond to any events and interactions
    *
    */
   disable(): void;
 
   /**
-   * Enable Carousel (if it was disabled)
+   * Enable carousel (if it was disabled)
    *
    */
   enable(): void;
 
   /**
-   * Set Carousel translate progress (from 0 to 1). Where 0 - its initial position (offset) on first slide, and 1 - its maximum position (offset) on last slide
+   * Set carousel translate progress (from 0 to 1). Where 0 - its initial position (offset) on first slide, and 1 - its maximum position (offset) on last slide
    *
-   * @param progress Carousel translate progress (from 0 to 1).
+   * @param progress carousel translate progress (from 0 to 1).
    * @param speed Transition duration (in ms).
    */
   setProgress(progress: number, speed?: number): void;
@@ -256,7 +256,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   slideToLoop(index: number, speed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Reset Carousel position to currently active slide for the duration equal to 'speed'
+   * Reset carousel position to currently active slide for the duration equal to 'speed'
    * parameter.
    *
    * @param speed Transition duration (in ms).
@@ -266,7 +266,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   slideReset(speed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Reset Carousel position to closest slide/snap point for the duration equal to 'speed' parameter.
+   * Reset carousel position to closest slide/snap point for the duration equal to 'speed' parameter.
    *
    * @param speed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
@@ -275,7 +275,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   slideToClosest(speed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Force Carousel to update its height (when autoHeight enabled) for the duration equal to
+   * Force carousel to update its height (when autoHeight enabled) for the duration equal to
    * 'speed' parameter
    *
    * @param speed Transition duration (in ms).
@@ -285,14 +285,14 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   /**
    * You should call it after you add/remove slides
    * manually, or after you hide/show it, or do any
-   * custom DOM modifications with Carousel
+   * custom DOM modifications with carousel
    * This method also includes subcall of the following
    * methods which you can use separately:
    */
   update(): void;
 
   /**
-   * recalculate size of Carousel container
+   * recalculate size of carousel container
    */
   updateSize(): void;
 
@@ -302,7 +302,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   updateSlides(): void;
 
   /**
-   * recalculate Carousel progress
+   * recalculate carousel progress
    */
   updateProgress(): void;
 
@@ -315,7 +315,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
    * Changes slider direction from horizontal to vertical and back.
    *
    * @param direction New direction. If not specified, then will automatically changed to opposite direction
-   * @param needUpdate Will call Carousel.update(). Default true
+   * @param needUpdate Will call carousel.update(). Default true
    */
   changeDirection(direction?: 'horizontal' | 'vertical', needUpdate?: boolean): void;
 
@@ -349,29 +349,29 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   /**
    * Initialize slider
    */
-  init(el?: HTMLElement): Carousel;
+  init(el?: HTMLElement): carousel;
 
   /**
    * Destroy slider instance and detach all events listeners
    *
-   * @param deleteInstance Set it to false (by default it is true) to not to delete Carousel instance
+   * @param deleteInstance Set it to false (by default it is true) to not to delete carousel instance
    * @param cleanStyles Set it to true (by default it is true) and all custom styles will be removed from slides, wrapper and container.
-   * Useful if you need to destroy Carousel and to init again with new options or in different direction
+   * Useful if you need to destroy carousel and to init again with new options or in different direction
    */
   destroy(deleteInstance?: boolean, cleanStyles?: boolean): void;
 
   /**
-   * Set custom css3 transform's translate value for Carousel wrapper
+   * Set custom css3 transform's translate value for carousel wrapper
    */
   setTranslate(translate: any): void;
 
   /**
-   * Get current value of Carousel wrapper css3 transform translate
+   * Get current value of carousel wrapper css3 transform translate
    */
   getTranslate(): any;
 
   /**
-   * Animate custom css3 transform's translate value for Carousel wrapper
+   * Animate custom css3 transform's translate value for carousel wrapper
    *
    * @param translate Translate value (in px)
    * @param speed Transition duration (in ms)
@@ -414,7 +414,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   /**
    * !INTERNAL
    */
-  getBreakpoint(breakpoints: CarouselOptions['breakpoints']): string;
+  getBreakpoint(breakpoints: carouselOptions['breakpoints']): string;
 
   /**
    * !INTERNAL
@@ -434,7 +434,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   /**
    * !INTERNAL
    */
-  modules: Array<CarouselModule>;
+  modules: Array<carouselModule>;
 
   a11y: A11yMethods;
   autoplay: AutoplayMethods;
@@ -460,35 +460,35 @@ interface Carousel extends CarouselClass<CarouselEvents> {
   freeMode: FreeModeMethods;
 }
 
-interface Carousel extends ManipulationMethods {}
+interface carousel extends ManipulationMethods {}
 
-declare class Carousel implements Carousel {
+declare class carousel implements carousel {
   /**
-   * Constructs a new Carousel instance.
+   * Constructs a new carousel instance.
    *
-   * @param container Where Carousel applies to.
+   * @param container Where carousel applies to.
    * @param options   Instance options.
    */
-  constructor(container: CSSSelector | HTMLElement, options?: CarouselOptions);
+  constructor(container: CSSSelector | HTMLElement, options?: carouselOptions);
   /**
-   * Installs modules on Carousel in runtime.
+   * Installs modules on carousel in runtime.
    */
-  static use(modules: CarouselModule[]): void;
+  static use(modules: carouselModule[]): void;
 
   /**
-   * Carousel default options
+   * carousel default options
    */
-  static defaults: CarouselOptions;
+  static defaults: carouselOptions;
 
   /**
-   * Extend global Carousel defaults
+   * Extend global carousel defaults
    */
-  static extendDefaults(options: CarouselOptions): void;
+  static extendDefaults(options: carouselOptions): void;
 
   /**
-   * Object with global Carousel extended options
+   * Object with global carousel extended options
    */
-  static extendedDefaults: CarouselOptions;
+  static extendedDefaults: carouselOptions;
 }
 
-export default Carousel;
+export default carousel;

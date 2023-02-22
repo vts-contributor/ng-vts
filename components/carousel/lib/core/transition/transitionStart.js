@@ -1,12 +1,12 @@
 import transitionEmit from './transitionEmit.js';
 
 export default function transitionStart(runCallbacks = true, direction) {
-  const Carousel = this;
-  const { params } = Carousel;
+  const carousel = this;
+  const { params } = carousel;
   if (params.cssMode) return;
   if (params.autoHeight) {
-    Carousel.updateAutoHeight();
+    carousel.updateAutoHeight();
   }
 
-  transitionEmit({ Carousel, runCallbacks, direction, step: 'Start' });
+  transitionEmit({ carousel, runCallbacks, direction, step: 'Start' });
 }

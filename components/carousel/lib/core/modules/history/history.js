@@ -1,6 +1,6 @@
 import { getWindow } from 'ssr-window';
 
-export default function History({ Carousel, extendParams, on }) {
+export default function History({ carousel, extendParams, on }) {
   extendParams({
     history: {
       enabled: false,
@@ -43,30 +43,30 @@ export default function History({ Carousel, extendParams, on }) {
   };
   const setHistory = (key, index) => {
     const window = getWindow();
-    if (!initialized || !Carousel.params.history.enabled) return;
+    if (!initialized || !carousel.params.history.enabled) return;
     let location;
-    if (Carousel.params.url) {
-      location = new URL(Carousel.params.url);
+    if (carousel.params.url) {
+      location = new URL(carousel.params.url);
     } else {
       location = window.location;
     }
-    const slide = Carousel.slides.eq(index);
+    const slide = carousel.slides.eq(index);
     let value = slugify(slide.attr('data-history'));
-    if (Carousel.params.history.root.length > 0) {
-      let root = Carousel.params.history.root;
+    if (carousel.params.history.root.length > 0) {
+      let root = carousel.params.history.root;
       if (root[root.length - 1] === '/') root = root.slice(0, root.length - 1);
       value = `${root}/${key}/${value}`;
     } else if (!location.pathname.includes(key)) {
       value = `${key}/${value}`;
     }
-    if (Carousel.params.history.keepQuery) {
+    if (carousel.params.history.keepQuery) {
       value += location.search;
     }
     const currentState = window.history.state;
     if (currentState && currentState.value === value) {
       return;
     }
-    if (Carousel.params.history.replaceState) {
+    if (carousel.params.history.replaceState) {
       window.history.replaceState({ value }, null, value);
     } else {
       window.history.pushState({ value }, null, value);
@@ -75,65 +75,65 @@ export default function History({ Carousel, extendParams, on }) {
 
   const scrollToSlide = (speed, value, runCallbacks) => {
     if (value) {
-      for (let i = 0, length = Carousel.slides.length; i < length; i += 1) {
-        const slide = Carousel.slides.eq(i);
+      for (let i = 0, length = carousel.slides.length; i < length; i += 1) {
+        const slide = carousel.slides.eq(i);
         const slideHistory = slugify(slide.attr('data-history'));
-        if (slideHistory === value && !slide.hasClass(Carousel.params.slideDuplicateClass)) {
+        if (slideHistory === value && !slide.hasClass(carousel.params.slideDuplicateClass)) {
           const index = slide.index();
-          Carousel.slideTo(index, speed, runCallbacks);
+          carousel.slideTo(index, speed, runCallbacks);
         }
       }
     } else {
-      Carousel.slideTo(0, speed, runCallbacks);
+      carousel.slideTo(0, speed, runCallbacks);
     }
   };
 
   const setHistoryPopState = () => {
-    paths = getPathValues(Carousel.params.url);
-    scrollToSlide(Carousel.params.speed, paths.value, false);
+    paths = getPathValues(carousel.params.url);
+    scrollToSlide(carousel.params.speed, paths.value, false);
   };
 
   const init = () => {
     const window = getWindow();
-    if (!Carousel.params.history) return;
+    if (!carousel.params.history) return;
     if (!window.history || !window.history.pushState) {
-      Carousel.params.history.enabled = false;
-      Carousel.params.hashNavigation.enabled = true;
+      carousel.params.history.enabled = false;
+      carousel.params.hashNavigation.enabled = true;
       return;
     }
     initialized = true;
-    paths = getPathValues(Carousel.params.url);
+    paths = getPathValues(carousel.params.url);
     if (!paths.key && !paths.value) return;
-    scrollToSlide(0, paths.value, Carousel.params.runCallbacksOnInit);
-    if (!Carousel.params.history.replaceState) {
+    scrollToSlide(0, paths.value, carousel.params.runCallbacksOnInit);
+    if (!carousel.params.history.replaceState) {
       window.addEventListener('popstate', setHistoryPopState);
     }
   };
   const destroy = () => {
     const window = getWindow();
-    if (!Carousel.params.history.replaceState) {
+    if (!carousel.params.history.replaceState) {
       window.removeEventListener('popstate', setHistoryPopState);
     }
   };
 
   on('init', () => {
-    if (Carousel.params.history.enabled) {
+    if (carousel.params.history.enabled) {
       init();
     }
   });
   on('destroy', () => {
-    if (Carousel.params.history.enabled) {
+    if (carousel.params.history.enabled) {
       destroy();
     }
   });
   on('transitionEnd _freeModeNoMomentumRelease', () => {
     if (initialized) {
-      setHistory(Carousel.params.history.key, Carousel.activeIndex);
+      setHistory(carousel.params.history.key, carousel.activeIndex);
     }
   });
   on('slideChange', () => {
-    if (initialized && Carousel.params.cssMode) {
-      setHistory(Carousel.params.history.key, Carousel.activeIndex);
+    if (initialized && carousel.params.cssMode) {
+      setHistory(carousel.params.history.key, carousel.activeIndex);
     }
   });
 }

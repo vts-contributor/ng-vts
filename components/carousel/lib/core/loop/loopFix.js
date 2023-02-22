@@ -1,7 +1,7 @@
 export default function loopFix() {
-  const Carousel = this;
+  const carousel = this;
 
-  Carousel.emit('beforeLoopFix');
+  carousel.emit('beforeLoopFix');
 
   const {
     activeIndex,
@@ -11,33 +11,33 @@ export default function loopFix() {
     allowSlideNext,
     snapGrid,
     rtlTranslate: rtl,
-  } = Carousel;
+  } = carousel;
   let newIndex;
-  Carousel.allowSlidePrev = true;
-  Carousel.allowSlideNext = true;
+  carousel.allowSlidePrev = true;
+  carousel.allowSlideNext = true;
 
   const snapTranslate = -snapGrid[activeIndex];
-  const diff = snapTranslate - Carousel.getTranslate();
+  const diff = snapTranslate - carousel.getTranslate();
 
   // Fix For Negative Oversliding
   if (activeIndex < loopedSlides) {
     newIndex = slides.length - loopedSlides * 3 + activeIndex;
     newIndex += loopedSlides;
-    const slideChanged = Carousel.slideTo(newIndex, 0, false, true);
+    const slideChanged = carousel.slideTo(newIndex, 0, false, true);
     if (slideChanged && diff !== 0) {
-      Carousel.setTranslate((rtl ? -Carousel.translate : Carousel.translate) - diff);
+      carousel.setTranslate((rtl ? -carousel.translate : carousel.translate) - diff);
     }
   } else if (activeIndex >= slides.length - loopedSlides) {
     // Fix For Positive Oversliding
     newIndex = -slides.length + activeIndex + loopedSlides;
     newIndex += loopedSlides;
-    const slideChanged = Carousel.slideTo(newIndex, 0, false, true);
+    const slideChanged = carousel.slideTo(newIndex, 0, false, true);
     if (slideChanged && diff !== 0) {
-      Carousel.setTranslate((rtl ? -Carousel.translate : Carousel.translate) - diff);
+      carousel.setTranslate((rtl ? -carousel.translate : carousel.translate) - diff);
     }
   }
-  Carousel.allowSlidePrev = allowSlidePrev;
-  Carousel.allowSlideNext = allowSlideNext;
+  carousel.allowSlidePrev = allowSlidePrev;
+  carousel.allowSlideNext = allowSlideNext;
 
-  Carousel.emit('loopFix');
+  carousel.emit('loopFix');
 }
