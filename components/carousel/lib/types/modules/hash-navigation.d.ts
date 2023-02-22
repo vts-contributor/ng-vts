@@ -1,4 +1,4 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface HashNavigationMethods {}
 
@@ -6,11 +6,11 @@ export interface HashNavigationEvents {
   /**
    * Event will be fired on window hash change
    */
-  hashChange: (Carousel: Carousel) => void;
+  hashChange: (carousel: carousel) => void;
   /**
-   * Event will be fired when Carousel updates the hash
+   * Event will be fired when carousel updates the hash
    */
-  hashSet: (Carousel: Carousel) => void;
+  hashSet: (carousel: carousel) => void;
 }
 
 export interface HashNavigationOptions {

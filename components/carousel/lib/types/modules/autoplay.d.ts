@@ -1,4 +1,4 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface AutoplayMethods {
   /**
@@ -36,23 +36,23 @@ export interface AutoplayEvents {
   /**
    * Event will be fired in when autoplay started
    */
-  autoplayStart: (Carousel: Carousel) => void;
+  autoplayStart: (carousel: carousel) => void;
   /**
    * Event will be fired when autoplay stopped
    */
-  autoplayStop: (Carousel: Carousel) => void;
+  autoplayStop: (carousel: carousel) => void;
   /**
    * Event will be fired on autoplay pause (on mouse/pointer enter), when `pauseOnMouseEnter` enabled
    */
-  autoplayPause: (Carousel: Carousel) => void;
+  autoplayPause: (carousel: carousel) => void;
   /**
    * Event will be fired on autoplay resume (on mouse/pointer leave), when `pauseOnMouseEnter` enabled
    */
-  autoplayResume: (Carousel: Carousel) => void;
+  autoplayResume: (carousel: carousel) => void;
   /**
    * Event will be fired when slide changed with autoplay
    */
-  autoplay: (Carousel: Carousel) => void;
+  autoplay: (carousel: carousel) => void;
 }
 
 /**
@@ -60,7 +60,7 @@ export interface AutoplayEvents {
  *
  * @example
  * ```js
- * const Carousel = new Carousel('.Carousel', {
+ * const carousel = new carousel('.carousel', {
  *   autoplay: {
  *     delay: 5000,
  *   },
@@ -72,12 +72,12 @@ export interface AutoplayOptions {
    * Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
    *
    * If you need to specify different delay for specific slides you can do it by using
-   * `data-Carousel-autoplay` (in ms) attribute on slide.
+   * `data-carousel-autoplay` (in ms) attribute on slide.
    *
    * @example
    * ```html
    * <!-- hold this slide for 2 seconds -->
-   * <div class="Carousel-slide" data-Carousel-autoplay="2000">
+   * <div class="carousel-slide" data-carousel-autoplay="2000">
    * ```
    *
    * @default 3000
@@ -116,7 +116,7 @@ export interface AutoplayOptions {
   waitForTransition?: boolean;
 
   /**
-   * When enabled autoplay will be paused on mouse enter over Carousel container. If `disableOnInteraction` is also enabled, it will stop autoplay instead of pause
+   * When enabled autoplay will be paused on mouse enter over carousel container. If `disableOnInteraction` is also enabled, it will stop autoplay instead of pause
    *
    * @default false
    */

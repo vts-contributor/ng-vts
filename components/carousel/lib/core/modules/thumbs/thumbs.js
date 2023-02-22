@@ -1,55 +1,55 @@
 import { isObject } from '../../shared/utils.js';
 import $ from '../../shared/dom.js';
 
-export default function Thumb({ Carousel, extendParams, on }) {
+export default function Thumb({ carousel, extendParams, on }) {
   extendParams({
     thumbs: {
-      Carousel: null,
+      carousel: null,
       multipleActiveThumbs: true,
       autoScrollOffset: 0,
-      slideThumbActiveClass: 'Carousel-slide-thumb-active',
-      thumbsContainerClass: 'Carousel-thumbs',
+      slideThumbActiveClass: 'carousel-slide-thumb-active',
+      thumbsContainerClass: 'carousel-thumbs',
     },
   });
 
   let initialized = false;
-  let CarouselCreated = false;
+  let carouselCreated = false;
 
-  Carousel.thumbs = {
-    Carousel: null,
+  carousel.thumbs = {
+    carousel: null,
   };
 
   function onThumbClick() {
-    const thumbsCarousel = Carousel.thumbs.Carousel;
-    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
+    const thumbscarousel = carousel.thumbs.carousel;
+    if (!thumbscarousel || thumbscarousel.destroyed) return;
 
-    const clickedIndex = thumbsCarousel.clickedIndex;
-    const clickedSlide = thumbsCarousel.clickedSlide;
-    if (clickedSlide && $(clickedSlide).hasClass(Carousel.params.thumbs.slideThumbActiveClass))
+    const clickedIndex = thumbscarousel.clickedIndex;
+    const clickedSlide = thumbscarousel.clickedSlide;
+    if (clickedSlide && $(clickedSlide).hasClass(carousel.params.thumbs.slideThumbActiveClass))
       return;
     if (typeof clickedIndex === 'undefined' || clickedIndex === null) return;
     let slideToIndex;
-    if (thumbsCarousel.params.loop) {
-      slideToIndex = parseInt($(thumbsCarousel.clickedSlide).attr('data-Carousel-slide-index'), 10);
+    if (thumbscarousel.params.loop) {
+      slideToIndex = parseInt($(thumbscarousel.clickedSlide).attr('data-carousel-slide-index'), 10);
     } else {
       slideToIndex = clickedIndex;
     }
-    if (Carousel.params.loop) {
-      let currentIndex = Carousel.activeIndex;
-      if (Carousel.slides.eq(currentIndex).hasClass(Carousel.params.slideDuplicateClass)) {
-        Carousel.loopFix();
+    if (carousel.params.loop) {
+      let currentIndex = carousel.activeIndex;
+      if (carousel.slides.eq(currentIndex).hasClass(carousel.params.slideDuplicateClass)) {
+        carousel.loopFix();
         // eslint-disable-next-line
-        Carousel._clientLeft = Carousel.$wrapperEl[0].clientLeft;
-        currentIndex = Carousel.activeIndex;
+        carousel._clientLeft = carousel.$wrapperEl[0].clientLeft;
+        currentIndex = carousel.activeIndex;
       }
-      const prevIndex = Carousel.slides
+      const prevIndex = carousel.slides
         .eq(currentIndex)
-        .prevAll(`[data-Carousel-slide-index="${slideToIndex}"]`)
+        .prevAll(`[data-carousel-slide-index="${slideToIndex}"]`)
         .eq(0)
         .index();
-      const nextIndex = Carousel.slides
+      const nextIndex = carousel.slides
         .eq(currentIndex)
-        .nextAll(`[data-Carousel-slide-index="${slideToIndex}"]`)
+        .nextAll(`[data-carousel-slide-index="${slideToIndex}"]`)
         .eq(0)
         .index();
       if (typeof prevIndex === 'undefined') slideToIndex = nextIndex;
@@ -57,103 +57,103 @@ export default function Thumb({ Carousel, extendParams, on }) {
       else if (nextIndex - currentIndex < currentIndex - prevIndex) slideToIndex = nextIndex;
       else slideToIndex = prevIndex;
     }
-    Carousel.slideTo(slideToIndex);
+    carousel.slideTo(slideToIndex);
   }
 
   function init() {
-    const { thumbs: thumbsParams } = Carousel.params;
+    const { thumbs: thumbsParams } = carousel.params;
     if (initialized) return false;
     initialized = true;
-    const CarouselClass = Carousel.constructor;
-    if (thumbsParams.Carousel instanceof CarouselClass) {
-      Carousel.thumbs.Carousel = thumbsParams.Carousel;
-      Object.assign(Carousel.thumbs.Carousel.originalParams, {
+    const carouselClass = carousel.constructor;
+    if (thumbsParams.carousel instanceof carouselClass) {
+      carousel.thumbs.carousel = thumbsParams.carousel;
+      Object.assign(carousel.thumbs.carousel.originalParams, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-      Object.assign(Carousel.thumbs.Carousel.params, {
+      Object.assign(carousel.thumbs.carousel.params, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-    } else if (isObject(thumbsParams.Carousel)) {
-      const thumbsCarouselParams = Object.assign({}, thumbsParams.Carousel);
-      Object.assign(thumbsCarouselParams, {
+    } else if (isObject(thumbsParams.carousel)) {
+      const thumbscarouselParams = Object.assign({}, thumbsParams.carousel);
+      Object.assign(thumbscarouselParams, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-      Carousel.thumbs.Carousel = new CarouselClass(thumbsCarouselParams);
-      CarouselCreated = true;
+      carousel.thumbs.carousel = new carouselClass(thumbscarouselParams);
+      carouselCreated = true;
     }
-    Carousel.thumbs.Carousel.$el.addClass(Carousel.params.thumbs.thumbsContainerClass);
-    Carousel.thumbs.Carousel.on('tap', onThumbClick);
+    carousel.thumbs.carousel.$el.addClass(carousel.params.thumbs.thumbsContainerClass);
+    carousel.thumbs.carousel.on('tap', onThumbClick);
     return true;
   }
 
   function update(initial) {
-    const thumbsCarousel = Carousel.thumbs.Carousel;
-    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
+    const thumbscarousel = carousel.thumbs.carousel;
+    if (!thumbscarousel || thumbscarousel.destroyed) return;
 
     const vtsSlidesPerView =
-      thumbsCarousel.params.vtsSlidesPerView === 'auto'
-        ? thumbsCarousel.slidesPerViewDynamic()
-        : thumbsCarousel.params.vtsSlidesPerView;
+      thumbscarousel.params.vtsSlidesPerView === 'auto'
+        ? thumbscarousel.slidesPerViewDynamic()
+        : thumbscarousel.params.vtsSlidesPerView;
 
     // Activate thumbs
     let thumbsToActivate = 1;
-    const thumbActiveClass = Carousel.params.thumbs.slideThumbActiveClass;
+    const thumbActiveClass = carousel.params.thumbs.slideThumbActiveClass;
 
-    if (Carousel.params.vtsSlidesPerView > 1 && !Carousel.params.centeredSlides) {
-      thumbsToActivate = Carousel.params.vtsSlidesPerView;
+    if (carousel.params.vtsSlidesPerView > 1 && !carousel.params.centeredSlides) {
+      thumbsToActivate = carousel.params.vtsSlidesPerView;
     }
 
-    if (!Carousel.params.thumbs.multipleActiveThumbs) {
+    if (!carousel.params.thumbs.multipleActiveThumbs) {
       thumbsToActivate = 1;
     }
 
     thumbsToActivate = Math.floor(thumbsToActivate);
 
-    thumbsCarousel.slides.removeClass(thumbActiveClass);
+    thumbscarousel.slides.removeClass(thumbActiveClass);
     if (
-      thumbsCarousel.params.loop ||
-      (thumbsCarousel.params.virtual && thumbsCarousel.params.virtual.enabled)
+      thumbscarousel.params.loop ||
+      (thumbscarousel.params.virtual && thumbscarousel.params.virtual.enabled)
     ) {
       for (let i = 0; i < thumbsToActivate; i += 1) {
-        thumbsCarousel.$wrapperEl
-          .children(`[data-Carousel-slide-index="${Carousel.realIndex + i}"]`)
+        thumbscarousel.$wrapperEl
+          .children(`[data-carousel-slide-index="${carousel.realIndex + i}"]`)
           .addClass(thumbActiveClass);
       }
     } else {
       for (let i = 0; i < thumbsToActivate; i += 1) {
-        thumbsCarousel.slides.eq(Carousel.realIndex + i).addClass(thumbActiveClass);
+        thumbscarousel.slides.eq(carousel.realIndex + i).addClass(thumbActiveClass);
       }
     }
 
-    const autoScrollOffset = Carousel.params.thumbs.autoScrollOffset;
-    const useOffset = autoScrollOffset && !thumbsCarousel.params.loop;
-    if (Carousel.realIndex !== thumbsCarousel.realIndex || useOffset) {
-      let currentThumbsIndex = thumbsCarousel.activeIndex;
+    const autoScrollOffset = carousel.params.thumbs.autoScrollOffset;
+    const useOffset = autoScrollOffset && !thumbscarousel.params.loop;
+    if (carousel.realIndex !== thumbscarousel.realIndex || useOffset) {
+      let currentThumbsIndex = thumbscarousel.activeIndex;
       let newThumbsIndex;
       let direction;
-      if (thumbsCarousel.params.loop) {
+      if (thumbscarousel.params.loop) {
         if (
-          thumbsCarousel.slides
+          thumbscarousel.slides
             .eq(currentThumbsIndex)
-            .hasClass(thumbsCarousel.params.slideDuplicateClass)
+            .hasClass(thumbscarousel.params.slideDuplicateClass)
         ) {
-          thumbsCarousel.loopFix();
+          thumbscarousel.loopFix();
           // eslint-disable-next-line
-          thumbsCarousel._clientLeft = thumbsCarousel.$wrapperEl[0].clientLeft;
-          currentThumbsIndex = thumbsCarousel.activeIndex;
+          thumbscarousel._clientLeft = thumbscarousel.$wrapperEl[0].clientLeft;
+          currentThumbsIndex = thumbscarousel.activeIndex;
         }
         // Find actual thumbs index to slide to
-        const prevThumbsIndex = thumbsCarousel.slides
+        const prevThumbsIndex = thumbscarousel.slides
           .eq(currentThumbsIndex)
-          .prevAll(`[data-Carousel-slide-index="${Carousel.realIndex}"]`)
+          .prevAll(`[data-carousel-slide-index="${carousel.realIndex}"]`)
           .eq(0)
           .index();
-        const nextThumbsIndex = thumbsCarousel.slides
+        const nextThumbsIndex = thumbscarousel.slides
           .eq(currentThumbsIndex)
-          .nextAll(`[data-Carousel-slide-index="${Carousel.realIndex}"]`)
+          .nextAll(`[data-carousel-slide-index="${carousel.realIndex}"]`)
           .eq(0)
           .index();
         if (typeof prevThumbsIndex === 'undefined') {
@@ -162,26 +162,26 @@ export default function Thumb({ Carousel, extendParams, on }) {
           newThumbsIndex = prevThumbsIndex;
         } else if (nextThumbsIndex - currentThumbsIndex === currentThumbsIndex - prevThumbsIndex) {
           newThumbsIndex =
-            thumbsCarousel.params.slidesPerGroup > 1 ? nextThumbsIndex : currentThumbsIndex;
+            thumbscarousel.params.slidesPerGroup > 1 ? nextThumbsIndex : currentThumbsIndex;
         } else if (nextThumbsIndex - currentThumbsIndex < currentThumbsIndex - prevThumbsIndex) {
           newThumbsIndex = nextThumbsIndex;
         } else {
           newThumbsIndex = prevThumbsIndex;
         }
-        direction = Carousel.activeIndex > Carousel.previousIndex ? 'next' : 'prev';
+        direction = carousel.activeIndex > carousel.previousIndex ? 'next' : 'prev';
       } else {
-        newThumbsIndex = Carousel.realIndex;
-        direction = newThumbsIndex > Carousel.previousIndex ? 'next' : 'prev';
+        newThumbsIndex = carousel.realIndex;
+        direction = newThumbsIndex > carousel.previousIndex ? 'next' : 'prev';
       }
       if (useOffset) {
         newThumbsIndex += direction === 'next' ? autoScrollOffset : -1 * autoScrollOffset;
       }
 
       if (
-        thumbsCarousel.visibleSlidesIndexes &&
-        thumbsCarousel.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0
+        thumbscarousel.visibleSlidesIndexes &&
+        thumbscarousel.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0
       ) {
-        if (thumbsCarousel.params.centeredSlides) {
+        if (thumbscarousel.params.centeredSlides) {
           if (newThumbsIndex > currentThumbsIndex) {
             newThumbsIndex = newThumbsIndex - Math.floor(vtsSlidesPerView / 2) + 1;
           } else {
@@ -189,18 +189,18 @@ export default function Thumb({ Carousel, extendParams, on }) {
           }
         } else if (
           newThumbsIndex > currentThumbsIndex &&
-          thumbsCarousel.params.slidesPerGroup === 1
+          thumbscarousel.params.slidesPerGroup === 1
         ) {
           // newThumbsIndex = newThumbsIndex - vtsSlidesPerView + 1;
         }
-        thumbsCarousel.slideTo(newThumbsIndex, initial ? 0 : undefined);
+        thumbscarousel.slideTo(newThumbsIndex, initial ? 0 : undefined);
       }
     }
   }
 
   on('beforeInit', () => {
-    const { thumbs } = Carousel.params;
-    if (!thumbs || !thumbs.Carousel) return;
+    const { thumbs } = carousel.params;
+    if (!thumbs || !thumbs.carousel) return;
     init();
     update(true);
   });
@@ -208,19 +208,19 @@ export default function Thumb({ Carousel, extendParams, on }) {
     update();
   });
   on('setTransition', (_s, duration) => {
-    const thumbsCarousel = Carousel.thumbs.Carousel;
-    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
-    thumbsCarousel.setTransition(duration);
+    const thumbscarousel = carousel.thumbs.carousel;
+    if (!thumbscarousel || thumbscarousel.destroyed) return;
+    thumbscarousel.setTransition(duration);
   });
   on('beforeDestroy', () => {
-    const thumbsCarousel = Carousel.thumbs.Carousel;
-    if (!thumbsCarousel || thumbsCarousel.destroyed) return;
-    if (CarouselCreated) {
-      thumbsCarousel.destroy();
+    const thumbscarousel = carousel.thumbs.carousel;
+    if (!thumbscarousel || thumbscarousel.destroyed) return;
+    if (carouselCreated) {
+      thumbscarousel.destroy();
     }
   });
 
-  Object.assign(Carousel.thumbs, {
+  Object.assign(carousel.thumbs, {
     init,
     update,
   });

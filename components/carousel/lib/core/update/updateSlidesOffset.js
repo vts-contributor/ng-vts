@@ -1,8 +1,8 @@
 export default function updateSlidesOffset() {
-  const Carousel = this;
-  const slides = Carousel.slides;
+  const carousel = this;
+  const slides = carousel.slides;
   for (let i = 0; i < slides.length; i += 1) {
-    slides[i].CarouselSlideOffset = Carousel.isHorizontal()
+    slides[i].carouselSlideOffset = carousel.isHorizontal()
       ? slides[i].offsetLeft
       : slides[i].offsetTop;
   }

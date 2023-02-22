@@ -1,7 +1,7 @@
 export default function effectInit(params) {
   const {
     effect,
-    Carousel,
+    carousel,
     on,
     setTranslate,
     setTransition,
@@ -12,36 +12,36 @@ export default function effectInit(params) {
   } = params;
 
   on('beforeInit', () => {
-    if (Carousel.params.effect !== effect) return;
-    Carousel.classNames.push(`${Carousel.params.containerModifierClass}${effect}`);
+    if (carousel.params.effect !== effect) return;
+    carousel.classNames.push(`${carousel.params.containerModifierClass}${effect}`);
     if (perspective && perspective()) {
-      Carousel.classNames.push(`${Carousel.params.containerModifierClass}3d`);
+      carousel.classNames.push(`${carousel.params.containerModifierClass}3d`);
     }
 
     const overwriteParamsResult = overwriteParams ? overwriteParams() : {};
 
-    Object.assign(Carousel.params, overwriteParamsResult);
-    Object.assign(Carousel.originalParams, overwriteParamsResult);
+    Object.assign(carousel.params, overwriteParamsResult);
+    Object.assign(carousel.originalParams, overwriteParamsResult);
   });
   on('setTranslate', () => {
-    if (Carousel.params.effect !== effect) return;
+    if (carousel.params.effect !== effect) return;
     setTranslate();
   });
   on('setTransition', (_s, duration) => {
-    if (Carousel.params.effect !== effect) return;
+    if (carousel.params.effect !== effect) return;
     setTransition(duration);
   });
 
   on('transitionEnd', () => {
-    if (Carousel.params.effect !== effect) return;
+    if (carousel.params.effect !== effect) return;
     if (recreateShadows) {
       if (!getEffectParams || !getEffectParams().slideShadows) return;
       // remove shadows
-      Carousel.slides.each((slideEl) => {
-        const $slideEl = Carousel.$(slideEl);
+      carousel.slides.each((slideEl) => {
+        const $slideEl = carousel.$(slideEl);
         $slideEl
           .find(
-            '.Carousel-slide-shadow-top, .Carousel-slide-shadow-right, .Carousel-slide-shadow-bottom, .Carousel-slide-shadow-left',
+            '.carousel-slide-shadow-top, .carousel-slide-shadow-right, .carousel-slide-shadow-bottom, .carousel-slide-shadow-left',
           )
           .remove();
       });
@@ -52,12 +52,12 @@ export default function effectInit(params) {
 
   let requireUpdateOnVirtual;
   on('virtualUpdate', () => {
-    if (Carousel.params.effect !== effect) return;
-    if (!Carousel.slides.length) {
+    if (carousel.params.effect !== effect) return;
+    if (!carousel.slides.length) {
       requireUpdateOnVirtual = true;
     }
     requestAnimationFrame(() => {
-      if (requireUpdateOnVirtual && Carousel.slides && Carousel.slides.length) {
+      if (requireUpdateOnVirtual && carousel.slides && carousel.slides.length) {
         setTranslate();
         requireUpdateOnVirtual = false;
       }

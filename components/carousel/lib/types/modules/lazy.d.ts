@@ -1,6 +1,6 @@
 import { Dom7Array } from 'dom7';
 import { CSSSelector } from '../shared';
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface LazyMethods {
   /**
@@ -19,11 +19,11 @@ export interface LazyEvents {
   /**
    * Event will be fired in the beginning of lazy loading of image
    */
-  lazyImageLoad: (Carousel: Carousel, slideEl: HTMLElement, imageEl: HTMLElement) => void;
+  lazyImageLoad: (carousel: carousel, slideEl: HTMLElement, imageEl: HTMLElement) => void;
   /**
    * Event will be fired when lazy loading image will be loaded
    */
-  lazyImageReady: (Carousel: Carousel, slideEl: HTMLElement, imageEl: HTMLElement) => void;
+  lazyImageReady: (carousel: carousel, slideEl: HTMLElement, imageEl: HTMLElement) => void;
 }
 
 export interface LazyOptions {
@@ -34,7 +34,7 @@ export interface LazyOptions {
    */
   enabled?: boolean;
   /**
-   * Enables to check is the Carousel in view before lazy loading images on initial slides
+   * Enables to check is the carousel in view before lazy loading images on initial slides
    *
    * @default false
    */
@@ -56,7 +56,7 @@ export interface LazyOptions {
    */
   loadPrevNextAmount?: number;
   /**
-   * By default, Carousel will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition
+   * By default, carousel will load lazy images after transition to this slide, so you may enable this parameter if you need it to start loading of new image in the beginning of transition
    *
    * @default false
    */
@@ -64,25 +64,25 @@ export interface LazyOptions {
   /**
    * CSS class name of lazy element
    *
-   * @default 'Carousel-lazy'
+   * @default 'carousel-lazy'
    */
   elementClass?: string;
   /**
    * CSS class name of lazy loading element
    *
-   * @default 'Carousel-lazy-loading'
+   * @default 'carousel-lazy-loading'
    */
   loadingClass?: string;
   /**
    * CSS class name of lazy loaded element
    *
-   * @default 'Carousel-lazy-loaded'
+   * @default 'carousel-lazy-loaded'
    */
   loadedClass?: string;
   /**
    * CSS class name of lazy preloader
    *
-   * @default 'Carousel-lazy-preloader'
+   * @default 'carousel-lazy-preloader'
    */
   preloaderClass?: string;
 }

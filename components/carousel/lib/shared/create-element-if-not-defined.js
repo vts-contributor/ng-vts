@@ -1,15 +1,15 @@
 import { getDocument } from 'ssr-window';
 
-export default function createElementIfNotDefined(Carousel, originalParams, params, checkProps) {
+export default function createElementIfNotDefined(carousel, originalParams, params, checkProps) {
   const document = getDocument();
-  if (Carousel.params.createElements) {
+  if (carousel.params.createElements) {
     Object.keys(checkProps).forEach((key) => {
       if (!params[key] && params.auto === true) {
-        let element = Carousel.$el.children(`.${checkProps[key]}`)[0];
+        let element = carousel.$el.children(`.${checkProps[key]}`)[0];
         if (!element) {
           element = document.createElement('div');
           element.className = checkProps[key];
-          Carousel.$el.append(element);
+          carousel.$el.append(element);
         }
         params[key] = element;
         originalParams[key] = element;

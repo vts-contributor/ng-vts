@@ -1,6 +1,6 @@
-export default function effectVirtualTransitionEnd({ Carousel, duration, transformEl, allSlides }) {
-  const { slides, activeIndex, $wrapperEl } = Carousel;
-  if (Carousel.params.virtualTranslate && duration !== 0) {
+export default function effectVirtualTransitionEnd({ carousel, duration, transformEl, allSlides }) {
+  const { slides, activeIndex, $wrapperEl } = carousel;
+  if (carousel.params.virtualTranslate && duration !== 0) {
     let eventTriggered = false;
     let $transitionEndTarget;
     if (allSlides) {
@@ -12,9 +12,9 @@ export default function effectVirtualTransitionEnd({ Carousel, duration, transfo
     }
     $transitionEndTarget.transitionEnd(() => {
       if (eventTriggered) return;
-      if (!Carousel || Carousel.destroyed) return;
+      if (!carousel || carousel.destroyed) return;
       eventTriggered = true;
-      Carousel.animating = false;
+      carousel.animating = false;
       const triggerEvents = ['webkitTransitionEnd', 'transitionend'];
       for (let i = 0; i < triggerEvents.length; i += 1) {
         $wrapperEl.trigger(triggerEvents[i]);

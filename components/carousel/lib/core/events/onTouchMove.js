@@ -4,15 +4,15 @@ import { now } from '../../shared/utils.js';
 
 export default function onTouchMove(event) {
   const document = getDocument();
-  const Carousel = this;
-  const data = Carousel.touchEventsData;
-  const { params, touches, rtlTranslate: rtl, enabled } = Carousel;
+  const carousel = this;
+  const data = carousel.touchEventsData;
+  const { params, touches, rtlTranslate: rtl, enabled } = carousel;
   if (!enabled) return;
   let e = event;
   if (e.originalEvent) e = e.originalEvent;
   if (!data.isTouched) {
     if (data.startMoving && data.isScrolling) {
-      Carousel.emit('touchMoveOpposite', e);
+      carousel.emit('touchMoveOpposite', e);
     }
     return;
   }
@@ -21,14 +21,14 @@ export default function onTouchMove(event) {
     e.type === 'touchmove' && e.targetTouches && (e.targetTouches[0] || e.changedTouches[0]);
   const pageX = e.type === 'touchmove' ? targetTouch.pageX : e.pageX;
   const pageY = e.type === 'touchmove' ? targetTouch.pageY : e.pageY;
-  if (e.preventedByNestedCarousel) {
+  if (e.preventedByNestedcarousel) {
     touches.startX = pageX;
     touches.startY = pageY;
     return;
   }
-  if (!Carousel.allowTouchMove) {
+  if (!carousel.allowTouchMove) {
     if (!$(e.target).is(data.focusableElements)) {
-      Carousel.allowClick = false;
+      carousel.allowClick = false;
     }
     if (data.isTouched) {
       Object.assign(touches, {
@@ -42,19 +42,19 @@ export default function onTouchMove(event) {
     return;
   }
   if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) {
-    if (Carousel.isVertical()) {
+    if (carousel.isVertical()) {
       // Vertical
       if (
-        (pageY < touches.startY && Carousel.translate <= Carousel.maxTranslate()) ||
-        (pageY > touches.startY && Carousel.translate >= Carousel.minTranslate())
+        (pageY < touches.startY && carousel.translate <= carousel.maxTranslate()) ||
+        (pageY > touches.startY && carousel.translate >= carousel.minTranslate())
       ) {
         data.isTouched = false;
         data.isMoved = false;
         return;
       }
     } else if (
-      (pageX < touches.startX && Carousel.translate <= Carousel.maxTranslate()) ||
-      (pageX > touches.startX && Carousel.translate >= Carousel.minTranslate())
+      (pageX < touches.startX && carousel.translate <= carousel.maxTranslate()) ||
+      (pageX > touches.startX && carousel.translate >= carousel.minTranslate())
     ) {
       return;
     }
@@ -62,12 +62,12 @@ export default function onTouchMove(event) {
   if (data.isTouchEvent && document.activeElement) {
     if (e.target === document.activeElement && $(e.target).is(data.focusableElements)) {
       data.isMoved = true;
-      Carousel.allowClick = false;
+      carousel.allowClick = false;
       return;
     }
   }
   if (data.allowTouchCallbacks) {
-    Carousel.emit('touchMove', e);
+    carousel.emit('touchMove', e);
   }
   if (e.targetTouches && e.targetTouches.length > 1) return;
 
@@ -76,28 +76,28 @@ export default function onTouchMove(event) {
 
   const diffX = touches.currentX - touches.startX;
   const diffY = touches.currentY - touches.startY;
-  if (Carousel.params.threshold && Math.sqrt(diffX ** 2 + diffY ** 2) < Carousel.params.threshold)
+  if (carousel.params.threshold && Math.sqrt(diffX ** 2 + diffY ** 2) < carousel.params.threshold)
     return;
 
   if (typeof data.isScrolling === 'undefined') {
     let touchAngle;
     if (
-      (Carousel.isHorizontal() && touches.currentY === touches.startY) ||
-      (Carousel.isVertical() && touches.currentX === touches.startX)
+      (carousel.isHorizontal() && touches.currentY === touches.startY) ||
+      (carousel.isVertical() && touches.currentX === touches.startX)
     ) {
       data.isScrolling = false;
     } else {
       // eslint-disable-next-line
       if (diffX * diffX + diffY * diffY >= 25) {
         touchAngle = (Math.atan2(Math.abs(diffY), Math.abs(diffX)) * 180) / Math.PI;
-        data.isScrolling = Carousel.isHorizontal()
+        data.isScrolling = carousel.isHorizontal()
           ? touchAngle > params.touchAngle
           : 90 - touchAngle > params.touchAngle;
       }
     }
   }
   if (data.isScrolling) {
-    Carousel.emit('touchMoveOpposite', e);
+    carousel.emit('touchMoveOpposite', e);
   }
   if (typeof data.startMoving === 'undefined') {
     if (touches.currentX !== touches.startX || touches.currentY !== touches.startY) {
@@ -111,7 +111,7 @@ export default function onTouchMove(event) {
   if (!data.startMoving) {
     return;
   }
-  Carousel.allowClick = false;
+  carousel.allowClick = false;
   if (!params.cssMode && e.cancelable) {
     e.preventDefault();
   }
@@ -121,73 +121,73 @@ export default function onTouchMove(event) {
 
   if (!data.isMoved) {
     if (params.loop && !params.cssMode) {
-      Carousel.loopFix();
+      carousel.loopFix();
     }
-    data.startTranslate = Carousel.getTranslate();
-    Carousel.setTransition(0);
-    if (Carousel.animating) {
-      Carousel.$wrapperEl.trigger('webkitTransitionEnd transitionend');
+    data.startTranslate = carousel.getTranslate();
+    carousel.setTransition(0);
+    if (carousel.animating) {
+      carousel.$wrapperEl.trigger('webkitTransitionEnd transitionend');
     }
     data.allowMomentumBounce = false;
     // Grab Cursor
-    if (params.grabCursor && (Carousel.allowSlideNext === true || Carousel.allowSlidePrev === true)) {
-      Carousel.setGrabCursor(true);
+    if (params.grabCursor && (carousel.allowSlideNext === true || carousel.allowSlidePrev === true)) {
+      carousel.setGrabCursor(true);
     }
-    Carousel.emit('sliderFirstMove', e);
+    carousel.emit('sliderFirstMove', e);
   }
-  Carousel.emit('sliderMove', e);
+  carousel.emit('sliderMove', e);
   data.isMoved = true;
 
-  let diff = Carousel.isHorizontal() ? diffX : diffY;
+  let diff = carousel.isHorizontal() ? diffX : diffY;
   touches.diff = diff;
 
   diff *= params.touchRatio;
   if (rtl) diff = -diff;
 
-  Carousel.swipeDirection = diff > 0 ? 'prev' : 'next';
+  carousel.swipeDirection = diff > 0 ? 'prev' : 'next';
   data.currentTranslate = diff + data.startTranslate;
 
-  let disableParentCarousel = true;
+  let disableParentcarousel = true;
   let resistanceRatio = params.resistanceRatio;
   if (params.touchReleaseOnEdges) {
     resistanceRatio = 0;
   }
-  if (diff > 0 && data.currentTranslate > Carousel.minTranslate()) {
-    disableParentCarousel = false;
+  if (diff > 0 && data.currentTranslate > carousel.minTranslate()) {
+    disableParentcarousel = false;
     if (params.resistance)
       data.currentTranslate =
-        Carousel.minTranslate() -
+        carousel.minTranslate() -
         1 +
-        (-Carousel.minTranslate() + data.startTranslate + diff) ** resistanceRatio;
-  } else if (diff < 0 && data.currentTranslate < Carousel.maxTranslate()) {
-    disableParentCarousel = false;
+        (-carousel.minTranslate() + data.startTranslate + diff) ** resistanceRatio;
+  } else if (diff < 0 && data.currentTranslate < carousel.maxTranslate()) {
+    disableParentcarousel = false;
     if (params.resistance)
       data.currentTranslate =
-        Carousel.maxTranslate() +
+        carousel.maxTranslate() +
         1 -
-        (Carousel.maxTranslate() - data.startTranslate - diff) ** resistanceRatio;
+        (carousel.maxTranslate() - data.startTranslate - diff) ** resistanceRatio;
   }
 
-  if (disableParentCarousel) {
-    e.preventedByNestedCarousel = true;
+  if (disableParentcarousel) {
+    e.preventedByNestedcarousel = true;
   }
 
   // Directions locks
   if (
-    !Carousel.allowSlideNext &&
-    Carousel.swipeDirection === 'next' &&
+    !carousel.allowSlideNext &&
+    carousel.swipeDirection === 'next' &&
     data.currentTranslate < data.startTranslate
   ) {
     data.currentTranslate = data.startTranslate;
   }
   if (
-    !Carousel.allowSlidePrev &&
-    Carousel.swipeDirection === 'prev' &&
+    !carousel.allowSlidePrev &&
+    carousel.swipeDirection === 'prev' &&
     data.currentTranslate > data.startTranslate
   ) {
     data.currentTranslate = data.startTranslate;
   }
-  if (!Carousel.allowSlidePrev && !Carousel.allowSlideNext) {
+  if (!carousel.allowSlidePrev && !carousel.allowSlideNext) {
     data.currentTranslate = data.startTranslate;
   }
 
@@ -199,7 +199,7 @@ export default function onTouchMove(event) {
         touches.startX = touches.currentX;
         touches.startY = touches.currentY;
         data.currentTranslate = data.startTranslate;
-        touches.diff = Carousel.isHorizontal()
+        touches.diff = carousel.isHorizontal()
           ? touches.currentX - touches.startX
           : touches.currentY - touches.startY;
         return;
@@ -214,17 +214,17 @@ export default function onTouchMove(event) {
 
   // Update active index in free mode
   if (
-    (params.freeMode && params.freeMode.enabled && Carousel.freeMode) ||
+    (params.freeMode && params.freeMode.enabled && carousel.freeMode) ||
     params.watchSlidesProgress
   ) {
-    Carousel.updateActiveIndex();
-    Carousel.updateSlidesClasses();
+    carousel.updateActiveIndex();
+    carousel.updateSlidesClasses();
   }
-  if (Carousel.params.freeMode && params.freeMode.enabled && Carousel.freeMode) {
-    Carousel.freeMode.onTouchMove();
+  if (carousel.params.freeMode && params.freeMode.enabled && carousel.freeMode) {
+    carousel.freeMode.onTouchMove();
   }
   // Update progress
-  Carousel.updateProgress(data.currentTranslate);
+  carousel.updateProgress(data.currentTranslate);
   // Update translate
-  Carousel.setTranslate(data.currentTranslate);
+  carousel.setTranslate(data.currentTranslate);
 }

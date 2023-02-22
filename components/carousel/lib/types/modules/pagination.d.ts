@@ -1,6 +1,6 @@
 import { Dom7Array } from 'dom7';
 import { CSSSelector } from '../shared';
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface PaginationMethods {
   /**
@@ -11,7 +11,7 @@ export interface PaginationMethods {
   /**
    * Dom7 array-like collection of pagination bullets
    * HTML elements. To get specific slide HTMLElement
-   * use `Carousel.pagination.bullets[1]`.
+   * use `carousel.pagination.bullets[1]`.
    */
   bullets: Dom7Array;
 
@@ -40,22 +40,22 @@ export interface PaginationEvents {
   /**
    * Event will be fired after pagination rendered
    */
-  paginationRender: (Carousel: Carousel, paginationEl: HTMLElement) => void;
+  paginationRender: (carousel: carousel, paginationEl: HTMLElement) => void;
 
   /**
    * Event will be fired when pagination updated
    */
-  paginationUpdate: (Carousel: Carousel, paginationEl: HTMLElement) => void;
+  paginationUpdate: (carousel: carousel, paginationEl: HTMLElement) => void;
 
   /**
    * Event will be fired on pagination hide
    */
-  paginationHide: (Carousel: Carousel) => void;
+  paginationHide: (carousel: carousel) => void;
 
   /**
    * Event will be fired on pagination show
    */
-  paginationShow: (Carousel: Carousel) => void;
+  paginationShow: (carousel: carousel) => void;
 }
 
 export interface PaginationOptions {
@@ -113,8 +113,8 @@ export interface PaginationOptions {
   clickable?: boolean;
 
   /**
-   * Makes pagination progressbar opposite to Carousel's `direction` parameter, means vertical progressbar for horizontal Carousel
-   * direction and horizontal progressbar for vertical Carousel direction
+   * Makes pagination progressbar opposite to carousel's `direction` parameter, means vertical progressbar for horizontal carousel
+   * direction and horizontal progressbar for vertical carousel direction
    *
    * @default false
    */
@@ -140,7 +140,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   //...
    *   renderBullet: function (index, className) {
    *     return '<span class="' + className + '">' + (index + 1) + '</span>';
@@ -157,7 +157,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   //...
    *   renderFraction: function (currentClass, totalClass) {
    *       return '<span class="' + currentClass + '"></span>' +
@@ -176,7 +176,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   //...
    *   renderProgressbar: function (progressbarFillClass) {
    *       return '<span class="' + progressbarFillClass + '"></span>';
@@ -194,103 +194,103 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   //...
-   *   renderCustom: function (Carousel, current, total) {
+   *   renderCustom: function (carousel, current, total) {
    *     return current + ' of ' + total;
    *   }
    * });
    * ```
    */
-  renderCustom?: (Carousel: Carousel, current: number, total: number) => void;
+  renderCustom?: (carousel: carousel, current: number, total: number) => void;
 
   /**
    * CSS class name of single pagination bullet
    *
-   * @default 'Carousel-pagination-bullet'
+   * @default 'carousel-pagination-bullet'
    */
   bulletClass?: string;
 
   /**
    * CSS class name of currently active pagination bullet
    *
-   * @default 'Carousel-pagination-bullet-active'
+   * @default 'carousel-pagination-bullet-active'
    */
   bulletActiveClass?: string;
 
   /**
    * The beginning of the modifier CSS class name that will be added to pagination depending on parameters
    *
-   * @default 'Carousel-pagination-'
+   * @default 'carousel-pagination-'
    */
   modifierClass?: string;
 
   /**
    * CSS class name of the element with currently active index in "fraction" pagination
    *
-   * @default 'Carousel-pagination-current'
+   * @default 'carousel-pagination-current'
    */
   currentClass?: string;
 
   /**
    * CSS class name of the element with total number of "snaps" in "fraction" pagination
    *
-   * @default 'Carousel-pagination-total'
+   * @default 'carousel-pagination-total'
    */
   totalClass?: string;
 
   /**
    * CSS class name of pagination when it becomes inactive
    *
-   * @default 'Carousel-pagination-hidden'
+   * @default 'carousel-pagination-hidden'
    */
   hiddenClass?: string;
 
   /**
    * CSS class name of pagination progressbar fill element
    *
-   * @default 'Carousel-pagination-progressbar-fill'
+   * @default 'carousel-pagination-progressbar-fill'
    */
   progressbarFillClass?: string;
 
   /**
    * CSS class name of pagination progressbar opposite
    *
-   * @default 'Carousel-pagination-progressbar-opposite'
+   * @default 'carousel-pagination-progressbar-opposite'
    */
   progressbarOppositeClass?: string;
   /**
    * CSS class name set to pagination when it is clickable
    *
-   * @default 'Carousel-pagination-clickable'
+   * @default 'carousel-pagination-clickable'
    */
   clickableClass?: string;
 
   /**
    * CSS class name set to pagination when it is disabled
    *
-   * @default 'Carousel-pagination-lock'
+   * @default 'carousel-pagination-lock'
    */
   lockClass?: string;
 
   /**
-   * CSS class name set to pagination in horizontal Carousel
+   * CSS class name set to pagination in horizontal carousel
    *
-   * @default 'Carousel-pagination-horizontal'
+   * @default 'carousel-pagination-horizontal'
    */
   horizontalClass?: string;
 
   /**
-   * CSS class name set to pagination in vertical Carousel
+   * CSS class name set to pagination in vertical carousel
    *
-   * @default 'Carousel-pagination-vertical'
+   * @default 'carousel-pagination-vertical'
    */
   verticalClass?: string;
 
   /**
-   * CSS class name added on Carousel container and pagination element when pagination is disabled by breakpoint
+   * CSS class name added on carousel container and pagination element when pagination is disabled by breakpoint
    *
-   * @default 'Carousel-pagination-disabled'
+   * @default 'carousel-pagination-disabled'
    */
   paginationDisabledClass?: string;
 }

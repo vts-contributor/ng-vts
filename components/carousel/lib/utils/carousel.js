@@ -1,1 +1,1 @@
-export { default as Carousel, default } from '../core/core';
+export { default as carousel, default } from '../core/core';

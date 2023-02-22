@@ -38,7 +38,7 @@ export default function slideTo(
     index = indexAsNumber;
   }
 
-  const Carousel = this;
+  const carousel = this;
   let slideIndex = index;
   if (slideIndex < 0) slideIndex = 0;
 
@@ -51,17 +51,17 @@ export default function slideTo(
     rtlTranslate: rtl,
     wrapperEl,
     enabled,
-  } = Carousel;
+  } = carousel;
 
   if (
-    (Carousel.animating && params.preventInteractionOnTransition) ||
+    (carousel.animating && params.preventInteractionOnTransition) ||
     (!enabled && !internal && !initial)
   ) {
     return false;
   }
 
-  const skip = Math.min(Carousel.params.slidesPerGroupSkip, slideIndex);
-  let snapIndex = skip + Math.floor((slideIndex - skip) / Carousel.params.slidesPerGroup);
+  const skip = Math.min(carousel.params.slidesPerGroupSkip, slideIndex);
+  let snapIndex = skip + Math.floor((slideIndex - skip) / carousel.params.slidesPerGroup);
   if (snapIndex >= snapGrid.length) snapIndex = snapGrid.length - 1;
 
   const translate = -snapGrid[snapIndex];
@@ -90,29 +90,29 @@ export default function slideTo(
     }
   }
   // Directions locks
-  if (Carousel.initialized && slideIndex !== activeIndex) {
+  if (carousel.initialized && slideIndex !== activeIndex) {
     if (
-      !Carousel.allowSlideNext &&
-      translate < Carousel.translate &&
-      translate < Carousel.minTranslate()
+      !carousel.allowSlideNext &&
+      translate < carousel.translate &&
+      translate < carousel.minTranslate()
     ) {
       return false;
     }
     if (
-      !Carousel.allowSlidePrev &&
-      translate > Carousel.translate &&
-      translate > Carousel.maxTranslate()
+      !carousel.allowSlidePrev &&
+      translate > carousel.translate &&
+      translate > carousel.maxTranslate()
     ) {
       if ((activeIndex || 0) !== slideIndex) return false;
     }
   }
 
   if (slideIndex !== (previousIndex || 0) && runCallbacks) {
-    Carousel.emit('beforeSlideChangeStart');
+    carousel.emit('beforeSlideChangeStart');
   }
 
   // Update progress
-  Carousel.updateProgress(translate);
+  carousel.updateProgress(translate);
 
   let direction;
   if (slideIndex > activeIndex) direction = 'next';
@@ -120,41 +120,41 @@ export default function slideTo(
   else direction = 'reset';
 
   // Update Index
-  if ((rtl && -translate === Carousel.translate) || (!rtl && translate === Carousel.translate)) {
-    Carousel.updateActiveIndex(slideIndex);
+  if ((rtl && -translate === carousel.translate) || (!rtl && translate === carousel.translate)) {
+    carousel.updateActiveIndex(slideIndex);
     // Update Height
     if (params.autoHeight) {
-      Carousel.updateAutoHeight();
+      carousel.updateAutoHeight();
     }
-    Carousel.updateSlidesClasses();
+    carousel.updateSlidesClasses();
     if (params.effect !== 'slide') {
-      Carousel.setTranslate(translate);
+      carousel.setTranslate(translate);
     }
     if (direction !== 'reset') {
-      Carousel.transitionStart(runCallbacks, direction);
-      Carousel.transitionEnd(runCallbacks, direction);
+      carousel.transitionStart(runCallbacks, direction);
+      carousel.transitionEnd(runCallbacks, direction);
     }
     return false;
   }
   if (params.cssMode) {
-    const isH = Carousel.isHorizontal();
+    const isH = carousel.isHorizontal();
     const t = rtl ? translate : -translate;
     if (speed === 0) {
-      const isVirtual = Carousel.virtual && Carousel.params.virtual.enabled;
+      const isVirtual = carousel.virtual && carousel.params.virtual.enabled;
       if (isVirtual) {
-        Carousel.wrapperEl.style.scrollSnapType = 'none';
-        Carousel._immediateVirtual = true;
+        carousel.wrapperEl.style.scrollSnapType = 'none';
+        carousel._immediateVirtual = true;
       }
       wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = t;
       if (isVirtual) {
         requestAnimationFrame(() => {
-          Carousel.wrapperEl.style.scrollSnapType = '';
-          Carousel._CarouselImmediateVirtual = false;
+          carousel.wrapperEl.style.scrollSnapType = '';
+          carousel._carouselImmediateVirtual = false;
         });
       }
     } else {
-      if (!Carousel.support.smoothScroll) {
-        animateCSSModeScroll({ Carousel, targetPosition: t, side: isH ? 'left' : 'top' });
+      if (!carousel.support.smoothScroll) {
+        animateCSSModeScroll({ carousel, targetPosition: t, side: isH ? 'left' : 'top' });
         return true;
       }
       wrapperEl.scrollTo({
@@ -165,38 +165,38 @@ export default function slideTo(
     return true;
   }
 
-  Carousel.setTransition(speed);
-  Carousel.setTranslate(translate);
-  Carousel.updateActiveIndex(slideIndex);
-  Carousel.updateSlidesClasses();
-  Carousel.emit('beforeTransitionStart', speed, internal);
-  Carousel.transitionStart(runCallbacks, direction);
+  carousel.setTransition(speed);
+  carousel.setTranslate(translate);
+  carousel.updateActiveIndex(slideIndex);
+  carousel.updateSlidesClasses();
+  carousel.emit('beforeTransitionStart', speed, internal);
+  carousel.transitionStart(runCallbacks, direction);
 
   if (speed === 0) {
-    Carousel.transitionEnd(runCallbacks, direction);
-  } else if (!Carousel.animating) {
-    Carousel.animating = true;
-    if (!Carousel.onSlideToWrapperTransitionEnd) {
-      Carousel.onSlideToWrapperTransitionEnd = function transitionEnd(e) {
-        if (!Carousel || Carousel.destroyed) return;
+    carousel.transitionEnd(runCallbacks, direction);
+  } else if (!carousel.animating) {
+    carousel.animating = true;
+    if (!carousel.onSlideToWrapperTransitionEnd) {
+      carousel.onSlideToWrapperTransitionEnd = function transitionEnd(e) {
+        if (!carousel || carousel.destroyed) return;
         if (e.target !== this) return;
-        Carousel.$wrapperEl[0].removeEventListener(
+        carousel.$wrapperEl[0].removeEventListener(
           'transitionend',
-          Carousel.onSlideToWrapperTransitionEnd,
+          carousel.onSlideToWrapperTransitionEnd,
         );
-        Carousel.$wrapperEl[0].removeEventListener(
+        carousel.$wrapperEl[0].removeEventListener(
           'webkitTransitionEnd',
-          Carousel.onSlideToWrapperTransitionEnd,
+          carousel.onSlideToWrapperTransitionEnd,
         );
-        Carousel.onSlideToWrapperTransitionEnd = null;
-        delete Carousel.onSlideToWrapperTransitionEnd;
-        Carousel.transitionEnd(runCallbacks, direction);
+        carousel.onSlideToWrapperTransitionEnd = null;
+        delete carousel.onSlideToWrapperTransitionEnd;
+        carousel.transitionEnd(runCallbacks, direction);
       };
     }
-    Carousel.$wrapperEl[0].addEventListener('transitionend', Carousel.onSlideToWrapperTransitionEnd);
-    Carousel.$wrapperEl[0].addEventListener(
+    carousel.$wrapperEl[0].addEventListener('transitionend', carousel.onSlideToWrapperTransitionEnd);
+    carousel.$wrapperEl[0].addEventListener(
       'webkitTransitionEnd',
-      Carousel.onSlideToWrapperTransitionEnd,
+      carousel.onSlideToWrapperTransitionEnd,
     );
   }
 

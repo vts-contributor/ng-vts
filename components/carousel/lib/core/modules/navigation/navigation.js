@@ -1,21 +1,21 @@
 import createElementIfNotDefined from '../../../shared/create-element-if-not-defined.js';
 import $ from '../../../shared/dom.js';
 
-export default function Navigation({ Carousel, extendParams, on, emit }) {
+export default function Navigation({ carousel, extendParams, on, emit }) {
   extendParams({
     navigation: {
       nextEl: null,
       prevEl: null,
 
       hideOnClick: false,
-      disabledClass: 'Carousel-button-disabled',
-      hiddenClass: 'Carousel-button-hidden',
-      lockClass: 'Carousel-button-lock',
-      navigationDisabledClass: 'Carousel-navigation-disabled',
+      disabledClass: 'carousel-button-disabled',
+      hiddenClass: 'carousel-button-hidden',
+      lockClass: 'carousel-button-lock',
+      navigationDisabledClass: 'carousel-navigation-disabled',
     },
   });
 
-  Carousel.navigation = {
+  carousel.navigation = {
     nextEl: null,
     $nextEl: null,
     prevEl: null,
@@ -27,57 +27,57 @@ export default function Navigation({ Carousel, extendParams, on, emit }) {
     if (el) {
       $el = $(el);
       if (
-        Carousel.params.uniqueNavElements &&
+        carousel.params.uniqueNavElements &&
         typeof el === 'string' &&
         $el.length > 1 &&
-        Carousel.$el.find(el).length === 1
+        carousel.$el.find(el).length === 1
       ) {
-        $el = Carousel.$el.find(el);
+        $el = carousel.$el.find(el);
       }
     }
     return $el;
   }
 
   function toggleEl($el, disabled) {
-    const params = Carousel.params.navigation;
+    const params = carousel.params.navigation;
     if ($el && $el.length > 0) {
       $el[disabled ? 'addClass' : 'removeClass'](params.disabledClass);
       if ($el[0] && $el[0].tagName === 'BUTTON') $el[0].disabled = disabled;
-      if (Carousel.params.watchOverflow && Carousel.enabled) {
-        $el[Carousel.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
+      if (carousel.params.watchOverflow && carousel.enabled) {
+        $el[carousel.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
       }
     }
   }
   function update() {
     // Update Navigation Buttons
-    if (Carousel.params.loop) return;
-    const { $nextEl, $prevEl } = Carousel.navigation;
+    if (carousel.params.loop) return;
+    const { $nextEl, $prevEl } = carousel.navigation;
 
-    toggleEl($prevEl, Carousel.isBeginning && !Carousel.params.rewind);
-    toggleEl($nextEl, Carousel.isEnd && !Carousel.params.rewind);
+    toggleEl($prevEl, carousel.isBeginning && !carousel.params.rewind);
+    toggleEl($nextEl, carousel.isEnd && !carousel.params.rewind);
   }
   function onPrevClick(e) {
     e.preventDefault();
-    if (Carousel.isBeginning && !Carousel.params.loop && !Carousel.params.rewind) return;
-    Carousel.slidePrev();
+    if (carousel.isBeginning && !carousel.params.loop && !carousel.params.rewind) return;
+    carousel.slidePrev();
     emit('navigationPrev');
   }
   function onNextClick(e) {
     e.preventDefault();
-    if (Carousel.isEnd && !Carousel.params.loop && !Carousel.params.rewind) return;
-    Carousel.slideNext();
+    if (carousel.isEnd && !carousel.params.loop && !carousel.params.rewind) return;
+    carousel.slideNext();
     emit('navigationNext');
   }
   function init() {
-    const params = Carousel.params.navigation;
+    const params = carousel.params.navigation;
 
-    Carousel.params.navigation = createElementIfNotDefined(
-      Carousel,
-      Carousel.originalParams.navigation,
-      Carousel.params.navigation,
+    carousel.params.navigation = createElementIfNotDefined(
+      carousel,
+      carousel.originalParams.navigation,
+      carousel.params.navigation,
       {
-        nextEl: 'Carousel-button-next',
-        prevEl: 'Carousel-button-prev',
+        nextEl: 'carousel-button-next',
+        prevEl: 'carousel-button-prev',
       },
     );
     if (!(params.nextEl || params.prevEl)) return;
@@ -92,32 +92,32 @@ export default function Navigation({ Carousel, extendParams, on, emit }) {
       $prevEl.on('click', onPrevClick);
     }
 
-    Object.assign(Carousel.navigation, {
+    Object.assign(carousel.navigation, {
       $nextEl,
       nextEl: $nextEl && $nextEl[0],
       $prevEl,
       prevEl: $prevEl && $prevEl[0],
     });
 
-    if (!Carousel.enabled) {
+    if (!carousel.enabled) {
       if ($nextEl) $nextEl.addClass(params.lockClass);
       if ($prevEl) $prevEl.addClass(params.lockClass);
     }
   }
   function destroy() {
-    const { $nextEl, $prevEl } = Carousel.navigation;
+    const { $nextEl, $prevEl } = carousel.navigation;
     if ($nextEl && $nextEl.length) {
       $nextEl.off('click', onNextClick);
-      $nextEl.removeClass(Carousel.params.navigation.disabledClass);
+      $nextEl.removeClass(carousel.params.navigation.disabledClass);
     }
     if ($prevEl && $prevEl.length) {
       $prevEl.off('click', onPrevClick);
-      $prevEl.removeClass(Carousel.params.navigation.disabledClass);
+      $prevEl.removeClass(carousel.params.navigation.disabledClass);
     }
   }
 
   on('init', () => {
-    if (Carousel.params.navigation.enabled === false) {
+    if (carousel.params.navigation.enabled === false) {
       // eslint-disable-next-line
       disable();
     } else {
@@ -132,34 +132,34 @@ export default function Navigation({ Carousel, extendParams, on, emit }) {
     destroy();
   });
   on('enable disable', () => {
-    const { $nextEl, $prevEl } = Carousel.navigation;
+    const { $nextEl, $prevEl } = carousel.navigation;
     if ($nextEl) {
-      $nextEl[Carousel.enabled ? 'removeClass' : 'addClass'](Carousel.params.navigation.lockClass);
+      $nextEl[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.navigation.lockClass);
     }
     if ($prevEl) {
-      $prevEl[Carousel.enabled ? 'removeClass' : 'addClass'](Carousel.params.navigation.lockClass);
+      $prevEl[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.navigation.lockClass);
     }
   });
   on('click', (_s, e) => {
-    const { $nextEl, $prevEl } = Carousel.navigation;
+    const { $nextEl, $prevEl } = carousel.navigation;
     const targetEl = e.target;
     if (
-      Carousel.params.navigation.hideOnClick &&
+      carousel.params.navigation.hideOnClick &&
       !$(targetEl).is($prevEl) &&
       !$(targetEl).is($nextEl)
     ) {
       if (
-        Carousel.pagination &&
-        Carousel.params.pagination &&
-        Carousel.params.pagination.clickable &&
-        (Carousel.pagination.el === targetEl || Carousel.pagination.el.contains(targetEl))
+        carousel.pagination &&
+        carousel.params.pagination &&
+        carousel.params.pagination.clickable &&
+        (carousel.pagination.el === targetEl || carousel.pagination.el.contains(targetEl))
       )
         return;
       let isHidden;
       if ($nextEl) {
-        isHidden = $nextEl.hasClass(Carousel.params.navigation.hiddenClass);
+        isHidden = $nextEl.hasClass(carousel.params.navigation.hiddenClass);
       } else if ($prevEl) {
-        isHidden = $prevEl.hasClass(Carousel.params.navigation.hiddenClass);
+        isHidden = $prevEl.hasClass(carousel.params.navigation.hiddenClass);
       }
       if (isHidden === true) {
         emit('navigationShow');
@@ -167,26 +167,26 @@ export default function Navigation({ Carousel, extendParams, on, emit }) {
         emit('navigationHide');
       }
       if ($nextEl) {
-        $nextEl.toggleClass(Carousel.params.navigation.hiddenClass);
+        $nextEl.toggleClass(carousel.params.navigation.hiddenClass);
       }
       if ($prevEl) {
-        $prevEl.toggleClass(Carousel.params.navigation.hiddenClass);
+        $prevEl.toggleClass(carousel.params.navigation.hiddenClass);
       }
     }
   });
 
   const enable = () => {
-    Carousel.$el.removeClass(Carousel.params.navigation.navigationDisabledClass);
+    carousel.$el.removeClass(carousel.params.navigation.navigationDisabledClass);
     init();
     update();
   };
 
   const disable = () => {
-    Carousel.$el.addClass(Carousel.params.navigation.navigationDisabledClass);
+    carousel.$el.addClass(carousel.params.navigation.navigationDisabledClass);
     destroy();
   };
 
-  Object.assign(Carousel.navigation, {
+  Object.assign(carousel.navigation, {
     enable,
     disable,
     update,

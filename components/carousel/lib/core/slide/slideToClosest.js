@@ -5,32 +5,32 @@ export default function slideToClosest(
   internal,
   threshold = 0.5,
 ) {
-  const Carousel = this;
-  let index = Carousel.activeIndex;
-  const skip = Math.min(Carousel.params.slidesPerGroupSkip, index);
-  const snapIndex = skip + Math.floor((index - skip) / Carousel.params.slidesPerGroup);
+  const carousel = this;
+  let index = carousel.activeIndex;
+  const skip = Math.min(carousel.params.slidesPerGroupSkip, index);
+  const snapIndex = skip + Math.floor((index - skip) / carousel.params.slidesPerGroup);
 
-  const translate = Carousel.rtlTranslate ? Carousel.translate : -Carousel.translate;
+  const translate = carousel.rtlTranslate ? carousel.translate : -carousel.translate;
 
-  if (translate >= Carousel.snapGrid[snapIndex]) {
+  if (translate >= carousel.snapGrid[snapIndex]) {
     // The current translate is on or after the current snap index, so the choice
     // is between the current index and the one after it.
-    const currentSnap = Carousel.snapGrid[snapIndex];
-    const nextSnap = Carousel.snapGrid[snapIndex + 1];
+    const currentSnap = carousel.snapGrid[snapIndex];
+    const nextSnap = carousel.snapGrid[snapIndex + 1];
     if (translate - currentSnap > (nextSnap - currentSnap) * threshold) {
-      index += Carousel.params.slidesPerGroup;
+      index += carousel.params.slidesPerGroup;
     }
   } else {
     // The current translate is before the current snap index, so the choice
     // is between the current index and the one before it.
-    const prevSnap = Carousel.snapGrid[snapIndex - 1];
-    const currentSnap = Carousel.snapGrid[snapIndex];
+    const prevSnap = carousel.snapGrid[snapIndex - 1];
+    const currentSnap = carousel.snapGrid[snapIndex];
     if (translate - prevSnap <= (currentSnap - prevSnap) * threshold) {
-      index -= Carousel.params.slidesPerGroup;
+      index -= carousel.params.slidesPerGroup;
     }
   }
   index = Math.max(index, 0);
-  index = Math.min(index, Carousel.slidesGrid.length - 1);
+  index = Math.min(index, carousel.slidesGrid.length - 1);
 
-  return Carousel.slideTo(index, speed, runCallbacks, internal);
+  return carousel.slideTo(index, speed, runCallbacks, internal);
 }

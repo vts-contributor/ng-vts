@@ -1,9 +1,9 @@
 import { setCSSProperty } from '../../shared/utils.js';
 
 export default function updateSlides() {
-  const Carousel = this;
+  const carousel = this;
   function getDirectionLabel(property) {
-    if (Carousel.isHorizontal()) {
+    if (carousel.isHorizontal()) {
       return property;
     }
     // prettier-ignore
@@ -22,42 +22,42 @@ export default function updateSlides() {
     return parseFloat(node.getPropertyValue(getDirectionLabel(label)) || 0);
   }
 
-  const params = Carousel.params;
+  const params = carousel.params;
 
-  const { $wrapperEl, size: CarouselSize, rtlTranslate: rtl, wrongRTL } = Carousel;
-  const isVirtual = Carousel.virtual && params.virtual.enabled;
-  const previousSlidesLength = isVirtual ? Carousel.virtual.slides.length : Carousel.slides.length;
-  const slides = $wrapperEl.children(`.${Carousel.params.slideClass}`);
-  const slidesLength = isVirtual ? Carousel.virtual.slides.length : slides.length;
+  const { $wrapperEl, size: carouselSize, rtlTranslate: rtl, wrongRTL } = carousel;
+  const isVirtual = carousel.virtual && params.virtual.enabled;
+  const previousSlidesLength = isVirtual ? carousel.virtual.slides.length : carousel.slides.length;
+  const slides = $wrapperEl.children(`.${carousel.params.slideClass}`);
+  const slidesLength = isVirtual ? carousel.virtual.slides.length : slides.length;
   let snapGrid = [];
   const slidesGrid = [];
   const slidesSizesGrid = [];
 
   let offsetBefore = params.slidesOffsetBefore;
   if (typeof offsetBefore === 'function') {
-    offsetBefore = params.slidesOffsetBefore.call(Carousel);
+    offsetBefore = params.slidesOffsetBefore.call(carousel);
   }
 
   let offsetAfter = params.slidesOffsetAfter;
   if (typeof offsetAfter === 'function') {
-    offsetAfter = params.slidesOffsetAfter.call(Carousel);
+    offsetAfter = params.slidesOffsetAfter.call(carousel);
   }
 
-  const previousSnapGridLength = Carousel.snapGrid.length;
-  const previousSlidesGridLength = Carousel.slidesGrid.length;
+  const previousSnapGridLength = carousel.snapGrid.length;
+  const previousSlidesGridLength = carousel.slidesGrid.length;
 
   let vtsSpaceBetween = params.vtsSpaceBetween;
   let slidePosition = -offsetBefore;
   let prevSlideSize = 0;
   let index = 0;
-  if (typeof CarouselSize === 'undefined') {
+  if (typeof carouselSize === 'undefined') {
     return;
   }
   if (typeof vtsSpaceBetween === 'string' && vtsSpaceBetween.indexOf('%') >= 0) {
-    vtsSpaceBetween = (parseFloat(vtsSpaceBetween.replace('%', '')) / 100) * CarouselSize;
+    vtsSpaceBetween = (parseFloat(vtsSpaceBetween.replace('%', '')) / 100) * carouselSize;
   }
 
-  Carousel.virtualSize = -vtsSpaceBetween;
+  carousel.virtualSize = -vtsSpaceBetween;
 
   // reset margins
   if (rtl) slides.css({ marginLeft: '', marginBottom: '', marginTop: '' });
@@ -65,13 +65,13 @@ export default function updateSlides() {
 
   // reset cssMode offsets
   if (params.centeredSlides && params.cssMode) {
-    setCSSProperty(Carousel.wrapperEl, '--Carousel-centered-offset-before', '');
-    setCSSProperty(Carousel.wrapperEl, '--Carousel-centered-offset-after', '');
+    setCSSProperty(carousel.wrapperEl, '--carousel-centered-offset-before', '');
+    setCSSProperty(carousel.wrapperEl, '--carousel-centered-offset-after', '');
   }
 
-  const gridEnabled = params.grid && params.grid.rows > 1 && Carousel.grid;
+  const gridEnabled = params.grid && params.grid.rows > 1 && carousel.grid;
   if (gridEnabled) {
-    Carousel.grid.initSlides(slidesLength);
+    carousel.grid.initSlides(slidesLength);
   }
 
   // Calc slides
@@ -88,7 +88,7 @@ export default function updateSlides() {
     slideSize = 0;
     const slide = slides.eq(i);
     if (gridEnabled) {
-      Carousel.grid.updateSlide(i, slide, slidesLength, getDirectionLabel);
+      carousel.grid.updateSlide(i, slide, slidesLength, getDirectionLabel);
     }
     if (slide.css('display') === 'none') continue; // eslint-disable-line
 
@@ -106,7 +106,7 @@ export default function updateSlides() {
         slide[0].style.webkitTransform = 'none';
       }
       if (params.roundLengths) {
-        slideSize = Carousel.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
+        slideSize = carousel.isHorizontal() ? slide.outerWidth(true) : slide.outerHeight(true);
       } else {
         // eslint-disable-next-line
         const width = getDirectionPropertyValue(slideStyles, 'width');
@@ -136,7 +136,7 @@ export default function updateSlides() {
       }
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
-      slideSize = (CarouselSize - (params.vtsSlidesPerView - 1) * vtsSpaceBetween) / params.vtsSlidesPerView;
+      slideSize = (carouselSize - (params.vtsSlidesPerView - 1) * vtsSpaceBetween) / params.vtsSlidesPerView;
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
       if (slides[i]) {
@@ -144,15 +144,15 @@ export default function updateSlides() {
       }
     }
     if (slides[i]) {
-      slides[i].CarouselSlideSize = slideSize;
+      slides[i].carouselSlideSize = slideSize;
     }
     slidesSizesGrid.push(slideSize);
 
     if (params.centeredSlides) {
       slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + vtsSpaceBetween;
       if (prevSlideSize === 0 && i !== 0)
-        slidePosition = slidePosition - CarouselSize / 2 - vtsSpaceBetween;
-      if (i === 0) slidePosition = slidePosition - CarouselSize / 2 - vtsSpaceBetween;
+        slidePosition = slidePosition - carouselSize / 2 - vtsSpaceBetween;
+      if (i === 0) slidePosition = slidePosition - carouselSize / 2 - vtsSpaceBetween;
       if (Math.abs(slidePosition) < 1 / 1000) slidePosition = 0;
       if (params.roundLengths) slidePosition = Math.floor(slidePosition);
       if (index % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
@@ -160,8 +160,8 @@ export default function updateSlides() {
     } else {
       if (params.roundLengths) slidePosition = Math.floor(slidePosition);
       if (
-        (index - Math.min(Carousel.params.slidesPerGroupSkip, index)) %
-          Carousel.params.slidesPerGroup ===
+        (index - Math.min(carousel.params.slidesPerGroupSkip, index)) %
+          carousel.params.slidesPerGroup ===
         0
       )
         snapGrid.push(slidePosition);
@@ -169,25 +169,25 @@ export default function updateSlides() {
       slidePosition = slidePosition + slideSize + vtsSpaceBetween;
     }
 
-    Carousel.virtualSize += slideSize + vtsSpaceBetween;
+    carousel.virtualSize += slideSize + vtsSpaceBetween;
 
     prevSlideSize = slideSize;
 
     index += 1;
   }
-  Carousel.virtualSize = Math.max(Carousel.virtualSize, CarouselSize) + offsetAfter;
+  carousel.virtualSize = Math.max(carousel.virtualSize, carouselSize) + offsetAfter;
 
   if (rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
-    $wrapperEl.css({ width: `${Carousel.virtualSize + params.vtsSpaceBetween}px` });
+    $wrapperEl.css({ width: `${carousel.virtualSize + params.vtsSpaceBetween}px` });
   }
   if (params.setWrapperSize) {
     $wrapperEl.css({
-      [getDirectionLabel('width')]: `${Carousel.virtualSize + params.vtsSpaceBetween}px`,
+      [getDirectionLabel('width')]: `${carousel.virtualSize + params.vtsSpaceBetween}px`,
     });
   }
 
   if (gridEnabled) {
-    Carousel.grid.updateWrapperSize(slideSize, snapGrid, getDirectionLabel);
+    carousel.grid.updateWrapperSize(slideSize, snapGrid, getDirectionLabel);
   }
 
   // Remove last grid elements depending on width
@@ -196,23 +196,23 @@ export default function updateSlides() {
     for (let i = 0; i < snapGrid.length; i += 1) {
       let slidesGridItem = snapGrid[i];
       if (params.roundLengths) slidesGridItem = Math.floor(slidesGridItem);
-      if (snapGrid[i] <= Carousel.virtualSize - CarouselSize) {
+      if (snapGrid[i] <= carousel.virtualSize - carouselSize) {
         newSlidesGrid.push(slidesGridItem);
       }
     }
     snapGrid = newSlidesGrid;
 
     if (
-      Math.floor(Carousel.virtualSize - CarouselSize) - Math.floor(snapGrid[snapGrid.length - 1]) >
+      Math.floor(carousel.virtualSize - carouselSize) - Math.floor(snapGrid[snapGrid.length - 1]) >
       1
     ) {
-      snapGrid.push(Carousel.virtualSize - CarouselSize);
+      snapGrid.push(carousel.virtualSize - carouselSize);
     }
   }
   if (snapGrid.length === 0) snapGrid = [0];
 
   if (params.vtsSpaceBetween !== 0) {
-    const key = Carousel.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
+    const key = carousel.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
     slides
       .filter((_, slideIndex) => {
         if (!params.cssMode) return true;
@@ -230,7 +230,7 @@ export default function updateSlides() {
       allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
     });
     allSlidesSize -= params.vtsSpaceBetween;
-    const maxSnap = allSlidesSize - CarouselSize;
+    const maxSnap = allSlidesSize - carouselSize;
     snapGrid = snapGrid.map((snap) => {
       if (snap < 0) return -offsetBefore;
       if (snap > maxSnap) return maxSnap + offsetAfter;
@@ -244,8 +244,8 @@ export default function updateSlides() {
       allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
     });
     allSlidesSize -= params.vtsSpaceBetween;
-    if (allSlidesSize < CarouselSize) {
-      const allSlidesOffset = (CarouselSize - allSlidesSize) / 2;
+    if (allSlidesSize < carouselSize) {
+      const allSlidesOffset = (carouselSize - allSlidesSize) / 2;
       snapGrid.forEach((snap, snapIndex) => {
         snapGrid[snapIndex] = snap - allSlidesOffset;
       });
@@ -255,7 +255,7 @@ export default function updateSlides() {
     }
   }
 
-  Object.assign(Carousel, {
+  Object.assign(carousel, {
     slides,
     snapGrid,
     slidesGrid,
@@ -263,40 +263,40 @@ export default function updateSlides() {
   });
 
   if (params.centeredSlides && params.cssMode && !params.centeredSlidesBounds) {
-    setCSSProperty(Carousel.wrapperEl, '--Carousel-centered-offset-before', `${-snapGrid[0]}px`);
+    setCSSProperty(carousel.wrapperEl, '--carousel-centered-offset-before', `${-snapGrid[0]}px`);
     setCSSProperty(
-      Carousel.wrapperEl,
-      '--Carousel-centered-offset-after',
-      `${Carousel.size / 2 - slidesSizesGrid[slidesSizesGrid.length - 1] / 2}px`,
+      carousel.wrapperEl,
+      '--carousel-centered-offset-after',
+      `${carousel.size / 2 - slidesSizesGrid[slidesSizesGrid.length - 1] / 2}px`,
     );
-    const addToSnapGrid = -Carousel.snapGrid[0];
-    const addToSlidesGrid = -Carousel.slidesGrid[0];
-    Carousel.snapGrid = Carousel.snapGrid.map((v) => v + addToSnapGrid);
-    Carousel.slidesGrid = Carousel.slidesGrid.map((v) => v + addToSlidesGrid);
+    const addToSnapGrid = -carousel.snapGrid[0];
+    const addToSlidesGrid = -carousel.slidesGrid[0];
+    carousel.snapGrid = carousel.snapGrid.map((v) => v + addToSnapGrid);
+    carousel.slidesGrid = carousel.slidesGrid.map((v) => v + addToSlidesGrid);
   }
 
   if (slidesLength !== previousSlidesLength) {
-    Carousel.emit('slidesLengthChange');
+    carousel.emit('slidesLengthChange');
   }
   if (snapGrid.length !== previousSnapGridLength) {
-    if (Carousel.params.watchOverflow) Carousel.checkOverflow();
-    Carousel.emit('snapGridLengthChange');
+    if (carousel.params.watchOverflow) carousel.checkOverflow();
+    carousel.emit('snapGridLengthChange');
   }
   if (slidesGrid.length !== previousSlidesGridLength) {
-    Carousel.emit('slidesGridLengthChange');
+    carousel.emit('slidesGridLengthChange');
   }
 
   if (params.watchSlidesProgress) {
-    Carousel.updateSlidesOffset();
+    carousel.updateSlidesOffset();
   }
 
   if (!isVirtual && !params.cssMode && (params.effect === 'slide' || params.effect === 'fade')) {
     const backFaceHiddenClass = `${params.containerModifierClass}backface-hidden`;
-    const hasClassBackfaceClassAdded = Carousel.$el.hasClass(backFaceHiddenClass);
+    const hasClassBackfaceClassAdded = carousel.$el.hasClass(backFaceHiddenClass);
     if (slidesLength <= params.maxBackfaceHiddenSlides) {
-      if (!hasClassBackfaceClassAdded) Carousel.$el.addClass(backFaceHiddenClass);
+      if (!hasClassBackfaceClassAdded) carousel.$el.addClass(backFaceHiddenClass);
     } else if (hasClassBackfaceClassAdded) {
-      Carousel.$el.removeClass(backFaceHiddenClass);
+      carousel.$el.removeClass(backFaceHiddenClass);
     }
   }
 }

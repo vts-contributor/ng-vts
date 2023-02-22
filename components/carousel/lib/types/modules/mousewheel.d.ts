@@ -1,4 +1,4 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 import { CSSSelector } from '../shared';
 
 export interface MousewheelMethods {
@@ -22,7 +22,7 @@ export interface MousewheelEvents {
   /**
    * Event will be fired on mousewheel scroll
    */
-  scroll: (Carousel: Carousel, event: WheelEvent) => void;
+  scroll: (carousel: carousel, event: WheelEvent) => void;
 }
 
 export interface MousewheelOptions {
@@ -34,7 +34,7 @@ export interface MousewheelOptions {
    */
   forceToAxis?: boolean;
   /**
-   * Set to `true` and Carousel will release mousewheel event and allow page scrolling when Carousel is on edge positions (in the beginning or in the end)
+   * Set to `true` and carousel will release mousewheel event and allow page scrolling when carousel is on edge positions (in the beginning or in the end)
 
    *
    * @default false
@@ -53,21 +53,21 @@ export interface MousewheelOptions {
    */
   sensitivity?: number;
   /**
-   * String with CSS selector or HTML element of the container accepting mousewheel events. By default it is Carousel
+   * String with CSS selector or HTML element of the container accepting mousewheel events. By default it is carousel
    *
    * @default 'container'
    */
   eventsTarget?: 'container' | 'wrapper' | CSSSelector | HTMLElement;
 
   /**
-   * Minimum mousewheel scroll delta to trigger Carousel slide change
+   * Minimum mousewheel scroll delta to trigger carousel slide change
    *
    * @default null
    */
   thresholdDelta?: number | null;
 
   /**
-   * Minimum mousewheel scroll time delta (in ms) to trigger Carousel slide change
+   * Minimum mousewheel scroll time delta (in ms) to trigger carousel slide change
    *
    * @default null
    */

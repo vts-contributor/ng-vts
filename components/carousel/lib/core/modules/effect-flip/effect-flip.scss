@@ -1,23 +1,23 @@
-.Carousel-flip {
+.carousel-flip {
   overflow: visible;
-  .Carousel-slide {
+  .carousel-slide {
     pointer-events: none;
     backface-visibility: hidden;
     z-index: 1;
-    .Carousel-slide {
+    .carousel-slide {
       pointer-events: none;
     }
   }
-  .Carousel-slide-active {
+  .carousel-slide-active {
     &,
-    & .Carousel-slide-active {
+    & .carousel-slide-active {
       pointer-events: auto;
     }
   }
-  .Carousel-slide-shadow-top,
-  .Carousel-slide-shadow-bottom,
-  .Carousel-slide-shadow-left,
-  .Carousel-slide-shadow-right {
+  .carousel-slide-shadow-top,
+  .carousel-slide-shadow-bottom,
+  .carousel-slide-shadow-left,
+  .carousel-slide-shadow-right {
     z-index: 0;
     backface-visibility: hidden;
   }

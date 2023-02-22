@@ -3,14 +3,14 @@ import { coerceBooleanProperty } from './lib/utils/utils';
 @Directive({
   selector: 'ng-template[vts-carousel-slide]',
 })
-export class CarouselSlideDirective {
+export class carouselSlideDirective {
   @Input() virtualIndex: number = 0;
   @Input() class: string = '';
   @Input()
   set ngClass(val: string) {
     this.class = [this.class || '', val].join(' ');
   }
-  @Input('data-Carousel-autoplay') autoplayDelay: string | null = null;
+  @Input('data-carousel-autoplay') autoplayDelay: string | null = null;
   @Input()
   set zoom(val: boolean) {
     this._zoom = coerceBooleanProperty(val);
@@ -29,11 +29,11 @@ export class CarouselSlideDirective {
     }
     this._classNames = val;
     this.slideData = {
-      isActive: this._hasClass(['Carousel-slide-active', 'Carousel-slide-duplicate-active']),
-      isVisible: this._hasClass(['Carousel-slide-visible']),
-      isDuplicate: this._hasClass(['Carousel-slide-duplicate']),
-      isPrev: this._hasClass(['Carousel-slide-prev', 'Carousel-slide-duplicate-prev']),
-      isNext: this._hasClass(['Carousel-slide-next', 'Carousel-slide-duplicate-next']),
+      isActive: this._hasClass(['carousel-slide-active', 'carousel-slide-duplicate-active']),
+      isVisible: this._hasClass(['carousel-slide-visible']),
+      isDuplicate: this._hasClass(['carousel-slide-duplicate']),
+      isPrev: this._hasClass(['carousel-slide-prev', 'carousel-slide-duplicate-prev']),
+      isNext: this._hasClass(['carousel-slide-next', 'carousel-slide-duplicate-next']),
     };
   }
 

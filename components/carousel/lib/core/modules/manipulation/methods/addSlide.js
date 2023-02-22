@@ -1,26 +1,26 @@
 export default function addSlide(index, slides) {
-  const Carousel = this;
-  const { $wrapperEl, params, activeIndex } = Carousel;
+  const carousel = this;
+  const { $wrapperEl, params, activeIndex } = carousel;
   let activeIndexBuffer = activeIndex;
   if (params.loop) {
-    activeIndexBuffer -= Carousel.loopedSlides;
-    Carousel.loopDestroy();
-    Carousel.slides = $wrapperEl.children(`.${params.slideClass}`);
+    activeIndexBuffer -= carousel.loopedSlides;
+    carousel.loopDestroy();
+    carousel.slides = $wrapperEl.children(`.${params.slideClass}`);
   }
-  const baseLength = Carousel.slides.length;
+  const baseLength = carousel.slides.length;
   if (index <= 0) {
-    Carousel.prependSlide(slides);
+    carousel.prependSlide(slides);
     return;
   }
   if (index >= baseLength) {
-    Carousel.appendSlide(slides);
+    carousel.appendSlide(slides);
     return;
   }
   let newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + 1 : activeIndexBuffer;
 
   const slidesBuffer = [];
   for (let i = baseLength - 1; i >= index; i -= 1) {
-    const currentSlide = Carousel.slides.eq(i);
+    const currentSlide = carousel.slides.eq(i);
     currentSlide.remove();
     slidesBuffer.unshift(currentSlide);
   }
@@ -40,14 +40,14 @@ export default function addSlide(index, slides) {
   }
 
   if (params.loop) {
-    Carousel.loopCreate();
+    carousel.loopCreate();
   }
   if (!params.observer) {
-    Carousel.update();
+    carousel.update();
   }
   if (params.loop) {
-    Carousel.slideTo(newActiveIndex + Carousel.loopedSlides, 0, false);
+    carousel.slideTo(newActiveIndex + carousel.loopedSlides, 0, false);
   } else {
-    Carousel.slideTo(newActiveIndex, 0, false);
+    carousel.slideTo(newActiveIndex, 0, false);
   }
 }

@@ -2,11 +2,11 @@
 @at-root {
   :root {
     /*
-  --Carousel-preloader-color: var(--Carousel-theme-color);
+  --carousel-preloader-color: var(--carousel-theme-color);
   */
   }
 }
-.Carousel-lazy-preloader {
+.carousel-lazy-preloader {
   width: 42px;
   height: 42px;
   position: absolute;
@@ -17,24 +17,24 @@
   z-index: 10;
   transform-origin: 50%;
   box-sizing: border-box;
-  border: 4px solid var(--Carousel-preloader-color, var(--Carousel-theme-color));
+  border: 4px solid var(--carousel-preloader-color, var(--carousel-theme-color));
   border-radius: 50%;
   border-top-color: transparent;
 }
-.Carousel:not(.Carousel-watch-progress),
-.Carousel-watch-progress .Carousel-slide-visible {
-  .Carousel-lazy-preloader {
-    animation: Carousel-preloader-spin 1s infinite linear;
+.carousel:not(.carousel-watch-progress),
+.carousel-watch-progress .carousel-slide-visible {
+  .carousel-lazy-preloader {
+    animation: carousel-preloader-spin 1s infinite linear;
   }
 }
 
-.Carousel-lazy-preloader-white {
-  --Carousel-preloader-color: #fff;
+.carousel-lazy-preloader-white {
+  --carousel-preloader-color: #fff;
 }
-.Carousel-lazy-preloader-black {
-  --Carousel-preloader-color: #000;
+.carousel-lazy-preloader-black {
+  --carousel-preloader-color: #000;
 }
-@keyframes Carousel-preloader-spin {
+@keyframes carousel-preloader-spin {
   0% {
     transform: rotate(0deg);
   }

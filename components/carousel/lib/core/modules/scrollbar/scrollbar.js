@@ -3,7 +3,7 @@ import $ from '../../shared/dom.js';
 import { nextTick } from '../../shared/utils.js';
 import createElementIfNotDefined from '../../shared/create-element-if-not-defined.js';
 
-export default function Scrollbar({ Carousel, extendParams, on, emit }) {
+export default function Scrollbar({ carousel, extendParams, on, emit }) {
   const document = getDocument();
 
   let isTouched = false;
@@ -21,15 +21,15 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
       hide: false,
       draggable: false,
       snapOnRelease: true,
-      lockClass: 'Carousel-scrollbar-lock',
-      dragClass: 'Carousel-scrollbar-drag',
-      scrollbarDisabledClass: 'Carousel-scrollbar-disabled',
-      horizontalClass: `Carousel-scrollbar-horizontal`,
-      verticalClass: `Carousel-scrollbar-vertical`,
+      lockClass: 'carousel-scrollbar-lock',
+      dragClass: 'carousel-scrollbar-drag',
+      scrollbarDisabledClass: 'carousel-scrollbar-disabled',
+      horizontalClass: `carousel-scrollbar-horizontal`,
+      verticalClass: `carousel-scrollbar-vertical`,
     },
   });
 
-  Carousel.scrollbar = {
+  carousel.scrollbar = {
     el: null,
     dragEl: null,
     $el: null,
@@ -37,10 +37,10 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
   };
 
   function setTranslate() {
-    if (!Carousel.params.scrollbar.el || !Carousel.scrollbar.el) return;
-    const { scrollbar, rtlTranslate: rtl, progress } = Carousel;
+    if (!carousel.params.scrollbar.el || !carousel.scrollbar.el) return;
+    const { scrollbar, rtlTranslate: rtl, progress } = carousel;
     const { $dragEl, $el } = scrollbar;
-    const params = Carousel.params.scrollbar;
+    const params = carousel.params.scrollbar;
 
     let newSize = dragSize;
     let newPos = (trackSize - dragSize) * progress;
@@ -58,7 +58,7 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     } else if (newPos + dragSize > trackSize) {
       newSize = trackSize - newPos;
     }
-    if (Carousel.isHorizontal()) {
+    if (carousel.isHorizontal()) {
       $dragEl.transform(`translate3d(${newPos}px, 0, 0)`);
       $dragEl[0].style.width = `${newSize}px`;
     } else {
@@ -75,31 +75,31 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     }
   }
   function setTransition(duration) {
-    if (!Carousel.params.scrollbar.el || !Carousel.scrollbar.el) return;
-    Carousel.scrollbar.$dragEl.transition(duration);
+    if (!carousel.params.scrollbar.el || !carousel.scrollbar.el) return;
+    carousel.scrollbar.$dragEl.transition(duration);
   }
   function updateSize() {
-    if (!Carousel.params.scrollbar.el || !Carousel.scrollbar.el) return;
+    if (!carousel.params.scrollbar.el || !carousel.scrollbar.el) return;
 
-    const { scrollbar } = Carousel;
+    const { scrollbar } = carousel;
     const { $dragEl, $el } = scrollbar;
 
     $dragEl[0].style.width = '';
     $dragEl[0].style.height = '';
-    trackSize = Carousel.isHorizontal() ? $el[0].offsetWidth : $el[0].offsetHeight;
+    trackSize = carousel.isHorizontal() ? $el[0].offsetWidth : $el[0].offsetHeight;
 
     divider =
-      Carousel.size /
-      (Carousel.virtualSize +
-        Carousel.params.slidesOffsetBefore -
-        (Carousel.params.centeredSlides ? Carousel.snapGrid[0] : 0));
-    if (Carousel.params.scrollbar.dragSize === 'auto') {
+      carousel.size /
+      (carousel.virtualSize +
+        carousel.params.slidesOffsetBefore -
+        (carousel.params.centeredSlides ? carousel.snapGrid[0] : 0));
+    if (carousel.params.scrollbar.dragSize === 'auto') {
       dragSize = trackSize * divider;
     } else {
-      dragSize = parseInt(Carousel.params.scrollbar.dragSize, 10);
+      dragSize = parseInt(carousel.params.scrollbar.dragSize, 10);
     }
 
-    if (Carousel.isHorizontal()) {
+    if (carousel.isHorizontal()) {
       $dragEl[0].style.width = `${dragSize}px`;
     } else {
       $dragEl[0].style.height = `${dragSize}px`;
@@ -110,18 +110,18 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     } else {
       $el[0].style.display = '';
     }
-    if (Carousel.params.scrollbar.hide) {
+    if (carousel.params.scrollbar.hide) {
       $el[0].style.opacity = 0;
     }
 
-    if (Carousel.params.watchOverflow && Carousel.enabled) {
-      scrollbar.$el[Carousel.isLocked ? 'addClass' : 'removeClass'](
-        Carousel.params.scrollbar.lockClass,
+    if (carousel.params.watchOverflow && carousel.enabled) {
+      scrollbar.$el[carousel.isLocked ? 'addClass' : 'removeClass'](
+        carousel.params.scrollbar.lockClass,
       );
     }
   }
   function getPointerPosition(e) {
-    if (Carousel.isHorizontal()) {
+    if (carousel.isHorizontal()) {
       return e.type === 'touchstart' || e.type === 'touchmove'
         ? e.targetTouches[0].clientX
         : e.clientX;
@@ -131,13 +131,13 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
       : e.clientY;
   }
   function setDragPosition(e) {
-    const { scrollbar, rtlTranslate: rtl } = Carousel;
+    const { scrollbar, rtlTranslate: rtl } = carousel;
     const { $el } = scrollbar;
 
     let positionRatio;
     positionRatio =
       (getPointerPosition(e) -
-        $el.offset()[Carousel.isHorizontal() ? 'left' : 'top'] -
+        $el.offset()[carousel.isHorizontal() ? 'left' : 'top'] -
         (dragStartPos !== null ? dragStartPos : dragSize / 2)) /
       (trackSize - dragSize);
     positionRatio = Math.max(Math.min(positionRatio, 1), 0);
@@ -146,22 +146,22 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     }
 
     const position =
-      Carousel.minTranslate() + (Carousel.maxTranslate() - Carousel.minTranslate()) * positionRatio;
+      carousel.minTranslate() + (carousel.maxTranslate() - carousel.minTranslate()) * positionRatio;
 
-    Carousel.updateProgress(position);
-    Carousel.setTranslate(position);
-    Carousel.updateActiveIndex();
-    Carousel.updateSlidesClasses();
+    carousel.updateProgress(position);
+    carousel.setTranslate(position);
+    carousel.updateActiveIndex();
+    carousel.updateSlidesClasses();
   }
   function onDragStart(e) {
-    const params = Carousel.params.scrollbar;
-    const { scrollbar, $wrapperEl } = Carousel;
+    const params = carousel.params.scrollbar;
+    const { scrollbar, $wrapperEl } = carousel;
     const { $el, $dragEl } = scrollbar;
     isTouched = true;
     dragStartPos =
       e.target === $dragEl[0] || e.target === $dragEl
         ? getPointerPosition(e) -
-          e.target.getBoundingClientRect()[Carousel.isHorizontal() ? 'left' : 'top']
+          e.target.getBoundingClientRect()[carousel.isHorizontal() ? 'left' : 'top']
         : null;
     e.preventDefault();
     e.stopPropagation();
@@ -176,13 +176,13 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     if (params.hide) {
       $el.css('opacity', 1);
     }
-    if (Carousel.params.cssMode) {
-      Carousel.$wrapperEl.css('scroll-snap-type', 'none');
+    if (carousel.params.cssMode) {
+      carousel.$wrapperEl.css('scroll-snap-type', 'none');
     }
     emit('scrollbarDragStart', e);
   }
   function onDragMove(e) {
-    const { scrollbar, $wrapperEl } = Carousel;
+    const { scrollbar, $wrapperEl } = carousel;
     const { $el, $dragEl } = scrollbar;
 
     if (!isTouched) return;
@@ -195,14 +195,14 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     emit('scrollbarDragMove', e);
   }
   function onDragEnd(e) {
-    const params = Carousel.params.scrollbar;
-    const { scrollbar, $wrapperEl } = Carousel;
+    const params = carousel.params.scrollbar;
+    const { scrollbar, $wrapperEl } = carousel;
     const { $el } = scrollbar;
 
     if (!isTouched) return;
     isTouched = false;
-    if (Carousel.params.cssMode) {
-      Carousel.$wrapperEl.css('scroll-snap-type', '');
+    if (carousel.params.cssMode) {
+      carousel.$wrapperEl.css('scroll-snap-type', '');
       $wrapperEl.transition('');
     }
     if (params.hide) {
@@ -214,12 +214,12 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     }
     emit('scrollbarDragEnd', e);
     if (params.snapOnRelease) {
-      Carousel.slideToClosest();
+      carousel.slideToClosest();
     }
   }
 
   function events(method) {
-    const { scrollbar, touchEventsTouch, touchEventsDesktop, params, support } = Carousel;
+    const { scrollbar, touchEventsTouch, touchEventsDesktop, params, support } = carousel;
     const $el = scrollbar.$el;
     if (!$el) return;
     const target = $el[0];
@@ -245,39 +245,39 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
   }
 
   function enableDraggable() {
-    if (!Carousel.params.scrollbar.el || !Carousel.scrollbar.el) return;
+    if (!carousel.params.scrollbar.el || !carousel.scrollbar.el) return;
     events('on');
   }
   function disableDraggable() {
-    if (!Carousel.params.scrollbar.el || !Carousel.scrollbar.el) return;
+    if (!carousel.params.scrollbar.el || !carousel.scrollbar.el) return;
     events('off');
   }
   function init() {
-    const { scrollbar, $el: $CarouselEl } = Carousel;
-    Carousel.params.scrollbar = createElementIfNotDefined(
-      Carousel,
-      Carousel.originalParams.scrollbar,
-      Carousel.params.scrollbar,
-      { el: 'Carousel-scrollbar' },
+    const { scrollbar, $el: $carouselEl } = carousel;
+    carousel.params.scrollbar = createElementIfNotDefined(
+      carousel,
+      carousel.originalParams.scrollbar,
+      carousel.params.scrollbar,
+      { el: 'carousel-scrollbar' },
     );
-    const params = Carousel.params.scrollbar;
+    const params = carousel.params.scrollbar;
     if (!params.el) return;
 
     let $el = $(params.el);
     if (
-      Carousel.params.uniqueNavElements &&
+      carousel.params.uniqueNavElements &&
       typeof params.el === 'string' &&
       $el.length > 1 &&
-      $CarouselEl.find(params.el).length === 1
+      $carouselEl.find(params.el).length === 1
     ) {
-      $el = $CarouselEl.find(params.el);
+      $el = $carouselEl.find(params.el);
     }
 
-    $el.addClass(Carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
+    $el.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
 
-    let $dragEl = $el.find(`.${Carousel.params.scrollbar.dragClass}`);
+    let $dragEl = $el.find(`.${carousel.params.scrollbar.dragClass}`);
     if ($dragEl.length === 0) {
-      $dragEl = $(`<div class="${Carousel.params.scrollbar.dragClass}"></div>`);
+      $dragEl = $(`<div class="${carousel.params.scrollbar.dragClass}"></div>`);
       $el.append($dragEl);
     }
 
@@ -293,21 +293,21 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     }
 
     if ($el) {
-      $el[Carousel.enabled ? 'removeClass' : 'addClass'](Carousel.params.scrollbar.lockClass);
+      $el[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.scrollbar.lockClass);
     }
   }
   function destroy() {
-    const params = Carousel.params.scrollbar;
-    const $el = Carousel.scrollbar.$el;
+    const params = carousel.params.scrollbar;
+    const $el = carousel.scrollbar.$el;
     if ($el) {
-      $el.removeClass(Carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
+      $el.removeClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
     }
 
     disableDraggable();
   }
 
   on('init', () => {
-    if (Carousel.params.scrollbar.enabled === false) {
+    if (carousel.params.scrollbar.enabled === false) {
       // eslint-disable-next-line
       disable();
     } else {
@@ -326,9 +326,9 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
     setTransition(duration);
   });
   on('enable disable', () => {
-    const { $el } = Carousel.scrollbar;
+    const { $el } = carousel.scrollbar;
     if ($el) {
-      $el[Carousel.enabled ? 'removeClass' : 'addClass'](Carousel.params.scrollbar.lockClass);
+      $el[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.scrollbar.lockClass);
     }
   });
   on('destroy', () => {
@@ -336,9 +336,9 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
   });
 
   const enable = () => {
-    Carousel.$el.removeClass(Carousel.params.scrollbar.scrollbarDisabledClass);
-    if (Carousel.scrollbar.$el) {
-      Carousel.scrollbar.$el.removeClass(Carousel.params.scrollbar.scrollbarDisabledClass);
+    carousel.$el.removeClass(carousel.params.scrollbar.scrollbarDisabledClass);
+    if (carousel.scrollbar.$el) {
+      carousel.scrollbar.$el.removeClass(carousel.params.scrollbar.scrollbarDisabledClass);
     }
     init();
     updateSize();
@@ -346,14 +346,14 @@ export default function Scrollbar({ Carousel, extendParams, on, emit }) {
   };
 
   const disable = () => {
-    Carousel.$el.addClass(Carousel.params.scrollbar.scrollbarDisabledClass);
-    if (Carousel.scrollbar.$el) {
-      Carousel.scrollbar.$el.addClass(Carousel.params.scrollbar.scrollbarDisabledClass);
+    carousel.$el.addClass(carousel.params.scrollbar.scrollbarDisabledClass);
+    if (carousel.scrollbar.$el) {
+      carousel.scrollbar.$el.addClass(carousel.params.scrollbar.scrollbarDisabledClass);
     }
     destroy();
   };
 
-  Object.assign(Carousel.scrollbar, {
+  Object.assign(carousel.scrollbar, {
     enable,
     disable,
     updateSize,

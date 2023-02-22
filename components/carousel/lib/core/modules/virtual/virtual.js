@@ -1,7 +1,7 @@
 import $ from '../../shared/dom.js';
 import { setCSSProperty } from '../../shared/utils.js';
 
-export default function Virtual({ Carousel, extendParams, on, emit }) {
+export default function Virtual({ carousel, extendParams, on, emit }) {
   extendParams({
     virtual: {
       enabled: false,
@@ -17,7 +17,7 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
 
   let cssModeTimeout;
 
-  Carousel.virtual = {
+  carousel.virtual = {
     cache: {},
     from: undefined,
     to: undefined,
@@ -27,39 +27,39 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
   };
 
   function renderSlide(slide, index) {
-    const params = Carousel.params.virtual;
-    if (params.cache && Carousel.virtual.cache[index]) {
-      return Carousel.virtual.cache[index];
+    const params = carousel.params.virtual;
+    if (params.cache && carousel.virtual.cache[index]) {
+      return carousel.virtual.cache[index];
     }
     const $slideEl = params.renderSlide
-      ? $(params.renderSlide.call(Carousel, slide, index))
+      ? $(params.renderSlide.call(carousel, slide, index))
       : $(
-          `<div class="${Carousel.params.slideClass}" data-Carousel-slide-index="${index}">${slide}</div>`,
+          `<div class="${carousel.params.slideClass}" data-carousel-slide-index="${index}">${slide}</div>`,
         );
-    if (!$slideEl.attr('data-Carousel-slide-index')) $slideEl.attr('data-Carousel-slide-index', index);
-    if (params.cache) Carousel.virtual.cache[index] = $slideEl;
+    if (!$slideEl.attr('data-carousel-slide-index')) $slideEl.attr('data-carousel-slide-index', index);
+    if (params.cache) carousel.virtual.cache[index] = $slideEl;
     return $slideEl;
   }
 
   function update(force) {
-    const { vtsSlidesPerView, slidesPerGroup, centeredSlides } = Carousel.params;
-    const { addSlidesBefore, addSlidesAfter } = Carousel.params.virtual;
+    const { vtsSlidesPerView, slidesPerGroup, centeredSlides } = carousel.params;
+    const { addSlidesBefore, addSlidesAfter } = carousel.params.virtual;
     const {
       from: previousFrom,
       to: previousTo,
       slides,
       slidesGrid: previousSlidesGrid,
       offset: previousOffset,
-    } = Carousel.virtual;
-    if (!Carousel.params.cssMode) {
-      Carousel.updateActiveIndex();
+    } = carousel.virtual;
+    if (!carousel.params.cssMode) {
+      carousel.updateActiveIndex();
     }
 
-    const activeIndex = Carousel.activeIndex || 0;
+    const activeIndex = carousel.activeIndex || 0;
 
     let offsetProp;
-    if (Carousel.rtlTranslate) offsetProp = 'right';
-    else offsetProp = Carousel.isHorizontal() ? 'left' : 'top';
+    if (carousel.rtlTranslate) offsetProp = 'right';
+    else offsetProp = carousel.isHorizontal() ? 'left' : 'top';
 
     let slidesAfter;
     let slidesBefore;
@@ -72,35 +72,35 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
     }
     const from = Math.max((activeIndex || 0) - slidesBefore, 0);
     const to = Math.min((activeIndex || 0) + slidesAfter, slides.length - 1);
-    const offset = (Carousel.slidesGrid[from] || 0) - (Carousel.slidesGrid[0] || 0);
+    const offset = (carousel.slidesGrid[from] || 0) - (carousel.slidesGrid[0] || 0);
 
-    Object.assign(Carousel.virtual, {
+    Object.assign(carousel.virtual, {
       from,
       to,
       offset,
-      slidesGrid: Carousel.slidesGrid,
+      slidesGrid: carousel.slidesGrid,
     });
 
     function onRendered() {
-      Carousel.updateSlides();
-      Carousel.updateProgress();
-      Carousel.updateSlidesClasses();
-      if (Carousel.lazy && Carousel.params.lazy.enabled) {
-        Carousel.lazy.load();
+      carousel.updateSlides();
+      carousel.updateProgress();
+      carousel.updateSlidesClasses();
+      if (carousel.lazy && carousel.params.lazy.enabled) {
+        carousel.lazy.load();
       }
       emit('virtualUpdate');
     }
 
     if (previousFrom === from && previousTo === to && !force) {
-      if (Carousel.slidesGrid !== previousSlidesGrid && offset !== previousOffset) {
-        Carousel.slides.css(offsetProp, `${offset}px`);
+      if (carousel.slidesGrid !== previousSlidesGrid && offset !== previousOffset) {
+        carousel.slides.css(offsetProp, `${offset}px`);
       }
-      Carousel.updateProgress();
+      carousel.updateProgress();
       emit('virtualUpdate');
       return;
     }
-    if (Carousel.params.virtual.renderExternal) {
-      Carousel.params.virtual.renderExternal.call(Carousel, {
+    if (carousel.params.virtual.renderExternal) {
+      carousel.params.virtual.renderExternal.call(carousel, {
         offset,
         from,
         to,
@@ -112,7 +112,7 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
           return slidesToRender;
         })(),
       });
-      if (Carousel.params.virtual.renderExternalUpdate) {
+      if (carousel.params.virtual.renderExternalUpdate) {
         onRendered();
       } else {
         emit('virtualUpdate');
@@ -122,12 +122,12 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
     const prependIndexes = [];
     const appendIndexes = [];
     if (force) {
-      Carousel.$wrapperEl.find(`.${Carousel.params.slideClass}`).remove();
+      carousel.$wrapperEl.find(`.${carousel.params.slideClass}`).remove();
     } else {
       for (let i = previousFrom; i <= previousTo; i += 1) {
         if (i < from || i > to) {
-          Carousel.$wrapperEl
-            .find(`.${Carousel.params.slideClass}[data-Carousel-slide-index="${i}"]`)
+          carousel.$wrapperEl
+            .find(`.${carousel.params.slideClass}[data-carousel-slide-index="${i}"]`)
             .remove();
         }
       }
@@ -143,107 +143,107 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
       }
     }
     appendIndexes.forEach((index) => {
-      Carousel.$wrapperEl.append(renderSlide(slides[index], index));
+      carousel.$wrapperEl.append(renderSlide(slides[index], index));
     });
     prependIndexes
       .sort((a, b) => b - a)
       .forEach((index) => {
-        Carousel.$wrapperEl.prepend(renderSlide(slides[index], index));
+        carousel.$wrapperEl.prepend(renderSlide(slides[index], index));
       });
-    Carousel.$wrapperEl.children('.Carousel-slide').css(offsetProp, `${offset}px`);
+    carousel.$wrapperEl.children('.carousel-slide').css(offsetProp, `${offset}px`);
     onRendered();
   }
 
   function appendSlide(slides) {
     if (typeof slides === 'object' && 'length' in slides) {
       for (let i = 0; i < slides.length; i += 1) {
-        if (slides[i]) Carousel.virtual.slides.push(slides[i]);
+        if (slides[i]) carousel.virtual.slides.push(slides[i]);
       }
     } else {
-      Carousel.virtual.slides.push(slides);
+      carousel.virtual.slides.push(slides);
     }
     update(true);
   }
   function prependSlide(slides) {
-    const activeIndex = Carousel.activeIndex;
+    const activeIndex = carousel.activeIndex;
     let newActiveIndex = activeIndex + 1;
     let numberOfNewSlides = 1;
 
     if (Array.isArray(slides)) {
       for (let i = 0; i < slides.length; i += 1) {
-        if (slides[i]) Carousel.virtual.slides.unshift(slides[i]);
+        if (slides[i]) carousel.virtual.slides.unshift(slides[i]);
       }
       newActiveIndex = activeIndex + slides.length;
       numberOfNewSlides = slides.length;
     } else {
-      Carousel.virtual.slides.unshift(slides);
+      carousel.virtual.slides.unshift(slides);
     }
-    if (Carousel.params.virtual.cache) {
-      const cache = Carousel.virtual.cache;
+    if (carousel.params.virtual.cache) {
+      const cache = carousel.virtual.cache;
       const newCache = {};
       Object.keys(cache).forEach((cachedIndex) => {
         const $cachedEl = cache[cachedIndex];
-        const cachedElIndex = $cachedEl.attr('data-Carousel-slide-index');
+        const cachedElIndex = $cachedEl.attr('data-carousel-slide-index');
         if (cachedElIndex) {
           $cachedEl.attr(
-            'data-Carousel-slide-index',
+            'data-carousel-slide-index',
             parseInt(cachedElIndex, 10) + numberOfNewSlides,
           );
         }
         newCache[parseInt(cachedIndex, 10) + numberOfNewSlides] = $cachedEl;
       });
-      Carousel.virtual.cache = newCache;
+      carousel.virtual.cache = newCache;
     }
     update(true);
-    Carousel.slideTo(newActiveIndex, 0);
+    carousel.slideTo(newActiveIndex, 0);
   }
   function removeSlide(slidesIndexes) {
     if (typeof slidesIndexes === 'undefined' || slidesIndexes === null) return;
-    let activeIndex = Carousel.activeIndex;
+    let activeIndex = carousel.activeIndex;
     if (Array.isArray(slidesIndexes)) {
       for (let i = slidesIndexes.length - 1; i >= 0; i -= 1) {
-        Carousel.virtual.slides.splice(slidesIndexes[i], 1);
-        if (Carousel.params.virtual.cache) {
-          delete Carousel.virtual.cache[slidesIndexes[i]];
+        carousel.virtual.slides.splice(slidesIndexes[i], 1);
+        if (carousel.params.virtual.cache) {
+          delete carousel.virtual.cache[slidesIndexes[i]];
         }
         if (slidesIndexes[i] < activeIndex) activeIndex -= 1;
         activeIndex = Math.max(activeIndex, 0);
       }
     } else {
-      Carousel.virtual.slides.splice(slidesIndexes, 1);
-      if (Carousel.params.virtual.cache) {
-        delete Carousel.virtual.cache[slidesIndexes];
+      carousel.virtual.slides.splice(slidesIndexes, 1);
+      if (carousel.params.virtual.cache) {
+        delete carousel.virtual.cache[slidesIndexes];
       }
       if (slidesIndexes < activeIndex) activeIndex -= 1;
       activeIndex = Math.max(activeIndex, 0);
     }
     update(true);
-    Carousel.slideTo(activeIndex, 0);
+    carousel.slideTo(activeIndex, 0);
   }
   function removeAllSlides() {
-    Carousel.virtual.slides = [];
-    if (Carousel.params.virtual.cache) {
-      Carousel.virtual.cache = {};
+    carousel.virtual.slides = [];
+    if (carousel.params.virtual.cache) {
+      carousel.virtual.cache = {};
     }
     update(true);
-    Carousel.slideTo(0, 0);
+    carousel.slideTo(0, 0);
   }
 
   on('beforeInit', () => {
-    if (!Carousel.params.virtual.enabled) return;
-    Carousel.virtual.slides = Carousel.params.virtual.slides;
-    Carousel.classNames.push(`${Carousel.params.containerModifierClass}virtual`);
+    if (!carousel.params.virtual.enabled) return;
+    carousel.virtual.slides = carousel.params.virtual.slides;
+    carousel.classNames.push(`${carousel.params.containerModifierClass}virtual`);
 
-    Carousel.params.watchSlidesProgress = true;
-    Carousel.originalParams.watchSlidesProgress = true;
+    carousel.params.watchSlidesProgress = true;
+    carousel.originalParams.watchSlidesProgress = true;
 
-    if (!Carousel.params.initialSlide) {
+    if (!carousel.params.initialSlide) {
       update();
     }
   });
   on('setTranslate', () => {
-    if (!Carousel.params.virtual.enabled) return;
-    if (Carousel.params.cssMode && !Carousel._immediateVirtual) {
+    if (!carousel.params.virtual.enabled) return;
+    if (carousel.params.cssMode && !carousel._immediateVirtual) {
       clearTimeout(cssModeTimeout);
       cssModeTimeout = setTimeout(() => {
         update();
@@ -253,13 +253,13 @@ export default function Virtual({ Carousel, extendParams, on, emit }) {
     }
   });
   on('init update resize', () => {
-    if (!Carousel.params.virtual.enabled) return;
-    if (Carousel.params.cssMode) {
-      setCSSProperty(Carousel.wrapperEl, '--Carousel-virtual-size', `${Carousel.virtualSize}px`);
+    if (!carousel.params.virtual.enabled) return;
+    if (carousel.params.cssMode) {
+      setCSSProperty(carousel.wrapperEl, '--carousel-virtual-size', `${carousel.virtualSize}px`);
     }
   });
 
-  Object.assign(Carousel.virtual, {
+  Object.assign(carousel.virtual, {
     appendSlide,
     prependSlide,
     removeSlide,

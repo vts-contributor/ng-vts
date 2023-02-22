@@ -1,21 +1,21 @@
-import Carousel from '../Carousel-class';
+import carousel from '../carousel-class';
 
 export interface ControllerMethods {
   /**
-   * Pass here another Carousel instance or array with Carousel instances that should be controlled
-   * by this Carousel
+   * Pass here another carousel instance or array with carousel instances that should be controlled
+   * by this carousel
    */
-  control?: Carousel | Carousel[];
+  control?: carousel | carousel[];
 }
 
 export interface ControllerEvents {}
 
 export interface ControllerOptions {
   /**
-   * Pass here another Carousel instance or array with Carousel instances that should be controlled
-   * by this Carousel
+   * Pass here another carousel instance or array with carousel instances that should be controlled
+   * by this carousel
    */
-  control?: Carousel | Carousel[];
+  control?: carousel | carousel[];
 
   /**
    * Set to `true` and controlling will be in inverse direction

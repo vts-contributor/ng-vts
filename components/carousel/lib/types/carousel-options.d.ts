@@ -22,47 +22,47 @@ import { ZoomOptions } from './modules/zoom';
 import { FreeModeOptions } from './modules/free-mode';
 import { GridOptions } from './modules/grid';
 
-import { CSSSelector, CarouselModule } from './shared';
-import { CarouselEvents } from './Carousel-events';
+import { CSSSelector, carouselModule } from './shared';
+import { carouselEvents } from './carousel-events';
 
-export interface CarouselOptions {
+export interface carouselOptions {
   /**
-   * Array with Carousel modules
+   * Array with carousel modules
    *
    * @example
    * ```js
-   * import Carousel, { Navigation, Pagination } from 'Carousel';
+   * import carousel, { Navigation, Pagination } from 'carousel';
    *
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *    modules: [ Navigation, Pagination ],
    *  });
    * ```
    */
-  modules?: CarouselModule[];
+  modules?: carouselModule[];
   /**
-   * Whether Carousel should be initialised automatically when you create an instance.
-   * If disabled, then you need to init it manually by calling `Carousel.init()`
+   * Whether carousel should be initialised automatically when you create an instance.
+   * If disabled, then you need to init it manually by calling `carousel.init()`
    *
    * @default true
    */
   init?: boolean;
 
   /**
-   * Whether Carousel initially enabled. When Carousel is disabled, it will hide all navigation elements and won't respond to any events and interactions
+   * Whether carousel initially enabled. When carousel is disabled, it will hide all navigation elements and won't respond to any events and interactions
    *
    * @default true
    */
   enabled?: boolean;
 
   /**
-   * Carousel will recalculate slides position on window resize (orientationchange)
+   * carousel will recalculate slides position on window resize (orientationchange)
    *
    * @default true
    */
   updateOnWindowResize?: boolean;
 
   /**
-   * When enabled it will use ResizeObserver (if supported by browser) on Carousel container to detect container resize (instead of watching for window resize)
+   * When enabled it will use ResizeObserver (if supported by browser) on carousel container to detect container resize (instead of watching for window resize)
    *
    * @default true
    */
@@ -90,7 +90,7 @@ export interface CarouselOptions {
   speed?: number;
 
   /**
-   * Enabled this option and plugin will set width/height on Carousel wrapper equal to total size of all slides.
+   * Enabled this option and plugin will set width/height on carousel wrapper equal to total size of all slides.
    * Mostly should be used as compatibility fallback option for browser that don't support flexbox layout well
    *
    * @default false
@@ -98,7 +98,7 @@ export interface CarouselOptions {
   setWrapperSize?: boolean;
 
   /**
-   * Enabled this option and Carousel will be operated as usual except it will not move, real translate values on wrapper will not be set.
+   * Enabled this option and carousel will be operated as usual except it will not move, real translate values on wrapper will not be set.
    * Useful when you may need to create custom slide transition
    *
    * @default false
@@ -106,22 +106,22 @@ export interface CarouselOptions {
   virtualTranslate?: boolean;
 
   /**
-   * Carousel width (in px). Parameter allows to force Carousel width.
-   * Useful only if you initialize Carousel when it is hidden and in SSR and Test environments for correct Carousel initialization
+   * carousel width (in px). Parameter allows to force carousel width.
+   * Useful only if you initialize carousel when it is hidden and in SSR and Test environments for correct carousel initialization
    *
    * @default null
    *
-   * @note Setting this parameter will make Carousel not responsive
+   * @note Setting this parameter will make carousel not responsive
    */
   width?: number | null;
 
   /**
-   * Carousel height (in px). Parameter allows to force Carousel height.
-   * Useful only if you initialize Carousel when it is hidden and in SSR and Test environments for correct Carousel initialization
+   * carousel height (in px). Parameter allows to force carousel height.
+   * Useful only if you initialize carousel when it is hidden and in SSR and Test environments for correct carousel initialization
    *
    * @default null
    *
-   * @note Setting this parameter will make Carousel not responsive
+   * @note Setting this parameter will make carousel not responsive
    */
   height?: number | null;
 
@@ -141,15 +141,15 @@ export interface CarouselOptions {
   roundLengths?: boolean;
 
   /**
-   * Set to `true` on  Carousel for correct touch events interception. Use only on
-   * Carousels that use same direction as the parent one
+   * Set to `true` on  carousel for correct touch events interception. Use only on
+   * carousels that use same direction as the parent one
    *
    * @default false
    */
   nested?: boolean;
 
   /**
-   * When enabled Carousel will automatically wrap slides with Carousel-wrapper element,
+   * When enabled carousel will automatically wrap slides with carousel-wrapper element,
    * and will create required elements for navigation, pagination and scrollbar
    * they are enabled (with their respective params object or with boolean `true`))
    *
@@ -166,7 +166,7 @@ export interface CarouselOptions {
 
   /**
    * If enabled (by default) and navigation elements' parameters passed as a string (like `".pagination"`)
-   * then Carousel will look for such elements through child elements first.
+   * then carousel will look for such elements through child elements first.
    * Applies for pagination, prev/next buttons and scrollbar elements
    *
    * @default true
@@ -181,7 +181,7 @@ export interface CarouselOptions {
   effect?: 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards';
 
   /**
-   * Fire Transition/SlideChange/Start/End events on Carousel initialization.
+   * Fire Transition/SlideChange/Start/End events on carousel initialization.
    * Such events will be fired on initialization in case of your initialSlide is not 0, or you use loop mode
    *
    * @default true
@@ -189,7 +189,7 @@ export interface CarouselOptions {
   runCallbacksOnInit?: boolean;
 
   /**
-   * When enabled Carousel will be disabled and hide navigation buttons on
+   * When enabled carousel will be disabled and hide navigation buttons on
    * case there are not enough slides for sliding.
    *
    * @default true
@@ -214,7 +214,7 @@ export interface CarouselOptions {
    * Register event handlers
    */
   on?: {
-    [event in keyof CarouselEvents]?: CarouselEvents[event];
+    [event in keyof carouselEvents]?: carouselEvents[event];
   };
 
   /**
@@ -222,7 +222,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *    onAny(eventName, ...args) {
    *      console.log('Event: ', eventName);
    *      console.log('Event data: ', args);
@@ -234,7 +234,7 @@ export interface CarouselOptions {
 
   /**
    * When enabled it will use modern CSS Scroll Snap API.
-   * It doesn't support all of Carousel's features, but potentially should bring a much better performance in simple configurations.
+   * It doesn't support all of carousel's features, but potentially should bring a much better performance in simple configurations.
    *
    * This is what is not supported when it is enabled:
    *
@@ -259,7 +259,7 @@ export interface CarouselOptions {
    *
    * @default 0
    *
-   * @note If you use "margin" css property to the elements which go into Carousel in which you pass "vtsSpaceBetween" into, navigation might not work properly.
+   * @note If you use "margin" css property to the elements which go into carousel in which you pass "vtsSpaceBetween" into, navigation might not work properly.
    */
   vtsSpaceBetween?: number;
 
@@ -273,7 +273,7 @@ export interface CarouselOptions {
   vtsSlidesPerView?: number | 'auto';
 
   /**
-   * If total number of slides less than specified here value, then Carousel will enable `backface-visibility: hidden` on slide elements to reduce visual "flicker" in Safari.
+   * If total number of slides less than specified here value, then carousel will enable `backface-visibility: hidden` on slide elements to reduce visual "flicker" in Safari.
    *
    * @note It is not recommended to enable it on large amount of slides as it will reduce performance
    *
@@ -348,15 +348,15 @@ export interface CarouselOptions {
   centerInsufficientSlides?: boolean;
 
   /**
-   * This option may a little improve desktop usability. If `true`, user will see the "grab" cursor when hover on Carousel
+   * This option may a little improve desktop usability. If `true`, user will see the "grab" cursor when hover on carousel
    *
    * @default false
    */
   grabCursor?: boolean;
 
   /**
-   * Target element to listen touch events on. Can be `'container'` (to listen for touch events on Carousel) or `'wrapper'`
-   * (to listen for touch events on Carousel-wrapper)
+   * Target element to listen touch events on. Can be `'container'` (to listen for touch events on carousel) or `'wrapper'`
+   * (to listen for touch events on carousel-wrapper)
    *
    * @default 'wrapper'
    */
@@ -377,7 +377,7 @@ export interface CarouselOptions {
   touchAngle?: number;
 
   /**
-   * If `true`, Carousel will accept mouse events like touch events (click and drag to change slides)
+   * If `true`, carousel will accept mouse events like touch events (click and drag to change slides)
    *
    * @default true
    */
@@ -426,7 +426,7 @@ export interface CarouselOptions {
   allowTouchMove?: boolean;
 
   /**
-   * Threshold value in px. If "touch distance" will be lower than this value then Carousel will not move
+   * Threshold value in px. If "touch distance" will be lower than this value then carousel will not move
    *
    * @default 0
    */
@@ -454,7 +454,7 @@ export interface CarouselOptions {
   touchMoveStopPropagation?: boolean;
 
   /**
-   * Enable to release Carousel events for swipe-back work in app. If set to `'prevent'` then it will prevent system swipe-back navigation instead
+   * Enable to release carousel events for swipe-back work in app. If set to `'prevent'` then it will prevent system swipe-back navigation instead
    *
    * @default false
    */
@@ -530,7 +530,7 @@ export interface CarouselOptions {
   /**
    * Specify `noSwiping`'s element css class
    *
-   * @default 'Carousel-no-swiping'
+   * @default 'carousel-no-swiping'
    */
   noSwipingClass?: string;
 
@@ -581,14 +581,14 @@ export interface CarouselOptions {
 
   // Images
   /**
-   * When enabled Carousel will force to load all images
+   * When enabled carousel will force to load all images
    *
    * @default true
    */
   preloadImages?: boolean;
 
   /**
-   * When enabled Carousel will be reinitialized after all inner images (<img> tags) are loaded. Required `preloadImages: true`
+   * When enabled carousel will be reinitialized after all inner images (<img> tags) are loaded. Required `preloadImages: true`
    *
    * @default true
    */
@@ -598,10 +598,10 @@ export interface CarouselOptions {
    * Set to `true` to enable continuous loop mode
    *
    * Because of nature of how the loop mode works, it will add duplicated slides. Such duplicated slides will have additional classes:
-   * - `Carousel-slide-duplicate` - represents duplicated slide
-   * - `Carousel-slide-duplicate-active` - represents slide duplicated to the currently active slide
-   * - `Carousel-slide-duplicate-next` - represents slide duplicated to the slide next to active
-   * - `Carousel-slide-duplicate-prev` - represents slide duplicated to the slide previous to active
+   * - `carousel-slide-duplicate` - represents duplicated slide
+   * - `carousel-slide-duplicate-active` - represents slide duplicated to the currently active slide
+   * - `carousel-slide-duplicate-next` - represents slide duplicated to the slide next to active
+   * - `carousel-slide-duplicate-prev` - represents slide duplicated to the slide previous to active
    *
    * @default false
    *
@@ -626,7 +626,7 @@ export interface CarouselOptions {
   loopAdditionalSlides?: number;
 
   /**
-   * If you use `slidesPerView:'auto'` with loop mode you should tell to Carousel how many slides it should loop (duplicate) using this parameter
+   * If you use `slidesPerView:'auto'` with loop mode you should tell to carousel how many slides it should loop (duplicate) using this parameter
    *
    * @default null
    */
@@ -646,7 +646,7 @@ export interface CarouselOptions {
    */
   loopFillGroupWithBlank?: boolean;
   /**
-   * When enabled it prevents Carousel slide prev/next transitions when transitions is already in progress (has effect when `loop` enabled)
+   * When enabled it prevents carousel slide prev/next transitions when transitions is already in progress (has effect when `loop` enabled)
    *
    * @default true
    */
@@ -657,7 +657,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   // Default parameters
    *   slidesPerView: 1,
    *   vtsSpaceBetween: 10,
@@ -684,7 +684,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   slidesPerView: 1,
    *   vtsSpaceBetween: 10,
    *   // using "ratio" endpoints
@@ -706,34 +706,34 @@ export interface CarouselOptions {
    * ```
    */
   breakpoints?: {
-    [width: number]: CarouselOptions;
-    [ratio: string]: CarouselOptions;
+    [width: number]: carouselOptions;
+    [ratio: string]: carouselOptions;
   };
 
   /**
-   * Base for breakpoints (beta). Can be `window` or `container`. If set to `window` (by default) then breakpoint keys mean window width. If set to `container` then breakpoint keys treated as Carousel container width
+   * Base for breakpoints (beta). Can be `window` or `container`. If set to `window` (by default) then breakpoint keys mean window width. If set to `container` then breakpoint keys treated as carousel container width
    *
    * @default 'window'
    *
-   * @note Currently in beta and not supported by Carousel Angular, React, Svelte and Vue components
+   * @note Currently in beta and not supported by carousel Angular, React, Svelte and Vue components
    */
   breakpointsBase?: string;
 
   // Observer
   /**
-   * Set to `true` to enable Mutation Observer on Carousel and its elements. In this case Carousel will be updated (reinitialized) each time if you change its style (like hide/show) or modify its child elements (like adding/removing slides)
+   * Set to `true` to enable Mutation Observer on carousel and its elements. In this case carousel will be updated (reinitialized) each time if you change its style (like hide/show) or modify its child elements (like adding/removing slides)
    *
    * @default false
    */
   observer?: boolean;
   /**
-   * Set to `true` if you also need to watch Mutations for Carousel slide children elements
+   * Set to `true` if you also need to watch Mutations for carousel slide children elements
    *
    * @default false
    */
   observeSlideChildren?: boolean;
   /**
-   * Set to `true` if you also need to watch Mutations for Carousel parent elements
+   * Set to `true` if you also need to watch Mutations for carousel parent elements
    *
    * @default false
    */
@@ -741,130 +741,130 @@ export interface CarouselOptions {
 
   // Namespace
   /**
-   * The beginning of the modifier CSS class that can be added to Carousel container depending on different parameters
+   * The beginning of the modifier CSS class that can be added to carousel container depending on different parameters
    *
-   * @default 'Carousel-'
+   * @default 'carousel-'
    */
   containerModifierClass?: string;
 
   /**
    * CSS class name of slide
    *
-   * @default 'Carousel-slide'
+   * @default 'carousel-slide'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue components
+   * @note Not supported in carousel Angular/React/Svelte/Vue components
    */
   slideClass?: string;
 
   /**
    * CSS class name of currently active slide
    *
-   * @default 'Carousel-slide-active'
+   * @default 'carousel-slide-active'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue components
+   * @note Not supported in carousel Angular/React/Svelte/Vue components
    */
   slideActiveClass?: string;
 
   /**
    * CSS class name of duplicated slide which represents the currently active slide
    *
-   * @default 'Carousel-slide-duplicate-active'
+   * @default 'carousel-slide-duplicate-active'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue components
+   * @note Not supported in carousel Angular/React/Svelte/Vue components
    */
   slideDuplicateActiveClass?: string;
 
   /**
    * CSS class name of currently visible slide
    *
-   * @default 'Carousel-slide-visible'
+   * @default 'carousel-slide-visible'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slideVisibleClass?: string;
 
   /**
    * CSS class name of slide duplicated by loop mode
    *
-   * @default 'Carousel-slide-duplicate'
+   * @default 'carousel-slide-duplicate'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slideDuplicateClass?: string;
 
   /**
    * CSS class name of slide which is right after currently active slide
    *
-   * @default 'Carousel-slide-next'
+   * @default 'carousel-slide-next'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slideNextClass?: string;
 
   /**
    * CSS class name of duplicated slide which represents the slide next to active slide
    *
-   * @default 'Carousel-slide-duplicate-next'
+   * @default 'carousel-slide-duplicate-next'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slideDuplicateNextClass?: string;
 
   /**
    * CSS class name of slide which is right before currently active slide
    *
-   * @default 'Carousel-slide-prev'
+   * @default 'carousel-slide-prev'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slidePrevClass?: string;
 
   /**
    * CSS class name of duplicated slide which represents the slide previous to active slide
    *
-   * @default 'Carousel-slide-duplicate-prev'
+   * @default 'carousel-slide-duplicate-prev'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slideDuplicatePrevClass?: string;
 
   /**
    * CSS class name of blank slide append to fill groups in loop mode when `loopFillGroupWithBlank` is also enabled
    *
-   * @default 'Carousel-slide-invisible-blank'
+   * @default 'carousel-slide-invisible-blank'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    */
   slideBlankClass?: string;
 
   /**
    * CSS class name of slides' wrapper
    *
-   * @default 'Carousel-wrapper'
+   * @default 'carousel-wrapper'
    *
-   * @note By changing classes you will also need to change Carousel's CSS to reflect changed classes
+   * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
-   * @note Not supported in Carousel Angular/React/Svelte/Vue
+   * @note Not supported in carousel Angular/React/Svelte/Vue
    *
    */
   wrapperClass?: string;
@@ -874,7 +874,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   a11y: {
    *     prevSlideMessage: 'Previous slide',
    *     nextSlideMessage: 'Next slide',
@@ -889,21 +889,21 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *  autoplay: {
    *    delay: 5000,
    *  },
    *});
    * ```
    */
-  autoplay?: AutoplayOptions | boolean;
+  vtsAutoplay?: AutoplayOptions | boolean;
 
   /**
    * Object with controller parameters or boolean `true` to enable with default settings
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   controller: {
    *     inverse: true,
    *   },
@@ -917,7 +917,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   effect: 'coverflow',
    *   coverflowEffect: {
    *     rotate: 30,
@@ -933,7 +933,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   effect: 'cube',
    *   cubeEffect: {
    *     slideShadows: false,
@@ -948,7 +948,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   effect: 'fade',
    *   fadeEffect: {
    *     crossFade: true
@@ -963,7 +963,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   effect: 'flip',
    *   flipEffect: {
    *     slideShadows: false,
@@ -978,7 +978,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   effect: 'creative',
    *   creativeEffect: {
    *     prev: {
@@ -1000,7 +1000,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   effect: 'cards',
    *   cardsEffect: {
    *     // ...
@@ -1016,7 +1016,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   hashNavigation: {
    *     replaceState: true,
    *   },
@@ -1032,7 +1032,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   history: {
    *     replaceState: true,
    *   },
@@ -1042,7 +1042,7 @@ export interface CarouselOptions {
    * @example
    * ```html
    * <!-- will produce "slides/slide1" url in browser history -->
-   * <div class="Carousel-slide" data-history="slide1"></div>
+   * <div class="carousel-slide" data-history="slide1"></div>
    * ```
    */
   history?: HistoryOptions | boolean;
@@ -1052,7 +1052,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   keyboard: {
    *     enabled: true,
    *     onlyInViewport: false,
@@ -1067,7 +1067,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   lazy: {
    *     loadPrevNext: true,
    *   },
@@ -1081,7 +1081,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   mousewheel: {
    *     invert: true,
    *   },
@@ -1095,10 +1095,10 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   navigation: {
-   *     nextEl: '.Carousel-button-next',
-   *     prevEl: '.Carousel-button-prev',
+   *     nextEl: '.carousel-button-next',
+   *     prevEl: '.carousel-button-prev',
    *   },
    * });
    * ```
@@ -1110,9 +1110,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   pagination: {
-   *     el: '.Carousel-pagination',
+   *     el: '.carousel-pagination',
    *     type: 'bullets',
    *   },
    * });
@@ -1125,7 +1125,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   parallax: true,
    * });
    * ```
@@ -1137,9 +1137,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   scrollbar: {
-   *     el: '.Carousel-scrollbar',
+   *     el: '.carousel-scrollbar',
    *     draggable: true,
    *   },
    * });
@@ -1152,10 +1152,10 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   ...
    *   thumbs: {
-   *     Carousel: thumbsCarousel
+   *     carousel: thumbscarousel
    *   }
    * });
    * ```
@@ -1167,7 +1167,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   virtual: {
    *     slides: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4', 'Slide 5'],
    *   },
@@ -1181,7 +1181,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   zoom: {
    *     maxRatio: 5,
    *   },
@@ -1195,11 +1195,11 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   freeMode: true,
    * });
    *
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   freeMode: {
    *     enabled: true,
    *     sticky: true,
@@ -1214,7 +1214,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const Carousel = new Carousel('.Carousel', {
+   * const carousel = new carousel('.carousel', {
    *   grid: {
    *     rows: 2,
    *   },

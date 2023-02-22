@@ -111,14 +111,14 @@ function extend(...args) {
         const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
         if (desc !== undefined && desc.enumerable) {
           if (isObject(to[nextKey]) && isObject(nextSource[nextKey])) {
-            if (nextSource[nextKey].__Carousel__) {
+            if (nextSource[nextKey].__carousel__) {
               to[nextKey] = nextSource[nextKey];
             } else {
               extend(to[nextKey], nextSource[nextKey]);
             }
           } else if (!isObject(to[nextKey]) && isObject(nextSource[nextKey])) {
             to[nextKey] = {};
-            if (nextSource[nextKey].__Carousel__) {
+            if (nextSource[nextKey].__carousel__) {
               to[nextKey] = nextSource[nextKey];
             } else {
               extend(to[nextKey], nextSource[nextKey]);
@@ -137,15 +137,15 @@ function setCSSProperty(el, varName, varValue) {
   el.style.setProperty(varName, varValue);
 }
 
-function animateCSSModeScroll({ Carousel, targetPosition, side }) {
+function animateCSSModeScroll({ carousel, targetPosition, side }) {
   const window = getWindow();
-  const startPosition = -Carousel.translate;
+  const startPosition = -carousel.translate;
   let startTime = null;
   let time;
-  const duration = Carousel.params.speed;
+  const duration = carousel.params.speed;
 
-  Carousel.wrapperEl.style.scrollSnapType = 'none';
-  window.cancelAnimationFrame(Carousel.cssModeFrameID);
+  carousel.wrapperEl.style.scrollSnapType = 'none';
+  window.cancelAnimationFrame(carousel.cssModeFrameID);
 
   const dir = targetPosition > startPosition ? 'next' : 'prev';
 
@@ -166,22 +166,22 @@ function animateCSSModeScroll({ Carousel, targetPosition, side }) {
     if (isOutOfBound(currentPosition, targetPosition)) {
       currentPosition = targetPosition;
     }
-    Carousel.wrapperEl.scrollTo({
+    carousel.wrapperEl.scrollTo({
       [side]: currentPosition,
     });
     if (isOutOfBound(currentPosition, targetPosition)) {
-      Carousel.wrapperEl.style.overflow = 'hidden';
-      Carousel.wrapperEl.style.scrollSnapType = '';
+      carousel.wrapperEl.style.overflow = 'hidden';
+      carousel.wrapperEl.style.scrollSnapType = '';
       setTimeout(() => {
-        Carousel.wrapperEl.style.overflow = '';
-        Carousel.wrapperEl.scrollTo({
+        carousel.wrapperEl.style.overflow = '';
+        carousel.wrapperEl.scrollTo({
           [side]: currentPosition,
         });
       });
-      window.cancelAnimationFrame(Carousel.cssModeFrameID);
+      window.cancelAnimationFrame(carousel.cssModeFrameID);
       return;
     }
-    Carousel.cssModeFrameID = window.requestAnimationFrame(animate);
+    carousel.cssModeFrameID = window.requestAnimationFrame(animate);
   };
   animate();
 }

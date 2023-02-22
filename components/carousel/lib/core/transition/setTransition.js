@@ -1,9 +1,9 @@
 export default function setTransition(duration, byController) {
-  const Carousel = this;
+  const carousel = this;
 
-  if (!Carousel.params.cssMode) {
-    Carousel.$wrapperEl.transition(duration);
+  if (!carousel.params.cssMode) {
+    carousel.$wrapperEl.transition(duration);
   }
 
-  Carousel.emit('setTransition', duration, byController);
+  carousel.emit('setTransition', duration, byController);
 }

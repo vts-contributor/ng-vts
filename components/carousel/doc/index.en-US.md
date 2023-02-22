@@ -4,7 +4,7 @@ type: Components
 title: Carousel
 cols: 1
 order: 0.1
-cover: https://gw.alipayobjects.com/zos/antfincdn/%24C9tmj978R/Carousel.svg
+cover: https://gw.alipayobjects.com/zos/antfincdn/%24C9tmj978R/carousel.svg
 ---
 
 A carousel component. Scales with its container.
@@ -26,19 +26,10 @@ import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 | Property | Description | Type | Default | Global Config |
 | -------- | ----------- | ---- | ------- | ------------- |
 | `[vtsAutoPlay]` | Whether to scroll automatically | `boolean` | `false` | ✅ |
-| `[vtsAutoPlaySpeed]` | Duration (milliseconds), does not scroll when set to 0 | `number` | `3000` | ✅ |
-| `[vtsDotRender]` | Dot render template | `TemplateRef<{ $implicit: number }>` | - |
-| `[vtsDotPosition]` | The position of the dots, which can be one of `top` `bottom` `left` `right` | `string` | `bottom` | ✅ |
-| `[vtsDots]` | Whether to show the dots at the bottom of the gallery | `boolean` | `true` | ✅ |
-| `[vtsEffect]` | Transition effect | `'scrollx'\|'fade'` | `'scrollx'` | ✅ |
-| `[vtsEnableSwipe]` | Whether to support swipe gesture | `boolean` | `true` | ✅ |
-| `[vtsNavigation]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
-| `[vtsRtl]` | Whether to scroll from right to left | `boolean` | `true` | ✅ |
-| `[vtsItems]` | Number of slides is shown | `boolean` | 1 | ✅ |
-| `[vtsSlideMargin]` | Margin between slides | `number` | 10 | ✅ |
-| `[vtsVertical]` | Whether to show slides vertical | `boolean` | `false` | ✅ |
-| `(vtsAfterChange)` | Callback function called after the current index changes | `EventEmitter<number>` | - |
-| `(vtsBeforeChange)` | Callback function called before the current index changes | `EventEmitter{ from: number; to: number }>` | - |
+| `[navigation]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
+| `[pagination]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
+| `[vtsSlidesPerView]` | Number of slides is shown | `boolean` | 1 | ✅ |
+| `[vtsSpaceBetween]` | Margin between slides | `number` | 10 | ✅ |
 
 #### Methods
 
@@ -52,8 +43,8 @@ import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 
 | Token | Description | Parameters | Default Value |
 | ----- | --- | ---- | --- |
-| `NZ_CAROUSEL_CUSTOM_STRATEGIES` | Provide custom transitioning strategies | `CarouselStrategyRegistryItem[]` | - |
+| `NZ_carousel_CUSTOM_STRATEGIES` | Provide custom transitioning strategies | `carouselStrategyRegistryItem[]` | - |
 
 ### Customizing transition effects
 
-You can provide strategies that extends `VtsCarouselBaseStrategy` to implement custom transition effects.
+You can provide strategies that extends `VtscarouselBaseStrategy` to implement custom transition effects.

@@ -1,6 +1,6 @@
 import { now } from '../../shared/utils.js';
 
-export default function freeMode({ Carousel, extendParams, emit, once }) {
+export default function freeMode({ carousel, extendParams, emit, once }) {
   extendParams({
     freeMode: {
       enabled: false,
@@ -15,43 +15,43 @@ export default function freeMode({ Carousel, extendParams, emit, once }) {
   });
 
   function onTouchStart() {
-    const translate = Carousel.getTranslate();
-    Carousel.setTranslate(translate);
-    Carousel.setTransition(0);
-    Carousel.touchEventsData.velocities.length = 0;
-    Carousel.freeMode.onTouchEnd({ currentPos: Carousel.rtl ? Carousel.translate : -Carousel.translate });
+    const translate = carousel.getTranslate();
+    carousel.setTranslate(translate);
+    carousel.setTransition(0);
+    carousel.touchEventsData.velocities.length = 0;
+    carousel.freeMode.onTouchEnd({ currentPos: carousel.rtl ? carousel.translate : -carousel.translate });
   }
 
   function onTouchMove() {
-    const { touchEventsData: data, touches } = Carousel;
+    const { touchEventsData: data, touches } = carousel;
     // Velocity
     if (data.velocities.length === 0) {
       data.velocities.push({
-        position: touches[Carousel.isHorizontal() ? 'startX' : 'startY'],
+        position: touches[carousel.isHorizontal() ? 'startX' : 'startY'],
         time: data.touchStartTime,
       });
     }
     data.velocities.push({
-      position: touches[Carousel.isHorizontal() ? 'currentX' : 'currentY'],
+      position: touches[carousel.isHorizontal() ? 'currentX' : 'currentY'],
       time: now(),
     });
   }
 
   function onTouchEnd({ currentPos }) {
-    const { params, $wrapperEl, rtlTranslate: rtl, snapGrid, touchEventsData: data } = Carousel;
+    const { params, $wrapperEl, rtlTranslate: rtl, snapGrid, touchEventsData: data } = carousel;
     // Time diff
     const touchEndTime = now();
     const timeDiff = touchEndTime - data.touchStartTime;
 
-    if (currentPos < -Carousel.minTranslate()) {
-      Carousel.slideTo(Carousel.activeIndex);
+    if (currentPos < -carousel.minTranslate()) {
+      carousel.slideTo(carousel.activeIndex);
       return;
     }
-    if (currentPos > -Carousel.maxTranslate()) {
-      if (Carousel.slides.length < snapGrid.length) {
-        Carousel.slideTo(snapGrid.length - 1);
+    if (currentPos > -carousel.maxTranslate()) {
+      if (carousel.slides.length < snapGrid.length) {
+        carousel.slideTo(snapGrid.length - 1);
       } else {
-        Carousel.slideTo(Carousel.slides.length - 1);
+        carousel.slideTo(carousel.slides.length - 1);
       }
       return;
     }
@@ -63,54 +63,54 @@ export default function freeMode({ Carousel, extendParams, emit, once }) {
 
         const distance = lastMoveEvent.position - velocityEvent.position;
         const time = lastMoveEvent.time - velocityEvent.time;
-        Carousel.velocity = distance / time;
-        Carousel.velocity /= 2;
-        if (Math.abs(Carousel.velocity) < params.freeMode.minimumVelocity) {
-          Carousel.velocity = 0;
+        carousel.velocity = distance / time;
+        carousel.velocity /= 2;
+        if (Math.abs(carousel.velocity) < params.freeMode.minimumVelocity) {
+          carousel.velocity = 0;
         }
         // this implies that the user stopped moving a finger then released.
         // There would be no events with distance zero, so the last event is stale.
         if (time > 150 || now() - lastMoveEvent.time > 300) {
-          Carousel.velocity = 0;
+          carousel.velocity = 0;
         }
       } else {
-        Carousel.velocity = 0;
+        carousel.velocity = 0;
       }
-      Carousel.velocity *= params.freeMode.momentumVelocityRatio;
+      carousel.velocity *= params.freeMode.momentumVelocityRatio;
 
       data.velocities.length = 0;
       let momentumDuration = 1000 * params.freeMode.momentumRatio;
-      const momentumDistance = Carousel.velocity * momentumDuration;
+      const momentumDistance = carousel.velocity * momentumDuration;
 
-      let newPosition = Carousel.translate + momentumDistance;
+      let newPosition = carousel.translate + momentumDistance;
       if (rtl) newPosition = -newPosition;
 
       let doBounce = false;
       let afterBouncePosition;
-      const bounceAmount = Math.abs(Carousel.velocity) * 20 * params.freeMode.momentumBounceRatio;
+      const bounceAmount = Math.abs(carousel.velocity) * 20 * params.freeMode.momentumBounceRatio;
       let needsLoopFix;
-      if (newPosition < Carousel.maxTranslate()) {
+      if (newPosition < carousel.maxTranslate()) {
         if (params.freeMode.momentumBounce) {
-          if (newPosition + Carousel.maxTranslate() < -bounceAmount) {
-            newPosition = Carousel.maxTranslate() - bounceAmount;
+          if (newPosition + carousel.maxTranslate() < -bounceAmount) {
+            newPosition = carousel.maxTranslate() - bounceAmount;
           }
-          afterBouncePosition = Carousel.maxTranslate();
+          afterBouncePosition = carousel.maxTranslate();
           doBounce = true;
           data.allowMomentumBounce = true;
         } else {
-          newPosition = Carousel.maxTranslate();
+          newPosition = carousel.maxTranslate();
         }
         if (params.loop && params.centeredSlides) needsLoopFix = true;
-      } else if (newPosition > Carousel.minTranslate()) {
+      } else if (newPosition > carousel.minTranslate()) {
         if (params.freeMode.momentumBounce) {
-          if (newPosition - Carousel.minTranslate() > bounceAmount) {
-            newPosition = Carousel.minTranslate() + bounceAmount;
+          if (newPosition - carousel.minTranslate() > bounceAmount) {
+            newPosition = carousel.minTranslate() + bounceAmount;
           }
-          afterBouncePosition = Carousel.minTranslate();
+          afterBouncePosition = carousel.minTranslate();
           doBounce = true;
           data.allowMomentumBounce = true;
         } else {
-          newPosition = Carousel.minTranslate();
+          newPosition = carousel.minTranslate();
         }
         if (params.loop && params.centeredSlides) needsLoopFix = true;
       } else if (params.freeMode.sticky) {
@@ -125,7 +125,7 @@ export default function freeMode({ Carousel, extendParams, emit, once }) {
         if (
           Math.abs(snapGrid[nextSlide] - newPosition) <
             Math.abs(snapGrid[nextSlide - 1] - newPosition) ||
-          Carousel.swipeDirection === 'next'
+          carousel.swipeDirection === 'next'
         ) {
           newPosition = snapGrid[nextSlide];
         } else {
@@ -135,15 +135,15 @@ export default function freeMode({ Carousel, extendParams, emit, once }) {
       }
       if (needsLoopFix) {
         once('transitionEnd', () => {
-          Carousel.loopFix();
+          carousel.loopFix();
         });
       }
       // Fix duration
-      if (Carousel.velocity !== 0) {
+      if (carousel.velocity !== 0) {
         if (rtl) {
-          momentumDuration = Math.abs((-newPosition - Carousel.translate) / Carousel.velocity);
+          momentumDuration = Math.abs((-newPosition - carousel.translate) / carousel.velocity);
         } else {
-          momentumDuration = Math.abs((newPosition - Carousel.translate) / Carousel.velocity);
+          momentumDuration = Math.abs((newPosition - carousel.translate) / carousel.velocity);
         }
         if (params.freeMode.sticky) {
           // If freeMode.sticky is active and the user ends a swipe with a slow-velocity
@@ -153,8 +153,8 @@ export default function freeMode({ Carousel, extendParams, emit, once }) {
           // nice side effect of matching slide speed if the user stopped moving before
           // lifting finger or mouse vs. moving slowly before lifting the finger/mouse.
           // For faster swipes, also apply limits (albeit higher ones).
-          const moveDistance = Math.abs((rtl ? -newPosition : newPosition) - Carousel.translate);
-          const currentSlideSize = Carousel.slidesSizesGrid[Carousel.activeIndex];
+          const moveDistance = Math.abs((rtl ? -newPosition : newPosition) - carousel.translate);
+          const currentSlideSize = carousel.slidesSizesGrid[carousel.activeIndex];
           if (moveDistance < currentSlideSize) {
             momentumDuration = params.speed;
           } else if (moveDistance < 2 * currentSlideSize) {
@@ -164,62 +164,62 @@ export default function freeMode({ Carousel, extendParams, emit, once }) {
           }
         }
       } else if (params.freeMode.sticky) {
-        Carousel.slideToClosest();
+        carousel.slideToClosest();
         return;
       }
 
       if (params.freeMode.momentumBounce && doBounce) {
-        Carousel.updateProgress(afterBouncePosition);
-        Carousel.setTransition(momentumDuration);
-        Carousel.setTranslate(newPosition);
-        Carousel.transitionStart(true, Carousel.swipeDirection);
-        Carousel.animating = true;
+        carousel.updateProgress(afterBouncePosition);
+        carousel.setTransition(momentumDuration);
+        carousel.setTranslate(newPosition);
+        carousel.transitionStart(true, carousel.swipeDirection);
+        carousel.animating = true;
         $wrapperEl.transitionEnd(() => {
-          if (!Carousel || Carousel.destroyed || !data.allowMomentumBounce) return;
+          if (!carousel || carousel.destroyed || !data.allowMomentumBounce) return;
           emit('momentumBounce');
-          Carousel.setTransition(params.speed);
+          carousel.setTransition(params.speed);
           setTimeout(() => {
-            Carousel.setTranslate(afterBouncePosition);
+            carousel.setTranslate(afterBouncePosition);
             $wrapperEl.transitionEnd(() => {
-              if (!Carousel || Carousel.destroyed) return;
-              Carousel.transitionEnd();
+              if (!carousel || carousel.destroyed) return;
+              carousel.transitionEnd();
             });
           }, 0);
         });
-      } else if (Carousel.velocity) {
+      } else if (carousel.velocity) {
         emit('_freeModeNoMomentumRelease');
-        Carousel.updateProgress(newPosition);
-        Carousel.setTransition(momentumDuration);
-        Carousel.setTranslate(newPosition);
-        Carousel.transitionStart(true, Carousel.swipeDirection);
-        if (!Carousel.animating) {
-          Carousel.animating = true;
+        carousel.updateProgress(newPosition);
+        carousel.setTransition(momentumDuration);
+        carousel.setTranslate(newPosition);
+        carousel.transitionStart(true, carousel.swipeDirection);
+        if (!carousel.animating) {
+          carousel.animating = true;
           $wrapperEl.transitionEnd(() => {
-            if (!Carousel || Carousel.destroyed) return;
-            Carousel.transitionEnd();
+            if (!carousel || carousel.destroyed) return;
+            carousel.transitionEnd();
           });
         }
       } else {
-        Carousel.updateProgress(newPosition);
+        carousel.updateProgress(newPosition);
       }
 
-      Carousel.updateActiveIndex();
-      Carousel.updateSlidesClasses();
+      carousel.updateActiveIndex();
+      carousel.updateSlidesClasses();
     } else if (params.freeMode.sticky) {
-      Carousel.slideToClosest();
+      carousel.slideToClosest();
       return;
     } else if (params.freeMode) {
       emit('_freeModeNoMomentumRelease');
     }
 
     if (!params.freeMode.momentum || timeDiff >= params.longSwipesMs) {
-      Carousel.updateProgress();
-      Carousel.updateActiveIndex();
-      Carousel.updateSlidesClasses();
+      carousel.updateProgress();
+      carousel.updateActiveIndex();
+      carousel.updateSlidesClasses();
     }
   }
 
-  Object.assign(Carousel, {
+  Object.assign(carousel, {
     freeMode: {
       onTouchStart,
       onTouchMove,

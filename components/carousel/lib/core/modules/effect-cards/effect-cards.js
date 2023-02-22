@@ -3,7 +3,7 @@ import effectInit from '../../shared/effect-init.js';
 import effectTarget from '../../shared/effect-target.js';
 import effectVirtualTransitionEnd from '../../shared/effect-virtual-transition-end.js';
 
-export default function EffectCards({ Carousel, extendParams, on }) {
+export default function EffectCards({ carousel, extendParams, on }) {
   extendParams({
     cardsEffect: {
       slideShadows: true,
@@ -15,22 +15,22 @@ export default function EffectCards({ Carousel, extendParams, on }) {
   });
 
   const setTranslate = () => {
-    const { slides, activeIndex } = Carousel;
-    const params = Carousel.params.cardsEffect;
-    const { startTranslate, isTouched } = Carousel.touchEventsData;
-    const currentTranslate = Carousel.translate;
+    const { slides, activeIndex } = carousel;
+    const params = carousel.params.cardsEffect;
+    const { startTranslate, isTouched } = carousel.touchEventsData;
+    const currentTranslate = carousel.translate;
     for (let i = 0; i < slides.length; i += 1) {
       const $slideEl = slides.eq(i);
       const slideProgress = $slideEl[0].progress;
       const progress = Math.min(Math.max(slideProgress, -4), 4);
-      let offset = $slideEl[0].CarouselSlideOffset;
-      if (Carousel.params.centeredSlides && !Carousel.params.cssMode) {
-        Carousel.$wrapperEl.transform(`translateX(${Carousel.minTranslate()}px)`);
+      let offset = $slideEl[0].carouselSlideOffset;
+      if (carousel.params.centeredSlides && !carousel.params.cssMode) {
+        carousel.$wrapperEl.transform(`translateX(${carousel.minTranslate()}px)`);
       }
-      if (Carousel.params.centeredSlides && Carousel.params.cssMode) {
-        offset -= slides[0].CarouselSlideOffset;
+      if (carousel.params.centeredSlides && carousel.params.cssMode) {
+        offset -= slides[0].carouselSlideOffset;
       }
-      let tX = Carousel.params.cssMode ? -offset - Carousel.translate : -offset;
+      let tX = carousel.params.cssMode ? -offset - carousel.translate : -offset;
       let tY = 0;
       const tZ = -100 * Math.abs(progress);
       let scale = 1;
@@ -39,19 +39,19 @@ export default function EffectCards({ Carousel, extendParams, on }) {
       let tXAdd = params.perSlideOffset - Math.abs(progress) * 0.75;
 
       const slideIndex =
-        Carousel.virtual && Carousel.params.virtual.enabled ? Carousel.virtual.from + i : i;
+        carousel.virtual && carousel.params.virtual.enabled ? carousel.virtual.from + i : i;
 
       const isSwipeToNext =
         (slideIndex === activeIndex || slideIndex === activeIndex - 1) &&
         progress > 0 &&
         progress < 1 &&
-        (isTouched || Carousel.params.cssMode) &&
+        (isTouched || carousel.params.cssMode) &&
         currentTranslate < startTranslate;
       const isSwipeToPrev =
         (slideIndex === activeIndex || slideIndex === activeIndex + 1) &&
         progress < 0 &&
         progress > -1 &&
-        (isTouched || Carousel.params.cssMode) &&
+        (isTouched || carousel.params.cssMode) &&
         currentTranslate > startTranslate;
 
       if (isSwipeToNext || isSwipeToPrev) {
@@ -71,7 +71,7 @@ export default function EffectCards({ Carousel, extendParams, on }) {
       } else {
         tX = `${tX}px`;
       }
-      if (!Carousel.isHorizontal()) {
+      if (!carousel.isHorizontal()) {
         const prevY = tY;
         tY = tX;
         tX = prevY;
@@ -88,7 +88,7 @@ export default function EffectCards({ Carousel, extendParams, on }) {
 
       if (params.slideShadows) {
         // Set shadows
-        let $shadowEl = $slideEl.find('.Carousel-slide-shadow');
+        let $shadowEl = $slideEl.find('.carousel-slide-shadow');
         if ($shadowEl.length === 0) {
           $shadowEl = createShadow(params, $slideEl);
         }
@@ -103,23 +103,23 @@ export default function EffectCards({ Carousel, extendParams, on }) {
   };
 
   const setTransition = (duration) => {
-    const { transformEl } = Carousel.params.cardsEffect;
-    const $transitionElements = transformEl ? Carousel.slides.find(transformEl) : Carousel.slides;
-    $transitionElements.transition(duration).find('.Carousel-slide-shadow').transition(duration);
+    const { transformEl } = carousel.params.cardsEffect;
+    const $transitionElements = transformEl ? carousel.slides.find(transformEl) : carousel.slides;
+    $transitionElements.transition(duration).find('.carousel-slide-shadow').transition(duration);
 
-    effectVirtualTransitionEnd({ Carousel, duration, transformEl });
+    effectVirtualTransitionEnd({ carousel, duration, transformEl });
   };
 
   effectInit({
     effect: 'cards',
-    Carousel,
+    carousel,
     on,
     setTranslate,
     setTransition,
     perspective: () => true,
     overwriteParams: () => ({
       watchSlidesProgress: true,
-      virtualTranslate: !Carousel.params.cssMode,
+      virtualTranslate: !carousel.params.cssMode,
     }),
   });
 }

@@ -1,45 +1,45 @@
 export default function onResize() {
-  const Carousel = this;
+  const carousel = this;
 
-  const { params, el } = Carousel;
+  const { params, el } = carousel;
 
   if (el && el.offsetWidth === 0) return;
 
   // Breakpoints
   if (params.breakpoints) {
-    Carousel.setBreakpoint();
+    carousel.setBreakpoint();
   }
 
   // Save locks
-  const { allowSlideNext, allowSlidePrev, snapGrid } = Carousel;
+  const { allowSlideNext, allowSlidePrev, snapGrid } = carousel;
 
   // Disable locks on resize
-  Carousel.allowSlideNext = true;
-  Carousel.allowSlidePrev = true;
+  carousel.allowSlideNext = true;
+  carousel.allowSlidePrev = true;
 
-  Carousel.updateSize();
-  Carousel.updateSlides();
+  carousel.updateSize();
+  carousel.updateSlides();
 
-  Carousel.updateSlidesClasses();
+  carousel.updateSlidesClasses();
   if (
     (params.vtsSlidesPerView === 'auto' || params.vtsSlidesPerView > 1) &&
-    Carousel.isEnd &&
-    !Carousel.isBeginning &&
-    !Carousel.params.centeredSlides
+    carousel.isEnd &&
+    !carousel.isBeginning &&
+    !carousel.params.centeredSlides
   ) {
-    Carousel.slideTo(Carousel.slides.length - 1, 0, false, true);
+    carousel.slideTo(carousel.slides.length - 1, 0, false, true);
   } else {
-    Carousel.slideTo(Carousel.activeIndex, 0, false, true);
+    carousel.slideTo(carousel.activeIndex, 0, false, true);
   }
 
-  if (Carousel.autoplay && Carousel.autoplay.running && Carousel.autoplay.paused) {
-    Carousel.autoplay.run();
+  if (carousel.vtsAutoplay && carousel.vtsAutoplay.running && carousel.vtsAutoplay.paused) {
+    carousel.vtsAutoplay.run();
   }
   // Return locks after resize
-  Carousel.allowSlidePrev = allowSlidePrev;
-  Carousel.allowSlideNext = allowSlideNext;
+  carousel.allowSlidePrev = allowSlidePrev;
+  carousel.allowSlideNext = allowSlideNext;
 
-  if (Carousel.params.watchOverflow && snapGrid !== Carousel.snapGrid) {
-    Carousel.checkOverflow();
+  if (carousel.params.watchOverflow && snapGrid !== carousel.snapGrid) {
+    carousel.checkOverflow();
   }
 }

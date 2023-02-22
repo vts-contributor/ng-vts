@@ -1,24 +1,24 @@
 import { extend } from '../../shared/utils.js';
 
-const isGridEnabled = (Carousel, params) => {
-  return Carousel.grid && params.grid && params.grid.rows > 1;
+const isGridEnabled = (carousel, params) => {
+  return carousel.grid && params.grid && params.grid.rows > 1;
 };
 
 export default function setBreakpoint() {
-  const Carousel = this;
-  const { activeIndex, initialized, loopedSlides = 0, params, $el } = Carousel;
+  const carousel = this;
+  const { activeIndex, initialized, loopedSlides = 0, params, $el } = carousel;
   const breakpoints = params.breakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
 
   // Get breakpoint for window width and update parameters
-  const breakpoint = Carousel.getBreakpoint(breakpoints, Carousel.params.breakpointsBase, Carousel.el);
+  const breakpoint = carousel.getBreakpoint(breakpoints, carousel.params.breakpointsBase, carousel.el);
 
-  if (!breakpoint || Carousel.currentBreakpoint === breakpoint) return;
+  if (!breakpoint || carousel.currentBreakpoint === breakpoint) return;
 
   const breakpointOnlyParams = breakpoint in breakpoints ? breakpoints[breakpoint] : undefined;
-  const breakpointParams = breakpointOnlyParams || Carousel.originalParams;
-  const wasMultiRow = isGridEnabled(Carousel, params);
-  const isMultiRow = isGridEnabled(Carousel, breakpointParams);
+  const breakpointParams = breakpointOnlyParams || carousel.originalParams;
+  const wasMultiRow = isGridEnabled(carousel, params);
+  const isMultiRow = isGridEnabled(carousel, breakpointParams);
 
   const wasEnabled = params.enabled;
 
@@ -26,7 +26,7 @@ export default function setBreakpoint() {
     $el.removeClass(
       `${params.containerModifierClass}grid ${params.containerModifierClass}grid-column`,
     );
-    Carousel.emitContainerClasses();
+    carousel.emitContainerClasses();
   } else if (!wasMultiRow && isMultiRow) {
     $el.addClass(`${params.containerModifierClass}grid`);
     if (
@@ -35,7 +35,7 @@ export default function setBreakpoint() {
     ) {
       $el.addClass(`${params.containerModifierClass}grid-column`);
     }
-    Carousel.emitContainerClasses();
+    carousel.emitContainerClasses();
   }
 
   // Toggle navigation, pagination, scrollbar
@@ -43,10 +43,10 @@ export default function setBreakpoint() {
     const wasModuleEnabled = params[prop] && params[prop].enabled;
     const isModuleEnabled = breakpointParams[prop] && breakpointParams[prop].enabled;
     if (wasModuleEnabled && !isModuleEnabled) {
-      Carousel[prop].disable();
+      carousel[prop].disable();
     }
     if (!wasModuleEnabled && isModuleEnabled) {
-      Carousel[prop].enable();
+      carousel[prop].enable();
     }
   });
 
@@ -56,34 +56,34 @@ export default function setBreakpoint() {
     params.loop && (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
 
   if (directionChanged && initialized) {
-    Carousel.changeDirection();
+    carousel.changeDirection();
   }
-  extend(Carousel.params, breakpointParams);
+  extend(carousel.params, breakpointParams);
 
-  const isEnabled = Carousel.params.enabled;
+  const isEnabled = carousel.params.enabled;
 
-  Object.assign(Carousel, {
-    allowTouchMove: Carousel.params.allowTouchMove,
-    allowSlideNext: Carousel.params.allowSlideNext,
-    allowSlidePrev: Carousel.params.allowSlidePrev,
+  Object.assign(carousel, {
+    allowTouchMove: carousel.params.allowTouchMove,
+    allowSlideNext: carousel.params.allowSlideNext,
+    allowSlidePrev: carousel.params.allowSlidePrev,
   });
 
   if (wasEnabled && !isEnabled) {
-    Carousel.disable();
+    carousel.disable();
   } else if (!wasEnabled && isEnabled) {
-    Carousel.enable();
+    carousel.enable();
   }
 
-  Carousel.currentBreakpoint = breakpoint;
+  carousel.currentBreakpoint = breakpoint;
 
-  Carousel.emit('_beforeBreakpoint', breakpointParams);
+  carousel.emit('_beforeBreakpoint', breakpointParams);
 
   if (needsReLoop && initialized) {
-    Carousel.loopDestroy();
-    Carousel.loopCreate();
-    Carousel.updateSlides();
-    Carousel.slideTo(activeIndex - loopedSlides + Carousel.loopedSlides, 0, false);
+    carousel.loopDestroy();
+    carousel.loopCreate();
+    carousel.updateSlides();
+    carousel.slideTo(activeIndex - loopedSlides + carousel.loopedSlides, 0, false);
   }
 
-  Carousel.emit('breakpoint', breakpointParams);
+  carousel.emit('breakpoint', breakpointParams);
 }

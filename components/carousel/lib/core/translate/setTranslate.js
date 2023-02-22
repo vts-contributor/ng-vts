@@ -1,11 +1,11 @@
 export default function setTranslate(translate, byController) {
-  const Carousel = this;
-  const { rtlTranslate: rtl, params, $wrapperEl, wrapperEl, progress } = Carousel;
+  const carousel = this;
+  const { rtlTranslate: rtl, params, $wrapperEl, wrapperEl, progress } = carousel;
   let x = 0;
   let y = 0;
   const z = 0;
 
-  if (Carousel.isHorizontal()) {
+  if (carousel.isHorizontal()) {
     x = rtl ? -translate : translate;
   } else {
     y = translate;
@@ -17,24 +17,24 @@ export default function setTranslate(translate, byController) {
   }
 
   if (params.cssMode) {
-    wrapperEl[Carousel.isHorizontal() ? 'scrollLeft' : 'scrollTop'] = Carousel.isHorizontal() ? -x : -y;
+    wrapperEl[carousel.isHorizontal() ? 'scrollLeft' : 'scrollTop'] = carousel.isHorizontal() ? -x : -y;
   } else if (!params.virtualTranslate) {
     $wrapperEl.transform(`translate3d(${x}px, ${y}px, ${z}px)`);
   }
-  Carousel.previousTranslate = Carousel.translate;
-  Carousel.translate = Carousel.isHorizontal() ? x : y;
+  carousel.previousTranslate = carousel.translate;
+  carousel.translate = carousel.isHorizontal() ? x : y;
 
   // Check if we need to update progress
   let newProgress;
-  const translatesDiff = Carousel.maxTranslate() - Carousel.minTranslate();
+  const translatesDiff = carousel.maxTranslate() - carousel.minTranslate();
   if (translatesDiff === 0) {
     newProgress = 0;
   } else {
-    newProgress = (translate - Carousel.minTranslate()) / translatesDiff;
+    newProgress = (translate - carousel.minTranslate()) / translatesDiff;
   }
   if (newProgress !== progress) {
-    Carousel.updateProgress(translate);
+    carousel.updateProgress(translate);
   }
 
-  Carousel.emit('setTranslate', Carousel.translate, byController);
+  carousel.emit('setTranslate', carousel.translate, byController);
 }

@@ -11,7 +11,7 @@ export interface HistoryOptions {
   enabled?: boolean;
 
   /**
-   * Carousel page root, useful to specify when you use Carousel history mode not on root website page.
+   * carousel page root, useful to specify when you use carousel history mode not on root website page.
    * For example can be `https://my-website.com/` or `https://my-website.com/subpage/` or `/subpage/`
    *
    *
