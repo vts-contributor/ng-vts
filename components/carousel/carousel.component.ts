@@ -87,7 +87,7 @@ export class VtsCarouselComponent implements OnInit {
     [ratio: string]: SwiperOptions;
   };
   @Input() vtsSpaceBetween?: number;
-  @Input() slidesPerView?: number | "auto";
+  @Input() vtsSlidesPerView?: number | "auto";
   // @Input() maxBackfaceHiddenSlides: "maxBackfaceHiddenSlides";
   // @Input() grid: "grid";
   // @Input() slidesPerGroup: "slidesPerGroup";
@@ -834,20 +834,20 @@ export class VtsCarouselComponent implements OnInit {
     if (!this.loop) {
       return false;
     }
-    let slidesPerViewParams = this.slidesPerView;
+    let vtsSlidesPerViewParams = this.vtsSlidesPerView;
     if (this.breakpoints) {
       const breakpoint = Swiper.prototype.getBreakpoint(this.breakpoints);
       const breakpointOnlyParams =
         breakpoint in this.breakpoints ? this.breakpoints[breakpoint] : undefined;
-      if (breakpointOnlyParams && breakpointOnlyParams.slidesPerView) {
-        slidesPerViewParams = breakpointOnlyParams.slidesPerView;
+      if (breakpointOnlyParams && breakpointOnlyParams.vtsSlidesPerView) {
+        vtsSlidesPerViewParams = breakpointOnlyParams.vtsSlidesPerView;
       }
     }
-    if (slidesPerViewParams === 'auto') {
+    if (vtsSlidesPerViewParams === 'auto') {
       this.loopedSlides = this.slides.length;
       return this.slides.length;
     }
-    let loopedSlides = this.loopedSlides || slidesPerViewParams;
+    let loopedSlides = this.loopedSlides || vtsSlidesPerViewParams;
     if (!loopedSlides) {
       // ?
       return false;

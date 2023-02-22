@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-with-caption',
   template: `
     <vts-carousel
-     [slidesPerView]="slidesPerView"
+     [vtsSlidesPerView]="vtsSlidesPerView"
      [navigation]="navigation"
      [pagination]="pagination"
     >
@@ -36,7 +36,7 @@ import { Component } from '@angular/core';
   ]
 })
 export class VtsDemoCarouselWithCaptionComponent {
-  slidesPerView = 1;
+  vtsSlidesPerView = 1;
   navigation= true;
   pagination= {clickable: true};
   array= [

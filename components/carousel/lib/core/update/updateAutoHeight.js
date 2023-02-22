@@ -21,13 +21,13 @@ export default function updateAutoHeight(speed) {
     return swiper.slides.eq(index)[0];
   };
   // Find slides currently in view
-  if (swiper.params.slidesPerView !== 'auto' && swiper.params.slidesPerView > 1) {
+  if (swiper.params.vtsSlidesPerView !== 'auto' && swiper.params.vtsSlidesPerView > 1) {
     if (swiper.params.centeredSlides) {
       (swiper.visibleSlides || $([])).each((slide) => {
         activeSlides.push(slide);
       });
     } else {
-      for (i = 0; i < Math.ceil(swiper.params.slidesPerView); i += 1) {
+      for (i = 0; i < Math.ceil(swiper.params.vtsSlidesPerView); i += 1) {
         const index = swiper.activeIndex + i;
         if (index > swiper.slides.length && !isVirtual) break;
         activeSlides.push(getSlideByIndex(index));

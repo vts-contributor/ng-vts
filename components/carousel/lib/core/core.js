@@ -408,7 +408,7 @@ class Swiper {
       }
     } else {
       if (
-        (swiper.params.slidesPerView === 'auto' || swiper.params.slidesPerView > 1) &&
+        (swiper.params.vtsSlidesPerView === 'auto' || swiper.params.vtsSlidesPerView > 1) &&
         swiper.isEnd &&
         !swiper.params.centeredSlides
       ) {

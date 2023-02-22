@@ -22,7 +22,7 @@ export default function onResize() {
 
   swiper.updateSlidesClasses();
   if (
-    (params.slidesPerView === 'auto' || params.slidesPerView > 1) &&
+    (params.vtsSlidesPerView === 'auto' || params.vtsSlidesPerView > 1) &&
     swiper.isEnd &&
     !swiper.isBeginning &&
     !swiper.params.centeredSlides

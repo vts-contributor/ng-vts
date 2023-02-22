@@ -46,18 +46,18 @@ export default function updateSlides() {
   const previousSnapGridLength = swiper.snapGrid.length;
   const previousSlidesGridLength = swiper.slidesGrid.length;
 
-  let spaceBetween = params.spaceBetween;
+  let vtsSpaceBetween = params.vtsSpaceBetween;
   let slidePosition = -offsetBefore;
   let prevSlideSize = 0;
   let index = 0;
   if (typeof swiperSize === 'undefined') {
     return;
   }
-  if (typeof spaceBetween === 'string' && spaceBetween.indexOf('%') >= 0) {
-    spaceBetween = (parseFloat(spaceBetween.replace('%', '')) / 100) * swiperSize;
+  if (typeof vtsSpaceBetween === 'string' && vtsSpaceBetween.indexOf('%') >= 0) {
+    vtsSpaceBetween = (parseFloat(vtsSpaceBetween.replace('%', '')) / 100) * swiperSize;
   }
 
-  swiper.virtualSize = -spaceBetween;
+  swiper.virtualSize = -vtsSpaceBetween;
 
   // reset margins
   if (rtl) slides.css({ marginLeft: '', marginBottom: '', marginTop: '' });
@@ -78,10 +78,10 @@ export default function updateSlides() {
   let slideSize;
 
   const shouldResetSlideSize =
-    params.slidesPerView === 'auto' &&
+    params.vtsSlidesPerView === 'auto' &&
     params.breakpoints &&
     Object.keys(params.breakpoints).filter((key) => {
-      return typeof params.breakpoints[key].slidesPerView !== 'undefined';
+      return typeof params.breakpoints[key].vtsSlidesPerView !== 'undefined';
     }).length > 0;
 
   for (let i = 0; i < slidesLength; i += 1) {
@@ -92,7 +92,7 @@ export default function updateSlides() {
     }
     if (slide.css('display') === 'none') continue; // eslint-disable-line
 
-    if (params.slidesPerView === 'auto') {
+    if (params.vtsSlidesPerView === 'auto') {
       if (shouldResetSlideSize) {
         slides[i].style[getDirectionLabel('width')] = ``;
       }
@@ -136,7 +136,7 @@ export default function updateSlides() {
       }
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
-      slideSize = (swiperSize - (params.slidesPerView - 1) * spaceBetween) / params.slidesPerView;
+      slideSize = (swiperSize - (params.vtsSlidesPerView - 1) * vtsSpaceBetween) / params.vtsSlidesPerView;
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
       if (slides[i]) {
@@ -149,10 +149,10 @@ export default function updateSlides() {
     slidesSizesGrid.push(slideSize);
 
     if (params.centeredSlides) {
-      slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + spaceBetween;
+      slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + vtsSpaceBetween;
       if (prevSlideSize === 0 && i !== 0)
-        slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
-      if (i === 0) slidePosition = slidePosition - swiperSize / 2 - spaceBetween;
+        slidePosition = slidePosition - swiperSize / 2 - vtsSpaceBetween;
+      if (i === 0) slidePosition = slidePosition - swiperSize / 2 - vtsSpaceBetween;
       if (Math.abs(slidePosition) < 1 / 1000) slidePosition = 0;
       if (params.roundLengths) slidePosition = Math.floor(slidePosition);
       if (index % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
@@ -166,10 +166,10 @@ export default function updateSlides() {
       )
         snapGrid.push(slidePosition);
       slidesGrid.push(slidePosition);
-      slidePosition = slidePosition + slideSize + spaceBetween;
+      slidePosition = slidePosition + slideSize + vtsSpaceBetween;
     }
 
-    swiper.virtualSize += slideSize + spaceBetween;
+    swiper.virtualSize += slideSize + vtsSpaceBetween;
 
     prevSlideSize = slideSize;
 
@@ -178,11 +178,11 @@ export default function updateSlides() {
   swiper.virtualSize = Math.max(swiper.virtualSize, swiperSize) + offsetAfter;
 
   if (rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
-    $wrapperEl.css({ width: `${swiper.virtualSize + params.spaceBetween}px` });
+    $wrapperEl.css({ width: `${swiper.virtualSize + params.vtsSpaceBetween}px` });
   }
   if (params.setWrapperSize) {
     $wrapperEl.css({
-      [getDirectionLabel('width')]: `${swiper.virtualSize + params.spaceBetween}px`,
+      [getDirectionLabel('width')]: `${swiper.virtualSize + params.vtsSpaceBetween}px`,
     });
   }
 
@@ -211,7 +211,7 @@ export default function updateSlides() {
   }
   if (snapGrid.length === 0) snapGrid = [0];
 
-  if (params.spaceBetween !== 0) {
+  if (params.vtsSpaceBetween !== 0) {
     const key = swiper.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
     slides
       .filter((_, slideIndex) => {
@@ -221,15 +221,15 @@ export default function updateSlides() {
         }
         return true;
       })
-      .css({ [key]: `${spaceBetween}px` });
+      .css({ [key]: `${vtsSpaceBetween}px` });
   }
 
   if (params.centeredSlides && params.centeredSlidesBounds) {
     let allSlidesSize = 0;
     slidesSizesGrid.forEach((slideSizeValue) => {
-      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+      allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
     });
-    allSlidesSize -= params.spaceBetween;
+    allSlidesSize -= params.vtsSpaceBetween;
     const maxSnap = allSlidesSize - swiperSize;
     snapGrid = snapGrid.map((snap) => {
       if (snap < 0) return -offsetBefore;
@@ -241,9 +241,9 @@ export default function updateSlides() {
   if (params.centerInsufficientSlides) {
     let allSlidesSize = 0;
     slidesSizesGrid.forEach((slideSizeValue) => {
-      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+      allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
     });
-    allSlidesSize -= params.spaceBetween;
+    allSlidesSize -= params.vtsSpaceBetween;
     if (allSlidesSize < swiperSize) {
       const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
       snapGrid.forEach((snap, snapIndex) => {

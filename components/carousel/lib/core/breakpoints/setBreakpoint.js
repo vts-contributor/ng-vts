@@ -53,7 +53,7 @@ export default function setBreakpoint() {
   const directionChanged =
     breakpointParams.direction && breakpointParams.direction !== params.direction;
   const needsReLoop =
-    params.loop && (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
+    params.loop && (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
 
   if (directionChanged && initialized) {
     swiper.changeDirection();

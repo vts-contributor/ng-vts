@@ -93,17 +93,17 @@ export default function Thumb({ swiper, extendParams, on }) {
     const thumbsSwiper = swiper.thumbs.swiper;
     if (!thumbsSwiper || thumbsSwiper.destroyed) return;
 
-    const slidesPerView =
-      thumbsSwiper.params.slidesPerView === 'auto'
+    const vtsSlidesPerView =
+      thumbsSwiper.params.vtsSlidesPerView === 'auto'
         ? thumbsSwiper.slidesPerViewDynamic()
-        : thumbsSwiper.params.slidesPerView;
+        : thumbsSwiper.params.vtsSlidesPerView;
 
     // Activate thumbs
     let thumbsToActivate = 1;
     const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
 
-    if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
-      thumbsToActivate = swiper.params.slidesPerView;
+    if (swiper.params.vtsSlidesPerView > 1 && !swiper.params.centeredSlides) {
+      thumbsToActivate = swiper.params.vtsSlidesPerView;
     }
 
     if (!swiper.params.thumbs.multipleActiveThumbs) {
@@ -183,15 +183,15 @@ export default function Thumb({ swiper, extendParams, on }) {
       ) {
         if (thumbsSwiper.params.centeredSlides) {
           if (newThumbsIndex > currentThumbsIndex) {
-            newThumbsIndex = newThumbsIndex - Math.floor(slidesPerView / 2) + 1;
+            newThumbsIndex = newThumbsIndex - Math.floor(vtsSlidesPerView / 2) + 1;
           } else {
-            newThumbsIndex = newThumbsIndex + Math.floor(slidesPerView / 2) - 1;
+            newThumbsIndex = newThumbsIndex + Math.floor(vtsSlidesPerView / 2) - 1;
           }
         } else if (
           newThumbsIndex > currentThumbsIndex &&
           thumbsSwiper.params.slidesPerGroup === 1
         ) {
-          // newThumbsIndex = newThumbsIndex - slidesPerView + 1;
+          // newThumbsIndex = newThumbsIndex - vtsSlidesPerView + 1;
         }
         thumbsSwiper.slideTo(newThumbsIndex, initial ? 0 : undefined);
       }

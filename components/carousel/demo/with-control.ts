@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-with-control',
   template: `
     <vts-carousel
-     [slidesPerView]="slidesPerView"
+     [vtsSlidesPerView]="vtsSlidesPerView"
      [navigation]="navigation"
     >
       <ng-template vts-carousel-slide *ngFor="let item of array">
@@ -25,7 +25,7 @@ import { Component } from '@angular/core';
   ]
 })
 export class VtsDemoCarouselWithControlComponent {
-  slidesPerView = 1;
+  vtsSlidesPerView = 1;
   navigation= true;
   array= [
     {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},

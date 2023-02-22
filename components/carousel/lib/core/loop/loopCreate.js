@@ -25,9 +25,9 @@ export default function loopCreate() {
     }
   }
 
-  if (params.slidesPerView === 'auto' && !params.loopedSlides) params.loopedSlides = slides.length;
+  if (params.vtsSlidesPerView === 'auto' && !params.loopedSlides) params.loopedSlides = slides.length;
 
-  swiper.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.slidesPerView, 10));
+  swiper.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.vtsSlidesPerView, 10));
   swiper.loopedSlides += params.loopAdditionalSlides;
   if (swiper.loopedSlides > slides.length && swiper.params.loopedSlidesLimit) {
     swiper.loopedSlides = slides.length;
