@@ -2,7 +2,6 @@ import { VtsUploadModule } from './../../upload/upload.module';
 import { VtsSelectModule } from './../../select/select.module';
 import { VtsDrawerModule } from './../../drawer/drawer.module';
 import { VtsModalModule } from '@ui-vts/ng-vts/modal';
-import { VtsProTableConfiguration } from './features/config.component';
 import { BidiModule } from '@angular/cdk/bidi';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -49,7 +48,10 @@ import { VtsTrMeasureComponent } from './protable/tr-measure.component';
 import { VtsTrDirective } from './protable/tr.directive';
 import { VtsProTableComponent } from './protable/protable.component';
 import { VtsFormModule } from './../../form/form.module';
-import { VtsSearchFormProTableComponent } from './features/search.component';
+import { VtsSearchFieldsComponent } from './components/search-fields/search-fields.component';
+import { VtsConfigFieldsComponent } from './components/config-fields/config-fields.component';
+import { VtsTableDataComponent } from './components/table-data/table-data.component';
+// import { VtsPaginationBarComponent } from './components/pagination-bar/pagination-bar.component';
 
 @NgModule({
   declarations: [
@@ -80,8 +82,10 @@ import { VtsSearchFormProTableComponent } from './features/search.component';
     VtsFilterTriggerComponent,
     VtsProTableFixedRowComponent,
     VtsThSelectionComponent,
-    VtsSearchFormProTableComponent,
-    VtsProTableConfiguration
+    VtsSearchFieldsComponent,
+    VtsConfigFieldsComponent,
+    VtsTableDataComponent,
+    // VtsPaginationBarComponent
   ],
   exports: [
     VtsProTableComponent,
@@ -101,8 +105,10 @@ import { VtsSearchFormProTableComponent } from './features/search.component';
     VtsCellEllipsisDirective,
     VtsProTableFixedRowComponent,
     VtsThSelectionComponent,
-    VtsSearchFormProTableComponent,
-    VtsProTableConfiguration
+    VtsSearchFieldsComponent,
+    VtsConfigFieldsComponent,
+    VtsTableDataComponent,
+    // VtsPaginationBarComponent
   ],
   imports: [
     BidiModule,

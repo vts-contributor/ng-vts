@@ -16,13 +16,14 @@ import { VtsProTableLayout } from '../protable.types';
   encapsulation: ViewEncapsulation.None,
   template: `
       <div class="vts-protable-content">
-        <protable
+        <table
           vts-protable-content
           [contentTemplate]="contentTemplate"
           [tableLayout]="tableLayout"
           [listOfColWidth]="listOfColWidth"
           [theadTemplate]="theadTemplate"
-        ></protable>
+          [rowHeight]="rowHeight"
+        ></table>
       </div>
     `
 })
@@ -31,9 +32,11 @@ export class VtsProTableInnerDefaultComponent {
   @Input() listOfColWidth: ReadonlyArray<string | null> = [];
   @Input() theadTemplate: TemplateRef<VtsSafeAny> | null = null;
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
+  @Input() rowHeight: string | null = null;
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-protable-container');
+    console.log(this.rowHeight, 'x');
   }
 }

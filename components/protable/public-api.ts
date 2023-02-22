@@ -30,4 +30,6 @@ export * from './src/addon/filter-trigger.component';
 export * from './src/styled/align.directive';
 export * from './src/styled/ellipsis.directive';
 export * from './src/styled/word-break.directive';
-export * from './src/features/search.component';
+export * from './src/components/config-fields/config-fields.component';
+export * from './src/components/search-fields/search-fields.component';
+export * from './src/components/table-data/table-data.component';

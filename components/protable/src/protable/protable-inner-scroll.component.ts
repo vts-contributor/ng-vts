@@ -33,13 +33,13 @@ import { VtsProTableData } from '../protable.types';
         [ngStyle]="headerStyleMap"
         class="vts-protable-header vts-protable-hide-scrollbar"
       >
-        <protable
+        <table
           vts-protable-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
           [theadTemplate]="theadTemplate"
-        ></protable>
+        ></table>
       </div>
       <div
         #tableBodyElement
@@ -47,13 +47,13 @@ import { VtsProTableData } from '../protable.types';
         class="vts-protable-body"
         [ngStyle]="bodyStyleMap"
       >
-        <protable
+        <table
           vts-protable-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
           [contentTemplate]="contentTemplate"
-        ></protable>
+        ></table>
       </div>
       <cdk-virtual-scroll-viewport
         #tableBodyElement
@@ -63,7 +63,7 @@ import { VtsProTableData } from '../protable.types';
         [minBufferPx]="virtualMinBufferPx"
         [style.height]="data.length ? scrollY : noDateVirtualHeight"
       >
-        <protable
+        <table
           vts-protable-content
           tableLayout="fixed"
           [scrollX]="scrollX"
@@ -82,18 +82,18 @@ import { VtsProTableData } from '../protable.types';
               ></ng-template>
             </ng-container>
           </tbody>
-        </protable>
+        </table>
       </cdk-virtual-scroll-viewport>
     </ng-container>
     <div class="vts-table-content" #tableBodyElement *ngIf="!scrollY" [ngStyle]="bodyStyleMap">
-      <protable
+      <table
         vts-protable-content
         tableLayout="fixed"
         [scrollX]="scrollX"
         [listOfColWidth]="listOfColWidth"
         [theadTemplate]="theadTemplate"
         [contentTemplate]="contentTemplate"
-      ></protable>
+      ></table>
     </div>
   `
 })

@@ -53,6 +53,7 @@ interface Item {
           <td vtsAlign="left">{{ data.content5 }}</td>
           <td>
             <a>View</a>
+            
           </td>
         </tr>
       </tbody>

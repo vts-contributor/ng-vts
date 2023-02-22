@@ -11,7 +11,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { VtsProTableLayout } from '../protable.types';
 
 @Component({
-  selector: 'protable[vts-protable-content]',
+  selector: 'table[vts-protable-content]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -35,4 +35,5 @@ export class VtsProTableContentComponent {
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
   @Input() listOfColWidth: ReadonlyArray<string | null> = [];
   @Input() scrollX: string | null = null;
+  @Input() rowHeight: string | null = null;
 }

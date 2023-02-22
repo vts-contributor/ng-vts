@@ -43,8 +43,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <vts-search-form-protable [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-form-protable>
-    <vts-protable-configuration [vtsNoSelectedItems]="4"></vts-protable-configuration>
+    <vts-search-fields [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-fields>
+    <vts-config-fields [vtsNoSelectedItems]="vtsNoSelectedItems" (rowHeightChanger)="onChangeRowHeight($event)"></vts-config-fields>
     <vts-spin
       [vtsDelay]="vtsLoadingDelay"
       [vtsSpinning]="vtsLoading"
@@ -215,6 +215,9 @@ export class VtsProTableComponent<T = VtsSafeAny>
   onPageIndexChange(index: number): void {
     this.vtsTableDataService.updatePageIndex(index);
   }
+
+  vtsNoSelectedItems = 4;
+  vtsRowHeight: VtsSafeAny;
 
   constructor(
     private elementRef: ElementRef,
@@ -395,5 +398,10 @@ export class VtsProTableComponent<T = VtsSafeAny>
       (this.vtsHidePaginationOnSinglePage && this.vtsData.length > this.vtsPageSize) ||
       (this.vtsData.length > 0 && !this.vtsHidePaginationOnSinglePage) ||
       (!this.vtsClientPagination && this.vtsTotal > this.vtsPageSize);
+  }
+
+  onChangeRowHeight(event: VtsSafeAny) {
+    this.vtsRowHeight = event;
+    console.log(event);
   }
 }
