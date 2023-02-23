@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'vts-demo-drawer-from-drawer',
+  selector: 'vts-demo-drawer-form-drawer',
   template: `
     <button vts-button vtsType="primary" (click)="open()">Create</button>
     <vts-drawer
@@ -95,7 +95,7 @@ import { Component } from '@angular/core';
     </vts-drawer>
   `
 })
-export class VtsDemoDrawerFromDrawerComponent {
+export class VtsDemoDrawerFormDrawerComponent {
   visible = false;
 
   open(): void {

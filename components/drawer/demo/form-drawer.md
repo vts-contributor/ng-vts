@@ -2,7 +2,7 @@
 order: 3
 title:
   zh-CN: 对象编辑
-  en-US: Edit item in drawer
+  en-US: Edit item in drawer form
 ---
 
 ## zh-CN
