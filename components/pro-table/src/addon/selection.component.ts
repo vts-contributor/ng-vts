@@ -1,4 +1,3 @@
-import { OnChanges, SimpleChanges } from '@angular/core';
 /**
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
@@ -16,7 +15,7 @@ import {
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 
 @Component({
-  selector: 'vts-protable-selection',
+  selector: 'vts-table-selection',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -24,23 +23,23 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     <label
       *ngIf="showCheckbox"
       vts-checkbox
-      [class.vts-protable-selection-select-all-custom]="showRowSelection"
+      [class.vts-table-selection-select-all-custom]="showRowSelection"
       [ngModel]="checked"
       [vtsDisabled]="disabled"
       [vtsIndeterminate]="indeterminate"
       (ngModelChange)="onCheckedChange($event)"
     ></label>
-    <div class="vts-protable-selection-extra" *ngIf="showRowSelection">
+    <div class="vts-table-selection-extra" *ngIf="showRowSelection">
       <span
         vts-dropdown
-        class="vts-protable-selection-down"
+        class="vts-table-selection-down"
         vtsPlacement="bottomLeft"
         [vtsDropdownMenu]="selectionMenu"
       >
         <i vts-icon vtsType="ArrowMiniDown"></i>
       </span>
       <vts-dropdown-menu #selectionMenu="vtsDropdownMenu">
-        <ul vts-menu class="vts-protable-selection-menu">
+        <ul vts-menu class="vts-table-selection-menu">
           <li
             vts-menu-item
             *ngFor="let selection of listOfSelections"
@@ -53,7 +52,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     </div>
   `
 })
-export class VtsProTableSelectionComponent implements OnChanges {
+export class VtsTableSelectionComponent {
   @Input() listOfSelections: Array<{
     text: string;
     onSelect(...args: VtsSafeAny[]): VtsSafeAny;
@@ -63,18 +62,11 @@ export class VtsProTableSelectionComponent implements OnChanges {
   @Input() indeterminate = false;
   @Input() showCheckbox = false;
   @Input() showRowSelection = false;
-  @Input() checkedItemsAmount = 0;
   @Output() readonly checkedChange = new EventEmitter<boolean>();
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-protable-selection');
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes) {
-      console.log(changes);
-    }
+    this.elementRef.nativeElement.classList.add('vts-table-selection');
   }
 
   onCheckedChange(checked: boolean): void {

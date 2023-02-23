@@ -10,20 +10,19 @@ interface Item {
 }
 
 @Component({
-  selector: 'vts-demo-protable-basic',
+  selector: 'vts-demo-pro-table-basic',
   template: `
     <ng-template #showTotal let-current let-range="range">
-      <p>{{ range[0] }} - {{ range[1] }} / {{ current }} items</p>
+      <p>{{ range[0] }}-{{ range[1] }} on total {{ current }}</p>
     </ng-template>
-    <vts-protable
+    <vts-table
       #basicTable
       [vtsData]="filteredList"
       [vtsPageSize]="pageSize"
       [vtsPageIndex]="pageIndex"
       [vtsShowTotal]="showTotal"
-      [checkedItemsAmount]="noCheckedItems"
-      (vtsClearAllCheckedItems)="onClearAllCheckedItem($event)"
       vtsShowPagination
+      vtsShowSizeChanger
     >
       <thead>
         <tr>
@@ -32,37 +31,51 @@ interface Item {
             [vtsIndeterminate]="indeterminate"
             (vtsCheckedChange)="onAllChecked($event)"
           ></th>
-          <th vtsWidth="1%" vtsAlign="left">#</th>
-          <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 1</th>
-          <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 2</th>
-          <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 3</th>
+          <th vtsWidth="1%" vtsAlign="center">#</th>
+          <th>Property 1</th>
+          <th>Property 2</th>
+          <th vtsAlign="center">3</th>
           <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 4</th>
-          <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 5</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
+        <!-- <tr>
+          <td></td>
+          <td></td>
+          <td>
+            <input name="filter1" ngModel (ngModelChange)="filter($event, 'content1')" vts-input />
+          </td>
+          <td>
+            <input name="filter2" ngModel (ngModelChange)="filter($event, 'content2')" vts-input />
+          </td>
+          <td>
+            <input name="filter3" ngModel (ngModelChange)="filter($event, 'content3')" vts-input />
+          </td>
+          <td>
+            <input name="filter4" ngModel (ngModelChange)="filter($event, 'content4')" vts-input />
+          </td>
+          <td></td>
+        </tr> -->
         <tr *ngFor="let data of basicTable.data; index as i">
           <td
             [vtsChecked]="setOfCheckedId.has(data.id)"
             (vtsCheckedChange)="onItemChecked(data.id, $event)"
           ></td>
-          <td vtsAlign="left">{{ data.id }}</td>
-          <td vtsAlign="left">{{ data.content1 }}</td>
-          <td vtsAlign="left">{{ data.content2 }}</td>
-          <td vtsAlign="left">{{ data.content3 }}</td>
-          <td vtsAlign="left">{{ data.content4 }}</td>
-          <td vtsAlign="left">{{ data.content5 }}</td>
+          <td vtsAlign="center">{{ data.id }}</td>
+          <td>{{ data.content1 }}</td>
+          <td>{{ data.content2 }}</td>
+          <td vtsAlign="center">{{ data.content3 }}</td>
+          <td vtsAlign="right">{{ data.content4 }}</td>
           <td>
-            <a>View</a>
-            
+            <a>Delete</a>
           </td>
         </tr>
       </tbody>
-    </vts-protable>
+    </vts-table>
   `
 })
-export class VtsDemoProtableBasicComponent {
+export class VtsDemoProTableBasicComponent {
   listOfData: Item[] = [
     ...Array.from({ length: 100 }).map((_, i) => {
       return {

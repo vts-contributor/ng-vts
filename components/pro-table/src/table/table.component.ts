@@ -1,3 +1,8 @@
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
@@ -27,50 +32,56 @@ import { InputBoolean, measureScrollbar } from '@ui-vts/ng-vts/core/util';
 import { PaginationItemRenderContext } from '@ui-vts/ng-vts/pagination';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
-import { VtsProTableData, VtsProTableLayout, VtsProTablePaginationPosition, VtsProTablePaginationType, VtsProTableQueryParams, VtsProTableSize } from '../protable.types';
-import { VtsProTableVirtualScrollDirective } from './protable-virtual-scroll.directive';
-import { VtsProTableInnerScrollComponent } from './protable-inner-scroll.component';
-import { VtsProTableStyleService } from '../protable-style.service';
-import { VtsProTableDataService } from '../protable-data.service';
+import { VtsTableDataService } from '../table-data.service';
+import { VtsTableStyleService } from '../table-style.service';
+import {
+  VtsTableData,
+  VtsTableLayout,
+  VtsTablePaginationPosition,
+  VtsTablePaginationType,
+  VtsTableQueryParams,
+  VtsTableSize
+} from '../table.types';
+import { VtsTableInnerScrollComponent } from './table-inner-scroll.component';
+import { VtsTableVirtualScrollDirective } from './table-virtual-scroll.directive';
 
-const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
+const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'table';
 
 @Component({
-  selector: 'vts-protable',
-  exportAs: 'vtsProTable',
-  providers: [VtsProTableStyleService, VtsProTableDataService],
+  selector: 'vts-table',
+  exportAs: 'vtsTable',
+  providers: [VtsTableStyleService, VtsTableDataService],
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <vts-search-fields [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-fields>
-    <vts-config-fields [checkedItemsAmount]="checkedItemsAmount" 
-      (rowHeightChanger)="onChangeRowHeight($event)" 
-      (clearAllCheckedItems)="onClearAllCheckedItems($event)"></vts-config-fields>
-    <!-- <vts-pagination-bar></vts-pagination-bar> -->
     <vts-spin
-    [vtsDelay]="vtsLoadingDelay"
-    [vtsSpinning]="vtsLoading"
-    [vtsIndicator]="vtsLoadingIndicator"
+      [vtsDelay]="vtsLoadingDelay"
+      [vtsSpinning]="vtsLoading"
+      [vtsIndicator]="vtsLoadingIndicator"
     >
+      <vts-search-fields [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-fields>
+      <vts-config-fields [checkedItemsAmount]="checkedItemsAmount" 
+        (rowHeightChanger)="onChangeRowHeight($event)" 
+        (clearAllCheckedItems)="onClearAllCheckedItems($event)"></vts-config-fields>
       <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'top'">
         <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
       </ng-container>
       <div
         #tableMainElement
         class="vts-table"
-        [class.vts-protable-rtl]="dir === 'rtl'"
-        [class.vts-protable-fixed-header]="vtsData.length && scrollY"
-        [class.vts-protable-fixed-column]="scrollX"
-        [class.vts-protable-has-fix-left]="hasFixLeft"
-        [class.vts-protable-has-fix-right]="hasFixRight"
-        [class.vts-protable-bordered]="vtsBordered"
-        [class.vts-protable-out-bordered]="vtsOuterBordered && !vtsBordered"
-        [class.vts-protable-middle]="vtsSize === 'middle'"
-        [class.vts-protable-small]="vtsSize === 'small'"
+        [class.vts-table-rtl]="dir === 'rtl'"
+        [class.vts-table-fixed-header]="vtsData.length && scrollY"
+        [class.vts-table-fixed-column]="scrollX"
+        [class.vts-table-has-fix-left]="hasFixLeft"
+        [class.vts-table-has-fix-right]="hasFixRight"
+        [class.vts-table-bordered]="vtsBordered"
+        [class.vts-table-out-bordered]="vtsOuterBordered && !vtsBordered"
+        [class.vts-table-middle]="vtsSize === 'middle'"
+        [class.vts-table-small]="vtsSize === 'small'"
       >
-        <vts-protable-title-footer [title]="vtsTitle" *ngIf="vtsTitle"></vts-protable-title-footer>
-        <vts-protable-inner-scroll
+        <vts-table-title-footer [title]="vtsTitle" *ngIf="vtsTitle"></vts-table-title-footer>
+        <vts-table-inner-scroll
           *ngIf="scrollY || scrollX; else defaultTemplate"
           [data]="data"
           [scrollX]="scrollX"
@@ -87,16 +98,16 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
           [virtualMinBufferPx]="vtsVirtualMinBufferPx"
           [tableMainElement]="tableMainElement"
           [virtualForTrackBy]="vtsVirtualForTrackBy"
-        ></vts-protable-inner-scroll>
+        ></vts-table-inner-scroll>
         <ng-template #defaultTemplate>
-          <vts-protable-inner-default
+          <vts-table-inner-default
             [tableLayout]="vtsTableLayout"
             [listOfColWidth]="listOfManualColWidth"
             [theadTemplate]="theadTemplate"
             [contentTemplate]="contentTemplate"
-          ></vts-protable-inner-default>
+          ></vts-table-inner-default>
         </ng-template>
-        <vts-protable-title-footer [footer]="vtsFooter" *ngIf="vtsFooter"></vts-protable-title-footer>
+        <vts-table-title-footer [footer]="vtsFooter" *ngIf="vtsFooter"></vts-table-title-footer>
       </div>
       <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'bottom'">
         <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
@@ -130,7 +141,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
     '[class.vts-table-wrapper-rtl]': 'dir === "rtl"'
   }
 })
-export class VtsProTableComponent<T = VtsSafeAny>
+export class VtsTableComponent<T = VtsSafeAny>
   implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
 
@@ -145,7 +156,7 @@ export class VtsProTableComponent<T = VtsSafeAny>
   static ngAcceptInputType_vtsShowQuickJumper: BooleanInput;
   static ngAcceptInputType_vtsSimple: BooleanInput;
 
-  @Input() vtsTableLayout: VtsProTableLayout = 'auto';
+  @Input() vtsTableLayout: VtsTableLayout = 'auto';
   @Input() vtsShowTotal: TemplateRef<{
     $implicit: number;
     range: [number, number];
@@ -159,19 +170,19 @@ export class VtsProTableComponent<T = VtsSafeAny>
   @Input() vtsVirtualItemSize = 0;
   @Input() vtsVirtualMaxBufferPx = 200;
   @Input() vtsVirtualMinBufferPx = 100;
-  @Input() vtsVirtualForTrackBy: TrackByFunction<VtsProTableData> = index => index;
+  @Input() vtsVirtualForTrackBy: TrackByFunction<VtsTableData> = index => index;
   @Input() vtsLoadingDelay = 0;
   @Input() vtsPageIndex = 1;
   @Input() vtsPageSize = 10;
   @Input() vtsTotal = 0;
   @Input() vtsWidthConfig: ReadonlyArray<string | null> = [];
   @Input() vtsData: ReadonlyArray<T> = [];
-  @Input() vtsPaginationPosition: VtsProTablePaginationPosition = 'bottom';
+  @Input() vtsPaginationPosition: VtsTablePaginationPosition = 'bottom';
   @Input() vtsScroll: { x?: string | null; y?: string | null } = {
     x: null,
     y: null
   };
-  @Input() vtsPaginationType: VtsProTablePaginationType = 'default';
+  @Input() vtsPaginationType: VtsTablePaginationType = 'default';
   @Input() @InputBoolean() vtsClientPagination = true;
   @Input() @InputBoolean() vtsTemplateMode = false;
   @Input() @InputBoolean() vtsShowPagination = false;
@@ -181,17 +192,18 @@ export class VtsProTableComponent<T = VtsSafeAny>
   // @WithConfig()
   vtsLoadingIndicator: TemplateRef<VtsSafeAny> | null = null;
   @Input() @WithConfig() @InputBoolean() vtsBordered: boolean = true;
-  @Input() @WithConfig() vtsSize: VtsProTableSize = 'default';
+  @Input() @WithConfig() vtsSize: VtsTableSize = 'default';
   @Input() @WithConfig() @InputBoolean() vtsShowSizeChanger: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsHidePaginationOnSinglePage: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsShowQuickJumper: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsSimple: boolean = false;
   @Output() readonly vtsPageSizeChange = new EventEmitter<number>();
   @Output() readonly vtsPageIndexChange = new EventEmitter<number>();
-  @Output() readonly vtsQueryParams = new EventEmitter<VtsProTableQueryParams>();
-  @Output() readonly vtsCurrentPageDataChange = new EventEmitter<ReadonlyArray<VtsProTableData>>();
-  
-  @Output() readonly vtsClearAllCheckedItems = new EventEmitter<boolean>();
+  @Output() readonly vtsQueryParams = new EventEmitter<VtsTableQueryParams>();
+  @Output() readonly vtsCurrentPageDataChange = new EventEmitter<ReadonlyArray<VtsTableData>>();
+
+  vtsNoSelectedItems = 4;
+  vtsRowHeight: VtsSafeAny;
   @Input() checkedItemsAmount: number = 0;
 
   /** public data for ngFor tr */
@@ -209,10 +221,10 @@ export class VtsProTableComponent<T = VtsSafeAny>
   private loading$ = new BehaviorSubject<boolean>(false);
   private templateMode$ = new BehaviorSubject<boolean>(false);
   dir: Direction = 'ltr';
-  @ContentChild(VtsProTableVirtualScrollDirective, { static: false })
-  vtsVirtualScrollDirective!: VtsProTableVirtualScrollDirective;
-  @ViewChild(VtsProTableInnerScrollComponent)
-  vtsTableInnerScrollComponent!: VtsProTableInnerScrollComponent;
+  @ContentChild(VtsTableVirtualScrollDirective, { static: false })
+  vtsVirtualScrollDirective!: VtsTableVirtualScrollDirective;
+  @ViewChild(VtsTableInnerScrollComponent)
+  vtsTableInnerScrollComponent!: VtsTableInnerScrollComponent;
   verticalScrollBarWidth = 0;
   onPageSizeChange(size: number): void {
     this.vtsTableDataService.updatePageSize(size);
@@ -222,16 +234,13 @@ export class VtsProTableComponent<T = VtsSafeAny>
     this.vtsTableDataService.updatePageIndex(index);
   }
 
-  vtsNoSelectedItems = 4;
-  vtsRowHeight: VtsSafeAny;
-
   constructor(
     private elementRef: ElementRef,
     private vtsResizeObserver: VtsResizeObserver,
     private vtsConfigService: VtsConfigService,
     private cdr: ChangeDetectorRef,
-    private vtsTableStyleService: VtsProTableStyleService,
-    private vtsTableDataService: VtsProTableDataService,
+    private vtsTableStyleService: VtsTableStyleService,
+    private vtsTableDataService: VtsTableDataService,
     @Optional() private directionality: Directionality
   ) {
     // TODO: move to host after View Engine deprecation

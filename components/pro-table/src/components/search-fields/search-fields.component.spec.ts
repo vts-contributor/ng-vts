@@ -1,20 +1,20 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VtsTableDataComponent } from '@ui-vts/ng-vts/protable/public-api';
+import { VtsSearchFieldsComponent } from '@ui-vts/ng-vts/protable/public-api';
 
-describe('VtsTableDataComponent', () => {
-  let component: VtsTableDataComponent;
-  let fixture: ComponentFixture<VtsTableDataComponent>;
+describe('SearchFieldsComponent', () => {
+  let component: VtsSearchFieldsComponent;
+  let fixture: ComponentFixture<VtsSearchFieldsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VtsTableDataComponent ]
+      declarations: [ VtsSearchFieldsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VtsTableDataComponent);
+    fixture = TestBed.createComponent(VtsSearchFieldsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -23,4 +23,3 @@ describe('VtsTableDataComponent', () => {
     expect(component).toBeTruthy();
   });
 });
- 

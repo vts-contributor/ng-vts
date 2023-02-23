@@ -1,3 +1,8 @@
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -9,10 +14,10 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { VtsProTableSortOrder } from '../protable.types';
+import { VtsTableSortOrder } from '../table.types';
 
 @Component({
-  selector: 'vts-protable-sorters',
+  selector: 'vts-table-sorters',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -20,7 +25,7 @@ import { VtsProTableSortOrder } from '../protable.types';
     <span>
       <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
     </span>
-    <span class="vts-table-column-sorter" [class.vts-protable-column-sorter-full]="isDown && isUp">
+    <span class="vts-table-column-sorter" [class.vts-table-column-sorter-full]="isDown && isUp">
       <span class="vts-table-column-sorter-inner">
         <i
           vts-icon
@@ -40,9 +45,9 @@ import { VtsProTableSortOrder } from '../protable.types';
     </span>
   `
 })
-export class VtsProTableSortersComponent implements OnChanges {
-  @Input() sortDirections: VtsProTableSortOrder[] = ['ascend', 'descend', null];
-  @Input() sortOrder: VtsProTableSortOrder = null;
+export class VtsTableSortersComponent implements OnChanges {
+  @Input() sortDirections: VtsTableSortOrder[] = ['ascend', 'descend', null];
+  @Input() sortOrder: VtsTableSortOrder = null;
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
   isUp = false;
   isDown = false;

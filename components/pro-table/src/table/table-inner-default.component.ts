@@ -1,3 +1,7 @@
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
 
 import {
   ChangeDetectionStrategy,
@@ -8,31 +12,29 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { VtsProTableLayout } from '../protable.types';
+import { VtsTableLayout } from '../table.types';
 
 @Component({
-  selector: 'vts-protable-inner-default',
+  selector: 'vts-table-inner-default',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-      <div class="vts-table-content">
-        <protable-content
-          vts-protable-content
-          [contentTemplate]="contentTemplate"
-          [tableLayout]="tableLayout"
-          [listOfColWidth]="listOfColWidth"
-          [theadTemplate]="theadTemplate"
-          [rowHeight]="rowHeight"
-        ></protable-content>
-      </div>
-    `
+    <div class="vts-table-content">
+      <table
+        vts-table-content
+        [contentTemplate]="contentTemplate"
+        [tableLayout]="tableLayout"
+        [listOfColWidth]="listOfColWidth"
+        [theadTemplate]="theadTemplate"
+      ></table>
+    </div>
+  `
 })
-export class VtsProTableInnerDefaultComponent {
-  @Input() tableLayout: VtsProTableLayout = 'auto';
+export class VtsTableInnerDefaultComponent {
+  @Input() tableLayout: VtsTableLayout = 'auto';
   @Input() listOfColWidth: ReadonlyArray<string | null> = [];
   @Input() theadTemplate: TemplateRef<VtsSafeAny> | null = null;
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
-  @Input() rowHeight: string | null = null;
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation

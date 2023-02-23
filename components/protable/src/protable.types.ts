@@ -36,8 +36,22 @@ export type PageInfo = {
   current: number;
 };
 
-export type RequestData<T> = {
+export type VtsProTableRowHeight = 'normal' | 'expand' | 'narrow' | null;
+
+export type VtsProTableRequesData<T> = {
   data: T[] | undefined;
   success?: boolean;
   total?: number;
 } & Record<string, any>;
+
+export type UseFetchDataAction<T = any> = {
+  dataSource: T[];
+  setDataSource: (dataSource: T[]) => void;
+  loading: boolean | undefined;
+  pageInfo: PageInfo;
+  reload: () => Promise<void>;
+  fullScreen?: () => void;
+  reset: () => void;
+  pollingLoading: boolean;
+  setPageInfo: (pageInfo: Partial<PageInfo>) => void;
+};

@@ -47,36 +47,6 @@
       </span>
     </div>
   </ng-template>
-
-  <!-- <table>
-    <thead>
-      <tr>
-        <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
-        <th vtsWidth="1%" vtsAlign="left">#</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 1</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 2</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 3</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 4</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 5</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody class="vts-table-tbody">
-      <tr *ngFor="let data of listOfData; index as i">
-        <td [vtsChecked]="setOfCheckedId.has(data.id)" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
-        <td vtsAlign="left">{{ data.id }}</td>
-        <td vtsAlign="left">{{ data.content1 }}</td>
-        <td vtsAlign="left">{{ data.content2 }}</td>
-        <td vtsAlign="left">{{ data.content3 }}</td>
-        <td vtsAlign="left">{{ data.content4 }}</td>
-        <td vtsAlign="left">{{ data.content5 }}</td>
-        <td>
-          <a>View</a>
-
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
 </div>
 
 <vts-modal [(vtsVisible)]="isVisibleModal" [vtsTitle]="modalData.title" [vtsContent]="modalData.content"

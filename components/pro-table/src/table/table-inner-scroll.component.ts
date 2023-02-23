@@ -1,3 +1,8 @@
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
 import { Platform } from '@angular/cdk/platform';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
@@ -20,10 +25,10 @@ import { VtsResizeService } from '@ui-vts/ng-vts/core/services';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { fromEvent, merge, Subject } from 'rxjs';
 import { delay, filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { VtsProTableData } from '../protable.types';
+import { VtsTableData } from '../table.types';
 
 @Component({
-  selector: 'vts-protable-inner-scroll',
+  selector: 'vts-table-inner-scroll',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -33,13 +38,13 @@ import { VtsProTableData } from '../protable.types';
         [ngStyle]="headerStyleMap"
         class="vts-table-header vts-table-hide-scrollbar"
       >
-        <protable-content
-          vts-protable-content
+        <table
+          vts-table-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
           [theadTemplate]="theadTemplate"
-        ></protable-content>
+        ></table>
       </div>
       <div
         #tableBodyElement
@@ -47,13 +52,13 @@ import { VtsProTableData } from '../protable.types';
         class="vts-table-body"
         [ngStyle]="bodyStyleMap"
       >
-        <protable-content
-          vts-protable-content
+        <table
+          vts-table-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
           [contentTemplate]="contentTemplate"
-        ></protable-content>
+        ></table>
       </div>
       <cdk-virtual-scroll-viewport
         #tableBodyElement
@@ -63,8 +68,8 @@ import { VtsProTableData } from '../protable.types';
         [minBufferPx]="virtualMinBufferPx"
         [style.height]="data.length ? scrollY : noDateVirtualHeight"
       >
-        <protable-content
-          vts-protable-content
+        <table
+          vts-table-content
           tableLayout="fixed"
           [scrollX]="scrollX"
           [listOfColWidth]="listOfColWidth"
@@ -82,23 +87,23 @@ import { VtsProTableData } from '../protable.types';
               ></ng-template>
             </ng-container>
           </tbody>
-        </protable-content>
+        </table>
       </cdk-virtual-scroll-viewport>
     </ng-container>
     <div class="vts-table-content" #tableBodyElement *ngIf="!scrollY" [ngStyle]="bodyStyleMap">
-      <protable-content
-        vts-protable-content
+      <table
+        vts-table-content
         tableLayout="fixed"
         [scrollX]="scrollX"
         [listOfColWidth]="listOfColWidth"
         [theadTemplate]="theadTemplate"
         [contentTemplate]="contentTemplate"
-      ></protable-content>
+      ></table>
     </div>
   `
 })
-export class VtsProTableInnerScrollComponent implements OnChanges, AfterViewInit, OnDestroy {
-  @Input() data: ReadonlyArray<VtsProTableData> = [];
+export class VtsTableInnerScrollComponent implements OnChanges, AfterViewInit, OnDestroy {
+  @Input() data: ReadonlyArray<VtsTableData> = [];
   @Input() scrollX: string | null = null;
   @Input() scrollY: string | null = null;
   @Input() contentTemplate: TemplateRef<VtsSafeAny> | null = null;
@@ -110,7 +115,7 @@ export class VtsProTableInnerScrollComponent implements OnChanges, AfterViewInit
   @Input() virtualMaxBufferPx = 200;
   @Input() virtualMinBufferPx = 100;
   @Input() tableMainElement?: HTMLDivElement;
-  @Input() virtualForTrackBy: TrackByFunction<VtsProTableData> = index => index;
+  @Input() virtualForTrackBy: TrackByFunction<VtsTableData> = index => index;
   @ViewChild('tableHeaderElement', { read: ElementRef })
   tableHeaderElement!: ElementRef;
   @ViewChild('tableBodyElement', { read: ElementRef })
