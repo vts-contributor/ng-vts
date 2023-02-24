@@ -1,8 +1,5 @@
 ---
 order: 21
-iframe:
-  height: 220
-  source: ./iframe/#/prolayout-basic
 title:
   zh-CN: 基本结构
   en-US: Basic Structure

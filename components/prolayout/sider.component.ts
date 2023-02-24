@@ -40,7 +40,33 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="vts-prolayout-sider-children">
-      <ng-content></ng-content>
+      <div class="logo-sider" *ngIf="!isFixedHeader && isFixedSider"></div> 
+      <ul vts-menu vtsMode="inline" class="sider-menu">
+        <li vts-submenu vtsOpen vtsTitle="subnav 1" vtsIcon="user">
+          <ul>
+            <li vts-menu-item vtsSelected>option1</li>
+            <li vts-menu-item>option2</li>
+            <li vts-menu-item>option3</li>
+            <li vts-menu-item>option4</li>
+          </ul>
+        </li>
+        <li vts-submenu vtsTitle="subnav 2" vtsIcon="laptop">
+          <ul>
+            <li vts-menu-item>option5</li>
+            <li vts-menu-item>option6</li>
+            <li vts-menu-item>option7</li>
+            <li vts-menu-item>option8</li>
+          </ul>
+        </li>
+        <li vts-submenu vtsTitle="subnav 3" vtsIcon="notification">
+          <ul>
+            <li vts-menu-item>option9</li>
+            <li vts-menu-item>option10</li>
+            <li vts-menu-item>option11</li>
+            <li vts-menu-item>option12</li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <div
       *ngIf="vtsCollapsible && vtsTrigger !== null"
@@ -63,7 +89,20 @@ import { takeUntil } from 'rxjs/operators';
     '[style.maxWidth]': 'widthSetting',
     '[style.minWidth]': 'widthSetting',
     '[style.width]': 'widthSetting'
-  }
+  },
+  styles: [
+    `
+      .logo-sider {
+        width: 120px;
+        height: 63px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px 28px 0 24px;
+        float: left;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    `
+  ]
 })
 export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterContentInit {
   static ngAcceptInputType_vtsReverseArrow: BooleanInput;
@@ -92,6 +131,9 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() @InputBoolean() vtsReverseArrow = false;
   @Input() @InputBoolean() vtsCollapsible = false;
   @Input() @InputBoolean() vtsCollapsed = false;
+  @Input() isFixedHeader: boolean = false;
+  @Input() isFixedSider: boolean = false;
+
   matchBreakPoint = false;
   flexSetting: string | null = null;
   widthSetting: string | null = null;

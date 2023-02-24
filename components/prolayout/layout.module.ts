@@ -8,14 +8,18 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsBreadCrumbModule } from '../breadcrumb';
 import { VtsButtonModule } from '../button';
 import { VtsDrawerModule } from '../drawer';
+import { VtsMenuModule } from '../menu';
 import { VtsSwitchModule } from '../switch';
 import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
 import { VtsHeaderComponent } from './header.component';
-import { VtsProLayoutComponent } from './pro-layout.component';
+import { VtsProLayoutComponent } from './layout.component';
+import { VtsProLayoutContainerComponent } from './pro-layout.component';
 import { VtsSettingDrawerComponent } from './setting-drawer.component';
 import { VtsSiderTriggerComponent } from './sider-trigger.component';
 import { VtsSiderComponent } from './sider.component';
@@ -28,16 +32,24 @@ import { VtsSiderComponent } from './sider.component';
     VtsSiderComponent,
     VtsSiderTriggerComponent,
     VtsProLayoutComponent,
+    VtsProLayoutContainerComponent,
     VtsSettingDrawerComponent
   ],
   exports: [
-    VtsHeaderComponent,
-    VtsContentComponent,
-    VtsFooterComponent,
-    VtsSiderComponent,
-    VtsProLayoutComponent,
-    VtsSettingDrawerComponent
+    VtsProLayoutContainerComponent
   ],
-  imports: [BidiModule, CommonModule, VtsIconModule, LayoutModule, PlatformModule, VtsDrawerModule, VtsButtonModule, VtsSwitchModule]
+  imports: [
+    BidiModule,
+    CommonModule,
+    VtsIconModule,
+    LayoutModule,
+    PlatformModule,
+    VtsDrawerModule,
+    VtsButtonModule,
+    VtsSwitchModule,
+    FormsModule,
+    VtsMenuModule,
+    VtsBreadCrumbModule
+  ]
 })
 export class VtsProLayoutModule {}
