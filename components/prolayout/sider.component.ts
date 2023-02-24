@@ -31,6 +31,8 @@ import { inNextTick, InputBoolean, toCssPixel } from '@ui-vts/ng-vts/core/util';
 import { VtsMenuDirective } from '@ui-vts/ng-vts/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MenuItemProLayout } from './pro-layout.types';
+import { renderMenuProLayout } from './utils';
 
 @Component({
   selector: 'vts-prolayout-sider',
@@ -40,32 +42,8 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="vts-prolayout-sider-children">
-      <div class="logo-sider" *ngIf="!isFixedHeader && isFixedSider"></div> 
-      <ul vts-menu vtsMode="inline" class="sider-menu">
-        <li vts-submenu vtsOpen vtsTitle="subnav 1" vtsIcon="user">
-          <ul>
-            <li vts-menu-item vtsSelected>option1</li>
-            <li vts-menu-item>option2</li>
-            <li vts-menu-item>option3</li>
-            <li vts-menu-item>option4</li>
-          </ul>
-        </li>
-        <li vts-submenu vtsTitle="subnav 2" vtsIcon="laptop">
-          <ul>
-            <li vts-menu-item>option5</li>
-            <li vts-menu-item>option6</li>
-            <li vts-menu-item>option7</li>
-            <li vts-menu-item>option8</li>
-          </ul>
-        </li>
-        <li vts-submenu vtsTitle="subnav 3" vtsIcon="notification">
-          <ul>
-            <li vts-menu-item>option9</li>
-            <li vts-menu-item>option10</li>
-            <li vts-menu-item>option11</li>
-            <li vts-menu-item>option12</li>
-          </ul>
-        </li>
+      <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider"></div> 
+      <ul vts-menu vtsMode="inline" class="sider-menu" [innerHTML]="renderMenuSider()">
       </ul>
     </div>
     <div
@@ -95,7 +73,6 @@ import { takeUntil } from 'rxjs/operators';
       .logo-sider {
         width: 120px;
         height: 63px;
-        background: rgba(255, 255, 255, 0.2);
         margin: 16px 28px 0 24px;
         float: left;
         background-repeat: no-repeat;
@@ -133,6 +110,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() @InputBoolean() vtsCollapsed = false;
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
+  @Input() menuData: MenuItemProLayout[] = [];
 
   matchBreakPoint = false;
   flexSetting: string | null = null;
@@ -164,6 +142,10 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       this.updateStyleMap();
       this.cdr.markForCheck();
     }
+  }
+
+  renderMenuSider(){
+    return renderMenuProLayout(this.menuData);
   }
 
   constructor(

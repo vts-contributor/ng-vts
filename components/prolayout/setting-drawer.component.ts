@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input } from '@angular/core';
 
 @Component({
     selector: 'vts-setting-drawer',
@@ -16,8 +16,8 @@ export class VtsSettingDrawerComponent implements OnInit {
     open: boolean = false;
     drawerWrapClassName: string = "test-prolayout"
 
-    isFixedHeader: boolean = false;
-    isFixedSider: boolean = false;
+    @Input() isFixedHeader: boolean = false;
+    @Input() isFixedSider: boolean = false;
 
     @Output() setFixedHeader: EventEmitter<boolean> = new EventEmitter<boolean>(false);
     @Output() setFixedSider: EventEmitter<boolean> = new EventEmitter<boolean>(false);

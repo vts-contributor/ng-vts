@@ -11,3 +11,4 @@ export * from './sider.component';
 export { VtsSiderTriggerComponent as ɵVtsSiderTriggerComponent } from './sider-trigger.component';
 export * from './layout.module';
 export * from './setting-drawer.component';
+export * from './pro-layout.types';
