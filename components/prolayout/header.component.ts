@@ -11,7 +11,8 @@ import {
   ViewEncapsulation,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  SimpleChange
 } from '@angular/core';
 
 @Component({
@@ -21,7 +22,7 @@ import {
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   template: `
-    <div class="logo-header" *ngIf="isFixedHeader && !isFixedSider"></div>
+    <div class="logo-header vts-logo" *ngIf="showLogo"></div>
     <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
       <li vts-menu-item>nav 1</li>
       <li vts-menu-item vtsSelected>nav 2</li>
@@ -33,7 +34,6 @@ import {
       .logo-header {
         width: 120px;
         height: 63px;
-        background: rgba(255, 255, 255, 0.2);
         margin: 16px 28px 0 24px;
         float: left;
         background-repeat: no-repeat;
@@ -55,7 +55,46 @@ export class VtsHeaderComponent implements OnChanges {
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
 
+  showLogo: boolean = true;
+
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+    const {isFixedHeader, isFixedSider } = changes;
+    this.handleChangeFixedStatus(isFixedHeader, isFixedSider);    
+  }
+
+  handleChangeFixedStatus(isFixedHeader: SimpleChange, isFixedSider: SimpleChange){
+    if(isFixedHeader && isFixedSider){
+      if(isFixedHeader.currentValue && !isFixedSider.currentValue){
+        this.showLogo = true;
+      }
+      else if(!isFixedHeader.currentValue && !isFixedSider.currentValue){
+        this.showLogo = true;
+      }
+      else if(!isFixedHeader.currentValue && isFixedSider.currentValue){
+        this.showLogo = false;
+      }
+    }
+    else if(isFixedHeader && !isFixedSider){
+      if(isFixedHeader.currentValue && !this.isFixedSider){
+        this.showLogo = true;
+      }
+      else if(!isFixedHeader.currentValue && !this.isFixedSider){
+        this.showLogo = true;
+      }
+      else if(!isFixedHeader.currentValue && this.isFixedSider){
+        this.showLogo = false;
+      }
+    }
+    else if(!isFixedHeader && isFixedSider){
+      if(this.isFixedHeader && !isFixedSider.currentValue){
+        this.showLogo = true;
+      }
+      else if(!this.isFixedHeader && !isFixedSider.currentValue){
+        this.showLogo = true;
+      }
+      else if(!this.isFixedHeader && isFixedSider.currentValue){
+        this.showLogo = false;
+      }
+    }
   }
 }

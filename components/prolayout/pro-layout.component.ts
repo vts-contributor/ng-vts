@@ -5,25 +5,29 @@
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
-  ChangeDetectionStrategy,
+  // ChangeDetectionStrategy,
   Component,
   ContentChildren,
+  SimpleChanges,
   ElementRef,
+  // ChangeDetectorRef,
   OnDestroy,
   OnInit,
+  Input,
   Optional,
+  OnChanges,
   QueryList,
   ViewEncapsulation
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MenuItemProLayout } from './pro-layout.types';
 import { VtsSiderComponent } from './sider.component';
 
 @Component({
   selector: 'vts-prolayout-container',
   exportAs: 'vtsProLayoutContainer',
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
     <vts-prolayout>
@@ -33,6 +37,7 @@ import { VtsSiderComponent } from './sider.component';
         *ngIf="isFixedSider"
         [isFixedHeader]="isFixedHeader"
         [isFixedSider]="isFixedSider"
+        [menuData]="menuData"
       ></vts-prolayout-sider>
 
       <vts-prolayout-header
@@ -59,6 +64,7 @@ import { VtsSiderComponent } from './sider.component';
               *ngIf="!isFixedSider"
               [isFixedHeader]="isFixedHeader"
               [isFixedSider]="isFixedSider"
+              [menuData]="menuData"
             ></vts-prolayout-sider>
             <vts-prolayout-content class="inner-content">Content</vts-prolayout-content>
           </vts-prolayout>
@@ -109,6 +115,8 @@ import { VtsSiderComponent } from './sider.component';
       </ng-template>
 
       <vts-setting-drawer
+        [isFixedHeader]="isFixedHeader"
+        [isFixedSider]="isFixedSider"
         (setFixedHeader)="onChangeFixedHeader($event)"
         (setFixedSider)="onChangeFixedSider($event)"
       ></vts-setting-drawer>
@@ -148,8 +156,11 @@ import { VtsSiderComponent } from './sider.component';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnDestroy, OnInit {
-  constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
+export class VtsProLayoutContainerComponent implements OnDestroy, OnInit, OnChanges {
+  constructor(
+    private elementRef: ElementRef,
+    @Optional() private directionality: Directionality
+  ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
   }
@@ -163,12 +174,20 @@ export class VtsProLayoutContainerComponent implements OnDestroy, OnInit {
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
 
+  @Input() menuData: MenuItemProLayout[] = [];
+
   onChangeFixedSider(isFixed: boolean) {
     this.isFixedSider = isFixed;
+    if (isFixed && this.isFixedHeader) {
+      this.isFixedHeader = false;
+    }
   }
 
   onChangeFixedHeader(isFixed: boolean) {
     this.isFixedHeader = isFixed;
+    if (isFixed && this.isFixedSider) {
+      this.isFixedSider = false;
+    }
   }
 
   ngOnInit(): void {
@@ -176,6 +195,12 @@ export class VtsProLayoutContainerComponent implements OnDestroy, OnInit {
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.menuData) {
+      console.log(this.menuData);
+    }
   }
 
   ngOnDestroy(): void {
