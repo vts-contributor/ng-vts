@@ -15,14 +15,12 @@ import { VtsProTableLayout } from '../protable.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <table>
-      <col [style.width]="width" [style.minWidth]="width" *ngFor="let width of listOfColWidth" />
-      <thead class="vts-table-thead" *ngIf="theadTemplate">
-        <ng-template [ngTemplateOutlet]="theadTemplate"></ng-template>
-      </thead>
-      <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
-      <ng-content></ng-content>
-    </table>
+    <col [style.width]="width" [style.minWidth]="width" *ngFor="let width of listOfColWidth" />
+    <thead class="vts-table-thead" *ngIf="theadTemplate">
+      <ng-template [ngTemplateOutlet]="theadTemplate"></ng-template>
+    </thead>
+    <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+    <ng-content></ng-content>
     `,
   host: {
     '[style.table-layout]': 'tableLayout',

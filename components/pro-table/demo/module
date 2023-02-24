@@ -8,7 +8,7 @@ import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
-import { VtsTableModule } from '@ui-vts/ng-vts/pro-table';
+import { VtsTableModule } from '@ui-vts/ng-vts/table';
 
 export const moduleList = [
   VtsTableModule,

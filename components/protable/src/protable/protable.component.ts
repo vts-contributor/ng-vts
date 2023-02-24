@@ -43,11 +43,14 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'protable';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   template: `
-    <vts-search-fields [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-fields>
-    <vts-config-fields [checkedItemsAmount]="checkedItemsAmount" 
-      (rowHeightChanger)="onChangeRowHeight($event)" 
-      (clearAllCheckedItems)="onClearAllCheckedItems($event)"></vts-config-fields>
-    <!-- <vts-pagination-bar></vts-pagination-bar> -->
+    <ng-container *ngIf="vtsHasSearchProperties">
+      <vts-search-fields [vtsIsCollapse]="true" [vtsNoDisplayProperties]="3" [vtsTotalProperties]="7"></vts-search-fields>
+    </ng-container>
+    <ng-container *ngIf="vtsHasConfigProTable">
+      <vts-config-fields [checkedItemsAmount]="checkedItemsAmount" 
+        (rowHeightChanger)="onChangeRowHeight($event)" 
+        (clearAllCheckedItems)="onClearAllCheckedItems($event)"></vts-config-fields>
+    </ng-container>
     <vts-spin
     [vtsDelay]="vtsLoadingDelay"
     [vtsSpinning]="vtsLoading"
@@ -224,6 +227,31 @@ export class VtsProTableComponent<T = VtsSafeAny>
 
   vtsNoSelectedItems = 4;
   vtsRowHeight: VtsSafeAny;
+  @Input() vtsProTableData: VtsSafeAny | null | {
+    property?: {
+      collapsed?: boolean,
+      key?: string | null | number,
+      value?: string | null
+      type?: string | null
+      editable?: boolean,
+      data?: VtsSafeAny[]
+    }[],
+    search?: boolean | VtsSafeAny,
+    config?: boolean | VtsSafeAny,
+    pagination?: boolean | VtsSafeAny | {
+      displayTotal?: boolean,
+      displayToTheLast?: boolean
+    },
+    request?: {
+      url?: string,
+      status?: string | VtsSafeAny,
+      total?: number,
+      current?: number
+    }
+  };
+  @Input() vtsHasSearchProperties: boolean = true;
+  @Input() vtsHasConfigProTable: boolean = true;
+
 
   constructor(
     private elementRef: ElementRef,
