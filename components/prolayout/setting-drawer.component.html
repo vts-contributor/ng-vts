@@ -1,25 +1,23 @@
 <div id="test">
   <ng-template *ngIf="open; else closed">
     <button vts-button>
-      <i vts-icon vtsType="Settings"></i>
+      <i vts-icon vtsType="Close"></i>
     </button>
   </ng-template>
   <ng-template #closed>
     <button vts-button (click)="openDrawer()">
-      <i vts-icon vtsType="Search"></i>
+      <i vts-icon vtsType="Settings"></i>
     </button>
   </ng-template>
 </div>
 <vts-drawer [vtsClosable]="true" [vtsVisible]="open" vtsPlacement="right" [vtsWrapClassName]="drawerWrapClassName"
   vtsTitle="Basic Drawer" (vtsOnClose)="closeDrawer()">
-  <ng-template *vtsDrawerContent>
+  <ng-container *vtsDrawerContent>
     <p>
-      <vts-switch [ngModel]="isFixedHeader" (ngModelChange)="onChangeFixedHeader()" vtsCheckedChildren="Fixed Header"
-        vtsUnCheckedChildren="Fixed Header"></vts-switch>
+      Fixed Header: <vts-switch [(ngModel)]="isFixedHeader" (ngModelChange)="onChangeFixedHeader($event)"></vts-switch>
     </p>
     <p>
-      <vts-switch [ngModel]="isFixedSider" (ngModelChange)="onChangeFixedSider()" vtsCheckedChildren="Fixed Sider"
-        vtsUnCheckedChildren="Fixed Sider"></vts-switch>
+      Fixed Sider: <vts-switch [(ngModel)]="isFixedSider" (ngModelChange)="onChangeFixedSider($event)"></vts-switch>
     </p>
-  </ng-template>
+  </ng-container>
 </vts-drawer>
