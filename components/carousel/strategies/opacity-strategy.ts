@@ -11,7 +11,7 @@ import { VtsCarouselContentDirective } from '../carousel-content.directive';
 import { VtsCarouselBaseStrategy } from './base-strategy';
 
 export class VtsCarouselOpacityStrategy extends VtsCarouselBaseStrategy {
-  withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null): void {
+  override withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null): void {
     super.withCarouselContents(contents);
 
     if (this.contents) {
@@ -50,7 +50,7 @@ export class VtsCarouselOpacityStrategy extends VtsCarouselBaseStrategy {
     return complete$;
   }
 
-  dispose(): void {
+  override dispose(): void {
     this.contents.forEach((content: VtsCarouselContentDirective) => {
       this.renderer.setStyle(content.el, 'transition', null);
     });

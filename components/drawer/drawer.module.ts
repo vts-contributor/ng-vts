@@ -18,17 +18,17 @@ import { VtsDrawerComponent } from './drawer.component';
 import { VtsDrawerServiceModule } from './drawer.service.module';
 
 @NgModule({
-    imports: [
-        BidiModule,
-        CommonModule,
-        OverlayModule,
-        PortalModule,
-        VtsIconModule,
-        VtsOutletModule,
-        VtsNoAnimationModule,
-        VtsDrawerServiceModule
-    ],
-    exports: [VtsDrawerComponent, VtsDrawerContentDirective],
-    declarations: [VtsDrawerComponent, VtsDrawerContentDirective]
+  imports: [
+    BidiModule,
+    CommonModule,
+    OverlayModule,
+    PortalModule,
+    VtsIconModule,
+    VtsOutletModule,
+    VtsNoAnimationModule,
+    VtsDrawerServiceModule
+  ],
+  exports: [VtsDrawerComponent, VtsDrawerContentDirective],
+  declarations: [VtsDrawerComponent, VtsDrawerContentDirective]
 })
 export class VtsDrawerModule {}

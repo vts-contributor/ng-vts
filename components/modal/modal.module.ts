@@ -28,37 +28,37 @@ import { VtsModalComponent } from './modal.component';
 import { VtsModalService } from './modal.service';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        BidiModule,
-        OverlayModule,
-        VtsOutletModule,
-        PortalModule,
-        VtsI18nModule,
-        VtsButtonModule,
-        VtsIconModule,
-        VtsPipesModule,
-        VtsNoAnimationModule,
-        VtsPipesModule
-    ],
-    exports: [
-        VtsModalComponent,
-        VtsModalFooterDirective,
-        VtsModalContentDirective,
-        VtsModalTitleDirective
-    ],
-    providers: [VtsModalService],
-    declarations: [
-        VtsModalComponent,
-        VtsModalFooterDirective,
-        VtsModalContentDirective,
-        VtsModalCloseComponent,
-        VtsModalFooterComponent,
-        VtsModalTitleComponent,
-        VtsModalTitleDirective,
-        VtsModalContainerComponent,
-        VtsModalConfirmContainerComponent,
-        VtsModalComponent
-    ]
+  imports: [
+    CommonModule,
+    BidiModule,
+    OverlayModule,
+    VtsOutletModule,
+    PortalModule,
+    VtsI18nModule,
+    VtsButtonModule,
+    VtsIconModule,
+    VtsPipesModule,
+    VtsNoAnimationModule,
+    VtsPipesModule
+  ],
+  exports: [
+    VtsModalComponent,
+    VtsModalFooterDirective,
+    VtsModalContentDirective,
+    VtsModalTitleDirective
+  ],
+  providers: [VtsModalService],
+  declarations: [
+    VtsModalComponent,
+    VtsModalFooterDirective,
+    VtsModalContentDirective,
+    VtsModalCloseComponent,
+    VtsModalFooterComponent,
+    VtsModalTitleComponent,
+    VtsModalTitleDirective,
+    VtsModalContainerComponent,
+    VtsModalConfirmContainerComponent,
+    VtsModalComponent
+  ]
 })
 export class VtsModalModule {}

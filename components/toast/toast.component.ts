@@ -84,10 +84,10 @@ import { VtsToastData } from './typings';
   `
 })
 export class VtsToastComponent extends VtsMNComponent implements OnDestroy {
-  @Input() instance!: Required<VtsToastData>;
+  @Input() override instance!: Required<VtsToastData>;
   @Input() placement?: string;
-  @Input() index!: number;
-  @Output() readonly destroyed = new EventEmitter<{
+  @Input() override index!: number;
+  @Output() override readonly destroyed = new EventEmitter<{
     id: string;
     userAction: boolean;
   }>();
@@ -96,7 +96,7 @@ export class VtsToastComponent extends VtsMNComponent implements OnDestroy {
     super(cdr);
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.instance.onClick.complete();
   }

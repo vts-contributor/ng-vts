@@ -14,15 +14,15 @@ import { VtsOverlayModule } from '@ui-vts/ng-vts/core/overlay';
 import { VtsToolTipComponent, VtsTooltipDirective } from './tooltip';
 
 @NgModule({
-    declarations: [VtsToolTipComponent, VtsTooltipDirective],
-    exports: [VtsToolTipComponent, VtsTooltipDirective],
-    imports: [
-        BidiModule,
-        CommonModule,
-        OverlayModule,
-        VtsOutletModule,
-        VtsOverlayModule,
-        VtsNoAnimationModule
-    ]
+  declarations: [VtsToolTipComponent, VtsTooltipDirective],
+  exports: [VtsToolTipComponent, VtsTooltipDirective],
+  imports: [
+    BidiModule,
+    CommonModule,
+    OverlayModule,
+    VtsOutletModule,
+    VtsOverlayModule,
+    VtsNoAnimationModule
+  ]
 })
 export class VtsToolTipModule {}

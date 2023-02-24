@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-radio-state',
@@ -49,8 +54,8 @@ export class VtsDemoRadioStateComponent {
   radioValue: string = 'A';
   disabled = true;
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl('A', {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('A', {
       validators: [CustomValidator]
     })
   });

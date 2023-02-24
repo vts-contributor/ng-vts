@@ -14,14 +14,14 @@ import { VtsMessageComponent } from './message.component';
 import { VtsMessageServiceModule } from './message.service.module';
 
 @NgModule({
-    imports: [
-        BidiModule,
-        CommonModule,
-        OverlayModule,
-        VtsIconModule,
-        VtsOutletModule,
-        VtsMessageServiceModule
-    ],
-    declarations: [VtsMessageContainerComponent, VtsMessageComponent]
+  imports: [
+    BidiModule,
+    CommonModule,
+    OverlayModule,
+    VtsIconModule,
+    VtsOutletModule,
+    VtsMessageServiceModule
+  ],
+  declarations: [VtsMessageContainerComponent, VtsMessageComponent]
 })
 export class VtsMessageModule {}

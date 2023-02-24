@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
@@ -58,8 +63,8 @@ export class VtsDemoDatePickerRangeSingleComponent {
   size: VtsSizeLDSType = 'md';
   placeholder: string = 'DD/MM/YYYY - DD/MM/YYYY';
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl(null, {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl(null, {
       validators: [CustomValidator]
     })
   });
