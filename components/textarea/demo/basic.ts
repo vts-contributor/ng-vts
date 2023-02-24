@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-textarea-basic',
@@ -52,8 +57,8 @@ export class VtsDemoTextareaBasicComponent implements OnInit {
     maxRows: 6
   };
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl('', {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('', {
       validators: [CustomValidator]
     })
   });

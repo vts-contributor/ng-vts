@@ -5,8 +5,8 @@ import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, tick } from '@angular/core/testing';
 import {
   AbstractControl,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
@@ -1097,9 +1097,9 @@ class MixedSliderComponent {
   styles: [styles]
 })
 class SliderWithFormControlComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({

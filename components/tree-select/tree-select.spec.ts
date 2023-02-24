@@ -12,7 +12,12 @@ import {
   tick,
   waitForAsync
 } from '@angular/core/testing';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -822,7 +827,7 @@ export class VtsTestTreeSelectCheckableComponent {
   `
 })
 export class VtsTestTreeSelectFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
   nodes = [
     {
       title: 'root2',
@@ -840,7 +845,7 @@ export class VtsTestTreeSelectFormComponent {
     }
   ].map(item => new VtsTreeNode(item));
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.formGroup = this.fb.group({
       select: '10021'
     });

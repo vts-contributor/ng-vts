@@ -146,11 +146,8 @@ export class VtsFormControlComponent
     this.validateChanges.unsubscribe();
     /** miss detect https://github.com/angular/angular/issues/10887 **/
     if (this.validateControl && this.validateControl.statusChanges) {
-      this.validateChanges = this.validateControl.statusChanges
-        .pipe(
-          startWith(null), 
-          takeUntil(this.destroyed$)
-        )
+      this.validateChanges = (this.validateControl.statusChanges as Observable<VtsSafeAny>)
+        .pipe(startWith(null), takeUntil(this.destroyed$))
         .subscribe(_ => {
           if (!this.disableAutoTips) {
             this.updateAutoErrorTip();

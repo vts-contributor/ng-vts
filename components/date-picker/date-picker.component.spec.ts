@@ -5,7 +5,7 @@ import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, inject, TestBed, tick } from '@angular/core/testing';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntypedFormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import isEqual from 'date-fns/isEqual';
@@ -1098,7 +1098,7 @@ describe('VtsDatePickerComponent', () => {
     beforeEach(() => (fixtureInstance.useSuite = 4));
 
     it('should formControl init work', fakeAsync(() => {
-      fixtureInstance.control = new FormControl(new Date('2020-04-08'));
+      fixtureInstance.control = new UntypedFormControl(new Date('2020-04-08'));
       fixture.detectChanges();
       flush(); // Wait writeValue() tobe done
       fixture.detectChanges();
@@ -1106,7 +1106,7 @@ describe('VtsDatePickerComponent', () => {
     }));
 
     it('should disabled work', fakeAsync(() => {
-      fixtureInstance.control = new FormControl({
+      fixtureInstance.control = new UntypedFormControl({
         value: new Date('2020-04-24'),
         disabled: true
       });
@@ -1295,5 +1295,5 @@ class VtsTestDatePickerComponent {
   modelValue!: Date;
 
   // --- Suite 4
-  control!: FormControl;
+  control!: UntypedFormControl;
 }

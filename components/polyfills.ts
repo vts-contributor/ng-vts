@@ -16,7 +16,6 @@
 
 /***************************************************************************************************
  * BROWSER POLYFILLS
- */ // Run `npm install --save classlist.js`.
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents

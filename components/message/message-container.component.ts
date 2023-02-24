@@ -46,9 +46,9 @@ const VTS_MESSAGE_DEFAULT_CONFIG: Required<MessageConfig> = {
   `
 })
 export class VtsMessageContainerComponent extends VtsMNContainerComponent {
-  readonly destroy$ = new Subject<void>();
+  override readonly destroy$ = new Subject<void>();
   dir: Direction = 'ltr';
-  instances: Array<Required<VtsMessageData>> = [];
+  override instances: Array<Required<VtsMessageData>> = [];
   top?: string | null;
 
   constructor(cdr: ChangeDetectorRef, vtsConfigService: VtsConfigService) {
