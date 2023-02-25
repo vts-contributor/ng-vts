@@ -43,7 +43,10 @@ import { renderMenuProLayout } from './utils';
   template: `
     <div class="vts-prolayout-sider-children">
       <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider"></div> 
-      <ul vts-menu vtsMode="inline" class="sider-menu" [innerHTML]="renderMenuSider()">
+      <ul vts-menu vtsMode="inline" class="sider-menu">
+        <ng-container *ngFor="let item of menuData">
+          <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
+        </ng-container>
       </ul>
     </div>
     <div
@@ -144,7 +147,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     }
   }
 
-  renderMenuSider(){
+  renderMenuSider() {
     return renderMenuProLayout(this.menuData);
   }
 
@@ -179,12 +182,15 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth } = changes;
+    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth, menuData } = changes;
     if (vtsCollapsed || vtsCollapsedWidth || vtsWidth) {
       this.updateStyleMap();
     }
     if (vtsCollapsed) {
       this.updateMenuInlineCollapsed();
+    }
+    if(menuData){
+      console.log('menuData', menuData);
     }
   }
 
