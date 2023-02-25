@@ -14,6 +14,7 @@ import {
   SimpleChanges,
   SimpleChange
 } from '@angular/core';
+import { MenuItemProLayout } from './pro-layout.types';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -24,9 +25,9 @@ import {
   template: `
     <div class="logo-header vts-logo" *ngIf="showLogo"></div>
     <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
-      <li vts-menu-item>nav 1</li>
-      <li vts-menu-item vtsSelected>nav 2</li>
-      <li vts-menu-item>nav 3</li>
+      <ng-container *ngFor="let item of menuData">
+        <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
+      </ng-container>
     </ul>
   `,
   styles: [
@@ -54,6 +55,7 @@ export class VtsHeaderComponent implements OnChanges {
 
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
+  @Input() menuData: MenuItemProLayout[] = [];
 
   showLogo: boolean = true;
 
