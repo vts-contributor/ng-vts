@@ -8,14 +8,14 @@ import {
   // ChangeDetectionStrategy,
   Component,
   ContentChildren,
-  SimpleChanges,
+  // SimpleChanges,
   ElementRef,
   // ChangeDetectorRef,
   OnDestroy,
   OnInit,
   Input,
   Optional,
-  OnChanges,
+  // OnChanges,
   QueryList,
   ViewEncapsulation
 } from '@angular/core';
@@ -98,6 +98,7 @@ import { VtsSiderComponent } from './sider.component';
               *ngIf="!isFixedSider"
               [isFixedHeader]="isFixedHeader"
               [isFixedSider]="isFixedSider"
+              [menuData]="menuData"
             ></vts-prolayout-sider>
             <vts-prolayout-content class="inner-content">
               <ng-content></ng-content>
@@ -156,7 +157,7 @@ import { VtsSiderComponent } from './sider.component';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnDestroy, OnInit, OnChanges {
+export class VtsProLayoutContainerComponent implements OnDestroy, OnInit {
   constructor(
     private elementRef: ElementRef,
     @Optional() private directionality: Directionality
@@ -195,12 +196,6 @@ export class VtsProLayoutContainerComponent implements OnDestroy, OnInit, OnChan
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.menuData) {
-      console.log(this.menuData);
-    }
   }
 
   ngOnDestroy(): void {

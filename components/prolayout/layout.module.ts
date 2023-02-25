@@ -19,6 +19,7 @@ import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
 import { VtsHeaderComponent } from './header.component';
 import { VtsProLayoutComponent } from './layout.component';
+import { VtsProlayoutMenuItemComponent } from './menu-item.component';
 import { VtsProLayoutContainerComponent } from './pro-layout.component';
 import { VtsSettingDrawerComponent } from './setting-drawer.component';
 import { VtsSiderTriggerComponent } from './sider-trigger.component';
@@ -33,6 +34,7 @@ import { VtsSiderComponent } from './sider.component';
     VtsSiderTriggerComponent,
     VtsProLayoutComponent,
     VtsProLayoutContainerComponent,
+    VtsProlayoutMenuItemComponent,
     VtsSettingDrawerComponent
   ],
   exports: [
