@@ -3,7 +3,6 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-// import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   // ChangeDetectionStrategy,
   Component,
@@ -58,7 +57,10 @@ import { MenuItemProLayout } from './pro-layout.types';
         text-align: center;
       }
     `
-  ]
+  ],
+  // host: {
+  //   '[style.color]': 'themeColor'
+  // }
 })
 export class VtsProLayoutContainerComponent implements OnInit {
   constructor(
@@ -68,15 +70,24 @@ export class VtsProLayoutContainerComponent implements OnInit {
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
   }
 
-  isFixedHeader: boolean = true;
-  isFixedSider: boolean = false;
+  themeColor: string = '#EE0033';
 
-  @Input() menuData: MenuItemProLayout[] = [];
+  @Input() isFixedHeader: boolean = false;
+  @Input() isFixedSider: boolean = false;
+  @Input() isShowHeader: boolean = true;
+  @Input() isShowSider: boolean = true;
+  @Input() isShowFooter: boolean = true;
+  @Input() isMenuSplitted: boolean = false;
+  @Input() menuHeader: MenuItemProLayout[] = [];
+  @Input() menuSider: MenuItemProLayout[] = [];
 
   onChangeFixedSider(isFixed: boolean) {
     this.isFixedSider = isFixed;
     if (isFixed && this.isFixedHeader) {
       this.isFixedHeader = false;
+    }
+    if(!this.isShowSider){
+      this.isShowSider = true;
     }
   }
 
@@ -85,7 +96,32 @@ export class VtsProLayoutContainerComponent implements OnInit {
     if (isFixed && this.isFixedSider) {
       this.isFixedSider = false;
     }
+    if(!this.isShowHeader){
+      this.isShowHeader = true;
+    }
   }
 
-  ngOnInit(): void {}
+  onChangeVisiblityHeader(value: boolean) {
+    this.isShowHeader = value;
+    if(!value && this.isFixedHeader){
+      this.isFixedHeader = false;
+    }
+  }
+
+  onChangeVisiblitySider(value: boolean) {
+    this.isShowSider = value;
+    if(!value && this.isFixedSider){
+      this.isFixedSider = false;
+    }
+  }
+
+  onChangeVisiblityFooter(value: boolean) {
+    this.isShowFooter = value;
+  }
+
+  onChangeThemeColor(color: string){
+    this.themeColor = color;
+  }
+
+  ngOnInit(): void { }
 }

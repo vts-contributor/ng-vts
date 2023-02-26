@@ -1,0 +1,13 @@
+<ng-container *ngIf="menuItem.children && menuItem.children.length > 0; else menuChild">
+    <li vts-submenu [vtsTitle]="menuItem.title">
+        <ul>
+            <ng-container *ngFor="let item of menuItem.children">
+                <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
+            </ng-container>
+        </ul>
+    </li>
+</ng-container>
+
+<ng-template #menuChild>
+    <li vts-menu-item>{{menuItem.title}}</li>
+</ng-template>

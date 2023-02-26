@@ -26,7 +26,7 @@ import { MenuItemProLayout } from './pro-layout.types';
     <div class="logo-header vts-logo" *ngIf="showLogo"></div>
     <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
       <ng-container *ngFor="let item of menuData">
-        <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
+        <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
       </ng-container>
     </ul>
   `,

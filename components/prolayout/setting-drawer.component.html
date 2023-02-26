@@ -10,14 +10,43 @@
     </button>
   </ng-template>
 </div>
-<vts-drawer [vtsClosable]="true" [vtsVisible]="open" vtsPlacement="right" [vtsWrapClassName]="drawerWrapClassName"
-  vtsTitle="Basic Drawer" (vtsOnClose)="closeDrawer()">
+<vts-drawer [vtsClosable]="true" [vtsVisible]="open" vtsPlacement="right" vtsTitle="Theme style setting"
+  (vtsOnClose)="closeDrawer()">
   <ng-container *vtsDrawerContent>
+    <ng-container *ngTemplateOutlet="themeColor"></ng-container>
+    <vts-divider></vts-divider>
+    <h4 vts-typography vtsType="h4">Navigation mode</h4>
     <p>
       Fixed Header: <vts-switch [(ngModel)]="isFixedHeader" (ngModelChange)="onChangeFixedHeader($event)"></vts-switch>
     </p>
     <p>
       Fixed Sider: <vts-switch [(ngModel)]="isFixedSider" (ngModelChange)="onChangeFixedSider($event)"></vts-switch>
     </p>
+    <vts-divider></vts-divider>
+    <h4 vts-typography vtsType="h4">Regional settings</h4>
+    <p>
+      Header: <vts-switch [(ngModel)]="isShowHeader" (ngModelChange)="onChangeVisiblityHeader($event)"></vts-switch>
+    </p>
+    <p>
+      Sider: <vts-switch [(ngModel)]="isShowSider" (ngModelChange)="onChangeVisiblitySider($event)"></vts-switch>
+    </p>
+    <p>
+      Footer: <vts-switch [(ngModel)]="isShowFooter" (ngModelChange)="onChangeVisiblityFooter($event)"></vts-switch>
+    </p>
   </ng-container>
 </vts-drawer>
+
+<!-- Theme color -->
+<ng-template #themeColor>
+  <h4 vts-typography vtsType="h4">Theme color</h4>
+  <ng-container *ngFor="let color of listColors">
+    <vts-tag [vtsColor]="color.value" (click)="onChangeThemeColor(color.value)">
+      <ng-container *ngIf="color.isChecked; else block">
+        <i vts-icon vtsType="CheckCircle"></i>
+      </ng-container>
+      <ng-template #block>
+        <span class="block" style="width: 16px; height: 16px; display: inline-block; cursor: pointer;"></span>
+      </ng-template>
+    </vts-tag>
+  </ng-container>
+</ng-template>

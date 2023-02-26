@@ -12,13 +12,16 @@ import { FormsModule } from '@angular/forms';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsBreadCrumbModule } from '../breadcrumb';
 import { VtsButtonModule } from '../button';
+import { VtsDividerModule } from '../divider';
 import { VtsDrawerModule } from '../drawer';
 import { VtsMenuModule } from '../menu';
 import { VtsSwitchModule } from '../switch';
+import { VtsTagModule } from '../tag';
 import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
 import { VtsHeaderComponent } from './header.component';
 import { VtsProLayoutComponent } from './layout.component';
+import { VtsProlayoutMenuItemHorizontalComponent } from './menu-item-horizontal.component';
 import { VtsProlayoutMenuItemComponent } from './menu-item.component';
 import { VtsProLayoutContainerComponent } from './pro-layout.component';
 import { VtsSettingDrawerComponent } from './setting-drawer.component';
@@ -35,6 +38,7 @@ import { VtsSiderComponent } from './sider.component';
     VtsProLayoutComponent,
     VtsProLayoutContainerComponent,
     VtsProlayoutMenuItemComponent,
+    VtsProlayoutMenuItemHorizontalComponent,
     VtsSettingDrawerComponent
   ],
   exports: [
@@ -51,7 +55,9 @@ import { VtsSiderComponent } from './sider.component';
     VtsSwitchModule,
     FormsModule,
     VtsMenuModule,
-    VtsBreadCrumbModule
+    VtsBreadCrumbModule,
+    VtsDividerModule,
+    VtsTagModule
   ]
 })
 export class VtsProLayoutModule {}
