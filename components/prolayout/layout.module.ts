@@ -14,6 +14,7 @@ import { VtsBreadCrumbModule } from '../breadcrumb';
 import { VtsButtonModule } from '../button';
 import { VtsDividerModule } from '../divider';
 import { VtsDrawerModule } from '../drawer';
+import { VtsGridModule } from '../grid';
 import { VtsMenuModule } from '../menu';
 import { VtsSwitchModule } from '../switch';
 import { VtsTagModule } from '../tag';
@@ -57,7 +58,8 @@ import { VtsSiderComponent } from './sider.component';
     VtsMenuModule,
     VtsBreadCrumbModule,
     VtsDividerModule,
-    VtsTagModule
+    VtsTagModule,
+    VtsGridModule
   ]
 })
 export class VtsProLayoutModule {}

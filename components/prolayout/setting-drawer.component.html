@@ -16,12 +16,22 @@
     <ng-container *ngTemplateOutlet="themeColor"></ng-container>
     <vts-divider></vts-divider>
     <h4 vts-typography vtsType="h4">Navigation mode</h4>
-    <p>
-      Fixed Header: <vts-switch [(ngModel)]="isFixedHeader" (ngModelChange)="onChangeFixedHeader($event)"></vts-switch>
-    </p>
-    <p>
-      Fixed Sider: <vts-switch [(ngModel)]="isFixedSider" (ngModelChange)="onChangeFixedSider($event)"></vts-switch>
-    </p>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">
+        Fixed Header:
+      </div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch [(ngModel)]="isFixedHeader" (ngModelChange)="onChangeFixedHeader($event)"></vts-switch>
+      </div>
+    </div>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">
+        Fixed Sider:
+      </div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch [(ngModel)]="isFixedSider" (ngModelChange)="onChangeFixedSider($event)"></vts-switch>
+      </div>
+    </div>
     <vts-divider></vts-divider>
     <h4 vts-typography vtsType="h4">Regional settings</h4>
     <p>
