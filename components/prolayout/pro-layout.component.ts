@@ -57,10 +57,7 @@ import { MenuItemProLayout } from './pro-layout.types';
         text-align: center;
       }
     `
-  ],
-  // host: {
-  //   '[style.color]': 'themeColor'
-  // }
+  ]
 })
 export class VtsProLayoutContainerComponent implements OnInit {
   constructor(
