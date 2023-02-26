@@ -9,3 +9,8 @@ export type MenuItemProLayout = {
     isSelected?: boolean,
     icon?: string
 }
+
+export type ThemeColorType = {
+    value: string,
+    isChecked: boolean
+}

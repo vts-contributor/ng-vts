@@ -182,15 +182,12 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth, menuData } = changes;
+    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth } = changes;
     if (vtsCollapsed || vtsCollapsedWidth || vtsWidth) {
       this.updateStyleMap();
     }
     if (vtsCollapsed) {
       this.updateMenuInlineCollapsed();
-    }
-    if(menuData){
-      console.log('menuData', menuData);
     }
   }
 

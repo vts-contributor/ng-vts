@@ -4,7 +4,7 @@ import { MenuItemProLayout } from '@ui-vts/ng-vts/prolayout';
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [menuData]="menuData">Content</vts-prolayout-container>
+    <vts-prolayout-container [menuHeader]="menuData" [menuSider]="menuData">Content</vts-prolayout-container>
   `
 })
 export class VtsDemoProlayoutBasicComponent {
@@ -12,9 +12,10 @@ export class VtsDemoProlayoutBasicComponent {
     {
       title: 'Parent 1',
       children: [
-        { title: 'Child 1.1', children: [{ title: 'Child 1.1.1' }, { title: 'Child 1.1.2' }] },
+        { title: 'Child 1.1', children: [{ title: 'Child 1.1.1' }, { title: 'Child 1.1.2', isSelected: true }], isOpen: true },
         { title: 'Child 1.2' }
-      ]
+      ],
+      isOpen: true
     },
     {
       title: 'Parent 2',
