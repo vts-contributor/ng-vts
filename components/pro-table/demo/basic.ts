@@ -73,6 +73,7 @@ interface Item {
         </tr>
       </tbody>
     </vts-table>
+    <vts-protable-container></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {

@@ -1,19 +1,19 @@
 <div class='vts-protable-configuration'>
   <div class="btn-area">
     <div vts-col class="btn-control-area">
-      <button vts-button class="btn-config-item" vtsType="primary" [vtsSize]="'xs'" (click)="openDrawer()"><i class="collapse-icon" vts-icon
-          [vtsType]="'AddCircle'"></i>New</button>
-      <button vts-button class="btn-config-item" vtsType="primary" [vtsSize]="'xs'" (click)="mockFn()"><i class="collapse-icon" vts-icon
-          [vtsType]="'AddCircle'"></i>Export</button>
-      <button vts-button class="btn-config-item" vtsType="primary" [vtsSize]="'xs'" (click)="showUploadModal()"><i class="collapse-icon"
-          vts-icon [vtsType]="'AddCircle'"></i>Import</button>
+      <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="openDrawer()"><i
+          class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>New</button>
+      <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="mockFn()"><i
+          class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Export</button>
+      <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="showUploadModal()"><i
+          class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Import</button>
       <ng-container>
-        <button vts-button class="btn-config-item" vtsType="default" [vtsSize]="'xs'" [disabled]="checkedItemsAmount<=0"
-          (click)="showDeleteModal()">Delete all selected items</button>
+        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="'xs'"
+          [disabled]="checkedItemsAmount<=0" (click)="showDeleteModal()">Delete all selected items</button>
       </ng-container>
     </div>
     <div vts-col class="btn-config-area">
-      <a vts-button class="btn-config-item" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert">
+      <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert">
         <i vts-icon vtsType="SwapVert"></i>
       </a>
       <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
@@ -23,8 +23,9 @@
           <li vts-menu-item (click)="handleChangeRowHeight(35)">Narrow</li>
         </ul>
       </vts-dropdown-menu>
-      <button vts-button class="btn-config-item" vtsType="default" (click)="mockFn()"><i vts-icon vtsType="Sync"></i></button>
-      <a vts-button vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSettings" class="btn-config-item">
+      <button vts-button class="btn-table-config" vtsType="default" (click)="mockFn()"><i vts-icon
+          vtsType="Sync"></i></button>
+      <a vts-button vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSettings" class="btn-table-config">
         <i vts-icon vtsType="Settings"></i>
       </a>
       <vts-dropdown-menu #menuSettings="vtsDropdownMenu">
@@ -36,6 +37,7 @@
       </vts-dropdown-menu>
     </div>
   </div>
+
   <ng-container *ngIf="checkedItemsAmount > 0">
     <ng-template [ngTemplateOutlet]="selectedInfo"></ng-template>
   </ng-container>
@@ -48,21 +50,18 @@
     </div>
   </ng-template>
 
-  <!-- <table>
+  <table style="width: -webkit-fill-available;">
     <thead>
-      <tr>
+      <tr [ngStyle]="{'height':vtsRowHeight+'px'}">
         <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
         <th vtsWidth="1%" vtsAlign="left">#</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 1</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 2</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 3</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 4</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Property 5</th>
+        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn" *ngFor="let num of [1, 2, 3, 4, 5]">
+          Property {{num}}</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody class="vts-table-tbody">
-      <tr *ngFor="let data of listOfData; index as i">
+      <tr *ngFor="let data of listOfData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
         <td [vtsChecked]="setOfCheckedId.has(data.id)" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
         <td vtsAlign="left">{{ data.id }}</td>
         <td vtsAlign="left">{{ data.content1 }}</td>
@@ -72,11 +71,20 @@
         <td vtsAlign="left">{{ data.content5 }}</td>
         <td>
           <a>View</a>
-
+          <a> | </a>
+          <a vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions">More<i class="collapse-icon" vts-icon
+              [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i></a>
+          <vts-dropdown-menu #menuActions="vtsDropdownMenu">
+            <ul vts-menu>
+              <li vts-menu-item>Edit</li>
+              <li vts-menu-item>Delete</li>
+              <li vts-menu-item>Enable/Disable</li>
+            </ul>
+          </vts-dropdown-menu>
         </td>
       </tr>
     </tbody>
-  </table> -->
+  </table>
 </div>
 
 <vts-modal [(vtsVisible)]="isVisibleModal" [vtsTitle]="modalData.title" [vtsContent]="modalData.content"

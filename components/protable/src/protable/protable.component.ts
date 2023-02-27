@@ -436,10 +436,11 @@ export class VtsProTableComponent<T = VtsSafeAny>
 
   onChangeRowHeight(event: VtsSafeAny) {
     this.vtsRowHeight = event;
-    console.log(event);
+    console.log(event, 'change row height');
   }
 
   onClearAllCheckedItems(event: VtsSafeAny) {
     this.checkedItemsAmount = event;
+    console.log(event, 'clear all checked items');
   }
 }
