@@ -32,6 +32,7 @@ import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
 import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
+import { VtsProLayoutModule } from '@ui-vts/ng-vts/prolayout';
 import { VtsListModule } from '@ui-vts/ng-vts/list';
 import { VtsMentionModule } from '@ui-vts/ng-vts/mention';
 import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
@@ -117,6 +118,7 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsStatisticModule,
     VtsStepsModule,
     VtsSwitchModule,
+    VtsProLayoutModule,
     VtsTableModule,
     VtsTabsModule,
     VtsTagModule,

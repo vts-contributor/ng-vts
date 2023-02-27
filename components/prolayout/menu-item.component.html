@@ -1,0 +1,22 @@
+<ng-container *ngIf="menuItem.children && menuItem.children.length > 0; else menuChild">
+    <li vts-submenu vtsOpen [vtsTitle]="menuItem.title" *ngIf="menuItem.isOpen; else closedMenu">
+        <ul>
+            <ng-container *ngFor="let item of menuItem.children">
+                <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
+            </ng-container>
+        </ul>
+    </li>
+    <ng-template #closedMenu>
+        <li vts-submenu [vtsTitle]="menuItem.title">
+            <ul>
+                <ng-container *ngFor="let item of menuItem.children">
+                    <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
+                </ng-container>
+            </ul>
+        </li>
+    </ng-template>
+</ng-container>
+
+<ng-template #menuChild>
+    <li vts-menu-item [vtsSelected]="menuItem.isSelected">{{menuItem.title}}</li>
+</ng-template>

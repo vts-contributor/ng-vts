@@ -55,7 +55,15 @@ interface Item {
           <td vtsAlign="left">{{ data.content5 }}</td>
           <td>
             <a>View</a>
-            
+            <a> | </a>
+            <a vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions">More<i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i></a>
+            <vts-dropdown-menu #menuActions="vtsDropdownMenu">
+              <ul vts-menu>
+                <li vts-menu-item>Edit</li>
+                <li vts-menu-item>Delete</li>
+                <li vts-menu-item>Enable/Disable</li>
+              </ul>
+            </vts-dropdown-menu>
           </td>
         </tr>
       </tbody>
@@ -85,6 +93,7 @@ export class VtsDemoProtableBasicComponent {
   setOfCheckedId = new Set<string>();
   noCheckedItems = 0;
   searchTerms: any = {};
+  vtsIsCollapse = true;
 
   onAllChecked(checked: any): void {
     this.filteredList.forEach(({ id }) => this.updateCheckedSet(id, checked));

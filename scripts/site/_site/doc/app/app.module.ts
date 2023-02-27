@@ -21,6 +21,8 @@ import { VtsMessageModule } from '@ui-vts/ng-vts/message';
 import { VtsPopoverModule } from '@ui-vts/ng-vts/popover';
 import { VtsSelectModule } from '@ui-vts/ng-vts/select';
 import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
+import { VtsProLayoutModule } from '@ui-vts/ng-vts/prolayout';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsDrawerModule } from '@ui-vts/ng-vts/drawer';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { HoverPreloadModule, HoverPreloadStrategy } from 'ngx-hover-preload';
@@ -59,6 +61,8 @@ const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
     VtsInputModule,
     VtsBadgeModule,
     VtsLayoutModule,
+    VtsProLayoutModule,
+    VtsSwitchModule,
     VtsDrawerModule,
     VtsPopoverModule,
     HttpClientJsonpModule,
