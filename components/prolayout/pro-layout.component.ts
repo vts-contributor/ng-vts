@@ -68,6 +68,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
   }
 
   themeColor: string = '#EE0033';
+  useDarkMode:  boolean = false;
 
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
@@ -118,6 +119,10 @@ export class VtsProLayoutContainerComponent implements OnInit {
 
   onChangeThemeColor(color: string){
     this.themeColor = color;
+  }
+
+  onChangePageStyle(useDarkMode: boolean){
+    this.useDarkMode = useDarkMode;
   }
 
   ngOnInit(): void { }

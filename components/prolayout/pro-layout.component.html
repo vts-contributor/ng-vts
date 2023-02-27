@@ -1,5 +1,5 @@
 <vts-prolayout>
-    <vts-prolayout-sider vtsWidth="200px" vtsTheme="light" *ngIf="isShowSider && isFixedSider"
+    <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'" *ngIf="isShowSider && isFixedSider"
         [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [menuData]="menuSider"></vts-prolayout-sider>
 
     <vts-prolayout-header [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [menuData]="menuHeader"
@@ -32,7 +32,7 @@
                 <vts-breadcrumb-item>App</vts-breadcrumb-item>
             </vts-breadcrumb>
             <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
-                <vts-prolayout-sider vtsWidth="200px" vtsTheme="light" [isFixedHeader]="isFixedHeader"
+                <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'" [isFixedHeader]="isFixedHeader"
                     *ngIf="isShowSider" [isFixedSider]="isFixedSider" [menuData]="menuSider"></vts-prolayout-sider>
                 <vts-prolayout-content class="inner-content">
                     <ng-container *ngTemplateOutlet="compContent"></ng-container>
@@ -53,6 +53,8 @@
         [isShowSider]="isShowSider" [isShowFooter]="isShowFooter" (setFixedHeader)="onChangeFixedHeader($event)"
         (setFixedSider)="onChangeFixedSider($event)" (setVisiblityHeader)="onChangeVisiblityHeader($event)"
         (setVisiblitySider)="onChangeVisiblitySider($event)"
+        [useDarkMode]="useDarkMode"
+        (setPageStyle)="onChangePageStyle($event)"
         (setThemeColor)="onChangeThemeColor($event)"
         (setVisiblityFooter)="onChangeVisiblityFooter($event)"></vts-setting-drawer>
 </vts-prolayout>
