@@ -43,6 +43,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     @Input() isShowHeader: boolean = true;
     @Input() isShowSider: boolean = true;
     @Input() isShowFooter: boolean = true;
+    @Input() useDarkMode: boolean = false;
 
     @Output() setFixedHeader: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() setFixedSider: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -50,6 +51,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     @Output() setVisiblitySider: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() setVisiblityFooter: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() setThemeColor: EventEmitter<string> = new EventEmitter<string>();
+    @Output() setPageStyle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() { }
 
@@ -87,5 +89,9 @@ export class VtsSettingDrawerComponent implements OnInit {
         cloneColors.filter(c => c.value == value)[0].isChecked = true;
         this.listColors = [...cloneColors];
         this.setThemeColor.emit(value);
+    }
+
+    onChangePageStyle(value: boolean){
+        this.setPageStyle.emit(value);
     }
 }
