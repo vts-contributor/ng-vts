@@ -1,8 +1,8 @@
 ---
 category: Components
-type: Layout
-cols: 1
-title: Layout
+type: Components
+cols: 19
+title: Prolayout
 cover: https://gw.alipayobjects.com/zos/alicdn/hzEndUVEx/Layout.svg
 ---
 
