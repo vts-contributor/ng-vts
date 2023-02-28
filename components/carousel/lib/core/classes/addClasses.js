@@ -20,7 +20,7 @@ export default function addClasses() {
   // prettier-ignore
   const suffixes = prepareClasses([
     'initialized',
-    params.direction,
+    params.vtsDirection,
     { 'pointer-events': !support.touch },
     { 'free-mode': carousel.params.freeMode && params.freeMode.enabled },
     { 'autoheight': params.autoHeight },

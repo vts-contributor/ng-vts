@@ -2,10 +2,10 @@ import carousel from 'carousel';
 
 export const calcLoopedSlides = (slides, carouselParams) => {
   let vtsSlidesPerViewParams = carouselParams.vtsSlidesPerView;
-  if (carouselParams.breakpoints) {
-    const breakpoint = carousel.prototype.getBreakpoint(carouselParams.breakpoints);
+  if (carouselParams.vtsBreakpoints) {
+    const breakpoint = carousel.prototype.getBreakpoint(carouselParams.vtsBreakpoints);
     const breakpointOnlyParams =
-      breakpoint in carouselParams.breakpoints ? carouselParams.breakpoints[breakpoint] : undefined;
+      breakpoint in carouselParams.vtsBreakpoints ? carouselParams.vtsBreakpoints[breakpoint] : undefined;
     if (breakpointOnlyParams && breakpointOnlyParams.vtsSlidesPerView) {
       vtsSlidesPerViewParams = breakpointOnlyParams.vtsSlidesPerView;
     }

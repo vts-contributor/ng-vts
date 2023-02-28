@@ -317,7 +317,7 @@ interface carousel extends carouselClass<carouselEvents> {
    * @param direction New direction. If not specified, then will automatically changed to opposite direction
    * @param needUpdate Will call carousel.update(). Default true
    */
-  changeDirection(direction?: 'horizontal' | 'vertical', needUpdate?: boolean): void;
+  changeDirection(direction?: string, needUpdate?: boolean): void;
 
   /**
    * Changes slider language
@@ -414,7 +414,7 @@ interface carousel extends carouselClass<carouselEvents> {
   /**
    * !INTERNAL
    */
-  getBreakpoint(breakpoints: carouselOptions['breakpoints']): string;
+  getBreakpoint(breakpoints: carouselOptions['vtsBreakpoints']): string;
 
   /**
    * !INTERNAL

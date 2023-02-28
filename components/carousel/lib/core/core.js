@@ -156,10 +156,10 @@ class carousel {
 
       // isDirection
       isHorizontal() {
-        return carousel.params.direction === 'horizontal';
+        return carousel.params.vtsDirection === 'horizontal';
       },
       isVertical() {
-        return carousel.params.direction === 'vertical';
+        return carousel.params.vtsDirection === 'vertical';
       },
 
       // Indexes
@@ -382,7 +382,7 @@ class carousel {
     if (!carousel || carousel.destroyed) return;
     const { snapGrid, params } = carousel;
     // Breakpoints
-    if (params.breakpoints) {
+    if (params.vtsBreakpoints) {
       carousel.setBreakpoint();
     }
     carousel.updateSize();
@@ -428,7 +428,7 @@ class carousel {
 
   changeDirection(newDirection, needUpdate = true) {
     const carousel = this;
-    const currentDirection = carousel.params.direction;
+    const currentDirection = carousel.params.vtsDirection;
     if (!newDirection) {
       // eslint-disable-next-line
       newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
@@ -445,7 +445,7 @@ class carousel {
       .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
     carousel.emitContainerClasses();
 
-    carousel.params.direction = newDirection;
+    carousel.params.vtsDirection = newDirection;
 
     carousel.slides.each((slideEl) => {
       if (newDirection === 'vertical') {
@@ -463,9 +463,9 @@ class carousel {
 
   changeLanguageDirection(direction) {
     const carousel = this;
-    if ((carousel.rtl && direction === 'rtl') || (!carousel.rtl && direction === 'ltr')) return;
+    if ((carousel.rtl && vtsDirection === 'rtl') || (!carousel.rtl && vtsDirection === 'ltr')) return;
     carousel.rtl = direction === 'rtl';
-    carousel.rtlTranslate = carousel.params.direction === 'horizontal' && carousel.rtl;
+    carousel.rtlTranslate = carousel.params.vtsDirection === 'horizontal' && carousel.rtl;
     if (carousel.rtl) {
       carousel.$el.addClass(`${carousel.params.containerModifierClass}rtl`);
       carousel.el.dir = 'rtl';
@@ -491,7 +491,7 @@ class carousel {
     el.carousel = carousel;
 
     const getWrapperSelector = () => {
-      return `.${(carousel.params.wrapperClass || '').trim().split(' ').join('.')}`;
+      return `.${(carousel.params.vtsWrapperClass || '').trim().split(' ').join('.')}`;
     };
 
     const getWrapper = () => {
@@ -529,7 +529,7 @@ class carousel {
       // RTL
       rtl: el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl',
       rtlTranslate:
-        carousel.params.direction === 'horizontal' &&
+        carousel.params.vtsDirection === 'horizontal' &&
         (el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl'),
       wrongRTL: $wrapperEl.css('display') === '-webkit-box',
     });
