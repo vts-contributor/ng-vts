@@ -40,6 +40,15 @@
         ></vts-switch>
       </div>
     </div>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Split menu:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="useSplitMenu"
+          (ngModelChange)="onChangeSplitMenu($event)"
+        ></vts-switch>
+      </div>
+    </div>
     <vts-divider></vts-divider>
     <h4 vts-typography vtsType="h4">Regional settings</h4>
     <div vts-row>

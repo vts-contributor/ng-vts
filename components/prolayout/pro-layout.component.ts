@@ -77,7 +77,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
   @Input() isShowFooter: boolean = true;
   @Input() isMenuSplitted: boolean = false;
   @Input() menuHeader: MenuItemProLayout[] = [];
-  @Input() menuSider: MenuItemProLayout[] = [];
+  @Input() menuSider: MenuItemProLayout[] = [];  
 
   onChangeFixedSider(isFixed: boolean) {
     this.isFixedSider = isFixed;
@@ -123,6 +123,13 @@ export class VtsProLayoutContainerComponent implements OnInit {
 
   onChangePageStyle(useDarkMode: boolean){
     this.useDarkMode = useDarkMode;
+  }
+
+  onChangeSplitMenu(useSplitMenu: boolean){
+    this.isMenuSplitted = useSplitMenu;
+    this.menuSider = [
+      ...this.menuSider
+    ]
   }
 
   ngOnInit(): void { }

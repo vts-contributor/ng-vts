@@ -14,6 +14,7 @@ import {
   SimpleChanges,
   SimpleChange
 } from '@angular/core';
+import { VtsMenuThemeType } from '../menu';
 import { MenuItemProLayout } from './pro-layout.types';
 
 @Component({
@@ -24,7 +25,7 @@ import { MenuItemProLayout } from './pro-layout.types';
   preserveWhitespaces: false,
   template: `
     <div class="logo-header vts-logo" *ngIf="showLogo"></div>
-    <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
+    <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu" [vtsTheme]="vtsTheme" *ngIf="!useSplitMenu">
       <ng-container *ngFor="let item of menuData">
         <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
       </ng-container>
@@ -56,6 +57,8 @@ export class VtsHeaderComponent implements OnChanges {
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
   @Input() menuData: MenuItemProLayout[] = [];
+  @Input() vtsTheme: VtsMenuThemeType = 'light';
+  @Input() useSplitMenu: boolean = false;
 
   showLogo: boolean = true;
 
