@@ -52,54 +52,21 @@ The first level navigation is inclined left near a logo, and the secondary menu 
 
 ## Component Overview
 
-- `vts-pro-layout`: The layout wrapper, in which `vts-prolayout-header` `vts-prolayout-sider` `vts-prolayout-content` `vts-prolayout-footer` or `vts-pro-layout` itself can be nested, and can be placed in any parent container.
-- `vts-prolayout-header`: The top layout with default style, in which any element can be nested, and must be placed in `vts-pro-layout`.
-- `vts-prolayout-sider`: The sidebar with default style and basic functions, in which any element can be nested, and must be placed in `vts-pro-layout`.
-- `vts-prolayout-content`: The content layout with default style, in which any element can be nested, and must be placed in `vts-pro-layout`.
-- `vts-prolayout-footer`: The bottom layout with default style, in which any element can be nested, and must be placed in `vts-prolayout-layout`.
-
-> Based on `flex layout`, please pay attention to the [compatibility](http://caniuse.com/#search=flex).
+- `vts-pro-layout-container`: The layout wrapper
 
 ## API
 
-```html
-<vts-pro-layout>
-  <vts-prolayout-header>header</vts-prolayout-header>
-  <vts-prolayout-layout>
-    <vts-prolayout-sider>left sidebar</vts-prolayout-sider>
-    <vts-prolayout-content>main content</vts-prolayout-content>
-    <vts-prolayout-sider>right sidebar</vts-prolayout-sider>
-  </vts-pro-layout>
-  <vts-prolayout-footer>footer</vts-prolayout-footer>
-</vts-pro-layout>
-```
+### vts-prolayout-container
 
-### vts-sider
-
-The sidebar.
+The pro-layout.
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[vtsBreakpoint]` | breakpoints of the responsive layout | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl'` | - |
-| `[vtsCollapsedWidth]` | width of the collapsed sidebar, by setting to `0` a special trigger will appear | `number` | `64` |
-| `[vtsCollapsible]` | whether can be collapsed | `boolean` | `false` |
-| `[vtsCollapsed]` | the collapsed status can be double binding | `boolean` | `false` |
-| `[vtsReverseArrow]` | reverse direction of arrow, for a sider that expands from the right | `boolean` | `false` |
-| `[vtsTrigger]` | specify the customized trigger, set to null to hide the trigger | `string \| TemplateRef<void>` | - |
-| `[vtsZeroTrigger]` | specify the customized trigger when vtsCollapsedWidth setting to `0` | `TemplateRef<void>` | - |
-| `[vtsWidth]` | width of the sidebar | `number \| string` | `200` |
-| `[vtsTheme]` | color theme of the sidebar | `'light' \| 'dark'` | `dark` |
-| `(vtsCollapsedChange)` | the callback function | `EventEmitter<boolean>` | - |
-
-#### breakpoint width
-
-```js
-{
-  xs: '360px',
-  sm: '600px',
-  md: '768px',
-  lg: '1024px',
-  xl: '1200px',
-  xxl: '1600px'
-}
-```
+| `[menuHeader]` | array of MenuItemProLayout displayed on the header | MenuItemProLayout[] | [] |
+| `[menuSider]` | array of MenuItemProLayout displayed on the sider | MenuItemProLayout[] | [] |
+| `[isFixedHeader]` | whether header is fixed | `boolean` | `false` |
+| `[isFixedSider]` | whether sider is fixed | `boolean` | `false` |
+| `[isShowHeader]` | whether header is shown | `boolean` | `true` |
+| `[isShowSider]` | whether sider is fixed | `boolean` | `true` |
+| `[isShowFooter]` | whether footer is fixed | `boolean` | `true` |
+| `[isMenuSplitted]` | menu items on header merged with menu items on sider, display on sider, remove all on header | `boolean` | `false` |
