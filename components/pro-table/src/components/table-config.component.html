@@ -1,8 +1,8 @@
 <div class='vts-protable-configuration'>
   <div class="btn-area">
     <div vts-col class="btn-control-area">
-      <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="openDrawer()"><i
-          class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>New</button>
+      <button vts-button vtsType="primary" [vtsSize]="'xs'" (click)="openDrawer()"><i class="collapse-icon" vts-icon
+          [vtsType]="'AddCircle'"></i>New</button>
       <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="mockFn()"><i
           class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Export</button>
       <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="showUploadModal()"><i
@@ -18,9 +18,9 @@
       </a>
       <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
         <ul vts-menu>
-          <li vts-menu-item (click)="handleChangeRowHeight(54)">Normal</li>
-          <li vts-menu-item (click)="handleChangeRowHeight(80)">Expand</li>
-          <li vts-menu-item (click)="handleChangeRowHeight(35)">Narrow</li>
+          <li vts-menu-item (click)="handleChangeRowHeight('normal')">Normal</li>
+          <li vts-menu-item (click)="handleChangeRowHeight('expand')">Expand</li>
+          <li vts-menu-item (click)="handleChangeRowHeight('narrow')">Narrow</li>
         </ul>
       </vts-dropdown-menu>
       <button vts-button class="btn-table-config" vtsType="default" (click)="mockFn()"><i vts-icon
@@ -30,9 +30,12 @@
       </a>
       <vts-dropdown-menu #menuSettings="vtsDropdownMenu">
         <ul vts-menu>
-          <li vts-menu-item>x</li>
-          <li vts-menu-item>x</li>
-          <li vts-menu-item>x</li>
+          <li vts-menu-item>Display all column</li>
+          <vts-divider></vts-divider>
+          <li vts-menu-item *ngFor="let num of [1, 2, 3, 4, 5]">Property {{num}}</li>
+          <vts-divider></vts-divider>
+          <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary">Save</button>
+          <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default">Reset</button>
         </ul>
       </vts-dropdown-menu>
     </div>
@@ -50,7 +53,7 @@
     </div>
   </ng-template>
 
-  <table style="width: -webkit-fill-available;">
+  <table style="width: -webkit-fill-available; margin-top: 16px;">
     <thead>
       <tr [ngStyle]="{'height':vtsRowHeight+'px'}">
         <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
@@ -76,8 +79,8 @@
               [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i></a>
           <vts-dropdown-menu #menuActions="vtsDropdownMenu">
             <ul vts-menu>
-              <li vts-menu-item>Edit</li>
-              <li vts-menu-item>Delete</li>
+              <li vts-menu-item (click)="onEditDataItem(data.id)">Edit</li>
+              <li vts-menu-item (click)="showDeleteItemModal(data.id)">Delete</li>
               <li vts-menu-item>Enable/Disable</li>
             </ul>
           </vts-dropdown-menu>
@@ -89,6 +92,11 @@
 
 <vts-modal [(vtsVisible)]="isVisibleModal" [vtsTitle]="modalData.title" [vtsContent]="modalData.content"
   (vtsOnCancel)="handleCancelModal()" (vtsOnOk)="handleOkModal()" [vtsOkLoading]="isOkLoadingModal">
+  <p *vtsModalContent>Modal Content</p>
+</vts-modal>
+
+<vts-modal [(vtsVisible)]="isVisibleDelete" [vtsTitle]="modalDeleteData.title" [vtsContent]="modalDeleteData.content"
+  (vtsOnCancel)="handleCancelDelete()" (vtsOnOk)="handleOkDelete()" [vtsOkLoading]="isOkLoadingDelete">
   <p *vtsModalContent>Modal Content</p>
 </vts-modal>
 
@@ -116,43 +124,13 @@
 <vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="720"
   [vtsVisible]="visibleDrawer" [vtsTitle]="drawerData.title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
   <form vts-form *vtsDrawerContent>
-    <div vts-row [vtsGutter]="8">
-      <div vts-col vtsSpan="12">
-        <vts-form-item>
-          <vts-form-label>Name</vts-form-label>
-          <vts-form-control>
-            <input vts-input placeholder="please enter user name" />
-          </vts-form-control>
-        </vts-form-item>
-      </div>
-      <div vts-col vtsSpan="12">
-        <vts-form-item>
-          <vts-form-label>Url</vts-form-label>
-          <vts-form-control>
-            <vts-input-group vtsAddOnBefore="http://" vtsAddOnAfter=".com">
-              <input type="text" vts-input placeholder="please enter url" />
-            </vts-input-group>
-          </vts-form-control>
-        </vts-form-item>
-      </div>
-    </div>
-    <div vts-row [vtsGutter]="8">
-      <div vts-col vtsSpan="12">
-        <vts-form-item>
-          <vts-form-label>Owner</vts-form-label>
-          <vts-form-control>
-            <vts-select vtsPlaceHolder="Please select an owner"></vts-select>
-          </vts-form-control>
-        </vts-form-item>
-      </div>
-      <div vts-col vtsSpan="12">
-        <vts-form-item>
-          <vts-form-label>Type</vts-form-label>
-          <vts-form-control>
-            <vts-select vtsPlaceHolder="Please choose the type"></vts-select>
-          </vts-form-control>
-        </vts-form-item>
-      </div>
+    <div vts-row [vtsGutter]="12" *ngFor="let num of [1, 2, 3, 4, 5, 6, 7]">
+      <vts-form-item>        
+        <vts-form-label>Property {{num}}</vts-form-label>
+        <vts-form-control>
+          <input vts-input placeholder="" />
+        </vts-form-control>
+      </vts-form-item>
     </div>
   </form>
 

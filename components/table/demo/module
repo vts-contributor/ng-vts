@@ -9,6 +9,7 @@ import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 export const moduleList = [
   VtsTableModule,
@@ -21,5 +22,6 @@ export const moduleList = [
   VtsButtonModule,
   VtsInputModule,
   VtsIconModule,
-  VtsPopconfirmModule
+  VtsPopconfirmModule,
+  DragDropModule
 ];

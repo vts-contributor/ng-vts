@@ -1,3 +1,4 @@
+import { VtsDividerModule } from './../../divider/divider.module';
 import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
 import { VtsSelectModule } from '@ui-vts/ng-vts/select';
 import { VtsDrawerModule } from '@ui-vts/ng-vts/drawer';
@@ -66,7 +67,8 @@ import { VtsProTableDataComponent } from './components/table.component';
     VtsFormModule,
     VtsSelectModule,
     VtsUploadModule,
-    VtsTableModule
+    VtsTableModule,
+    VtsDividerModule
   ]
 })
 export class VtsProTable2Module {}
