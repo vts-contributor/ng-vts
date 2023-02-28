@@ -23,6 +23,13 @@ export class VtsDemoProlayoutBasicComponent {
         { title: 'Child 2.1', children: [{ title: 'Child 2.1.1' }, { title: 'Child 2.1.2' }] },
         { title: 'Child 2.2' }
       ]
+    },
+    {
+      title: 'Parent 3',
+      children: [
+        { title: 'Child 3.1', children: [{ title: 'Child 3.1.1' }, { title: 'Child 3.1.2' }] },
+        { title: 'Child 3.2' }
+      ]
     }
   ];
 }

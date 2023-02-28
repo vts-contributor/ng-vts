@@ -44,6 +44,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     @Input() isShowSider: boolean = true;
     @Input() isShowFooter: boolean = true;
     @Input() useDarkMode: boolean = false;
+    @Input() useSplitMenu: boolean = false;
 
     @Output() setFixedHeader: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() setFixedSider: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -52,6 +53,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     @Output() setVisiblityFooter: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() setThemeColor: EventEmitter<string> = new EventEmitter<string>();
     @Output() setPageStyle: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() setSplitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() { }
 
@@ -93,5 +95,9 @@ export class VtsSettingDrawerComponent implements OnInit {
 
     onChangePageStyle(value: boolean){
         this.setPageStyle.emit(value);
+    }
+
+    onChangeSplitMenu(value: boolean){
+        this.setSplitMenu.emit(value);
     }
 }
