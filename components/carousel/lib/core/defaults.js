@@ -1,6 +1,6 @@
 export default {
   init: true,
-  direction: 'horizontal',
+  vtsDirection: 'horizontal',
   touchEventsTarget: 'wrapper',
   initialSlide: 0,
   speed: 300,
@@ -136,7 +136,7 @@ export default {
   slideDuplicateNextClass: 'carousel-slide-duplicate-next',
   slidePrevClass: 'carousel-slide-prev',
   slideDuplicatePrevClass: 'carousel-slide-duplicate-prev',
-  wrapperClass: 'carousel-wrapper',
+  vtsWrapperClass: 'carousel-wrapper',
 
   // Callbacks
   runCallbacksOnInit: true,

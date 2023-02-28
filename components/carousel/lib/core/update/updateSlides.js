@@ -79,9 +79,9 @@ export default function updateSlides() {
 
   const shouldResetSlideSize =
     params.vtsSlidesPerView === 'auto' &&
-    params.breakpoints &&
-    Object.keys(params.breakpoints).filter((key) => {
-      return typeof params.breakpoints[key].vtsSlidesPerView !== 'undefined';
+    params.vtsBreakpoints &&
+    Object.keys(params.vtsBreakpoints).filter((key) => {
+      return typeof params.vtsBreakpoints[key].vtsSlidesPerView !== 'undefined';
     }).length > 0;
 
   for (let i = 0; i < slidesLength; i += 1) {

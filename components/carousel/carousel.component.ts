@@ -59,9 +59,9 @@ import { isPlatformBrowser } from '@angular/common';
   ],
 })
 export class VtscarouselComponent implements OnInit {
-  @Input() enabled?: boolean;
+  //@Input() enabled?: boolean;
   // @Input() on?: "on";
-  @Input() direction?: 'horizontal' | 'vertical';
+  @Input() vtsDirection?: string = 'horizontal';
   //@Input() touchEventsTarget: "touchEventsTarget";
   //@Input() initialSlide: "initialSlide";
   @Input() speed?: number;
@@ -82,7 +82,7 @@ export class VtscarouselComponent implements OnInit {
   // @Input() setWrapperSize: "setWrapperSize";
   // @Input() virtualTranslate: "virtualTranslate";
   // @Input() effect: "effect";
-  @Input() breakpoints?: {
+  @Input() vtsBreakpoints?: {
     [width: number]: carouselOptions;
     [ratio: string]: carouselOptions;
   };
@@ -149,7 +149,7 @@ export class VtscarouselComponent implements OnInit {
   // @Input() slideDuplicateNextClass: "slideDuplicateNextClass";
   // @Input() slidePrevClass: "slidePrevClass";
   // @Input() slideDuplicatePrevClass: "slideDuplicatePrevClass";
-  @Input() wrapperClass: string = 'carousel-wrapper';
+  @Input() vtsWrapperClass: string = 'carousel-wrapper';
   // @Input() runCallbacksOnInit: "runCallbacksOnInit";
   // @Input() observeParents: "observeParents";
   // @Input() observeSlideChildren: "observeSlideChildren";
@@ -812,10 +812,10 @@ export class VtscarouselComponent implements OnInit {
       if (changedParams.allowSlidePrev) {
         this.carouselRef.allowSlidePrev = this.allowSlidePrev ? true : false;
       }
-      if (changedParams.direction) {
-        this.carouselRef.changeDirection(this.direction, false);
+      if (changedParams.vtsDirection) {
+        this.carouselRef.changeDirection(this.vtsDirection, false);
       }
-      if (changedParams.breakpoints) {
+      if (changedParams.vtsBreakpoints) {
         if (this.loop && !this.loopedSlides) {
           this.calcLoopedSlides();
         }
@@ -835,10 +835,10 @@ export class VtscarouselComponent implements OnInit {
       return false;
     }
     let vtsSlidesPerViewParams = this.vtsSlidesPerView;
-    if (this.breakpoints) {
-      const breakpoint = carousel.prototype.getBreakpoint(this.breakpoints);
+    if (this.vtsBreakpoints) {
+      const breakpoint = carousel.prototype.getBreakpoint(this.vtsBreakpoints);
       const breakpointOnlyParams =
-        breakpoint in this.breakpoints ? this.breakpoints[breakpoint] : undefined;
+        breakpoint in this.vtsBreakpoints ? this.vtsBreakpoints[breakpoint] : undefined;
       if (breakpointOnlyParams && breakpointOnlyParams.vtsSlidesPerView) {
         vtsSlidesPerViewParams = breakpointOnlyParams.vtsSlidesPerView;
       }

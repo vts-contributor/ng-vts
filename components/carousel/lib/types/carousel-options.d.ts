@@ -80,7 +80,7 @@ export interface carouselOptions {
    *
    * @default 'horizontal'
    */
-  direction?: 'horizontal' | 'vertical';
+  vtsDirection?: 'horizontal' | 'vertical';
 
   /**
    * Duration of transition between slides (in ms)
@@ -705,7 +705,7 @@ export interface carouselOptions {
    * });
    * ```
    */
-  breakpoints?: {
+  vtsBreakpoints?: {
     [width: number]: carouselOptions;
     [ratio: string]: carouselOptions;
   };
@@ -867,7 +867,7 @@ export interface carouselOptions {
    * @note Not supported in carousel Angular/React/Svelte/Vue
    *
    */
-  wrapperClass?: string;
+  vtsWrapperClass?: string;
 
   /**
    * Object with a11y parameters or boolean `true` to enable with default settings.

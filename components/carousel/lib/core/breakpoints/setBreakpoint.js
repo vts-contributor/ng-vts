@@ -7,7 +7,7 @@ const isGridEnabled = (carousel, params) => {
 export default function setBreakpoint() {
   const carousel = this;
   const { activeIndex, initialized, loopedSlides = 0, params, $el } = carousel;
-  const breakpoints = params.breakpoints;
+  const breakpoints = params.vtsBreakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
 
   // Get breakpoint for window width and update parameters
@@ -51,7 +51,7 @@ export default function setBreakpoint() {
   });
 
   const directionChanged =
-    breakpointParams.direction && breakpointParams.direction !== params.direction;
+    breakpointParams.direction && breakpointParams.direction !== params.vtsDirection;
   const needsReLoop =
     params.loop && (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
 

@@ -6,7 +6,7 @@ export default function onResize() {
   if (el && el.offsetWidth === 0) return;
 
   // Breakpoints
-  if (params.breakpoints) {
+  if (params.vtsBreakpoints) {
     carousel.setBreakpoint();
   }
 
