@@ -68,6 +68,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
   }
 
   themeColor: string = '#EE0033';
+  useDarkMode:  boolean = false;
 
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
@@ -76,7 +77,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
   @Input() isShowFooter: boolean = true;
   @Input() isMenuSplitted: boolean = false;
   @Input() menuHeader: MenuItemProLayout[] = [];
-  @Input() menuSider: MenuItemProLayout[] = [];
+  @Input() menuSider: MenuItemProLayout[] = [];  
 
   onChangeFixedSider(isFixed: boolean) {
     this.isFixedSider = isFixed;
@@ -118,6 +119,17 @@ export class VtsProLayoutContainerComponent implements OnInit {
 
   onChangeThemeColor(color: string){
     this.themeColor = color;
+  }
+
+  onChangePageStyle(useDarkMode: boolean){
+    this.useDarkMode = useDarkMode;
+  }
+
+  onChangeSplitMenu(useSplitMenu: boolean){
+    this.isMenuSplitted = useSplitMenu;
+    this.menuSider = [
+      ...this.menuSider
+    ]
   }
 
   ngOnInit(): void { }
