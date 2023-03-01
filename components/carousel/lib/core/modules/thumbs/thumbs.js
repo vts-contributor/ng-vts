@@ -3,7 +3,7 @@ import $ from '../../shared/dom.js';
 
 export default function Thumb({ carousel, extendParams, on }) {
   extendParams({
-    thumbs: {
+    vtsThumbs: {
       carousel: null,
       multipleActiveThumbs: true,
       autoScrollOffset: 0,
@@ -15,28 +15,28 @@ export default function Thumb({ carousel, extendParams, on }) {
   let initialized = false;
   let carouselCreated = false;
 
-  carousel.thumbs = {
+  carousel.vtsThumbs = {
     carousel: null,
   };
 
   function onThumbClick() {
-    const thumbscarousel = carousel.thumbs.carousel;
+    const thumbscarousel = carousel.vtsThumbs.carousel;
     if (!thumbscarousel || thumbscarousel.destroyed) return;
 
     const clickedIndex = thumbscarousel.clickedIndex;
     const clickedSlide = thumbscarousel.clickedSlide;
-    if (clickedSlide && $(clickedSlide).hasClass(carousel.params.thumbs.slideThumbActiveClass))
+    if (clickedSlide && $(clickedSlide).hasClass(carousel.params.vtsThumbs.slideThumbActiveClass))
       return;
     if (typeof clickedIndex === 'undefined' || clickedIndex === null) return;
     let slideToIndex;
-    if (thumbscarousel.params.loop) {
+    if (thumbscarousel.params.vtsLoop) {
       slideToIndex = parseInt($(thumbscarousel.clickedSlide).attr('data-carousel-slide-index'), 10);
     } else {
       slideToIndex = clickedIndex;
     }
-    if (carousel.params.loop) {
+    if (carousel.params.vtsLoop) {
       let currentIndex = carousel.activeIndex;
-      if (carousel.slides.eq(currentIndex).hasClass(carousel.params.slideDuplicateClass)) {
+      if (carousel.slides.eq(currentIndex).hasClass(carousel.params.vtsSlideDuplicateClass)) {
         carousel.loopFix();
         // eslint-disable-next-line
         carousel._clientLeft = carousel.$wrapperEl[0].clientLeft;
@@ -61,17 +61,17 @@ export default function Thumb({ carousel, extendParams, on }) {
   }
 
   function init() {
-    const { thumbs: thumbsParams } = carousel.params;
+    const { vtsThumbs: thumbsParams } = carousel.params;
     if (initialized) return false;
     initialized = true;
     const carouselClass = carousel.constructor;
     if (thumbsParams.carousel instanceof carouselClass) {
-      carousel.thumbs.carousel = thumbsParams.carousel;
-      Object.assign(carousel.thumbs.carousel.originalParams, {
+      carousel.vtsThumbs.carousel = thumbsParams.carousel;
+      Object.assign(carousel.vtsThumbs.carousel.originalParams, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-      Object.assign(carousel.thumbs.carousel.params, {
+      Object.assign(carousel.vtsThumbs.carousel.params, {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
@@ -81,16 +81,16 @@ export default function Thumb({ carousel, extendParams, on }) {
         watchSlidesProgress: true,
         slideToClickedSlide: false,
       });
-      carousel.thumbs.carousel = new carouselClass(thumbscarouselParams);
+      carousel.vtsThumbs.carousel = new carouselClass(thumbscarouselParams);
       carouselCreated = true;
     }
-    carousel.thumbs.carousel.$el.addClass(carousel.params.thumbs.thumbsContainerClass);
-    carousel.thumbs.carousel.on('tap', onThumbClick);
+    carousel.vtsThumbs.carousel.$el.addClass(carousel.params.vtsThumbs.thumbsContainerClass);
+    carousel.vtsThumbs.carousel.on('tap', onThumbClick);
     return true;
   }
 
   function update(initial) {
-    const thumbscarousel = carousel.thumbs.carousel;
+    const thumbscarousel = carousel.vtsThumbs.carousel;
     if (!thumbscarousel || thumbscarousel.destroyed) return;
 
     const vtsSlidesPerView =
@@ -100,13 +100,13 @@ export default function Thumb({ carousel, extendParams, on }) {
 
     // Activate thumbs
     let thumbsToActivate = 1;
-    const thumbActiveClass = carousel.params.thumbs.slideThumbActiveClass;
+    const thumbActiveClass = carousel.params.vtsThumbs.slideThumbActiveClass;
 
     if (carousel.params.vtsSlidesPerView > 1 && !carousel.params.centeredSlides) {
       thumbsToActivate = carousel.params.vtsSlidesPerView;
     }
 
-    if (!carousel.params.thumbs.multipleActiveThumbs) {
+    if (!carousel.params.vtsThumbs.multipleActiveThumbs) {
       thumbsToActivate = 1;
     }
 
@@ -114,7 +114,7 @@ export default function Thumb({ carousel, extendParams, on }) {
 
     thumbscarousel.slides.removeClass(thumbActiveClass);
     if (
-      thumbscarousel.params.loop ||
+      thumbscarousel.params.vtsLoop ||
       (thumbscarousel.params.virtual && thumbscarousel.params.virtual.enabled)
     ) {
       for (let i = 0; i < thumbsToActivate; i += 1) {
@@ -128,17 +128,17 @@ export default function Thumb({ carousel, extendParams, on }) {
       }
     }
 
-    const autoScrollOffset = carousel.params.thumbs.autoScrollOffset;
-    const useOffset = autoScrollOffset && !thumbscarousel.params.loop;
+    const autoScrollOffset = carousel.params.vtsThumbs.autoScrollOffset;
+    const useOffset = autoScrollOffset && !thumbscarousel.params.vtsLoop;
     if (carousel.realIndex !== thumbscarousel.realIndex || useOffset) {
       let currentThumbsIndex = thumbscarousel.activeIndex;
       let newThumbsIndex;
       let direction;
-      if (thumbscarousel.params.loop) {
+      if (thumbscarousel.params.vtsLoop) {
         if (
           thumbscarousel.slides
             .eq(currentThumbsIndex)
-            .hasClass(thumbscarousel.params.slideDuplicateClass)
+            .hasClass(thumbscarousel.params.vtsSlideDuplicateClass)
         ) {
           thumbscarousel.loopFix();
           // eslint-disable-next-line
@@ -199,8 +199,8 @@ export default function Thumb({ carousel, extendParams, on }) {
   }
 
   on('beforeInit', () => {
-    const { thumbs } = carousel.params;
-    if (!thumbs || !thumbs.carousel) return;
+    const { vtsThumbs } = carousel.params;
+    if (!vtsThumbs || !vtsThumbs.carousel) return;
     init();
     update(true);
   });
@@ -208,19 +208,19 @@ export default function Thumb({ carousel, extendParams, on }) {
     update();
   });
   on('setTransition', (_s, duration) => {
-    const thumbscarousel = carousel.thumbs.carousel;
+    const thumbscarousel = carousel.vtsThumbs.carousel;
     if (!thumbscarousel || thumbscarousel.destroyed) return;
     thumbscarousel.setTransition(duration);
   });
   on('beforeDestroy', () => {
-    const thumbscarousel = carousel.thumbs.carousel;
+    const thumbscarousel = carousel.vtsThumbs.carousel;
     if (!thumbscarousel || thumbscarousel.destroyed) return;
     if (carouselCreated) {
       thumbscarousel.destroy();
     }
   });
 
-  Object.assign(carousel.thumbs, {
+  Object.assign(carousel.vtsThumbs, {
     init,
     update,
   });

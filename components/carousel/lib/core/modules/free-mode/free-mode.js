@@ -100,7 +100,7 @@ export default function freeMode({ carousel, extendParams, emit, once }) {
         } else {
           newPosition = carousel.maxTranslate();
         }
-        if (params.loop && params.centeredSlides) needsLoopFix = true;
+        if (params.vtsLoop && params.centeredSlides) needsLoopFix = true;
       } else if (newPosition > carousel.minTranslate()) {
         if (params.freeMode.momentumBounce) {
           if (newPosition - carousel.minTranslate() > bounceAmount) {
@@ -112,7 +112,7 @@ export default function freeMode({ carousel, extendParams, emit, once }) {
         } else {
           newPosition = carousel.minTranslate();
         }
-        if (params.loop && params.centeredSlides) needsLoopFix = true;
+        if (params.vtsLoop && params.centeredSlides) needsLoopFix = true;
       } else if (params.freeMode.sticky) {
         let nextSlide;
         for (let j = 0; j < snapGrid.length; j += 1) {
@@ -156,11 +156,11 @@ export default function freeMode({ carousel, extendParams, emit, once }) {
           const moveDistance = Math.abs((rtl ? -newPosition : newPosition) - carousel.translate);
           const currentSlideSize = carousel.slidesSizesGrid[carousel.activeIndex];
           if (moveDistance < currentSlideSize) {
-            momentumDuration = params.speed;
+            momentumDuration = params.vtsSpeed;
           } else if (moveDistance < 2 * currentSlideSize) {
-            momentumDuration = params.speed * 1.5;
+            momentumDuration = params.vtsSpeed * 1.5;
           } else {
-            momentumDuration = params.speed * 2.5;
+            momentumDuration = params.vtsSpeed * 2.5;
           }
         }
       } else if (params.freeMode.sticky) {
@@ -177,7 +177,7 @@ export default function freeMode({ carousel, extendParams, emit, once }) {
         $wrapperEl.transitionEnd(() => {
           if (!carousel || carousel.destroyed || !data.allowMomentumBounce) return;
           emit('momentumBounce');
-          carousel.setTransition(params.speed);
+          carousel.setTransition(params.vtsSpeed);
           setTimeout(() => {
             carousel.setTranslate(afterBouncePosition);
             $wrapperEl.transitionEnd(() => {

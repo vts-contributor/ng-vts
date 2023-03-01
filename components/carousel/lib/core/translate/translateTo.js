@@ -2,7 +2,7 @@ import { animateCSSModeScroll } from '../../shared/utils.js';
 
 export default function translateTo(
   translate = 0,
-  speed = this.params.speed,
+  vtsSpeed = this.params.vtsSpeed,
   runCallbacks = true,
   translateBounds = true,
   internal,
@@ -27,7 +27,7 @@ export default function translateTo(
 
   if (params.cssMode) {
     const isH = carousel.isHorizontal();
-    if (speed === 0) {
+    if (vtsSpeed === 0) {
       wrapperEl[isH ? 'scrollLeft' : 'scrollTop'] = -newTranslate;
     } else {
       if (!carousel.support.smoothScroll) {
@@ -42,18 +42,18 @@ export default function translateTo(
     return true;
   }
 
-  if (speed === 0) {
+  if (vtsSpeed === 0) {
     carousel.setTransition(0);
     carousel.setTranslate(newTranslate);
     if (runCallbacks) {
-      carousel.emit('beforeTransitionStart', speed, internal);
+      carousel.emit('beforeTransitionStart', vtsSpeed, internal);
       carousel.emit('transitionEnd');
     }
   } else {
-    carousel.setTransition(speed);
+    carousel.setTransition(vtsSpeed);
     carousel.setTranslate(newTranslate);
     if (runCallbacks) {
-      carousel.emit('beforeTransitionStart', speed, internal);
+      carousel.emit('beforeTransitionStart', vtsSpeed, internal);
       carousel.emit('transitionStart');
     }
     if (!carousel.animating) {

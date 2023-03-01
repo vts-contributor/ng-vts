@@ -11,11 +11,11 @@ export default function onResize() {
   }
 
   // Save locks
-  const { allowSlideNext, allowSlidePrev, snapGrid } = carousel;
+  const { vtsAllowSlideNext, vtsAllowSlidePrev, snapGrid } = carousel;
 
   // Disable locks on resize
-  carousel.allowSlideNext = true;
-  carousel.allowSlidePrev = true;
+  carousel.vtsAllowSlideNext = true;
+  carousel.vtsAllowSlidePrev = true;
 
   carousel.updateSize();
   carousel.updateSlides();
@@ -36,8 +36,8 @@ export default function onResize() {
     carousel.vtsAutoplay.run();
   }
   // Return locks after resize
-  carousel.allowSlidePrev = allowSlidePrev;
-  carousel.allowSlideNext = allowSlideNext;
+  carousel.vtsAllowSlidePrev = vtsAllowSlidePrev;
+  carousel.vtsAllowSlideNext = vtsAllowSlideNext;
 
   if (carousel.params.watchOverflow && snapGrid !== carousel.snapGrid) {
     carousel.checkOverflow();

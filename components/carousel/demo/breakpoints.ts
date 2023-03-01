@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
      [vtsNavigation]="vtsNavigation"
      [vtsPagination]="vtsPagination"
      [vtsBreakpoints]="vtsBreakpoints"
+     [vtsLoop]="vtsLoop"
     >
       <ng-template vts-carousel-slide *ngFor="let item of array">
         <img src={{item.src}} alt="">
@@ -28,9 +29,10 @@ import { Component } from '@angular/core';
   ]
 })
 export class VtsDemoCarouselBreakpointsComponent {
-  vtsSlidesPerView = 1;
+  vtsSlidesPerView = 3;
   vtsNavigation= true;
   vtsPagination= {clickable: true};
+  vtsLoop=true;
   vtsBreakpoints= {
     720: {
       vtsSlidesPerView: 2,

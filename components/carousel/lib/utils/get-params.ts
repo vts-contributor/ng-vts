@@ -1,5 +1,5 @@
 // @ts-ignore
-import carousel from './carousel';
+import Carousel from './carousel';
 import { paramsList } from './params-list';
 import { extend, isObject } from './utils';
 type KeyValueType = { [x: string]: any };
@@ -10,8 +10,8 @@ export function getParams(obj: any = {}) {
   };
   // const events = {};
   const passedParams: KeyValueType = {};
-  extend(params, carousel.defaults);
-  extend(params, carousel.extendedDefaults);
+  extend(params, Carousel.defaults);
+  extend(params, Carousel.extendedDefaults);
   params._emitClasses = true;
   params.init = false;
 

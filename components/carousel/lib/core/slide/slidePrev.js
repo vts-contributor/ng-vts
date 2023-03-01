@@ -1,10 +1,10 @@
 /* eslint no-unused-vars: "off" */
-export default function slidePrev(speed = this.params.speed, runCallbacks = true, internal) {
+export default function slidePrev(vtsSpeed = this.params.vtsSpeed, runCallbacks = true, internal) {
   const carousel = this;
   const { params, animating, snapGrid, slidesGrid, rtlTranslate, enabled } = carousel;
   if (!enabled) return carousel;
 
-  if (params.loop) {
+  if (params.vtsLoop) {
     if (animating && params.loopPreventsSlide) return false;
     carousel.loopFix();
     // eslint-disable-next-line
@@ -50,7 +50,7 @@ export default function slidePrev(speed = this.params.speed, runCallbacks = true
       carousel.params.virtual && carousel.params.virtual.enabled && carousel.virtual
         ? carousel.virtual.slides.length - 1
         : carousel.slides.length - 1;
-    return carousel.slideTo(lastIndex, speed, runCallbacks, internal);
+    return carousel.slideTo(lastIndex, vtsSpeed, runCallbacks, internal);
   }
-  return carousel.slideTo(prevIndex, speed, runCallbacks, internal);
+  return carousel.slideTo(prevIndex, vtsSpeed, runCallbacks, internal);
 }

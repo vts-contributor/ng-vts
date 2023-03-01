@@ -78,7 +78,7 @@ export default function Parallax({ carousel, extendParams, on }) {
     });
   };
 
-  const setTransition = (duration = carousel.params.speed) => {
+  const setTransition = (duration = carousel.params.vtsSpeed) => {
     const { $el } = carousel;
     $el
       .find(

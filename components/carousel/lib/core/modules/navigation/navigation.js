@@ -50,7 +50,7 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
   }
   function update() {
     // Update Navigation Buttons
-    if (carousel.params.loop) return;
+    if (carousel.params.vtsLoop) return;
     const { $nextEl, $prevEl } = carousel.vtsNavigation;
 
     toggleEl($prevEl, carousel.isBeginning && !carousel.params.rewind);
@@ -58,13 +58,13 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
   }
   function onPrevClick(e) {
     e.preventDefault();
-    if (carousel.isBeginning && !carousel.params.loop && !carousel.params.rewind) return;
+    if (carousel.isBeginning && !carousel.params.vtsLoop && !carousel.params.rewind) return;
     carousel.slidePrev();
     emit('navigationPrev');
   }
   function onNextClick(e) {
     e.preventDefault();
-    if (carousel.isEnd && !carousel.params.loop && !carousel.params.rewind) return;
+    if (carousel.isEnd && !carousel.params.vtsLoop && !carousel.params.rewind) return;
     carousel.slideNext();
     emit('navigationNext');
   }

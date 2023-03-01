@@ -3,7 +3,7 @@ export default {
   vtsDirection: 'horizontal',
   touchEventsTarget: 'wrapper',
   initialSlide: 0,
-  speed: 300,
+  vtsSpeed: 300,
   cssMode: false,
   updateOnWindowResize: true,
   resizeObserver: true,
@@ -24,8 +24,8 @@ export default {
   url: null,
 
   // To support iOS's swipe-to-go-back gesture (when being used in-app).
-  edgeSwipeDetection: false,
-  edgeSwipeThreshold: 20,
+  vtsEdgeSwipeDetection: false,
+  vtsEdgeSwipeThreshold: 20,
 
   // Autoheight
   autoHeight: false,
@@ -101,9 +101,9 @@ export default {
   updateOnImagesReady: true,
 
   // loop
-  loop: false,
-  loopAdditionalSlides: 0,
-  loopedSlides: null,
+  vtsLoop: false,
+  vtsLoopAdditionalSlides: 0,
+  vtsLoopedSlides: null,
   loopedSlidesLimit: true,
   loopFillGroupWithBlank: false,
   loopPreventsSlide: true,
@@ -112,8 +112,8 @@ export default {
   rewind: false,
 
   // Swiping/no swiping
-  allowSlidePrev: true,
-  allowSlideNext: true,
+  vtsAllowSlidePrev: true,
+  vtsAllowSlideNext: true,
   swipeHandler: null, // '.swipe-handler',
   noSwiping: true,
   noSwipingClass: 'carousel-no-swiping',
@@ -126,12 +126,12 @@ export default {
 
   // NS
   containerModifierClass: 'carousel-', // NEW
-  slideClass: 'carousel-slide',
+  vtsSlideClass: 'carousel-slide',
   slideBlankClass: 'carousel-slide-invisible-blank',
   slideActiveClass: 'carousel-slide-active',
   slideDuplicateActiveClass: 'carousel-slide-duplicate-active',
   slideVisibleClass: 'carousel-slide-visible',
-  slideDuplicateClass: 'carousel-slide-duplicate',
+  vtsSlideDuplicateClass: 'carousel-slide-duplicate',
   slideNextClass: 'carousel-slide-next',
   slideDuplicateNextClass: 'carousel-slide-duplicate-next',
   slidePrevClass: 'carousel-slide-prev',

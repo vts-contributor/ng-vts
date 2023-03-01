@@ -14,8 +14,8 @@ import { Component } from '@angular/core';
       <img src={{item.src}} alt="">
     </ng-template>
     </vts-carousel>
-    <div class="navigation-btn next-btn"></div>
-    <div class="navigation-btn prev-btn"></div>
+    <div class="navigation-btn mtl-next-btn"></div>
+    <div class="navigation-btn mtl-prev-btn"></div>
     <div class="pagination-custom"></div>
   `,
   styles: [
@@ -47,18 +47,18 @@ import { Component } from '@angular/core';
         width: 38px;
         height: 38px;
       }
-      .next-btn {
+      .mtl-next-btn {
         right: 0;
       }
-      .next-btn:after {
+      .mtl-next-btn:after {
         font-family: carousel-icons;
         font-size: 20px;
         content: 'next';
       }
-      .prev-btn {
+      .mtl-prev-btn {
         left: 0;
       }
-      .prev-btn:after {
+      .mtl-prev-btn:after {
         font-family: carousel-icons;
         font-size: 20px;
         content: 'prev';
@@ -69,7 +69,7 @@ import { Component } from '@angular/core';
 export class VtsDemoCarouselMultipleComponent {
     vtsSlidesPerView = 3;
     vtsSpaceBetween = 20;
-    vtsNavigation= {nextEl: '.next-btn', prevEl: '.prev-btn'};
+    vtsNavigation= {nextEl: '.mtl-next-btn', prevEl: '.mtl-prev-btn'};
     vtsPagination= {clickable: true, el: '.pagination-custom'};
     vtsAutoplay = true;
     array= [

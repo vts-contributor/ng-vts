@@ -1,5 +1,5 @@
-// carousel Class
-import carousel from './core/core.js';
+// Carousel Class
+import Carousel from './core/core.js';
 
 //IMPORT_MODULES
 
@@ -7,7 +7,7 @@ const modules = [
   //INSTALL_MODULES
 ];
 
-carousel.use(modules);
+Carousel.use(modules);
 
 //EXPORT
-export default carousel;
+export default Carousel;

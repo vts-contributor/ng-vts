@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: "off" */
-export default function slideReset(speed = this.params.speed, runCallbacks = true, internal) {
+export default function slideReset(vtsSpeed = this.params.vtsSpeed, runCallbacks = true, internal) {
   const carousel = this;
-  return carousel.slideTo(carousel.activeIndex, speed, runCallbacks, internal);
+  return carousel.slideTo(carousel.activeIndex, vtsSpeed, runCallbacks, internal);
 }

@@ -6,7 +6,7 @@ const isGridEnabled = (carousel, params) => {
 
 export default function setBreakpoint() {
   const carousel = this;
-  const { activeIndex, initialized, loopedSlides = 0, params, $el } = carousel;
+  const { activeIndex, initialized, vtsLoopedSlides = 0, params, $el } = carousel;
   const breakpoints = params.vtsBreakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
 
@@ -53,7 +53,7 @@ export default function setBreakpoint() {
   const directionChanged =
     breakpointParams.direction && breakpointParams.direction !== params.vtsDirection;
   const needsReLoop =
-    params.loop && (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
+    params.vtsLoop && (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
 
   if (directionChanged && initialized) {
     carousel.changeDirection();
@@ -64,8 +64,8 @@ export default function setBreakpoint() {
 
   Object.assign(carousel, {
     allowTouchMove: carousel.params.allowTouchMove,
-    allowSlideNext: carousel.params.allowSlideNext,
-    allowSlidePrev: carousel.params.allowSlidePrev,
+    vtsAllowSlideNext: carousel.params.vtsAllowSlideNext,
+    vtsAllowSlidePrev: carousel.params.vtsAllowSlidePrev,
   });
 
   if (wasEnabled && !isEnabled) {
@@ -82,7 +82,7 @@ export default function setBreakpoint() {
     carousel.loopDestroy();
     carousel.loopCreate();
     carousel.updateSlides();
-    carousel.slideTo(activeIndex - loopedSlides + carousel.loopedSlides, 0, false);
+    carousel.slideTo(activeIndex - vtsLoopedSlides + carousel.vtsLoopedSlides, 0, false);
   }
 
   carousel.emit('breakpoint', breakpointParams);

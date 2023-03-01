@@ -78,7 +78,7 @@ export default function History({ carousel, extendParams, on }) {
       for (let i = 0, length = carousel.slides.length; i < length; i += 1) {
         const slide = carousel.slides.eq(i);
         const slideHistory = slugify(slide.attr('data-history'));
-        if (slideHistory === value && !slide.hasClass(carousel.params.slideDuplicateClass)) {
+        if (slideHistory === value && !slide.hasClass(carousel.params.vtsSlideDuplicateClass)) {
           const index = slide.index();
           carousel.slideTo(index, speed, runCallbacks);
         }
@@ -90,7 +90,7 @@ export default function History({ carousel, extendParams, on }) {
 
   const setHistoryPopState = () => {
     paths = getPathValues(carousel.params.url);
-    scrollToSlide(carousel.params.speed, paths.value, false);
+    scrollToSlide(carousel.params.vtsSpeed, paths.value, false);
   };
 
   const init = () => {

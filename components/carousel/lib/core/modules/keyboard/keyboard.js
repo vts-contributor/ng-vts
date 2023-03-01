@@ -32,7 +32,7 @@ export default function Keyboard({ carousel, extendParams, on, emit }) {
     const isArrowDown = kc === 40;
     // Directions locks
     if (
-      !carousel.allowSlideNext &&
+      !carousel.vtsAllowSlideNext &&
       ((carousel.isHorizontal() && isArrowRight) ||
         (carousel.isVertical() && isArrowDown) ||
         isPageDown)
@@ -40,7 +40,7 @@ export default function Keyboard({ carousel, extendParams, on, emit }) {
       return false;
     }
     if (
-      !carousel.allowSlidePrev &&
+      !carousel.vtsAllowSlidePrev &&
       ((carousel.isHorizontal() && isArrowLeft) || (carousel.isVertical() && isArrowUp) || isPageUp)
     ) {
       return false;
@@ -63,7 +63,7 @@ export default function Keyboard({ carousel, extendParams, on, emit }) {
       let inView = false;
       // Check that carousel should be inside of visible area of window
       if (
-        carousel.$el.parents(`.${carousel.params.slideClass}`).length > 0 &&
+        carousel.$el.parents(`.${carousel.params.vtsSlideClass}`).length > 0 &&
         carousel.$el.parents(`.${carousel.params.slideActiveClass}`).length === 0
       ) {
         return undefined;

@@ -1,36 +1,36 @@
-import carousel from './types/carousel-class';
-import { carouselOptions } from './types/carousel-options';
-import { carouselModule } from './types/shared';
+import Carousel from './types/carousel-class';
+import { CarouselOptions } from './types/carousel-options';
+import { CarouselModule } from './types/shared';
 
-declare const A11y: carouselModule;
-declare const Autoplay: carouselModule;
-declare const Controller: carouselModule;
-declare const EffectCoverflow: carouselModule;
-declare const EffectCube: carouselModule;
-declare const EffectFade: carouselModule;
-declare const EffectFlip: carouselModule;
-declare const EffectCreative: carouselModule;
-declare const EffectCards: carouselModule;
-declare const HashNavigation: carouselModule;
-declare const History: carouselModule;
-declare const Keyboard: carouselModule;
-declare const Lazy: carouselModule;
-declare const Mousewheel: carouselModule;
-declare const Navigation: carouselModule;
-declare const Pagination: carouselModule;
-declare const Parallax: carouselModule;
-declare const Scrollbar: carouselModule;
-declare const Thumbs: carouselModule;
-declare const Virtual: carouselModule;
-declare const Zoom: carouselModule;
-declare const FreeMode: carouselModule;
-declare const Grid: carouselModule;
-declare const Manipulation: carouselModule;
+declare const A11y: CarouselModule;
+declare const Autoplay: CarouselModule;
+declare const Controller: CarouselModule;
+declare const EffectCoverflow: CarouselModule;
+declare const EffectCube: CarouselModule;
+declare const EffectFade: CarouselModule;
+declare const EffectFlip: CarouselModule;
+declare const EffectCreative: CarouselModule;
+declare const EffectCards: CarouselModule;
+declare const HashNavigation: CarouselModule;
+declare const History: CarouselModule;
+declare const Keyboard: CarouselModule;
+declare const Lazy: CarouselModule;
+declare const Mousewheel: CarouselModule;
+declare const Navigation: CarouselModule;
+declare const Pagination: CarouselModule;
+declare const Parallax: CarouselModule;
+declare const Scrollbar: CarouselModule;
+declare const Thumbs: CarouselModule;
+declare const Virtual: CarouselModule;
+declare const Zoom: CarouselModule;
+declare const FreeMode: CarouselModule;
+declare const Grid: CarouselModule;
+declare const Manipulation: CarouselModule;
 
-export default carousel;
+export default Carousel;
 export {
-  carousel,
-  carouselOptions,
+  Carousel,
+  CarouselOptions,
   A11y,
   Autoplay,
   Controller,

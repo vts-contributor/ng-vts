@@ -3,7 +3,7 @@ import $ from '../../shared/dom.js';
 export default function updateClickedSlide(e) {
   const carousel = this;
   const params = carousel.params;
-  const slide = $(e).closest(`.${params.slideClass}`)[0];
+  const slide = $(e).closest(`.${params.vtsSlideClass}`)[0];
   let slideFound = false;
   let slideIndex;
 

@@ -25,7 +25,7 @@ export default function onTouchEnd(event) {
     params.grabCursor &&
     data.isMoved &&
     data.isTouched &&
-    (carousel.allowSlideNext === true || carousel.allowSlidePrev === true)
+    (carousel.vtsAllowSlideNext === true || carousel.vtsAllowSlidePrev === true)
   ) {
     carousel.setGrabCursor(false);
   }

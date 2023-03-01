@@ -1,15 +1,15 @@
 import $ from '../../shared/dom.js';
 
-export default function updateAutoHeight(speed) {
+export default function updateAutoHeight(vtsSpeed) {
   const carousel = this;
   const activeSlides = [];
   const isVirtual = carousel.virtual && carousel.params.virtual.enabled;
   let newHeight = 0;
   let i;
-  if (typeof speed === 'number') {
-    carousel.setTransition(speed);
-  } else if (speed === true) {
-    carousel.setTransition(carousel.params.speed);
+  if (typeof vtsSpeed === 'number') {
+    carousel.setTransition(vtsSpeed);
+  } else if (vtsSpeed === true) {
+    carousel.setTransition(carousel.params.vtsSpeed);
   }
 
   const getSlideByIndex = (index) => {

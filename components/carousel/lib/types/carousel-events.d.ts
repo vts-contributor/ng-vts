@@ -24,7 +24,7 @@ import { VirtualEvents } from './modules/virtual';
 import { ZoomEvents } from './modules/zoom';
 import { FreeModeEvents } from './modules/free-mode';
 
-export interface carouselEvents {
+export interface CarouselEvents {
   // CORE_EVENTS_START
   /**
    * Fired right after carousel initialization.
@@ -227,7 +227,7 @@ export interface carouselEvents {
   /**
    * !INTERNAL: Event will fired after setting CSS classes on carousel slide element
    */
-  _slideClass?: (carousel: carousel, slideEl: HTMLElement, classNames: string) => void;
+  _vtsSlideClass?: (carousel: carousel, slideEl: HTMLElement, classNames: string) => void;
 
   /**
    * !INTERNAL: Event will fired after setting CSS classes on all carousel slides
@@ -338,25 +338,25 @@ export interface carouselEvents {
   // CORE_EVENTS_END
 }
 
-interface carouselEvents extends A11yEvents {}
-interface carouselEvents extends AutoplayEvents {}
-interface carouselEvents extends ControllerEvents {}
-interface carouselEvents extends CoverflowEffectEvents {}
-interface carouselEvents extends CubeEffectEvents {}
-interface carouselEvents extends FadeEffectEvents {}
-interface carouselEvents extends FlipEffectEvents {}
-interface carouselEvents extends CreativeEffectEvents {}
-interface carouselEvents extends CardsEffectEvents {}
-interface carouselEvents extends HashNavigationEvents {}
-interface carouselEvents extends HistoryEvents {}
-interface carouselEvents extends KeyboardEvents {}
-interface carouselEvents extends LazyEvents {}
-interface carouselEvents extends MousewheelEvents {}
-interface carouselEvents extends NavigationEvents {}
-interface carouselEvents extends PaginationEvents {}
-interface carouselEvents extends ParallaxEvents {}
-interface carouselEvents extends ScrollbarEvents {}
-interface carouselEvents extends ThumbsEvents {}
-interface carouselEvents extends VirtualEvents {}
-interface carouselEvents extends ZoomEvents {}
-interface carouselEvents extends FreeModeEvents {}
+interface CarouselEvents extends A11yEvents {}
+interface CarouselEvents extends AutoplayEvents {}
+interface CarouselEvents extends ControllerEvents {}
+interface CarouselEvents extends CoverflowEffectEvents {}
+interface CarouselEvents extends CubeEffectEvents {}
+interface CarouselEvents extends FadeEffectEvents {}
+interface CarouselEvents extends FlipEffectEvents {}
+interface CarouselEvents extends CreativeEffectEvents {}
+interface CarouselEvents extends CardsEffectEvents {}
+interface CarouselEvents extends HashNavigationEvents {}
+interface CarouselEvents extends HistoryEvents {}
+interface CarouselEvents extends KeyboardEvents {}
+interface CarouselEvents extends LazyEvents {}
+interface CarouselEvents extends MousewheelEvents {}
+interface CarouselEvents extends NavigationEvents {}
+interface CarouselEvents extends PaginationEvents {}
+interface CarouselEvents extends ParallaxEvents {}
+interface CarouselEvents extends ScrollbarEvents {}
+interface CarouselEvents extends ThumbsEvents {}
+interface CarouselEvents extends VirtualEvents {}
+interface CarouselEvents extends ZoomEvents {}
+interface CarouselEvents extends FreeModeEvents {}

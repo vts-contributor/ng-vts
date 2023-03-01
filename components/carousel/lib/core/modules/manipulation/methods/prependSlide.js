@@ -2,7 +2,7 @@ export default function prependSlide(slides) {
   const carousel = this;
   const { params, $wrapperEl, activeIndex } = carousel;
 
-  if (params.loop) {
+  if (params.vtsLoop) {
     carousel.loopDestroy();
   }
   let newActiveIndex = activeIndex + 1;
@@ -14,7 +14,7 @@ export default function prependSlide(slides) {
   } else {
     $wrapperEl.prepend(slides);
   }
-  if (params.loop) {
+  if (params.vtsLoop) {
     carousel.loopCreate();
   }
   if (!params.observer) {

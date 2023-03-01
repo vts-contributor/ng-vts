@@ -34,7 +34,7 @@ export default function Virtual({ carousel, extendParams, on, emit }) {
     const $slideEl = params.renderSlide
       ? $(params.renderSlide.call(carousel, slide, index))
       : $(
-          `<div class="${carousel.params.slideClass}" data-carousel-slide-index="${index}">${slide}</div>`,
+          `<div class="${carousel.params.vtsSlideClass}" data-carousel-slide-index="${index}">${slide}</div>`,
         );
     if (!$slideEl.attr('data-carousel-slide-index')) $slideEl.attr('data-carousel-slide-index', index);
     if (params.cache) carousel.virtual.cache[index] = $slideEl;
@@ -122,12 +122,12 @@ export default function Virtual({ carousel, extendParams, on, emit }) {
     const prependIndexes = [];
     const appendIndexes = [];
     if (force) {
-      carousel.$wrapperEl.find(`.${carousel.params.slideClass}`).remove();
+      carousel.$wrapperEl.find(`.${carousel.params.vtsSlideClass}`).remove();
     } else {
       for (let i = previousFrom; i <= previousTo; i += 1) {
         if (i < from || i > to) {
           carousel.$wrapperEl
-            .find(`.${carousel.params.slideClass}[data-carousel-slide-index="${i}"]`)
+            .find(`.${carousel.params.vtsSlideClass}[data-carousel-slide-index="${i}"]`)
             .remove();
         }
       }

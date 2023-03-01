@@ -9,18 +9,18 @@ export default function slideToClickedSlide() {
     params.vtsSlidesPerView === 'auto' ? carousel.slidesPerViewDynamic() : params.vtsSlidesPerView;
   let slideToIndex = carousel.clickedIndex;
   let realIndex;
-  if (params.loop) {
+  if (params.vtsLoop) {
     if (carousel.animating) return;
     realIndex = parseInt($(carousel.clickedSlide).attr('data-carousel-slide-index'), 10);
     if (params.centeredSlides) {
       if (
-        slideToIndex < carousel.loopedSlides - vtsSlidesPerView / 2 ||
-        slideToIndex > carousel.slides.length - carousel.loopedSlides + vtsSlidesPerView / 2
+        slideToIndex < carousel.vtsLoopedSlides - vtsSlidesPerView / 2 ||
+        slideToIndex > carousel.slides.length - carousel.vtsLoopedSlides + vtsSlidesPerView / 2
       ) {
         carousel.loopFix();
         slideToIndex = $wrapperEl
           .children(
-            `.${params.slideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`,
+            `.${params.vtsSlideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.vtsSlideDuplicateClass})`,
           )
           .eq(0)
           .index();
@@ -35,7 +35,7 @@ export default function slideToClickedSlide() {
       carousel.loopFix();
       slideToIndex = $wrapperEl
         .children(
-          `.${params.slideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`,
+          `.${params.vtsSlideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.vtsSlideDuplicateClass})`,
         )
         .eq(0)
         .index();

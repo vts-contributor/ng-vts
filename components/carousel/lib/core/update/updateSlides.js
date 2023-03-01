@@ -27,7 +27,7 @@ export default function updateSlides() {
   const { $wrapperEl, size: carouselSize, rtlTranslate: rtl, wrongRTL } = carousel;
   const isVirtual = carousel.virtual && params.virtual.enabled;
   const previousSlidesLength = isVirtual ? carousel.virtual.slides.length : carousel.slides.length;
-  const slides = $wrapperEl.children(`.${carousel.params.slideClass}`);
+  const slides = $wrapperEl.children(`.${carousel.params.vtsSlideClass}`);
   const slidesLength = isVirtual ? carousel.virtual.slides.length : slides.length;
   let snapGrid = [];
   const slidesGrid = [];
