@@ -27,6 +27,7 @@ import { VtsProTableContainerComponent } from './pro-table.component';
 import { VtsProTableSearchFormComponent } from './components/search-form.component';
 import { VtsProTableConfigComponent } from './components/table-config.component';
 import { VtsProTableDataComponent } from './components/table.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { VtsProTableDataComponent } from './components/table.component';
     VtsSelectModule,
     VtsUploadModule,
     VtsTableModule,
-    VtsDividerModule
+    VtsDividerModule,
+    DragDropModule
   ]
 })
 export class VtsProTableModule {}

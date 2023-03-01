@@ -3,7 +3,7 @@
     <div vts-col class="btn-control-area">
       <button vts-button vtsType="primary" [vtsSize]="'xs'" (click)="openDrawer()"><i class="collapse-icon" vts-icon
           [vtsType]="'AddCircle'"></i>New</button>
-      <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="mockFn()"><i
+      <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="exportDataToFile()"><i
           class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Export</button>
       <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="showUploadModal()"><i
           class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Import</button>
@@ -23,7 +23,7 @@
           <li vts-menu-item (click)="handleChangeRowHeight('narrow')">Narrow</li>
         </ul>
       </vts-dropdown-menu>
-      <button vts-button class="btn-table-config" vtsType="default" (click)="mockFn()"><i vts-icon
+      <button vts-button class="btn-table-config" vtsType="default" (click)="reloadTableData()"><i vts-icon
           vtsType="Sync"></i></button>
       <a vts-button vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSettings" class="btn-table-config">
         <i vts-icon vtsType="Settings"></i>
@@ -32,8 +32,8 @@
         <ul vts-menu>
           <li vts-menu-item>Display all column</li>
           <vts-divider></vts-divider>
-          <ng-container *ngFor="let property of properties">
-            <li vts-menu-item *ngIf="property.checked">{{property.headerTitle}}</li>
+          <ng-container *ngFor="let property of properties" cdkDropList (cdkDropListDropped)="drop($event)">
+            <li vts-menu-item *ngIf="property.checked" cdkDrag>{{property.headerTitle}}</li>
           </ng-container>
           <vts-divider></vts-divider>
           <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary">Save</button>
@@ -65,7 +65,7 @@
       </tr>
     </thead>
     <tbody class="vts-table-tbody">
-      <tr *ngFor="let data of listData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
+      <tr *ngFor="let data of displayedData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
         <td [vtsChecked]="setOfCheckedId.has(data.id)" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
         <td *ngFor="let prop of properties" vtsAlign="left">{{ data[prop.propertyName] }}</td>
         <td>
@@ -84,6 +84,19 @@
       </tr>
     </tbody>
   </table>
+
+  <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'bottom'">
+    <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+  </ng-container>
+  <ng-template #paginationTemplate>
+    <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize" [vtsShowTotal]="rangeTemplate"
+    class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
+    </vts-pagination>
+    <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
+    <ng-template #rangeTemplate let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} / {{ total }} items
+    </ng-template>
+  </ng-template>
 </div>
 
 <vts-modal [(vtsVisible)]="isVisibleModal" [vtsTitle]="modalData.title" [vtsContent]="modalData.content"

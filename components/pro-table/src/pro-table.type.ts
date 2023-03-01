@@ -237,3 +237,5 @@ export type PropertyType = {
   datatype: 'string' | 'number' | 'datetime';
   checked?: boolean;
 }
+
+export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';

@@ -19,8 +19,9 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { PropertyType } from '../pro-table.type';
+import { PropertyType, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 @Component({
@@ -71,6 +72,12 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     .btn-properties-config {
       margin-left: 8px;
     }
+
+    .protable-paging {
+      display: flex;
+      justify-content: right;
+      padding-top: 16px;
+    }
 	`],
   host: {
     '[class.vts-table-config-rtl]': `dir === 'rtl'`,
@@ -110,6 +117,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  @Input() vtsPaginationPosition: VtsProTablePaginationPosition = 'bottom';
+  @Input() vtsPageSize: number = 10;
+  @Input() vtsPageIndex: number = 1;
+  @Input() vtsTotal: number = 0;
 
   vtsRowHeight: string | number = 54;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
@@ -122,10 +133,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
-
-  listDisplayedData = [];
-
-  filteredList = [...this.listData];
+  filteredList: { [key: string]: VtsSafeAny }[] = [];
+  displayedData: { [key: string]: VtsSafeAny }[] = [];
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
     // TODO: move to host after View Engine deprecation
@@ -137,10 +146,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
+    this.filteredList = [...this.listData];
+    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    this.vtsTotal = this.filteredList.length;
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes.properties){
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.properties) {
       // let listData: T[] = [];
       // changes.data.currentValue.forEach((d: T) => {
       // //   // let val: T = {};
@@ -162,6 +174,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   mockFn() {
     alert('Mock function!');
     this.visibleDrawer = false;
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.properties, event.previousIndex, event.currentIndex);
   }
 
   showDeleteModal(): void {
@@ -189,7 +205,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   handleOkDelete(): void {
-    this.isOkLoadingDelete = true;  
+    this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
       // _.remove(this.listDisplayedData, item => item.id == this.itemIdToDelete);
     }
@@ -287,4 +303,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.visibleDrawer = true;
   }
 
+  onChangePageIndex(event: VtsSafeAny) {
+    this.displayedData = this.listData.slice((event - 1) * this.vtsPageSize, event * this.vtsPageSize);
+  }
+
+  reloadTableData() {
+    this.vtsPageIndex = 1;
+    this.displayedData = this.listData.slice(0, this.vtsPageSize);
+  }
+
+  exportDataToFile() {}
 }

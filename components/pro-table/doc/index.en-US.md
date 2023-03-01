@@ -1,14 +1,14 @@
 ---
 category: Components
 type: Components
-title: Pro-Table-2
+title: ProTable
 order: 22
 cols: 1
 cover: https://gw.alipayobjects.com/zos/alicdn/f-SbcX2Lx/Table.svg
 ---
 
 ```ts
-import { VtsTableModule } from '@ui-vts/ng-vts/table';
+import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 ```
 
 ## API

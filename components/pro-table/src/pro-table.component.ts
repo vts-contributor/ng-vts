@@ -24,7 +24,6 @@ import {
   template: `
     <vts-search-form></vts-search-form>
     <vts-table-config [listData]="listData" [properties]="properties"></vts-table-config>
-    <vts-protable-data></vts-protable-data>
   `,
   styles: [
     ``
