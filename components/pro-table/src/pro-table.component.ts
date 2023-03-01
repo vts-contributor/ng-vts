@@ -1,4 +1,4 @@
-import { PropertyType } from './pro-table.type';
+import { PropertyType, Request } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
   // ChangeDetectionStrategy,
@@ -23,7 +23,7 @@ import {
   preserveWhitespaces: false,
   template: `
     <vts-search-form></vts-search-form>
-    <vts-table-config [listData]="listData" [properties]="properties"></vts-table-config>
+    <vts-table-config [listData]="listData" [properties]="properties" [editRequest]="editRequest"></vts-table-config>
     <vts-protable-data></vts-protable-data>
   `,
   styles: [
@@ -40,6 +40,10 @@ export class VtsProTableContainerComponent implements OnInit {
 
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  editRequest: Request = {
+    url: "http://localhost:3000/posts/",
+    type: "GET"
+  }
   
   ngOnInit(): void { }
 }

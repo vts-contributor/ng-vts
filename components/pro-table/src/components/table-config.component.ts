@@ -12,16 +12,17 @@ import {
   Output,
   SimpleChanges,
   // QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ChangeDetectorRef
 } from '@angular/core';
 import { VtsDrawerPlacement } from '@ui-vts/ng-vts/drawer';
 import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { PropertyType } from '../pro-table.type';
+import { PropertyType, Request } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-
+import { ProtableService } from '../pro-table.service';
 
 @Component({
   selector: 'vts-table-config',
@@ -30,53 +31,56 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   templateUrl: './table-config.component.html',
-  styles: [`
-		.vts-protable-configuration {
-			padding: 16px;
-			background: #FFFFFF;
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			border-radius: 5px;
-			margin-bottom: 16px;
-		}
+  styles: [
+    `
+      .vts-protable-configuration {
+        padding: 16px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        margin-bottom: 16px;
+      }
 
-		.select-label {
-			background: #FCE5EA;
-			border: 0.5px solid #CB002B;
-			border-radius: 10px;
-		}
+      .select-label {
+        background: #fce5ea;
+        border: 0.5px solid #cb002b;
+        border-radius: 10px;
+      }
 
-		.btn-area {
-			display: flex;
-			justify-content: space-between;
-			margin-bottom: 16px;
-		}
+      .btn-area {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
 
-		.btn-table-config {
-			margin-left: 8px;
-		}
+      .btn-table-config {
+        margin-left: 8px;
+      }
 
-		.btn-control-area {
-			display: flex !important;
-			text-align: left;
-		}
+      .btn-control-area {
+        display: flex !important;
+        text-align: left;
+      }
 
-		.config-area>button {
-			border: none;
-		}
+      .config-area > button {
+        border: none;
+      }
 
-    td, th {
-      border: 1px solid #D1D1D1;
-    }
+      td,
+      th {
+        border: 1px solid #d1d1d1;
+      }
 
-    .btn-properties-config {
-      margin-left: 8px;
-    }
-	`],
+      .btn-properties-config {
+        margin-left: 8px;
+      }
+    `
+  ],
   host: {
-    '[class.vts-table-config-rtl]': `dir === 'rtl'`,
+    '[class.vts-table-config-rtl]': `dir === 'rtl'`
   }
 })
-export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
+export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();
 
@@ -84,32 +88,31 @@ export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
   @Input() isVisibleModal = false;
   @Input() isOkLoadingModal = false;
   @Input() modalData = {
-    title: "Delete Popup",
-    content: "Do you want to delete all selected items?",
+    title: 'Delete Popup',
+    content: 'Do you want to delete all selected items?'
   };
 
   @Input() isVisibleDelete = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
   @Input() modalDeleteData = {
-    title: "Delete Popup",
-    content: "Do you want to delete this items?",
+    title: 'Delete Popup',
+    content: 'Do you want to delete this items?'
   };
 
   @Input() isVisibleUpload = false;
   @Input() uploadData = {
     url: 'http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/',
-    okText: "Upload"
-  }
+    okText: 'Upload'
+  };
 
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
-  @Input() drawerData = {
-    title: "Edit item detail"
-  };
+  @Input() drawerData: { [key: string]: any } = {};
 
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  @Input() editRequest: Request | undefined;
 
   vtsRowHeight: string | number = 54;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
@@ -127,7 +130,12 @@ export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
 
   filteredList = [...this.listData];
 
-  constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
+  constructor(
+    private elementRef: ElementRef,
+    @Optional() private directionality: Directionality,
+    private service: ProtableService,
+    private changeDetector: ChangeDetectorRef
+  ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-table-config');
   }
@@ -139,8 +147,8 @@ export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes.properties){
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.properties) {
       // let listData: T[] = [];
       // changes.data.currentValue.forEach((d: T) => {
       // //   // let val: T = {};
@@ -189,7 +197,7 @@ export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
   }
 
   handleOkDelete(): void {
-    this.isOkLoadingDelete = true;  
+    this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
       // _.remove(this.listDisplayedData, item => item.id == this.itemIdToDelete);
     }
@@ -208,13 +216,15 @@ export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
   }
 
   openDrawer(): void {
-    // let emptyT: {[key: string]: any} = {};
-    // this.headers.forEach(header => {
-    //   emptyT[header.propName] = null;
-    // })
-    // this.testData = {
-    //   ...emptyT
-    // }
+    let emptyT: { [key: string]: any } = {};
+    this.properties.forEach(prop => {
+      if (prop.propertyName) {
+        emptyT[prop.propertyName] = null;
+      }
+    });
+    this.drawerData = {
+      ...emptyT
+    };
     this.visibleDrawer = true;
   }
 
@@ -280,11 +290,14 @@ export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
 
   onEditDataItem(itemId?: number | string) {
     // get data with itemID
-    // let data = {};
-
-    // this.testData = data;
-    console.log(itemId);
-    this.visibleDrawer = true;
+    if (this.editRequest) {
+      let url = this.editRequest.url;
+      url += itemId;
+      this.service.getDataById({...this.editRequest, url}).subscribe(data => {
+        this.drawerData = { ...data };
+        this.visibleDrawer = true;
+        this.changeDetector.detectChanges();
+      });
+    }
   }
-
 }

@@ -1,0 +1,35 @@
+<vts-drawer
+  [vtsBodyStyle]="{ overflow: 'auto' }"
+  [vtsMaskClosable]="false"
+  [vtsWidth]="300"
+  [vtsVisible]="visibleDrawer"
+  [vtsTitle]="title"
+  [vtsFooter]="footerTpl"
+  (vtsOnClose)="closeDrawer()"
+>
+  <form vts-form *vtsDrawerContent>
+    <div *ngFor="let item of headers; let i = index">
+      <ng-container *ngIf="item.headerTitle">
+        <vts-form-item vts-row>
+          <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
+          <vts-form-control vts-col [vtsSpan]="18" *ngIf="item.datatype == 'string'; else inputNumber">
+            <input vts-input [(ngModel)]="data[item.propertyName]" placeholder="" />
+          </vts-form-control>
+
+          <ng-template #inputNumber>
+            <vts-form-control vts-col [vtsSpan]="18">
+              <vts-input-number [(ngModel)]="data[item.propertyName]"></vts-input-number>
+            </vts-form-control>
+          </ng-template>
+        </vts-form-item>
+      </ng-container>
+    </div>
+  </form>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button vts-button style="margin-right: 8px">Save</button>
+      <button vts-button vtsType="primary" (click)="closeDrawer()">Close</button>
+    </div>
+  </ng-template>
+</vts-drawer>
