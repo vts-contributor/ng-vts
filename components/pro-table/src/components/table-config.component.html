@@ -32,7 +32,9 @@
         <ul vts-menu>
           <li vts-menu-item>Display all column</li>
           <vts-divider></vts-divider>
-          <li vts-menu-item *ngFor="let num of [1, 2, 3, 4, 5]">Property {{num}}</li>
+          <ng-container *ngFor="let property of properties">
+            <li vts-menu-item *ngIf="property.checked">{{property.headerTitle}}</li>
+          </ng-container>
           <vts-divider></vts-divider>
           <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary">Save</button>
           <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default">Reset</button>
@@ -57,21 +59,15 @@
     <thead>
       <tr [ngStyle]="{'height':vtsRowHeight+'px'}">
         <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
-        <th vtsWidth="1%" vtsAlign="left">#</th>
-        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn" *ngFor="let num of [1, 2, 3, 4, 5]">
-          Property {{num}}</th>
+        <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn" *ngFor="let property of properties">
+          {{property.headerTitle}}</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody class="vts-table-tbody">
-      <tr *ngFor="let data of listOfData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
+      <tr *ngFor="let data of listData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
         <td [vtsChecked]="setOfCheckedId.has(data.id)" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
-        <td vtsAlign="left">{{ data.id }}</td>
-        <td vtsAlign="left">{{ data.content1 }}</td>
-        <td vtsAlign="left">{{ data.content2 }}</td>
-        <td vtsAlign="left">{{ data.content3 }}</td>
-        <td vtsAlign="left">{{ data.content4 }}</td>
-        <td vtsAlign="left">{{ data.content5 }}</td>
+        <td *ngFor="let prop of properties" vtsAlign="left">{{ data[prop.propertyName] }}</td>
         <td>
           <a>View</a>
           <a> | </a>
@@ -125,7 +121,7 @@
   [vtsVisible]="visibleDrawer" [vtsTitle]="drawerData.title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
   <form vts-form *vtsDrawerContent>
     <div vts-row [vtsGutter]="12" *ngFor="let num of [1, 2, 3, 4, 5, 6, 7]">
-      <vts-form-item>        
+      <vts-form-item>
         <vts-form-label>Property {{num}}</vts-form-label>
         <vts-form-control>
           <input vts-input placeholder="" />

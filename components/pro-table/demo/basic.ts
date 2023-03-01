@@ -1,3 +1,4 @@
+import { PropertyType } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 interface Item {
@@ -12,7 +13,7 @@ interface Item {
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
-    <ng-template #showTotal let-current let-range="range">
+    <!-- <ng-template #showTotal let-current let-range="range">
       <p>{{ range[0] }}-{{ range[1] }} on total {{ current }}</p>
     </ng-template>
     <vts-table
@@ -40,7 +41,7 @@ interface Item {
         </tr>
       </thead>
       <tbody>
-        <!-- <tr>
+        <tr>
           <td></td>
           <td></td>
           <td>
@@ -56,7 +57,7 @@ interface Item {
             <input name="filter4" ngModel (ngModelChange)="filter($event, 'content4')" vts-input />
           </td>
           <td></td>
-        </tr> -->
+        </tr>
         <tr *ngFor="let data of basicTable.data; index as i">
           <td
             [vtsChecked]="setOfCheckedId.has(data.id)"
@@ -72,8 +73,8 @@ interface Item {
           </td>
         </tr>
       </tbody>
-    </vts-table>
-    <vts-protable-container></vts-protable-container>
+    </vts-table> -->
+    <vts-protable-container [listData]="listOfData" [properties]="properties"></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {
@@ -89,6 +90,50 @@ export class VtsDemoProTableBasicComponent {
       };
     })
   ];
+
+  properties: PropertyType[] = [
+    {
+      headerTitle: '#',
+      propertyName: 'id',
+      required: true,
+      datatype: 'string'
+    },
+
+    {
+      headerTitle: 'Prop 1',
+      propertyName: 'content1',
+      required: true,
+      datatype: 'string',
+      checked: true
+    },
+    {
+      headerTitle: 'Prop 2',
+      propertyName: 'content2',
+      required: true,
+      datatype: 'string',
+      checked: true
+    },
+    {
+      headerTitle: 'Prop 3',
+      propertyName: 'content3',
+      required: true,
+      datatype: 'string',
+      checked: true
+    },
+    {
+      headerTitle: 'Prop 4',
+      propertyName: 'content4',
+      required: true,
+      datatype: 'string',
+    },
+    {
+      headerTitle: 'Prop 5',
+      propertyName: 'content5',
+      required: true,
+      datatype: 'string',
+    },
+  ];
+
 
   filteredList = [...this.listOfData];
 
@@ -106,7 +151,7 @@ export class VtsDemoProTableBasicComponent {
   }
 
   onClearAllCheckedItem(event: boolean) {
-    if(event) {
+    if (event) {
       console.log(event);
       this.onAllChecked(!event);
     }

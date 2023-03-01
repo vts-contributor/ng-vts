@@ -224,3 +224,16 @@ export type ColumnsConfig = {
   request?: VtsSafeAny;
   initialValue?: VtsSafeAny;
 }
+
+export type ConfigColumn = {
+  headerName: string,
+  propName: string
+}
+
+export type PropertyType = {
+  headerTitle?: string;
+  propertyName: string;
+  required?: boolean;
+  datatype: 'string' | 'number' | 'datetime';
+  checked?: boolean;
+}

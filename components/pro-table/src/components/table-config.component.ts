@@ -10,6 +10,7 @@ import {
   OnInit,
   Optional,
   Output,
+  SimpleChanges,
   // QueryList,
   ViewEncapsulation
 } from '@angular/core';
@@ -18,15 +19,9 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
+import { PropertyType } from '../pro-table.type';
+import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 
-interface Item {
-  id: string;
-  content1: string;
-  content2: string;
-  content3: string;
-  content4: string;
-  content5: string;
-}
 
 @Component({
   selector: 'vts-table-config',
@@ -113,6 +108,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     title: "Edit item detail"
   };
 
+  @Input() properties: PropertyType[] = [];
+  @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+
   vtsRowHeight: string | number = 54;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
@@ -124,6 +122,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
+
+  listDisplayedData = [];
+
+  filteredList = [...this.listData];
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
     // TODO: move to host after View Engine deprecation
@@ -137,25 +139,25 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.properties){
+      // let listData: T[] = [];
+      // changes.data.currentValue.forEach((d: T) => {
+      // //   // let val: T = {};
+      // //   // this.headers.forEach(header => {
+      // //   //   val[header.propName] = d[header.propName];
+      // //   // });
+      // //   // listData.push(val);
+      // // });
+      // this.listOfData = [...listData];
+      console.log(changes.properties);
+    }
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  listOfData: Item[] = [
-    ...Array.from({ length: 10 }).map((_, i) => {
-      return {
-        id: `${i + 1}`,
-        content1: `Table row ${i + 1}`,
-        content2: `Table row ${i + 1}`,
-        content3: `Table row ${i + 1} (center)`,
-        content4: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
-        content5: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0')
-      };
-    })
-  ];
-
-  filteredList = [...this.listOfData];
 
   mockFn() {
     alert('Mock function!');
@@ -189,7 +191,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;  
     if (this.itemIdToDelete) {
-      _.remove(this.listOfData, item => item.id == this.itemIdToDelete);
+      // _.remove(this.listDisplayedData, item => item.id == this.itemIdToDelete);
     }
     this.isOkLoadingDelete = false;
     this.isVisibleDelete = false;
@@ -206,6 +208,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   openDrawer(): void {
+    // let emptyT: {[key: string]: any} = {};
+    // this.headers.forEach(header => {
+    //   emptyT[header.propName] = null;
+    // })
+    // this.testData = {
+    //   ...emptyT
+    // }
     this.visibleDrawer = true;
   }
 
@@ -270,7 +279,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   sortFn = (item1: any, item2: any) => (item1.content4 < item2.content4 ? 1 : -1);
 
   onEditDataItem(itemId?: number | string) {
-    this.openDrawer();
+    // get data with itemID
+    // let data = {};
+
+    // this.testData = data;
     console.log(itemId);
+    this.visibleDrawer = true;
   }
+
 }

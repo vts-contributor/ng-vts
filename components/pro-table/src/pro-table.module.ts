@@ -71,4 +71,4 @@ import { VtsProTableDataComponent } from './components/table.component';
     VtsDividerModule
   ]
 })
-export class VtsProTable2Module {}
+export class VtsProTableModule {}

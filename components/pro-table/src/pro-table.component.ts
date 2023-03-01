@@ -1,3 +1,4 @@
+import { PropertyType } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
   // ChangeDetectionStrategy,
@@ -22,7 +23,7 @@ import {
   preserveWhitespaces: false,
   template: `
     <vts-search-form></vts-search-form>
-    <vts-table-config></vts-table-config>
+    <vts-table-config [listData]="listData" [properties]="properties"></vts-table-config>
     <vts-protable-data></vts-protable-data>
   `,
   styles: [
@@ -37,8 +38,8 @@ export class VtsProTableContainerComponent implements OnInit {
     this.elementRef.nativeElement.classList.add('vts-protable-container');
   }
 
-  @Input() request: VtsSafeAny;
-  @Input() param: Object = {};
-
+  @Input() properties: PropertyType[] = [];
+  @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  
   ngOnInit(): void { }
 }

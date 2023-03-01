@@ -9,7 +9,7 @@ import { VtsInputModule } from '@ui-vts/ng-vts/input';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
 import { VtsTableModule } from '@ui-vts/ng-vts/table';
-import { VtsProTable2Module } from '@ui-vts/ng-vts/pro-table'
+import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table'
 
 export const moduleList = [
   VtsTableModule,
@@ -23,5 +23,5 @@ export const moduleList = [
   VtsInputModule,
   VtsIconModule,
   VtsPopconfirmModule,
-  VtsProTable2Module
+  VtsProTableModule
 ];
