@@ -74,7 +74,10 @@ interface Item {
         </tr>
       </tbody>
     </vts-table> -->
-    <vts-protable-container [listData]="listOfData" [properties]="properties"></vts-protable-container>
+    <vts-protable-container
+      [listData]="listData2"
+      [properties]="properties"
+    ></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {
@@ -91,6 +94,11 @@ export class VtsDemoProTableBasicComponent {
     })
   ];
 
+  listData2 = [
+    { id: 1, title: 'json-server', author: 'typicode' },
+    { id: 2, title: 'json-server1', author: 'typicode1' }
+  ];
+
   properties: PropertyType[] = [
     {
       headerTitle: '#',
@@ -101,39 +109,38 @@ export class VtsDemoProTableBasicComponent {
 
     {
       headerTitle: 'Prop 1',
-      propertyName: 'content1',
+      propertyName: 'title',
       required: true,
       datatype: 'string',
       checked: true
     },
     {
       headerTitle: 'Prop 2',
-      propertyName: 'content2',
+      propertyName: 'author',
       required: true,
       datatype: 'string',
       checked: true
     },
-    {
-      headerTitle: 'Prop 3',
-      propertyName: 'content3',
-      required: true,
-      datatype: 'string',
-      checked: true
-    },
-    {
-      headerTitle: 'Prop 4',
-      propertyName: 'content4',
-      required: true,
-      datatype: 'string',
-    },
-    {
-      headerTitle: 'Prop 5',
-      propertyName: 'content5',
-      required: true,
-      datatype: 'string',
-    },
+    // {
+    //   headerTitle: 'Prop 3',
+    //   propertyName: 'content3',
+    //   required: true,
+    //   datatype: 'string',
+    //   checked: true
+    // },
+    // {
+    //   headerTitle: 'Prop 4',
+    //   propertyName: 'content4',
+    //   required: true,
+    //   datatype: 'string'
+    // },
+    // {
+    //   headerTitle: 'Prop 5',
+    //   propertyName: 'content5',
+    //   required: true,
+    //   datatype: 'string'
+    // }
   ];
-
 
   filteredList = [...this.listOfData];
 

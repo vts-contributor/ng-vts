@@ -237,3 +237,12 @@ export type PropertyType = {
   datatype: 'string' | 'number' | 'datetime';
   checked?: boolean;
 }
+
+export type Request = {
+  url: string,
+  type: "POST" | "GET",
+  params?: {[key: string]: any},
+  body?: {[key: string]: any},
+  onSuccess?: void
+}
+
