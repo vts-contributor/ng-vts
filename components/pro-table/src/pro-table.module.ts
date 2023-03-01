@@ -27,13 +27,16 @@ import { VtsProTableContainerComponent } from './pro-table.component';
 import { VtsProTableSearchFormComponent } from './components/search-form.component';
 import { VtsProTableConfigComponent } from './components/table-config.component';
 import { VtsProTableDataComponent } from './components/table.component';
+import { ProtableDrawerComponent } from './components/table-drawer.component';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 
 @NgModule({
   declarations: [
     VtsProTableContainerComponent,
     VtsProTableSearchFormComponent,
     VtsProTableConfigComponent,
-    VtsProTableDataComponent
+    VtsProTableDataComponent,
+    ProtableDrawerComponent
   ],
   exports: [
     VtsProTableContainerComponent,
@@ -68,7 +71,8 @@ import { VtsProTableDataComponent } from './components/table.component';
     VtsSelectModule,
     VtsUploadModule,
     VtsTableModule,
-    VtsDividerModule
+    VtsDividerModule,
+    VtsInputNumberModule
   ]
 })
 export class VtsProTableModule {}

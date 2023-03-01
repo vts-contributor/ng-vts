@@ -76,7 +76,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     '[class.vts-table-config-rtl]': `dir === 'rtl'`,
   }
 })
-export class VtsProTableConfigComponent implements OnDestroy, OnInit {
+export class VtsProTableConfigComponent<T> implements OnDestroy, OnInit {
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();
 
