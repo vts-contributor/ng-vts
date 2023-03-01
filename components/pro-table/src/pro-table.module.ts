@@ -34,7 +34,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     VtsProTableContainerComponent,
     VtsProTableSearchFormComponent,
     VtsProTableConfigComponent,
-    VtsProTableDataComponent
+    VtsProTableDataComponent,
+    ProtableDrawerComponent
   ],
   exports: [
     VtsProTableContainerComponent,

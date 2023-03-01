@@ -238,4 +238,14 @@ export type PropertyType = {
   checked?: boolean;
 }
 
+export type Request = {
+  url: string,
+  type: "POST" | "GET",
+  params?: {[key: string]: any},
+  body?: {[key: string]: any},
+  onSuccess?: void
+}
+
+
+
 export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';

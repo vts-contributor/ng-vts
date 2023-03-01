@@ -105,7 +105,7 @@
 </vts-modal>
 
 <vts-modal [(vtsVisible)]="isVisibleDelete" [vtsTitle]="modalDeleteData.title" [vtsContent]="modalDeleteData.content"
-  (vtsOnCancel)="handleCancelDelete()" (vtsOnOk)="handleOkDelete()" [vtsOkLoading]="isOkLoadingDelete">
+  (vtsOnCancel)="handleCancelDelete()" [vtsOkLoading]="isOkLoadingDelete">
   <p *vtsModalContent>Modal Content</p>
 </vts-modal>
 
@@ -130,23 +130,4 @@
   </ng-container>
 </vts-modal>
 
-<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="720"
-  [vtsVisible]="visibleDrawer" [vtsTitle]="drawerData.title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
-  <form vts-form *vtsDrawerContent>
-    <div vts-row [vtsGutter]="12" *ngFor="let num of [1, 2, 3, 4, 5, 6, 7]">
-      <vts-form-item>
-        <vts-form-label>Property {{num}}</vts-form-label>
-        <vts-form-control>
-          <input vts-input placeholder="" />
-        </vts-form-control>
-      </vts-form-item>
-    </div>
-  </form>
-
-  <ng-template #footerTpl>
-    <div style="float: right">
-      <button vts-button style="margin-right: 8px;" (click)="mockFn()">Save</button>
-      <button vts-button vtsType="primary" (click)="closeDrawer()">Close</button>
-    </div>
-  </ng-template>
-</vts-drawer>
+<table-drawer [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer" [data]="drawerData"></table-drawer>

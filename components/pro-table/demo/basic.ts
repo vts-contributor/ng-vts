@@ -30,6 +30,11 @@ export class VtsDemoProTableBasicComponent {
     })
   ];
 
+  listData2 = [
+    { id: 1, title: 'json-server', author: 'typicode' },
+    { id: 2, title: 'json-server1', author: 'typicode1' }
+  ];
+
   properties: PropertyType[] = [
     {
       headerTitle: '#',
@@ -40,14 +45,14 @@ export class VtsDemoProTableBasicComponent {
 
     {
       headerTitle: 'Prop 1',
-      propertyName: 'content1',
+      propertyName: 'title',
       required: true,
       datatype: 'string',
       checked: true
     },
     {
       headerTitle: 'Prop 2',
-      propertyName: 'content2',
+      propertyName: 'author',
       required: true,
       datatype: 'string',
       checked: true
@@ -72,7 +77,6 @@ export class VtsDemoProTableBasicComponent {
       datatype: 'string',
     }
   ];
-
 
   filteredList = [...this.listOfData];
 

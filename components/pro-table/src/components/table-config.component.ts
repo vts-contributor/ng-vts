@@ -12,7 +12,8 @@ import {
   Output,
   SimpleChanges,
   // QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ChangeDetectorRef
 } from '@angular/core';
 import { VtsDrawerPlacement } from '@ui-vts/ng-vts/drawer';
 import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
@@ -31,43 +32,45 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   templateUrl: './table-config.component.html',
-  styles: [`
-		.vts-protable-configuration {
-			padding: 16px;
-			background: #FFFFFF;
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			border-radius: 5px;
-			margin-bottom: 16px;
-		}
+  styles: [
+    `
+      .vts-protable-configuration {
+        padding: 16px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        margin-bottom: 16px;
+      }
 
-		.select-label {
-			background: #FCE5EA;
-			border: 0.5px solid #CB002B;
-			border-radius: 10px;
-		}
+      .select-label {
+        background: #fce5ea;
+        border: 0.5px solid #cb002b;
+        border-radius: 10px;
+      }
 
-		.btn-area {
-			display: flex;
-			justify-content: space-between;
-			margin-bottom: 16px;
-		}
+      .btn-area {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
 
-		.btn-table-config {
-			margin-left: 8px;
-		}
+      .btn-table-config {
+        margin-left: 8px;
+      }
 
-		.btn-control-area {
-			display: flex !important;
-			text-align: left;
-		}
+      .btn-control-area {
+        display: flex !important;
+        text-align: left;
+      }
 
-		.config-area>button {
-			border: none;
-		}
+      .config-area > button {
+        border: none;
+      }
 
-    td, th {
-      border: 1px solid #D1D1D1;
-    }
+      td,
+      th {
+        border: 1px solid #d1d1d1;
+      }
 
     .btn-properties-config {
       margin-left: 8px;
@@ -80,7 +83,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
     }
 	`],
   host: {
-    '[class.vts-table-config-rtl]': `dir === 'rtl'`,
+    '[class.vts-table-config-rtl]': `dir === 'rtl'`
   }
 })
 export class VtsProTableConfigComponent implements OnDestroy, OnInit {
@@ -91,29 +94,27 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() isVisibleModal = false;
   @Input() isOkLoadingModal = false;
   @Input() modalData = {
-    title: "Delete Popup",
-    content: "Do you want to delete all selected items?",
+    title: 'Delete Popup',
+    content: 'Do you want to delete all selected items?'
   };
 
   @Input() isVisibleDelete = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
   @Input() modalDeleteData = {
-    title: "Delete Popup",
-    content: "Do you want to delete this items?",
+    title: 'Delete Popup',
+    content: 'Do you want to delete this items?'
   };
 
   @Input() isVisibleUpload = false;
   @Input() uploadData = {
     url: 'http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/',
-    okText: "Upload"
-  }
+    okText: 'Upload'
+  };
 
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
-  @Input() drawerData = {
-    title: "Edit item detail"
-  };
+  @Input() drawerData: { [key: string]: any } = {};
 
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
@@ -133,8 +134,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
-  filteredList: { [key: string]: VtsSafeAny }[] = [];
-  displayedData: { [key: string]: VtsSafeAny }[] = [];
+
+  listDisplayedData = [];
+
+  filteredList = [...this.listData];
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
     // TODO: move to host after View Engine deprecation
@@ -224,13 +227,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   openDrawer(): void {
-    // let emptyT: {[key: string]: any} = {};
-    // this.headers.forEach(header => {
-    //   emptyT[header.propName] = null;
-    // })
-    // this.testData = {
-    //   ...emptyT
-    // }
+    let emptyT: { [key: string]: any } = {};
+    this.properties.forEach(prop => {
+      if (prop.propertyName) {
+        emptyT[prop.propertyName] = null;
+      }
+    });
+    this.drawerData = {
+      ...emptyT
+    };
     this.visibleDrawer = true;
   }
 
@@ -303,14 +308,4 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.visibleDrawer = true;
   }
 
-  onChangePageIndex(event: VtsSafeAny) {
-    this.displayedData = this.listData.slice((event - 1) * this.vtsPageSize, event * this.vtsPageSize);
-  }
-
-  reloadTableData() {
-    this.vtsPageIndex = 1;
-    this.displayedData = this.listData.slice(0, this.vtsPageSize);
-  }
-
-  exportDataToFile() {}
 }
