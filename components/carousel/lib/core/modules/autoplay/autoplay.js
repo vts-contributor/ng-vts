@@ -38,17 +38,17 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
     timeout = nextTick(() => {
       let autoplayResult;
       if (carousel.params.vtsAutoplay.reverseDirection) {
-        if (carousel.params.loop) {
+        if (carousel.params.vtsLoop) {
           carousel.loopFix();
-          autoplayResult = carousel.slidePrev(carousel.params.speed, true, true);
+          autoplayResult = carousel.slidePrev(carousel.params.vtsSpeed, true, true);
           emit('autoplay');
         } else if (!carousel.isBeginning) {
-          autoplayResult = carousel.slidePrev(carousel.params.speed, true, true);
+          autoplayResult = carousel.slidePrev(carousel.params.vtsSpeed, true, true);
           emit('autoplay');
         } else if (!carousel.params.vtsAutoplay.stopOnLastSlide) {
           autoplayResult = carousel.slideTo(
             carousel.slides.length - 1,
-            carousel.params.speed,
+            carousel.params.vtsSpeed,
             true,
             true,
           );
@@ -56,15 +56,15 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
         } else {
           stop();
         }
-      } else if (carousel.params.loop) {
+      } else if (carousel.params.vtsLoop) {
         carousel.loopFix();
-        autoplayResult = carousel.slideNext(carousel.params.speed, true, true);
+        autoplayResult = carousel.slideNext(carousel.params.vtsSpeed, true, true);
         emit('autoplay');
       } else if (!carousel.isEnd) {
-        autoplayResult = carousel.slideNext(carousel.params.speed, true, true);
+        autoplayResult = carousel.slideNext(carousel.params.vtsSpeed, true, true);
         emit('autoplay');
       } else if (!carousel.params.vtsAutoplay.stopOnLastSlide) {
-        autoplayResult = carousel.slideTo(0, carousel.params.speed, true, true);
+        autoplayResult = carousel.slideTo(0, carousel.params.vtsSpeed, true, true);
         emit('autoplay');
       } else {
         stop();

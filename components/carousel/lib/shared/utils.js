@@ -142,7 +142,7 @@ function animateCSSModeScroll({ carousel, targetPosition, side }) {
   const startPosition = -carousel.translate;
   let startTime = null;
   let time;
-  const duration = carousel.params.speed;
+  const duration = carousel.params.vtsSpeed;
 
   carousel.wrapperEl.style.scrollSnapType = 'none';
   window.cancelAnimationFrame(carousel.cssModeFrameID);

@@ -2,7 +2,7 @@ import { animateCSSModeScroll } from '../../shared/utils.js';
 
 export default function slideTo(
   index = 0,
-  speed = this.params.speed,
+  vtsSpeed = this.params.vtsSpeed,
   runCallbacks = true,
   internal,
   initial,
@@ -92,14 +92,14 @@ export default function slideTo(
   // Directions locks
   if (carousel.initialized && slideIndex !== activeIndex) {
     if (
-      !carousel.allowSlideNext &&
+      !carousel.vtsAllowSlideNext &&
       translate < carousel.translate &&
       translate < carousel.minTranslate()
     ) {
       return false;
     }
     if (
-      !carousel.allowSlidePrev &&
+      !carousel.vtsAllowSlidePrev &&
       translate > carousel.translate &&
       translate > carousel.maxTranslate()
     ) {
@@ -139,7 +139,7 @@ export default function slideTo(
   if (params.cssMode) {
     const isH = carousel.isHorizontal();
     const t = rtl ? translate : -translate;
-    if (speed === 0) {
+    if (vtsSpeed === 0) {
       const isVirtual = carousel.virtual && carousel.params.virtual.enabled;
       if (isVirtual) {
         carousel.wrapperEl.style.scrollSnapType = 'none';
@@ -165,14 +165,14 @@ export default function slideTo(
     return true;
   }
 
-  carousel.setTransition(speed);
+  carousel.setTransition(vtsSpeed);
   carousel.setTranslate(translate);
   carousel.updateActiveIndex(slideIndex);
   carousel.updateSlidesClasses();
-  carousel.emit('beforeTransitionStart', speed, internal);
+  carousel.emit('beforeTransitionStart', vtsSpeed, internal);
   carousel.transitionStart(runCallbacks, direction);
 
-  if (speed === 0) {
+  if (vtsSpeed === 0) {
     carousel.transitionEnd(runCallbacks, direction);
   } else if (!carousel.animating) {
     carousel.animating = true;

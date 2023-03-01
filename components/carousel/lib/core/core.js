@@ -46,7 +46,7 @@ const prototypes = {
 
 const extendedDefaults = {};
 
-class carousel {
+class Carousel {
   isHorizontal() {
     throw new Error('Method not implemented.');
   }
@@ -178,8 +178,8 @@ class carousel {
       animating: false,
 
       // Locks
-      allowSlideNext: carousel.params.allowSlideNext,
-      allowSlidePrev: carousel.params.allowSlidePrev,
+      vtsAllowSlideNext: carousel.params.vtsAllowSlideNext,
+      vtsAllowSlidePrev: carousel.params.vtsAllowSlidePrev,
 
       // Touch Events
       touchEvents: (function touchEvents() {
@@ -256,9 +256,9 @@ class carousel {
     this.loopDestroy = undefined;
     this.loopedSlides = undefined;
     this.lazy = undefined;
-    this.controller = undefined;
-    this.allowSlideNext = undefined;
-    this.allowSlidePrev = undefined;
+    this.vtsController = undefined;
+    this.vtsAllowSlideNext = undefined;
+    this.vtsAllowSlidePrev = undefined;
     this.currentBreakpoint = undefined;
   }
 
@@ -314,7 +314,7 @@ class carousel {
       .filter((className) => {
         return (
           className.indexOf('carousel-slide') === 0 ||
-          className.indexOf(carousel.params.slideClass) === 0
+          className.indexOf(carousel.params.vtsSlideClass) === 0
         );
       })
       .join(' ');
@@ -327,7 +327,7 @@ class carousel {
     carousel.slides.each((slideEl) => {
       const classNames = carousel.getSlideClasses(slideEl);
       updates.push({ slideEl, classNames });
-      carousel.emit('_slideClass', slideEl, classNames);
+      carousel.emit('_vtsSlideClass', slideEl, classNames);
     });
     carousel.emit('_slideClasses', updates);
   }
@@ -514,7 +514,7 @@ class carousel {
       $wrapperEl = $(wrapper);
       wrapper.className = carousel.params.wrapperClass;
       $el.append(wrapper);
-      $el.children(`.${carousel.params.slideClass}`).each((slideEl) => {
+      $el.children(`.${carousel.params.vtsSlideClass}`).each((slideEl) => {
         $wrapperEl.append(slideEl);
       });
     }
@@ -555,7 +555,7 @@ class carousel {
     carousel.addClasses();
 
     // Create loop
-    if (carousel.params.loop) {
+    if (carousel.params.vtsLoop) {
       carousel.loopCreate();
     }
 
@@ -579,9 +579,9 @@ class carousel {
     }
 
     // Slide To Initial Slide
-    if (carousel.params.loop) {
+    if (carousel.params.vtsLoop) {
       carousel.slideTo(
-        carousel.params.initialSlide + carousel.loopedSlides,
+        carousel.params.initialSlide + carousel.vtsLoopedSlides,
         0,
         carousel.params.runCallbacksOnInit,
         false,
@@ -621,7 +621,7 @@ class carousel {
     carousel.detachEvents();
 
     // Destroy loop
-    if (params.loop) {
+    if (params.vtsLoop) {
       carousel.loopDestroy();
     }
 
@@ -674,8 +674,8 @@ class carousel {
   }
 
   static installModule(mod) {
-    if (!carousel.prototype.__modules__) carousel.prototype.__modules__ = [];
-    const modules = carousel.prototype.__modules__;
+    if (!Carousel.prototype.__modules__) Carousel.prototype.__modules__ = [];
+    const modules = Carousel.prototype.__modules__;
 
     if (typeof mod === 'function' && modules.indexOf(mod) < 0) {
       modules.push(mod);
@@ -684,20 +684,20 @@ class carousel {
 
   static use(module) {
     if (Array.isArray(module)) {
-      module.forEach((m) => carousel.installModule(m));
-      return carousel;
+      module.forEach((m) => Carousel.installModule(m));
+      return Carousel;
     }
-    carousel.installModule(module);
-    return carousel;
+    Carousel.installModule(module);
+    return Carousel;
   }
 }
 
 Object.keys(prototypes).forEach((prototypeGroup) => {
   Object.keys(prototypes[prototypeGroup]).forEach((protoMethod) => {
-    carousel.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
+    Carousel.prototype[protoMethod] = prototypes[prototypeGroup][protoMethod];
   });
 });
 
-carousel.use([Resize, Observer, Autoplay, Navigation, Pagination]);
+Carousel.use([Resize, Observer, Autoplay, Navigation, Pagination]);
 
-export default carousel;
+export default Carousel;

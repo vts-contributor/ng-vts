@@ -28,7 +28,7 @@ export default function onTouchStart(event) {
   if (carousel.animating && params.preventInteractionOnTransition) {
     return;
   }
-  if (!carousel.animating && params.cssMode && params.loop) {
+  if (!carousel.animating && params.cssMode && params.vtsLoop) {
     carousel.loopFix();
   }
   let e = event;
@@ -78,13 +78,13 @@ export default function onTouchStart(event) {
 
   // Do NOT start if iOS edge swipe is detected. Otherwise iOS app cannot swipe-to-go-back anymore
 
-  const edgeSwipeDetection = params.edgeSwipeDetection || params.iOSEdgeSwipeDetection;
-  const edgeSwipeThreshold = params.edgeSwipeThreshold || params.iOSEdgeSwipeThreshold;
+  const vtsEdgeSwipeDetection = params.vtsEdgeSwipeDetection || params.iOSEdgeSwipeDetection;
+  const vtsEdgeSwipeThreshold = params.vtsEdgeSwipeThreshold || params.iOSEdgeSwipeThreshold;
   if (
-    edgeSwipeDetection &&
-    (startX <= edgeSwipeThreshold || startX >= window.innerWidth - edgeSwipeThreshold)
+    vtsEdgeSwipeDetection &&
+    (startX <= vtsEdgeSwipeThreshold || startX >= window.innerWidth - vtsEdgeSwipeThreshold)
   ) {
-    if (edgeSwipeDetection === 'prevent') {
+    if (vtsEdgeSwipeDetection === 'prevent') {
       event.preventDefault();
     } else {
       return;

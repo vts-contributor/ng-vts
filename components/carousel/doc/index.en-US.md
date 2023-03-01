@@ -26,25 +26,11 @@ import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 | Property | Description | Type | Default | Global Config |
 | -------- | ----------- | ---- | ------- | ------------- |
 | `[vtsAutoPlay]` | Whether to scroll automatically | `boolean` | `false` | ✅ |
-| `[vtsNavigation]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
-| `[vtsPagination]` | Whether to show the next button and previouse button | `boolean` | `true` | ✅ |
+| `[vtsNavigation]` | Whether to show the next button and previouse button | `boolean` | `false` | ✅ |
+| `[vtsPagination]` | Whether to show the next button and previouse button | `boolean` | `false` | ✅ |
 | `[vtsSlidesPerView]` | Number of slides is shown | `boolean` | 1 | ✅ |
-| `[vtsSpaceBetween]` | Margin between slides | `number` | 10 | ✅ |
+| `[vtsSpaceBetween]` | Margin between slides | `number` | 0 | ✅ |
+| `[vtsSpeed]` | Duration of transition between slides (in ms) | `number` | 300 | ✅ |
+| `[vtsBreakpoints]` | Allows to set different parameter for different responsive breakpoints (screen sizes). Not all parameters can be changed in breakpoints, only those which do not require different layout and logic, like `vstSlidesPerView`, `vtsSpaceBetween`. Such parameters like `vtsLoop` won't work | `CarouselOptions` |  | ✅ |
+| `[vtsLoop]` | Set to `true` to enable continuous loop mode | `boolean` | false | ✅ |
 
-#### Methods
-
-| Name | Description |
-| ---- | ----------- |
-| `goTo(slideNumber)` | Change current slide to given slide number |
-| `next()` | Change current slide to next slide |
-| `pre()` | Change current slide to previous slide |
-
-### InjectionToken
-
-| Token | Description | Parameters | Default Value |
-| ----- | --- | ---- | --- |
-| `NZ_carousel_CUSTOM_STRATEGIES` | Provide custom transitioning strategies | `carouselStrategyRegistryItem[]` | - |
-
-### Customizing transition effects
-
-You can provide strategies that extends `VtscarouselBaseStrategy` to implement custom transition effects.

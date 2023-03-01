@@ -14,7 +14,7 @@ export interface AutoplayMethods {
   /**
    * Pause autoplay
    */
-  pause(speed?: number): void;
+  pause(vtsSpeed?: number): void;
 
   /**
    * Run the autoplay logic

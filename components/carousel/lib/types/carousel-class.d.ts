@@ -1,7 +1,7 @@
 import { Dom7Array } from 'dom7';
-import { carouselOptions } from './carousel-options';
-import { CSSSelector, carouselModule } from './shared';
-import { carouselEvents } from './carousel-events';
+import { CarouselOptions } from './carousel-options';
+import { CSSSelector, CarouselModule } from './shared';
+import { CarouselEvents } from './carousel-events';
 
 import { A11yMethods } from './modules/a11y';
 import { AutoplayMethods } from './modules/autoplay';
@@ -27,7 +27,7 @@ import { ZoomMethods } from './modules/zoom';
 import { FreeModeMethods } from './modules/free-mode';
 import { ManipulationMethods } from './modules/manipulation';
 
-interface carouselClass<Events> {
+interface CarouselClass<Events> {
   /** Add event handler */
   on<E extends keyof Events>(event: E, handler: Events[E]): void;
   /** Add event handler that will be removed after it was fired */
@@ -40,16 +40,16 @@ interface carouselClass<Events> {
   emit<E extends keyof Events>(event: E, ...args: any[]): void;
 }
 
-interface carousel extends carouselClass<carouselEvents> {
+interface Carousel extends CarouselClass<CarouselEvents> {
   /**
    * Object with passed initialization parameters
    */
-  params: carouselOptions;
+  params: CarouselOptions;
 
   /**
    * Object with original initialization parameters
    */
-  originalParams: carouselOptions;
+  originalParams: CarouselOptions;
 
   /**
    * Dom7 element with slider container HTML element. To get vanilla HTMLElement use `carousel.el`
@@ -79,7 +79,7 @@ interface carousel extends carouselClass<carouselEvents> {
   /**
    * !INTERNAL
    */
-  loopedSlides: number | null;
+  vtsLoopedSlides: number | null;
 
   /**
    * Width of container
@@ -178,12 +178,12 @@ interface carousel extends carouselClass<carouselEvents> {
   /**
    * Disable / enable ability to slide to the next slides by assigning `false` / `true` to this property
    */
-  allowSlideNext: boolean;
+  vtsAllowSlideNext: boolean;
 
   /**
    * Disable / enable ability to slide to the previous slides by assigning `false` / `true` to this property
    */
-  allowSlidePrev: boolean;
+  vtsAllowSlidePrev: boolean;
 
   /**
    * Disable / enable ability move slider by grabbing it with mouse or by touching it with finger (on touch screens) by assigning `false` / `true` to this property
@@ -211,76 +211,76 @@ interface carousel extends carouselClass<carouselEvents> {
    * Set carousel translate progress (from 0 to 1). Where 0 - its initial position (offset) on first slide, and 1 - its maximum position (offset) on last slide
    *
    * @param progress carousel translate progress (from 0 to 1).
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    */
-  setProgress(progress: number, speed?: number): void;
+  setProgress(progress: number, vtsSpeed?: number): void;
 
   /**
    * Run transition to next slide.
    *
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
    *  not produce transition events.
    */
-  slideNext(speed?: number, runCallbacks?: boolean): void;
+  slideNext(vtsSpeed?: number, runCallbacks?: boolean): void;
 
   /**
    * Run transition to previous slide.
    *
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
    *  not produce transition events.
    */
-  slidePrev(speed?: number, runCallbacks?: boolean): void;
+  slidePrev(vtsSpeed?: number, runCallbacks?: boolean): void;
 
   /**
    * Run transition to the slide with index number equal to 'index' parameter for the
-   *  duration equal to 'speed' parameter.
+   *  duration equal to 'vtsSpeed' parameter.
    *
    * @param index Index number of slide.
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
    *  not produce transition events.
    */
-  slideTo(index: number, speed?: number, runCallbacks?: boolean): void;
+  slideTo(index: number, vtsSpeed?: number, runCallbacks?: boolean): void;
 
   /**
    * Does the same as .slideTo but for the case when used with enabled loop. So this
    * method will slide to slides with realIndex matching to passed index
    *
    * @param index Index number of slide.
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
    *  not produce transition events.
    */
-  slideToLoop(index: number, speed?: number, runCallbacks?: boolean): void;
+  slideToLoop(index: number, vtsSpeed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Reset carousel position to currently active slide for the duration equal to 'speed'
+   * Reset carousel position to currently active slide for the duration equal to 'vtsSpeed'
    * parameter.
    *
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
    *  not produce transition events.
    */
-  slideReset(speed?: number, runCallbacks?: boolean): void;
+  slideReset(vtsSpeed?: number, runCallbacks?: boolean): void;
 
   /**
-   * Reset carousel position to closest slide/snap point for the duration equal to 'speed' parameter.
+   * Reset carousel position to closest slide/snap point for the duration equal to 'vtsSpeed' parameter.
    *
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    * @param runCallbacks Set it to false (by default it is true) and transition will
    *  not produce transition events.
    */
-  slideToClosest(speed?: number, runCallbacks?: boolean): void;
+  slideToClosest(vtsSpeed?: number, runCallbacks?: boolean): void;
 
   /**
    * Force carousel to update its height (when autoHeight enabled) for the duration equal to
-   * 'speed' parameter
+   * 'vtsSpeed' parameter
    *
-   * @param speed Transition duration (in ms).
+   * @param vtsSpeed Transition duration (in ms).
    */
-  updateAutoHeight(speed?: number): void;
+  updateAutoHeight(vtsSpeed?: number): void;
 
   /**
    * You should call it after you add/remove slides
@@ -349,7 +349,7 @@ interface carousel extends carouselClass<carouselEvents> {
   /**
    * Initialize slider
    */
-  init(el?: HTMLElement): carousel;
+  init(el?: HTMLElement): Carousel;
 
   /**
    * Destroy slider instance and detach all events listeners
@@ -374,14 +374,14 @@ interface carousel extends carouselClass<carouselEvents> {
    * Animate custom css3 transform's translate value for carousel wrapper
    *
    * @param translate Translate value (in px)
-   * @param speed Transition duration (in ms)
+   * @param vtsSpeed Transition duration (in ms)
    * @param runCallbacks Set it to false (by default it is true) and transition will not produce  transition events
    * @param translateBounds Set it to false (by default it is true) and transition value can extend beyond min and max translate
    *
    */
   translateTo(
     translate: number,
-    speed: number,
+    vtsSpeed: number,
     runCallbacks?: boolean,
     translateBounds?: boolean,
   ): any;
@@ -414,7 +414,7 @@ interface carousel extends carouselClass<carouselEvents> {
   /**
    * !INTERNAL
    */
-  getBreakpoint(breakpoints: carouselOptions['vtsBreakpoints']): string;
+  getBreakpoint(breakpoints: CarouselOptions['vtsBreakpoints']): string;
 
   /**
    * !INTERNAL
@@ -434,11 +434,11 @@ interface carousel extends carouselClass<carouselEvents> {
   /**
    * !INTERNAL
    */
-  modules: Array<carouselModule>;
+  modules: Array<CarouselModule>;
 
   a11y: A11yMethods;
   autoplay: AutoplayMethods;
-  controller: ControllerMethods;
+  vtsController: ControllerMethods;
   coverflowEffect: CoverflowEffectMethods;
   cubeEffect: CubeEffectMethods;
   fadeEffect: FadeEffectMethods;
@@ -460,35 +460,35 @@ interface carousel extends carouselClass<carouselEvents> {
   freeMode: FreeModeMethods;
 }
 
-interface carousel extends ManipulationMethods {}
+interface Carousel extends ManipulationMethods {}
 
-declare class carousel implements carousel {
+declare class Carousel implements Carousel {
   /**
    * Constructs a new carousel instance.
    *
    * @param container Where carousel applies to.
    * @param options   Instance options.
    */
-  constructor(container: CSSSelector | HTMLElement, options?: carouselOptions);
+  constructor(container: CSSSelector | HTMLElement, options?: CarouselOptions);
   /**
    * Installs modules on carousel in runtime.
    */
-  static use(modules: carouselModule[]): void;
+  static use(modules: CarouselModule[]): void;
 
   /**
    * carousel default options
    */
-  static defaults: carouselOptions;
+  static defaults: CarouselOptions;
 
   /**
    * Extend global carousel defaults
    */
-  static extendDefaults(options: carouselOptions): void;
+  static extendDefaults(options: CarouselOptions): void;
 
   /**
    * Object with global carousel extended options
    */
-  static extendedDefaults: carouselOptions;
+  static extendedDefaults: CarouselOptions;
 }
 
-export default carousel;
+export default Carousel;

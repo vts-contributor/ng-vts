@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: "off" */
-export default function slideNext(speed = this.params.speed, runCallbacks = true, internal) {
+export default function slideNext(speed = this.params.vtsSpeed, runCallbacks = true, internal) {
   const carousel = this;
   const { animating, enabled, params } = carousel;
   if (!enabled) return carousel;
@@ -8,7 +8,7 @@ export default function slideNext(speed = this.params.speed, runCallbacks = true
     perGroup = Math.max(carousel.slidesPerViewDynamic('current', true), 1);
   }
   const increment = carousel.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;
-  if (params.loop) {
+  if (params.vtsLoop) {
     if (animating && params.loopPreventsSlide) return false;
     carousel.loopFix();
     // eslint-disable-next-line

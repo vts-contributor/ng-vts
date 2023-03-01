@@ -6,38 +6,38 @@ export default function loopFix() {
   const {
     activeIndex,
     slides,
-    loopedSlides,
-    allowSlidePrev,
-    allowSlideNext,
+    vtsLoopedSlides,
+    vtsAllowSlidePrev,
+    vtsAllowSlideNext,
     snapGrid,
     rtlTranslate: rtl,
   } = carousel;
   let newIndex;
-  carousel.allowSlidePrev = true;
-  carousel.allowSlideNext = true;
+  carousel.vtsAllowSlidePrev = true;
+  carousel.vtsAllowSlideNext = true;
 
   const snapTranslate = -snapGrid[activeIndex];
   const diff = snapTranslate - carousel.getTranslate();
 
   // Fix For Negative Oversliding
-  if (activeIndex < loopedSlides) {
-    newIndex = slides.length - loopedSlides * 3 + activeIndex;
-    newIndex += loopedSlides;
+  if (activeIndex < vtsLoopedSlides) {
+    newIndex = slides.length - vtsLoopedSlides * 3 + activeIndex;
+    newIndex += vtsLoopedSlides;
     const slideChanged = carousel.slideTo(newIndex, 0, false, true);
     if (slideChanged && diff !== 0) {
       carousel.setTranslate((rtl ? -carousel.translate : carousel.translate) - diff);
     }
-  } else if (activeIndex >= slides.length - loopedSlides) {
+  } else if (activeIndex >= slides.length - vtsLoopedSlides) {
     // Fix For Positive Oversliding
-    newIndex = -slides.length + activeIndex + loopedSlides;
-    newIndex += loopedSlides;
+    newIndex = -slides.length + activeIndex + vtsLoopedSlides;
+    newIndex += vtsLoopedSlides;
     const slideChanged = carousel.slideTo(newIndex, 0, false, true);
     if (slideChanged && diff !== 0) {
       carousel.setTranslate((rtl ? -carousel.translate : carousel.translate) - diff);
     }
   }
-  carousel.allowSlidePrev = allowSlidePrev;
-  carousel.allowSlideNext = allowSlideNext;
+  carousel.vtsAllowSlidePrev = vtsAllowSlidePrev;
+  carousel.vtsAllowSlideNext = vtsAllowSlideNext;
 
   carousel.emit('loopFix');
 }

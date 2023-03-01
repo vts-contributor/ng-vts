@@ -74,15 +74,15 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     const $el = carousel.vtsPagination.$el;
     // Current/Total
     let current;
-    const total = carousel.params.loop
-      ? Math.ceil((slidesLength - carousel.loopedSlides * 2) / carousel.params.slidesPerGroup)
+    const total = carousel.params.vtsLoop
+      ? Math.ceil((slidesLength - carousel.vtsLoopedSlides * 2) / carousel.params.slidesPerGroup)
       : carousel.snapGrid.length;
-    if (carousel.params.loop) {
+    if (carousel.params.vtsLoop) {
       current = Math.ceil(
-        (carousel.activeIndex - carousel.loopedSlides) / carousel.params.slidesPerGroup,
+        (carousel.activeIndex - carousel.vtsLoopedSlides) / carousel.params.slidesPerGroup,
       );
-      if (current > slidesLength - 1 - carousel.loopedSlides * 2) {
-        current -= slidesLength - carousel.loopedSlides * 2;
+      if (current > slidesLength - 1 - carousel.vtsLoopedSlides * 2) {
+        current -= slidesLength - carousel.vtsLoopedSlides * 2;
       }
       if (current > total - 1) current -= total;
       if (current < 0 && carousel.params.vtsPaginationType !== 'bullets') current = total + current;
@@ -108,7 +108,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
           `${bulletSize * (params.dynamicMainBullets + 4)}px`,
         );
         if (params.dynamicMainBullets > 1 && carousel.previousIndex !== undefined) {
-          dynamicBulletIndex += current - (carousel.previousIndex - carousel.loopedSlides || 0);
+          dynamicBulletIndex += current - (carousel.previousIndex - carousel.vtsLoopedSlides || 0);
           if (dynamicBulletIndex > params.dynamicMainBullets - 1) {
             dynamicBulletIndex = params.dynamicMainBullets - 1;
           } else if (dynamicBulletIndex < 0) {
@@ -153,7 +153,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
           for (let i = firstIndex; i <= lastIndex; i += 1) {
             bullets.eq(i).addClass(`${params.bulletActiveClass}-main`);
           }
-          if (carousel.params.loop) {
+          if (carousel.params.vtsLoop) {
             if (bulletIndex >= bullets.length) {
               for (let i = params.dynamicMainBullets; i >= 0; i -= 1) {
                 bullets.eq(bullets.length - i).addClass(`${params.bulletActiveClass}-main`);
@@ -203,7 +203,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       $el
         .find(classesToSelector(params.progressbarFillClass))
         .transform(`translate3d(0,0,0) scaleX(${scaleX}) scaleY(${scaleY})`)
-        .transition(carousel.params.speed);
+        .transition(carousel.params.vtsSpeed);
     }
     if (params.type === 'custom' && params.renderCustom) {
       $el.html(params.renderCustom(carousel, current + 1, total));
@@ -227,13 +227,13 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     const $el = carousel.vtsPagination.$el;
     let paginationHTML = '';
     if (params.type === 'bullets') {
-      let numberOfBullets = carousel.params.loop
-        ? Math.ceil((slidesLength - carousel.loopedSlides * 2) / carousel.params.slidesPerGroup)
+      let numberOfBullets = carousel.params.vtsLoop
+        ? Math.ceil((slidesLength - carousel.vtsLoopedSlides * 2) / carousel.params.slidesPerGroup)
         : carousel.snapGrid.length;
       if (
         carousel.params.freeMode &&
         carousel.params.freeMode.enabled &&
-        !carousel.params.loop &&
+        !carousel.params.vtsLoop &&
         numberOfBullets > slidesLength
       ) {
         numberOfBullets = slidesLength;
@@ -318,7 +318,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       $el.on('click', classesToSelector(params.bulletClass), function onClick(e) {
         e.preventDefault();
         let index = $(this).index() * carousel.params.slidesPerGroup;
-        if (carousel.params.loop) index += carousel.loopedSlides;
+        if (carousel.params.vtsLoop) index += carousel.vtsLoopedSlides;
         carousel.slideTo(index);
       });
     }
@@ -358,25 +358,25 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     }
   });
   on('activeIndexChange', () => {
-    if (carousel.params.loop) {
+    if (carousel.params.vtsLoop) {
       update();
     } else if (typeof carousel.snapIndex === 'undefined') {
       update();
     }
   });
   on('snapIndexChange', () => {
-    if (!carousel.params.loop) {
+    if (!carousel.params.vtsLoop) {
       update();
     }
   });
   on('slidesLengthChange', () => {
-    if (carousel.params.loop) {
+    if (carousel.params.vtsLoop) {
       render();
       update();
     }
   });
   on('snapGridLengthChange', () => {
-    if (!carousel.params.loop) {
+    if (!carousel.params.vtsLoop) {
       render();
       update();
     }

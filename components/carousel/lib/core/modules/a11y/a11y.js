@@ -73,7 +73,7 @@ export default function A11y({ carousel, extendParams, on }) {
     const params = carousel.params.a11y;
     const $targetEl = $(e.target);
     if (carousel.vtsNavigation && carousel.vtsNavigation.$nextEl && $targetEl.is(carousel.vtsNavigation.$nextEl)) {
-      if (!(carousel.isEnd && !carousel.params.loop)) {
+      if (!(carousel.isEnd && !carousel.params.vtsLoop)) {
         carousel.slideNext();
       }
       if (carousel.isEnd) {
@@ -83,7 +83,7 @@ export default function A11y({ carousel, extendParams, on }) {
       }
     }
     if (carousel.vtsNavigation && carousel.vtsNavigation.$prevEl && $targetEl.is(carousel.vtsNavigation.$prevEl)) {
-      if (!(carousel.isBeginning && !carousel.params.loop)) {
+      if (!(carousel.isBeginning && !carousel.params.vtsLoop)) {
         carousel.slidePrev();
       }
       if (carousel.isBeginning) {
@@ -102,7 +102,7 @@ export default function A11y({ carousel, extendParams, on }) {
   }
 
   function updateNavigation() {
-    if (carousel.params.loop || carousel.params.rewind || !carousel.vtsNavigation) return;
+    if (carousel.params.vtsLoop || carousel.params.rewind || !carousel.vtsNavigation) return;
     const { $nextEl, $prevEl } = carousel.vtsNavigation;
 
     if ($prevEl && $prevEl.length > 0) {
@@ -180,7 +180,7 @@ export default function A11y({ carousel, extendParams, on }) {
 
   const handleFocus = (e) => {
     if (carousel.a11y.clicked) return;
-    const slideEl = e.target.closest(`.${carousel.params.slideClass}`);
+    const slideEl = e.target.closest(`.${carousel.params.vtsSlideClass}`);
     if (!slideEl || !carousel.slides.includes(slideEl)) return;
     const isActive = carousel.slides.indexOf(slideEl) === carousel.activeIndex;
     const isVisible =
@@ -206,14 +206,14 @@ export default function A11y({ carousel, extendParams, on }) {
       addElRole($(carousel.slides), params.slideRole);
     }
 
-    const slidesLength = carousel.params.loop
-      ? carousel.slides.filter((el) => !el.classList.contains(carousel.params.slideDuplicateClass))
+    const slidesLength = carousel.params.vtsLoop
+      ? carousel.slides.filter((el) => !el.classList.contains(carousel.params.vtsSlideDuplicateClass))
           .length
       : carousel.slides.length;
     if (params.slideLabelMessage) {
       carousel.slides.each((slideEl, index) => {
         const $slideEl = $(slideEl);
-        const slideIndex = carousel.params.loop
+        const slideIndex = carousel.params.vtsLoop
           ? parseInt($slideEl.attr('data-carousel-slide-index'), 10)
           : index;
         const ariaLabelMessage = params.slideLabelMessage

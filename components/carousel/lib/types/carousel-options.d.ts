@@ -25,7 +25,7 @@ import { GridOptions } from './modules/grid';
 import { CSSSelector, carouselModule } from './shared';
 import { carouselEvents } from './carousel-events';
 
-export interface carouselOptions {
+export interface CarouselOptions {
   /**
    * Array with carousel modules
    *
@@ -87,7 +87,7 @@ export interface carouselOptions {
    *
    * @default 300
    */
-  speed?: number;
+  vtsSpeed?: number;
 
   /**
    * Enabled this option and plugin will set width/height on carousel wrapper equal to total size of all slides.
@@ -458,14 +458,14 @@ export interface carouselOptions {
    *
    * @default false
    */
-  edgeSwipeDetection?: boolean | string;
+  vtsEdgeSwipeDetection?: boolean | string;
 
   /**
    * Area (in px) from left edge of the screen to release touch events for swipe-back in app
    *
    * @default 20
    */
-  edgeSwipeThreshold?: number;
+  vtsEdgeSwipeThreshold?: number;
 
   /**
    * Enable to release touch events on slider edge position (beginning, end) to allow for further page scrolling
@@ -511,14 +511,14 @@ export interface carouselOptions {
    *
    * @default true
    */
-  allowSlidePrev?: boolean;
+  vtsAllowSlidePrev?: boolean;
 
   /**
    * Set to `false` to disable swiping to next slide direction (to right or bottom)
    *
    * @default true
    */
-  allowSlideNext?: boolean;
+  vtsAllowSlideNext?: boolean;
 
   /**
    * Enable/disable swiping on elements matched to class specified in `noSwipingClass`
@@ -607,7 +607,7 @@ export interface carouselOptions {
    *
    * @note If you use it along with `slidesPerView: 'auto'` then you need to specify `loopedSlides` parameter with amount of slides to loop (duplicate). Should not be used together with `rewind` mode
    */
-  loop?: boolean;
+  vtsLoop?: boolean;
 
   /**
    * Set to `true` to enable "rewind" mode. When enabled, clicking "next" navigation button (or calling `.slideNext()`) when on last slide will slide back to the first slide. Clicking "prev" navigation button (or calling `.slidePrev()`) when on first slide will slide forward to the last slide.
@@ -623,14 +623,14 @@ export interface carouselOptions {
    *
    * @default 0
    */
-  loopAdditionalSlides?: number;
+  vtsLoopAdditionalSlides?: number;
 
   /**
    * If you use `slidesPerView:'auto'` with loop mode you should tell to carousel how many slides it should loop (duplicate) using this parameter
    *
    * @default null
    */
-  loopedSlides?: number | null;
+  vtsLoopedSlides?: number | null;
 
   /**
    * When enabled then amount of duplicated slides will not exceed amount of original slides. Useful to disable and increase `loopedSlides` when you have a lot of slides per view and not sufficient amount of original slides
@@ -706,8 +706,8 @@ export interface carouselOptions {
    * ```
    */
   vtsBreakpoints?: {
-    [width: number]: carouselOptions;
-    [ratio: string]: carouselOptions;
+    [width: number]: CarouselOptions;
+    [ratio: string]: CarouselOptions;
   };
 
   /**
@@ -756,7 +756,7 @@ export interface carouselOptions {
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue components
    */
-  slideClass?: string;
+  vtsSlideClass?: string;
 
   /**
    * CSS class name of currently active slide
@@ -800,7 +800,7 @@ export interface carouselOptions {
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue
    */
-  slideDuplicateClass?: string;
+  vtsSlideDuplicateClass?: string;
 
   /**
    * CSS class name of slide which is right after currently active slide
@@ -910,7 +910,7 @@ export interface carouselOptions {
    * });
    * ```
    */
-  controller?: ControllerOptions;
+  vtsController?: ControllerOptions;
 
   /**
    * Object with Coverflow-effect parameters.
@@ -1160,7 +1160,7 @@ export interface carouselOptions {
    * });
    * ```
    */
-  thumbs?: ThumbsOptions;
+  vtsThumbs?: ThumbsOptions;
 
   /**
    * Enables virtual slides functionality. Object with virtual slides parameters or boolean `true` to enable with default settings.
@@ -1224,7 +1224,7 @@ export interface carouselOptions {
   grid?: GridOptions;
 
   /**
-   * !INTERNAL When enabled will emit "_containerClasses" and "_slideClass" events
+   * !INTERNAL When enabled will emit "_containerClasses" and "_vtsSlideClass" events
    */
   _emitClasses?: boolean;
 }

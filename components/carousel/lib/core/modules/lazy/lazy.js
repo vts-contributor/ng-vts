@@ -31,7 +31,7 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
 
     const $slideEl = isVirtual
       ? carousel.$wrapperEl.children(
-          `.${carousel.params.slideClass}[data-carousel-slide-index="${index}"]`,
+          `.${carousel.params.vtsSlideClass}[data-carousel-slide-index="${index}"]`,
         )
       : carousel.slides.eq(index);
 
@@ -96,16 +96,16 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
 
         $imageEl.addClass(params.loadedClass).removeClass(params.loadingClass);
         $slideEl.find(`.${params.preloaderClass}`).remove();
-        if (carousel.params.loop && loadInDuplicate) {
+        if (carousel.params.vtsLoop && loadInDuplicate) {
           const slideOriginalIndex = $slideEl.attr('data-carousel-slide-index');
-          if ($slideEl.hasClass(carousel.params.slideDuplicateClass)) {
+          if ($slideEl.hasClass(carousel.params.vtsSlideDuplicateClass)) {
             const originalSlide = carousel.$wrapperEl.children(
-              `[data-carousel-slide-index="${slideOriginalIndex}"]:not(.${carousel.params.slideDuplicateClass})`,
+              `[data-carousel-slide-index="${slideOriginalIndex}"]:not(.${carousel.params.vtsSlideDuplicateClass})`,
             );
             loadInSlide(originalSlide.index(), false);
           } else {
             const duplicatedSlide = carousel.$wrapperEl.children(
-              `.${carousel.params.slideDuplicateClass}[data-carousel-slide-index="${slideOriginalIndex}"]`,
+              `.${carousel.params.vtsSlideDuplicateClass}[data-carousel-slide-index="${slideOriginalIndex}"]`,
             );
             loadInSlide(duplicatedSlide.index(), false);
           }
@@ -133,7 +133,7 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
     function slideExist(index) {
       if (isVirtual) {
         if (
-          $wrapperEl.children(`.${carouselParams.slideClass}[data-carousel-slide-index="${index}"]`)
+          $wrapperEl.children(`.${carouselParams.vtsSlideClass}[data-carousel-slide-index="${index}"]`)
             .length
         ) {
           return true;

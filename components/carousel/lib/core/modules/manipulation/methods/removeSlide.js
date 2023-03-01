@@ -3,10 +3,10 @@ export default function removeSlide(slidesIndexes) {
   const { params, $wrapperEl, activeIndex } = carousel;
 
   let activeIndexBuffer = activeIndex;
-  if (params.loop) {
-    activeIndexBuffer -= carousel.loopedSlides;
+  if (params.vtsLoop) {
+    activeIndexBuffer -= carousel.vtsLoopedSlides;
     carousel.loopDestroy();
-    carousel.slides = $wrapperEl.children(`.${params.slideClass}`);
+    carousel.slides = $wrapperEl.children(`.${params.vtsSlideClass}`);
   }
   let newActiveIndex = activeIndexBuffer;
   let indexToRemove;
@@ -25,15 +25,15 @@ export default function removeSlide(slidesIndexes) {
     newActiveIndex = Math.max(newActiveIndex, 0);
   }
 
-  if (params.loop) {
+  if (params.vtsLoop) {
     carousel.loopCreate();
   }
 
   if (!params.observer) {
     carousel.update();
   }
-  if (params.loop) {
-    carousel.slideTo(newActiveIndex + carousel.loopedSlides, 0, false);
+  if (params.vtsLoop) {
+    carousel.slideTo(newActiveIndex + carousel.vtsLoopedSlides, 0, false);
   } else {
     carousel.slideTo(newActiveIndex, 0, false);
   }

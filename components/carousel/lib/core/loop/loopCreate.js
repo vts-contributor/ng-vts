@@ -8,29 +8,29 @@ export default function loopCreate() {
   // Remove duplicated slides
   const $selector =
     $wrapperEl.children().length > 0 ? $($wrapperEl.children()[0].parentNode) : $wrapperEl;
-  $selector.children(`.${params.slideClass}.${params.slideDuplicateClass}`).remove();
+  $selector.children(`.${params.vtsSlideClass}.${params.vtsSlideDuplicateClass}`).remove();
 
-  let slides = $selector.children(`.${params.slideClass}`);
+  let slides = $selector.children(`.${params.vtsSlideClass}`);
 
   if (params.loopFillGroupWithBlank) {
     const blankSlidesNum = params.slidesPerGroup - (slides.length % params.slidesPerGroup);
     if (blankSlidesNum !== params.slidesPerGroup) {
       for (let i = 0; i < blankSlidesNum; i += 1) {
         const blankNode = $(document.createElement('div')).addClass(
-          `${params.slideClass} ${params.slideBlankClass}`,
+          `${params.vtsSlideClass} ${params.slideBlankClass}`,
         );
         $selector.append(blankNode);
       }
-      slides = $selector.children(`.${params.slideClass}`);
+      slides = $selector.children(`.${params.vtsSlideClass}`);
     }
   }
 
-  if (params.vtsSlidesPerView === 'auto' && !params.loopedSlides) params.loopedSlides = slides.length;
+  if (params.vtsSlidesPerView === 'auto' && !params.vtsLoopedSlides) params.vtsLoopedSlides = slides.length;
 
-  carousel.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.vtsSlidesPerView, 10));
-  carousel.loopedSlides += params.loopAdditionalSlides;
-  if (carousel.loopedSlides > slides.length && carousel.params.loopedSlidesLimit) {
-    carousel.loopedSlides = slides.length;
+  carousel.vtsLoopedSlides = Math.ceil(parseFloat(params.vtsLoopedSlides || params.vtsSlidesPerView, 10));
+  carousel.vtsLoopedSlides += params.vtsLoopAdditionalSlides;
+  if (carousel.vtsLoopedSlides > slides.length && carousel.params.loopedSlidesLimit) {
+    carousel.vtsLoopedSlides = slides.length;
   }
 
   const prependSlides = [];
@@ -41,16 +41,16 @@ export default function loopCreate() {
     slide.attr('data-carousel-slide-index', index);
   });
 
-  for (let i = 0; i < carousel.loopedSlides; i += 1) {
+  for (let i = 0; i < carousel.vtsLoopedSlides; i += 1) {
     const index = i - Math.floor(i / slides.length) * slides.length;
     appendSlides.push(slides.eq(index)[0]);
     prependSlides.unshift(slides.eq(slides.length - index - 1)[0]);
   }
 
   for (let i = 0; i < appendSlides.length; i += 1) {
-    $selector.append($(appendSlides[i].cloneNode(true)).addClass(params.slideDuplicateClass));
+    $selector.append($(appendSlides[i].cloneNode(true)).addClass(params.vtsSlideDuplicateClass));
   }
   for (let i = prependSlides.length - 1; i >= 0; i -= 1) {
-    $selector.prepend($(prependSlides[i].cloneNode(true)).addClass(params.slideDuplicateClass));
+    $selector.prepend($(prependSlides[i].cloneNode(true)).addClass(params.vtsSlideDuplicateClass));
   }
 }

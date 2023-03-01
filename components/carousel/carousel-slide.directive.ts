@@ -3,7 +3,7 @@ import { coerceBooleanProperty } from './lib/utils/utils';
 @Directive({
   selector: 'ng-template[vts-carousel-slide]',
 })
-export class carouselSlideDirective {
+export class CarouselSlideDirective {
   @Input() virtualIndex: number = 0;
   @Input() class: string = '';
   @Input()

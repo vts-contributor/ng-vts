@@ -147,11 +147,11 @@ export default function Mousewheel({ carousel, extendParams, on, emit }) {
     //   Go to prev slide and
     //   emit a scroll event.
     if (newEvent.direction < 0) {
-      if ((!carousel.isEnd || carousel.params.loop) && !carousel.animating) {
+      if ((!carousel.isEnd || carousel.params.vtsLoop) && !carousel.animating) {
         carousel.slideNext();
         emit('scroll', newEvent.raw);
       }
-    } else if ((!carousel.isBeginning || carousel.params.loop) && !carousel.animating) {
+    } else if ((!carousel.isBeginning || carousel.params.vtsLoop) && !carousel.animating) {
       carousel.slidePrev();
       emit('scroll', newEvent.raw);
     }
@@ -163,11 +163,11 @@ export default function Mousewheel({ carousel, extendParams, on, emit }) {
   function releaseScroll(newEvent) {
     const params = carousel.params.mousewheel;
     if (newEvent.direction < 0) {
-      if (carousel.isEnd && !carousel.params.loop && params.releaseOnEdges) {
+      if (carousel.isEnd && !carousel.params.vtsLoop && params.releaseOnEdges) {
         // Return true to animate scroll on edges
         return true;
       }
-    } else if (carousel.isBeginning && !carousel.params.loop && params.releaseOnEdges) {
+    } else if (carousel.isBeginning && !carousel.params.vtsLoop && params.releaseOnEdges) {
       // Return true to animate scroll on edges
       return true;
     }
@@ -217,14 +217,14 @@ export default function Mousewheel({ carousel, extendParams, on, emit }) {
     if (positions >= carousel.minTranslate()) positions = carousel.minTranslate();
     if (positions <= carousel.maxTranslate()) positions = carousel.maxTranslate();
 
-    // When loop is true:
+    // When vtsLoop is true:
     //     the disableParentcarousel will be true.
-    // When loop is false:
+    // When vtsLoop is false:
     //     if the scroll positions is not on edge,
     //     then the disableParentcarousel will be true.
     //     if the scroll on edge positions,
     //     then the disableParentcarousel will be false.
-    disableParentcarousel = carousel.params.loop
+    disableParentcarousel = carousel.params.vtsLoop
       ? true
       : !(positions === carousel.minTranslate() || positions === carousel.maxTranslate());
 
@@ -291,7 +291,7 @@ export default function Mousewheel({ carousel, extendParams, on, emit }) {
       if (!ignoreWheelEvents) {
         lastEventBeforeSnap = undefined;
 
-        if (carousel.params.loop) {
+        if (carousel.params.vtsLoop) {
           carousel.loopFix();
         }
         let position = carousel.getTranslate() + delta * params.sensitivity;
@@ -355,7 +355,7 @@ export default function Mousewheel({ carousel, extendParams, on, emit }) {
             lastEventBeforeSnap = newEvent;
             recentWheelEvents.splice(0);
             timeout = nextTick(() => {
-              carousel.slideToClosest(carousel.params.speed, true, undefined, snapToThreshold);
+              carousel.slideToClosest(carousel.params.vtsSpeed, true, undefined, snapToThreshold);
             }, 0); // no delay; move on next tick
           }
           if (!timeout) {
@@ -366,7 +366,7 @@ export default function Mousewheel({ carousel, extendParams, on, emit }) {
               const snapToThreshold = 0.5;
               lastEventBeforeSnap = newEvent;
               recentWheelEvents.splice(0);
-              carousel.slideToClosest(carousel.params.speed, true, undefined, snapToThreshold);
+              carousel.slideToClosest(carousel.params.vtsSpeed, true, undefined, snapToThreshold);
             }, 500);
           }
         }

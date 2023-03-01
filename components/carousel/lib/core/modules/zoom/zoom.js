@@ -164,7 +164,7 @@ export default function Zoom({ carousel, extendParams, on, emit }) {
     if (!gesture.$imageEl || gesture.$imageEl.length === 0) return;
     zoom.scale = Math.max(Math.min(zoom.scale, gesture.maxRatio), params.minRatio);
     gesture.$imageEl
-      .transition(carousel.params.speed)
+      .transition(carousel.params.vtsSpeed)
       .transform(`translate3d(0,0,0) scale(${zoom.scale})`);
     currentScale = zoom.scale;
     isScaling = false;
@@ -335,7 +335,7 @@ export default function Zoom({ carousel, extendParams, on, emit }) {
 
     if (!gesture.$slideEl) {
       if (e && e.target) {
-        gesture.$slideEl = $(e.target).closest(`.${carousel.params.slideClass}`);
+        gesture.$slideEl = $(e.target).closest(`.${carousel.params.vtsSlideClass}`);
       }
       if (!gesture.$slideEl) {
         if (carousel.params.virtual && carousel.params.virtual.enabled && carousel.virtual) {
@@ -502,7 +502,7 @@ export default function Zoom({ carousel, extendParams, on, emit }) {
   }
 
   function getSlideSelector() {
-    return `.${carousel.params.slideClass}`;
+    return `.${carousel.params.vtsSlideClass}`;
   }
 
   function toggleGestures(method) {
