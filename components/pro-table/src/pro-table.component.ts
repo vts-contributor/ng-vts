@@ -39,6 +39,8 @@ export class VtsProTableContainerComponent implements OnInit {
 
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  @Input() requestData: Request | undefined;
+
   editRequest: Request = {
     url: "http://localhost:3000/posts/",
     type: "GET",

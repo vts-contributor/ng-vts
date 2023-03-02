@@ -7,7 +7,7 @@
           class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Export</button>
       <button vts-button class="btn-table-config" vtsType="primary" [vtsSize]="'xs'" (click)="showUploadModal()"><i
           class="collapse-icon" vts-icon [vtsType]="'AddCircle'"></i>Import</button>
-      <ng-container>
+      <ng-container *ngIf="checkedItemsAmount>0">
         <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="'xs'"
           [disabled]="checkedItemsAmount<=0" (click)="showDeleteModal()">Delete all selected items</button>
       </ng-container>
@@ -43,14 +43,14 @@
     </div>
   </div>
 
-  <ng-container *ngIf="checkedItemsAmount > 0">
+  <ng-container>
     <ng-template [ngTemplateOutlet]="selectedInfo"></ng-template>
   </ng-container>
   <ng-template #selectedInfo>
     <div class="select-label">
       <span style="padding-left: 16px;">
-        <span style="color: #CB002B">{{ checkedItemsAmount }}</span> items is selected <span style="color: #CB002B">| <a
-            (click)="showDeleteModal()">Clear selected</a></span>
+        <span class="text-custom">{{ checkedItemsAmount }}</span> items is selected <span style="color: #CB002B; height: 18px;">| <a
+            (click)="showDeleteModal()" class="text-custom">Clear selected</a></span>
       </span>
     </div>
   </ng-template>
@@ -66,10 +66,10 @@
     </thead>
     <tbody class="vts-table-tbody">
       <tr *ngFor="let data of displayedData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
-        <td [vtsChecked]="setOfCheckedId.has(data.id)" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
+        <td [vtsChecked]="setOfCheckedId.has(data.id)" [vtsDisabled]="data.disabled" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
         <td *ngFor="let prop of properties" vtsAlign="left">{{ data[prop.propertyName] }}</td>
         <td>
-          <a>View</a>
+          <a (click)="onEditDataItem(data.id)">View</a>
           <a> | </a>
           <a vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions">More<i class="collapse-icon" vts-icon
               [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i></a>
@@ -77,7 +77,7 @@
             <ul vts-menu>
               <li vts-menu-item (click)="onEditDataItem(data.id)">Edit</li>
               <li vts-menu-item (click)="showDeleteItemModal(data.id)">Delete</li>
-              <li vts-menu-item>Enable/Disable</li>
+              <li vts-menu-item (click)="changeStatusItem(data.id)">Enable/Disable</li>
             </ul>
           </vts-dropdown-menu>
         </td>

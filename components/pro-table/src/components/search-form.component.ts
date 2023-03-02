@@ -26,24 +26,27 @@ import { takeUntil } from 'rxjs/operators';
   preserveWhitespaces: false,
   template: `
     <form vts-form vtsLayout="vertical" [formGroup]="validateForm" class="vts-advanced-search-form">
-      <div vts-row [vtsGutter]="24">
-        <div vts-col [vtsSpan]="6" *ngFor="let control of controlArray" [hidden]="!control.show">
+      <div vts-row [vtsGutter]="26">
+        <div vts-col [vtsSpan]="4" *ngFor="let control of controlArray" [hidden]="!control.show">
           <vts-form-item>
             <vts-form-label [vtsFor]="'property' + control.index">
               Propertie {{ control.index }}
             </vts-form-label>
             <vts-form-control>
-              <input vts-input placeholder="Input propertie name" [formControlName]="'property' + control.index"
+              <input vts-input [vtsSize]="'sm'" placeholder="Input propertie name" [formControlName]="'property' + control.index"
                 [attr.id]="'property' + control.index" />
             </vts-form-control>
           </vts-form-item>
         </div>
-        <div vts-col [vtsSpan]="6" class="search-area">
-          <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'xs'" (click)="mockFn()">Search</button>
-          <button vts-button class="btn-search-item" [vtsSize]="'xs'" (click)="resetForm()">Reset</button>
-          <button vts-button class="btn-search-item" [vtsSize]="'xs'" (click)="toggleCollapse()">Collapse
-            <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
-          </button>
+        <div vts-col [vtsSpan]="8" class="search-area">
+          <vts-form-label></vts-form-label>
+          <vts-form-item style="flex-direction: row; padding-top: 5px;">
+            <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'sm'" (click)="mockFn()">Search</button>
+            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="resetForm()">Reset</button>
+            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="toggleCollapse()">Collapse
+              <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
+            </button>
+          </vts-form-item>
         </div>
       </div>
     </form>
@@ -105,7 +108,7 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
     });
     for (let i = 1; i <= this.vtsTotalProperties; i++) {
       this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties });
-      this.validateForm.addControl(`Prop${i}`, new FormControl());
+      this.validateForm.addControl(`property${i}`, new FormControl());
     }
   }
 
@@ -114,7 +117,7 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
       this.totalProps = changes.headers.currentValue;
     }
     this.displayedProps = this.totalProps.filter(prop => prop.checked == true);
-    this.vtsNoDisplayProperties = this.displayedProps.length > 3 ? 3 : this.displayedProps.length;
+    this.vtsNoDisplayProperties = this.displayedProps.length > 4 ? 4 : this.displayedProps.length;
     this.vtsTotalProperties = this.displayedProps.length;
     this.validateForm = this.fb.group({});
   }

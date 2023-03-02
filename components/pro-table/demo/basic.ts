@@ -9,6 +9,7 @@ interface Item {
   content4: string;
   content5: string;
   num?: number;
+  disabled?: boolean;
 }
 
 @Component({
@@ -27,7 +28,8 @@ export class VtsDemoProTableBasicComponent {
         content3: `Table row ${i + 1} (center)`,
         content4: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
         content5: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
-        num: i + 1
+        num: i + 1,
+        disabled: i % 3 == 1 ? true : false
       };
     })
   ];

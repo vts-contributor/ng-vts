@@ -47,6 +47,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         background: #fce5ea;
         border: 0.5px solid #cb002b;
         border-radius: 10px;
+        height: 34px;
+        display: flex;
+        align-items: center;
       }
 
       .btn-area {
@@ -73,15 +76,24 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         border: 1px solid #d1d1d1;
       }
 
-    .btn-properties-config {
-      margin-left: 8px;
-    }
+      .btn-properties-config {
+        margin-left: 8px;
+      }
 
-    .protable-paging {
-      display: flex;
-      justify-content: right;
-      padding-top: 16px;
-    }
+      .protable-paging {
+        display: flex;
+        justify-content: right;
+        padding-top: 16px;
+      }
+
+      .text-custom {
+        font-family: 'Sarabun';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+        color: #CB002B;
+      }
 	`],
   host: {
     '[class.vts-table-config-rtl]': `dir === 'rtl'`
@@ -310,7 +322,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   sortFn = (item1: any, item2: any) => (item1.headerTitle < item2.headerTitle ? 1 : -1);
 
   onEditDataItem(itemId?: number | string) {
-    // get data with itemID
+    // get data with itemID 
     if (this.editRequest) {
       let url = this.editRequest.url;
       url += itemId;
@@ -337,5 +349,23 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   exportDataToFile() {
 
+  }
+
+  changeStatusItem(itemId?: string | number) {
+    // send request to change status to server
+    if (this.editRequest) {
+      let url = this.editRequest.url;
+      url += itemId;
+      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+        if (data) {
+          data.disabled = !data.disabled;
+        };
+        this.changeDetector.detectChanges();
+      });
+    }
+
+    let itemData = this.listData.find(item => item.id === itemId);
+    if (itemData) itemData.disabled = !itemData.disabled;
+    console.log('change status OK');
   }
 }
