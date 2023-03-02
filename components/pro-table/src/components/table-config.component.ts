@@ -124,6 +124,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
   @Input() editRequest: Request | undefined;
+  @Input() saveRequest: Request | undefined;
 
   vtsRowHeight: string | number = 54;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
