@@ -65,7 +65,7 @@ export class VtsDemoProTableBasicComponent {
 
   properties: PropertyType[] = [
     {
-      headerTitle: 'ID',
+      // headerTitle: 'ID',
       propertyName: 'id',
       required: true,
       datatype: 'string',

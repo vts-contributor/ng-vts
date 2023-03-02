@@ -8,7 +8,7 @@
   (vtsOnClose)="closeDrawer()"
 >
   <form vts-form *vtsDrawerContent [formGroup]="formGroup" vtsLayout="vertical">
-    <div *ngFor="let item of headers; let i = index">
+    <div *ngFor="let item of displayHeaders; let i = index">
       <ng-container [ngSwitch]="item.datatype">
         <ng-container *ngSwitchCase="'status'">
           <ng-container
@@ -19,7 +19,7 @@
           <vts-form-item vts-row>
             <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
             <vts-form-control vts-col [vtsSpan]="18">
-              <vts-input-number [formControlName]="item.propertyName"></vts-input-number>
+              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"></vts-input-number>
             </vts-form-control>
           </vts-form-item>
         </ng-container>
