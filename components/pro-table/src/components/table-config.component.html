@@ -61,7 +61,7 @@
         <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
         <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn" *ngFor="let property of properties">
           {{property.headerTitle}}</th>
-        <th>Action</th>
+        <th style="padding: 16px 16px;">Action</th>
       </tr>
     </thead>
     <tbody class="vts-table-tbody">
@@ -89,8 +89,8 @@
     <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
   </ng-container>
   <ng-template #paginationTemplate>
-    <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize" [vtsShowTotal]="rangeTemplate"
-    class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
+    <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize"
+      [vtsShowTotal]="rangeTemplate" class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
     </vts-pagination>
     <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
     <ng-template #rangeTemplate let-range="range" let-total>
@@ -130,4 +130,5 @@
   </ng-container>
 </vts-modal>
 
-<table-drawer [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer" [data]="drawerData"></table-drawer>
+<table-drawer [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer" [data]="drawerData">
+</table-drawer>

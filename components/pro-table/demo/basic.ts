@@ -37,25 +37,25 @@ export class VtsDemoProTableBasicComponent {
 
   properties: PropertyType[] = [
     {
-      headerTitle: '#',
+      headerTitle: 'ID',
       propertyName: 'id',
       required: true,
-      datatype: 'string'
+      datatype: 'string',
+      checked: true
     },
 
     {
       headerTitle: 'Prop 1',
-      propertyName: 'title',
+      propertyName: 'content1',
       required: true,
       datatype: 'string',
       checked: true
     },
     {
       headerTitle: 'Prop 2',
-      propertyName: 'author',
+      propertyName: 'content2',
       required: true,
-      datatype: 'string',
-      checked: true
+      datatype: 'string'
     },
     {
       headerTitle: 'Prop 3',
@@ -75,6 +75,7 @@ export class VtsDemoProTableBasicComponent {
       propertyName: 'content5',
       required: true,
       datatype: 'string',
+      checked: true
     }
   ];
 

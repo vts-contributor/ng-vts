@@ -1,4 +1,4 @@
-import { SearchConfig } from './../pro-table.type';
+import { PropertyType, SearchConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -6,9 +6,11 @@ import {
   // ContentChildren,
   ElementRef,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Optional,
+  SimpleChanges,
   // QueryList,
   ViewEncapsulation
 } from '@angular/core';
@@ -23,7 +25,7 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <form vts-form [formGroup]="validateForm" class="vts-advanced-search-form">
+    <form vts-form vtsLayout="vertical" [formGroup]="validateForm" class="vts-advanced-search-form">
       <div vts-row [vtsGutter]="24">
         <div vts-col [vtsSpan]="6" *ngFor="let control of controlArray" [hidden]="!control.show">
           <vts-form-item>
@@ -77,16 +79,20 @@ import { takeUntil } from 'rxjs/operators';
     '[class.vts-search-form-rtl]': `dir === 'rtl'`,
   }
 })
-export class VtsProTableSearchFormComponent implements OnDestroy, OnInit {
+export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChanges {
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();
   validateForm!: FormGroup;
   controlArray: Array<{ index: number; show: boolean }> = [];
   @Input() vtsIsCollapse = true;
-  @Input() vtsNoDisplayProperties: number = 3;
-  @Input() vtsTotalProperties: number = 7;
   @Input() vtsSearchConfig: SearchConfig[] = [];
 
+  @Input() data: { [key: string]: any } = {};
+  @Input() headers: PropertyType[] = [];
+  displayedProps: PropertyType[] = [];
+  totalProps: PropertyType[] = [];
+  vtsNoDisplayProperties: number = 0;
+  vtsTotalProperties: number = 0;
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality, private fb: FormBuilder) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-search-form');
@@ -97,12 +103,20 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit {
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-
-    this.validateForm = this.fb.group({});
     for (let i = 1; i <= this.vtsTotalProperties; i++) {
       this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties });
-      this.validateForm.addControl(`property${i}`, new FormControl());
+      this.validateForm.addControl(`Prop${i}`, new FormControl());
     }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes) {
+      this.totalProps = changes.headers.currentValue;
+    }
+    this.displayedProps = this.totalProps.filter(prop => prop.checked == true);
+    this.vtsNoDisplayProperties = this.displayedProps.length > 3 ? 3 : this.displayedProps.length;
+    this.vtsTotalProperties = this.displayedProps.length;
+    this.validateForm = this.fb.group({});
   }
 
   ngOnDestroy(): void {

@@ -22,8 +22,8 @@ import {
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   template: `
-    <vts-search-form></vts-search-form>
-    <vts-table-config [listData]="listData" [properties]="properties"></vts-table-config>
+    <vts-search-form [headers]="properties" [data]="listData"></vts-search-form>
+    <vts-table-config [listData]="listData" [properties]="properties" [editRequest]="editRequest"></vts-table-config>
   `,
   styles: [
     ``
@@ -43,6 +43,9 @@ export class VtsProTableContainerComponent implements OnInit {
     url: "http://localhost:3000/posts/",
     type: "GET"
   }
-  
-  ngOnInit(): void { }
+
+  displayedProps: PropertyType[] = [];
+
+  ngOnInit(): void {
+  }
 }

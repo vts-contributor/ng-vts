@@ -237,6 +237,7 @@ export type PropertyType = {
   datatype: 'string' | 'number' | 'datetime';
   checked?: boolean;
 }
+export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';
 
 export type Request = {
   url: string,
@@ -246,6 +247,3 @@ export type Request = {
   onSuccess?: void
 }
 
-
-
-export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';

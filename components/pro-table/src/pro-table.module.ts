@@ -1,3 +1,4 @@
+import { VtsInputModule } from '@ui-vts/ng-vts/input/input.module';
 import { VtsDividerModule } from './../../divider/divider.module';
 import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
 import { VtsSelectModule } from '@ui-vts/ng-vts/select';
@@ -26,22 +27,21 @@ import { VtsTableModule } from '@ui-vts/ng-vts/table';
 import { VtsProTableContainerComponent } from './pro-table.component';
 import { VtsProTableSearchFormComponent } from './components/search-form.component';
 import { VtsProTableConfigComponent } from './components/table-config.component';
-import { VtsProTableDataComponent } from './components/table.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ProtableDrawerComponent } from './components/table-drawer.component';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 
 @NgModule({
   declarations: [
     VtsProTableContainerComponent,
     VtsProTableSearchFormComponent,
     VtsProTableConfigComponent,
-    VtsProTableDataComponent,
     ProtableDrawerComponent
   ],
   exports: [
     VtsProTableContainerComponent,
     VtsProTableSearchFormComponent,
-    VtsProTableConfigComponent,
-    VtsProTableDataComponent
+    VtsProTableConfigComponent
   ],
   imports: [
     BidiModule,
@@ -71,7 +71,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     VtsUploadModule,
     VtsTableModule,
     VtsDividerModule,
-    DragDropModule
+    DragDropModule,
+    VtsInputNumberModule,
+    VtsInputModule
   ]
 })
-export class VtsProTableModule {}
+export class VtsProTableModule { }

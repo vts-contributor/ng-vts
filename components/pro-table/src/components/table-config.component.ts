@@ -1,6 +1,7 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   // ContentChildren,
   ElementRef,
@@ -12,16 +13,16 @@ import {
   Output,
   SimpleChanges,
   // QueryList,
-  ViewEncapsulation,
-  ChangeDetectorRef
+  ViewEncapsulation
 } from '@angular/core';
 import { VtsDrawerPlacement } from '@ui-vts/ng-vts/drawer';
 import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { PropertyType, VtsProTablePaginationPosition } from '../pro-table.type';
+import { PropertyType, Request, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
@@ -122,6 +123,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageSize: number = 10;
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
+  @Input() editRequest: Request | undefined;
 
   vtsRowHeight: string | number = 54;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
@@ -136,10 +138,16 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   vtsIsCollapse: boolean = true;
 
   listDisplayedData = [];
-
+  displayedData: { [key: string]: any }[] = [];
+  displayedProperties: PropertyType[] = [];
   filteredList = [...this.listData];
 
-  constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
+  constructor(
+    private elementRef: ElementRef,
+    @Optional() private directionality: Directionality,
+    private service: ProtableService,
+    private changeDetector: ChangeDetectorRef
+  ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-table-config');
   }
@@ -151,6 +159,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     });
     this.filteredList = [...this.listData];
     this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    // this.displayedProperties = this.properties.filter(prop => prop.checked === true);
     this.vtsTotal = this.filteredList.length;
   }
 
@@ -297,15 +306,35 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   sortDirections = ['ascend', 'descend', null];
-  sortFn = (item1: any, item2: any) => (item1.content4 < item2.content4 ? 1 : -1);
+  sortFn = (item1: any, item2: any) => (item1.headerTitle < item2.headerTitle ? 1 : -1);
 
   onEditDataItem(itemId?: number | string) {
     // get data with itemID
-    // let data = {};
-
-    // this.testData = data;
-    console.log(itemId);
+    if (this.editRequest) {
+      let url = this.editRequest.url;
+      url += itemId;
+      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+        this.drawerData = { ...data };
+        this.visibleDrawer = true;
+        this.changeDetector.detectChanges();
+      });
+    }
     this.visibleDrawer = true;
   }
 
+  onChangePageIndex(event: number) {
+    if (event) {
+      this.vtsPageIndex = event;
+      this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    }
+  }
+
+  reloadTableData() {
+    this.vtsPageIndex = 1;
+    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+  }
+
+  exportDataToFile() {
+
+  }
 }
