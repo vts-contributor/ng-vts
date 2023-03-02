@@ -11,21 +11,21 @@ import { Directive, Input } from '@angular/core';
   providers: [{ provide: CdkTreeNodePadding, useExisting: VtsTreeNodePaddingDirective }]
 })
 export class VtsTreeNodePaddingDirective<T> extends CdkTreeNodePadding<T> {
-  _indent = 24;
+  override _indent = 24;
 
   @Input('vtsTreeNodePadding')
-  get level(): number {
+  override get level(): number {
     return this._level;
   }
-  set level(value: number) {
+  override set level(value: number) {
     this._setLevelInput(value);
   }
 
   @Input('vtsTreeNodePaddingIndent')
-  get indent(): number | string {
+  override get indent(): number | string {
     return this._indent;
   }
-  set indent(indent: number | string) {
+  override set indent(indent: number | string) {
     this._setIndentInput(indent);
   }
 }

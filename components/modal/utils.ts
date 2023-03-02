@@ -1,10 +1,4 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
-
 import { ModalOptions } from './modal-types';
-import { VtsModalComponent } from './modal.component';
 
 export function applyConfigDefaults(
   config: ModalOptions,
@@ -25,16 +19,11 @@ export function getValueWithConfig<T>(
     : userValue;
 }
 
-/**
- * Assign the params into the content component instance.
- * @deprecated Should use dependency injection to get the params for user
- * @breaking-change 12.0.0
- */
 export function setContentInstanceParams<T>(instance: T, params: Partial<T> | undefined): void {
   Object.assign(instance, params);
 }
 
-export function getConfigFromComponent(component: VtsModalComponent): ModalOptions {
+export function getConfigFromComponent<T extends ModalOptions>(component: T): ModalOptions {
   const {
     vtsCentered,
     vtsMask,
