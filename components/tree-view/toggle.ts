@@ -28,10 +28,10 @@ export class VtsTreeNodeNoopToggleDirective {}
 export class VtsTreeNodeToggleDirective<T> extends CdkTreeNodeToggle<T> {
   static ngAcceptInputType_recursive: BooleanInput;
   @Input('vtsTreeNodeToggleRecursive')
-  get recursive(): boolean {
+  override get recursive(): boolean {
     return this._recursive;
   }
-  set recursive(value: boolean) {
+  override set recursive(value: boolean) {
     this._recursive = coerceBooleanProperty(value);
   }
 

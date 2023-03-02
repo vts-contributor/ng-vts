@@ -1,4 +1,4 @@
-import { dest, parallel, series, src, task } from 'gulp';
+import { dest, series, src, task } from 'gulp';
 import { join } from 'path';
 import { buildConfig } from '../../build-config';
 import { compile as compileLess } from '../../build/compile-styles';
@@ -40,12 +40,6 @@ task(
   'build:library',
   series(
     'library:build-zorro',
-    parallel(
-      // 'library:compile-less', 
-      'library:copy-resources', 
-      'library:generate-less-vars', 
-      'build:schematics'
-    ),
-    'library:copy-libs'
+    'library:copy-resources'
   )
-);
+)

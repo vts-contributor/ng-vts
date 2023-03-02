@@ -6,9 +6,9 @@
 import { ChangeDetectionStrategy, Component, Directive, Input, OnDestroy } from '@angular/core';
 import { animationFrameScheduler, asapScheduler, merge, Subscription } from 'rxjs';
 import { auditTime } from 'rxjs/operators';
-import { VtsTreeNodeComponent } from './node';
-import { VtsTreeView } from './tree';
 
+import { VtsNodeBase } from './node-base';
+import { VtsTreeView } from './tree';
 import { getNextSibling, getParent } from './utils';
 
 /**
@@ -54,7 +54,7 @@ export class VtsTreeNodeIndentLineDirective<T> implements OnDestroy {
   private currentIndents: string = '';
   private changeSubscription: Subscription;
 
-  constructor(private treeNode: VtsTreeNodeComponent<T>, private tree: VtsTreeView<T>) {
+  constructor(private treeNode: VtsNodeBase<T>, private tree: VtsTreeView<T>) {
     this.buildIndents();
     this.checkLast();
 
