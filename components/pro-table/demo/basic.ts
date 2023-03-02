@@ -33,13 +33,33 @@ export class VtsDemoProTableBasicComponent {
   ];
 
   listData2 = [
-    { id: 1, title: 'success', author: 'typicode', num: 10 },
-    { id: 2, title: 'warning', author: 'typicode1' },
     {
-      id: 3,
-      title: 'danger',
-      author: 'typicode1',
-      num: 100000
+      "id": 1,
+      "title": "success",
+      "author": "typicode",
+      "num": 10
+    },
+    {
+      "id": 2,
+      "title": "warning",
+      "author": "typicode1"
+    },
+    {
+      "id": 3,
+      "title": "default",
+      "author": "typicode1",
+      "num": 100000
+    },
+    {
+      "id": 4,
+      "title": "processing",
+      "author": "typicode1"
+    },
+    {
+      "id": 5,
+      "title": "error",
+      "author": "typicode1",
+      "num": 100000
     }
   ];
 

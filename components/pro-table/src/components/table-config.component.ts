@@ -327,7 +327,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.changeDetector.detectChanges();
       });
     }
-    this.visibleDrawer = true;
+    // this.visibleDrawer = true;
   }
 
   onChangePageIndex(event: number) {

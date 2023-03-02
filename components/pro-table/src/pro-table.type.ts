@@ -248,3 +248,4 @@ export type Request = {
   onError?: () => void
 }
 
+export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";
