@@ -34,12 +34,12 @@ export class VtsCarouselTransformStrategy extends VtsCarouselBaseStrategy<VtsCar
     super(carouselComponent, cdr, renderer, platform, options);
   }
 
-  dispose(): void {
+  override dispose(): void {
     super.dispose();
     this.renderer.setStyle(this.slickTrackEl, 'transform', null);
   }
 
-  withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null): void {
+  override withCarouselContents(contents: QueryList<VtsCarouselContentDirective> | null): void {
     super.withCarouselContents(contents);
 
     const carousel = this.carouselComponent!;
@@ -123,7 +123,7 @@ export class VtsCarouselTransformStrategy extends VtsCarouselBaseStrategy<VtsCar
     return complete$.asObservable();
   }
 
-  dragging(_vector: PointerVector): void {
+  override dragging(_vector: PointerVector): void {
     if (this.isTransitioning) {
       return;
     }

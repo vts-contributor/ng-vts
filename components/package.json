@@ -14,18 +14,18 @@
     "frontend"
   ],
   "dependencies": {
-    "@angular/cdk": "^12.2.13",
+    "@angular/cdk": "^14.1.0",
     "@ui-vts/icons-angular": "1.0.0",
-    "date-fns": "^2.10.0",
+    "@ui-vts/theme": "^1.0.2",
     "apexcharts": "^3.27.3",
-    "@ui-vts/theme": "^1.0.2"
+    "date-fns": "^2.10.0"
   },
   "peerDependencies": {
-    "@angular/animations": "^12.1.0",
-    "@angular/common": "^12.1.0",
-    "@angular/forms": "^12.1.0",
-    "@angular/core": "^12.1.0",
-    "@angular/platform-browser": "^12.1.0",
-    "@angular/router": "^12.1.0"
+    "@angular/animations": "^14.2.12",
+    "@angular/common": "^14.2.12",
+    "@angular/forms": "^14.2.12",
+    "@angular/core": "^14.2.12",
+    "@angular/platform-browser": "^14.2.12",
+    "@angular/router": "^14.2.12"
   }
 }

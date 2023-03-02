@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-checkbox-state',
@@ -63,11 +68,11 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
 export class VtsDemoCheckboxStateComponent {
   disabled = true;
 
-  formGroup: FormGroup = new FormGroup({
-    inputGroup: new FormGroup(
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputGroup: new UntypedFormGroup(
       {
-        A: new FormControl(false),
-        B: new FormControl(false)
+        A: new UntypedFormControl(false),
+        B: new UntypedFormControl(false)
       },
       {
         validators: [CustomValidator]

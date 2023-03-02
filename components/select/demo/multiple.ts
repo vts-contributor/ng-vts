@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-select-multiple',
@@ -84,8 +84,8 @@ export class VtsDemoSelectMultipleComponent {
   size: any = 'md';
   listOfOption: Array<{ label: string; value: string }> = [];
 
-  formGroup = new FormGroup({
-    inputValue: new FormControl([], [Validators.minLength(5)])
+  formGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl([], [Validators.minLength(5)])
   });
 
   ngOnInit() {

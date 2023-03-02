@@ -71,7 +71,7 @@ export class VtsTreeNodeComponent<T> extends CdkTreeNode<T> implements OnDestroy
     this._elementRef.nativeElement.classList.add('vts-tree-treenode');
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.isLeaf = !this.tree.treeControl.isExpandable(this.data);
   }
 
@@ -122,7 +122,7 @@ export class VtsTreeNodeComponent<T> extends CdkTreeNode<T> implements OnDestroy
   providers: [{ provide: CdkTreeNodeDef, useExisting: VtsTreeNodeDefDirective }]
 })
 export class VtsTreeNodeDefDirective<T> extends CdkTreeNodeDef<T> {
-  @Input('vtsTreeNodeDefWhen') when!: (index: number, nodeData: T) => boolean;
+  @Input('vtsTreeNodeDefWhen') override when!: (index: number, nodeData: T) => boolean;
 }
 
 @Directive({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-checkbox-basic',
@@ -21,10 +21,10 @@ import { FormControl, FormGroup } from '@angular/forms';
   `
 })
 export class VtsDemoCheckboxBasicComponent {
-  formGroup: FormGroup = new FormGroup({
-    checkboxes: new FormGroup({
-      A: new FormControl(false),
-      B: new FormControl(false)
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    checkboxes: new UntypedFormGroup({
+      A: new UntypedFormControl(false),
+      B: new UntypedFormControl(false)
     })
   });
 

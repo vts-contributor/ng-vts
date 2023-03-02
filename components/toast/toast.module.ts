@@ -24,7 +24,6 @@ import { VtsToastServiceModule } from './toast.service.module';
     VtsToastServiceModule,
     VtsAlertModule
   ],
-  declarations: [VtsToastComponent, VtsToastContainerComponent],
-  entryComponents: [VtsToastContainerComponent]
+  declarations: [VtsToastComponent, VtsToastContainerComponent]
 })
 export class VtsToastModule {}

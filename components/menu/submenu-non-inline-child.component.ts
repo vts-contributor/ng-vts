@@ -33,7 +33,6 @@ import { VtsMenuModeType } from './menu.types';
   template: `
     <div
       [class.vts-dropdown-menu]="isMenuInsideDropDown"
-      [class.vts-menu]="!isMenuInsideDropDown"
       [class.vts-dropdown-menu-vertical]="isMenuInsideDropDown"
       [class.vts-dropdown-menu-sub]="isMenuInsideDropDown"
       [class.vts-menu-sub]="!isMenuInsideDropDown"
@@ -44,7 +43,6 @@ import { VtsMenuModeType } from './menu.types';
     </div>
   `,
   host: {
-    '[class.vts-menu-submenu]': 'true',
     '[class.vts-menu-submenu-popup]': 'true',
     '[class.vts-menu-of-horizontal]': "rootMode === 'horizontal'",
     '[class.vts-menu-of-vertical]': "rootMode === 'vertical'",

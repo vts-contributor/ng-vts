@@ -1,4 +1,4 @@
-import { dest, parallel, series, src, task } from 'gulp';
+import { dest, series, src, task } from 'gulp';
 import { join } from 'path';
 import { buildConfig } from '../../build-config';
 import { compile as compileLess } from '../../build/compile-styles';
@@ -6,8 +6,8 @@ import { generateLessVars } from '../../build/generate-less-vars';
 import { copyStylesToSrc } from '../../build/migration-styles';
 import { execNodeTask } from '../util/task-helpers';
 
-/** Run `ng build ng-vts-lib --prod` */
-task('library:build-zorro', execNodeTask('@angular/cli', 'ng', ['build', 'ng-vts-lib', '--prod']));
+/** Run `ng build ng-vts-lib --configuration=production` */
+task('library:build-zorro', execNodeTask('@angular/cli', 'ng', ['build', 'ng-vts-lib']));
 
 /** Run `ng build ng-vts-lib` */
 task('library:ivy-prebuild', execNodeTask('@angular/cli', 'ng', ['build', 'ng-vts-lib']));
@@ -40,12 +40,6 @@ task(
   'build:library',
   series(
     'library:build-zorro',
-    parallel(
-      // 'library:compile-less', 
-      'library:copy-resources', 
-      'library:generate-less-vars', 
-      'build:schematics'
-    ),
-    'library:copy-libs'
+    'library:copy-resources'
   )
-);
+)

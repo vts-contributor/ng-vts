@@ -495,7 +495,7 @@ export class VtsTabSetComponent
 
   private isLinkActive(router: Router): (link?: RouterLink | RouterLinkWithHref) => boolean {
     return (link?: RouterLink | RouterLinkWithHref) =>
-      link ? router.isActive(link.urlTree, this.vtsLinkExact) : false;
+      link?.urlTree ? router.isActive(link.urlTree, this.vtsLinkExact) : false;
   }
 
   private getTabContentMarginValue(): number {

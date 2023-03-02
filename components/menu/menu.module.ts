@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+
 import { VtsMenuGroupComponent } from './menu-group.component';
 import { VtsMenuItemDirective } from './menu-item.directive';
 import { VtsMenuDirective } from './menu.directive';

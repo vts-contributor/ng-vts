@@ -48,7 +48,6 @@ import { VtsModalService } from './modal.service';
     VtsModalTitleDirective
   ],
   providers: [VtsModalService],
-  entryComponents: [VtsModalContainerComponent, VtsModalConfirmContainerComponent],
   declarations: [
     VtsModalComponent,
     VtsModalFooterDirective,

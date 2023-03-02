@@ -74,9 +74,9 @@ import { ModalOptions } from './modal-types';
   }
 })
 export class VtsModalContainerComponent extends BaseModalContainerComponent {
-  @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
+  @ViewChild(CdkPortalOutlet, { static: true }) override portalOutlet!: CdkPortalOutlet;
   @ViewChild('modalElement', { static: true })
-  modalElementRef!: ElementRef<HTMLDivElement>;
+  override modalElementRef!: ElementRef<HTMLDivElement>;
   constructor(
     elementRef: ElementRef,
     focusTrapFactory: FocusTrapFactory,
@@ -84,7 +84,7 @@ export class VtsModalContainerComponent extends BaseModalContainerComponent {
     render: Renderer2,
     overlayRef: OverlayRef,
     vtsConfigService: VtsConfigService,
-    public config: ModalOptions,
+    public override config: ModalOptions,
     @Optional() @Inject(DOCUMENT) document: VtsSafeAny,
     @Optional() @Inject(ANIMATION_MODULE_TYPE) animationType: string
   ) {

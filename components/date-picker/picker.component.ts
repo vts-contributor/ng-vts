@@ -48,11 +48,12 @@ import { DatePickerService } from './date-picker.service';
 import { DateRangePopupComponent } from './date-range-popup.component';
 import { RangePartType } from './standard-types';
 import { PREFIX_CLASS } from './util';
-import { VtsPlacement } from './date-picker.component';
 import {
   DATE_PICKER_POSITION_MAP,
   DEFAULT_DATE_PICKER_POSITIONS
 } from '@ui-vts/ng-vts/core/overlay';
+
+export type Placement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -226,7 +227,7 @@ export class VtsPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   @Input() dir: Direction = 'ltr';
   @Input() vtsId: string | null = null;
   @Input() hasBackdrop = false;
-  @Input() vtsPlacement: VtsPlacement = 'bottomLeft';
+  @Input() vtsPlacement: Placement = 'bottomLeft';
 
   @Output() readonly focusChange = new EventEmitter<boolean>();
   @Output() readonly valueChange = new EventEmitter<CandyDate | CandyDate[] | null>();
@@ -539,7 +540,7 @@ export class VtsPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
     return this.open !== undefined;
   }
 
-  private setPlacement(placement: VtsPlacement): void {
+  private setPlacement(placement: Placement): void {
     const position: ConnectionPositionPair = DATE_PICKER_POSITION_MAP[placement];
     this.overlayPositions = [position, ...DEFAULT_DATE_PICKER_POSITIONS];
     this.currentPositionX = position.originX;

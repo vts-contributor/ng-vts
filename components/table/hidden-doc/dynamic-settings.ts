@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import {
   VtsTableLayout,
   VtsTablePaginationPosition,
@@ -136,7 +136,7 @@ interface Setting {
   ]
 })
 export class VtsDemoTableDynamicSettingsComponent implements OnInit {
-  settingForm?: FormGroup;
+  settingForm?: UntypedFormGroup;
   listOfData: ReadonlyArray<ItemData> = [];
   displayData: ReadonlyArray<ItemData> = [];
   allChecked = false;
@@ -243,7 +243,7 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
     return data;
   }
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.settingForm = this.formBuilder.group({
