@@ -7,7 +7,7 @@
   [vtsFooter]="footerTpl"
   (vtsOnClose)="closeDrawer()"
 >
-  <form vts-form *vtsDrawerContent [formGroup]="formGroup">
+  <form vts-form vtsLayout="vertical" *vtsDrawerContent [formGroup]="formGroup">
     <div *ngFor="let item of headers; let i = index">
       <ng-container *ngIf="item.headerTitle">
         <vts-form-item vts-row>
@@ -17,7 +17,7 @@
             [vtsSpan]="18"
             *ngIf="item.datatype == 'string'; else inputNumber"
           >
-            <input vts-input placeholder="" [formControlName]="item.propertyName" />
+            <input vts-input placeholder="" [formControlName]="item.propertyName"/>
           </vts-form-control>
 
           <ng-template #inputNumber>
@@ -32,7 +32,7 @@
 
   <ng-template #footerTpl>
     <div style="float: right">
-      <button vts-button style="margin-right: 8px" (click)="onSave()">Save</button>
+      <button *ngIf="mode!=='view'" vts-button style="margin-right: 8px" (click)="onSave()">Save</button>
       <button vts-button vtsType="primary" (click)="closeDrawer()">Close</button>
     </div>
   </ng-template>

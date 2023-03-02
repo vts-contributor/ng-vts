@@ -1,3 +1,4 @@
+import { VtsSafeAny } from './../../../core/types/any';
 import { PropertyType, SearchConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
@@ -5,11 +6,13 @@ import {
   Component,
   // ContentChildren,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   SimpleChanges,
   // QueryList,
   ViewEncapsulation
@@ -26,24 +29,24 @@ import { takeUntil } from 'rxjs/operators';
   preserveWhitespaces: false,
   template: `
     <form vts-form vtsLayout="vertical" [formGroup]="validateForm" class="vts-advanced-search-form">
-      <div vts-row [vtsGutter]="26">
-        <div vts-col [vtsSpan]="4" *ngFor="let control of controlArray" [hidden]="!control.show">
+      <div vts-row [vtsGutter]="24">
+        <div vts-col [vtsSpan]="4" *ngFor="let control of controlArray">
           <vts-form-item>
-            <vts-form-label [vtsFor]="'property' + control.index">
-              Propertie {{ control.index }}
+            <vts-form-label [vtsFor]="control.controlKey">
+              {{ control.title }}
             </vts-form-label>
             <vts-form-control>
-              <input vts-input [vtsSize]="'sm'" placeholder="Input propertie name" [formControlName]="'property' + control.index"
-                [attr.id]="'property' + control.index" />
+              <input vts-input [vtsSize]="'sm'" placeholder="Input search data" [formControlName]="control.controlKey"
+                [attr.id]="control.controlKey" />
             </vts-form-control>
           </vts-form-item>
         </div>
         <div vts-col [vtsSpan]="8" class="search-area">
           <vts-form-label></vts-form-label>
           <vts-form-item style="flex-direction: row; padding-top: 5px;">
-            <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'sm'" (click)="mockFn()">Search</button>
+            <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'sm'" (click)="onSearch()">Search</button>
             <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="resetForm()">Reset</button>
-            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="toggleCollapse()">Collapse
+            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="toggleCollapse()" *ngIf="vtsNoDisplayProperties<vtsTotalProperties || true">Collapse
               <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
             </button>
           </vts-form-item>
@@ -66,6 +69,7 @@ import { takeUntil } from 'rxjs/operators';
 
     .btn-search-item {
       margin-left: 8px;
+      border-radius: 3px;
     }
 
     .collapse-icon {
@@ -86,12 +90,15 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();
   validateForm!: FormGroup;
-  controlArray: Array<{ index: number; show: boolean }> = [];
+  controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
   @Input() vtsIsCollapse = true;
   @Input() vtsSearchConfig: SearchConfig[] = [];
 
   @Input() data: { [key: string]: any } = {};
   @Input() headers: PropertyType[] = [];
+
+  @Output() putSearchData: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
+
   displayedProps: PropertyType[] = [];
   totalProps: PropertyType[] = [];
   vtsNoDisplayProperties: number = 0;
@@ -106,20 +113,20 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-    for (let i = 1; i <= this.vtsTotalProperties; i++) {
-      this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties });
-      this.validateForm.addControl(`property${i}`, new FormControl());
-    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes) {
       this.totalProps = changes.headers.currentValue;
+      this.displayedProps = this.totalProps.filter(prop => prop.checked == true);
+      this.vtsNoDisplayProperties = this.displayedProps.length > 4 ? 4 : this.displayedProps.length;
+      this.vtsTotalProperties = this.displayedProps.length;
+      this.validateForm = this.fb.group({});
+      for (let i = 1; i <= this.vtsTotalProperties; i++) {
+        this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties, title: this.displayedProps[i - 1].headerTitle, controlKey: this.displayedProps[i - 1].propertyName });
+        this.validateForm.addControl(`${this.displayedProps[i - 1].propertyName}`, new FormControl());
+      }
     }
-    this.displayedProps = this.totalProps.filter(prop => prop.checked == true);
-    this.vtsNoDisplayProperties = this.displayedProps.length > 4 ? 4 : this.displayedProps.length;
-    this.vtsTotalProperties = this.displayedProps.length;
-    this.validateForm = this.fb.group({});
   }
 
   ngOnDestroy(): void {
@@ -140,5 +147,10 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
 
   resetForm(): void {
     this.validateForm.reset();
+  }
+
+  onSearch() {
+    // console.log(this.validateForm.value)
+    this.putSearchData.emit(this.validateForm.value);
   }
 }

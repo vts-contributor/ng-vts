@@ -25,7 +25,6 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-
 @Component({
   selector: 'vts-table-config',
   exportAs: 'vtsProTable',
@@ -71,6 +70,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         border: none;
       }
 
+      .vts-table-tbody > tr > td {
+        padding: 8px;
+      }
+
       td,
       th {
         border: 1px solid #d1d1d1;
@@ -93,6 +96,23 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         font-size: 14px;
         line-height: 18px;
         color: #CB002B;
+      }
+      .vts-pagination-item > a {
+        font-weight: 700;
+        font-size: 14px;
+      }
+
+      .vts-table-column-sorters {
+        width: auto;
+      }
+
+      .selected-item-data:hover {
+        background: #FFF5F6 !important;
+      }
+
+      .vts-pagination-total-text {
+        position: absolute;
+        left: 0;
       }
 	`],
   host: {
@@ -137,10 +157,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsTotal: number = 0;
   @Input() editRequest: Request | undefined;
   @Input() saveRequest: Request | undefined;
+  @Input() exportRequest: Request | undefined;
+  @Input() searchData: Object | VtsSafeAny;
 
   vtsRowHeight: string | number = 54;
+  loading: boolean = false;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
+  @Output() reloadTable = new EventEmitter<boolean>();
 
   pageSize = 10;
   pageIndex = 1;
@@ -149,6 +173,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
+  mode: string = '';
 
   listDisplayedData = [];
   displayedData: { [key: string]: any }[] = [];
@@ -166,6 +191,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
@@ -174,6 +200,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
     // this.displayedProperties = this.properties.filter(prop => prop.checked === true);
     this.vtsTotal = this.filteredList.length;
+    this.loading = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -189,6 +216,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       // this.listOfData = [...listData];
       console.log(changes.properties);
     }
+
+    if (changes.searchData) {
+      console.log(changes.searchData.currentValue);
+    }
+
+    if (changes.listData) {
+      console.log(changes.listData.currentValue);
+    }
   }
 
   ngOnDestroy(): void {
@@ -202,7 +237,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
+    console.log(1000, event);
+    
+    console.log(1, this.properties);
+
     moveItemInArray(this.properties, event.previousIndex, event.currentIndex);
+    console.log(2, this.properties);
   }
 
   showDeleteModal(): void {
@@ -292,7 +332,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onAllChecked(checked: any): void {
-    this.filteredList.forEach(({ id }) => this.updateCheckedSet(id, checked));
+    const enableList = this.filteredList.filter(d => d.disabled === false);
+    enableList.forEach(({ id }) => this.updateCheckedSet(id, checked));
     this.refreshCheckedStatus();
   }
 
@@ -301,8 +342,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.refreshCheckedStatus();
   }
 
-  updateCheckedSet(id: string, checked: boolean): void {
-    if (checked) {
+  updateCheckedSet(id: string, checked: boolean, disabled?: boolean): void {
+    if (checked && !disabled) {
       this.setOfCheckedId.add(id);
     } else {
       this.setOfCheckedId.delete(id);
@@ -332,6 +373,24 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.changeDetector.detectChanges();
       });
     }
+    this.drawerData = this.listData.filter(data => data.id === itemId)[0];
+    this.mode = 'edit';
+    this.visibleDrawer = true;
+  }
+
+  onViewDataItem(itemId?: number | string) {
+    // get data with itemID 
+    if (this.editRequest) {
+      let url = this.editRequest.url;
+      url += itemId;
+      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+        this.drawerData = { ...data };
+        this.visibleDrawer = true;
+        this.changeDetector.detectChanges();
+      });
+    }
+    this.drawerData = this.listData.filter(data => data.id === itemId)[0];
+    this.mode = 'view';
     this.visibleDrawer = true;
   }
 
@@ -345,9 +404,20 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   reloadTableData() {
     this.vtsPageIndex = 1;
     this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    this.reloadTable.emit(true);
   }
 
   exportDataToFile() {
+    console.log(this.setOfCheckedId);
+    if (this.exportRequest) {
+      this.exportRequest.body = this.setOfCheckedId;
+      this.service.exportSelectedDataToFile(this.exportRequest).subscribe(res => {
+        const data = res;
+        console.log(data);
+
+      });
+    }
+    // send Set of item ID to server, must server returns content data to exporting
 
   }
 

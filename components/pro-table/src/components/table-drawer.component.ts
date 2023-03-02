@@ -14,6 +14,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   ) {}
 
   @Input() visibleDrawer: boolean = false;
+  @Input() mode: string = '';
   @Input() data: {[key: string]: any} = {};
   @Input() headers: PropertyType[] = [];
   @Input() saveRequest: Request | undefined;
