@@ -52,8 +52,8 @@ import { VtsMessageData } from './typings';
   `
 })
 export class VtsMessageComponent extends VtsMNComponent implements OnInit, OnDestroy {
-  @Input() instance!: Required<VtsMessageData>;
-  @Output() readonly destroyed = new EventEmitter<{
+  @Input() override instance!: Required<VtsMessageData>;
+  @Output() override readonly destroyed = new EventEmitter<{
     id: string;
     userAction: boolean;
   }>();

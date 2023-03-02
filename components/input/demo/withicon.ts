@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
@@ -53,8 +53,8 @@ export class VtsDemoInputWithiconComponent implements OnInit {
   value?: string;
   size: VtsSizeLDSType = 'md';
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl('', {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('', {
       validators: [Validators.minLength(16)]
     })
   });

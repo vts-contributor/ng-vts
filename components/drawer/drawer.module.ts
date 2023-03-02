@@ -29,7 +29,6 @@ import { VtsDrawerServiceModule } from './drawer.service.module';
     VtsDrawerServiceModule
   ],
   exports: [VtsDrawerComponent, VtsDrawerContentDirective],
-  declarations: [VtsDrawerComponent, VtsDrawerContentDirective],
-  entryComponents: [VtsDrawerComponent]
+  declarations: [VtsDrawerComponent, VtsDrawerContentDirective]
 })
 export class VtsDrawerModule {}

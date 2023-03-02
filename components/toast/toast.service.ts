@@ -18,7 +18,7 @@ let toastId = 0;
   providedIn: VtsToastServiceModule
 })
 export class VtsToastService extends VtsMNService {
-  protected container!: VtsToastContainerComponent;
+  protected override container!: VtsToastContainerComponent;
   protected componentPrefix = 'toast-';
 
   constructor(vtsSingletonService: VtsSingletonService, overlay: Overlay, injector: Injector) {

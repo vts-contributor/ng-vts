@@ -21,7 +21,6 @@ import { VtsPopconfirmComponent, VtsPopconfirmDirective } from './popconfirm';
 @NgModule({
   declarations: [VtsPopconfirmComponent, VtsPopconfirmDirective],
   exports: [VtsPopconfirmComponent, VtsPopconfirmDirective],
-  entryComponents: [VtsPopconfirmComponent],
   imports: [
     BidiModule,
     CommonModule,

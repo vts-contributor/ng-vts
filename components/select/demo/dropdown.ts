@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-select-dropdown',
@@ -73,8 +73,8 @@ export class VtsDemoSelectDropdownComponent {
   placeholder = '';
   size: any = 'md';
 
-  formGroup = new FormGroup({
-    inputValue: new FormControl('A', [Validators.minLength(5)])
+  formGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('A', [Validators.minLength(5)])
   });
 
   ngOnInit() {

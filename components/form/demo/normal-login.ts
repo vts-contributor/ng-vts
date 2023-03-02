@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-form-normal-login',
@@ -57,7 +57,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   ]
 })
 export class VtsDemoFormNormalLoginComponent implements OnInit {
-  validateForm!: FormGroup;
+  validateForm!: UntypedFormGroup;
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
@@ -66,7 +66,7 @@ export class VtsDemoFormNormalLoginComponent implements OnInit {
     }
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

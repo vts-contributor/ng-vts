@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   ValidatorFn,
   Validators
 } from '@angular/forms';
@@ -91,7 +91,7 @@ import { Observable, Observer } from 'rxjs';
   ]
 })
 export class VtsDemoFormAutoTipsComponent {
-  validateForm: FormGroup;
+  validateForm: UntypedFormGroup;
 
   // current locale is key of the vtsAutoTips
   // if it is not found, it will be searched again with `default`
@@ -125,7 +125,7 @@ export class VtsDemoFormAutoTipsComponent {
     setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
   }
 
-  userNameAsyncValidator = (control: FormControl) =>
+  userNameAsyncValidator = (control: UntypedFormControl) =>
     new Observable((observer: Observer<MyValidationErrors | null>) => {
       setTimeout(() => {
         if (control.value === 'JasonWood') {
@@ -142,7 +142,7 @@ export class VtsDemoFormAutoTipsComponent {
       }, 1000);
     });
 
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
+  confirmValidator = (control: UntypedFormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { error: true, required: true };
     } else if (control.value !== this.validateForm.controls.password.value) {
@@ -151,7 +151,7 @@ export class VtsDemoFormAutoTipsComponent {
     return {};
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     // use `MyValidators`
     const { required, maxLength, minLength, email, mobile } = MyValidators;
     this.validateForm = this.fb.group({

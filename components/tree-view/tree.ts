@@ -35,12 +35,12 @@ export class VtsTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   dir: Direction = 'ltr';
   _dataSourceChanged = new Subject<void>();
-  @Input('vtsTreeControl') treeControl!: TreeControl<T, VtsSafeAny>;
+  @Input('vtsTreeControl') override treeControl!: TreeControl<T, VtsSafeAny>;
   @Input('vtsDataSource')
-  get dataSource(): DataSource<T> | Observable<T[]> | T[] {
+  override get dataSource(): DataSource<T> | Observable<T[]> | T[] {
     return super.dataSource;
   }
-  set dataSource(dataSource: DataSource<T> | Observable<T[]> | T[]) {
+  override set dataSource(dataSource: DataSource<T> | Observable<T[]> | T[]) {
     super.dataSource = dataSource;
   }
   @Input() @InputBoolean() vtsDirectoryTree = false;
@@ -55,7 +55,7 @@ export class VtsTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
     super(differs, changeDetectorRef);
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     super.ngOnInit();
 
     if (this.directionality) {
@@ -69,13 +69,13 @@ export class VtsTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  renderNodeChanges(
+  override renderNodeChanges(
     data: T[] | ReadonlyArray<T>,
     dataDiffer?: IterableDiffer<T>,
     viewContainer?: ViewContainerRef,

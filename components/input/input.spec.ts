@@ -1,6 +1,11 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { VtsIconTestModule } from '@ui-vts/ng-vts/icon/testing';
 import { VtsInputDirective } from './input.directive';
@@ -119,9 +124,9 @@ export class VtsTestInputWithTextAreaComponent {}
   `
 })
 export class VtsTestInputFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       input: ['abc']
     });

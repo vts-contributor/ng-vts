@@ -16,7 +16,6 @@ import { VtsToolTipComponent, VtsTooltipDirective } from './tooltip';
 @NgModule({
   declarations: [VtsToolTipComponent, VtsTooltipDirective],
   exports: [VtsToolTipComponent, VtsTooltipDirective],
-  entryComponents: [VtsToolTipComponent],
   imports: [
     BidiModule,
     CommonModule,

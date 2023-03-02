@@ -17,10 +17,7 @@ import { moduleList } from './module';
   ],
   declarations: [
 {{declarations}}
-  ],
-entryComponents: [
-  {{entryComponents}}
-]
+  ]
 })
 export class VtsDemo{{component}}Module {
 
