@@ -243,6 +243,7 @@ export type Request = {
   type: "POST" | "GET",
   params?: {[key: string]: any},
   body?: {[key: string]: any},
-  onSuccess?: void
+  onSuccess?: (data: {[key: string]: any}) => void,
+  onError?: () => void
 }
 

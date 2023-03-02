@@ -113,6 +113,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   @Input() editRequest: Request | undefined;
+  @Input() saveRequest: Request | undefined;
 
   vtsRowHeight: string | number = 54;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();

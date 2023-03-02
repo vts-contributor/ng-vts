@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PropertyType } from '../pro-table.type';
+import { ProtableService } from '../pro-table.service';
+import { PropertyType, Request } from '../pro-table.type';
 
 @Component({
   selector: 'table-drawer',
@@ -9,11 +10,13 @@ import { PropertyType } from '../pro-table.type';
 export class ProtableDrawerComponent implements OnInit, OnChanges {
   constructor(
     // private cdf: ChangeDetectorRef
+    private service: ProtableService
   ) {}
 
   @Input() visibleDrawer: boolean = false;
   @Input() data: {[key: string]: any} = {};
   @Input() headers: PropertyType[] = [];
+  @Input() saveRequest: Request | undefined;
 
   title: string = "Test drawer";
   formGroup: FormGroup = new FormGroup({
@@ -43,6 +46,8 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   }
 
   onSave(){
-    console.log(this.data);
+    this.service.saveDataById(this.saveRequest).subscribe(data => {
+      console.log(data);
+    })
   }
 }

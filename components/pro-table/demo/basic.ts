@@ -8,6 +8,7 @@ interface Item {
   content3: string;
   content4: string;
   content5: string;
+  num?: number;
 }
 
 @Component({
@@ -89,14 +90,21 @@ export class VtsDemoProTableBasicComponent {
         content2: `Table row ${i + 1}`,
         content3: `Table row ${i + 1} (center)`,
         content4: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
-        content5: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0')
+        content5: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
+        num: i + 1
       };
     })
   ];
 
   listData2 = [
     { id: 1, title: 'json-server', author: 'typicode' },
-    { id: 2, title: 'json-server1', author: 'typicode1' }
+    { id: 2, title: 'json-server1', author: 'typicode1' },
+    {
+      id: 3,
+      title: 'json-server1',
+      author: 'typicode1',
+      num: 10
+    }
   ];
 
   properties: PropertyType[] = [
@@ -121,13 +129,13 @@ export class VtsDemoProTableBasicComponent {
       datatype: 'string',
       checked: true
     },
-    // {
-    //   headerTitle: 'Prop 3',
-    //   propertyName: 'content3',
-    //   required: true,
-    //   datatype: 'string',
-    //   checked: true
-    // },
+    {
+      headerTitle: 'Prop 4',
+      propertyName: 'num',
+      required: true,
+      datatype: 'number',
+      checked: true
+    }
     // {
     //   headerTitle: 'Prop 4',
     //   propertyName: 'content4',

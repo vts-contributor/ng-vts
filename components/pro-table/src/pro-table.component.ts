@@ -23,7 +23,7 @@ import {
   preserveWhitespaces: false,
   template: `
     <vts-search-form></vts-search-form>
-    <vts-table-config [listData]="listData" [properties]="properties" [editRequest]="editRequest"></vts-table-config>
+    <vts-table-config [listData]="listData" [properties]="properties" [editRequest]="editRequest" [saveRequest]="saveRequest"></vts-table-config>
     <vts-protable-data></vts-protable-data>
   `,
   styles: [
@@ -42,7 +42,15 @@ export class VtsProTableContainerComponent implements OnInit {
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   editRequest: Request = {
     url: "http://localhost:3000/posts/",
-    type: "GET"
+    type: "GET",
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  }
+
+  saveRequest: Request = {
+    url: "http://localhost:3000/posts/",
+    type: "POST"
   }
   
   ngOnInit(): void { }
