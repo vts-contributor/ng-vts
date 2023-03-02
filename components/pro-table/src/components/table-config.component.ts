@@ -6,7 +6,9 @@ import {
   // ContentChildren,
   ElementRef,
   EventEmitter,
+  // Inject,
   Input,
+  // LOCALE_ID,
   OnDestroy,
   OnInit,
   Optional,
@@ -24,6 +26,7 @@ import { PropertyType, Request, VtsProTablePaginationPosition } from '../pro-tab
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+// import { getLocaleNumberSymbol, NumberSymbol } from '@angular/common';
 
 
 @Component({
@@ -73,16 +76,17 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         border: 1px solid #d1d1d1;
       }
 
-    .btn-properties-config {
-      margin-left: 8px;
-    }
+      .btn-properties-config {
+        margin-left: 8px;
+      }
 
-    .protable-paging {
-      display: flex;
-      justify-content: right;
-      padding-top: 16px;
-    }
-	`],
+      .protable-paging {
+        display: flex;
+        justify-content: right;
+        padding-top: 16px;
+      }
+    `
+  ],
   host: {
     '[class.vts-table-config-rtl]': `dir === 'rtl'`
   }
@@ -159,7 +163,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.dir = direction;
     });
     this.filteredList = [...this.listData];
-    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    this.displayedData = this.listData.slice(
+      (this.vtsPageIndex - 1) * this.vtsPageSize,
+      this.vtsPageIndex * this.vtsPageSize
+    );
     // this.displayedProperties = this.properties.filter(prop => prop.checked === true);
     this.vtsTotal = this.filteredList.length;
   }
@@ -326,16 +333,38 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   onChangePageIndex(event: number) {
     if (event) {
       this.vtsPageIndex = event;
-      this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+      this.displayedData = this.listData.slice(
+        (this.vtsPageIndex - 1) * this.vtsPageSize,
+        this.vtsPageIndex * this.vtsPageSize
+      );
     }
   }
 
   reloadTableData() {
     this.vtsPageIndex = 1;
-    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    this.displayedData = this.listData.slice(
+      (this.vtsPageIndex - 1) * this.vtsPageSize,
+      this.vtsPageIndex * this.vtsPageSize
+    );
   }
 
-  exportDataToFile() {
+  exportDataToFile() {}
 
+  formatNumber(value: number): string {
+    if (value) {
+      const stringValue = `${value}`;
+      const list = stringValue.split('.');
+      const prefix = list[0].charAt(0) === '-' ? '-' : '';
+      let num = prefix ? list[0].slice(1) : list[0];
+      let result = '';
+      while (num.length > 3) {
+        result = `,${num.slice(-3)}${result}`;
+        num = num.slice(0, num.length - 3);
+      }
+      if (num) {
+        result = num + result;
+      }
+      return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
+    } else return '';
   }
 }

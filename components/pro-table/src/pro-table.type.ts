@@ -234,7 +234,7 @@ export type PropertyType = {
   headerTitle?: string;
   propertyName: string;
   required?: boolean;
-  datatype: 'string' | 'number' | 'datetime';
+  datatype: 'string' | 'number' | 'datetime' | 'status';
   checked?: boolean;
 }
 export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';

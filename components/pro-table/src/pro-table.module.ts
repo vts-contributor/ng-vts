@@ -30,6 +30,7 @@ import { VtsProTableConfigComponent } from './components/table-config.component'
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProtableDrawerComponent } from './components/table-drawer.component';
 import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
+import { VtsTagModule } from '@ui-vts/ng-vts/tag';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
     VtsDividerModule,
     DragDropModule,
     VtsInputNumberModule,
+    VtsTagModule,
     VtsInputModule
   ]
 })

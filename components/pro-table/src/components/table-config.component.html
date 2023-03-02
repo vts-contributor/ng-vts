@@ -67,7 +67,10 @@
     <tbody class="vts-table-tbody">
       <tr *ngFor="let data of displayedData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}">
         <td [vtsChecked]="setOfCheckedId.has(data.id)" (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
-        <td *ngFor="let prop of properties" vtsAlign="left">{{ data[prop.propertyName] }}</td>
+        <!-- <td *ngFor="let prop of properties" vtsAlign="left">{{ data[prop.propertyName] }}</td> -->
+        <ng-container *ngFor="let prop of properties">
+          <ng-container *ngTemplateOutlet="cellDisplay; context: {datatype: prop.datatype, value: data[prop.propertyName]}"></ng-container>
+        </ng-container>
         <td>
           <a>View</a>
           <a> | </a>
@@ -131,3 +134,25 @@
 </vts-modal>
 
 <table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer" [data]="drawerData"></table-drawer>
+
+<!-- display data cell base on datatype -->
+<ng-template #cellDisplay let-datatype="datatype" let-value="value">
+  <ng-container [ngSwitch]="datatype">
+    <td *ngSwitchCase="'number'" vtsAlign="right">{{formatNumber(value)}}</td>    
+    <td *ngSwitchCase="'status'">
+      <ng-container *ngTemplateOutlet="colorDisplay; context: {status: value}"></ng-container>
+    </td>
+    <td *ngSwitchDefault vtsAlign="left">{{value}}</td>
+  </ng-container>
+</ng-template>
+
+<!-- display status -->
+<ng-template #colorDisplay let-status="status">
+  <ng-container [ngSwitch]="status">
+    <vts-tag vtsColor="success" *ngSwitchCase="'success'">success</vts-tag>
+    <vts-tag vtsColor="processing"*ngSwitchCase="'processing'">processing</vts-tag>
+    <vts-tag vtsColor="error"*ngSwitchCase="'error'">error</vts-tag>
+    <vts-tag vtsColor="warning"*ngSwitchCase="'warning'">warning</vts-tag>
+    <vts-tag vtsColor="default" *ngSwitchDefault>default</vts-tag>
+  </ng-container>
+</ng-template>
