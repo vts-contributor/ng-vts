@@ -36,7 +36,9 @@ import _ from 'lodash';
       [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest" 
       [searchData]="searchData" 
-      (reloadTable)="reloadTable($event)"></vts-table-config>
+      (reloadTable)="reloadTable($event)"
+      >
+    </vts-table-config>
     </vts-spin>
   `,
   styles: [
@@ -93,7 +95,7 @@ export class VtsProTableContainerComponent implements OnInit {
   searchData: Object = {};
 
   ngOnInit(): void {
-    this.getRenderData(this.requestData)
+    this.getRenderData(this.requestData);
   }
 
   getRenderData(request?: Request) {

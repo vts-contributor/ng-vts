@@ -38,13 +38,16 @@
           <ng-container *ngFor="let property of properties">
             <li vts-menu-item cdkDrag style="list-style-type: none;">
               <i vts-icon vtsType="FullScreen"></i>
-              <label vts-checkbox [(ngModel)]="property.checked" (ngModelChange)="updateSingleChecked()">{{property.headerTitle}}</label>
+              <label vts-checkbox [(ngModel)]="property.checked"
+                (ngModelChange)="updateSingleChecked()">{{property.headerTitle}}</label>
             </li>
           </ng-container>
           <vts-divider style="margin: 0;"></vts-divider>
           <div class="btn-config-area">
-            <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary" (click)="onSaveCheckedPropertiesChange()">Save</button>
-            <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default" (click)="onResetCheckedProperties()">Reset</button>
+            <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary"
+              (click)="onSaveCheckedPropertiesChange()">Save</button>
+            <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default"
+              (click)="onResetCheckedProperties()">Reset</button>
           </div>
         </ul>
       </vts-dropdown-menu>
@@ -70,7 +73,8 @@
         <tr>
           <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
           <ng-container *ngFor="let property of properties">
-            <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn" *ngIf="property.checked">
+            <th [vtsSortFn]="sortFn" [vtsSortDirections]="sortDirections" *ngIf="property.checked"
+              (click)="sortValue(property)">
               {{property.headerTitle}}</th>
           </ng-container>
           <th style="padding: 16px 16px;">Action</th>
@@ -150,3 +154,13 @@
 
 <table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer"
   [mode]="mode" [data]="drawerData"></table-drawer>
+
+<vts-drawer [vtsClosable]="false" [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"
+  vtsHeight="80px">
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <span>my_demo_download_file.xlsx is downloaded</span>
+    <a vts-button [vtsType]="'text'" (click)="closeExported()">
+      <i vts-icon vtsType="Close"></i>
+    </a>
+  </div>
+</vts-drawer>

@@ -29,29 +29,43 @@ import { takeUntil } from 'rxjs/operators';
   preserveWhitespaces: false,
   template: `
     <form vts-form vtsLayout="vertical" [formGroup]="validateForm" class="vts-advanced-search-form">
-      <div vts-row [vtsGutter]="24">
-        <div vts-col [vtsSpan]="4" *ngFor="let control of controlArray">
-          <vts-form-item>
-            <vts-form-label [vtsFor]="control.controlKey">
-              {{ control.title }}
-            </vts-form-label>
-            <vts-form-control>
-              <input vts-input [vtsSize]="'sm'" placeholder="Input search data" [formControlName]="control.controlKey"
-                [attr.id]="control.controlKey" />
-            </vts-form-control>
-          </vts-form-item>
+      <div vts-row [vtsGutter]="vtsGutter">
+        <ng-container *ngFor="let control of controlArray">
+          <div vts-col [vtsSpan]="vtsSpan" *ngIf="control.show">
+            <vts-form-item>
+              <vts-form-label [vtsFor]="control.controlKey">
+                {{ control.title }}
+              </vts-form-label>
+              <vts-form-control>
+                <input vts-input [vtsSize]="'sm'" placeholder="Input search data" [formControlName]="control.controlKey"
+                  [attr.id]="control.controlKey" />
+              </vts-form-control>
+            </vts-form-item>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="vtsIsCollapse">
+          <ng-template [ngTemplateOutlet]="searchBtns"></ng-template>
+        </ng-container>
+      </div>
+
+      <ng-container *ngIf="!vtsIsCollapse">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <ng-template [ngTemplateOutlet]="searchBtns"></ng-template>
         </div>
-        <div vts-col [vtsSpan]="8" class="search-area">
-          <vts-form-label></vts-form-label>
-          <vts-form-item style="flex-direction: row; padding-top: 5px;">
+      </ng-container>
+
+      <ng-template #searchBtns>
+        <div vts-col [vtsSpan]="vtsSpan" [vtsOffset]="vtsOffsetButton" class="search-area">
+          <vts-form-label *ngIf="vtsIsCollapse"></vts-form-label>
+          <vts-form-item style="flex-direction: row; padding-top: 5px; width: max-content">
             <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'sm'" (click)="onSearch()">Search</button>
             <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="resetForm()">Reset</button>
-            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="toggleCollapse()" *ngIf="vtsNoDisplayProperties<vtsTotalProperties || true">Collapse
+            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="toggleCollapse()">Collapse
               <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
             </button>
           </vts-form-item>
         </div>
-      </div>
+      </ng-template>
     </form>
   `,
   styles: [`
@@ -61,6 +75,7 @@ import { takeUntil } from 'rxjs/operators';
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       margin-bottom: 16px;
+      padding-bottom: 0px;
     }
 
     [vts-form-label] {
@@ -91,18 +106,21 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   private destroy$ = new Subject<void>();
   validateForm!: FormGroup;
   controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
+
   @Input() vtsIsCollapse = true;
   @Input() vtsSearchConfig: SearchConfig[] = [];
-
   @Input() data: { [key: string]: any } = {};
   @Input() headers: PropertyType[] = [];
-
   @Output() putSearchData: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
 
   displayedProps: PropertyType[] = [];
   totalProps: PropertyType[] = [];
   vtsNoDisplayProperties: number = 0;
   vtsTotalProperties: number = 0;
+  vtsGutter = 24
+  vtsSpan = 5;
+  vtsOffsetButton = 0;
+
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality, private fb: FormBuilder) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-search-form');
@@ -116,11 +134,13 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes)
     if (changes) {
       this.totalProps = changes.headers.currentValue;
-      this.displayedProps = this.totalProps.filter(prop => prop.checked == true);
-      this.vtsNoDisplayProperties = this.displayedProps.length > 4 ? 4 : this.displayedProps.length;
-      this.vtsTotalProperties = this.displayedProps.length;
+      // this.displayedProps = this.totalProps.filter(prop => prop.checked && prop.checked === true)
+      this.displayedProps = this.totalProps;
+      this.vtsNoDisplayProperties = this.displayedProps.length > 3 ? 3 : this.totalProps.length;
+      this.vtsTotalProperties = this.totalProps.length;
       this.validateForm = this.fb.group({});
       for (let i = 1; i <= this.vtsTotalProperties; i++) {
         this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties, title: this.displayedProps[i - 1].headerTitle, controlKey: this.displayedProps[i - 1].propertyName });
@@ -134,12 +154,13 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
     this.destroy$.complete();
   }
 
-  mockFn() {
-    alert('Mock function!');
-  }
-
   toggleCollapse(): void {
     this.vtsIsCollapse = !this.vtsIsCollapse;
+    if (this.vtsIsCollapse === false) {
+      this.vtsSpan = 6;
+    } else {
+      this.vtsSpan = 5;
+    }
     this.controlArray.forEach((c, index) => {
       c.show = this.vtsIsCollapse ? index < this.vtsNoDisplayProperties : true;
     });

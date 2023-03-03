@@ -32,96 +32,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   templateUrl: './table-config.component.html',
-  styles: [
-    `
-      .vts-protable-configuration {
-        padding: 16px;
-        background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        margin-bottom: 16px;
-      }
-
-      .select-label {
-        background: #fce5ea;
-        border: 0.5px solid #cb002b;
-        border-radius: 10px;
-        height: 34px;
-        display: flex;
-        align-items: center;
-      }
-
-      .btn-area {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 16px;
-      }
-
-      .btn-table-config {
-        margin-left: 8px;
-      }
-
-      .btn-control-area {
-        display: flex !important;
-        text-align: left;
-      }
-
-      .config-area > button {
-        border: none;
-      }
-
-      .vts-table-tbody > tr > td {
-        padding: 8px;
-      }
-
-      td,
-      th {
-        border: 1px solid #d1d1d1;
-      }
-
-      .btn-properties-config {
-        margin-left: 8px;
-        border-radius: 10px;
-      }
-
-      .protable-paging {
-        display: flex;
-        justify-content: right;
-        padding-top: 16px;
-      }
-
-      .text-custom {
-        font-family: 'Sarabun';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 18px;
-        color: #CB002B;
-      }
-      .vts-pagination-item > a {
-        font-weight: 700;
-        font-size: 14px;
-      }
-
-      .vts-table-column-sorters {
-        width: auto;
-      }
-
-      .selected-item-data:hover {
-        background: #FFF5F6 !important;
-      }
-
-      .vts-pagination-total-text {
-        position: absolute;
-        left: 0;
-      }
-
-      .btn-config-area {
-        padding: 8px;
-        display: flex;
-        justify-content: right;
-      }
-	`],
+  styleUrls: ['./table-config.component.css'],
   host: {
     '[class.vts-table-config-rtl]': `dir === 'rtl'`
   }
@@ -155,7 +66,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
   @Input() drawerData: { [key: string]: any } = {};
-
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   @Input() vtsPaginationPosition: VtsProTablePaginationPosition = 'bottom';
@@ -175,6 +85,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
   @Output() reloadTable = new EventEmitter<boolean>();
+  @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
 
   pageSize = 10;
   pageIndex = 1;
@@ -192,7 +103,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   allChecked = false;
   indeterminateConfig = true;
-
+  visibleExport = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -228,7 +139,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       // //   // listData.push(val);
       // // });
       // this.listOfData = [...listData];
-      console.log(changes.properties);
+      console.log('on change', changes.properties);
     }
 
     if (changes.searchData) {
@@ -281,7 +192,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      _.remove(this.listData, {id: this.itemIdToDelete});
+      _.remove(this.listData, { id: this.itemIdToDelete });
       if (this.deleteRequest) {
         let url = this.deleteRequest.url;
         url += this.itemIdToDelete;
@@ -378,7 +289,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   sortDirections = ['ascend', 'descend', null];
-  sortFn = (item1: any, item2: any) => (item1.headerTitle < item2.headerTitle ? 1 : -1);
+  sortFn(item1: { [key: string]: VtsSafeAny }, item2: { [key: string]: VtsSafeAny }) {
+    alert(item1);
+    console.log(item2);
+    return 1;
+  }
+
 
   onEditDataItem(itemId?: number | string) {
     // get data with itemID 
@@ -441,6 +357,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   exportDataToFile() {
+    this.visibleExport = true;
     console.log(this.setOfCheckedId);
     if (this.exportRequest) {
       this.exportRequest.body = this.setOfCheckedId;
@@ -448,7 +365,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
         const data = res;
         console.log(data);
-
       });
     }
     // send Set of item ID to server, must server returns content data to exporting
@@ -486,6 +402,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         checked: false
       }));
     }
+    this.onChangeHeaders.emit(this.properties);
     this.changeDetector.detectChanges();
   }
 
@@ -499,6 +416,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     } else {
       this.indeterminateConfig = true;
     }
+    this.onChangeHeaders.emit(this.properties);
   }
 
   onSaveCheckedPropertiesChange() {
@@ -523,5 +441,49 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.service.updateConfigTable({ ...getConfigRequest, url }).subscribe(res => {
       this.properties = [...res.properties];
     })
+  }
+
+  sorted = false;
+  sortValue(prop: PropertyType) {
+    if (prop.datatype === 'number') {
+      const sortData = this.sorted ? this.displayedData.sort((itemX, itemY) => itemY[prop.propertyName] - itemX[prop.propertyName])
+        : this.displayedData.sort((itemX, itemY) => itemX[prop.propertyName] - itemY[prop.propertyName]);
+      this.sorted = !this.sorted;
+      this.displayedData = sortData;
+    }
+
+    if (prop.datatype === 'string') {
+      const sortData = this.sorted ?
+        this.displayedData.sort((itemX, itemY) => {
+          const xValue = itemX[prop.propertyName].toUpperCase();
+          const yValue = itemY[prop.propertyName].toUpperCase();
+          if (xValue < yValue) {
+            return -1;
+          }
+          if (xValue > yValue) {
+            return 1;
+          }
+          return 0;
+        })
+        : this.displayedData.sort((itemY, itemX) => {
+          const xValue = itemX[prop.propertyName].toUpperCase();
+          const yValue = itemY[prop.propertyName].toUpperCase();
+          if (xValue < yValue) {
+            return -1;
+          }
+          if (xValue > yValue) {
+            return 1;
+          }
+          return 0;
+        });
+      this.sorted = !this.sorted;
+      this.displayedData = sortData;
+    }
+
+    this.changeDetector.detectChanges();
+  }
+
+  closeExported() {
+    this.visibleExport = false;
   }
 }
