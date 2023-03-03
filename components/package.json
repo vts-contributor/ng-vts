@@ -18,7 +18,8 @@
     "@ui-vts/icons-angular": "1.0.0",
     "@ui-vts/theme": "^1.0.2",
     "apexcharts": "^3.27.3",
-    "date-fns": "^2.10.0"
+    "date-fns": "^2.10.0",
+    "dom7": "^4.0.4"
   },
   "peerDependencies": {
     "@angular/animations": "^14.2.12",
