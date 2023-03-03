@@ -147,6 +147,7 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
 
   resetForm(): void {
     this.validateForm.reset();
+    this.putSearchData.emit(this.validateForm.value);
   }
 
   onSearch() {

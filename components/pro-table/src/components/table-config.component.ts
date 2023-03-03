@@ -81,6 +81,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
       .btn-properties-config {
         margin-left: 8px;
+        border-radius: 10px;
       }
 
       .protable-paging {
@@ -113,6 +114,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       .vts-pagination-total-text {
         position: absolute;
         left: 0;
+      }
+
+      .btn-config-area {
+        padding: 8px;
+        display: flex;
+        justify-content: right;
       }
 	`],
   host: {
@@ -156,9 +163,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
   @Input() editRequest: Request | undefined;
+  @Input() deleteRequest: Request | undefined;
   @Input() saveRequest: Request | undefined;
   @Input() exportRequest: Request | undefined;
+  @Input() searchRequest: Request | undefined;
   @Input() searchData: Object | VtsSafeAny;
+  @Input() configTableRequest: Request | undefined;
 
   vtsRowHeight: string | number = 54;
   loading: boolean = false;
@@ -179,6 +189,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   displayedData: { [key: string]: any }[] = [];
   displayedProperties: PropertyType[] = [];
   filteredList = [...this.listData];
+
+  allChecked = false;
+  indeterminateConfig = true;
+
 
   constructor(
     private elementRef: ElementRef,
@@ -237,12 +251,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-    console.log(1000, event);
-    
-    console.log(1, this.properties);
-
     moveItemInArray(this.properties, event.previousIndex, event.currentIndex);
-    console.log(2, this.properties);
   }
 
   showDeleteModal(): void {
@@ -272,7 +281,16 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      // _.remove(this.listDisplayedData, item => item.id == this.itemIdToDelete);
+      _.remove(this.listData, {id: this.itemIdToDelete});
+      if (this.deleteRequest) {
+        let url = this.deleteRequest.url;
+        url += this.itemIdToDelete;
+        this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
+          this.drawerData = { ...data };
+          this.visibleDrawer = true;
+          this.changeDetector.detectChanges();
+        });
+      }
     }
     this.isOkLoadingDelete = false;
     this.isVisibleDelete = false;
@@ -398,6 +416,21 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     if (event) {
       this.vtsPageIndex = event;
       this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+
+      const getRequest: Request = {
+        url: this.searchRequest ? this.searchRequest.url : '',
+        body: {
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize
+        },
+        type: 'GET'
+      }
+      let url = getRequest.url;
+      this.service.getRenderData({ ...getRequest, url }).subscribe(res => {
+        this.listData = [...res.listData];
+        this.properties = [...res.properties];
+        this.changeDetector.detectChanges();
+      })
     }
   }
 
@@ -411,7 +444,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     console.log(this.setOfCheckedId);
     if (this.exportRequest) {
       this.exportRequest.body = this.setOfCheckedId;
-      this.service.exportSelectedDataToFile(this.exportRequest).subscribe(res => {
+      let url = this.exportRequest.url;
+      this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
         const data = res;
         console.log(data);
 
@@ -436,6 +470,58 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
     let itemData = this.listData.find(item => item.id === itemId);
     if (itemData) itemData.disabled = !itemData.disabled;
-    console.log('change status OK');
+    // console.log('change status OK');
+  }
+
+  updateAllChecked(): void {
+    this.indeterminateConfig = false;
+    if (this.allChecked) {
+      this.properties = this.properties.map(item => ({
+        ...item,
+        checked: true
+      }));
+    } else {
+      this.properties = this.properties.map(item => ({
+        ...item,
+        checked: false
+      }));
+    }
+    this.changeDetector.detectChanges();
+  }
+
+  updateSingleChecked(): void {
+    if (this.properties.every(item => !item.checked)) {
+      this.allChecked = false;
+      this.indeterminateConfig = false;
+    } else if (this.properties.every(item => item.checked)) {
+      this.allChecked = true;
+      this.indeterminateConfig = false;
+    } else {
+      this.indeterminateConfig = true;
+    }
+  }
+
+  onSaveCheckedPropertiesChange() {
+    if (this.configTableRequest) { }
+    const updateConfigRequest: Request = {
+      url: this.configTableRequest ? this.configTableRequest.url : '',
+      body: this.properties,
+      type: 'POST'
+    };
+    let url = updateConfigRequest.url;
+    this.service.updateConfigTable({ ...updateConfigRequest, url }).subscribe(res => {
+      this.properties = [...res.properties];
+    })
+  }
+
+  onResetCheckedProperties() {
+    const getConfigRequest: Request = {
+      url: this.configTableRequest ? this.configTableRequest.url : '',
+      type: 'GET'
+    };
+    let url = getConfigRequest.url;
+    this.service.updateConfigTable({ ...getConfigRequest, url }).subscribe(res => {
+      this.properties = [...res.properties];
+    })
   }
 }

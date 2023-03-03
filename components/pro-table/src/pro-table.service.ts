@@ -5,9 +5,29 @@ import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProtableService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getDataById(request: Request): Observable<any> {
+    if (request.type == 'GET') {
+      return this.http.get(request.url);
+    } else {
+      return this.http.post(request.url, request.body, {
+        observe: 'body'
+      });
+    }
+  }
+
+  deleteItem(request: Request): Observable<any> {
+    if (request.type == 'GET') {
+      return this.http.get(request.url);
+    } else {
+      return this.http.post(request.url, request.body, {
+        observe: 'body'
+      });
+    }
+  }
+
+  updateConfigTable(request: Request): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url);
     } else {
@@ -23,7 +43,7 @@ export class ProtableService {
     }
     else return of(new Error("Request invalid"));
   }
-  
+
   getRenderData(request: Request): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url);

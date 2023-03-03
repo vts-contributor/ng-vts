@@ -21,13 +21,22 @@ import _ from 'lodash';
 
 @Component({
   selector: 'vts-protable-container',
-  exportAs: 'vtsProTableContainer', 
+  exportAs: 'vtsProTableContainer',
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   template: `
     <vts-spin [vtsSpinning]="loading">
       <vts-search-form [headers]="properties" [data]="listData" (putSearchData)="searchDataByForm($event)"></vts-search-form>
-      <vts-table-config [listData]="listData" [properties]="properties" [editRequest]="editRequest" [saveRequest]="saveRequest" [searchData]="searchData" (reloadTable)="reloadTable($event)"></vts-table-config>
+      <vts-table-config 
+      [listData]="listData" 
+      [properties]="properties" 
+      [editRequest]="editRequest"
+      [deleteRequest]="deleteRequest" 
+      [saveRequest]="saveRequest"
+      [exportRequest]="exportRequest"
+      [configTableRequest]="configTableRequest" 
+      [searchData]="searchData" 
+      (reloadTable)="reloadTable($event)"></vts-table-config>
     </vts-spin>
   `,
   styles: [
@@ -49,21 +58,34 @@ export class VtsProTableContainerComponent implements OnInit {
   @Input() requestData: Request | undefined;
 
   editRequest: Request = {
-    url: "http://localhost:3000/posts/",
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
     type: "GET",
     onSuccess: (data) => {
       console.log(data);
     },
   }
 
+  deleteRequest: Request = {
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  }
+
   saveRequest: Request = {
-    url: "http://localhost:3000/posts/",
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
     type: "POST"
   }
 
   exportRequest: Request = {
-    url: "http://localhost:3000/posts/",
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
     type: "POST"
+  }
+
+  configTableRequest: Request = {
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    type: "GET"
   }
 
   displayedProps: PropertyType[] = [];
@@ -77,11 +99,23 @@ export class VtsProTableContainerComponent implements OnInit {
   getRenderData(request?: Request) {
     if (request && request.url) {
       this.loading = true;
-      let url = request.url;
-      this.service.getRenderData({ ...request, url }).subscribe(data => {
-        this.listData = { ...data };
+      const getRequest: Request = {
+        url: request ? request.url : '',
+        body: event,
+        type: 'GET',
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      };
+      let url = getRequest.url;
+      this.service.getRenderData({ ...getRequest, url }).subscribe(data => {
+        this.listData = { ...data.listData };
+        this.properties = { ...data.properties }
         this.loading = false;
         this.changeDetector.detectChanges();
+      }, err => {
+        console.log(err);
+        this.loading = false;
       });
     }
   }
@@ -89,23 +123,42 @@ export class VtsProTableContainerComponent implements OnInit {
   searchDataByForm(event: VtsSafeAny) {
     console.log('search', event);
     this.searchData = event;
-    if (!_.isEqual(event, {})) {
-      const searchRequest: Request = {
-        url: this.requestData ? this.requestData.url : '',
-        body: event,
-        type: 'GET',
-        onSuccess: (data) => {
-          console.log(data);
-        },
-      };
-      this.getRenderData(searchRequest);
-    }
+    const searchRequest: Request = {
+      url: this.requestData ? this.requestData.url : '',
+      body: event,
+      type: 'GET',
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    };
+
+    let url = searchRequest.url;
+    this.service.getRenderData({ ...searchRequest, url }).subscribe(data => {
+      this.listData = { ...data.listData };
+      this.properties = { ...data.properties }
+      this.loading = false;
+      this.changeDetector.detectChanges();
+    });
   }
 
   reloadTable(event: boolean) {
     if (event) {
       console.log('reload data', event);
-      this.getRenderData(this.requestData);
+      const getRequest: Request = {
+        url: this.requestData ? this.requestData.url : '',
+        type: 'GET',
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      };
+
+      let url = getRequest.url;
+      this.service.getRenderData({ ...getRequest, url }).subscribe(data => {
+        this.listData = { ...data.listData };
+        this.properties = { ...data.properties }
+        this.loading = false;
+        this.changeDetector.detectChanges();
+      });
     }
   }
 }

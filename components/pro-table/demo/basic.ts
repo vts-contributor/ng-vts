@@ -12,10 +12,19 @@ interface Item {
   disabled?: boolean;
 }
 
+interface Request {
+  url: string,
+  type: "POST" | "GET",
+  params?: {[key: string]: any},
+  body?: {[key: string]: any},
+  onSuccess?: (data: {[key: string]: any}) => void,
+  onError?: () => void
+}
+
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
-    <vts-protable-container [listData]="listOfData" [properties]="properties"></vts-protable-container>
+    <vts-protable-container [listData]="listOfData" [properties]="properties" [requestData]="request"></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {
@@ -94,6 +103,14 @@ export class VtsDemoProTableBasicComponent {
     //   datatype: 'string'
     // }
   ];
+
+  request: Request = {
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    type: "GET",
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+  }
 
   filteredList = [...this.listOfData];
 

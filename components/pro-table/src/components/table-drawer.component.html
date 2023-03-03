@@ -1,28 +1,22 @@
-<vts-drawer
-  [vtsBodyStyle]="{ overflow: 'auto' }"
-  [vtsMaskClosable]="false"
-  [vtsWidth]="300"
-  [vtsVisible]="visibleDrawer"
-  [vtsTitle]="title"
-  [vtsFooter]="footerTpl"
-  (vtsOnClose)="closeDrawer()"
->
+<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="300"
+  [vtsVisible]="visibleDrawer" [vtsTitle]="title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
   <form vts-form vtsLayout="vertical" *vtsDrawerContent [formGroup]="formGroup">
     <div *ngFor="let item of headers; let i = index">
       <ng-container *ngIf="item.headerTitle">
         <vts-form-item vts-row>
           <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
-          <vts-form-control
-            vts-col
-            [vtsSpan]="18"
-            *ngIf="item.datatype == 'string'; else inputNumber"
-          >
-            <input vts-input placeholder="" [formControlName]="item.propertyName"/>
+          <vts-form-control vts-col [vtsSpan]="18" *ngIf="item.datatype == 'string'; else inputNumber">
+            <ng-container *ngIf="mode!=='view'">
+              <input vts-input placeholder="Input value" [formControlName]="item.propertyName" />
+            </ng-container>
+            <ng-container *ngIf="mode==='view'">
+              <input vts-input placeholder="" type="text" [formControlName]="item.propertyName" [disabled]="true"/>
+            </ng-container>
           </vts-form-control>
 
           <ng-template #inputNumber>
             <vts-form-control vts-col [vtsSpan]="18">
-              <vts-input-number  [formControlName]="item.propertyName"></vts-input-number>
+              <vts-input-number [formControlName]="item.propertyName" [vtsDisabled]="mode==='view'"></vts-input-number>
             </vts-form-control>
           </ng-template>
         </vts-form-item>
