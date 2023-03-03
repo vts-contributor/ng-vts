@@ -40,6 +40,7 @@ function generateNav(componentsDocMap) {
     "breadcrumb",
     "button",
     "card",
+    "carousel",
     "chart",
     "checkbox",
     "date-picker",

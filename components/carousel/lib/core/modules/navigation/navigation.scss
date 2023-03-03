@@ -1,0 +1,64 @@
+@import '../../carousel-vars.scss';
+@at-root {
+  :root {
+    --carousel-navigation-size: 44px;
+    /*
+  --carousel-navigation-color: var(--carousel-theme-color);
+  */
+  }
+}
+.carousel-button-prev,
+.carousel-button-next {
+  position: absolute;
+  top: 50%;
+  width: calc(var(--carousel-navigation-size) / 44 * 27);
+  height: var(--carousel-navigation-size);
+  margin-top: calc(0px - (var(--carousel-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--carousel-navigation-color, var(--carousel-theme-color));
+  &.carousel-button-disabled {
+    opacity: 0.35;
+    cursor: auto;
+    pointer-events: none;
+  }
+  &.carousel-button-hidden {
+    opacity: 0;
+    cursor: auto;
+    pointer-events: none;
+  }
+  .carousel-navigation-disabled & {
+    display: none !important;
+  }
+  &:after {
+    font-family: carousel-icons;
+    font-size: var(--carousel-navigation-size);
+    text-transform: none !important;
+    letter-spacing: 0;
+    font-variant: initial;
+    line-height: 1;
+  }
+}
+.carousel-button-prev,
+.carousel-rtl .carousel-button-next {
+  &:after {
+    content: 'prev';
+  }
+  left: 10px;
+  right: auto;
+}
+.carousel-button-next,
+.carousel-rtl .carousel-button-prev {
+  &:after {
+    content: 'next';
+  }
+  right: 10px;
+  left: auto;
+}
+
+.carousel-button-lock {
+  display: none;
+}

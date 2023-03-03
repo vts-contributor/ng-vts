@@ -1,0 +1,44 @@
+/* Preloader */
+@at-root {
+  :root {
+    /*
+  --carousel-preloader-color: var(--carousel-theme-color);
+  */
+  }
+}
+.carousel-lazy-preloader {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -21px;
+  margin-top: -21px;
+  z-index: 10;
+  transform-origin: 50%;
+  box-sizing: border-box;
+  border: 4px solid var(--carousel-preloader-color, var(--carousel-theme-color));
+  border-radius: 50%;
+  border-top-color: transparent;
+}
+.carousel:not(.carousel-watch-progress),
+.carousel-watch-progress .carousel-slide-visible {
+  .carousel-lazy-preloader {
+    animation: carousel-preloader-spin 1s infinite linear;
+  }
+}
+
+.carousel-lazy-preloader-white {
+  --carousel-preloader-color: #fff;
+}
+.carousel-lazy-preloader-black {
+  --carousel-preloader-color: #000;
+}
+@keyframes carousel-preloader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
