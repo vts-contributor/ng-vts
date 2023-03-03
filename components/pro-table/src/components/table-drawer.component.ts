@@ -9,7 +9,6 @@ import { PropertyType, Request, StatusProTable } from '../pro-table.type';
 })
 export class ProtableDrawerComponent implements OnInit, OnChanges {
   constructor(
-    // private cdf: ChangeDetectorRef
     private service: ProtableService
   ) {}
 
@@ -54,6 +53,9 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       this.formGroup = form;
       this.selectedStatus = {...selectedStatus};
     }
+    if(changes.editRequest || changes.saveRequest){
+      
+    }
   }
 
   onChangeStatus(property: string, status: StatusProTable){
@@ -79,14 +81,27 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   }
 
   onSave(){
+    // merge old data with new changes
     this.entity = {
       ...this.data,
       ...this.selectedStatus,
       ...this.formGroup.value
     }
     console.log(this.entity);
-    this.service.saveDataById(this.saveRequest).subscribe(data => {
-      console.log(data);
-    })
+
+    if(typeof this.saveRequest != "undefined"){
+      let {onSuccess, onError} = this.saveRequest;
+      this.service.saveDataById(this.saveRequest)
+      .subscribe(data => {
+        if(onSuccess){
+          onSuccess(data);
+        }
+        this.closeDrawer();
+      }, error => {
+        if(onError){
+          onError(error);
+        }
+      });
+    }    
   }
 }

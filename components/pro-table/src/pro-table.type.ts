@@ -245,7 +245,7 @@ export type Request = {
   params?: {[key: string]: any},
   body?: {[key: string]: any},
   onSuccess?: (data: {[key: string]: any}) => void,
-  onError?: () => void
+  onError?: (data: {[key: string]: any}) => void
 }
 
 export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";

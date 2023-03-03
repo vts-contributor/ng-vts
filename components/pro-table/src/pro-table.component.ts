@@ -49,7 +49,10 @@ export class VtsProTableContainerComponent implements OnInit {
 
   saveRequest: Request = {
     url: "http://localhost:3000/posts/",
-    type: "POST"
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    }
   }
 
   displayedProps: PropertyType[] = [];
