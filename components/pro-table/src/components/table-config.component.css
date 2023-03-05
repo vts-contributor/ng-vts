@@ -1,0 +1,92 @@
+.vts-protable-configuration {
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-bottom: 16px;
+}
+
+.select-label {
+  background: #fce5ea;
+  border: 0.5px solid #cb002b;
+  border-radius: 10px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.btn-table-config {
+  margin-left: 8px;
+}
+
+.btn-control-area {
+  display: flex !important;
+  text-align: left;
+}
+
+.config-area>button {
+  border: none;
+}
+
+.vts-table-tbody>tr>td {
+  padding: 16px;
+}
+
+td,
+th {
+  border: 1px solid #d1d1d1;
+}
+
+.btn-properties-config {
+  margin-left: 8px;
+  border-radius: 10px;
+}
+
+.protable-paging {
+  display: flex;
+  justify-content: right;
+  padding-top: 16px;
+}
+
+.text-custom {
+  font-family: 'Sarabun';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  color: #CB002B;
+}
+
+.vts-pagination-item>a {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.vts-table-column-sorters {
+  width: auto;
+}
+
+.selected-item-data:hover {
+  background: #FFF5F6 !important;
+}
+
+.vts-pagination-total-text {
+  position: absolute;
+  left: 0;
+}
+
+.btn-config-area {
+  padding: 8px;
+  display: flex;
+  justify-content: right;
+}
+
+.vts-table-column-sorter-inner:hover {
+  cursor: pointer;
+}

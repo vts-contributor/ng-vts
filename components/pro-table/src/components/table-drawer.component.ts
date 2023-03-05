@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProtableService } from '../pro-table.service';
-import { PropertyType, Request, StatusProTable } from '../pro-table.type';
+import { PropertyType, Request, StatusProTable, ViewMode } from '../pro-table.type';
 
 @Component({
   selector: 'table-drawer',
@@ -13,6 +13,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   ) {}
 
   @Input() visibleDrawer: boolean = false;
+  @Input() mode: ViewMode = 'view';
   @Input() data: {[key: string]: any} = {};
   @Input() headers: PropertyType[] = [];
   @Input() saveRequest: Request | undefined;

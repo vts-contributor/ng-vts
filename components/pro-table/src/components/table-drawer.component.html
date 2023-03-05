@@ -10,34 +10,43 @@
   <form vts-form *vtsDrawerContent [formGroup]="formGroup" vtsLayout="vertical">
     <div *ngFor="let item of displayHeaders; let i = index">
       <ng-container [ngSwitch]="item.datatype">
+
+        <!-- status type -->
         <ng-container *ngSwitchCase="'status'">
           <ng-container
             *ngTemplateOutlet="statusDisplay; context: {title: item.headerTitle, value: selectedStatus[item.propertyName], property: item.propertyName}"></ng-container>
         </ng-container>
+
+        <!-- datetime type -->
         <ng-container *ngSwitchCase="'datetime'"></ng-container>
+
+        <!-- number type -->
         <ng-container *ngSwitchCase="'number'">
           <vts-form-item vts-row>
             <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
             <vts-form-control vts-col [vtsSpan]="18">
-              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"></vts-input-number>
+              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName" [vtsDisabled]="mode == 'view'"></vts-input-number>
             </vts-form-control>
           </vts-form-item>
         </ng-container>
+
+        <!-- string type - default -->
         <ng-container *ngSwitchDefault>
           <vts-form-item vts-row>
             <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
             <vts-form-control vts-col [vtsSpan]="18">
-              <input vts-input placeholder="" [formControlName]="item.propertyName" />
+              <input vts-input placeholder="" [formControlName]="item.propertyName" [disabled]="mode == 'view'" />
             </vts-form-control>
           </vts-form-item>
         </ng-container>
+
       </ng-container>
     </div>
   </form>
 
   <ng-template #footerTpl>
     <div style="float: right">
-      <button vts-button style="margin-right: 8px" (click)="onSave()">Save</button>
+      <button *ngIf="mode!=='view'" vts-button style="margin-right: 8px" (click)="onSave()">Save</button>
       <button vts-button vtsType="primary" (click)="closeDrawer()">Close</button>
     </div>
   </ng-template>

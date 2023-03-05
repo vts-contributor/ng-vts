@@ -9,12 +9,22 @@ interface Item {
   content4: string;
   content5: string;
   num?: number;
+  disabled?: boolean;
+}
+
+interface Request {
+  url: string,
+  type: "POST" | "GET",
+  params?: {[key: string]: any},
+  body?: {[key: string]: any},
+  onSuccess?: (data: {[key: string]: any}) => void,
+  onError?: () => void
 }
 
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
-    <vts-protable-container [listData]="listData2" [properties]="properties"></vts-protable-container>
+    <vts-protable-container [listData]="listOfData" [properties]="properties" [requestData]="request"></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {
@@ -27,7 +37,8 @@ export class VtsDemoProTableBasicComponent {
         content3: `Table row ${i + 1} (center)`,
         content4: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
         content5: '0.' + '5'.padStart(Math.round(Math.random() * 7), '0'),
-        num: i + 1
+        num: i + 1,
+        disabled: i % 3 == 1 ? true : false
       };
     })
   ];
@@ -112,6 +123,14 @@ export class VtsDemoProTableBasicComponent {
     //   datatype: 'string'
     // }
   ];
+
+  request: Request = {
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    type: "GET",
+    onSuccess: (data: any) => {
+      console.log(data);
+    },
+  }
 
   filteredList = [...this.listOfData];
 

@@ -22,12 +22,10 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { PropertyType, Request, VtsProTablePaginationPosition } from '../pro-table.type';
+import { PropertyType, Request, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-// import { getLocaleNumberSymbol, NumberSymbol } from '@angular/common';
-
 
 @Component({
   selector: 'vts-table-config',
@@ -36,57 +34,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   templateUrl: './table-config.component.html',
-  styles: [
-    `
-      .vts-protable-configuration {
-        padding: 16px;
-        background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        margin-bottom: 16px;
-      }
-
-      .select-label {
-        background: #fce5ea;
-        border: 0.5px solid #cb002b;
-        border-radius: 10px;
-      }
-
-      .btn-area {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 16px;
-      }
-
-      .btn-table-config {
-        margin-left: 8px;
-      }
-
-      .btn-control-area {
-        display: flex !important;
-        text-align: left;
-      }
-
-      .config-area > button {
-        border: none;
-      }
-
-      td,
-      th {
-        border: 1px solid #d1d1d1;
-      }
-
-      .btn-properties-config {
-        margin-left: 8px;
-      }
-
-      .protable-paging {
-        display: flex;
-        justify-content: right;
-        padding-top: 16px;
-      }
-    `
-  ],
+  styleUrls: ['./table-config.component.css'],
   host: {
     '[class.vts-table-config-rtl]': `dir === 'rtl'`
   }
@@ -120,7 +68,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
   @Input() drawerData: { [key: string]: any } = {};
-
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   @Input() vtsPaginationPosition: VtsProTablePaginationPosition = 'bottom';
@@ -128,11 +75,19 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
   @Input() editRequest: Request | undefined;
+  @Input() deleteRequest: Request | undefined;
   @Input() saveRequest: Request | undefined;
+  @Input() exportRequest: Request | undefined;
+  @Input() searchRequest: Request | undefined;
+  @Input() searchData: Object | VtsSafeAny;
+  @Input() configTableRequest: Request | undefined;
 
   vtsRowHeight: string | number = 54;
+  loading: boolean = false;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
+  @Output() reloadTable = new EventEmitter<boolean>();
+  @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
 
   pageSize = 10;
   pageIndex = 1;
@@ -141,11 +96,16 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
+  mode: ViewMode = 'view';
 
   listDisplayedData = [];
   displayedData: { [key: string]: any }[] = [];
   displayedProperties: PropertyType[] = [];
   filteredList = [...this.listData];
+
+  allChecked = false;
+  indeterminateConfig = true;
+  visibleExport = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -158,6 +118,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
@@ -169,6 +130,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     );
     // this.displayedProperties = this.properties.filter(prop => prop.checked === true);
     this.vtsTotal = this.filteredList.length;
+    this.loading = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -182,7 +144,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       // //   // listData.push(val);
       // // });
       // this.listOfData = [...listData];
-      console.log(changes.properties);
+      console.log('on change', changes.properties);
+    }
+
+    if (changes.searchData) {
+      console.log(changes.searchData.currentValue);
+    }
+
+    if (changes.listData) {
+      console.log(changes.listData.currentValue);
     }
   }
 
@@ -227,7 +197,16 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      // _.remove(this.listDisplayedData, item => item.id == this.itemIdToDelete);
+      _.remove(this.listData, { id: this.itemIdToDelete });
+      if (this.deleteRequest) {
+        let url = this.deleteRequest.url;
+        url += this.itemIdToDelete;
+        this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
+          this.drawerData = { ...data };
+          this.visibleDrawer = true;
+          this.changeDetector.detectChanges();
+        });
+      }
     }
     this.isOkLoadingDelete = false;
     this.isVisibleDelete = false;
@@ -287,7 +266,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onAllChecked(checked: any): void {
-    this.filteredList.forEach(({ id }) => this.updateCheckedSet(id, checked));
+    const enableList = this.filteredList.filter(d => d.disabled === false);
+    enableList.forEach(({ id }) => this.updateCheckedSet(id, checked));
     this.refreshCheckedStatus();
   }
 
@@ -296,8 +276,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.refreshCheckedStatus();
   }
 
-  updateCheckedSet(id: string, checked: boolean): void {
-    if (checked) {
+  updateCheckedSet(id: string, checked: boolean, disabled?: boolean): void {
+    if (checked && !disabled) {
       this.setOfCheckedId.add(id);
     } else {
       this.setOfCheckedId.delete(id);
@@ -314,41 +294,88 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   sortDirections = ['ascend', 'descend', null];
-  sortFn = (item1: any, item2: any) => (item1.headerTitle < item2.headerTitle ? 1 : -1);
+  sortFn(item1: { [key: string]: VtsSafeAny }, item2: { [key: string]: VtsSafeAny }) {
+    alert(item1);
+    console.log(item2);
+    return 1;
+  }
+
 
   onEditDataItem(itemId?: number | string) {
-    // get data with itemID
+    // get data with itemID 
     if (this.editRequest) {
       let url = this.editRequest.url;
       url += itemId;
       this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
         this.drawerData = { ...data };
+        this.mode = 'edit';
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
       });
     }
+    // this.drawerData = this.listData.filter(data => data.id === itemId)[0];
+    // this.mode = 'edit';
+    // this.visibleDrawer = true;
+  }
+
+  onViewDataItem(itemId?: number | string) {
+    // get data with itemID 
+    if (this.editRequest) {
+      let url = this.editRequest.url;
+      url += itemId;
+      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+        this.drawerData = { ...data };
+        this.mode = 'view';
+        this.visibleDrawer = true;
+        this.changeDetector.detectChanges();
+      });
+    }
+    // this.drawerData = this.listData.filter(data => data.id === itemId)[0];
+    // this.mode = 'view';
     // this.visibleDrawer = true;
   }
 
   onChangePageIndex(event: number) {
     if (event) {
       this.vtsPageIndex = event;
-      this.displayedData = this.listData.slice(
-        (this.vtsPageIndex - 1) * this.vtsPageSize,
-        this.vtsPageIndex * this.vtsPageSize
-      );
+      this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+
+      const getRequest: Request = {
+        url: this.searchRequest ? this.searchRequest.url : '',
+        body: {
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize
+        },
+        type: 'GET'
+      }
+      let url = getRequest.url;
+      this.service.getRenderData({ ...getRequest, url }).subscribe(res => {
+        this.listData = [...res.listData];
+        this.properties = [...res.properties];
+        this.changeDetector.detectChanges();
+      })
     }
   }
 
   reloadTableData() {
     this.vtsPageIndex = 1;
-    this.displayedData = this.listData.slice(
-      (this.vtsPageIndex - 1) * this.vtsPageSize,
-      this.vtsPageIndex * this.vtsPageSize
-    );
+    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    this.reloadTable.emit(true);
   }
 
-  exportDataToFile() {}
+  exportDataToFile() {
+    this.visibleExport = true;
+    console.log(this.setOfCheckedId);
+    if (this.exportRequest) {
+      this.exportRequest.body = this.setOfCheckedId;
+      let url = this.exportRequest.url;
+      this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
+        const data = res;
+        console.log(data);
+      });
+    }
+    // send Set of item ID to server, must server returns content data to exporting
+  }
 
   formatNumber(value: number): string {
     if (value) {
@@ -366,5 +393,121 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       }
       return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
     } else return '';
+  }
+
+  changeStatusItem(itemId?: string | number) {
+    // send request to change status to server
+    if (this.editRequest) {
+      let url = this.editRequest.url;
+      url += itemId;
+      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+        if (data) {
+          data.disabled = !data.disabled;
+        };
+        this.changeDetector.detectChanges();
+      });
+    }
+
+    let itemData = this.listData.find(item => item.id === itemId);
+    if (itemData) itemData.disabled = !itemData.disabled;
+    // console.log('change status OK');
+  }
+
+  updateAllChecked(): void {
+    this.indeterminateConfig = false;
+    if (this.allChecked) {
+      this.properties = this.properties.map(item => ({
+        ...item,
+        checked: true
+      }));
+    } else {
+      this.properties = this.properties.map(item => ({
+        ...item,
+        checked: false
+      }));
+    }
+    this.onChangeHeaders.emit(this.properties);
+    this.changeDetector.detectChanges();
+  }
+
+  updateSingleChecked(): void {
+    if (this.properties.every(item => !item.checked)) {
+      this.allChecked = false;
+      this.indeterminateConfig = false;
+    } else if (this.properties.every(item => item.checked)) {
+      this.allChecked = true;
+      this.indeterminateConfig = false;
+    } else {
+      this.indeterminateConfig = true;
+    }
+    this.onChangeHeaders.emit(this.properties);
+  }
+
+  onSaveCheckedPropertiesChange() {
+    if (this.configTableRequest) { }
+    const updateConfigRequest: Request = {
+      url: this.configTableRequest ? this.configTableRequest.url : '',
+      body: this.properties,
+      type: 'POST'
+    };
+    let url = updateConfigRequest.url;
+    this.service.updateConfigTable({ ...updateConfigRequest, url }).subscribe(res => {
+      this.properties = [...res.properties];
+    })
+  }
+
+  onResetCheckedProperties() {
+    const getConfigRequest: Request = {
+      url: this.configTableRequest ? this.configTableRequest.url : '',
+      type: 'GET'
+    };
+    let url = getConfigRequest.url;
+    this.service.updateConfigTable({ ...getConfigRequest, url }).subscribe(res => {
+      this.properties = [...res.properties];
+    })
+  }
+
+  sorted = false;
+  sortValue(prop: PropertyType) {
+    if (prop.datatype === 'number') {
+      const sortData = this.sorted ? this.displayedData.sort((itemX, itemY) => itemY[prop.propertyName] - itemX[prop.propertyName])
+        : this.displayedData.sort((itemX, itemY) => itemX[prop.propertyName] - itemY[prop.propertyName]);
+      this.sorted = !this.sorted;
+      this.displayedData = sortData;
+    }
+
+    if (prop.datatype === 'string') {
+      const sortData = this.sorted ?
+        this.displayedData.sort((itemX, itemY) => {
+          const xValue = itemX[prop.propertyName].toUpperCase();
+          const yValue = itemY[prop.propertyName].toUpperCase();
+          if (xValue < yValue) {
+            return -1;
+          }
+          if (xValue > yValue) {
+            return 1;
+          }
+          return 0;
+        })
+        : this.displayedData.sort((itemY, itemX) => {
+          const xValue = itemX[prop.propertyName].toUpperCase();
+          const yValue = itemY[prop.propertyName].toUpperCase();
+          if (xValue < yValue) {
+            return -1;
+          }
+          if (xValue > yValue) {
+            return 1;
+          }
+          return 0;
+        });
+      this.sorted = !this.sorted;
+      this.displayedData = sortData;
+    }
+
+    this.changeDetector.detectChanges();
+  }
+
+  closeExported() {
+    this.visibleExport = false;
   }
 }

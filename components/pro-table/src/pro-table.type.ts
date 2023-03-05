@@ -249,3 +249,5 @@ export type Request = {
 }
 
 export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";
+
+export type ViewMode = "view" | "edit";

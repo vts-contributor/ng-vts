@@ -13,8 +13,11 @@ import {
   // Optional,
   // OnChanges,
   // QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ChangeDetectorRef
 } from '@angular/core';
+import { ProtableService } from './pro-table.service';
+import _ from 'lodash';
 
 @Component({
   selector: 'vts-protable-container',
@@ -22,8 +25,20 @@ import {
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   template: `
-    <vts-search-form [headers]="properties" [data]="listData"></vts-search-form>
-    <vts-table-config [listData]="listData" [properties]="properties" [editRequest]="editRequest" [saveRequest]="saveRequest"></vts-table-config>
+    <vts-spin [vtsSpinning]="loading">
+      <vts-search-form [headers]="properties" [data]="listData" (putSearchData)="searchDataByForm($event)"></vts-search-form>
+      <vts-table-config 
+      [listData]="listData" 
+      [properties]="properties" 
+      [editRequest]="editRequest"
+      [deleteRequest]="deleteRequest" 
+      [saveRequest]="saveRequest"
+      [configTableRequest]="configTableRequest" 
+      [searchData]="searchData" 
+      (reloadTable)="reloadTable($event)"
+      >
+    </vts-table-config>
+    </vts-spin>
   `,
   styles: [
     ``
@@ -31,7 +46,9 @@ import {
 })
 export class VtsProTableContainerComponent implements OnInit {
   constructor(
-    public elementRef: ElementRef
+    public elementRef: ElementRef,
+    private service: ProtableService,
+    private changeDetector: ChangeDetectorRef
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-protable-container');
@@ -39,9 +56,19 @@ export class VtsProTableContainerComponent implements OnInit {
 
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  @Input() requestData: Request | undefined;
+
   editRequest: Request = {
-    url: "http://localhost:3000/posts/",
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
     type: "GET",
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  }
+
+  deleteRequest: Request = {
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    type: "POST",
     onSuccess: (data) => {
       console.log(data);
     },
@@ -55,8 +82,82 @@ export class VtsProTableContainerComponent implements OnInit {
     }
   }
 
+  configTableRequest: Request = {
+    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    type: "GET"
+  }
+
   displayedProps: PropertyType[] = [];
+  loading: boolean = false;
+  searchData: Object = {};
 
   ngOnInit(): void {
+    this.getRenderData(this.requestData);
+  }
+
+  getRenderData(request?: Request) {
+    if (request && request.url) {
+      this.loading = true;
+      const getRequest: Request = {
+        url: request ? request.url : '',
+        body: event,
+        type: 'GET',
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      };
+      let url = getRequest.url;
+      this.service.getRenderData({ ...getRequest, url }).subscribe(data => {
+        this.listData = { ...data.listData };
+        this.properties = { ...data.properties }
+        this.loading = false;
+        this.changeDetector.detectChanges();
+      }, err => {
+        console.log(err);
+        this.loading = false;
+      });
+    }
+  }
+
+  searchDataByForm(event: VtsSafeAny) {
+    console.log('search', event);
+    this.searchData = event;
+    const searchRequest: Request = {
+      url: this.requestData ? this.requestData.url : '',
+      body: event,
+      type: 'GET',
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    };
+
+    let url = searchRequest.url;
+    this.service.getRenderData({ ...searchRequest, url }).subscribe(data => {
+      this.listData = { ...data.listData };
+      this.properties = { ...data.properties }
+      this.loading = false;
+      this.changeDetector.detectChanges();
+    });
+  }
+
+  reloadTable(event: boolean) {
+    if (event) {
+      console.log('reload data', event);
+      const getRequest: Request = {
+        url: this.requestData ? this.requestData.url : '',
+        type: 'GET',
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      };
+
+      let url = getRequest.url;
+      this.service.getRenderData({ ...getRequest, url }).subscribe(data => {
+        this.listData = { ...data.listData };
+        this.properties = { ...data.properties }
+        this.loading = false;
+        this.changeDetector.detectChanges();
+      });
+    }
   }
 }
