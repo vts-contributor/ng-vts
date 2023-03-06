@@ -81,6 +81,7 @@ task('build:site-doc', done => {
     'build', 
     '--project=ng-vts-doc',
     '--configuration=production',
+    '--watch',
     ...(path ? ['--base-href', path] : [])
   ];
   execNodeTask('@angular/cli', 'ng', command)(done);
@@ -92,6 +93,7 @@ task('build:site-iframe', done => {
     'build', 
     '--project=ng-vts-iframe',
     '--configuration=production',
+    '--watch',
     ...(path ? ['--base-href', path] : [])
   ];
   execNodeTask('@angular/cli', 'ng', command)(done);
