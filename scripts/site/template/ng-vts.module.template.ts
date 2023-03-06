@@ -64,6 +64,7 @@ import { VtsTransferModule } from '@ui-vts/ng-vts/transfer';
 import { VtsTreeModule } from '@ui-vts/ng-vts/tree';
 import { VtsTreeSelectModule } from '@ui-vts/ng-vts/tree-select';
 import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
+import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 
 @NgModule({
   exports: [
@@ -130,7 +131,8 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsTreeModule,
     VtsTreeSelectModule,
     VtsUploadModule,
-    VtsWaveModule
+    VtsWaveModule,
+    VtsProTableModule
   ]
 })
 export class SiteNgZorroAntdModule {}

@@ -74,6 +74,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageSize: number = 10;
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
+  @Input() getRequest: Request | undefined;
   @Input() editRequest: Request | undefined;
   @Input() deleteRequest: Request | undefined;
   @Input() saveRequest: Request | undefined;
@@ -81,6 +82,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() searchRequest: Request | undefined;
   @Input() searchData: Object | VtsSafeAny;
   @Input() configTableRequest: Request | undefined;
+  @Input() pageSize = 10;
 
   vtsRowHeight: string | number = 54;
   loading: boolean = false;
@@ -88,8 +90,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
   @Output() reloadTable = new EventEmitter<boolean>();
   @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
+  @Output() changePageSize = new EventEmitter<number>();
 
-  pageSize = 10;
   pageIndex = 1;
   checked = false;
   indeterminate = false;
@@ -118,32 +120,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
-    this.filteredList = [...this.listData];
-    this.displayedData = this.listData.slice(
-      (this.vtsPageIndex - 1) * this.vtsPageSize,
-      this.vtsPageIndex * this.vtsPageSize
-    );
-    // this.displayedProperties = this.properties.filter(prop => prop.checked === true);
-    this.vtsTotal = this.filteredList.length;
-    this.loading = false;
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.properties) {
-      // let listData: T[] = [];
-      // changes.data.currentValue.forEach((d: T) => {
-      // //   // let val: T = {};
-      // //   // this.headers.forEach(header => {
-      // //   //   val[header.propName] = d[header.propName];
-      // //   // });
-      // //   // listData.push(val);
-      // // });
-      // this.listOfData = [...listData];
+      this.properties = this.properties.filter(item => item.headerTitle || item.headerTitle != null);
       console.log('on change', changes.properties);
     }
 
@@ -153,17 +138,22 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
     if (changes.listData) {
       console.log(changes.listData.currentValue);
+
+      this.loading = true;
+      this.filteredList = [...this.listData];
+      this.displayedData = this.listData.slice(
+        (this.vtsPageIndex - 1) * this.vtsPageSize,
+        this.vtsPageIndex * this.vtsPageSize
+      );
+      this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
+      this.vtsTotal = this.filteredList.length;
+      this.loading = false;
     }
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  mockFn() {
-    alert('Mock function!');
-    this.visibleDrawer = false;
   }
 
   drop(event: CdkDragDrop<string[]>): void {
@@ -185,7 +175,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkModal(): void {
     this.isOkLoadingModal = true;
     this.checkedItemsAmount = 0;
-    // this.clearAllCheckedItems.emit(this.checkedItemsAmount === 0);
     this.onAllChecked(false);
     this.isOkLoadingModal = false;
     this.isVisibleModal = false;
@@ -197,7 +186,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      _.remove(this.listData, { id: this.itemIdToDelete });
+      _.remove(this.displayedData, { id: this.itemIdToDelete });
+      this.vtsTotal = this.listData.length;
+
       if (this.deleteRequest) {
         let url = this.deleteRequest.url;
         url += this.itemIdToDelete;
@@ -303,12 +294,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onEditDataItem(itemId?: number | string) {
     // get data with itemID 
-    if (this.editRequest) {
-      let url = this.editRequest.url;
+    this.mode = 'edit';
+    if (this.getRequest) {
+      let url = this.getRequest.url;
       url += itemId;
-      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+      this.service.getDataById({ ...this.getRequest, url }).subscribe(data => {
         this.drawerData = { ...data };
-        this.mode = 'edit';
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
       });
@@ -320,12 +311,11 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onViewDataItem(itemId?: number | string) {
     // get data with itemID 
-    if (this.editRequest) {
-      let url = this.editRequest.url;
-      url += itemId;
-      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+    this.mode = 'view';
+    if (this.getRequest) {
+      let url = this.getRequest.url + itemId;
+      this.service.getDataById({ ...this.getRequest, url }).subscribe(data => {
         this.drawerData = { ...data };
-        this.mode = 'view';
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
       });
@@ -359,7 +349,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   reloadTableData() {
     this.vtsPageIndex = 1;
-    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
     this.reloadTable.emit(true);
   }
 

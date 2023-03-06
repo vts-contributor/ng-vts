@@ -48,7 +48,8 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
           selectedStatus[header.propertyName] = value[header.propertyName]
         }
         else {
-          form.addControl(header.propertyName, new FormControl(value[header.propertyName]))
+          form.addControl(header.propertyName, new FormControl(value[header.propertyName]));
+          if (this.mode === 'view') form.get(header.propertyName)?.disable();
         }
       });
       this.formGroup = form;
@@ -88,7 +89,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       ...this.selectedStatus,
       ...this.formGroup.value
     }
-    console.log(this.entity);
+    // console.log(this.entity);
 
     if(typeof this.saveRequest != "undefined"){
       let {onSuccess, onError} = this.saveRequest;

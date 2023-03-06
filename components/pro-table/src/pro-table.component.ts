@@ -4,17 +4,19 @@ import {
   // ChangeDetectionStrategy,
   Component,
   // ContentChildren,
-  // SimpleChanges,
+  SimpleChanges,
   ElementRef,
   // ChangeDetectorRef,
   // OnDestroy,
   OnInit,
   Input,
   // Optional,
-  // OnChanges,
+  OnChanges,
   // QueryList,
   ViewEncapsulation,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { ProtableService } from './pro-table.service';
 import _ from 'lodash';
@@ -29,10 +31,12 @@ import _ from 'lodash';
       <vts-search-form [headers]="properties" [data]="listData" (putSearchData)="searchDataByForm($event)"></vts-search-form>
       <vts-table-config 
       [listData]="listData" 
-      [properties]="properties" 
+      [properties]="properties"
+      [getRequest]="getRequest"
       [editRequest]="editRequest"
       [deleteRequest]="deleteRequest" 
       [saveRequest]="saveRequest"
+      [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest" 
       [searchData]="searchData" 
       (reloadTable)="reloadTable($event)"
@@ -44,7 +48,7 @@ import _ from 'lodash';
     ``
   ]
 })
-export class VtsProTableContainerComponent implements OnInit {
+export class VtsProTableContainerComponent implements OnInit, OnChanges {
   constructor(
     public elementRef: ElementRef,
     private service: ProtableService,
@@ -54,45 +58,33 @@ export class VtsProTableContainerComponent implements OnInit {
     this.elementRef.nativeElement.classList.add('vts-protable-container');
   }
 
+  @Input() loading: boolean = false;
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
+  @Input() pageSize: number = 10;
+  @Input() onSuccess: VtsSafeAny = () => {};
+  @Input() onError: VtsSafeAny = () => {};
   @Input() requestData: Request | undefined;
+  @Input() getRequest: Request | undefined;
+  @Input() editRequest: Request | undefined;
+  @Input() deleteRequest: Request | undefined;
+  @Input() saveRequest: Request | undefined;
+  @Input() exportRequest: Request | undefined;
+  @Input() configTableRequest: Request | undefined;
 
-  editRequest: Request = {
-    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
-    type: "GET",
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  }
+  @Output() onPageSizeChanger = new EventEmitter<number>();
+  @Output() onPageIndexChanger = new EventEmitter<number>();
+  @Output() onSuccessEvent = new EventEmitter<VtsSafeAny>();
+  @Output() onErrorEvent = new EventEmitter<VtsSafeAny>();
 
-  deleteRequest: Request = {
-    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
-    type: "POST",
-    onSuccess: (data) => {
-      console.log(data);
-    },
-  }
-
-  saveRequest: Request = {
-    url: "http://localhost:3000/posts/",
-    type: "POST",
-    onSuccess: (data) => {
-      console.log(data);
-    }
-  }
-
-  configTableRequest: Request = {
-    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
-    type: "GET"
-  }
-
-  displayedProps: PropertyType[] = [];
-  loading: boolean = false;
   searchData: Object = {};
 
-  ngOnInit(): void {
-    this.getRenderData(this.requestData);
+  ngOnInit(): void { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.requestData) {
+      this.getRenderData(this.requestData);
+    }
   }
 
   getRenderData(request?: Request) {
@@ -108,8 +100,7 @@ export class VtsProTableContainerComponent implements OnInit {
       };
       let url = getRequest.url;
       this.service.getRenderData({ ...getRequest, url }).subscribe(data => {
-        this.listData = { ...data.listData };
-        this.properties = { ...data.properties }
+        this.listData = [...data];
         this.loading = false;
         this.changeDetector.detectChanges();
       }, err => {
@@ -120,7 +111,7 @@ export class VtsProTableContainerComponent implements OnInit {
   }
 
   searchDataByForm(event: VtsSafeAny) {
-    console.log('search', event);
+    // console.log('search', event);
     this.searchData = event;
     const searchRequest: Request = {
       url: this.requestData ? this.requestData.url : '',
@@ -133,8 +124,7 @@ export class VtsProTableContainerComponent implements OnInit {
 
     let url = searchRequest.url;
     this.service.getRenderData({ ...searchRequest, url }).subscribe(data => {
-      this.listData = { ...data.listData };
-      this.properties = { ...data.properties }
+      this.listData = [...data];
       this.loading = false;
       this.changeDetector.detectChanges();
     });
@@ -142,7 +132,7 @@ export class VtsProTableContainerComponent implements OnInit {
 
   reloadTable(event: boolean) {
     if (event) {
-      console.log('reload data', event);
+      // console.log('reload data', event);
       const getRequest: Request = {
         url: this.requestData ? this.requestData.url : '',
         type: 'GET',
@@ -153,8 +143,7 @@ export class VtsProTableContainerComponent implements OnInit {
 
       let url = getRequest.url;
       this.service.getRenderData({ ...getRequest, url }).subscribe(data => {
-        this.listData = { ...data.listData };
-        this.properties = { ...data.properties }
+        this.listData = [...data];
         this.loading = false;
         this.changeDetector.detectChanges();
       });

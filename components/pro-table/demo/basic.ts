@@ -24,7 +24,16 @@ interface Request {
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
-    <vts-protable-container [listData]="listOfData" [properties]="properties" [requestData]="request"></vts-protable-container>
+    <vts-protable-container 
+      [properties]="properties" 
+      [requestData]="request"
+      [getRequest]="getRequest"
+      [editRequest]="editRequest"
+      [deleteRequest]="deleteRequest"
+      [saveRequest]="saveRequest"
+      [exportRequest]="exportRequest"
+      [configTableRequest]="configTableRequest"
+    ></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {
@@ -47,7 +56,7 @@ export class VtsDemoProTableBasicComponent {
     {
       "id": 1,
       "title": "success",
-      "author": "typicode",
+      "author": "typicode",   
       "num": 10
     },
     {
@@ -80,7 +89,7 @@ export class VtsDemoProTableBasicComponent {
       propertyName: 'id',
       required: true,
       datatype: 'string',
-      checked: true
+      checked: true,
     },
 
     {
@@ -125,11 +134,57 @@ export class VtsDemoProTableBasicComponent {
   ];
 
   request: Request = {
-    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
+    url: "http://localhost:3000/getData",
     type: "GET",
     onSuccess: (data: any) => {
       console.log(data);
     },
+  }
+  
+  getRequest: Request = {
+    url: "http://localhost:3000/getData/",
+    type: "GET",
+    onSuccess: (data) => {
+      console.log(data);
+    }
+  }
+
+  editRequest: Request = {
+    url: "http://localhost:3000/getData/",
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  };
+
+  deleteRequest: Request = {
+    url: "http://localhost:3000/getData/",
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  }
+
+
+  saveRequest: Request = {
+    url: "http://localhost:3000/posts/",
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    }
+  }
+
+  exportRequest: Request = {
+    url: "http://localhost:3000/posts/",
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    }
+  }
+
+  configTableRequest: Request = {
+    url: "http://localhost:3000/getData/",
+    type: "GET"
   }
 
   filteredList = [...this.listOfData];

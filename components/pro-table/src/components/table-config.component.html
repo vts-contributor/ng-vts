@@ -36,11 +36,13 @@
           </li>
           <vts-divider style="margin: 0;"></vts-divider>
           <ng-container *ngFor="let property of properties">
-            <li vts-menu-item cdkDrag style="list-style-type: none;">
-              <i vts-icon vtsType="FullScreen"></i>
-              <label vts-checkbox [(ngModel)]="property.checked"
-                (ngModelChange)="updateSingleChecked()">{{property.headerTitle}}</label>
-            </li>
+            <ng-container *ngIf="property.headerTitle && property.headerTitle != null">
+              <li vts-menu-item cdkDrag style="list-style-type: none;">
+                <i vts-icon vtsType="FullScreen"></i>
+                <label vts-checkbox [(ngModel)]="property.checked"
+                  (ngModelChange)="updateSingleChecked()">{{property.headerTitle}}</label>
+              </li>
+            </ng-container>
           </ng-container>
           <vts-divider style="margin: 0;"></vts-divider>
           <div class="btn-config-area">
@@ -67,63 +69,78 @@
     </div>
   </ng-template>
 
-  <vts-spin [vtsSpinning]="loading">
-    <table style="width: -webkit-fill-available; margin-top: 16px;">
-      <thead>
-        <tr>
-          <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
-          <ng-container *ngFor="let property of properties">
-            <th [vtsSortFn]="sortFn" [vtsSortDirections]="sortDirections" *ngIf="property.checked"
-              (click)="sortValue(property)">
-              {{property.headerTitle}}</th>
-          </ng-container>
-          <th style="padding: 16px 16px;">Action</th>
-        </tr>
-      </thead>
-      <tbody class="vts-table-tbody">
-        <tr *ngFor="let data of displayedData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}"
-          [ngClass]="'selected-item-data'">
-          <td [vtsChecked]="setOfCheckedId.has(data.id)" [vtsDisabled]="data.disabled"
-            (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
-          <ng-container *ngFor="let prop of properties">
-            <!-- <td *ngIf="prop.checked" vtsAlign="left">{{ data[prop.propertyName] }}</td> -->
-            <ng-container *ngFor="let prop of properties">
-              <ng-container *ngIf="prop.checked">
-                <ng-container *ngTemplateOutlet="cellDisplay; context: {datatype: prop.datatype, value: data[prop.propertyName]}"></ng-container>
+  <ng-container *ngIf="indeterminateConfig || allChecked; else noData">
+    <vts-spin [vtsSpinning]="loading">
+      <table style="width: -webkit-fill-available; margin-top: 16px;">
+        <thead>
+          <tr>
+            <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)">
+            </th>
+            <th style="padding: 16px 16px;">#</th>
+            <ng-container *ngFor="let property of properties">
+              <ng-container *ngIf="property.headerTitle && property.headerTitle != null">
+                <th [vtsSortFn]="sortFn" [vtsSortDirections]="sortDirections" *ngIf="property.checked"
+                  (click)="sortValue(property)">
+                  {{property.headerTitle}}
+                </th>
               </ng-container>
             </ng-container>
+            <th style="padding: 16px 16px;">Action</th>
+          </tr>
+        </thead>
+        <tbody class="vts-table-tbody">
+          <ng-container *ngIf="displayedData.length>0; else noData">
+            <tr *ngFor="let data of displayedData; index as i" [ngStyle]="{'height':vtsRowHeight+'px'}"
+              [ngClass]="'selected-item-data'">
+              <td [vtsChecked]="setOfCheckedId.has(data.id)" [vtsDisabled]="data.disabled"
+                (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
+              <td vtsAlign="left">{{ i + vtsPageSize*(vtsPageIndex-1)+1 }}</td>
+              <ng-container *ngFor="let prop of properties">
+                <ng-container *ngIf="prop.checked && prop.headerTitle">
+                  <ng-container
+                    *ngTemplateOutlet="cellDisplay; context: {datatype: prop.datatype, value: data[prop.propertyName]}">
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <td>
+                <a (click)="onViewDataItem(data.id)">View</a>
+                <a> | </a>
+                <a vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions">More<i class="collapse-icon" vts-icon
+                    [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i></a>
+                <vts-dropdown-menu #menuActions="vtsDropdownMenu">
+                  <ul vts-menu>
+                    <li vts-menu-item (click)="onEditDataItem(data.id)">Edit</li>
+                    <li vts-menu-item (click)="showDeleteItemModal(data.id)">Delete</li>
+                    <li *ngIf="data.disabled" vts-menu-item (click)="changeStatusItem(data.id)">Enable</li>
+                    <li *ngIf="!data.disabled" vts-menu-item (click)="changeStatusItem(data.id)">Disable</li>
+                  </ul>
+                </vts-dropdown-menu>
+              </td>
+            </tr>
           </ng-container>
-          <td>
-            <a (click)="onViewDataItem(data.id)">View</a>
-            <a> | </a>
-            <a vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions">More<i class="collapse-icon" vts-icon
-                [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i></a>
-            <vts-dropdown-menu #menuActions="vtsDropdownMenu">
-              <ul vts-menu>
-                <li vts-menu-item (click)="onEditDataItem(data.id)">Edit</li>
-                <li vts-menu-item (click)="showDeleteItemModal(data.id)">Delete</li>
-                <li *ngIf="data.disabled" vts-menu-item (click)="changeStatusItem(data.id)">Enable</li>
-                <li *ngIf="!data.disabled" vts-menu-item (click)="changeStatusItem(data.id)">Disable</li>
-              </ul>
-            </vts-dropdown-menu>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'bottom'">
-      <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
-    </ng-container>
-    <ng-template #paginationTemplate>
-      <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize"
-        [vtsShowTotal]="rangeTemplate" class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
-      </vts-pagination>
-      <ng-template #rangeTemplate let-range="range" let-total>
-        <span class="text-custom">{{ range[0] }}<span style="color: #000000;"> - </span>{{ range[1] }}<span
-            style="color: #000000;"> / </span>{{ total }}<span style="color: #000000;">
-            items</span></span>
+        </tbody>
+      </table>
+      <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'bottom'">
+        <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+      </ng-container>
+      <ng-template #paginationTemplate>
+        <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize"
+          [vtsShowTotal]="rangeTemplate" class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
+        </vts-pagination>
+        <ng-template #rangeTemplate let-range="range" let-total>
+          <span class="text-custom">
+            {{ range[0] }}<span style="color: #000000;"> - </span>{{range[1] }}<span style="color: #000000;"> / </span>{{
+            total }}<span style="color: #000000;">
+              items</span></span>
+        </ng-template>
       </ng-template>
-    </ng-template>
-  </vts-spin>
+    </vts-spin>
+  </ng-container>
+
+  <ng-template #noData>
+    <vts-empty style="padding-top: 16px;"></vts-empty>
+  </ng-template>
+
 </div>
 
 <vts-modal [(vtsVisible)]="isVisibleModal" [vtsTitle]="modalData.title" [vtsContent]="modalData.content"
@@ -173,7 +190,7 @@
 <!-- display data cell base on datatype -->
 <ng-template #cellDisplay let-datatype="datatype" let-value="value">
   <ng-container [ngSwitch]="datatype">
-    <td *ngSwitchCase="'number'" vtsAlign="right">{{formatNumber(value)}}</td>    
+    <td *ngSwitchCase="'number'" vtsAlign="left">{{formatNumber(value)}}</td>
     <td *ngSwitchCase="'status'">
       <ng-container *ngTemplateOutlet="colorDisplay; context: {status: value}"></ng-container>
     </td>
@@ -185,9 +202,9 @@
 <ng-template #colorDisplay let-status="status">
   <ng-container [ngSwitch]="status">
     <vts-tag vtsColor="success" *ngSwitchCase="'success'">success</vts-tag>
-    <vts-tag vtsColor="processing"*ngSwitchCase="'processing'">processing</vts-tag>
-    <vts-tag vtsColor="error"*ngSwitchCase="'error'">error</vts-tag>
-    <vts-tag vtsColor="warning"*ngSwitchCase="'warning'">warning</vts-tag>
+    <vts-tag vtsColor="processing" *ngSwitchCase="'processing'">processing</vts-tag>
+    <vts-tag vtsColor="error" *ngSwitchCase="'error'">error</vts-tag>
+    <vts-tag vtsColor="warning" *ngSwitchCase="'warning'">warning</vts-tag>
     <vts-tag vtsColor="default" *ngSwitchDefault>default</vts-tag>
   </ng-container>
 </ng-template>
