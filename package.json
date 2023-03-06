@@ -21,7 +21,9 @@
     "stage-release": "ts-node --project scripts/release/tsconfig.json scripts/release/release.ts",
     "ng": "ng",
     "gulp": "gulp",
-    "lint": "tslint --project components/tsconfig.lib.json -c tslint.json"
+    "lint": "tslint --project components/tsconfig.lib.json -c tslint.json",
+    "start:doc": "gulp build:site-doc",
+    "start:iframe": "gulp build:site-iframe"
   },
   "dependencies": {
     "@ui-vts/ng-vts": "file:components",
