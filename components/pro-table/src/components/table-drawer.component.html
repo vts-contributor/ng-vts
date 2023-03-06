@@ -1,12 +1,5 @@
-<vts-drawer
-  [vtsBodyStyle]="{ overflow: 'auto' }"
-  [vtsMaskClosable]="false"
-  [vtsWidth]="300"
-  [vtsVisible]="visibleDrawer"
-  [vtsTitle]="title"
-  [vtsFooter]="footerTpl"
-  (vtsOnClose)="closeDrawer()"
->
+<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="300"
+  [vtsVisible]="visibleDrawer" [vtsTitle]="title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
   <form vts-form *vtsDrawerContent [formGroup]="formGroup" vtsLayout="vertical">
     <div *ngFor="let item of displayHeaders; let i = index">
       <ng-container [ngSwitch]="item.datatype">
@@ -14,7 +7,8 @@
         <!-- status type -->
         <ng-container *ngSwitchCase="'status'">
           <ng-container
-            *ngTemplateOutlet="statusDisplay; context: {title: item.headerTitle, value: selectedStatus[item.propertyName], property: item.propertyName}"></ng-container>
+            *ngTemplateOutlet="statusDisplay; context: {title: item.headerTitle, value: selectedStatus[item.propertyName], property: item.propertyName}">
+          </ng-container>
         </ng-container>
 
         <!-- datetime type -->
@@ -25,7 +19,8 @@
           <vts-form-item vts-row>
             <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
             <vts-form-control vts-col [vtsSpan]="18">
-              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName" [vtsDisabled]="mode == 'view'"></vts-input-number>
+              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"
+                [vtsDisabled]="mode == 'view'"></vts-input-number>
             </vts-form-control>
           </vts-form-item>
         </ng-container>
@@ -35,7 +30,7 @@
           <vts-form-item vts-row>
             <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
             <vts-form-control vts-col [vtsSpan]="18">
-              <input vts-input placeholder="" [formControlName]="item.propertyName"/>
+              <input vts-input placeholder="" [formControlName]="item.propertyName" />
             </vts-form-control>
           </vts-form-item>
         </ng-container>
@@ -56,13 +51,21 @@
 <ng-template #statusDisplay let-title="title" let-value="value" let-property="property">
   <div style="margin-bottom: 12px;">
     <h4>{{title}}</h4>
-    <ng-container *ngFor="let status of listStatus">
-      <vts-tag [vtsColor]="status" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status)">
-        <ng-container *ngIf="value == status">
-          <i vts-icon vtsType="CheckCircle"></i>
-        </ng-container>
-        <span>{{status}}</span>
-      </vts-tag>
+    <ng-container *ngIf="mode!=='view'; else viewMode">
+      <ng-container *ngFor="let status of listStatus">
+        <vts-tag [vtsColor]="status" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status)">
+          <ng-container *ngIf="value == status">
+            <i vts-icon vtsType="CheckCircle"></i>
+          </ng-container>
+          <span>{{status}}</span>
+        </vts-tag>
+      </ng-container>
     </ng-container>
+    <ng-template #viewMode>
+      <vts-tag [vtsColor]="value" style="margin-bottom: 5px;">
+        <i vts-icon vtsType="CheckCircle"></i>
+        <span>{{value}}</span>
+      </vts-tag>
+    </ng-template>
   </div>
 </ng-template>

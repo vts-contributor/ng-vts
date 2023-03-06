@@ -123,8 +123,6 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   totalProps: PropertyType[] = [];
   vtsNoDisplayProperties: number = 0;
   vtsTotalProperties: number = 0;
-  vtsGutter = 24
-  vtsSpan = 5;
   vtsOffsetButton = 0;
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality, private fb: FormBuilder) {
@@ -140,10 +138,9 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
     if (changes) {
       this.totalProps = changes.headers.currentValue;
-      // this.displayedProps = this.totalProps.filter(prop => prop.checked && prop.checked === true)
+      this.totalProps = this.totalProps.filter(prop => prop.headerTitle && prop.headerTitle != null);
       this.displayedProps = this.totalProps;
       this.vtsNoDisplayProperties = this.displayedProps.length > 3 ? 3 : this.totalProps.length;
       this.vtsTotalProperties = this.totalProps.length;
@@ -162,11 +159,6 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
 
   toggleCollapse(): void {
     this.vtsIsCollapse = !this.vtsIsCollapse;
-    if (this.vtsIsCollapse === false) {
-      this.vtsSpan = 6;
-    } else {
-      this.vtsSpan = 5;
-    }
     this.controlArray.forEach((c, index) => {
       c.show = this.vtsIsCollapse ? index < this.vtsNoDisplayProperties : true;
     });

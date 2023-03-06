@@ -70,6 +70,7 @@ export type PropertyType = {
   required?: boolean;
   datatype: 'string' | 'number' | 'datetime' | 'status';
   checked?: boolean;
+  align?: 'left' | 'center' | 'right';
 }
 export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';
 

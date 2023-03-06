@@ -89,7 +89,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       ...this.selectedStatus,
       ...this.formGroup.value
     }
-    console.log(this.entity);
+    // console.log(this.entity);
 
     if(typeof this.saveRequest != "undefined"){
       let {onSuccess, onError} = this.saveRequest;
