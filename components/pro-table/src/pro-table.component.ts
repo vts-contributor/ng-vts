@@ -54,10 +54,13 @@ export class VtsProTableContainerComponent implements OnInit {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-protable-container');
   }
-
+  
+  @Input() loading: boolean = false;
   @Input() properties: PropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   @Input() requestData: Request | undefined;
+  @Input() pageSize: number = 10;
+
 
   editRequest: Request = {
     url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
@@ -91,7 +94,6 @@ export class VtsProTableContainerComponent implements OnInit {
   }
 
   displayedProps: PropertyType[] = [];
-  loading: boolean = false;
   searchData: Object = {};
 
   ngOnInit(): void {

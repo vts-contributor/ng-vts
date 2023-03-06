@@ -40,7 +40,8 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       };
       let keys = this.headers.map(h => h.propertyName);
       keys.forEach(k => {
-        form.addControl(k, new FormControl(value[k]))
+        form.addControl(k, new FormControl(value[k]));
+        if (this.mode === 'view') form.get(k)?.disable();
       });
       this.formGroup = form;
     }

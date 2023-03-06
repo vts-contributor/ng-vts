@@ -79,6 +79,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() searchRequest: Request | undefined;
   @Input() searchData: Object | VtsSafeAny;
   @Input() configTableRequest: Request | undefined;
+  @Input() pageSize = 10;
 
   vtsRowHeight: string | number = 54;
   loading: boolean = false;
@@ -86,8 +87,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
   @Output() reloadTable = new EventEmitter<boolean>();
   @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
+  @Output() changePageSize = new EventEmitter<number>();
 
-  pageSize = 10;
   pageIndex = 1;
   checked = false;
   indeterminate = false;
@@ -192,7 +193,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      _.remove(this.listData, { id: this.itemIdToDelete });
+      _.remove(this.displayedData, { id: this.itemIdToDelete });
+      this.vtsTotal = this.listData.length;
+
       if (this.deleteRequest) {
         let url = this.deleteRequest.url;
         url += this.itemIdToDelete;

@@ -29,23 +29,29 @@ import { takeUntil } from 'rxjs/operators';
   preserveWhitespaces: false,
   template: `
     <form vts-form vtsLayout="vertical" [formGroup]="validateForm" class="vts-advanced-search-form">
-      <div vts-row [vtsGutter]="vtsGutter">
-        <ng-container *ngFor="let control of controlArray">
-          <div vts-col [vtsSpan]="vtsSpan" *ngIf="control.show">
-            <vts-form-item>
-              <vts-form-label [vtsFor]="control.controlKey">
-                {{ control.title }}
-              </vts-form-label>
-              <vts-form-control>
-                <input vts-input [vtsSize]="'sm'" placeholder="Input search data" [formControlName]="control.controlKey"
-                  [attr.id]="control.controlKey" />
-              </vts-form-control>
-            </vts-form-item>
+      <div vts-row>
+        <div vts-col [vtsXl]=" vtsIsCollapse ? 16 : 24" vtsLg="24">
+          <div vts-row [vtsGutter]="2">
+            <ng-container *ngFor="let control of controlArray">
+              <div vts-col *ngIf="control.show" vtsFlex="auto">
+                <vts-form-item>
+                  <vts-form-label [vtsFor]="control.controlKey">
+                    {{ control.title }}
+                  </vts-form-label>
+                  <vts-form-control>
+                    <input vts-input [vtsSize]="'sm'" placeholder="Input search data" [formControlName]="control.controlKey"
+                      [attr.id]="control.controlKey" />
+                  </vts-form-control>
+                </vts-form-item>
+              </div>
+            </ng-container>
           </div>
-        </ng-container>
-        <ng-container *ngIf="vtsIsCollapse">
-          <ng-template [ngTemplateOutlet]="searchBtns"></ng-template>
-        </ng-container>
+        </div>
+        <div vts-col vtsXl="8" vtsLg="24" *ngIf="vtsIsCollapse">
+          <ng-container>
+            <ng-template [ngTemplateOutlet]="searchBtns"></ng-template>
+          </ng-container>
+        </div>
       </div>
 
       <ng-container *ngIf="!vtsIsCollapse">
@@ -55,7 +61,7 @@ import { takeUntil } from 'rxjs/operators';
       </ng-container>
 
       <ng-template #searchBtns>
-        <div vts-col [vtsSpan]="vtsSpan" [vtsOffset]="vtsOffsetButton" class="search-area">
+        <div vts-col [vtsOffset]="vtsOffsetButton" class="search-area">
           <vts-form-label *ngIf="vtsIsCollapse"></vts-form-label>
           <vts-form-item style="flex-direction: row; padding-top: 5px; width: max-content">
             <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'sm'" (click)="onSearch()">Search</button>
