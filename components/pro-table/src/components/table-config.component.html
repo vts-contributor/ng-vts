@@ -86,7 +86,12 @@
           <td [vtsChecked]="setOfCheckedId.has(data.id)" [vtsDisabled]="data.disabled"
             (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
           <ng-container *ngFor="let prop of properties">
-            <td *ngIf="prop.checked" vtsAlign="left">{{ data[prop.propertyName] }}</td>
+            <!-- <td *ngIf="prop.checked" vtsAlign="left">{{ data[prop.propertyName] }}</td> -->
+            <ng-container *ngFor="let prop of properties">
+              <ng-container *ngIf="prop.checked">
+                <ng-container *ngTemplateOutlet="cellDisplay; context: {datatype: prop.datatype, value: data[prop.propertyName]}"></ng-container>
+              </ng-container>
+            </ng-container>
           </ng-container>
           <td>
             <a (click)="onViewDataItem(data.id)">View</a>
@@ -164,3 +169,25 @@
     </a>
   </div>
 </vts-drawer>
+
+<!-- display data cell base on datatype -->
+<ng-template #cellDisplay let-datatype="datatype" let-value="value">
+  <ng-container [ngSwitch]="datatype">
+    <td *ngSwitchCase="'number'" vtsAlign="right">{{formatNumber(value)}}</td>    
+    <td *ngSwitchCase="'status'">
+      <ng-container *ngTemplateOutlet="colorDisplay; context: {status: value}"></ng-container>
+    </td>
+    <td *ngSwitchDefault vtsAlign="left">{{value}}</td>
+  </ng-container>
+</ng-template>
+
+<!-- display status -->
+<ng-template #colorDisplay let-status="status">
+  <ng-container [ngSwitch]="status">
+    <vts-tag vtsColor="success" *ngSwitchCase="'success'">success</vts-tag>
+    <vts-tag vtsColor="processing"*ngSwitchCase="'processing'">processing</vts-tag>
+    <vts-tag vtsColor="error"*ngSwitchCase="'error'">error</vts-tag>
+    <vts-tag vtsColor="warning"*ngSwitchCase="'warning'">warning</vts-tag>
+    <vts-tag vtsColor="default" *ngSwitchDefault>default</vts-tag>
+  </ng-container>
+</ng-template>

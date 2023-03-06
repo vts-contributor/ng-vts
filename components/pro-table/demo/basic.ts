@@ -44,19 +44,39 @@ export class VtsDemoProTableBasicComponent {
   ];
 
   listData2 = [
-    { id: 1, title: 'json-server', author: 'typicode' },
-    { id: 2, title: 'json-server1', author: 'typicode1' },
     {
-      id: 3,
-      title: 'json-server1',
-      author: 'typicode1',
-      num: 10
+      "id": 1,
+      "title": "success",
+      "author": "typicode",
+      "num": 10
+    },
+    {
+      "id": 2,
+      "title": "warning",
+      "author": "typicode1"
+    },
+    {
+      "id": 3,
+      "title": "default",
+      "author": "typicode1",
+      "num": 100000
+    },
+    {
+      "id": 4,
+      "title": "processing",
+      "author": "typicode1"
+    },
+    {
+      "id": 5,
+      "title": "error",
+      "author": "typicode1",
+      "num": 100000
     }
   ];
 
   properties: PropertyType[] = [
     {
-      headerTitle: 'ID',
+      // headerTitle: 'ID',
       propertyName: 'id',
       required: true,
       datatype: 'string',
@@ -65,24 +85,24 @@ export class VtsDemoProTableBasicComponent {
 
     {
       headerTitle: 'Prop 1',
-      propertyName: 'content1',
+      propertyName: 'title',
       required: true,
-      datatype: 'string',
+      datatype: 'status',
       checked: true
     },
     {
       headerTitle: 'Prop 2',
-      propertyName: 'content2',
+      propertyName: 'author',
       required: true,
       datatype: 'string'
     },
-    {
-      headerTitle: 'Prop 3',
-      propertyName: 'content3',
-      required: true,
-      datatype: 'string',
-      checked: true
-    },
+    // {
+    //   headerTitle: 'Prop 3',
+    //   propertyName: 'content3',
+    //   required: true,
+    //   datatype: 'string',
+    //   checked: true
+    // },
     {
       headerTitle: 'Prop 4',
       propertyName: 'num',

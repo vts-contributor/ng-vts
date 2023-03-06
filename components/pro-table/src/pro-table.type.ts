@@ -68,7 +68,7 @@ export type PropertyType = {
   headerTitle?: string;
   propertyName: string;
   required?: boolean;
-  datatype: 'string' | 'number' | 'datetime';
+  datatype: 'string' | 'number' | 'datetime' | 'status';
   checked?: boolean;
 }
 export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';
@@ -79,6 +79,9 @@ export type Request = {
   params?: {[key: string]: any},
   body?: {[key: string]: any},
   onSuccess?: (data: {[key: string]: any}) => void,
-  onError?: () => void
+  onError?: (data: {[key: string]: any}) => void
 }
 
+export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";
+
+export type ViewMode = "view" | "edit";

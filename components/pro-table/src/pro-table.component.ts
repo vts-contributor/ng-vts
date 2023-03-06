@@ -33,7 +33,6 @@ import _ from 'lodash';
       [editRequest]="editRequest"
       [deleteRequest]="deleteRequest" 
       [saveRequest]="saveRequest"
-      [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest" 
       [searchData]="searchData" 
       (reloadTable)="reloadTable($event)"
@@ -79,13 +78,11 @@ export class VtsProTableContainerComponent implements OnInit {
   }
 
   saveRequest: Request = {
-    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
-    type: "POST"
-  }
-
-  exportRequest: Request = {
-    url: "http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/",
-    type: "POST"
+    url: "http://localhost:3000/posts/",
+    type: "POST",
+    onSuccess: (data) => {
+      console.log(data);
+    }
   }
 
   configTableRequest: Request = {

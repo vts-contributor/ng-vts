@@ -6,7 +6,9 @@ import {
   // ContentChildren,
   ElementRef,
   EventEmitter,
+  // Inject,
   Input,
+  // LOCALE_ID,
   OnDestroy,
   OnInit,
   Optional,
@@ -20,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { PropertyType, Request, VtsProTablePaginationPosition } from '../pro-table.type';
+import { PropertyType, Request, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -95,7 +97,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
-  mode: string = '';
+  mode: ViewMode = 'view';
 
   listDisplayedData = [];
   displayedData: { [key: string]: any }[] = [];
@@ -123,7 +125,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.dir = direction;
     });
     this.filteredList = [...this.listData];
-    this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+    this.displayedData = this.listData.slice(
+      (this.vtsPageIndex - 1) * this.vtsPageSize,
+      this.vtsPageIndex * this.vtsPageSize
+    );
     // this.displayedProperties = this.properties.filter(prop => prop.checked === true);
     this.vtsTotal = this.filteredList.length;
     this.loading = false;
@@ -306,13 +311,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       url += itemId;
       this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
         this.drawerData = { ...data };
+        this.mode = 'edit';
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
       });
     }
-    this.drawerData = this.listData.filter(data => data.id === itemId)[0];
-    this.mode = 'edit';
-    this.visibleDrawer = true;
+    // this.drawerData = this.listData.filter(data => data.id === itemId)[0];
+    // this.mode = 'edit';
+    // this.visibleDrawer = true;
   }
 
   onViewDataItem(itemId?: number | string) {
@@ -322,13 +328,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       url += itemId;
       this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
         this.drawerData = { ...data };
+        this.mode = 'view';
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
       });
     }
-    this.drawerData = this.listData.filter(data => data.id === itemId)[0];
-    this.mode = 'view';
-    this.visibleDrawer = true;
+    // this.drawerData = this.listData.filter(data => data.id === itemId)[0];
+    // this.mode = 'view';
+    // this.visibleDrawer = true;
   }
 
   onChangePageIndex(event: number) {
@@ -371,7 +378,24 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       });
     }
     // send Set of item ID to server, must server returns content data to exporting
+  }
 
+  formatNumber(value: number): string {
+    if (value) {
+      const stringValue = `${value}`;
+      const list = stringValue.split('.');
+      const prefix = list[0].charAt(0) === '-' ? '-' : '';
+      let num = prefix ? list[0].slice(1) : list[0];
+      let result = '';
+      while (num.length > 3) {
+        result = `,${num.slice(-3)}${result}`;
+        num = num.slice(0, num.length - 3);
+      }
+      if (num) {
+        result = num + result;
+      }
+      return `${prefix}${result}${list[1] ? `.${list[1]}` : ''}`;
+    } else return '';
   }
 
   changeStatusItem(itemId?: string | number) {
