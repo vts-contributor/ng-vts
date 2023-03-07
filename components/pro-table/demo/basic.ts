@@ -142,4 +142,22 @@ export class VtsDemoProTableBasicComponent {
     url: "http://localhost:3000/getData/",
     type: "GET"
   }
+
+  isDrawerOpened: boolean = false;
+  drawerConfig: DrawerConfig = {
+    entityName: "post",
+    showTitleBasedOnProp: "id",
+    onOpen: () => {
+        this.isDrawerOpened = true;
+        console.log('drawer open');
+    },
+    onClose: () => {
+      this.isDrawerOpened = false;
+      console.log('drawer close');
+    },
+    onSave: (data) => {
+      console.log(data);
+      this.isDrawerOpened = false;
+    }
+  }
 }

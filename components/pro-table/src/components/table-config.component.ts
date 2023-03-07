@@ -243,10 +243,25 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     };
     this.visibleDrawer = true;
     this.mode = 'create';
+
+    // callback when open drawer
+    if(typeof this.drawerConfig != "undefined"){
+        let {onOpen} = this.drawerConfig;
+        if(onOpen){
+          onOpen();
+        }
+    }
   }
 
   closeDrawer(): void {
     this.visibleDrawer = false;
+    // callback when close drawer
+    if(typeof this.drawerConfig != "undefined"){
+        let {onClose} = this.drawerConfig;
+        if(onClose){
+          onClose();
+        }
+    }
   }
 
   handleChangeUpload({ file }: VtsUploadChangeParam): void {
@@ -323,9 +338,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.changeDetector.detectChanges();
       });
     }
-    // this.drawerData = this.listData.filter(data => data.id === itemId)[0];
-    // this.mode = 'edit';
-    // this.visibleDrawer = true;
+    // callback when open drawer
+    if(typeof this.drawerConfig != "undefined"){
+      let {onOpen} = this.drawerConfig;
+      if(onOpen){
+        onOpen();
+      }
+  }
   }
 
   onViewDataItem(itemId?: number | string) {
@@ -339,9 +358,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.changeDetector.detectChanges();
       });
     }
-    // this.drawerData = this.listData.filter(data => data.id === itemId)[0];
-    // this.mode = 'view';
-    // this.visibleDrawer = true;
+    // callback when open drawer
+    if(typeof this.drawerConfig != "undefined"){
+      let {onOpen} = this.drawerConfig;
+      if(onOpen){
+        onOpen();
+      }
+  }
   }
 
   onChangePageIndex(event: number) {
