@@ -44,4 +44,12 @@ export type Request = {
 
 export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";
 
-export type ViewMode = "view" | "edit";
+export type ViewMode = "view" | "edit" | "create";
+
+export type DrawerConfig = {
+  entityName: string,
+  showTitleBasedOnProp?: string, // Thêm mới (Chỉnh sửa) [entityName] entity[showTitleBasedOnProp]
+  onOpen?: () => void,
+  onClose?: () => void,
+  onSave?: (data: {[key: string]: any}) => void,
+}

@@ -174,7 +174,7 @@
   </ng-container>
 </vts-modal>
 
-<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer"
+<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer" [drawerConfig]="drawerConfig"
   [mode]="mode" [data]="drawerData"></table-drawer>
 
 <vts-drawer [vtsClosable]="false" [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"

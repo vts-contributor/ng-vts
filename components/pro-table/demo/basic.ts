@@ -1,4 +1,4 @@
-import { PropertyType } from '@ui-vts/ng-vts/pro-table';
+import { DrawerConfig, PropertyType } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 interface Request {
@@ -22,6 +22,7 @@ interface Request {
       [saveRequest]="saveRequest"
       [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest"
+      [drawerConfig]="drawerConfig"
     ></vts-protable-container>
   `
 })
