@@ -1,4 +1,4 @@
-import { PropertyType } from '@ui-vts/ng-vts/pro-table';
+import { DrawerConfig, PropertyType } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 interface Item {
@@ -33,6 +33,7 @@ interface Request {
       [saveRequest]="saveRequest"
       [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest"
+      [drawerConfig]="drawerConfig"
     ></vts-protable-container>
   `
 })
@@ -185,6 +186,22 @@ export class VtsDemoProTableBasicComponent {
   configTableRequest: Request = {
     url: "http://localhost:3000/getData/",
     type: "GET"
+  }
+
+  isDrawerOpened: boolean = false;
+  drawerConfig: DrawerConfig = {
+    entityName: "post",
+    showTitleBasedOnProp: "id",
+    onOpen: () => {
+        this.isDrawerOpened = true;
+    },
+    onClose: () => {
+      this.isDrawerOpened = false;
+    },
+    onSave: (data) => {
+      console.log(data);
+      this.isDrawerOpened = false;
+    }
   }
 
   filteredList = [...this.listOfData];

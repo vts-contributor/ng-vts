@@ -1,11 +1,18 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProtableService } from '../pro-table.service';
-import { PropertyType, Request, StatusProTable, ViewMode } from '../pro-table.type';
+import { DrawerConfig, PropertyType, Request, StatusProTable, ViewMode } from '../pro-table.type';
 
 @Component({
   selector: 'table-drawer',
-  templateUrl: 'table-drawer.component.html'
+  templateUrl: 'table-drawer.component.html',
+  styles: [
+    `
+      .vts-input-number {
+        width: 100%
+      }
+    `
+  ]
 })
 export class ProtableDrawerComponent implements OnInit, OnChanges {
   constructor(
@@ -17,13 +24,14 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Input() data: {[key: string]: any} = {};
   @Input() headers: PropertyType[] = [];
   @Input() saveRequest: Request | undefined;
+  @Input() drawerConfig: DrawerConfig | undefined;
 
-  title: string = "Test drawer";
   formGroup: FormGroup = new FormGroup({});
   selectedStatus: {[key: string]: StatusProTable } = {};
   listStatus: StatusProTable[] = ["default", "error", "processing", "success", "warning"];
   entity: {[key: string]: any}  = {};
   displayHeaders: PropertyType[] = [];
+  title: string = "Test drawer";
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -54,10 +62,40 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       });
       this.formGroup = form;
       this.selectedStatus = {...selectedStatus};
+
+      if(typeof this.drawerConfig != "undefined"){
+        this.setTitle(this.drawerConfig);
+      }
     }
-    if(changes.editRequest || changes.saveRequest){
-      
+    if(changes.drawerConfig){
+      if(typeof changes.drawerConfig.currentValue != "undefined"){
+        console.log('changes.drawerConfig.currentValue:',changes.drawerConfig.currentValue);
+        this.setTitle(changes.drawerConfig.currentValue);
+      }
     }
+  }
+
+  setTitle(config: DrawerConfig){
+    let modeTitle: string = "";
+    let entityDetailOnTitle: string = "";
+    switch(this.mode){
+      case "create": {
+        modeTitle = "Thêm mới";
+        entityDetailOnTitle = "";
+        break;
+      }
+      case "edit": {
+        modeTitle = "Chỉnh sửa";
+        entityDetailOnTitle = config.showTitleBasedOnProp ? this.data[config.showTitleBasedOnProp]: "";
+        break;
+      }
+      default: {
+        modeTitle = "Xem chi tiết";
+        entityDetailOnTitle = config.showTitleBasedOnProp ? this.data[config.showTitleBasedOnProp]: "";
+        break;
+      }
+    }
+    this.title = `${modeTitle} ${config.entityName} ${entityDetailOnTitle}`;
   }
 
   onChangeStatus(property: string, status: StatusProTable){

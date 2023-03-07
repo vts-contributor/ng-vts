@@ -22,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { PropertyType, Request, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, PropertyType, Request, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -58,6 +58,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     title: 'Delete Popup',
     content: 'Do you want to delete this items?'
   };
+  @Input() drawerConfig: DrawerConfig | undefined;
 
   @Input() isVisibleUpload = false;
   @Input() uploadData = {
@@ -217,13 +218,31 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     let emptyT: { [key: string]: any } = {};
     this.properties.forEach(prop => {
       if (prop.propertyName) {
-        emptyT[prop.propertyName] = null;
+        switch(prop.datatype){
+          case "datetime": {
+            break;
+          }
+          case "number": {
+            emptyT[prop.propertyName] = 0;
+            break;
+          }
+          case "status": {
+            emptyT[prop.propertyName] = "default";
+            break;
+          }
+          default: {
+            emptyT[prop.propertyName] = null;
+            break;
+          }
+        }
+        
       }
     });
     this.drawerData = {
       ...emptyT
     };
     this.visibleDrawer = true;
+    this.mode = 'create';
   }
 
   closeDrawer(): void {
