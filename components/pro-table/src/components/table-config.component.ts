@@ -187,14 +187,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      _.remove(this.displayedData, { id: this.itemIdToDelete });
+      _.remove(this.listData, { id: this.itemIdToDelete });
       this.vtsTotal = this.listData.length;
 
       if (this.deleteRequest) {
         let url = this.deleteRequest.url;
         url += this.itemIdToDelete;
         this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
-          this.drawerData = { ...data };
+          console.log(data);
           this.visibleDrawer = true;
           this.changeDetector.detectChanges();
         });
@@ -291,17 +291,17 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onAllChecked(checked: any): void {
-    const enableList = this.filteredList.filter(d => d.disabled === false);
-    enableList.forEach(({ id }) => this.updateCheckedSet(id, checked));
+    const enableList = this.filteredList.filter(d => (!d.disable || d.disabled == false));
+    enableList.forEach(item => this.updateCheckedSet(item.id, checked));
     this.refreshCheckedStatus();
   }
 
-  onItemChecked(id: string, checked: boolean): void {
+  onItemChecked(id: VtsSafeAny, checked: boolean): void {
     this.updateCheckedSet(id, checked);
     this.refreshCheckedStatus();
   }
 
-  updateCheckedSet(id: string, checked: boolean, disabled?: boolean): void {
+  updateCheckedSet(id: VtsSafeAny, checked: boolean, disabled?: boolean): void {
     if (checked && !disabled) {
       this.setOfCheckedId.add(id);
     } else {
