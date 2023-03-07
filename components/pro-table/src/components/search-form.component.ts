@@ -1,5 +1,5 @@
 import { VtsSafeAny } from './../../../core/types/any';
-import { PropertyType, SearchConfig } from './../pro-table.type';
+import { PropertyType } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -114,7 +114,6 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
 
   @Input() vtsIsCollapse = true;
-  @Input() vtsSearchConfig: SearchConfig[] = [];
   @Input() data: { [key: string]: any } = {};
   @Input() headers: PropertyType[] = [];
   @Output() putSearchData: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
