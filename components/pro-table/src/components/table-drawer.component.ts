@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProtableService } from '../pro-table.service';
-import { DrawerConfig, PropertyType, Request, StatusProTable, ViewMode } from '../pro-table.type';
+import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode } from '../pro-table.type';
 
 @Component({
   selector: 'table-drawer',
@@ -25,10 +25,11 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Input() headers: PropertyType[] = [];
   @Input() saveRequest: Request | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
+  @Input() listStatus: StatusConfig[] = [];
+
 
   formGroup: FormGroup = new FormGroup({});
-  selectedStatus: {[key: string]: StatusProTable } = {};
-  listStatus: StatusProTable[] = ["default", "error", "processing", "success", "warning"];
+  selectedStatus: {[key: string]: string | number } = {};
   entity: {[key: string]: any}  = {};
   displayHeaders: PropertyType[] = [];
   title: string = "Test drawer";
@@ -47,7 +48,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
     }
     if(changes.data){
       let form = new FormGroup({});
-      let selectedStatus: {[key: string]: StatusProTable } = {};
+      let selectedStatus: {[key: string]: string } = {};
       let value = {
         ...changes.data.currentValue
       };      
@@ -98,7 +99,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
     this.title = `${modeTitle} ${config.entityName} ${entityDetailOnTitle}`;
   }
 
-  onChangeStatus(property: string, status: StatusProTable){
+  onChangeStatus(property: string, status: string | number){
     let currentStatus = {...this.selectedStatus};
     currentStatus[property] = status;
     this.selectedStatus = {...currentStatus};
@@ -149,5 +150,13 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
         }
       });
     }    
+  }
+
+  getSelectedStatus(value: string){
+    let selectedObjStatus: StatusConfig = this.listStatus.filter(s => s.value == value)[0];
+    if(selectedObjStatus){
+      return selectedObjStatus;
+    }
+    else return null;
   }
 }

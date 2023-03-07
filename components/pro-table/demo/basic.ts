@@ -1,4 +1,4 @@
-import { DrawerConfig, PropertyType } from '@ui-vts/ng-vts/pro-table';
+import { DrawerConfig, PropertyType, StatusConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 interface Item {
@@ -187,6 +187,34 @@ export class VtsDemoProTableBasicComponent {
     url: "http://localhost:3000/getData/",
     type: "GET"
   }
+
+  listStatus: StatusConfig[] = [
+    {
+      text: "success",
+      color: "success",
+      value: "success"
+    },
+    {
+      text: "processing",
+      color: "processing",
+      value: "processing"
+    },
+    {
+      text: "error",
+      color: "error",
+      value: "error"
+    },
+    {
+      text: "warning",
+      color: "warning",
+      value: "warning"
+    },
+    {
+      text: "default",
+      color: "default",
+      value: "default"
+    },
+  ]
 
   isDrawerOpened: boolean = false;
   drawerConfig: DrawerConfig = {

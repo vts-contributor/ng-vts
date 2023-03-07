@@ -22,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, PropertyType, Request, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -84,6 +84,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() searchData: Object | VtsSafeAny;
   @Input() configTableRequest: Request | undefined;
   @Input() pageSize = 10;
+  @Input() listStatus: StatusConfig[] = [];
+
 
   vtsRowHeight: string | number = 54;
   loading: boolean = false;

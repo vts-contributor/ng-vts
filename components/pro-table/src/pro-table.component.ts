@@ -1,4 +1,4 @@
-import { DrawerConfig, PropertyType, Request } from './pro-table.type';
+import { DrawerConfig, PropertyType, Request, StatusConfig } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
   // ChangeDetectionStrategy,
@@ -41,6 +41,7 @@ import _ from 'lodash';
       [searchData]="searchData" 
       (reloadTable)="reloadTable($event)"
       [drawerConfig]="drawerConfig"
+      [listStatus]="listStatus"
       >
     </vts-table-config>
     </vts-spin>
@@ -73,6 +74,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   @Input() exportRequest: Request | undefined;
   @Input() configTableRequest: Request | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
+  @Input() listStatus: StatusConfig[] = [];
 
   @Output() onPageSizeChanger = new EventEmitter<number>();
   @Output() onPageIndexChanger = new EventEmitter<number>();

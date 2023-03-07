@@ -83,8 +83,6 @@ export type Request = {
   onError?: (data: {[key: string]: any}) => void
 }
 
-export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";
-
 export type ViewMode = "view" | "edit" | "create";
 
 export type DrawerConfig = {
@@ -93,4 +91,10 @@ export type DrawerConfig = {
   onOpen?: () => void,
   onClose?: () => void,
   onSave?: (data: {[key: string]: any}) => void,
+}
+
+export type StatusConfig = {
+  text: string,
+  color: string,
+  value: string | number
 }

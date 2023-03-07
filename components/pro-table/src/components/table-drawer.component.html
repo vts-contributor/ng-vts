@@ -53,18 +53,18 @@
     <h4>{{title}}</h4>
     <ng-container *ngIf="mode!=='view'; else viewMode">
       <ng-container *ngFor="let status of listStatus">
-        <vts-tag [vtsColor]="status" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status)">
-          <ng-container *ngIf="value == status">
+        <vts-tag [vtsColor]="status.color" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status.value)">
+          <ng-container *ngIf="value == status.value">
             <i vts-icon vtsType="CheckCircle"></i>
           </ng-container>
-          <span>{{status}}</span>
+          <span>{{status.text}}</span>
         </vts-tag>
       </ng-container>
     </ng-container>
     <ng-template #viewMode>
-      <vts-tag [vtsColor]="value" style="margin-bottom: 5px;">
+      <vts-tag [vtsColor]="getSelectedStatus(value)?.color" style="margin-bottom: 5px;">
         <i vts-icon vtsType="CheckCircle"></i>
-        <span>{{value}}</span>
+        <span>{{getSelectedStatus(value)?.value}}</span>
       </vts-tag>
     </ng-template>
   </div>
