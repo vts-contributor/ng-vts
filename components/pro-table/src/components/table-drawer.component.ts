@@ -130,11 +130,17 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
     // console.log(this.entity);
 
     if(typeof this.saveRequest != "undefined"){
-      let {onSuccess, onError} = this.saveRequest;
+      let {onSuccess, onError} = this.saveRequest;      
       this.service.saveDataById(this.saveRequest)
       .subscribe(data => {
         if(onSuccess){
           onSuccess(data);
+        }
+        if(typeof this.drawerConfig != "undefined"){
+          let {onSave} = this.drawerConfig;
+          if(onSave){
+            onSave(data);
+          }
         }
         this.closeDrawer();
       }, error => {

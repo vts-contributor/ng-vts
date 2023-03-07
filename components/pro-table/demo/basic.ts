@@ -194,9 +194,11 @@ export class VtsDemoProTableBasicComponent {
     showTitleBasedOnProp: "id",
     onOpen: () => {
         this.isDrawerOpened = true;
+        console.log('drawer open');
     },
     onClose: () => {
       this.isDrawerOpened = false;
+      console.log('drawer close');
     },
     onSave: (data) => {
       console.log(data);
