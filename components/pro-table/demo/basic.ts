@@ -1,4 +1,4 @@
-import { DrawerConfig, PropertyType, Request, StatusConfig } from '@ui-vts/ng-vts/pro-table';
+import { DrawerConfig, PropertyType, Request, StatusConfig, UploadConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 @Component({
@@ -15,6 +15,7 @@ import { Component } from '@angular/core';
       [configTableRequest]="configTableRequest"
       [drawerConfig]="drawerConfig"
       [listStatus]="listStatus"
+      [uploadConfig]="uploadConfig"
     ></vts-protable-container>
   `
 })
@@ -137,6 +138,11 @@ export class VtsDemoProTableBasicComponent {
       value: "default"
     },
   ]
+
+  uploadConfig: UploadConfig = {
+    acceptTypes: ".png, .jpg, .jpeg",
+    maxFileSizeInKB: 1024000
+  };
 
   isDrawerOpened: boolean = false;
   drawerConfig: DrawerConfig = {

@@ -143,29 +143,14 @@
 
 </div>
 
+<!-- Modal confirm delete -->
 <table-delete [isVisibleDelete]="isVisibleDelete" [config]="modalDeleteConfig" (submit)="handleOkDelete()" (cancel)="handleCancelDelete()"></table-delete>
 
-<vts-modal [(vtsVisible)]="isVisibleUpload" [vtsWidth]="720" [vtsOkText]="uploadData.okText"
-  (vtsOnCancel)="handleCancelUpload()" (vtsOnOk)="handleOkUpload()">
-  <ng-container *vtsModalContent>
-    <vts-upload vtsType="drag" vtsAccept=".png, .jpg, .jpeg, .svg" [vtsMultiple]="true"
-      [vtsOpenFileDialogOnClick]="false" [vtsAction]="uploadData.url" (vtsChange)="handleChangeUpload($event)"
-      #container>
-      <p class="vts-upload-drag-icon">
-        <i vts-icon vtsType="UploadCloud"></i>
-      </p>
-      <p class="text-hint">
-        Kéo thả ảnh/video hoặc
-        <a vts-button vtsType="link" (click)="container.openDialog()">Chọn file</a>
-        để tải lên
-      </p>
-      <p class="text-hint">
-        Chỉ cho phép file dạng .png, .jpg, .jpeg, .svg và dung lượng không quá 100Mb
-      </p>
-    </vts-upload>
-  </ng-container>
-</vts-modal>
+<!-- Modal upload -->
+<table-upload [uploadConfig]="uploadConfig" [isVisibleUpload]="isVisibleUpload" [config]="modalUploadConfig"
+  (submit)="handleOkUpload()" (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
+<!-- Create, view, edit -->
 <table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer" [drawerConfig]="drawerConfig" [listStatus]="listStatus"
   [mode]="mode" [data]="drawerData"></table-drawer>
 

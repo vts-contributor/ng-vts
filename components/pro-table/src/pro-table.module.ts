@@ -33,6 +33,7 @@ import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 import { VtsTagModule } from '@ui-vts/ng-vts/tag';
 import { VtsDatePickerModule } from '@ui-vts/ng-vts/date-picker';
 import { VtsTableDeleteComponent } from './components/table-delete.component';
+import { VtsTableUploadComponent } from './components/table-upload.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { VtsTableDeleteComponent } from './components/table-delete.component';
     VtsProTableSearchFormComponent,
     VtsProTableConfigComponent,
     ProtableDrawerComponent,
-    VtsTableDeleteComponent
+    VtsTableDeleteComponent,
+    VtsTableUploadComponent
   ],
   exports: [
     VtsProTableContainerComponent,

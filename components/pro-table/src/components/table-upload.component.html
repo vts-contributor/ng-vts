@@ -1,0 +1,20 @@
+<vts-modal [(vtsVisible)]="isVisibleUpload" [vtsWidth]="720"
+  (vtsOnCancel)="onCancel()" (vtsOnOk)="onSubmit()">
+  <ng-container *vtsModalContent>
+    <vts-upload vtsType="drag" [vtsAccept]="uploadConfig?.acceptTypes" [vtsMultiple]="true"
+      [vtsOpenFileDialogOnClick]="false" (vtsChange)="onChange($event)"
+      #container>
+      <p class="vts-upload-drag-icon">
+        <i vts-icon vtsType="UploadCloud"></i>
+      </p>
+      <p class="text-hint">
+        Kéo thả ảnh/video hoặc
+        <a vts-button vtsType="link" (click)="container.openDialog()">Chọn file</a>
+        để tải lên
+      </p>
+      <p class="text-hint">
+        Chỉ cho phép file dạng {{ uploadConfig?.acceptTypes }} {{ getMaxFileSizeInText() }}
+      </p>
+    </vts-upload>
+  </ng-container>
+</vts-modal>

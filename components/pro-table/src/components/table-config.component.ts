@@ -22,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, ModalConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, ModalConfig, PropertyType, Request, StatusConfig, UploadConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -58,6 +58,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     title: 'Delete Popup Modal',
     content: 'Do you want to delete this items?'
   };
+  modalUploadConfig: ModalConfig = {
+    title: 'Upload Modal'
+  };
   @Input() drawerConfig: DrawerConfig | undefined;
 
   @Input() isVisibleUpload = false;
@@ -85,6 +88,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() configTableRequest: Request | undefined;
   @Input() pageSize = 10;
   @Input() listStatus: StatusConfig[] = [];
+  @Input() uploadConfig: UploadConfig | null = null;
 
 
   vtsRowHeight: string | number = 54;

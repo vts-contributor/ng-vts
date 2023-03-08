@@ -102,5 +102,10 @@ export type StatusConfig = {
 
 export type ModalConfig = {
   title: string,
-  content: string
+  content?: string
+}
+
+export type UploadConfig = {
+  acceptTypes: string,
+  maxFileSizeInKB: number
 }
