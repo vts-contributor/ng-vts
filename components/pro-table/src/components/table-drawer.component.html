@@ -1,6 +1,36 @@
+<!-- Open with drawer -->
 <vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="300"
   [vtsVisible]="visibleDrawer" [vtsTitle]="title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
-  <form vts-form *vtsDrawerContent [formGroup]="formGroup" vtsLayout="vertical">
+  
+  <ng-container *vtsDrawerContent>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+      <button vts-button (click)="closeDrawer()">Close</button>
+    </div>
+  </ng-template>
+</vts-drawer>
+
+<!-- Open with modal -->
+<vts-modal [(vtsVisible)]="visibleModal" [vtsWidth]="720">
+  <div *vtsModalTitle>
+    {{title}}
+  </div>
+  <ng-container *vtsModalContent>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+  <div *vtsModalFooter>
+    <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+    <button vts-button (click)="closeDrawer()">Close</button>
+  </div>
+</vts-modal>
+
+<!-- Content of the drawer/dialog -->
+<ng-template #contentTemplate>
+  <form vts-form [formGroup]="formGroup" vtsLayout="vertical">
     <div *ngFor="let item of displayHeaders; let i = index">
       <ng-container [ngSwitch]="item.datatype">
 
@@ -38,14 +68,7 @@
       </ng-container>
     </div>
   </form>
-
-  <ng-template #footerTpl>
-    <div style="float: right">
-      <button *ngIf="mode!=='view'" vts-button style="margin-right: 8px" (click)="onSave()">Save</button>
-      <button vts-button vtsType="primary" (click)="closeDrawer()">Close</button>
-    </div>
-  </ng-template>
-</vts-drawer>
+</ng-template>
 
 <!-- Status display -->
 <ng-template #statusDisplay let-title="title" let-value="value" let-property="property">

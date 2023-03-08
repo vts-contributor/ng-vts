@@ -174,7 +174,7 @@
   </ng-container>
 </vts-modal>
 
-<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [visibleDrawer]="visibleDrawer" [drawerConfig]="drawerConfig" [listStatus]="listStatus"
+<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer" [drawerConfig]="drawerConfig" [listStatus]="listStatus"
   [mode]="mode" [data]="drawerData"></table-drawer>
 
 <vts-drawer [vtsClosable]="false" [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"
@@ -190,7 +190,7 @@
 <!-- display data cell base on datatype -->
 <ng-template #cellDisplay let-datatype="datatype" let-value="value">
   <ng-container [ngSwitch]="datatype">
-    <td *ngSwitchCase="'number'" vtsAlign="left">{{formatNumber(value)}}</td>
+    <td *ngSwitchCase="'number'" vtsAlign="right">{{formatNumber(value)}}</td>
     <td *ngSwitchCase="'status'">
       <ng-container *ngTemplateOutlet="colorDisplay; context: {status: value}"></ng-container>
     </td>

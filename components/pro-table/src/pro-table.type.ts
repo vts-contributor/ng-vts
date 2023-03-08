@@ -86,6 +86,7 @@ export type Request = {
 export type ViewMode = "view" | "edit" | "create";
 
 export type DrawerConfig = {
+  openWith: "drawer" | "modal",
   entityName: string,
   showTitleBasedOnProp?: string, // Thêm mới (Chỉnh sửa) [entityName] entity[showTitleBasedOnProp]
   onOpen?: () => void,

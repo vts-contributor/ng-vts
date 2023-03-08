@@ -19,7 +19,10 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
     private service: ProtableService
   ) {}
 
-  @Input() visibleDrawer: boolean = false;
+  /**
+   * decide component is open or not
+   */
+  @Input() open: boolean = false;
   @Input() mode: ViewMode = 'view';
   @Input() data: {[key: string]: any} = {};
   @Input() headers: PropertyType[] = [];
@@ -27,6 +30,11 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Input() drawerConfig: DrawerConfig | undefined;
   @Input() listStatus: StatusConfig[] = [];
 
+  /**
+   * decide drawer or modal component is open, depends on [open]
+   */
+  visibleDrawer: boolean = false;
+  visibleModal: boolean = false;
 
   formGroup: FormGroup = new FormGroup({});
   selectedStatus: {[key: string]: string | number } = {};
@@ -43,14 +51,15 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.headers){
-      this.displayHeaders = [...changes.headers.currentValue.filter((h: PropertyType) => h.headerTitle)];
+    let {headers, data, drawerConfig, open} = changes;
+    if(headers){
+      this.displayHeaders = [...headers.currentValue.filter((h: PropertyType) => h.headerTitle)];
     }
-    if(changes.data){
+    if(data){
       let form = new FormGroup({});
       let selectedStatus: {[key: string]: string } = {};
       let value = {
-        ...changes.data.currentValue
+        ...data.currentValue
       };      
       this.displayHeaders.forEach(header => {
         if(header.datatype == "status"){
@@ -68,11 +77,47 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
         this.setTitle(this.drawerConfig);
       }
     }
-    if(changes.drawerConfig){
-      if(typeof changes.drawerConfig.currentValue != "undefined"){
-        console.log('changes.drawerConfig.currentValue:',changes.drawerConfig.currentValue);
-        this.setTitle(changes.drawerConfig.currentValue);
+    if(drawerConfig){
+      if(typeof drawerConfig.currentValue != "undefined"){
+        this.setTitle(drawerConfig.currentValue);
       }
+    }
+    if(open && open.currentValue){
+      // if both changes on the same time, use the updated value
+      if(drawerConfig){
+        switch(drawerConfig.currentValue.openWith){
+          case "modal": {
+            this.visibleDrawer = false;
+            this.visibleModal = true;
+            break;
+          }
+          default: {
+            this.visibleDrawer = true;
+            this.visibleModal = false;
+            break;
+          }
+        }
+      }
+      else {
+        if(typeof this.drawerConfig != 'undefined'){
+          switch(this.drawerConfig.openWith){
+            case "modal": {
+              this.visibleDrawer = false;
+              this.visibleModal = true;
+              break;
+            }
+            default: {
+              this.visibleDrawer = true;
+              this.visibleModal = false;
+              break;
+            }
+          }
+        }
+      }
+    }
+    else {
+      this.visibleDrawer = false;
+      this.visibleModal = false;
     }
   }
 

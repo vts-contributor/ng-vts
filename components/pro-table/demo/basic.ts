@@ -219,6 +219,7 @@ export class VtsDemoProTableBasicComponent {
 
   isDrawerOpened: boolean = false;
   drawerConfig: DrawerConfig = {
+    openWith: "modal",
     entityName: "post",
     showTitleBasedOnProp: "id",
     onOpen: () => {
