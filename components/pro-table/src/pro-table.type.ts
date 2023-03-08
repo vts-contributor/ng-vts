@@ -68,7 +68,7 @@ export type PropertyType = {
   headerTitle?: string;
   propertyName: string;
   required?: boolean;
-  datatype: 'string' | 'number' | 'datetime' | 'status';
+  datatype: 'string' | 'number' | 'datetime' | 'status' | 'date';
   checked?: boolean;
   align?: 'left' | 'center' | 'right';
 }

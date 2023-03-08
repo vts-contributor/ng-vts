@@ -31,6 +31,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProtableDrawerComponent } from './components/table-drawer.component';
 import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsDatePickerModule } from '@ui-vts/ng-vts/date-picker';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { VtsTagModule } from '@ui-vts/ng-vts/tag';
     DragDropModule,
     VtsInputNumberModule,
     VtsTagModule,
-    VtsInputModule
+    VtsInputModule,
+    VtsDatePickerModule
   ]
 })
 export class VtsProTableModule { }

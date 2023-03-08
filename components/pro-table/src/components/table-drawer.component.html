@@ -41,14 +41,25 @@
           </ng-container>
         </ng-container>
 
-        <!-- datetime type -->
-        <ng-container *ngSwitchCase="'datetime'"></ng-container>
+        <!-- date type -->
+        <ng-container *ngSwitchCase="'date'">
+          <vts-form-item>
+            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-control>
+              <vts-date-picker
+                vtsPlaceHolder="DD/MM/YYYY"
+                [vtsSize]="datePickerSize"
+                [formControlName]="item.propertyName"
+              ></vts-date-picker>
+            </vts-form-control>
+          </vts-form-item>
+        </ng-container>
 
         <!-- number type -->
         <ng-container *ngSwitchCase="'number'">
-          <vts-form-item vts-row>
-            <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
-            <vts-form-control vts-col [vtsSpan]="18">
+          <vts-form-item>
+            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-control>
               <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"
                 [vtsDisabled]="mode == 'view'"></vts-input-number>
             </vts-form-control>
@@ -57,9 +68,9 @@
 
         <!-- string type - default -->
         <ng-container *ngSwitchDefault>
-          <vts-form-item vts-row>
-            <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
-            <vts-form-control vts-col [vtsSpan]="18">
+          <vts-form-item>
+            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-control>
               <input vts-input placeholder="" [formControlName]="item.propertyName" />
             </vts-form-control>
           </vts-form-item>

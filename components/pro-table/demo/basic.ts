@@ -95,14 +95,14 @@ export class VtsDemoProTableBasicComponent {
     },
 
     {
-      headerTitle: 'Prop 1',
+      headerTitle: 'Status type',
       propertyName: 'title',
       required: true,
       datatype: 'status',
       checked: true
     },
     {
-      headerTitle: 'Prop 2',
+      headerTitle: 'String type',
       propertyName: 'author',
       required: true,
       datatype: 'string'
@@ -115,18 +115,18 @@ export class VtsDemoProTableBasicComponent {
     //   checked: true
     // },
     {
-      headerTitle: 'Prop 4',
+      headerTitle: 'Number type',
       propertyName: 'num',
       required: true,
       datatype: 'number',
       checked: true
-    }
-    // {
-    //   headerTitle: 'Prop 4',
-    //   propertyName: 'content4',
-    //   required: true,
-    //   datatype: 'string'
-    // },
+    },
+    {
+      headerTitle: 'Date type',
+      propertyName: 'birth',
+      required: true,
+      datatype: 'date'
+    },
     // {
     //   headerTitle: 'Prop 5',
     //   propertyName: 'content5',

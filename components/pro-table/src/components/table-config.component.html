@@ -194,6 +194,9 @@
     <td *ngSwitchCase="'status'">
       <ng-container *ngTemplateOutlet="colorDisplay; context: {status: value}"></ng-container>
     </td>
+    <td *ngSwitchCase="'date'">
+      {{ value | date:'dd/MM/yyyy' }}
+    </td>
     <td *ngSwitchDefault vtsAlign="left">{{value}}</td>
   </ng-container>
 </ng-template>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode } from '../pro-table.type';
 
@@ -41,6 +42,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   entity: {[key: string]: any}  = {};
   displayHeaders: PropertyType[] = [];
   title: string = "Test drawer";
+  datePickerSize: VtsSizeLDSType = 'md';
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -167,13 +169,15 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   }
 
   onSave(){
+    let newDateObj = this.transformDateDatatype();
     // merge old data with new changes
     this.entity = {
       ...this.data,
       ...this.selectedStatus,
-      ...this.formGroup.value
+      ...this.formGroup.value,
+      ...newDateObj
     }
-    // console.log(this.entity);
+    console.log(this.entity);
 
     if(typeof this.saveRequest != "undefined"){
       let {onSuccess, onError} = this.saveRequest;      
@@ -203,5 +207,18 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       return selectedObjStatus;
     }
     else return null;
+  }
+
+  /**
+   * transform formGroup value of date type properties to Date
+   * @returns new object has every field with type of date having value of Date object
+   */
+  transformDateDatatype(){
+    let dateTypeProperties: PropertyType[] = this.displayHeaders.filter(head => head.datatype == 'date');
+    let output: {[key: string]: Date} = {};
+    dateTypeProperties.forEach(pro => {
+      output[pro.propertyName] = new Date(this.formGroup.get(pro.propertyName)?.value);
+    });
+    return output;
   }
 }
