@@ -361,12 +361,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       });
     }
     // callback when open drawer
-    if(typeof this.drawerConfig != "undefined"){
-      let {onOpen} = this.drawerConfig;
-      if(onOpen){
+    if (typeof this.drawerConfig != 'undefined') {
+      let { onOpen } = this.drawerConfig;
+      if (onOpen) {
         onOpen();
       }
-  }
+    }
   }
 
   onChangePageIndex(event: number) {
@@ -542,5 +542,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   closeExported() {
     this.visibleExport = false;
+  }
+
+  getSelectedStatus(value: string){
+    let selectedObjStatus: StatusConfig = this.listStatus.filter(s => s.value == value)[0];
+    if(selectedObjStatus){
+      return selectedObjStatus;
+    }
+    else return null;
   }
 }

@@ -34,6 +34,7 @@ interface Request {
       [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest"
       [drawerConfig]="drawerConfig"
+      [listStatus]="listStatus"
     ></vts-protable-container>
   `
 })
@@ -190,7 +191,7 @@ export class VtsDemoProTableBasicComponent {
 
   listStatus: StatusConfig[] = [
     {
-      text: "success",
+      text: "New",
       color: "success",
       value: "success"
     },
@@ -200,17 +201,17 @@ export class VtsDemoProTableBasicComponent {
       value: "processing"
     },
     {
-      text: "error",
+      text: "Danger",
       color: "error",
       value: "error"
     },
     {
-      text: "warning",
+      text: "Warning",
       color: "warning",
       value: "warning"
     },
     {
-      text: "default",
+      text: "Draft",
       color: "default",
       value: "default"
     },

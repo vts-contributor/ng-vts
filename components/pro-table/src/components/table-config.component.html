@@ -199,12 +199,9 @@
 </ng-template>
 
 <!-- display status -->
-<ng-template #colorDisplay let-status="status">
-  <ng-container [ngSwitch]="status">
-    <vts-tag vtsColor="success" *ngSwitchCase="'success'">success</vts-tag>
-    <vts-tag vtsColor="processing" *ngSwitchCase="'processing'">processing</vts-tag>
-    <vts-tag vtsColor="error" *ngSwitchCase="'error'">error</vts-tag>
-    <vts-tag vtsColor="warning" *ngSwitchCase="'warning'">warning</vts-tag>
-    <vts-tag vtsColor="default" *ngSwitchDefault>default</vts-tag>
-  </ng-container>
+<ng-template #colorDisplay let-value="status">
+  <vts-tag [vtsColor]="getSelectedStatus(value)?.color" style="margin-bottom: 5px;">
+    <span>{{getSelectedStatus(value)?.text}}</span>
+  </vts-tag>
 </ng-template>
+
