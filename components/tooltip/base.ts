@@ -134,7 +134,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
   protected readonly destroy$ = new Subject<void>();
   protected readonly triggerDisposables: Array<() => void> = [];
 
-  private delayTimer?: number;
+  private delayTimer?: number | ReturnType<typeof setTimeout>;
 
   constructor(
     public elementRef: ElementRef,

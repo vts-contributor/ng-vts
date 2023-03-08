@@ -161,9 +161,9 @@ export abstract class VtsMNComponent implements OnInit, OnDestroy {
 
   protected options!: Required<VtsMessageDataOptions>;
   protected autoClose?: boolean;
-  protected closeTimer?: number;
+  protected closeTimer?: number | ReturnType<typeof setTimeout>;
   protected userAction: boolean = false;
-  protected eraseTimer: number | null = null;
+  protected eraseTimer: number | ReturnType<typeof setTimeout> | null = null;
   protected eraseTimingStart?: number;
   protected eraseTTL!: number;
 

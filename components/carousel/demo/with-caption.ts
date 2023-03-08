@@ -4,15 +4,15 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-with-caption',
   template: `
     <vts-carousel
-     [vtsSlidesPerView]="vtsSlidesPerView"
-     [vtsNavigation]="vtsNavigation"
-     [vtsPagination]="vtsPagination"
+      [vtsSlidesPerView]="vtsSlidesPerView"
+      [vtsNavigation]="vtsNavigation"
+      [vtsPagination]="vtsPagination"
     >
       <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src='{{item.src}}' alt="" />
+        <img src="{{ item.src }}" alt="" />
         <div class="caption">
-          <div class="title">{{item.title}}</div>
-          <div class="content">{{item.content}}</div>
+          <div class="title">{{ item.title }}</div>
+          <div class="content">{{ item.content }}</div>
         </div>
       </ng-template>
     </vts-carousel>
@@ -51,22 +51,23 @@ import { Component } from '@angular/core';
 })
 export class VtsDemoCarouselWithCaptionComponent {
   vtsSlidesPerView = 1;
-  vtsNavigation= true;
-  vtsPagination= {clickable: true, el: '.pagination-custom'};
-  array= [
+  vtsNavigation = true;
+  vtsPagination = { clickable: true, el: '.pagination-custom' };
+  array = [
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      title: 'Second slide label', 
+      title: 'Second slide label',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     },
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      title: 'Second slide label', 
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    },{
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      title: 'Second slide label', 
+      title: 'Second slide label',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     },
-  ]
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
+      title: 'Second slide label',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    }
+  ];
 }

@@ -104,7 +104,7 @@ export class VtsInputNumberComponent
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsAutoFocus: BooleanInput;
 
-  private autoStepTimer?: number;
+  private autoStepTimer?: number | ReturnType<typeof setTimeout>;
   private parsedValue?: string | number;
   private value?: number;
   private destroy$ = new Subject<void>();

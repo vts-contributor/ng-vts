@@ -4,14 +4,14 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-multiple-with-caption',
   template: `
     <vts-carousel
-     [vtsSlidesPerView]="vtsSlidesPerView"
-     [vtsNavigation]="vtsNavigation"
-     [vtsPagination]="vtsPagination"
-     [vtsSpaceBetween]="vtsSpaceBetween"
+      [vtsSlidesPerView]="vtsSlidesPerView"
+      [vtsNavigation]="vtsNavigation"
+      [vtsPagination]="vtsPagination"
+      [vtsSpaceBetween]="vtsSpaceBetween"
     >
       <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src='{{item.src}}' alt="" />
-        <div class="content">{{item.content}}</div>
+        <img src="{{ item.src }}" alt="" />
+        <div class="content">{{ item.content }}</div>
       </ng-template>
     </vts-carousel>
     <div class="navigation-btn next-btn"></div>
@@ -39,7 +39,7 @@ import { Component } from '@angular/core';
         text-align: center;
       }
       .navigation-btn {
-        position: absolute;    
+        position: absolute;
         top: 150px;
         width: calc(var(--carousel-navigation-size) / 44 * 27);
         height: var(--carousel-navigation-size);
@@ -49,7 +49,7 @@ import { Component } from '@angular/core';
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #73777A;
+        background: #73777a;
         color: #fff;
         border-radius: 50%;
         width: 38px;
@@ -76,24 +76,29 @@ import { Component } from '@angular/core';
 })
 export class VtsDemoCarouselMultipleWithCaptionComponent {
   vtsSlidesPerView = 3;
-  vtsNavigation= {nextEl: '.next-btn', prevEl: '.prev-btn'};
+  vtsNavigation = { nextEl: '.next-btn', prevEl: '.prev-btn' };
   vtsSpaceBetween = 20;
-  vtsPagination= {clickable: true, el: '.pagination-multiple-custom'};
-  array= [
+  vtsPagination = { clickable: true, el: '.pagination-multiple-custom' };
+  array = [
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      content: 'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
+      content:
+        'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
     },
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      content: 'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
-    },{
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      content: 'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
+      content:
+        'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
     },
     {
       src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
-      content: 'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
+      content:
+        'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ',
+      content:
+        'They all have something to say beyond the words on the page. They can come across as casual or neutral, exotic or graphic. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'
     }
-  ]
+  ];
 }

@@ -5,8 +5,6 @@ import { compile as compileLess } from '../../build/compile-styles';
 import { generateLessVars } from '../../build/generate-less-vars';
 import { copyStylesToSrc } from '../../build/migration-styles';
 import { execNodeTask } from '../util/task-helpers';
-import buildCarousel from '../custom/build-carousel'
-import copyExternalLibs from '../custom/copy-libs'
 
 /** Run `ng build ng-vts-lib --configuration=production` */
 task('library:build-components', execNodeTask('@angular/cli', 'ng', ['build', 'ng-vts-lib']));
@@ -37,18 +35,3 @@ task('library:copy-resources', () => {
 task('library:copy-libs', () => {
   return src([join(buildConfig.publishDir, '**/*')]).pipe(dest(join(buildConfig.libDir)));
 });
-
-// External libs
-task(
-  'library:build-externals',
-  done => Promise.all([
-    buildCarousel()
-  ]).then(() => {done()})
-)
-
-task(
-  'library:copy-externals',
-  done => Promise.all([
-    copyExternalLibs()
-  ]).then(() => {done()})
-)
