@@ -1,5 +1,5 @@
 // @ts-ignore
-import Carousel from './carousel';
+import Carousel from '@ui-vts/lib/carousel';
 import { paramsList } from './params-list';
 import { extend, isObject } from './utils';
 type KeyValueType = { [x: string]: any };

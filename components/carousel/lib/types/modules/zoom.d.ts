@@ -66,13 +66,13 @@ export interface ZoomOptions {
   /**
    * CSS class name of zoom container
    *
-   * @default 'carousel-zoom-container'
+   * @default 'vts-carousel-zoom-container'
    */
   containerClass?: string;
   /**
    * CSS class name of zoomed in container
    *
-   * @default 'carousel-slide-zoomed'
+   * @default 'vts-carousel-slide-zoomed'
 
    */
   zoomedSlideClass?: string;

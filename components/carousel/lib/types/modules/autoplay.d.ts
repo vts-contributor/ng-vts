@@ -60,7 +60,7 @@ export interface AutoplayEvents {
  *
  * @example
  * ```js
- * const carousel = new carousel('.carousel', {
+ * const carousel = new carousel('.vts-carousel', {
  *   autoplay: {
  *     delay: 5000,
  *   },
@@ -77,7 +77,7 @@ export interface AutoplayOptions {
    * @example
    * ```html
    * <!-- hold this slide for 2 seconds -->
-   * <div class="carousel-slide" data-carousel-autoplay="2000">
+   * <div class="vts-carousel-slide" data-carousel-autoplay="2000">
    * ```
    *
    * @default 3000

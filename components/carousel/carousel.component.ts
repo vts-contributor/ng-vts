@@ -17,13 +17,12 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import Carousel from './lib/carousel';
+//@ts-ignore
+import Carousel from '@ui-vts/lib/carousel';
 import { Observable, of, Subject } from 'rxjs';
 import { getParams } from './lib/utils/get-params';
 import { CarouselSlideDirective } from './carousel-slide.directive';
 import { EventsParams } from './carousel-events';
-import { ThumbsOptions } from './lib/types/modules/thumbs';
-import { ControllerOptions } from './lib/types/modules/controller';
 import {
   extend,
   isObject,
@@ -40,6 +39,9 @@ import {
   PaginationOptions,
   ScrollbarOptions,
   VirtualOptions,
+  ControllerOptions, 
+  ThumbsOptions,
+  ICarousel
 } from './lib/types';
 import { isPlatformBrowser } from '@angular/common';
 @Component({
@@ -140,7 +142,7 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() slideDuplicateNextClass: "slideDuplicateNextClass";
   // @Input() slidePrevClass: "slidePrevClass";
   // @Input() slideDuplicatePrevClass: "slideDuplicatePrevClass";
-  @Input() vtsWrapperClass: string = 'carousel-wrapper';
+  @Input() vtsWrapperClass: string = 'vts-carousel-wrapper';
   // @Input() runCallbacksOnInit: "runCallbacksOnInit";
   // @Input() observeParents: "observeParents";
   // @Input() observeSlideChildren: "observeSlideChildren";
@@ -493,7 +495,7 @@ export class VtsCarouselComponent implements OnInit {
   prependSlides!: Observable<CarouselSlideDirective[]>;
   appendSlides!: Observable<CarouselSlideDirective[]>;
 
-  carouselRef?: Carousel;
+  carouselRef?: ICarousel;
   readonly _activeSlides = new Subject<CarouselSlideDirective[]>();
 
   get activeSlides() {
@@ -506,11 +508,11 @@ export class VtsCarouselComponent implements OnInit {
   get zoomContainerClass() {
     // return this.zoom && typeof this.zoom !== 'boolean'
     //   ? this.zoom.containerClass
-    //   : 'carousel-zoom-container';
-    return 'carousel-zoom-container';
+    //   : 'vts-carousel-zoom-container';
+    return 'vts-carousel-zoom-container';
   }
 
-  @HostBinding('class') containerClasses: string = 'carousel';
+  @HostBinding('class') containerClasses: string = 'vts-carousel';
   constructor(
     private _ngZone: NgZone,
     private elementRef: ElementRef,
@@ -646,8 +648,8 @@ export class VtsCarouselComponent implements OnInit {
 
       if (isPlatformBrowser(this._platformId)) {
         this.carouselRef = carouselRef.init(this.elementRef.nativeElement);
-        const isVirtualEnabled = isEnabled(this.carouselRef.params.virtual!);
-        if (this.carouselRef.virtual && isVirtualEnabled) {
+        const isVirtualEnabled = isEnabled(this.carouselRef?.params.virtual!);
+        if (this.carouselRef?.virtual && isVirtualEnabled) {
           this.carouselRef.virtual.update(true);
         }
         this._changeDetectorRef.detectChanges();

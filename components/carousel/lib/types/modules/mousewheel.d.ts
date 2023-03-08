@@ -1,5 +1,5 @@
 import carousel from '../carousel-class';
-import { CSSSelector } from '../shared';
+import { CSSSelector } from '../../../shared';
 
 export interface MousewheelMethods {
   /**

@@ -12,7 +12,7 @@ import { VtscarouselModule } from './carousel.module';
 import { VtscarouselOpacityStrategy } from './strategies/opacity-strategy';
 import { VTS_carousel_CUSTOM_STRATEGIES } from './typings';
 
-describe('carousel', () => {
+describe('vts-carousel', () => {
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [BidiModule, VtscarouselModule],
@@ -21,7 +21,7 @@ describe('carousel', () => {
     TestBed.compileComponents();
   }));
 
-  describe('carousel basic', () => {
+  describe('vts-carousel basic', () => {
     let fixture: ComponentFixture<VtsTestcarouselBasicComponent>;
     let testComponent: VtsTestcarouselBasicComponent;
     let carouselWrapper: DebugElement;
@@ -316,7 +316,7 @@ describe('carousel', () => {
   });
 });
 
-describe('carousel custom strategies', () => {
+describe('vts-carousel custom strategies', () => {
   let fixture: ComponentFixture<VtsTestcarouselBasicComponent>;
   let testComponent: VtsTestcarouselBasicComponent;
   let carouselWrapper: DebugElement;

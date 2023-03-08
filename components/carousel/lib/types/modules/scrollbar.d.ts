@@ -1,4 +1,4 @@
-import { CSSSelector } from '../shared';
+import { CSSSelector } from '../../../shared';
 import carousel from '../carousel-class';
 
 export interface ScrollbarMethods {
@@ -55,9 +55,9 @@ export interface ScrollbarEvents {
  *
  * @example
  * ```js
- * const carousel = new carousel('.carousel', {
+ * const carousel = new carousel('.vts-carousel', {
  *   scrollbar: {
- *     el: '.carousel-scrollbar',
+ *     el: '.vts-carousel-scrollbar',
  *     draggable: true,
  *   },
  * });
@@ -106,35 +106,35 @@ export interface ScrollbarOptions {
   /**
    * Scrollbar element additional CSS class when it is disabled
    *
-   * @default 'carousel-scrollbar-lock'
+   * @default 'vts-carousel-scrollbar-lock'
    */
   lockClass?: string;
 
   /**
    * Scrollbar draggable element CSS class
    *
-   * @default 'carousel-scrollbar-drag'
+   * @default 'vts-carousel-scrollbar-drag'
    */
   dragClass?: string;
 
   /**
    * CSS class name added on carousel container and scrollbar element when scrollbar is disabled by breakpoint
    *
-   * @default 'carousel-scrollbar-disabled'
+   * @default 'vts-carousel-scrollbar-disabled'
    */
   scrollbarDisabledClass?: string;
 
   /**
    * CSS class name set to scrollbar in horizontal carousel
    *
-   * @default 'carousel-scrollbar-horizontal'
+   * @default 'vts-carousel-scrollbar-horizontal'
    */
   horizontalClass?: string;
 
   /**
    * CSS class name set to scrollbar in vertical carousel
    *
-   * @default 'carousel-scrollbar-vertical'
+   * @default 'vts-carousel-scrollbar-vertical'
    */
   verticalClass?: string;
 }

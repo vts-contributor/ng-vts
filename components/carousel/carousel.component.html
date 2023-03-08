@@ -1,10 +1,10 @@
 <ng-content select="[slot=container-start]"></ng-content>
 <ng-container *ngIf="vtsNavigation && showNavigation">
-  <div class="carousel-button-prev" #vtsPrevElRef></div>
-  <div class="carousel-button-next" #vtsNextElRef></div>
+  <div class="vts-carousel-button-prev" #vtsPrevElRef></div>
+  <div class="vts-carousel-button-next" #vtsNextElRef></div>
 </ng-container>
-<div *ngIf="scrollbar && showScrollbar" class="carousel-scrollbar" #vtsScrollbarElRef></div>
-<div *ngIf="vtsPagination && showPagination" class="carousel-pagination"
+<div *ngIf="scrollbar && showScrollbar" class="vts-carousel-scrollbar" #vtsScrollbarElRef></div>
+<div *ngIf="vtsPagination && showPagination" class="vts-carousel-pagination"
   #vtsPaginationElRef>
 </div>
 <div [ngClass]="vtsWrapperClass" [attr.id]="id">

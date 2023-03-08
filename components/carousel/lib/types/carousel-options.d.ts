@@ -31,9 +31,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * import carousel, { Navigation, Pagination } from 'carousel';
+   * import carousel, { Navigation, Pagination } from 'vts-carousel';
    *
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *    modules: [ Navigation, Pagination ],
    *  });
    * ```
@@ -222,7 +222,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *    onAny(eventName, ...args) {
    *      console.log('Event: ', eventName);
    *      console.log('Event data: ', args);
@@ -530,7 +530,7 @@ export interface CarouselOptions {
   /**
    * Specify `noSwiping`'s element css class
    *
-   * @default 'carousel-no-swiping'
+   * @default 'vts-carousel-no-swiping'
    */
   noSwipingClass?: string;
 
@@ -657,7 +657,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   // Default parameters
    *   slidesPerView: 1,
    *   vtsSpaceBetween: 10,
@@ -684,7 +684,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   slidesPerView: 1,
    *   vtsSpaceBetween: 10,
    *   // using "ratio" endpoints
@@ -743,14 +743,14 @@ export interface CarouselOptions {
   /**
    * The beginning of the modifier CSS class that can be added to carousel container depending on different parameters
    *
-   * @default 'carousel-'
+   * @default 'vts-carousel-'
    */
   containerModifierClass?: string;
 
   /**
    * CSS class name of slide
    *
-   * @default 'carousel-slide'
+   * @default 'vts-carousel-slide'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -761,7 +761,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of currently active slide
    *
-   * @default 'carousel-slide-active'
+   * @default 'vts-carousel-slide-active'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -772,7 +772,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of duplicated slide which represents the currently active slide
    *
-   * @default 'carousel-slide-duplicate-active'
+   * @default 'vts-carousel-slide-duplicate-active'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -783,7 +783,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of currently visible slide
    *
-   * @default 'carousel-slide-visible'
+   * @default 'vts-carousel-slide-visible'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -794,7 +794,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of slide duplicated by loop mode
    *
-   * @default 'carousel-slide-duplicate'
+   * @default 'vts-carousel-slide-duplicate'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -805,7 +805,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of slide which is right after currently active slide
    *
-   * @default 'carousel-slide-next'
+   * @default 'vts-carousel-slide-next'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -816,7 +816,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of duplicated slide which represents the slide next to active slide
    *
-   * @default 'carousel-slide-duplicate-next'
+   * @default 'vts-carousel-slide-duplicate-next'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -827,7 +827,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of slide which is right before currently active slide
    *
-   * @default 'carousel-slide-prev'
+   * @default 'vts-carousel-slide-prev'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -838,7 +838,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of duplicated slide which represents the slide previous to active slide
    *
-   * @default 'carousel-slide-duplicate-prev'
+   * @default 'vts-carousel-slide-duplicate-prev'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -849,7 +849,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of blank slide append to fill groups in loop mode when `loopFillGroupWithBlank` is also enabled
    *
-   * @default 'carousel-slide-invisible-blank'
+   * @default 'vts-carousel-slide-invisible-blank'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -860,7 +860,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of slides' wrapper
    *
-   * @default 'carousel-wrapper'
+   * @default 'vts-carousel-wrapper'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -874,7 +874,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   a11y: {
    *     prevSlideMessage: 'Previous slide',
    *     nextSlideMessage: 'Next slide',
@@ -889,7 +889,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *  autoplay: {
    *    delay: 5000,
    *  },
@@ -903,7 +903,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   controller: {
    *     inverse: true,
    *   },
@@ -917,7 +917,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'coverflow',
    *   coverflowEffect: {
    *     rotate: 30,
@@ -933,7 +933,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'cube',
    *   cubeEffect: {
    *     slideShadows: false,
@@ -948,7 +948,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'fade',
    *   fadeEffect: {
    *     crossFade: true
@@ -963,7 +963,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'flip',
    *   flipEffect: {
    *     slideShadows: false,
@@ -978,7 +978,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'creative',
    *   creativeEffect: {
    *     prev: {
@@ -1000,7 +1000,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'cards',
    *   cardsEffect: {
    *     // ...
@@ -1016,7 +1016,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   hashNavigation: {
    *     replaceState: true,
    *   },
@@ -1032,7 +1032,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   history: {
    *     replaceState: true,
    *   },
@@ -1042,7 +1042,7 @@ export interface CarouselOptions {
    * @example
    * ```html
    * <!-- will produce "slides/slide1" url in browser history -->
-   * <div class="carousel-slide" data-history="slide1"></div>
+   * <div class="vts-carousel-slide" data-history="slide1"></div>
    * ```
    */
   history?: HistoryOptions | boolean;
@@ -1052,7 +1052,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   keyboard: {
    *     enabled: true,
    *     onlyInViewport: false,
@@ -1067,7 +1067,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   lazy: {
    *     loadPrevNext: true,
    *   },
@@ -1081,7 +1081,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   mousewheel: {
    *     invert: true,
    *   },
@@ -1095,10 +1095,10 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   navigation: {
-   *     nextEl: '.carousel-button-next',
-   *     prevEl: '.carousel-button-prev',
+   *     nextEl: '.vts-carousel-button-next',
+   *     prevEl: '.vts-carousel-button-prev',
    *   },
    * });
    * ```
@@ -1110,9 +1110,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   pagination: {
-   *     el: '.carousel-pagination',
+   *     el: '.vts-carousel-pagination',
    *     type: 'bullets',
    *   },
    * });
@@ -1125,7 +1125,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   parallax: true,
    * });
    * ```
@@ -1137,9 +1137,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   scrollbar: {
-   *     el: '.carousel-scrollbar',
+   *     el: '.vts-carousel-scrollbar',
    *     draggable: true,
    *   },
    * });
@@ -1152,7 +1152,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   ...
    *   thumbs: {
    *     carousel: thumbscarousel
@@ -1167,7 +1167,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   virtual: {
    *     slides: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4', 'Slide 5'],
    *   },
@@ -1181,7 +1181,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   zoom: {
    *     maxRatio: 5,
    *   },
@@ -1195,11 +1195,11 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   freeMode: true,
    * });
    *
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   freeMode: {
    *     enabled: true,
    *     sticky: true,
@@ -1214,7 +1214,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   grid: {
    *     rows: 2,
    *   },
