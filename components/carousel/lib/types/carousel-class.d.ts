@@ -383,7 +383,7 @@ interface ICarousel extends CarouselClass<CarouselEvents> {
     translate: number,
     vtsSpeed: number,
     runCallbacks?: boolean,
-    translateBounds?: boolean,
+    translateBounds?: boolean
   ): any;
 
   /**
@@ -491,5 +491,5 @@ declare class Carousel implements ICarousel {
   static extendedDefaults: CarouselOptions;
 }
 
-export { ICarousel }
+export { ICarousel };
 export default Carousel;

@@ -234,7 +234,7 @@ export interface CarouselEvents {
    */
   _slideClasses?: (
     carousel: carousel,
-    slides: { slideEl: HTMLElement; classNames: string; index: number }[],
+    slides: { slideEl: HTMLElement; classNames: string; index: number }[]
   ) => void;
 
   /**

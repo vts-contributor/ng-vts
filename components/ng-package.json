@@ -10,7 +10,6 @@
     "angular", 
     "@ui-vts/theme", 
     "@ui-vts/icons-angular", 
-    "@ui-vts/lib", 
     "apexcharts", 
     "date-fns", 
     "dom7"

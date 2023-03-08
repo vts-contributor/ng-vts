@@ -1,7 +1,7 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 import { coerceBooleanProperty } from './lib/utils/utils';
 @Directive({
-  selector: 'ng-template[vts-carousel-slide]',
+  selector: 'ng-template[vts-carousel-slide]'
 })
 export class CarouselSlideDirective {
   @Input() virtualIndex: number = 0;
@@ -29,23 +29,26 @@ export class CarouselSlideDirective {
     }
     this._classNames = val;
     this.slideData = {
-      isActive: this._hasClass(['vts-carousel-slide-active', 'vts-carousel-slide-duplicate-active']),
+      isActive: this._hasClass([
+        'vts-carousel-slide-active',
+        'vts-carousel-slide-duplicate-active'
+      ]),
       isVisible: this._hasClass(['vts-carousel-slide-visible']),
       isDuplicate: this._hasClass(['vts-carousel-slide-duplicate']),
       isPrev: this._hasClass(['vts-carousel-slide-prev', 'vts-carousel-slide-duplicate-prev']),
-      isNext: this._hasClass(['vts-carousel-slide-next', 'vts-carousel-slide-duplicate-next']),
+      isNext: this._hasClass(['vts-carousel-slide-next', 'vts-carousel-slide-duplicate-next'])
     };
   }
 
   private _hasClass(classNames: string[]) {
-    return classNames.some((className) => this._classNames.indexOf(className) >= 0);
+    return classNames.some(className => this._classNames.indexOf(className) >= 0);
   }
   slideData = {
     isActive: false,
     isPrev: false,
     isNext: false,
     isVisible: false,
-    isDuplicate: false,
+    isDuplicate: false
   };
 
   private _classNames: string = '';

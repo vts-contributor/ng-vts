@@ -25,8 +25,8 @@ export function isShowEl(val: any, obj: any, el: any): boolean {
 export function extend(target: any, src: any) {
   const noExtend = ['__proto__', 'constructor', 'prototype'];
   Object.keys(src)
-    .filter((key) => noExtend.indexOf(key) < 0)
-    .forEach((key) => {
+    .filter(key => noExtend.indexOf(key) < 0)
+    .forEach(key => {
       if (typeof target[key] === 'undefined') {
         target[key] = src[key];
         return;
