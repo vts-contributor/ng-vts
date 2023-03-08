@@ -1,7 +1,5 @@
 .vts-protable-configuration {
-  padding: 16px;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-bottom: 16px;
 }
@@ -23,6 +21,7 @@
 
 .btn-table-config {
   margin-left: 8px;
+  border: none;
 }
 
 .btn-control-area {
@@ -82,11 +81,14 @@ th {
 }
 
 .btn-config-area {
-  padding: 8px;
   display: flex;
   justify-content: right;
 }
 
 .vts-table-column-sorter-inner:hover {
   cursor: pointer;
+}
+
+.vts-tabs-top > .vts-tabs-nav {
+  margin-bottom: 0px;
 }

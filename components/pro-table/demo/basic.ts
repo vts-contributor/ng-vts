@@ -1,12 +1,12 @@
-import { DrawerConfig, PropertyType } from '@ui-vts/ng-vts/pro-table';
+import { ButtonConfig, DrawerConfig, PropertyType, TabGroupConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 interface Request {
   url: string,
   type: "POST" | "GET",
-  params?: {[key: string]: any},
-  body?: {[key: string]: any},
-  onSuccess?: (data: {[key: string]: any}) => void,
+  params?: { [key: string]: any },
+  body?: { [key: string]: any },
+  onSuccess?: (data: { [key: string]: any }) => void,
   onError?: () => void
 }
 
@@ -14,6 +14,9 @@ interface Request {
   selector: 'vts-demo-pro-table-basic',
   template: `
     <vts-protable-container 
+      [tableTitle]="tableTitle"
+      [moreActionConfig]="moreAction"
+      [tabGroupConfig]="tabGroupConfig"
       [properties]="properties" 
       [requestData]="request"
       [getRequest]="getRequest"
@@ -27,12 +30,38 @@ interface Request {
   `
 })
 export class VtsDemoProTableBasicComponent {
+  tableTitle = "Table Title";
+  moreAction: ButtonConfig[] = [
+    {
+      buttonText: 'Clear selected',
+      style: { 'background': 'red' }
+    },
+    {
+      buttonText: 'Clear selected',
+      style: { 'background': 'green' }
+
+    }
+  ];
+
+  tabGroupConfig: TabGroupConfig = {
+    tabProperty: 'status',
+    tabValueConfig: [
+      { tabTitle: "All" },
+      {
+        tabTitle: "Category 1",
+        tabCondition: {
+          operation: ['<'],
+          threshold: ['']
+        }
+      }
+    ]
+  }
 
   listData = [
     {
       "id": 1,
       "title": "success",
-      "author": "typicode",   
+      "author": "typicode",
       "num": 10
     },
     {
@@ -91,13 +120,13 @@ export class VtsDemoProTableBasicComponent {
   ];
 
   request: Request = {
-    url: "http://localhost:3000/getData",
+    url: "http://localhost:3000/getData/",
     type: "GET",
     onSuccess: (data: any) => {
       console.log(data);
     },
   }
-  
+
   getRequest: Request = {
     url: "http://localhost:3000/getData/",
     type: "GET",
@@ -148,8 +177,8 @@ export class VtsDemoProTableBasicComponent {
     entityName: "post",
     showTitleBasedOnProp: "id",
     onOpen: () => {
-        this.isDrawerOpened = true;
-        console.log('drawer open');
+      this.isDrawerOpened = true;
+      console.log('drawer open');
     },
     onClose: () => {
       this.isDrawerOpened = false;

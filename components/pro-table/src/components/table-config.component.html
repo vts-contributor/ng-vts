@@ -1,5 +1,5 @@
 <div class='vts-protable-configuration'>
-  <div class="btn-area">
+  <!-- <div class="btn-area">
     <div vts-col class="btn-control-area">
       <button vts-button vtsType="primary" [vtsSize]="'sm'" (click)="openDrawer()"><i class="collapse-icon" vts-icon
           [vtsType]="'AddCircle'"></i>New</button>
@@ -54,20 +54,11 @@
         </ul>
       </vts-dropdown-menu>
     </div>
-  </div>
+  </div> -->
 
-  <ng-container>
-    <ng-template [ngTemplateOutlet]="selectedInfo"></ng-template>
-  </ng-container>
-  <ng-template #selectedInfo>
-    <div class="select-label">
-      <span style="padding-left: 16px;">
-        <span class="text-custom">{{ checkedItemsAmount }}</span> items is selected <span
-          style="color: #CB002B; height: 18px;">| <a (click)="showDeleteModal()" class="text-custom">Clear
-            selected</a></span>
-      </span>
-    </div>
-  </ng-template>
+  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties"></vts-group-filter>
+
+  <vts-selected-label-config [selectedItemsAmount]="checkedItemsAmount > 0 ? checkedItemsAmount : 0"></vts-selected-label-config>
 
   <ng-container *ngIf="indeterminateConfig || allChecked; else noData">
     <vts-spin [vtsSpinning]="loading">
@@ -205,6 +196,7 @@
     <vts-tag vtsColor="processing" *ngSwitchCase="'processing'">processing</vts-tag>
     <vts-tag vtsColor="error" *ngSwitchCase="'error'">error</vts-tag>
     <vts-tag vtsColor="warning" *ngSwitchCase="'warning'">warning</vts-tag>
-    <vts-tag vtsColor="default" *ngSwitchDefault>default</vts-tag>
+    <vts-tag vtsColor="default" *ngSwitchCase="'default'">default</vts-tag>
+    <ng-container *ngSwitchDefault></ng-container>
   </ng-container>
 </ng-template>

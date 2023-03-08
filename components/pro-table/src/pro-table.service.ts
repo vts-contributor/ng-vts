@@ -46,10 +46,10 @@ export class ProtableService {
 
   getRenderData(request: Request): Observable<any> {
     if (request.type == 'GET') {
-      return this.http.get(request.url);
+      return this.http.get(request.url, {observe: 'response'});
     } else {
       return this.http.post(request.url, request.body, {
-        observe: 'body'
+        observe: 'response'
       });
     }
   }

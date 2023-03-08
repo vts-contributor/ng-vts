@@ -75,6 +75,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageSize: number = 10;
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
+  @Input() requestData: Request | undefined;
   @Input() getRequest: Request | undefined;
   @Input() editRequest: Request | undefined;
   @Input() deleteRequest: Request | undefined;
@@ -83,6 +84,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() searchRequest: Request | undefined;
   @Input() searchData: Object | VtsSafeAny;
   @Input() configTableRequest: Request | undefined;
+  @Input() filterGroupConfig: {[key:string]:any}[] | undefined;
   @Input() pageSize = 10;
 
   vtsRowHeight: string | number = 54;
@@ -147,7 +149,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.vtsPageIndex * this.vtsPageSize
       );
       this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
-      this.vtsTotal = this.filteredList.length;
       this.loading = false;
     }
   }
@@ -187,9 +188,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleOkDelete(): void {
     this.isOkLoadingDelete = true;
     if (this.itemIdToDelete) {
-      _.remove(this.listData, { id: this.itemIdToDelete });
-      this.vtsTotal = this.listData.length;
-
       if (this.deleteRequest) {
         let url = this.deleteRequest.url;
         url += this.itemIdToDelete;
@@ -218,7 +216,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     let emptyT: { [key: string]: any } = {};
     this.properties.forEach(prop => {
       if (prop.propertyName) {
-        switch(prop.datatype){
+        switch (prop.datatype) {
           case "datetime": {
             break;
           }
@@ -235,7 +233,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
             break;
           }
         }
-        
+
       }
     });
     this.drawerData = {
@@ -245,22 +243,22 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.mode = 'create';
 
     // callback when open drawer
-    if(typeof this.drawerConfig != "undefined"){
-        let {onOpen} = this.drawerConfig;
-        if(onOpen){
-          onOpen();
-        }
+    if (typeof this.drawerConfig != "undefined") {
+      let { onOpen } = this.drawerConfig;
+      if (onOpen) {
+        onOpen();
+      }
     }
   }
 
   closeDrawer(): void {
     this.visibleDrawer = false;
     // callback when close drawer
-    if(typeof this.drawerConfig != "undefined"){
-        let {onClose} = this.drawerConfig;
-        if(onClose){
-          onClose();
-        }
+    if (typeof this.drawerConfig != "undefined") {
+      let { onClose } = this.drawerConfig;
+      if (onClose) {
+        onClose();
+      }
     }
   }
 
@@ -339,12 +337,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       });
     }
     // callback when open drawer
-    if(typeof this.drawerConfig != "undefined"){
-      let {onOpen} = this.drawerConfig;
-      if(onOpen){
+    if (typeof this.drawerConfig != "undefined") {
+      let { onOpen } = this.drawerConfig;
+      if (onOpen) {
         onOpen();
       }
-  }
+    }
   }
 
   onViewDataItem(itemId?: number | string) {
@@ -359,31 +357,26 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       });
     }
     // callback when open drawer
-    if(typeof this.drawerConfig != "undefined"){
-      let {onOpen} = this.drawerConfig;
-      if(onOpen){
+    if (typeof this.drawerConfig != "undefined") {
+      let { onOpen } = this.drawerConfig;
+      if (onOpen) {
         onOpen();
       }
-  }
+    }
   }
 
   onChangePageIndex(event: number) {
-    if (event) {
+    if (event && this.requestData) {
       this.vtsPageIndex = event;
-      this.displayedData = this.listData.slice((this.vtsPageIndex - 1) * this.vtsPageSize, this.vtsPageIndex * this.vtsPageSize);
+      this.requestData.body = {
+        'pageSize': this.vtsPageSize,
+        'pageIndex': this.vtsPageIndex
+      };
 
-      const getRequest: Request = {
-        url: this.searchRequest ? this.searchRequest.url : '',
-        body: {
-          pageIndex: this.pageIndex,
-          pageSize: this.pageSize
-        },
-        type: 'GET'
-      }
-      let url = getRequest.url;
-      this.service.getRenderData({ ...getRequest, url }).subscribe(res => {
-        this.listData = [...res.listData];
-        this.properties = [...res.properties];
+      // only for json-server
+      this.requestData.url = this.requestData.url.split('?')[0] + `?_page=${event}&_limit=${this.vtsPageSize}`;
+      this.service.getRenderData({ ...this.requestData }).subscribe(res => {
+        this.displayedData = [...res.body];
         this.changeDetector.detectChanges();
       })
     }
@@ -475,27 +468,19 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onSaveCheckedPropertiesChange() {
-    if (this.configTableRequest) { }
-    const updateConfigRequest: Request = {
-      url: this.configTableRequest ? this.configTableRequest.url : '',
-      body: this.properties,
-      type: 'POST'
-    };
-    let url = updateConfigRequest.url;
-    this.service.updateConfigTable({ ...updateConfigRequest, url }).subscribe(res => {
-      this.properties = [...res.properties];
-    })
+    if (this.configTableRequest && this.configTableRequest.url) {
+      this.service.updateConfigTable({ ...this.configTableRequest }).subscribe(res => {
+        this.properties = [...res.properties];
+      })
+    }
   }
 
   onResetCheckedProperties() {
-    const getConfigRequest: Request = {
-      url: this.configTableRequest ? this.configTableRequest.url : '',
-      type: 'GET'
-    };
-    let url = getConfigRequest.url;
-    this.service.updateConfigTable({ ...getConfigRequest, url }).subscribe(res => {
-      this.properties = [...res.properties];
-    })
+    if (this.configTableRequest && this.configTableRequest.url) {
+      this.service.updateConfigTable({ ...this.configTableRequest }).subscribe(res => {
+        this.properties = [...res.properties];
+      })
+    }
   }
 
   sorted = false;

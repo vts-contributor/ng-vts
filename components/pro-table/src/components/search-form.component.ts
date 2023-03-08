@@ -137,7 +137,7 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes) {
+    if (changes.headers) {
       this.totalProps = changes.headers.currentValue;
       this.totalProps = this.totalProps.filter(prop => prop.headerTitle && prop.headerTitle != null);
       this.displayedProps = this.totalProps;
@@ -169,7 +169,6 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   }
 
   onSearch() {
-    // console.log(this.validateForm.value)
     this.putSearchData.emit(this.validateForm.value);
   }
 }

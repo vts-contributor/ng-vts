@@ -53,3 +53,34 @@ export type DrawerConfig = {
   onClose?: () => void,
   onSave?: (data: {[key: string]: any}) => void,
 }
+
+export type TabGroupConfig = {
+  tabProperty: string,  // property name
+  tabValueConfig: TabConfig[]
+}
+
+export type TabConfig = {
+  tabTitle: string,
+  tabCondition?: TabCondition
+};
+
+export type TabCondition = {
+  operation: string[],
+  threshold: any[]
+};
+
+export type Status = {
+  text: string,
+  style: string,
+  classNames: string
+};
+
+export type StatusConfig = Status[];
+
+export type ButtonConfig = {
+  buttonText: string,
+  buttonAPI?: string,
+  style: {[key: string]: string},
+  classNames?: string,
+  onClick?: () => void
+}
