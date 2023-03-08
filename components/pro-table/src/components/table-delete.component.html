@@ -1,0 +1,5 @@
+<ng-container *ngIf="config != null">
+    <vts-modal [(vtsVisible)]="isVisibleDelete" [vtsTitle]="config.title" [vtsContent]="config.content"
+        (vtsOnCancel)="onCancel()" (vtsOnOk)="onSubmit()">
+    </vts-modal>
+</ng-container>

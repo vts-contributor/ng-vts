@@ -143,15 +143,7 @@
 
 </div>
 
-<vts-modal [(vtsVisible)]="isVisibleModal" [vtsTitle]="modalData.title" [vtsContent]="modalData.content"
-  (vtsOnCancel)="handleCancelModal()" (vtsOnOk)="handleOkModal()" [vtsOkLoading]="isOkLoadingModal">
-  <p *vtsModalContent>Modal Content</p>
-</vts-modal>
-
-<vts-modal [(vtsVisible)]="isVisibleDelete" [vtsTitle]="modalDeleteData.title" [vtsContent]="modalDeleteData.content"
-  (vtsOnCancel)="handleCancelDelete()" (vtsOnOk)="handleOkDelete()" [vtsOkLoading]="isOkLoadingDelete">
-  <p *vtsModalContent>Modal Content</p>
-</vts-modal>
+<table-delete [isVisibleDelete]="isVisibleDelete" [config]="modalDeleteConfig" (submit)="handleOkDelete()" (cancel)="handleCancelDelete()"></table-delete>
 
 <vts-modal [(vtsVisible)]="isVisibleUpload" [vtsWidth]="720" [vtsOkText]="uploadData.okText"
   (vtsOnCancel)="handleCancelUpload()" (vtsOnOk)="handleOkUpload()">

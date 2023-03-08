@@ -99,3 +99,8 @@ export type StatusConfig = {
   color: string,
   value: string | number
 }
+
+export type ModalConfig = {
+  title: string,
+  content: string
+}

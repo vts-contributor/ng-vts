@@ -22,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, ModalConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -54,8 +54,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() isVisibleDelete = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
-  @Input() modalDeleteData = {
-    title: 'Delete Popup',
+  modalDeleteConfig: ModalConfig = {
+    title: 'Delete Popup Modal',
     content: 'Do you want to delete this items?'
   };
   @Input() drawerConfig: DrawerConfig | undefined;
