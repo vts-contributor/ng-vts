@@ -6,7 +6,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@ui-vts/ng-vts/*": ["./*"]
+      "@ui-vts/ng-vts/*": ["./*"],
     },
     "alwaysStrict": true,
     "strictFunctionTypes": true
@@ -21,6 +21,6 @@
     "strictInjectionParameters": true
   },
   "include": [
-    "./**/*.ts"
+    "./**/*.ts" 
   ]
 }

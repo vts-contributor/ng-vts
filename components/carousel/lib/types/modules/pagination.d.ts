@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import { CSSSelector } from '../shared';
+import { CSSSelector } from '../../../shared';
 import carousel from '../carousel-class';
 
 export interface PaginationMethods {
@@ -140,7 +140,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   //...
    *   renderBullet: function (index, className) {
    *     return '<span class="' + className + '">' + (index + 1) + '</span>';
@@ -157,7 +157,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   //...
    *   renderFraction: function (currentClass, totalClass) {
    *       return '<span class="' + currentClass + '"></span>' +
@@ -176,7 +176,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   //...
    *   renderProgressbar: function (progressbarFillClass) {
    *       return '<span class="' + progressbarFillClass + '"></span>';
@@ -194,7 +194,7 @@ export interface PaginationOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   //...
    *   renderCustom: function (carousel, current, total) {
    *     return current + ' of ' + total;
@@ -207,90 +207,90 @@ export interface PaginationOptions {
   /**
    * CSS class name of single pagination bullet
    *
-   * @default 'carousel-pagination-bullet'
+   * @default 'vts-carousel-pagination-bullet'
    */
   bulletClass?: string;
 
   /**
    * CSS class name of currently active pagination bullet
    *
-   * @default 'carousel-pagination-bullet-active'
+   * @default 'vts-carousel-pagination-bullet-active'
    */
   bulletActiveClass?: string;
 
   /**
    * The beginning of the modifier CSS class name that will be added to pagination depending on parameters
    *
-   * @default 'carousel-pagination-'
+   * @default 'vts-carousel-pagination-'
    */
   modifierClass?: string;
 
   /**
    * CSS class name of the element with currently active index in "fraction" pagination
    *
-   * @default 'carousel-pagination-current'
+   * @default 'vts-carousel-pagination-current'
    */
   currentClass?: string;
 
   /**
    * CSS class name of the element with total number of "snaps" in "fraction" pagination
    *
-   * @default 'carousel-pagination-total'
+   * @default 'vts-carousel-pagination-total'
    */
   totalClass?: string;
 
   /**
    * CSS class name of pagination when it becomes inactive
    *
-   * @default 'carousel-pagination-hidden'
+   * @default 'vts-carousel-pagination-hidden'
    */
   hiddenClass?: string;
 
   /**
    * CSS class name of pagination progressbar fill element
    *
-   * @default 'carousel-pagination-progressbar-fill'
+   * @default 'vts-carousel-pagination-progressbar-fill'
    */
   progressbarFillClass?: string;
 
   /**
    * CSS class name of pagination progressbar opposite
    *
-   * @default 'carousel-pagination-progressbar-opposite'
+   * @default 'vts-carousel-pagination-progressbar-opposite'
    */
   progressbarOppositeClass?: string;
   /**
    * CSS class name set to pagination when it is clickable
    *
-   * @default 'carousel-pagination-clickable'
+   * @default 'vts-carousel-pagination-clickable'
    */
   clickableClass?: string;
 
   /**
    * CSS class name set to pagination when it is disabled
    *
-   * @default 'carousel-pagination-lock'
+   * @default 'vts-carousel-pagination-lock'
    */
   lockClass?: string;
 
   /**
    * CSS class name set to pagination in horizontal carousel
    *
-   * @default 'carousel-pagination-horizontal'
+   * @default 'vts-carousel-pagination-horizontal'
    */
   horizontalClass?: string;
 
   /**
    * CSS class name set to pagination in vertical carousel
    *
-   * @default 'carousel-pagination-vertical'
+   * @default 'vts-carousel-pagination-vertical'
    */
   verticalClass?: string;
 
   /**
    * CSS class name added on carousel container and pagination element when pagination is disabled by breakpoint
    *
-   * @default 'carousel-pagination-disabled'
+   * @default 'vts-carousel-pagination-disabled'
    */
   paginationDisabledClass?: string;
 }

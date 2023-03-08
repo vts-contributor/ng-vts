@@ -33,7 +33,7 @@ export interface CarouselEvents {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   init: false,
    *   // other parameters
    * });
@@ -47,7 +47,7 @@ export interface CarouselEvents {
    * @example
    * ```js
    * // Otherwise use it as the parameter:
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   // other parameters
    *   on: {
    *     init: function () {

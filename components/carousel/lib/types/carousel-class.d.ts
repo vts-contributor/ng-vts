@@ -40,7 +40,7 @@ interface CarouselClass<Events> {
   emit<E extends keyof Events>(event: E, ...args: any[]): void;
 }
 
-interface Carousel extends CarouselClass<CarouselEvents> {
+interface ICarousel extends CarouselClass<CarouselEvents> {
   /**
    * Object with passed initialization parameters
    */
@@ -462,7 +462,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
 
 interface Carousel extends ManipulationMethods {}
 
-declare class Carousel implements Carousel {
+declare class Carousel implements ICarousel {
   /**
    * Constructs a new carousel instance.
    *
@@ -491,4 +491,5 @@ declare class Carousel implements Carousel {
   static extendedDefaults: CarouselOptions;
 }
 
+export { ICarousel }
 export default Carousel;

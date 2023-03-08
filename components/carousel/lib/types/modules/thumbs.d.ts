@@ -29,13 +29,13 @@ export interface ThumbsOptions {
   /**
    * Additional class that will be added to activated thumbs carousel slide
    *
-   * @default 'carousel-slide-thumb-active'
+   * @default 'vts-carousel-slide-thumb-active'
    */
   slideThumbActiveClass?: string;
   /**
    * Additional class that will be added to thumbs carousel
    *
-   * @default 'carousel-thumbs'
+   * @default 'vts-carousel-thumbs'
    */
   thumbsContainerClass?: string;
   /**
