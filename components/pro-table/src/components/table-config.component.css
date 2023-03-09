@@ -104,5 +104,8 @@ td {
   align-items: center;
   padding: 16px 16px;
   width: auto;
-  min-width: 0;
+}
+
+.vts-table-column-sorters {
+  width: auto !important;
 }

@@ -42,10 +42,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
     
           <ng-container *ngFor="let filter of filterGroupConfig">
             <vts-input-group class="filter-item" [vtsAddOnBefore]="filter.filterText">
-              <vts-select [ngModel]="filter.defaultValue" class="filter-item-select">
-                <ng-container *ngFor="let valueItem of filter.filterValues">
-                  <vts-option [vtsLabel]="valueItem.label" [vtsValue]="valueItem.value"></vts-option>
-                </ng-container>
+              <vts-select style="width: 100%;"
+                [(ngModel)]="filter['selectedValues']"
+                vtsMode="multiple" vtsAllowClear="false"
+                [vtsTokenSeparators]="[',']"
+              >
+                <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
               </vts-select>
             </vts-input-group>
           </ng-container>
@@ -54,7 +56,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           <button vts-button class="btn-table-config" vtsType="default" (click)="reloadTableData()">
             <i vts-icon vtsType="FilterFramesDoutone"></i>
           </button>
-          <vts-badge [vtsCount]="5">
+          <vts-badge [vtsCount]="5" style="margin-bottom: 20px;">
             <a class="head-example"></a>
           </vts-badge>
         </div>
@@ -92,12 +94,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
               </ng-container>
             </ng-container>
             <vts-divider style="margin: 0;"></vts-divider>
-            <!-- <div class="btn-config-area">
+            <div class="btn-config-area">
               <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary"
-                (click)="onSaveCheckedPropertiesChange()">Save</button>
+                >Save</button>
               <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default"
-                (click)="onResetCheckedProperties()">Reset</button>
-            </div> -->
+                >Reset</button>
+            </div>
           </ul>
         </vts-dropdown-menu>
         
@@ -214,6 +216,7 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
   vtsRowHeight: string | number = 54;
   allChecked = false;
   indeterminateConfig = true;
+  listOfFilter = [];
 
   constructor(
     private elementRef: ElementRef,

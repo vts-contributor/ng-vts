@@ -44,19 +44,19 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject<void>();
 
   @Input() checkedItemsAmount: number = 0;
-  @Input() isVisibleModal = false;
+  isVisibleModal = false;
   @Input() isOkLoadingModal = false;
 
-  @Input() isVisibleDelete = false;
+  isVisibleDelete = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
   @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
   @Input() modalUploadConfig: ModalUploadConfig | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
 
-  @Input() isVisibleUpload = false;
+  isVisibleUpload = false;
 
-  @Input() visibleDrawer = false;
+  visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
   @Input() drawerData: { [key: string]: any } = {};
   @Input() properties: PropertyType[] = [];
@@ -77,6 +77,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() pageSize = 10;
   @Input() listStatus: StatusConfig[] = [];
+  @Input() action: { 'key': string } = {
+    key: ''
+  };
 
 
   vtsRowHeight: string = '';
@@ -142,6 +145,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       );
       this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
       this.loading = false;
+    }
+
+    if (changes.action) {
+      this.onClickActionButtons(this.action.key);
     }
   }
 
@@ -261,7 +268,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   handleChangeRowHeight(value: string) {
     if (value) {
       console.log(value);
-      
+
       this.vtsRowHeight = value;
     }
   }
@@ -511,5 +518,20 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       return selectedObjStatus;
     }
     else return null;
+  }
+
+  onClickActionButtons(actionType: string) {
+    switch (actionType) {
+      case 'new':
+        this.visibleDrawer = true;
+        this.mode = 'create';
+        break;
+      case 'import':
+        this.showUploadModal();
+        break;
+      case 'export':
+        this.exportDataToFile();
+        break;
+    }
   }
 }

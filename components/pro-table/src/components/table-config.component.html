@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody class="vts-protable-tbody">
-          <ng-container *ngIf="displayedData.length>0; else noData">
+          <ng-container *ngIf="displayedData.length>0">
             <tr *ngFor="let data of displayedData; index as i" [ngStyle]="{'height':vtsRowHeight}"
               [ngClass]="'selected-item-data'">
               <td [vtsChecked]="setOfCheckedId.has(data.id)" [vtsDisabled]="data.disabled"
@@ -73,12 +73,13 @@
         </ng-template>
       </ng-template>
     </vts-spin>
+    <ng-container *ngIf="displayedData.length<=0">
+      <vts-empty style="padding-top: 16px;"></vts-empty>
+    </ng-container>
   </ng-container>
-
   <ng-template #noData>
     <vts-empty style="padding-top: 16px;"></vts-empty>
   </ng-template>
-
 </div>
 
 <!-- Modal confirm delete -->
@@ -93,6 +94,7 @@
 <table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer"
   [drawerConfig]="drawerConfig" [listStatus]="listStatus" [mode]="mode" [data]="drawerData"></table-drawer>
 
+<!-- Modal download -->
 <vts-drawer [vtsClosable]="false" [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"
   vtsHeight="80px">
   <div style="display: flex; align-items: center; justify-content: space-between;">

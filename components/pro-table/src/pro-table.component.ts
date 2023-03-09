@@ -28,20 +28,21 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   template: `
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <div [ngStyle]="{'display': 'flex', 'flex-direction':'row', 'justify-content':tableTitle?'space-between':'right'}">
       <ng-container *ngIf="tableTitle">
         <span class="title-table">{{tableTitle}}</span>
       </ng-container>
       <div vts-col class="btn-control-area">
-        <button vts-button vtsType="default" [vtsSize]="buttonSize" class="btn-default">
+        <button vts-button vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('new')">
           <span vts-icon vtsType="AddDoutone"></span>
           New
         </button>
-        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="buttonSize" class="btn-default">
+        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('export')">
           <span vts-icon vtsType="CloudUploadDoutone"></span>
           Export
         </button>
-        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="buttonSize" class="btn-default">
+        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('import')">
           <span vts-icon vtsType="SaveAltDoutone"></span>
           Import
         </button>
@@ -68,10 +69,10 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
       <vts-tabset>
         <ng-container *ngFor="let tabConfig of tabGroupConfig.tabValueConfig">
           <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{vtsTotal}})">
-            <ng-container *ngTemplateOutlet="tableArea"></ng-container>
-          </vts-tab>
-        </ng-container>
-      </vts-tabset>
+            </vts-tab>
+          </ng-container>
+        </vts-tabset>
+        <ng-container *ngTemplateOutlet="tableArea"></ng-container>
     </ng-container>
 
     <ng-template #tableArea>
@@ -98,11 +99,12 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
           [listStatus]="listStatus" 
           [modalUploadConfig]="modalUploadConfig"
           [vtsTotal]="vtsTotal"
+          [action]="actionType"
         >
       </vts-table-config>
       </vts-spin>
     </ng-template>
-
+    
   `,
   styles: [
     `
@@ -185,6 +187,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   vtsTotal: number = 0;
   buttonSize: VtsButtonSize = 'sm';
   publicProperties: PropertyType[] = [];
+  actionType: {'key':string} = {key: ''};
 
   ngOnInit(): void {
     this.filterGroupConfig = [
@@ -200,7 +203,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             value: 'Country'
           },
         ],
-        'defaultValue': 'Home'
+        defaultValue: 'Home'
       },
       {
         filterText: 'Filter 2',
@@ -214,7 +217,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             value: 'Country'
           },
         ],
-        'defaultValue': 'Home'
+        defaultValue: 'Home'
       },
     ];
   }
@@ -271,6 +274,13 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
         this.loading = false;
         this.changeDetector.detectChanges();
       });
+    }
+  }
+
+  onClickAction(key: string) {
+    let actionType = {'key': key};
+    this.actionType = {
+      ...actionType
     }
   }
 }
