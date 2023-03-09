@@ -36,7 +36,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   templateUrl: './table-config.component.html',
   styleUrls: ['./table-config.component.css'],
   host: {
-    '[class.vts-table-config-rtl]': `dir === 'rtl'`
+    '[class.vts-protable-config-rtl]': `dir === 'rtl'`
   }
 })
 export class VtsProTableConfigComponent implements OnDestroy, OnInit {
@@ -93,7 +93,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() uploadConfig: UploadConfig | null = null;
 
 
-  vtsRowHeight: string | number = 54;
+  vtsRowHeight: string = '';
   loading: boolean = false;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
@@ -274,23 +274,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   handleChangeRowHeight(value: string) {
     if (value) {
-      let rowHeight: number = 0;
-      switch (value) {
-        case 'normal':
-          rowHeight = 54;
-          break;
-        case 'expand':
-          rowHeight = 80;
-          break;
-        case 'narrow':
-          rowHeight = 35;
-          break;
-        default:
-          rowHeight = 54;
-          break;
-      }
-      this.vtsRowHeight = rowHeight;
-      this.rowHeightChanger.emit(rowHeight + 'px');
+      console.log(value);
+      
+      this.vtsRowHeight = value;
     }
   }
 

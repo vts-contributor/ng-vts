@@ -31,7 +31,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   preserveWhitespaces: false,
   template: `
     <div class="flex-s">
-      <div style="flex-basis: 75%; display:flex; flex-direction: row; align-items: center">
+      <div style="display:flex; flex-direction: row; align-items: center; flex-basis: 80%">
         <div class="common-group-filter">
           <vts-input-group class="filter-item" [vtsSuffix]="suffixIconSearch">
             <input type="text" vts-input placeholder="Search all ..." />
@@ -60,7 +60,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         </div>
       </div>
 
-      <div vts-col class="btn-config-area" style="flex-basis: 25%">
+      <div vts-col class="btn-config-area" style="flex-basis: 20%">
         <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert">
           <i vts-icon vtsType="HeightDoutone"></i>
         </a>
@@ -120,6 +120,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         display: flex;
         flex-direction: row;
         padding: 12px 0;
+        width: 100%;
       }
 
       .text-format {
@@ -158,6 +159,12 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       .vts-input-group-addon {
         border: 1px solid #FFFFFF;
         background: #FFFFFF;
+        font-family: 'Sarabun';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 22px;
+        color: #000000;
       }
 
       .vts-select-selector {
@@ -269,16 +276,16 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
       let rowHeight: number = 0;
       switch (value) {
         case 'normal':
-          rowHeight = 54;
+          rowHeight = 48;
           break;
         case 'expand':
-          rowHeight = 80;
+          rowHeight = 72;
           break;
         case 'narrow':
-          rowHeight = 35;
+          rowHeight = 40;
           break;
         default:
-          rowHeight = 54;
+          rowHeight = 48;
           break;
       }
       this.vtsRowHeight = rowHeight;

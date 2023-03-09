@@ -67,7 +67,7 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
     <ng-container *ngIf="tabGroupConfig; else tableArea">
       <vts-tabset>
         <ng-container *ngFor="let tabConfig of tabGroupConfig.tabValueConfig">
-          <vts-tab [vtsTitle]="tabConfig.tabTitle">
+          <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{tabConfig.tabRelatedProperties ? tabConfig.tabRelatedProperties.length : publicProperties.length}})">
             <ng-container *ngTemplateOutlet="tableArea"></ng-container>
           </vts-tab>
         </ng-container>
@@ -131,6 +131,15 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
       .vts-tabs-tab-btn {
         padding: 0 12px;
       }
+
+      .vts-tabs-tab {
+        font-family: 'Sarabun';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #73777A;
+      }
     `
   ]
 })
@@ -174,6 +183,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   searchData: Object = {};
   vtsTotal: number = 0;
   buttonSize: VtsButtonSize = 'sm';
+  publicProperties: PropertyType[] = [];
 
   ngOnInit(): void {
     this.filterGroupConfig = [
@@ -215,6 +225,10 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
 
     if (changes.moreActionConfig) {
       console.log(changes.moreActionConfig);
+    }
+
+    if (changes.properties) {
+      this.publicProperties = changes.properties.currentValue.filter((prop: PropertyType) => prop.headerTitle);
     }
   }
 

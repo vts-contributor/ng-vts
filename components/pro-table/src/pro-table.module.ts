@@ -1,3 +1,4 @@
+import { VtsSwitchModule } from './../../switch/switch.module';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsInputModule } from '@ui-vts/ng-vts/input/input.module';
 import { VtsDividerModule } from './../../divider/divider.module';
@@ -91,7 +92,8 @@ import { VtsProTableSelectedLabelConfigComponent } from './components/selected-l
     VtsInputModule,
     VtsTabsModule,
     VtsBadgeModule,
-    VtsDatePickerModule
+    VtsDatePickerModule,
+    VtsSwitchModule
   ]
 })
 export class VtsProTableModule { }

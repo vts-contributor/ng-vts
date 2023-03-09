@@ -1,15 +1,6 @@
 import { ButtonConfig, DrawerConfig, PropertyType, TabGroupConfig, Request, StatusConfig, UploadConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
-interface Request {
-  url: string,
-  type: "POST" | "GET",
-  params?: { [key: string]: any },
-  body?: { [key: string]: any },
-  onSuccess?: (data: { [key: string]: any }) => void,
-  onError?: () => void
-}
-
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
@@ -50,12 +41,29 @@ export class VtsDemoProTableBasicComponent {
     tabValueConfig: [
       { tabTitle: "All" },
       {
-        tabTitle: "Category 1",
+        tabTitle: "Category A",
+        tabRelatedProperties: ['content', 'title', 'author'],
         tabCondition: {
           operation: ['<'],
           threshold: ['']
         }
-      }
+      },
+      {
+        tabTitle: "Category B",
+        tabRelatedProperties: ['content'],
+        tabCondition: {
+          operation: ['<'],
+          threshold: ['']
+        }
+      },
+      {
+        tabTitle: "Category C",
+        tabRelatedProperties: ['author'],
+        tabCondition: {
+          operation: ['<'],
+          threshold: ['']
+        }
+      },
     ]
   }
 
@@ -97,7 +105,13 @@ export class VtsDemoProTableBasicComponent {
       datatype: 'string',
       checked: true,
     },
-
+    {
+      headerTitle: 'Content',
+      propertyName: 'content',
+      required: true,
+      datatype: 'string',
+      checked: true,
+    },
     {
       headerTitle: 'Status type',
       propertyName: 'title',
@@ -109,7 +123,8 @@ export class VtsDemoProTableBasicComponent {
       headerTitle: 'String type',
       propertyName: 'author',
       required: true,
-      datatype: 'string'
+      datatype: 'string',
+      checked: true
     },
     {
       headerTitle: 'Number type',
@@ -122,7 +137,8 @@ export class VtsDemoProTableBasicComponent {
       headerTitle: 'Date type',
       propertyName: 'birth',
       required: true,
-      datatype: 'date'
+      datatype: 'date',
+      checked: true
     },
   ];
 
