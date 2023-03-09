@@ -22,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, ModalConfig, PropertyType, Request, StatusConfig, UploadConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -46,28 +46,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() checkedItemsAmount: number = 0;
   @Input() isVisibleModal = false;
   @Input() isOkLoadingModal = false;
-  @Input() modalData = {
-    title: 'Delete Popup',
-    content: 'Do you want to delete all selected items?'
-  };
 
   @Input() isVisibleDelete = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
-  modalDeleteConfig: ModalConfig = {
-    title: 'Delete Popup Modal',
-    content: 'Do you want to delete this items?'
-  };
-  modalUploadConfig: ModalConfig = {
-    title: 'Upload Modal'
-  };
+  @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
+  @Input() modalUploadConfig: ModalUploadConfig | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
 
   @Input() isVisibleUpload = false;
-  @Input() uploadData = {
-    url: 'http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/',
-    okText: 'Upload'
-  };
 
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
@@ -90,7 +77,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() pageSize = 10;
   @Input() listStatus: StatusConfig[] = [];
-  @Input() uploadConfig: UploadConfig | null = null;
 
 
   vtsRowHeight: string | number = 54;

@@ -60,13 +60,18 @@ export type StatusConfig = {
 }
 
 export type ModalConfig = {
-  title: string,
+  title?: string,
   content?: string
 }
 
-export type UploadConfig = {
-  acceptTypes: string,
-  maxFileSizeInKB: number
+export type ModalDeleteConfig = ModalConfig & {
+  entityName?: string,
+  showNameBasedOnProp?: string
+}
+
+export type ModalUploadConfig = ModalConfig & {
+  acceptTypes?: string,
+  maxFileSizeInKB?: number
 }
 
 export type TabGroupConfig = {

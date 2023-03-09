@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
-import { ModalConfig, UploadConfig } from '../pro-table.type';
+import { ModalUploadConfig } from '../pro-table.type';
 
 @Component({
   selector: 'table-upload',
@@ -10,8 +10,7 @@ export class VtsTableUploadComponent implements OnInit {
   constructor() {}
 
   @Input() isVisibleUpload: boolean = false;
-  @Input() config: ModalConfig | null = null;
-  @Input() uploadConfig: UploadConfig | null = null;
+  @Input() config: ModalUploadConfig | undefined;
 
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -33,8 +32,8 @@ export class VtsTableUploadComponent implements OnInit {
 
   getMaxFileSizeInText(){
     let text = "và dung lượng không quá ";
-    if(this.uploadConfig){
-        let maxSize: number = this.uploadConfig.maxFileSizeInKB;
+    if(this.config && this.config.maxFileSizeInKB){
+        let maxSize: number = this.config.maxFileSizeInKB;
         if(maxSize < 1024){
             return `${text} ${maxSize}KB`
         }

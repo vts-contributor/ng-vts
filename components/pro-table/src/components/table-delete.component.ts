@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ModalConfig } from '../pro-table.type';
+import { ModalDeleteConfig } from '../pro-table.type';
 
 @Component({
   selector: 'table-delete',
@@ -9,7 +9,7 @@ export class VtsTableDeleteComponent implements OnInit {
   constructor() {}
 
   @Input() isVisibleDelete: boolean = false;
-  @Input() config: ModalConfig | null = null;
+  @Input() config: ModalDeleteConfig | undefined;
 
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
