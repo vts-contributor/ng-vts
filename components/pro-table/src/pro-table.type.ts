@@ -81,7 +81,6 @@ export type TabGroupConfig = {
 
 export type TabConfig = {
   tabTitle: string,
-  tabRelatedProperties?: string[],
   tabCondition?: TabCondition
 };
 

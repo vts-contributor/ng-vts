@@ -67,7 +67,7 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
     <ng-container *ngIf="tabGroupConfig; else tableArea">
       <vts-tabset>
         <ng-container *ngFor="let tabConfig of tabGroupConfig.tabValueConfig">
-          <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{tabConfig.tabRelatedProperties ? tabConfig.tabRelatedProperties.length : publicProperties.length}})">
+          <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{vtsTotal}})">
             <ng-container *ngTemplateOutlet="tableArea"></ng-container>
           </vts-tab>
         </ng-container>

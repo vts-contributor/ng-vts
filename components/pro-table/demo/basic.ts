@@ -19,6 +19,7 @@ import { Component } from '@angular/core';
       [drawerConfig]="drawerConfig"
       [listStatus]="listStatus"
       [modalUploadConfig]="uploadConfig"
+      [modalDeleteConfig]="modalDeleteConfig"
     ></vts-protable-container>
   `
 })
@@ -42,7 +43,6 @@ export class VtsDemoProTableBasicComponent {
       { tabTitle: "All" },
       {
         tabTitle: "Category A",
-        tabRelatedProperties: ['content', 'title', 'author'],
         tabCondition: {
           operation: ['<'],
           threshold: ['']
@@ -50,7 +50,6 @@ export class VtsDemoProTableBasicComponent {
       },
       {
         tabTitle: "Category B",
-        tabRelatedProperties: ['content'],
         tabCondition: {
           operation: ['<'],
           threshold: ['']
@@ -58,7 +57,6 @@ export class VtsDemoProTableBasicComponent {
       },
       {
         tabTitle: "Category C",
-        tabRelatedProperties: ['author'],
         tabCondition: {
           operation: ['<'],
           threshold: ['']
@@ -235,7 +233,7 @@ export class VtsDemoProTableBasicComponent {
 
   isDrawerOpened: boolean = false;
   drawerConfig: DrawerConfig = {
-    openWith: "modal",
+    openWith: "drawer",
     entityName: "post",
     showTitleBasedOnProp: "id",
     onOpen: () => {
