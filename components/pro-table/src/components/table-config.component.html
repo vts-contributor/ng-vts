@@ -86,7 +86,7 @@
   (cancel)="handleCancelDelete()"></table-delete>
 
 <!-- Modal upload -->
-<table-upload [uploadConfig]="uploadConfig" [isVisibleUpload]="isVisibleUpload" [config]="modalUploadConfig"
+<table-upload [isVisibleUpload]="isVisibleUpload" [config]="modalUploadConfig"
   (submit)="handleOkUpload()" (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
 <!-- Create, view, edit -->

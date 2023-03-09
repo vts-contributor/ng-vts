@@ -1,4 +1,4 @@
-import { ButtonConfig, DrawerConfig, PropertyType, TabGroupConfig, Request, StatusConfig, UploadConfig } from '@ui-vts/ng-vts/pro-table';
+import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, TabGroupConfig, Request, StatusConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
       [configTableRequest]="configTableRequest"
       [drawerConfig]="drawerConfig"
       [listStatus]="listStatus"
-      [uploadConfig]="uploadConfig"
+      [modalUploadConfig]="uploadConfig"
     ></vts-protable-container>
   `
 })
@@ -223,10 +223,15 @@ export class VtsDemoProTableBasicComponent {
     },
   ]
 
-  uploadConfig: UploadConfig = {
+  uploadConfig: ModalUploadConfig = {
     acceptTypes: ".png, .jpg, .jpeg",
     maxFileSizeInKB: 1024000
   };
+
+  modalDeleteConfig: ModalDeleteConfig = {
+    title: "Confirm delete",
+    content: ""
+  }
 
   isDrawerOpened: boolean = false;
   drawerConfig: DrawerConfig = {
