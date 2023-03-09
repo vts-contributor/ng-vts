@@ -89,12 +89,6 @@ export type TabCondition = {
   threshold: any[]
 };
 
-export type Status = {
-  text: string,
-  style: string,
-  classNames: string
-};
-
 export type ButtonConfig = {
   buttonText: string,
   buttonAPI?: string,

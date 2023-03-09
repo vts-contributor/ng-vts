@@ -1,15 +1,6 @@
 import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, TabGroupConfig, Request, StatusConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
-interface Request {
-  url: string,
-  type: "POST" | "GET",
-  params?: { [key: string]: any },
-  body?: { [key: string]: any },
-  onSuccess?: (data: { [key: string]: any }) => void,
-  onError?: () => void
-}
-
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
