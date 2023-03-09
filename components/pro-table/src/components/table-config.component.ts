@@ -22,7 +22,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, PropertyType, Request, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, ModalConfig, PropertyType, Request, StatusConfig, UploadConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -54,9 +54,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() isVisibleDelete = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
-  @Input() modalDeleteData = {
-    title: 'Delete Popup',
+  modalDeleteConfig: ModalConfig = {
+    title: 'Delete Popup Modal',
     content: 'Do you want to delete this items?'
+  };
+  modalUploadConfig: ModalConfig = {
+    title: 'Upload Modal'
   };
   @Input() drawerConfig: DrawerConfig | undefined;
 
@@ -84,8 +87,11 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() searchRequest: Request | undefined;
   @Input() searchData: Object | VtsSafeAny;
   @Input() configTableRequest: Request | undefined;
-  @Input() filterGroupConfig: {[key:string]:any}[] | undefined;
+  @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() pageSize = 10;
+  @Input() listStatus: StatusConfig[] = [];
+  @Input() uploadConfig: UploadConfig | null = null;
+
 
   vtsRowHeight: string | number = 54;
   loading: boolean = false;
@@ -357,7 +363,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       });
     }
     // callback when open drawer
-    if (typeof this.drawerConfig != "undefined") {
+    if (typeof this.drawerConfig != 'undefined') {
       let { onOpen } = this.drawerConfig;
       if (onOpen) {
         onOpen();
@@ -525,5 +531,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   closeExported() {
     this.visibleExport = false;
+  }
+
+  getSelectedStatus(value: string) {
+    let selectedObjStatus: StatusConfig = this.listStatus.filter(s => s.value == value)[0];
+    if (selectedObjStatus) {
+      return selectedObjStatus;
+    }
+    else return null;
   }
 }

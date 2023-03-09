@@ -27,7 +27,7 @@ export type PropertyType = {
   headerTitle?: string;
   propertyName: string;
   required?: boolean;
-  datatype: 'string' | 'number' | 'datetime' | 'status';
+  datatype: 'string' | 'number' | 'datetime' | 'status' | 'date';
   checked?: boolean;
   align?: 'left' | 'center' | 'right';
 }
@@ -42,16 +42,31 @@ export type Request = {
   onError?: (data: {[key: string]: VtsSafeAny}) => void
 }
 
-export type StatusProTable = "success" | "error" | "default" | "processing" | "warning";
-
 export type ViewMode = "view" | "edit" | "create";
 
 export type DrawerConfig = {
+  openWith: "drawer" | "modal",
   entityName: string,
   showTitleBasedOnProp?: string, // Thêm mới (Chỉnh sửa) [entityName] entity[showTitleBasedOnProp]
   onOpen?: () => void,
   onClose?: () => void,
   onSave?: (data: {[key: string]: any}) => void,
+}
+
+export type StatusConfig = {
+  text: string,
+  color: string,
+  value: string | number
+}
+
+export type ModalConfig = {
+  title: string,
+  content?: string
+}
+
+export type UploadConfig = {
+  acceptTypes: string,
+  maxFileSizeInKB: number
 }
 
 export type TabGroupConfig = {
@@ -74,8 +89,6 @@ export type Status = {
   style: string,
   classNames: string
 };
-
-export type StatusConfig = Status[];
 
 export type ButtonConfig = {
   buttonText: string,

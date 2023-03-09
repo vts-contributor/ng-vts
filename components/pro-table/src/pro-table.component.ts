@@ -1,4 +1,4 @@
-import { ButtonConfig, DrawerConfig, PropertyType, Request, TabGroupConfig } from './pro-table.type';
+import { ButtonConfig, DrawerConfig, PropertyType, Request, StatusConfig, UploadConfig, TabGroupConfig } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
   // ChangeDetectionStrategy,
@@ -95,6 +95,8 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
           [searchData]="searchData" 
           (reloadTable)="reloadTable($event)"
           [drawerConfig]="drawerConfig"
+          [listStatus]="listStatus" 
+          [uploadConfig]="uploadConfig"
           [vtsTotal]="vtsTotal"
         >
       </vts-table-config>
@@ -161,6 +163,8 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   @Input() exportRequest: Request | undefined;
   @Input() configTableRequest: Request | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
+  @Input() listStatus: StatusConfig[] = [];
+  @Input() uploadConfig: UploadConfig | null = null;
 
   @Output() onPageSizeChanger = new EventEmitter<number>();
   @Output() onPageIndexChanger = new EventEmitter<number>();

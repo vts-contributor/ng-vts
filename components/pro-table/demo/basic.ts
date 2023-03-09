@@ -1,4 +1,4 @@
-import { ButtonConfig, DrawerConfig, PropertyType, TabGroupConfig } from '@ui-vts/ng-vts/pro-table';
+import { ButtonConfig, DrawerConfig, PropertyType, TabGroupConfig, Request, StatusConfig, UploadConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 interface Request {
@@ -26,6 +26,8 @@ interface Request {
       [exportRequest]="exportRequest"
       [configTableRequest]="configTableRequest"
       [drawerConfig]="drawerConfig"
+      [listStatus]="listStatus"
+      [uploadConfig]="uploadConfig"
     ></vts-protable-container>
   `
 })
@@ -90,7 +92,6 @@ export class VtsDemoProTableBasicComponent {
 
   properties: PropertyType[] = [
     {
-      // headerTitle: 'ID',
       propertyName: 'id',
       required: true,
       datatype: 'string',
@@ -98,25 +99,31 @@ export class VtsDemoProTableBasicComponent {
     },
 
     {
-      headerTitle: 'Prop 1',
+      headerTitle: 'Status type',
       propertyName: 'title',
       required: true,
       datatype: 'status',
       checked: true
     },
     {
-      headerTitle: 'Prop 2',
+      headerTitle: 'String type',
       propertyName: 'author',
       required: true,
       datatype: 'string'
     },
     {
-      headerTitle: 'Prop 4',
+      headerTitle: 'Number type',
       propertyName: 'num',
       required: true,
       datatype: 'number',
       checked: true
-    }
+    },
+    {
+      headerTitle: 'Date type',
+      propertyName: 'birth',
+      required: true,
+      datatype: 'date'
+    },
   ];
 
   request: Request = {
@@ -172,8 +179,42 @@ export class VtsDemoProTableBasicComponent {
     type: "GET"
   }
 
+  listStatus: StatusConfig[] = [
+    {
+      text: "New",
+      color: "success",
+      value: "success"
+    },
+    {
+      text: "processing",
+      color: "processing",
+      value: "processing"
+    },
+    {
+      text: "Danger",
+      color: "error",
+      value: "error"
+    },
+    {
+      text: "Warning",
+      color: "warning",
+      value: "warning"
+    },
+    {
+      text: "Draft",
+      color: "default",
+      value: "default"
+    },
+  ]
+
+  uploadConfig: UploadConfig = {
+    acceptTypes: ".png, .jpg, .jpeg",
+    maxFileSizeInKB: 1024000
+  };
+
   isDrawerOpened: boolean = false;
   drawerConfig: DrawerConfig = {
+    openWith: "modal",
     entityName: "post",
     showTitleBasedOnProp: "id",
     onOpen: () => {
@@ -189,4 +230,12 @@ export class VtsDemoProTableBasicComponent {
       this.isDrawerOpened = false;
     }
   }
+
+  pageSize = 10;
+  pageIndex = 1;
+  checked = false;
+  indeterminate = false;
+  setOfCheckedId = new Set<string>();
+  noCheckedItems = 0;
+  searchTerms: any = {};
 }

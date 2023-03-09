@@ -32,6 +32,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProtableDrawerComponent } from './components/table-drawer.component';
 import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
 import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsDatePickerModule } from '@ui-vts/ng-vts/date-picker';
+import { VtsTableDeleteComponent } from './components/table-delete.component';
+import { VtsTableUploadComponent } from './components/table-upload.component';
 import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
 import { VtsProTableGroupFilterComponent } from './components/group-filter.component';
 import { VtsProTableSelectedLabelConfigComponent } from './components/selected-label-config.component';
@@ -43,6 +46,8 @@ import { VtsProTableSelectedLabelConfigComponent } from './components/selected-l
     VtsProTableGroupFilterComponent,
     VtsProTableConfigComponent,
     ProtableDrawerComponent,
+    VtsTableDeleteComponent,
+    VtsTableUploadComponent,
     VtsProTableSelectedLabelConfigComponent
   ],
   exports: [
@@ -85,7 +90,8 @@ import { VtsProTableSelectedLabelConfigComponent } from './components/selected-l
     VtsTagModule,
     VtsInputModule,
     VtsTabsModule,
-    VtsBadgeModule
+    VtsBadgeModule,
+    VtsDatePickerModule
   ]
 })
 export class VtsProTableModule { }

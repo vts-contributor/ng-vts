@@ -1,6 +1,36 @@
+<!-- Open with drawer -->
 <vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="300"
   [vtsVisible]="visibleDrawer" [vtsTitle]="title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
-  <form vts-form *vtsDrawerContent [formGroup]="formGroup" vtsLayout="vertical">
+  
+  <ng-container *vtsDrawerContent>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+      <button vts-button (click)="closeDrawer()">Close</button>
+    </div>
+  </ng-template>
+</vts-drawer>
+
+<!-- Open with modal -->
+<vts-modal [(vtsVisible)]="visibleModal" [vtsWidth]="720">
+  <div *vtsModalTitle>
+    {{title}}
+  </div>
+  <ng-container *vtsModalContent>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+  <div *vtsModalFooter>
+    <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+    <button vts-button (click)="closeDrawer()">Close</button>
+  </div>
+</vts-modal>
+
+<!-- Content of the drawer/dialog -->
+<ng-template #contentTemplate>
+  <form vts-form [formGroup]="formGroup" vtsLayout="vertical">
     <div *ngFor="let item of displayHeaders; let i = index">
       <ng-container [ngSwitch]="item.datatype">
 
@@ -11,14 +41,25 @@
           </ng-container>
         </ng-container>
 
-        <!-- datetime type -->
-        <ng-container *ngSwitchCase="'datetime'"></ng-container>
+        <!-- date type -->
+        <ng-container *ngSwitchCase="'date'">
+          <vts-form-item>
+            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-control>
+              <vts-date-picker
+                vtsPlaceHolder="DD/MM/YYYY"
+                [vtsSize]="datePickerSize"
+                [formControlName]="item.propertyName"
+              ></vts-date-picker>
+            </vts-form-control>
+          </vts-form-item>
+        </ng-container>
 
         <!-- number type -->
         <ng-container *ngSwitchCase="'number'">
-          <vts-form-item vts-row>
-            <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
-            <vts-form-control vts-col [vtsSpan]="18">
+          <vts-form-item>
+            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-control>
               <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"
                 [vtsDisabled]="mode == 'view'"></vts-input-number>
             </vts-form-control>
@@ -27,9 +68,9 @@
 
         <!-- string type - default -->
         <ng-container *ngSwitchDefault>
-          <vts-form-item vts-row>
-            <vts-form-label vts-col [vtsSpan]="6">{{ item.headerTitle }}</vts-form-label>
-            <vts-form-control vts-col [vtsSpan]="18">
+          <vts-form-item>
+            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-control>
               <input vts-input placeholder="" [formControlName]="item.propertyName" />
             </vts-form-control>
           </vts-form-item>
@@ -38,14 +79,7 @@
       </ng-container>
     </div>
   </form>
-
-  <ng-template #footerTpl>
-    <div style="float: right">
-      <button *ngIf="mode!=='view'" vts-button style="margin-right: 8px" (click)="onSave()">Save</button>
-      <button vts-button vtsType="primary" (click)="closeDrawer()">Close</button>
-    </div>
-  </ng-template>
-</vts-drawer>
+</ng-template>
 
 <!-- Status display -->
 <ng-template #statusDisplay let-title="title" let-value="value" let-property="property">
@@ -53,18 +87,18 @@
     <h4>{{title}}</h4>
     <ng-container *ngIf="mode!=='view'; else viewMode">
       <ng-container *ngFor="let status of listStatus">
-        <vts-tag [vtsColor]="status" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status)">
-          <ng-container *ngIf="value == status">
+        <vts-tag [vtsColor]="status.color" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status.value)">
+          <ng-container *ngIf="value == status.value">
             <i vts-icon vtsType="CheckCircle"></i>
           </ng-container>
-          <span>{{status}}</span>
+          <span>{{status.text}}</span>
         </vts-tag>
       </ng-container>
     </ng-container>
     <ng-template #viewMode>
-      <vts-tag [vtsColor]="value" style="margin-bottom: 5px;">
+      <vts-tag [vtsColor]="getSelectedStatus(value)?.color" style="margin-bottom: 5px;">
         <i vts-icon vtsType="CheckCircle"></i>
-        <span>{{value}}</span>
+        <span>{{getSelectedStatus(value)?.text}}</span>
       </vts-tag>
     </ng-template>
   </div>
