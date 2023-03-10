@@ -1,9 +1,12 @@
 <div class='vts-protable-configuration'>
   <!-- filters config -->
-  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties" (rowHeightChanger)="handleChangeRowHeight($event)"></vts-group-filter>
+  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties"
+    (rowHeightChanger)="handleChangeRowHeight($event)" (reloadTable)="onReloadTable($event)"></vts-group-filter>
 
   <!-- selected items label-->
-  <vts-selected-label-config [selectedItemsAmount]="checkedItemsAmount > 0 ? checkedItemsAmount : 0">
+  <vts-selected-label-config [selectedItemsAmount]="checkedItemsAmount > 0 ? checkedItemsAmount : 0"
+    (clearAllSelectedItems)="clearAllSelectedItems($event)" (deleteSelectedItems)="deleteSelectedItems($event)"
+    (exportSelectedItems)="exportSelectedItems($event)">
   </vts-selected-label-config>
 
   <!-- table-data -->
@@ -51,9 +54,11 @@
                   <ul vts-menu>
                     <li vts-menu-item (click)="onEditDataItem(data.id)"><i vts-icon vtsType="EditDoutone"></i>Edit</li>
                     <li vts-menu-item (click)="changeStatusItem(data.id)">
-                      <vts-switch vtsSize="sm" [(ngModel)]="data.disabled" (click)="changeStatusItem(data.id)"></vts-switch>Enable/Disable
+                      <vts-switch vtsSize="sm" [(ngModel)]="data.disabled" (click)="changeStatusItem(data.id)">
+                      </vts-switch>Enable/Disable
                     </li>
-                    <li vts-menu-item (click)="showDeleteItemModal(data.id)" style="color: #EE0033;"><i vts-icon vtsType="DeleteDoutone"></i>Delete</li>
+                    <li vts-menu-item (click)="showDeleteItemModal(data.id)" style="color: #EE0033;"><i vts-icon
+                        vtsType="DeleteDoutone"></i>Delete</li>
                   </ul>
                 </vts-dropdown-menu>
               </td>
@@ -69,7 +74,8 @@
           [vtsShowTotal]="rangeTemplate" class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
         </vts-pagination>
         <ng-template #rangeTemplate let-range="range" let-total>
-          <span class="text-custom" style="color: #73777A; font-weight: 400;">{{ range[0] }} - {{range[1] }} / {{ total }} items</span>
+          <span class="text-custom" style="color: #73777A; font-weight: 400;">{{ range[0] }} - {{range[1] }} / {{ total
+            }} items</span>
         </ng-template>
       </ng-template>
     </vts-spin>
@@ -83,12 +89,12 @@
 </div>
 
 <!-- Modal confirm delete -->
-<table-delete [isVisibleDelete]="isVisibleDelete" [config]="modalDeleteConfig" (submit)="handleOkDelete()"
+<table-delete [isVisibleDelete]="isVisibleDelete" [config]="modalDeleteConfig" (submit)="handleOkDelete($event)"
   (cancel)="handleCancelDelete()"></table-delete>
 
 <!-- Modal upload -->
-<table-upload [isVisibleUpload]="isVisibleUpload" [config]="modalUploadConfig"
-  (submit)="handleOkUpload()" (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
+<table-upload [isVisibleUpload]="isVisibleUpload" [config]="modalUploadConfig" (submit)="handleOkUpload()"
+  (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
 <!-- Create, view, edit -->
 <table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer"

@@ -66,7 +66,8 @@ export type ModalConfig = {
 
 export type ModalDeleteConfig = ModalConfig & {
   entityName?: string,
-  showNameBasedOnProp?: string
+  showNameBasedOnProp?: string,
+  type?: string
 }
 
 export type ModalUploadConfig = ModalConfig & {
@@ -81,7 +82,9 @@ export type TabGroupConfig = {
 
 export type TabConfig = {
   tabTitle: string,
-  tabCondition?: TabCondition
+  tabValue: string,
+  tabCondition?: TabCondition,
+  total?: number
 };
 
 export type TabCondition = {

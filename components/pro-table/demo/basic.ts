@@ -38,27 +38,33 @@ export class VtsDemoProTableBasicComponent {
   ];
 
   tabGroupConfig: TabGroupConfig = {
-    tabProperty: 'status',
+    tabProperty: 'title',
     tabValueConfig: [
-      { tabTitle: "All" },
+      {
+        tabTitle: "All",
+        tabValue: "all",
+      },
       {
         tabTitle: "Category A",
+        tabValue: "cateA",
         tabCondition: {
-          operation: ['<'],
-          threshold: ['']
+          operation: ['='],
+          threshold: ['success']
         }
       },
       {
         tabTitle: "Category B",
+        tabValue: "cateB",
         tabCondition: {
-          operation: ['<'],
-          threshold: ['']
+          operation: ['='],
+          threshold: ['warning']
         }
       },
       {
         tabTitle: "Category C",
+        tabValue: "cateC",
         tabCondition: {
-          operation: ['<'],
+          operation: ['='],
           threshold: ['']
         }
       },

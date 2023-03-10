@@ -1,4 +1,4 @@
-<ng-container *ngIf="config != null">
+<ng-container *ngIf="config">
     <vts-modal [(vtsVisible)]="isVisibleDelete" [vtsTitle]="config.title" [vtsContent]="config.content"
         (vtsOnCancel)="onCancel()" (vtsOnOk)="onSubmit()">
     </vts-modal>

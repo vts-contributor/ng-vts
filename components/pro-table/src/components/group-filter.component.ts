@@ -40,16 +40,29 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
             <span vts-icon vtsType="SearchDoutone"></span>
           </ng-template>
     
-          <ng-container *ngFor="let filter of filterGroupConfig">
+          <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
             <vts-input-group class="filter-item" [vtsAddOnBefore]="filter.filterText">
-              <vts-select style="width: 100%;"
+              <!-- <vts-select style="width: 100%;"
                 [(ngModel)]="filter['selectedValues']"
                 vtsMode="multiple" vtsAllowClear="false"
                 [vtsTokenSeparators]="[',']"
               >
                 <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
-              </vts-select>
+              </vts-select> -->
+              <vts-select style="width: 100%;"
+                  [(ngModel)]="filter['selectedValues']"
+                  vtsMode="multiple" vtsAllowClear="false"
+                  [vtsTokenSeparators]="[',']"
+                  [vtsCustomTemplate]="multipleTemplate"
+                >
+                  <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
+                </vts-select>
             </vts-input-group>
+              <ng-template #multipleTemplate let-selected>
+                <div class="vts-select-selection-item-content">
+                  {{ renderSelectedItems(i) }}
+                </div>
+              </ng-template>
           </ng-container>
         </div>
         <div>
@@ -170,7 +183,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       }
 
       .vts-select-selector {
-        border: none !important; 
+        border: none !important;
+        height: 36px !important;
       }
 
       .btn-config-area {
@@ -329,5 +343,21 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
     }
     this.onChangeHeaders.emit(this.properties);
     this.changeDetector.detectChanges();
+  }
+
+  renderSelectedItems(index: number) {
+    let output = "";
+    if (typeof this.filterGroupConfig != "undefined") {
+      let currentFilter = {
+        ...this.filterGroupConfig[index]
+      };
+      // get label of selected values for current filter
+      let selectedLabels = [...currentFilter.filterValues.filter((x: any) => currentFilter.selectedValues.indexOf(x.value) >= 0).map((x: any) => x.label)];
+      if (selectedLabels.length > 1) {
+        output = selectedLabels[0] + ',...';
+      }
+      else output = selectedLabels[0];
+    }
+    return output;
   }
 }

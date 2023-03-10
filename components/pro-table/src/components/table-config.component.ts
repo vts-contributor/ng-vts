@@ -1,3 +1,4 @@
+import { TabConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -44,19 +45,16 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   private destroy$ = new Subject<void>();
 
   @Input() checkedItemsAmount: number = 0;
-  isVisibleModal = false;
+  @Input() isVisibleModal = false;
   @Input() isOkLoadingModal = false;
-
-  isVisibleDelete = false;
+  @Input() isVisibleDelete: boolean = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string = '';
   @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
   @Input() modalUploadConfig: ModalUploadConfig | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
-
-  isVisibleUpload = false;
-
-  visibleDrawer = false;
+  @Input() isVisibleUpload = false;
+  @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
   @Input() drawerData: { [key: string]: any } = {};
   @Input() properties: PropertyType[] = [];
@@ -80,9 +78,10 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() action: { 'key': string } = {
     key: ''
   };
+  @Input() tabConfig: TabConfig | undefined;
 
 
-  vtsRowHeight: string = '';
+  vtsRowHeight: string = '48px';
   loading: boolean = false;
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
@@ -136,13 +135,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
     if (changes.listData) {
       console.log(changes.listData.currentValue);
-
       this.loading = true;
+      this.displayedData = [...this.listData];
       this.filteredList = [...this.listData];
-      this.displayedData = this.listData.slice(
-        (this.vtsPageIndex - 1) * this.vtsPageSize,
-        this.vtsPageIndex * this.vtsPageSize
-      );
       this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
       this.loading = false;
     }
@@ -159,10 +154,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(this.properties, event.previousIndex, event.currentIndex);
-  }
-
-  showDeleteModal(): void {
-    this.isVisibleModal = true;
   }
 
   showDeleteItemModal(itemId: string): void {
@@ -184,22 +175,42 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.isVisibleModal = false;
   }
 
-  handleOkDelete(): void {
+  handleOkDelete(event: string): void {
     this.isOkLoadingDelete = true;
-    if (this.itemIdToDelete) {
-      if (this.deleteRequest) {
-        let url = this.deleteRequest.url;
-        url += this.itemIdToDelete;
-        this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
-          console.log(data);
-          this.visibleDrawer = true;
-          this.changeDetector.detectChanges();
-        });
-      }
+    switch (event) {
+      case 'clear':
+        this.onAllChecked(false);
+        break;
+      case 'delete-multiple':
+        if (this.deleteRequest) {
+          let url = this.deleteRequest.url;
+          this.deleteRequest.body = this.setOfCheckedId;
+          url += 'multiple-delete';
+          this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
+            console.log(data);
+            this.visibleDrawer = true;
+            this.changeDetector.detectChanges();
+          });
+        }
+        break;
+      default:
+        if (this.itemIdToDelete) {
+          if (this.deleteRequest) {
+            let url = this.deleteRequest.url;
+            url += this.itemIdToDelete;
+            this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
+              console.log(data);
+              this.visibleDrawer = true;
+              this.changeDetector.detectChanges();
+            });
+          }
+        }
+        break;
     }
     this.isOkLoadingDelete = false;
     this.isVisibleDelete = false;
   }
+
   handleCancelDelete(): void {
     this.isVisibleDelete = false;
   }
@@ -267,8 +278,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   handleChangeRowHeight(value: string) {
     if (value) {
-      console.log(value);
-
       this.vtsRowHeight = value;
     }
   }
@@ -359,9 +368,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       };
 
       // only for json-server
-      this.requestData.url = this.requestData.url.split('?')[0] + `?_page=${event}&_limit=${this.vtsPageSize}`;
-      this.service.getRenderData({ ...this.requestData }).subscribe(res => {
+      let url = this.requestData.url.split('?')[0] + `?_page=${event}&_limit=${this.vtsPageSize}`;
+      // if (this.tabConfig?.tabCondition) {
+      //   url += `$`
+      // }
+      this.service.getRenderData({ ...this.requestData, url }).subscribe(res => {
         this.displayedData = [...res.body];
+        this.vtsTotal = +res.headers.get('X-Total-Count');
         this.changeDetector.detectChanges();
       })
     }
@@ -372,18 +385,21 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.reloadTable.emit(true);
   }
 
-  exportDataToFile() {
+  exportDataToFile(mode?: string) {
     this.visibleExport = true;
-    console.log(this.setOfCheckedId);
     if (this.exportRequest) {
-      this.exportRequest.body = this.setOfCheckedId;
+      this.exportRequest.body = mode=='all'? this.listData: this.setOfCheckedId;
       let url = this.exportRequest.url;
       this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
         const data = res;
         console.log(data);
       });
+      setTimeout(() => {
+        this.visibleExport = false;
+      }, 3000);
     }
     // send Set of item ID to server, must server returns content data to exporting
+
   }
 
   formatNumber(value: number): string {
@@ -530,8 +546,37 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.showUploadModal();
         break;
       case 'export':
-        this.exportDataToFile();
+        this.exportDataToFile('all');
         break;
     }
   }
+
+  onReloadTable(event: boolean) {
+    this.reloadTable.emit(event);
+  }
+
+  clearAllSelectedItems(event: boolean) {
+    if (event && this.modalDeleteConfig) {
+      this.modalDeleteConfig.content = "Do you want to clear all selected items?";
+      this.modalDeleteConfig.type = 'clear';
+      this.isVisibleDelete = true;
+    }
+  }
+
+  deleteSelectedItems(event: boolean) {
+    console.log(this.setOfCheckedId);
+    if (event && this.modalDeleteConfig) {
+      this.modalDeleteConfig.content = "Do you want to delete all selected items?";
+      this.modalDeleteConfig.type = 'delete-multiple';
+      this.isVisibleDelete = true;
+    }
+  }
+
+  exportSelectedItems(event: boolean) {
+    console.log(event);
+    if (event) {
+      this.exportDataToFile();
+    }
+  }
+
 }

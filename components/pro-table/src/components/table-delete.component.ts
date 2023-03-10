@@ -6,21 +6,23 @@ import { ModalDeleteConfig } from '../pro-table.type';
   templateUrl: 'table-delete.component.html'
 })
 export class VtsTableDeleteComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
   @Input() isVisibleDelete: boolean = false;
   @Input() config: ModalDeleteConfig | undefined;
 
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() submit: EventEmitter<string> = new EventEmitter<string>();
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onCancel(){
+  onCancel() {
     this.cancel.emit();
   }
 
-  onSubmit(){
-    this.submit.emit();
+  onSubmit() {
+    if (this.config?.type) {
+      this.submit.emit(this.config?.type);
+    }
   }
 }

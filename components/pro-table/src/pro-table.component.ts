@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, Request, StatusConfig, TabGroupConfig } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
@@ -66,9 +68,9 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
     </div>
 
     <ng-container *ngIf="tabGroupConfig; else tableArea">
-      <vts-tabset>
+      <vts-tabset [(vtsSelectedIndex)]="selectedTabIndex" (vtsSelectedIndexChange)="onChangeTabFilter($event)">
         <ng-container *ngFor="let tabConfig of tabGroupConfig.tabValueConfig">
-          <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{vtsTotal}})">
+          <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{tabConfig.total}})">
             </vts-tab>
           </ng-container>
         </vts-tabset>
@@ -77,11 +79,6 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
 
     <ng-template #tableArea>
       <vts-spin [vtsSpinning]="loading">
-        <!-- for older design -->
-        <!-- <vts-search-form [headers]="properties" [data]="listData" (putSearchData)="searchDataByForm($event)"></vts-search-form> -->
-
-        <!-- for new design 03/2023 -->
-        <!-- <vts-group-filter [headers]="properties" [data]="listData" (putSearchData)="searchDataByForm($event)"></vts-group-filter> -->
         <vts-table-config 
           [listData]="listData" 
           [properties]="properties"
@@ -98,8 +95,10 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
           [drawerConfig]="drawerConfig"
           [listStatus]="listStatus" 
           [modalUploadConfig]="modalUploadConfig"
+          [modalDeleteConfig]="modalDeleteConfig"
           [vtsTotal]="vtsTotal"
           [action]="actionType"
+          [tabConfig]="tabConfig"
         >
       </vts-table-config>
       </vts-spin>
@@ -149,7 +148,8 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   constructor(
     public elementRef: ElementRef,
     private service: ProtableService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private httpClient: HttpClient
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-protable-container');
@@ -187,7 +187,10 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   vtsTotal: number = 0;
   buttonSize: VtsButtonSize = 'sm';
   publicProperties: PropertyType[] = [];
-  actionType: {'key':string} = {key: ''};
+  actionType: { 'key': string } = { key: '' };
+  selectedTabIndex = 0;
+  totalDataWithFilter: VtsSafeAny[] = [];
+  tabConfig: VtsSafeAny;
 
   ngOnInit(): void {
     this.filterGroupConfig = [
@@ -224,7 +227,11 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.requestData) {
-      this.getRenderData(this.requestData);
+      // this.getRenderData(this.requestData);
+    }
+
+    if (changes.tabGroupConfig) {
+      this.getTotalDataWithTabConfig();
     }
 
     if (changes.moreActionConfig) {
@@ -278,9 +285,39 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   }
 
   onClickAction(key: string) {
-    let actionType = {'key': key};
+    let actionType = { 'key': key };
     this.actionType = {
       ...actionType
     }
+  }
+
+  getTotalDataWithTabConfig() {
+    const tabArray = this.tabGroupConfig?.tabValueConfig;
+    const urlsFork = [];
+    if (tabArray) {
+      for (let i = 0; i < tabArray.length; i++) {
+        if (this.requestData) {
+          let url = this.requestData.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
+          if (tabArray[i].tabCondition) {
+            url += `&${this.tabGroupConfig?.tabProperty}=${tabArray[i].tabCondition?.threshold}`
+          }
+          urlsFork.push(this.httpClient.get(url, { observe: 'response' }));
+        }
+      }
+
+      forkJoin(urlsFork).subscribe(res => {
+        this.totalDataWithFilter = res;
+        this.listData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
+        this.vtsTotal = +this.totalDataWithFilter[this.selectedTabIndex].headers.get('X-Total-Count');
+      })
+    }
+  }
+
+  onChangeTabFilter(event: number) {
+    this.pageIndex = 1;
+    this.selectedTabIndex = event;
+    this.tabConfig = this.tabGroupConfig?.tabValueConfig[event];
+    this.listData = [...this.totalDataWithFilter[event].body];
+    this.vtsTotal = +this.totalDataWithFilter[event].headers.get('X-Total-Count');
   }
 }

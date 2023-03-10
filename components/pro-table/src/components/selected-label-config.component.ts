@@ -4,12 +4,13 @@ import {
   Component,
   // ContentChildren,
   ElementRef,
-  // EventEmitter,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Optional,
+  Output,
   SimpleChanges,
   // Output,
   // SimpleChanges,
@@ -32,17 +33,32 @@ import { takeUntil } from 'rxjs/operators';
         <span class="text-format bold-text">{{ selectedItemsAmount }}</span><span class="text-format normal-text"> items is selected</span>
         <span class="divider-s">|</span>
         <span>
-          <a class="text-format bold-text lable-btn"><i vts-icon vtsType="ClearDoutone"></i>Clear Selected</a>
+          <ng-container *ngIf="selectedItemsAmount>0 else disabedClearAll">
+            <a class="text-format bold-text lable-btn" (click)="onClearAll()"><i vts-icon vtsType="ClearDoutone"></i>Clear Selected</a>
+          </ng-container>
+          <ng-template #disabedClearAll>
+            <a class="text-format bold-text lable-btn" (click)="onClearAll()" disabled><i vts-icon vtsType="ClearDoutone"></i>Clear Selected</a>
+          </ng-template>
         </span>
       </span>
 
       <span>
+        <ng-container *ngIf="selectedItemsAmount>0 else disabedAction">
         <span>
-          <a class="text-format bold-text lable-btn"><i vts-icon vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
+          <a class="text-format bold-text lable-btn" (click)="onDeleteSelectedItems()"><i vts-icon vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
         </span>
         <span>
-          <a class="text-format bold-text lable-btn" style="padding: 0 16px"><i vts-icon vtsType="CloudUploadDoutone"></i>Export Selected</a>
+          <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()"><i vts-icon vtsType="CloudUploadDoutone"></i>Export Selected</a>
         </span>
+        </ng-container>
+        <ng-template #disabedAction>
+        <span>
+          <a class="text-format bold-text lable-btn" (click)="onDeleteSelectedItems()" disabled><i vts-icon vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
+        </span>
+        <span>
+          <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()" disabled><i vts-icon vtsType="CloudUploadDoutone"></i>Export Selected</a>
+        </span>
+        </ng-template>
         <span>
           <a class="text-format bold-text lable-btn"><i vts-icon vtsType="ArrowDownOutline"></i>More action</a>
         </span>
@@ -102,6 +118,12 @@ export class VtsProTableSelectedLabelConfigComponent implements OnDestroy, OnIni
   controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
 
   @Input() selectedItemsAmount = 0;
+  @Input() moreActions = [];
+
+  @Output() clearAllSelectedItems = new EventEmitter<boolean>();
+  @Output() deleteSelectedItems = new EventEmitter<boolean>();
+  @Output() exportSelectedItems = new EventEmitter<boolean>();
+  @Output() moreActionEvents = new EventEmitter<boolean[]>();
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
     // TODO: move to host after View Engine deprecation
@@ -124,5 +146,21 @@ export class VtsProTableSelectedLabelConfigComponent implements OnDestroy, OnIni
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  onClearAll() {
+    this.clearAllSelectedItems.emit(true);
+  }
+
+  onDeleteSelectedItems() {
+    this.deleteSelectedItems.emit(true);
+  }
+
+  onExportSelectedItems() {
+    this.exportSelectedItems.emit(true);
+  }
+
+  onMoreActionEvent() {
+    this.moreActionEvents.emit([]);
   }
 }
