@@ -1,7 +1,7 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 import { coerceBooleanProperty } from './lib/utils/utils';
 @Directive({
-  selector: 'ng-template[vts-carousel-slide]',
+  selector: 'ng-template[vts-carousel-slide]'
 })
 export class CarouselSlideDirective {
   @Input() virtualIndex: number = 0;
@@ -33,19 +33,19 @@ export class CarouselSlideDirective {
       isVisible: this._hasClass(['carousel-slide-visible']),
       isDuplicate: this._hasClass(['carousel-slide-duplicate']),
       isPrev: this._hasClass(['carousel-slide-prev', 'carousel-slide-duplicate-prev']),
-      isNext: this._hasClass(['carousel-slide-next', 'carousel-slide-duplicate-next']),
+      isNext: this._hasClass(['carousel-slide-next', 'carousel-slide-duplicate-next'])
     };
   }
 
   private _hasClass(classNames: string[]) {
-    return classNames.some((className) => this._classNames.indexOf(className) >= 0);
+    return classNames.some(className => this._classNames.indexOf(className) >= 0);
   }
   slideData = {
     isActive: false,
     isPrev: false,
     isNext: false,
     isVisible: false,
-    isDuplicate: false,
+    isDuplicate: false
   };
 
   private _classNames: string = '';

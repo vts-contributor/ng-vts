@@ -383,7 +383,7 @@ interface Carousel extends CarouselClass<CarouselEvents> {
     translate: number,
     vtsSpeed: number,
     runCallbacks?: boolean,
-    translateBounds?: boolean,
+    translateBounds?: boolean
   ): any;
 
   /**

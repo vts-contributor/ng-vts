@@ -54,5 +54,5 @@ export {
   Zoom,
   FreeMode,
   Grid,
-  Manipulation,
+  Manipulation
 };

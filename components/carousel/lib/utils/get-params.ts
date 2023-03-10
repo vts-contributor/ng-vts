@@ -3,10 +3,10 @@ import Carousel from './carousel';
 import { paramsList } from './params-list';
 import { extend, isObject } from './utils';
 type KeyValueType = { [x: string]: any };
-export const allowedParams = paramsList.map((key) => key.replace(/_/, ''));
+export const allowedParams = paramsList.map(key => key.replace(/_/, ''));
 export function getParams(obj: any = {}) {
   const params: any = {
-    on: {},
+    on: {}
   };
   // const events = {};
   const passedParams: KeyValueType = {};
@@ -16,7 +16,7 @@ export function getParams(obj: any = {}) {
   params.init = false;
 
   const rest: KeyValueType = {};
-  const allowedParams = paramsList.map((key) => key.replace(/_/, ''));
+  const allowedParams = paramsList.map(key => key.replace(/_/, ''));
   Object.keys(obj).forEach((key: string) => {
     const _key = key.replace(/^_/, '');
     if (allowedParams.indexOf(_key) >= 0) {
@@ -37,7 +37,7 @@ export function getParams(obj: any = {}) {
       rest[_key] = obj[key];
     }
   });
-  ['vtsNavigation', 'vtsPagination', 'scrollbar'].forEach((key) => {
+  ['vtsNavigation', 'vtsPagination', 'scrollbar'].forEach(key => {
     if (params[key] === true) params[key] = {};
     if (params[key] === false) delete params[key];
   });
