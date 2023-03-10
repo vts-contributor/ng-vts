@@ -4,15 +4,15 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-multiple',
   template: `
     <vts-carousel
-     [vtsSlidesPerView]="vtsSlidesPerView"
-     [vtsNavigation]="vtsNavigation"
-     [vtsPagination]="vtsPagination"
-     [vtsSpaceBetween]="vtsSpaceBetween"
-     [vtsAutoplay]="vtsAutoplay"
+      [vtsSlidesPerView]="vtsSlidesPerView"
+      [vtsNavigation]="vtsNavigation"
+      [vtsPagination]="vtsPagination"
+      [vtsSpaceBetween]="vtsSpaceBetween"
+      [vtsAutoplay]="vtsAutoplay"
     >
-    <ng-template vts-carousel-slide *ngFor="let item of array">
-      <img src={{item.src}} alt="">
-    </ng-template>
+      <ng-template vts-carousel-slide *ngFor="let item of array">
+        <img src="{{ item.src }}" alt="" />
+      </ng-template>
     </vts-carousel>
     <div class="navigation-btn mtl-next-btn"></div>
     <div class="navigation-btn mtl-prev-btn"></div>
@@ -31,7 +31,7 @@ import { Component } from '@angular/core';
         text-align: center;
       }
       .navigation-btn {
-        position: absolute;    
+        position: absolute;
         top: 150px;
         width: calc(var(--carousel-navigation-size) / 44 * 27);
         height: var(--carousel-navigation-size);
@@ -41,7 +41,7 @@ import { Component } from '@angular/core';
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #73777A;
+        background: #73777a;
         color: #fff;
         border-radius: 50%;
         width: 38px;
@@ -67,17 +67,29 @@ import { Component } from '@angular/core';
   ]
 })
 export class VtsDemoCarouselMultipleComponent {
-    vtsSlidesPerView = 3;
-    vtsSpaceBetween = 20;
-    vtsNavigation= {nextEl: '.mtl-next-btn', prevEl: '.mtl-prev-btn'};
-    vtsPagination= {clickable: true, el: '.pagination-custom'};
-    vtsAutoplay = true;
-    array= [
-      {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-      {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-      {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-      {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-      {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-      {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-    ];
+  vtsSlidesPerView = 3;
+  vtsSpaceBetween = 20;
+  vtsNavigation = { nextEl: '.mtl-next-btn', prevEl: '.mtl-prev-btn' };
+  vtsPagination = { clickable: true, el: '.pagination-custom' };
+  vtsAutoplay = true;
+  array = [
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    }
+  ];
 }

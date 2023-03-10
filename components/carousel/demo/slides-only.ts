@@ -3,11 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-carousel-slides-only',
   template: `
-    <vts-carousel
-     [vtsSlidesPerView]="vtsSlidesPerView"
-    >
+    <vts-carousel [vtsSlidesPerView]="vtsSlidesPerView">
       <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src={{item.src}} alt="">
+        <img src="{{ item.src }}" alt="" />
       </ng-template>
     </vts-carousel>
   `,
@@ -25,10 +23,16 @@ import { Component } from '@angular/core';
   ]
 })
 export class VtsDemoCarouselSlidesOnlyComponent {
-  array= [
-    {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-    {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
-    {src: "https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ"},
+  array = [
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    },
+    {
+      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+    }
   ];
   vtsSlidesPerView = 1;
 }

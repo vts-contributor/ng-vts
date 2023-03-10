@@ -7,6 +7,6 @@ import { CarouselSlideDirective } from './carousel-slide.directive';
 @NgModule({
   declarations: [VtsCarouselComponent, CarouselSlideDirective],
   exports: [VtsCarouselComponent, CarouselSlideDirective],
-  imports: [BidiModule, CommonModule, PlatformModule],
+  imports: [BidiModule, CommonModule, PlatformModule]
 })
 export class VtsCarouselModule {}
