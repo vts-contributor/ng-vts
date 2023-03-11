@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'vts-demo-checkbox-state',
   template: `
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+    <form [vtsLayout]="'vertical'" vts-form>
       <vts-form-item>
         <vts-form-label>Label</vts-form-label>
         <vts-form-control>
@@ -51,16 +51,24 @@ import {
           </vts-checkbox-wrapper>
         </vts-form-control>
       </vts-form-item>
-      <vts-form-item formGroupName="inputGroup">
-        <vts-form-label>Label</vts-form-label>
-        <vts-form-control [vtsValidateStatus]="formGroup" vtsErrorTip="Error message">
-          <vts-checkbox-wrapper>
-            <vts-space vtsPreset="2" vtsDirection="vertical">
-              <label formControlName="A" *vtsSpaceItem vts-checkbox vtsValue="A">Checkbox</label>
-              <label formControlName="B" *vtsSpaceItem vts-checkbox vtsValue="B">Checkbox</label>
-            </vts-space>
-          </vts-checkbox-wrapper>
-        </vts-form-control>
+      <vts-form-item>
+        <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item formGroupName="inputGroup">
+            <vts-form-label>Label</vts-form-label>
+            <vts-form-control [vtsValidateStatus]="formGroup" vtsErrorTip="Error message">
+              <vts-checkbox-wrapper>
+                <vts-space vtsPreset="2" vtsDirection="vertical">
+                  <label formControlName="A" *vtsSpaceItem vts-checkbox vtsValue="A">
+                    Checkbox
+                  </label>
+                  <label formControlName="B" *vtsSpaceItem vts-checkbox vtsValue="B">
+                    Checkbox
+                  </label>
+                </vts-space>
+              </vts-checkbox-wrapper>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `

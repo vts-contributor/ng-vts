@@ -25,7 +25,15 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
         Chỉ cho phép file dạng .png, .jpg, .jpeg, .svg và dung lượng không quá 1Mb
       </p>
     </vts-upload>
-  `
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+    `
+  ]
 })
 export class VtsDemoUploadDragComponent {
   constructor() {}

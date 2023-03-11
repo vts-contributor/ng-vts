@@ -25,6 +25,7 @@ import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
 import { filter, startWith, takeUntil } from 'rxjs/operators';
+import { VtsBreadcrumb } from './breadcrumb';
 
 export interface VtsBreadcrumbItem {
   label?: string;
@@ -38,6 +39,7 @@ export interface VtsBreadcrumbItem {
   encapsulation: ViewEncapsulation.None,
   selector: 'vts-breadcrumb',
   exportAs: 'vtsBreadcrumb',
+  providers: [{ provide: VtsBreadcrumb, useExisting: VtsBreadCrumbComponent }],
   preserveWhitespaces: false,
   template: `
     <ng-container

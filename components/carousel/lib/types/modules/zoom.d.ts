@@ -41,7 +41,12 @@ export interface ZoomEvents {
   /**
    * Event will be fired on zoom change
    */
-  zoomChange: (carousel: carousel, scale: number, imageEl: HTMLElement, slideEl: HTMLElement) => void;
+  zoomChange: (
+    carousel: carousel,
+    scale: number,
+    imageEl: HTMLElement,
+    slideEl: HTMLElement
+  ) => void;
 }
 
 export interface ZoomOptions {

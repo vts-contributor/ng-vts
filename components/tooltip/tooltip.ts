@@ -7,8 +7,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -23,7 +23,7 @@ import {
 import { zoomBigMotion } from '@ui-vts/ng-vts/core/animation';
 import { isPresetColor, VtsPresetColor } from '@ui-vts/ng-vts/core/color';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
-import { NgStyleInterface, VtsTSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, NgStyleInterface, VtsTSType } from '@ui-vts/ng-vts/core/types';
 import { Directionality } from '@angular/cdk/bidi';
 import {
   isTooltipEmpty,
@@ -33,6 +33,7 @@ import {
   PropertyMapping,
   VtsTooltipType
 } from './base';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
 @Directive({
   selector: '[vts-tooltip]',
@@ -42,6 +43,8 @@ import {
   }
 })
 export class VtsTooltipDirective extends VtsTooltipBaseDirective {
+  static ngAcceptInputType_arrowPointAtCenter: BooleanInput;
+
   @Input('vtsTooltipTitle') override title?: VtsTSType | null;
   @Input('vts-tooltip') override directiveTitle?: VtsTSType | null;
   @Input('vtsTooltipTrigger') override trigger?: VtsTooltipTrigger = 'hover';
@@ -53,14 +56,15 @@ export class VtsTooltipDirective extends VtsTooltipBaseDirective {
   @Input('vtsTooltipOverlayClassName') override overlayClassName?: string;
   @Input('vtsTooltipOverlayStyle') override overlayStyle?: NgStyleInterface;
   @Input('vtsTooltipType') override vtsType?: VtsTooltipType;
+  @Input('vtsTooltipArrowPointAtCenter') @InputBoolean() override arrowPointAtCenter?: boolean;
   @Input() vtsTooltipColor?: string;
 
   // tslint:disable-next-line:no-output-rename
   @Output('vtsTooltipVisibleChange')
   override readonly visibleChange = new EventEmitter<boolean>();
 
-  override componentFactory: ComponentFactory<VtsToolTipComponent> =
-    this.resolver.resolveComponentFactory(VtsToolTipComponent);
+  override componentRef: ComponentRef<VtsToolTipComponent> =
+    this.hostView.createComponent(VtsToolTipComponent);
 
   constructor(
     elementRef: ElementRef,
@@ -74,6 +78,7 @@ export class VtsTooltipDirective extends VtsTooltipBaseDirective {
 
   protected override getProxyPropertyMap(): PropertyMapping {
     return {
+      ...super.getProxyPropertyMap(),
       vtsTooltipColor: ['vtsColor', () => this.vtsTooltipColor]
     };
   }
@@ -94,6 +99,7 @@ export class VtsTooltipDirective extends VtsTooltipBaseDirective {
       [cdkConnectedOverlayOpen]="_visible"
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayPush]="true"
+      [vtsArrowPointAtCenter]="vtsArrowPointAtCenter"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="hide()"
       (positionChange)="onPositionChange($event)"

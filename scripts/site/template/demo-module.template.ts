@@ -10,9 +10,8 @@ import { moduleList } from './module';
     ShareModule,
     ...moduleList,
     RouterModule.forChild([
-      { path: '', redirectTo: 'en' },
       { path: 'en', component: VtsDemo{{component}}EnComponent },
-      { path: '**', redirectTo: 'installation' }
+      { path: '**', redirectTo: '/components/{{lowerComponent}}/en' }
     ])
   ],
   declarations: [

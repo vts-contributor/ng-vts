@@ -4,7 +4,11 @@
  */
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
-import { CdkOverlayOrigin, ConnectionPositionPair } from '@angular/cdk/overlay';
+import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  ConnectionPositionPair
+} from '@angular/cdk/overlay';
 import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
@@ -88,12 +92,16 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'timePicker';
       [cdkConnectedOverlayPositions]="overlayPositions"
       [cdkConnectedOverlayOrigin]="origin"
       [cdkConnectedOverlayOpen]="vtsOpen"
-      [cdkConnectedOverlayOffsetY]="-2"
       [cdkConnectedOverlayTransformOriginOn]="'.vts-picker-dropdown'"
       (detach)="close()"
       (overlayOutsideClick)="onClickOutside($event)"
     >
-      <div [@slideMotion]="'enter'" class="vts-picker-dropdown">
+      <div
+        [@slideMotion]="'enter'"
+        (@slideMotion.done)="onAnimateEnd()"
+        class="vts-picker-dropdown"
+        style="position: relative"
+      >
         <div class="vts-picker-panel-container">
           <div tabindex="-1" class="vts-picker-panel">
             <vts-time-picker-panel
@@ -165,6 +173,8 @@ export class VtsTimePickerComponent
   value: Date | null = null;
   preValue: Date | null = null;
   origin!: CdkOverlayOrigin;
+  @ViewChild(CdkConnectedOverlay, { static: false })
+  cdkConnectedOverlay?: CdkConnectedOverlay;
   inputSize?: number;
   i18nPlaceHolder$: Observable<string | undefined> = of(undefined);
   overlayPositions: ConnectionPositionPair[] = [
@@ -174,6 +184,27 @@ export class VtsTimePickerComponent
       overlayX: 'start',
       overlayY: 'top',
       offsetY: 3
+    },
+    {
+      offsetY: -3,
+      originX: 'start',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'bottom'
+    },
+    {
+      offsetY: 3,
+      originX: 'end',
+      originY: 'bottom',
+      overlayX: 'end',
+      overlayY: 'top'
+    },
+    {
+      offsetY: -3,
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'end',
+      overlayY: 'bottom'
     }
   ];
   dir: Direction = 'ltr';
@@ -406,5 +437,10 @@ export class VtsTimePickerComponent
   setDisabledState(isDisabled: boolean): void {
     this.vtsDisabled = isDisabled;
     this.cdr.markForCheck();
+  }
+
+  // Handle wrong position on open
+  onAnimateEnd() {
+    this.cdkConnectedOverlay?.overlayRef?.updatePosition();
   }
 }
