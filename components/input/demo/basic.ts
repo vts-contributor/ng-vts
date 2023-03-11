@@ -13,7 +13,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
     </vts-radio-group>
     <br />
     <br />
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form>
       <vts-form-item>
         <vts-form-label>Input Label</vts-form-label>
         <vts-form-control>
@@ -40,10 +40,19 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
         </vts-form-control>
       </vts-form-item>
       <vts-form-item>
-        <vts-form-label>Input Label</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <input vts-input [vtsSize]="size" [placeholder]="value" formControlName="inputValue" />
-        </vts-form-control>
+        <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Input Label</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <input
+                vts-input
+                [vtsSize]="size"
+                [placeholder]="value"
+                formControlName="inputValue"
+              />
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `
