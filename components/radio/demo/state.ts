@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'vts-demo-radio-state',
   template: `
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+    <form [vtsLayout]="'vertical'" vts-form>
       <vts-form-item>
         <vts-form-label>Label</vts-form-label>
         <vts-form-control>
@@ -37,15 +37,19 @@ import {
         </vts-form-control>
       </vts-form-item>
       <vts-form-item>
-        <vts-form-label>Label</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <vts-radio-group formControlName="inputValue">
-            <vts-space vtsPreset="2" vtsDirection="vertical">
-              <label vts-radio *vtsSpaceItem vtsValue="A">Radio button item</label>
-              <label vts-radio *vtsSpaceItem vtsValue="B">Radio button item</label>
-            </vts-space>
-          </vts-radio-group>
-        </vts-form-control>
+        <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Label</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <vts-radio-group formControlName="inputValue">
+                <vts-space vtsPreset="2" vtsDirection="vertical">
+                  <label vts-radio *vtsSpaceItem vtsValue="A">Radio button item</label>
+                  <label vts-radio *vtsSpaceItem vtsValue="B">Radio button item</label>
+                </vts-space>
+              </vts-radio-group>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `

@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'vts-demo-textarea-basic',
   template: `
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+    <form [vtsLayout]="'vertical'" vts-form>
       <vts-form-item>
         <vts-form-label>Input Label</vts-form-label>
         <vts-form-control>
@@ -37,15 +37,19 @@ import {
         </vts-form-control>
       </vts-form-item>
       <vts-form-item>
-        <vts-form-label>Input Label</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <textarea
-            rows="4"
-            placeholder="Textarea placeholder"
-            formControlName="inputValue"
-            vts-input
-          ></textarea>
-        </vts-form-control>
+        <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Input Label</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <textarea
+                rows="4"
+                placeholder="Textarea placeholder"
+                formControlName="inputValue"
+                vts-input
+              ></textarea>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `
