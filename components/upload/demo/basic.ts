@@ -38,7 +38,15 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
         </vts-form-control>
       </vts-form-item>
     </form>
-  `
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+    `
+  ]
 })
 export class VtsDemoUploadBasicComponent {
   inputValue: string = '';

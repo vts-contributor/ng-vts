@@ -8,7 +8,15 @@ import { VtsChartOptions, VtsDonutOptions } from '@ui-vts/ng-vts/chart';
       [vtsOptions]="chartOptions"
       [donutChartOptions]="donutChartOptions"
     ></vts-donut-chart>
-  `
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+    `
+  ]
 })
 export class VtsDemoChartDonutComponent {
   chartOptions: VtsChartOptions = {

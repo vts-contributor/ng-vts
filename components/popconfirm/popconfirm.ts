@@ -8,8 +8,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -77,8 +77,8 @@ export class VtsPopconfirmDirective extends VtsTooltipBaseDirective {
   @Output() readonly vtsOnCancel = new EventEmitter<void>();
   @Output() readonly vtsOnConfirm = new EventEmitter<void>();
 
-  protected override readonly componentFactory: ComponentFactory<VtsPopconfirmComponent> =
-    this.resolver.resolveComponentFactory(VtsPopconfirmComponent);
+  protected override readonly componentRef: ComponentRef<VtsPopconfirmComponent> =
+    this.hostView.createComponent(VtsPopconfirmComponent);
 
   protected override getProxyPropertyMap(): PropertyMapping {
     return {
