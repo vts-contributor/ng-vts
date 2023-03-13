@@ -3,17 +3,9 @@ category: Components
 type: Components
 title: Carousel
 cols: 1
-order: 0.1
-cover: https://gw.alipayobjects.com/zos/antfincdn/%24C9tmj978R/carousel.svg
+order: 100
+cover: ''
 ---
-
-A carousel component. Scales with its container.
-
-## When To Use
-
-- When there is a group of content on the same level.
-- When there is insufficient content space, it can be used to save space in the form of a revolving door.
-- Commonly used for a group of pictures/cards.
 
 ```ts
 import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';

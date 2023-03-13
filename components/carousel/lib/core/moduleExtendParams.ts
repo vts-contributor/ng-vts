@@ -10,7 +10,7 @@ export default function moduleExtendParams(params, allModulesParams) {
       return;
     }
     if (
-      ['vtsNavigation', 'vtsPagination', 'scrollbar'].indexOf(moduleParamName) >= 0 &&
+      ['navigation', 'pagination', 'scrollbar'].indexOf(moduleParamName) >= 0 &&
       params[moduleParamName] === true
     ) {
       params[moduleParamName] = { auto: true };

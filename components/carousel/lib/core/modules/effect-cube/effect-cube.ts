@@ -185,11 +185,11 @@ export default function EffectCube({ carousel, extendParams, on }) {
     getEffectParams: () => carousel.params.cubeEffect,
     perspective: () => true,
     overwriteParams: () => ({
-      vtsSlidesPerView: 1,
+      slidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
       resistanceRatio: 0,
-      vtsSpaceBetween: 0,
+      spaceBetween: 0,
       centeredSlides: false,
       virtualTranslate: true
     })

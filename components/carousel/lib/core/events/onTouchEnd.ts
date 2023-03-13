@@ -26,7 +26,7 @@ export default function onTouchEnd(event) {
     params.grabCursor &&
     data.isMoved &&
     data.isTouched &&
-    (carousel.vtsAllowSlideNext === true || carousel.vtsAllowSlidePrev === true)
+    (carousel.allowSlideNext === true || carousel.allowSlidePrev === true)
   ) {
     carousel.setGrabCursor(false);
   }
@@ -150,8 +150,8 @@ export default function onTouchEnd(event) {
       return;
     }
     const isNavButtonTarget =
-      carousel.vtsNavigation &&
-      (e.target === carousel.vtsNavigation.nextEl || e.target === carousel.vtsNavigation.prevEl);
+      carousel.navigation &&
+      (e.target === carousel.navigation.nextEl || e.target === carousel.navigation.prevEl);
     if (!isNavButtonTarget) {
       if (carousel.swipeDirection === 'next') {
         carousel.slideTo(rewindFirstIndex !== null ? rewindFirstIndex : stopIndex + increment);
@@ -159,7 +159,7 @@ export default function onTouchEnd(event) {
       if (carousel.swipeDirection === 'prev') {
         carousel.slideTo(rewindLastIndex !== null ? rewindLastIndex : stopIndex);
       }
-    } else if (e.target === carousel.vtsNavigation.nextEl) {
+    } else if (e.target === carousel.navigation.nextEl) {
       carousel.slideTo(stopIndex + increment);
     } else {
       carousel.slideTo(stopIndex);

@@ -20,7 +20,7 @@ import {
 import Carousel from './lib/carousel';
 import { Observable, of, Subject } from 'rxjs';
 import { getParams } from './lib/utils/get-params';
-import { CarouselSlideDirective } from './carousel-slide.directive';
+import { VtsCarouselSlideDirective } from './carousel-slide.directive';
 import { EventsParams } from './carousel-events';
 import {
   extend,
@@ -32,18 +32,19 @@ import {
   isEnabled
 } from './lib/utils/utils';
 import {
-  CarouselOptions,
-  CarouselEvents,
-  NavigationOptions,
-  PaginationOptions,
-  ScrollbarOptions,
-  VirtualOptions,
-  ControllerOptions,
-  ThumbsOptions,
+  CarouselOptions as VtsCarouselOptions,
+  CarouselEvents as VtsCarouselEvents,
+  NavigationOptions as VtsCarouselNavigationOptions,
+  PaginationOptions as VtsCarouselPaginationOptions,
+  ScrollbarOptions as VtsCarouselScrollbarOptions,
+  VirtualOptions as VtsCarouselVirtualOptions,
+  ControllerOptions as VtsCarouselControllerOptions,
+  ThumbsOptions as VtsCarouselThumbsOptions,
   ICarousel
 } from './lib/types';
 import { isPlatformBrowser } from '@angular/common';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { camelCase, upperFirst } from '@ui-vts/ng-vts/core/util';
 @Component({
   selector: 'vts-carousel',
   templateUrl: './carousel.component.html',
@@ -52,12 +53,10 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
   exportAs: 'vtsCarousel'
 })
 export class VtsCarouselComponent implements OnInit {
-  //@Input() enabled?: boolean;
+  // @Input() enabled?: boolean;
   // @Input() on?: "on";
-  @Input() vtsDirection?: CarouselOptions['vtsDirection'] = 'horizontal';
-  //@Input() touchEventsTarget: "touchEventsTarget";
-  //@Input() initialSlide: "initialSlide";
-  @Input() vtsSpeed?: number;
+  // @Input() touchEventsTarget: "touchEventsTarget";
+  // @Input() initialSlide: "initialSlide";
   // @Input() cssMode: "cssMode";
   // @Input() updateOnWindowResize: "updateOnWindowResize";
   // @Input() resizeObserver: "resizeObserver";
@@ -68,19 +67,11 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() preventInteractionOnTransition: "preventInteractionOnTransition";
   // @Input() userAgent: "userAgent";
   // @Input() url: "url";
-  @Input() vtsEdgeSwipeDetection: boolean | string = '';
-  @Input() vtsEdgeSwipeThreshold: number = 1;
   // @Input() freeMode: "freeMode";
   // @Input() autoHeight: "autoHeight";
   // @Input() setWrapperSize: "setWrapperSize";
   // @Input() virtualTranslate: "virtualTranslate";
   // @Input() effect: "effect";
-  @Input() vtsBreakpoints?: {
-    [width: number]: CarouselOptions;
-    [ratio: string]: CarouselOptions;
-  };
-  @Input() vtsSpaceBetween?: number;
-  @Input() vtsSlidesPerView?: number | 'auto';
   // @Input() maxBackfaceHiddenSlides: "maxBackfaceHiddenSlides";
   // @Input() grid: "grid";
   // @Input() slidesPerGroup: "slidesPerGroup";
@@ -117,38 +108,28 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() slideToClickedSlide: "slideToClickedSlide";
   // @Input() preloadImages: "preloadImages";
   // @Input() updateOnImagesReady: "updateOnImagesReady";
-  @Input() vtsLoop?: boolean;
-  @Input() vtsLoopAdditionalSlides?: number;
-  @Input() vtsLoopedSlides?: number | null;
   // @Input() loopedSlidesLimit: "loopedSlidesLimit";
   // @Input() loopFillGroupWithBlank: "loopFillGroupWithBlank";
   // @Input() loopPreventsSlide: "loopPreventsSlide";
   // @Input() rewind: "rewind";
-  @Input() vtsAllowSlidePrev?: boolean;
-  @Input() vtsAllowSlideNext?: boolean;
   // @Input() swipeHandler: "swipeHandler";
   // @Input() noSwiping: "noSwiping";
   // @Input() noSwipingClass: "noSwipingClass";
   // @Input() noSwipingSelector: "noSwipingSelector";
   // @Input() passiveListeners: "passiveListeners";
   // @Input() containerModifierClass: "containerModifierClass";
-  @Input() vtsSlideClass?: string;
   // @Input() slideBlankClass: "slideBlankClass";
   // @Input() slideActiveClass: "slideActiveClass";
   // @Input() slideDuplicateActiveClass: "slideDuplicateActiveClass";
   // @Input() slideVisibleClass: "slideVisibleClass";
-  @Input() vtsSlideDuplicateClass: string = 'slideDuplicateClass';
   // @Input() slideNextClass: "slideNextClass";
   // @Input() slideDuplicateNextClass: "slideDuplicateNextClass";
   // @Input() slidePrevClass: "slidePrevClass";
   // @Input() slideDuplicatePrevClass: "slideDuplicatePrevClass";
-  @Input() vtsWrapperClass: string = 'vts-carousel-wrapper';
   // @Input() runCallbacksOnInit: "runCallbacksOnInit";
   // @Input() observeParents: "observeParents";
   // @Input() observeSlideChildren: "observeSlideChildren";
   // @Input() a11y: "a11y";
-  @Input() vtsAutoplay?: boolean;
-  @Input() vtsController?: ControllerOptions;
   // @Input() coverflowEffect: "coverflowEffect";
   // @Input() cubeEffect: "cubeEffect";
   // @Input() fadeEffect: "fadeEffect";
@@ -161,8 +142,29 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() lazy: "lazy";
   // @Input() mousewheel: "mousewheel";
   // @Input() parallax: "parallax";
-  @Input() vtsThumbs?: ThumbsOptions;
   // @Input() zoom: "zoom";
+
+  @Input() vtsDirection?: VtsCarouselOptions['vtsDirection'] = 'horizontal';
+  @Input() vtsSpeed?: number;
+  @Input() vtsEdgeSwipeDetection: boolean | string = '';
+  @Input() vtsEdgeSwipeThreshold: number = 1;
+  @Input() vtsBreakpoints?: {
+    [width: number]: VtsCarouselOptions;
+    [ratio: string]: VtsCarouselOptions;
+  };
+  @Input() vtsSpaceBetween?: number;
+  @Input() vtsSlidesPerView?: number | 'auto';
+  @Input() vtsLoop?: boolean;
+  @Input() vtsLoopAdditionalSlides?: number;
+  @Input() vtsLoopedSlides?: number | null;
+  @Input() vtsAllowSlidePrev?: boolean;
+  @Input() vtsAllowSlideNext?: boolean;
+  @Input() vtsSlideClass?: string = 'vts-carousel-slide';
+  @Input() vtsSlideDuplicateClass: string = 'slideDuplicateClass';
+  @Input() vtsWrapperClass: string = 'vts-carousel-wrapper';
+  @Input() vtsAutoplay?: boolean;
+  @Input() vtsController?: VtsCarouselControllerOptions;
+  @Input() vtsThumbs?: VtsCarouselThumbsOptions;
   @Input() class: string = '';
   @Input() id: string = '';
   @Input()
@@ -175,27 +177,44 @@ export class VtsCarouselComponent implements OnInit {
       typeof this._vtsNavigation !== 'boolean' && this._vtsNavigation !== ''
         ? this._vtsNavigation?.prevEl
         : null;
-    this._vtsNavigation = setProperty(val, {
+
+    const newVal: typeof this._vtsNavigation = setProperty(val, {
       nextEl: currentNext || null,
       prevEl: currentPrev || null
-    });
-    this.showNavigation = !(
+    }) as VtsCarouselNavigationOptions
+
+    // Set default
+    newVal.nextEl = newVal.nextEl || this._nextElRef?.nativeElement
+    newVal.prevEl = newVal.prevEl || this._prevElRef?.nativeElement
+    
+    this._vtsNavigation = newVal;
+    
+    this.showNextNavigation = !(
       coerceBooleanProperty(val) !== true ||
       (this._vtsNavigation &&
         typeof this._vtsNavigation !== 'boolean' &&
-        this._vtsNavigation.prevEl !== this._prevElRef?.nativeElement &&
-        (this._vtsNavigation.prevEl !== null || this._vtsNavigation.nextEl !== null) &&
+        this._vtsNavigation.nextEl !== null &&
+        this._vtsNavigation.nextEl !== this._nextElRef?.nativeElement &&
         (typeof this._vtsNavigation.nextEl === 'string' ||
-          typeof this._vtsNavigation.prevEl === 'string' ||
-          typeof this._vtsNavigation.nextEl === 'object' ||
+          typeof this._vtsNavigation.nextEl === 'object'))
+    );
+
+    this.showPrevNavigation = !(
+      coerceBooleanProperty(val) !== true ||
+      (this._vtsNavigation &&
+        typeof this._vtsNavigation !== 'boolean' &&
+        this._vtsNavigation.prevEl !== null &&
+        this._vtsNavigation.prevEl !== this._prevElRef?.nativeElement &&
+        (typeof this._vtsNavigation.prevEl === 'string' ||
           typeof this._vtsNavigation.prevEl === 'object'))
     );
   }
   get vtsNavigation() {
     return this._vtsNavigation;
   }
-  private _vtsNavigation: NavigationOptions | boolean | '';
-  showNavigation: boolean = true;
+  private _vtsNavigation: VtsCarouselNavigationOptions | boolean | '';
+  showNextNavigation: boolean = true;
+  showPrevNavigation: boolean = true;
 
   @Input()
   set vtsPagination(val) {
@@ -211,39 +230,40 @@ export class VtsCarouselComponent implements OnInit {
   get vtsPagination() {
     return this._vtsPagination;
   }
-  private _vtsPagination: PaginationOptions | boolean | '';
+  private _vtsPagination: VtsCarouselPaginationOptions | boolean | '';
   showPagination: boolean = true;
 
   @Input()
-  set scrollbar(val) {
+  set vtsScrollbar(val) {
     const current =
-      typeof this._scrollbar !== 'boolean' && this._scrollbar !== '' ? this._scrollbar?.el : null;
-    this._scrollbar = setProperty(val, {
+      typeof this._vtsScrollbar !== 'boolean' && this._vtsScrollbar !== '' ? this._vtsScrollbar?.el : null;
+    this._vtsScrollbar = setProperty(val, {
       el: current || null
     });
-    this.showScrollbar = isShowEl(val, this._scrollbar, this._scrollbarElRef);
+    this.showScrollbar = isShowEl(val, this._vtsScrollbar, this._vtsScrollbarElRef);
   }
-  get scrollbar() {
-    return this._scrollbar;
+  get vtsScrollbar() {
+    return this._vtsScrollbar;
   }
-  private _scrollbar: ScrollbarOptions | boolean | '';
+  private _vtsScrollbar: VtsCarouselScrollbarOptions | boolean | '';
   showScrollbar: boolean = true;
 
   @Input()
   set virtual(val) {
-    this._virtual = setProperty(val);
+    this._vtsVirtual = setProperty(val);
   }
   get virtual() {
-    return this._virtual;
+    return this._vtsVirtual;
   }
-  private _virtual: VirtualOptions | boolean | '';
+  private _vtsVirtual: VtsCarouselVirtualOptions | boolean | '';
 
   @Input()
-  set config(val: CarouselOptions) {
+  set config(val: VtsCarouselOptions) {
     this.updateCarousel(val);
     const { params } = getParams(val);
-    Object.assign(this, params);
+    this.setSelfParams(params)
   }
+
   @Output('_vtsBeforeBreakpoint') s__beforeBreakpoint = new EventEmitter<
     EventsParams['_beforeBreakpoint']
   >();
@@ -384,15 +404,15 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output('vtsScroll') s_scroll = new EventEmitter<EventsParams['scroll']>();
 
-  @Output('vtsScrollbarDragEnd') s_scrollbarDragEnd = new EventEmitter<
+  @Output('vtsScrollbarDragEnd') s_vtsScrollbarDragEnd = new EventEmitter<
     EventsParams['scrollbarDragEnd']
   >();
 
-  @Output('vtsScrollbarDragMove') s_scrollbarDragMove = new EventEmitter<
+  @Output('vtsScrollbarDragMove') s_vtsScrollbarDragMove = new EventEmitter<
     EventsParams['scrollbarDragMove']
   >();
 
-  @Output('vtsScrollbarDragStart') s_scrollbarDragStart = new EventEmitter<
+  @Output('vtsScrollbarDragStart') s_vtsScrollbarDragStart = new EventEmitter<
     EventsParams['scrollbarDragStart']
   >();
 
@@ -500,25 +520,25 @@ export class VtsCarouselComponent implements OnInit {
   _nextElRef!: ElementRef;
   @ViewChild('vtsScrollbarElRef', { static: false })
   set scrollbarElRef(el: ElementRef) {
-    this._scrollbarElRef = el;
-    this._setElement(el, this.scrollbar, 'scrollbar');
+    this._vtsScrollbarElRef = el;
+    this._setElement(el, this.vtsScrollbar, 'vtsScrollbar');
   }
-  _scrollbarElRef!: ElementRef;
+  _vtsScrollbarElRef!: ElementRef;
   @ViewChild('vtsPaginationElRef', { static: false })
   set paginationElRef(el: ElementRef) {
     this._paginationElRef = el;
-    this._setElement(el, this.vtsPagination, 'pagination');
+    this._setElement(el, this.vtsPagination, 'vtsPagination');
   }
   _paginationElRef!: ElementRef;
-  @ContentChildren(CarouselSlideDirective, { descendants: false, emitDistinctChangesOnly: true })
-  slidesEl!: QueryList<CarouselSlideDirective>;
-  private slides!: CarouselSlideDirective[];
+  @ContentChildren(VtsCarouselSlideDirective, { descendants: false, emitDistinctChangesOnly: true })
+  slidesEl!: QueryList<VtsCarouselSlideDirective>;
+  private slides!: VtsCarouselSlideDirective[];
 
-  prependSlides!: Observable<CarouselSlideDirective[]>;
-  appendSlides!: Observable<CarouselSlideDirective[]>;
+  prependSlides!: Observable<VtsCarouselSlideDirective[]>;
+  appendSlides!: Observable<VtsCarouselSlideDirective[]>;
 
   carouselRef?: ICarousel;
-  readonly _activeSlides = new Subject<CarouselSlideDirective[]>();
+  readonly _activeSlides = new Subject<VtsCarouselSlideDirective[]>();
 
   get activeSlides() {
     if (this.virtual) {
@@ -543,8 +563,8 @@ export class VtsCarouselComponent implements OnInit {
   ) {
     this._vtsPagination = false;
     this._vtsNavigation = false;
-    this._scrollbar = false;
-    this._virtual = false;
+    this._vtsScrollbar = false;
+    this._vtsVirtual = false;
   }
 
   private _setElement(el: ElementRef, ref: any, update: string, key = 'el') {
@@ -561,7 +581,7 @@ export class VtsCarouselComponent implements OnInit {
   }
   ngOnInit(): void {
     const { params } = getParams(this);
-    Object.assign(this, params);
+    this.setSelfParams(params)
   }
   ngAfterViewInit() {
     this.childrenSlidesInit();
@@ -572,13 +592,21 @@ export class VtsCarouselComponent implements OnInit {
     });
   }
 
+  private setSelfParams(params: any) {
+    Object.keys(params).forEach(k => {
+      const selfKey = `vts${upperFirst(k)}`
+      //@ts-ignore
+      this[selfKey] = params[k]
+    })
+  }
+
   private childrenSlidesInit() {
     this.slidesChanges(this.slidesEl);
     this.slidesEl.changes.subscribe(this.slidesChanges);
   }
 
-  private slidesChanges = (val: QueryList<CarouselSlideDirective>) => {
-    this.slides = val.map((slide: CarouselSlideDirective, index: number) => {
+  private slidesChanges = (val: QueryList<VtsCarouselSlideDirective>) => {
+    this.slides = val.map((slide: VtsCarouselSlideDirective, index: number) => {
       slide.slideIndex = index;
       slide.classNames = this.vtsSlideClass || '';
       return slide;
@@ -607,7 +635,7 @@ export class VtsCarouselComponent implements OnInit {
   initCarousel() {
     // const { params: carouselParams, passedParams } = getParams(this);
     const { params: carouselParams } = getParams(this);
-    Object.assign(this, carouselParams);
+    this.setSelfParams(carouselParams)
     this._ngZone.runOutsideAngular(() => {
       carouselParams.init = false;
       if (!carouselParams.virtual) {
@@ -620,7 +648,7 @@ export class VtsCarouselComponent implements OnInit {
           emitter.emit([...args]);
         }
       };
-      const _slideClasses: CarouselEvents['_slideClasses'] = (_, updated) => {
+      const _slideClasses: VtsCarouselEvents['_slideClasses'] = (_, updated) => {
         updated.forEach(({ slideEl, classNames }, index) => {
           const dataIndex = slideEl.getAttribute('data-carousel-slide-index');
           const slideIndex = dataIndex ? parseInt(dataIndex) : index;
@@ -640,7 +668,7 @@ export class VtsCarouselComponent implements OnInit {
         });
         this._changeDetectorRef.detectChanges();
       };
-      const _containerClasses: CarouselEvents['_containerClasses'] = (_, classes) => {
+      const _containerClasses: VtsCarouselEvents['_containerClasses'] = (_, classes) => {
         setTimeout(() => {
           this.containerClasses = classes;
         });
@@ -736,7 +764,7 @@ export class VtsCarouselComponent implements OnInit {
         thumbs
       } = this.carouselRef!;
 
-      if (changedParams.pagination) {
+      if (changedParams.vtsPagination) {
         if (
           this.vtsPagination &&
           typeof this.vtsPagination !== 'boolean' &&
@@ -744,7 +772,7 @@ export class VtsCarouselComponent implements OnInit {
           pagination &&
           !pagination.el
         ) {
-          this.updateParameter('pagination', this.vtsPagination);
+          this.updateParameter('vtsPagination', this.vtsPagination);
           pagination.init();
           pagination.render();
           pagination.update();
@@ -754,15 +782,15 @@ export class VtsCarouselComponent implements OnInit {
         }
       }
 
-      if (changedParams.scrollbar) {
+      if (changedParams.vtsScrollbar) {
         if (
-          this.scrollbar &&
-          typeof this.scrollbar !== 'boolean' &&
-          this.scrollbar.el &&
+          this.vtsScrollbar &&
+          typeof this.vtsScrollbar !== 'boolean' &&
+          this.vtsScrollbar.el &&
           scrollbar &&
           !scrollbar.el
         ) {
-          this.updateParameter('scrollbar', this.scrollbar);
+          this.updateParameter('vtsScrollbar', this.vtsScrollbar);
           scrollbar.init();
           scrollbar.updateSize();
           scrollbar.setTranslate();
@@ -782,7 +810,7 @@ export class VtsCarouselComponent implements OnInit {
           !navigation.prevEl &&
           !navigation.nextEl
         ) {
-          this.updateParameter('navigation', this.vtsNavigation);
+          this.updateParameter('vtsNavigation', this.vtsNavigation);
           navigation.init();
           navigation.update();
         } else if (navigation.prevEl && navigation.nextEl) {
@@ -798,7 +826,7 @@ export class VtsCarouselComponent implements OnInit {
       }
 
       if (changedParams.vtsController && this.vtsController && this.vtsController.control) {
-        this.carouselRef!.vtsController.control = this.vtsController.control;
+        this.carouselRef!.controller.control = this.vtsController.control;
       }
 
       this.carouselRef!.update();
@@ -882,7 +910,7 @@ export class VtsCarouselComponent implements OnInit {
     if (!(this.carouselRef && !this.carouselRef.destroyed)) {
       return;
     }
-    const _key = key.replace(/^_/, '') as keyof CarouselOptions;
+    const _key = camelCase(key.replace(/^_/, '').replace(/^vts/, '')) as keyof VtsCarouselOptions;
     const isCurrentParamObj = isObject(this.carouselRef.params[_key]);
 
     if (_key === 'enabled') {
@@ -908,12 +936,12 @@ export class VtsCarouselComponent implements OnInit {
 }
 
 export {
-  CarouselOptions as VtsCarouselOptions,
-  CarouselEvents as VtsCarouselEvents,
-  NavigationOptions as VtsCarouselNavigationOptions,
-  PaginationOptions as VtsCarouselPaginationOptions,
-  ScrollbarOptions as VtsCarouselScrollbarOptions,
-  VirtualOptions as VtsCarouselVirtualOptions,
-  ControllerOptions as VtsCarouselControllerOptions,
-  ThumbsOptions as VtsCarouselThumbsOptions
-};
+  VtsCarouselOptions,
+  VtsCarouselEvents,
+  VtsCarouselNavigationOptions,
+  VtsCarouselPaginationOptions,
+  VtsCarouselScrollbarOptions,
+  VtsCarouselVirtualOptions,
+  VtsCarouselControllerOptions,
+  VtsCarouselThumbsOptions,
+}

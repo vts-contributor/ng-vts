@@ -32,7 +32,7 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
 
     const $slideEl = isVirtual
       ? carousel.$wrapperEl.children(
-          `.${carousel.params.vtsSlideClass}[data-carousel-slide-index="${index}"]`
+          `.${carousel.params.slideClass}[data-carousel-slide-index="${index}"]`
         )
       : carousel.slides.eq(index);
 
@@ -97,16 +97,16 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
 
         $imageEl.addClass(params.loadedClass).removeClass(params.loadingClass);
         $slideEl.find(`.${params.preloaderClass}`).remove();
-        if (carousel.params.vtsLoop && loadInDuplicate) {
+        if (carousel.params.loop && loadInDuplicate) {
           const slideOriginalIndex = $slideEl.attr('data-carousel-slide-index');
-          if ($slideEl.hasClass(carousel.params.vtsSlideDuplicateClass)) {
+          if ($slideEl.hasClass(carousel.params.slideDuplicateClass)) {
             const originalSlide = carousel.$wrapperEl.children(
-              `[data-carousel-slide-index="${slideOriginalIndex}"]:not(.${carousel.params.vtsSlideDuplicateClass})`
+              `[data-carousel-slide-index="${slideOriginalIndex}"]:not(.${carousel.params.slideDuplicateClass})`
             );
             loadInSlide(originalSlide.index(), false);
           } else {
             const duplicatedSlide = carousel.$wrapperEl.children(
-              `.${carousel.params.vtsSlideDuplicateClass}[data-carousel-slide-index="${slideOriginalIndex}"]`
+              `.${carousel.params.slideDuplicateClass}[data-carousel-slide-index="${slideOriginalIndex}"]`
             );
             loadInSlide(duplicatedSlide.index(), false);
           }
@@ -126,16 +126,16 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
     const isVirtual = carousel.virtual && carouselParams.virtual.enabled;
     const params = carouselParams.lazy;
 
-    let vtsSlidesPerView = carouselParams.vtsSlidesPerView;
-    if (vtsSlidesPerView === 'auto') {
-      vtsSlidesPerView = 0;
+    let slidesPerView = carouselParams.slidesPerView;
+    if (slidesPerView === 'auto') {
+      slidesPerView = 0;
     }
 
     function slideExist(index) {
       if (isVirtual) {
         if (
           $wrapperEl.children(
-            `.${carouselParams.vtsSlideClass}[data-carousel-slide-index="${index}"]`
+            `.${carouselParams.slideClass}[data-carousel-slide-index="${index}"]`
           ).length
         ) {
           return true;
@@ -157,17 +157,17 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
         const index = isVirtual ? $(slideEl).attr('data-carousel-slide-index') : $(slideEl).index();
         loadInSlide(index);
       });
-    } else if (vtsSlidesPerView > 1) {
-      for (let i = activeIndex; i < activeIndex + vtsSlidesPerView; i += 1) {
+    } else if (slidesPerView > 1) {
+      for (let i = activeIndex; i < activeIndex + slidesPerView; i += 1) {
         if (slideExist(i)) loadInSlide(i);
       }
     } else {
       loadInSlide(activeIndex);
     }
     if (params.loadPrevNext) {
-      if (vtsSlidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
+      if (slidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
         const amount = params.loadPrevNextAmount;
-        const spv = Math.ceil(vtsSlidesPerView);
+        const spv = Math.ceil(slidesPerView);
         const maxIndex = Math.min(activeIndex + spv + Math.max(amount, spv), slides.length);
         const minIndex = Math.max(activeIndex - Math.max(spv, amount), 0);
         // Next Slides

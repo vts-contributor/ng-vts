@@ -9,10 +9,12 @@ import { Component } from '@angular/core';
       [vtsPagination]="vtsPagination"
       [vtsSpaceBetween]="vtsSpaceBetween"
     >
-      <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src="{{ item.src }}" alt="" />
-        <div class="content">{{ item.content }}</div>
-      </ng-template>
+      <ng-container *ngFor="let item of array">
+        <ng-container *vtsCarouselSlide>
+          <img src="{{ item.src }}" alt="" />
+          <div class="content">{{ item.content }}</div>
+        </ng-container>
+      </ng-container>
     </vts-carousel>
     <div class="navigation-btn next-btn"></div>
     <div class="navigation-btn prev-btn"></div>

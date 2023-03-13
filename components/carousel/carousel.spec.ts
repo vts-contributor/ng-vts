@@ -8,14 +8,14 @@ import { dispatchKeyboardEvent, dispatchMouseEvent } from '@ui-vts/ng-vts/core/t
 
 import { VtscarouselContentDirective } from './carousel-content.directive';
 import { VtscarouselComponent } from './carousel.component';
-import { VtscarouselModule } from './carousel.module';
+import { VtsCarouselModule } from './carousel.module';
 import { VtscarouselOpacityStrategy } from './strategies/opacity-strategy';
 import { VTS_carousel_CUSTOM_STRATEGIES } from './typings';
 
 describe('vts-carousel', () => {
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [BidiModule, VtscarouselModule],
+      imports: [BidiModule, VtsCarouselModule],
       declarations: [VtsTestcarouselBasicComponent, VtsTestcarouselRtlComponent]
     });
     TestBed.compileComponents();
@@ -324,7 +324,7 @@ describe('vts-carousel custom strategies', () => {
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
-      imports: [VtscarouselModule],
+      imports: [VtsCarouselModule],
       declarations: [VtsTestcarouselBasicComponent],
       providers: [
         {

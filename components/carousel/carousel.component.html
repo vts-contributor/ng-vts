@@ -1,9 +1,19 @@
 <ng-content select="[slot=container-start]"></ng-content>
-<ng-container *ngIf="vtsNavigation && showNavigation">
-  <div class="vts-carousel-button-prev" #vtsPrevElRef></div>
-  <div class="vts-carousel-button-next" #vtsNextElRef></div>
+<ng-container *ngIf="vtsNavigation && showPrevNavigation">
+  <div class="vts-carousel-button-prev" #vtsPrevElRef>
+    <svg width="17" height="30" viewBox="0 0 17 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.93 1.485a1.875 1.875 0 0 0-2.655 0L.81 13.95a1.494 1.494 0 0 0 0 2.115L13.275 28.53c.735.735 1.92.735 2.655 0a1.874 1.874 0 0 0 0-2.655L5.07 15 15.945 4.125c.72-.72.72-1.92-.015-2.64Z" fill="currentColor"/>
+    </svg>
+  </div>
 </ng-container>
-<div *ngIf="scrollbar && showScrollbar" class="vts-carousel-scrollbar" #vtsScrollbarElRef></div>
+<ng-container *ngIf="vtsNavigation && showNextNavigation">
+  <div class="vts-carousel-button-next" #vtsNextElRef>
+    <svg width="17" height="30" viewBox="0 0 17 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M1.07 28.515c.735.735 1.92.735 2.655 0L16.19 16.05a1.495 1.495 0 0 0 0-2.115L3.725 1.47a1.874 1.874 0 0 0-2.655 0 1.874 1.874 0 0 0 0 2.655L11.93 15 1.055 25.875c-.72.72-.72 1.92.015 2.64Z" fill="currentColor"/>
+    </svg>
+  </div>
+</ng-container>
+<div *ngIf="vtsScrollbar && showScrollbar" class="vts-carousel-scrollbar" #vtsScrollbarElRef></div>
 <div *ngIf="vtsPagination && showPagination" class="vts-carousel-pagination"
   #vtsPaginationElRef>
 </div>

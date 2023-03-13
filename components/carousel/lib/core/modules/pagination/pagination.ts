@@ -6,7 +6,7 @@ import createElementIfNotDefined from '../../../shared/create-element-if-not-def
 export default function Pagination({ carousel, extendParams, on, emit }) {
   const pfx = 'vts-carousel-pagination';
   extendParams({
-    vtsPagination: {
+    pagination: {
       el: null,
       bulletElement: 'span',
       clickable: false,
@@ -37,7 +37,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     }
   });
 
-  carousel.vtsPagination = {
+  carousel.pagination = {
     el: null,
     $el: null,
     bullets: []
@@ -48,15 +48,15 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
 
   function isPaginationDisabled() {
     return (
-      !carousel.params.vtsPagination.el ||
-      !carousel.vtsPagination.el ||
-      !carousel.vtsPagination.$el ||
-      carousel.vtsPagination.$el.length === 0
+      !carousel.params.pagination.el ||
+      !carousel.pagination.el ||
+      !carousel.pagination.$el ||
+      carousel.pagination.$el.length === 0
     );
   }
 
   function setSideBullets($bulletEl, position) {
-    const { bulletActiveClass } = carousel.params.vtsPagination;
+    const { bulletActiveClass } = carousel.params.pagination;
     $bulletEl[position]()
       .addClass(`${bulletActiveClass}-${position}`)
       [position]()
@@ -66,27 +66,27 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
   function update() {
     // Render || Update Pagination bullets/items
     const rtl = carousel.rtl;
-    const params = carousel.params.vtsPagination;
+    const params = carousel.params.pagination;
     if (isPaginationDisabled()) return;
     const slidesLength =
       carousel.virtual && carousel.params.virtual.enabled
         ? carousel.virtual.slides.length
         : carousel.slides.length;
-    const $el = carousel.vtsPagination.$el;
+    const $el = carousel.pagination.$el;
     // Current/Total
     let current;
-    const total = carousel.params.vtsLoop
-      ? Math.ceil((slidesLength - carousel.vtsLoopedSlides * 2) / carousel.params.slidesPerGroup)
+    const total = carousel.params.loop
+      ? Math.ceil((slidesLength - carousel.loopedSlides * 2) / carousel.params.slidesPerGroup)
       : carousel.snapGrid.length;
-    if (carousel.params.vtsLoop) {
+    if (carousel.params.loop) {
       current = Math.ceil(
-        (carousel.activeIndex - carousel.vtsLoopedSlides) / carousel.params.slidesPerGroup
+        (carousel.activeIndex - carousel.loopedSlides) / carousel.params.slidesPerGroup
       );
-      if (current > slidesLength - 1 - carousel.vtsLoopedSlides * 2) {
-        current -= slidesLength - carousel.vtsLoopedSlides * 2;
+      if (current > slidesLength - 1 - carousel.loopedSlides * 2) {
+        current -= slidesLength - carousel.loopedSlides * 2;
       }
       if (current > total - 1) current -= total;
-      if (current < 0 && carousel.params.vtsPaginationType !== 'bullets') current = total + current;
+      if (current < 0 && carousel.params.paginationType !== 'bullets') current = total + current;
     } else if (typeof carousel.snapIndex !== 'undefined') {
       current = carousel.snapIndex;
     } else {
@@ -95,10 +95,10 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     // Types
     if (
       params.type === 'bullets' &&
-      carousel.vtsPagination.bullets &&
-      carousel.vtsPagination.bullets.length > 0
+      carousel.pagination.bullets &&
+      carousel.pagination.bullets.length > 0
     ) {
-      const bullets = carousel.vtsPagination.bullets;
+      const bullets = carousel.pagination.bullets;
       let firstIndex;
       let lastIndex;
       let midIndex;
@@ -109,7 +109,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
           `${bulletSize * (params.dynamicMainBullets + 4)}px`
         );
         if (params.dynamicMainBullets > 1 && carousel.previousIndex !== undefined) {
-          dynamicBulletIndex += current - (carousel.previousIndex - carousel.vtsLoopedSlides || 0);
+          dynamicBulletIndex += current - (carousel.previousIndex - carousel.loopedSlides || 0);
           if (dynamicBulletIndex > params.dynamicMainBullets - 1) {
             dynamicBulletIndex = params.dynamicMainBullets - 1;
           } else if (dynamicBulletIndex < 0) {
@@ -154,7 +154,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
           for (let i = firstIndex; i <= lastIndex; i += 1) {
             bullets.eq(i).addClass(`${params.bulletActiveClass}-main`);
           }
-          if (carousel.params.vtsLoop) {
+          if (carousel.params.loop) {
             if (bulletIndex >= bullets.length) {
               for (let i = params.dynamicMainBullets; i >= 0; i -= 1) {
                 bullets.eq(bullets.length - i).addClass(`${params.bulletActiveClass}-main`);
@@ -204,7 +204,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       $el
         .find(classesToSelector(params.progressbarFillClass))
         .transform(`translate3d(0,0,0) scaleX(${scaleX}) scaleY(${scaleY})`)
-        .transition(carousel.params.vtsSpeed);
+        .transition(carousel.params.speed);
     }
     if (params.type === 'custom' && params.renderCustom) {
       $el.html(params.renderCustom(carousel, current + 1, total));
@@ -215,26 +215,67 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     if (carousel.params.watchOverflow && carousel.enabled) {
       $el[carousel.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
     }
+    
+    if (params.type === 'bullets' && params.clickable) {
+      $el.addClass(params.clickableClass);
+    } else {
+      $el.removeClass(params.clickableClass);
+    }
+
+    if (params.clickable) {
+      $el.on('click', classesToSelector(params.bulletClass), function onClick(e) {
+        e.preventDefault();
+        let index = $(this).index() * carousel.params.slidesPerGroup;
+        if (carousel.params.loop) index += carousel.loopedSlides;
+        carousel.slideTo(index);
+      });
+    } else
+      $el.off('click', classesToSelector(params.bulletClass))
   }
   function render() {
     // Render Container
-    const params = carousel.params.vtsPagination;
+    const params = carousel.params.pagination;
     if (isPaginationDisabled()) return;
     const slidesLength =
       carousel.virtual && carousel.params.virtual.enabled
         ? carousel.virtual.slides.length
         : carousel.slides.length;
 
-    const $el = carousel.vtsPagination.$el;
+    const $el = carousel.pagination.$el;
     let paginationHTML = '';
+
+    if (carousel.pagination.prevParams?.type) {
+      $el.removeClass(params.modifierClass + carousel.pagination.prevParams.type);
+    }
+
+    $el.addClass(params.modifierClass + params.type);
+    $el.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
+    
+    if (params.type === 'bullets' && params.dynamicBullets) {
+      $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
+      dynamicBulletIndex = 0;
+      if (params.dynamicMainBullets < 1) {
+        params.dynamicMainBullets = 1;
+      }
+    }
+
     if (params.type === 'bullets') {
-      let numberOfBullets = carousel.params.vtsLoop
-        ? Math.ceil((slidesLength - carousel.vtsLoopedSlides * 2) / carousel.params.slidesPerGroup)
+      let numberOfBullets = carousel.params.loop
+        ? Math.ceil((slidesLength - carousel.loopedSlides * 2) / carousel.params.slidesPerGroup)
         : carousel.snapGrid.length;
+
+      if (params.dynamicBullets) {
+        $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
+        dynamicBulletIndex = 0;
+        if (params.dynamicMainBullets < 1) {
+          params.dynamicMainBullets = 1;
+        }
+      }
+
       if (
         carousel.params.freeMode &&
         carousel.params.freeMode.enabled &&
-        !carousel.params.vtsLoop &&
+        !carousel.params.loop &&
         numberOfBullets > slidesLength
       ) {
         numberOfBullets = slidesLength;
@@ -248,7 +289,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       }
       $el.html(paginationHTML);
 
-      carousel.vtsPagination.bullets = $el.find(classesToSelector(params.bulletClass));
+      carousel.pagination.bullets = $el.find(classesToSelector(params.bulletClass));
     }
     if (params.type === 'fraction') {
       if (params.renderFraction) {
@@ -266,6 +307,10 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       $el.html(paginationHTML);
     }
     if (params.type === 'progressbar') {
+      if (params.progressbarOpposite) {
+        $el.addClass(params.progressbarOppositeClass);
+      }
+
       if (params.renderProgressbar) {
         paginationHTML = params.renderProgressbar.call(carousel, params.progressbarFillClass);
       } else {
@@ -274,17 +319,18 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       $el.html(paginationHTML);
     }
     if (params.type !== 'custom') {
-      emit('paginationRender', carousel.vtsPagination.$el[0]);
+      emit('paginationRender', carousel.pagination.$el[0]);
     }
+    carousel.pagination.prevParams = {...params}
   }
   function init() {
-    carousel.params.vtsPagination = createElementIfNotDefined(
+    carousel.params.pagination = createElementIfNotDefined(
       carousel,
-      carousel.originalParams.vtsPagination,
-      carousel.params.vtsPagination,
+      carousel.originalParams.pagination,
+      carousel.params.pagination,
       { el: 'vts-carousel-pagination' }
     );
-    const params = carousel.params.vtsPagination;
+    const params = carousel.params.pagination;
     if (!params.el) return;
 
     let $el = $(params.el);
@@ -301,34 +347,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       }
     }
 
-    if (params.type === 'bullets' && params.clickable) {
-      $el.addClass(params.clickableClass);
-    }
-
-    $el.addClass(params.modifierClass + params.type);
-    $el.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
-
-    if (params.type === 'bullets' && params.dynamicBullets) {
-      $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
-      dynamicBulletIndex = 0;
-      if (params.dynamicMainBullets < 1) {
-        params.dynamicMainBullets = 1;
-      }
-    }
-    if (params.type === 'progressbar' && params.progressbarOpposite) {
-      $el.addClass(params.progressbarOppositeClass);
-    }
-
-    if (params.clickable) {
-      $el.on('click', classesToSelector(params.bulletClass), function onClick(e) {
-        e.preventDefault();
-        let index = $(this).index() * carousel.params.slidesPerGroup;
-        if (carousel.params.vtsLoop) index += carousel.vtsLoopedSlides;
-        carousel.slideTo(index);
-      });
-    }
-
-    Object.assign(carousel.vtsPagination, {
+    Object.assign(carousel.pagination, {
       $el,
       el: $el[0]
     });
@@ -338,50 +357,64 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     }
   }
   function destroy() {
-    const params = carousel.params.vtsPagination;
+    const params = carousel.params.pagination;
     if (isPaginationDisabled()) return;
-    const $el = carousel.vtsPagination.$el;
+    const $el = carousel.pagination.$el;
 
     $el.removeClass(params.hiddenClass);
     $el.removeClass(params.modifierClass + params.type);
     $el.removeClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
-    if (carousel.vtsPagination.bullets && carousel.vtsPagination.bullets.removeClass)
-      carousel.vtsPagination.bullets.removeClass(params.bulletActiveClass);
+    if (carousel.pagination.bullets && carousel.pagination.bullets.removeClass)
+      carousel.pagination.bullets.removeClass(params.bulletActiveClass);
     if (params.clickable) {
       $el.off('click', classesToSelector(params.bulletClass));
     }
   }
 
   on('init', () => {
-    if (carousel.params.vtsPagination.enabled === false) {
+    if (carousel.params.pagination.enabled === false) {
       // eslint-disable-next-line
       disable();
     } else {
       init();
       render();
       update();
+      carousel.pagination.enabled = true
     }
   });
+  on('update', () => {
+    const { enabled, type, renderBullet, renderCustom, renderFraction, renderProgressbar } = carousel.params.pagination;
+    const { type: oType, renderBullet: oRenderBullet, renderCustom: oRenderCustom, renderFraction: oRenderFraction, renderProgressbar: oRenderProgressbar } = carousel.pagination.prevParams || {}
+    if (!enabled && !!carousel.pagination.enabled)
+      disable()
+    if (enabled && !carousel.pagination.enabled)
+      enable()
+
+    if (type !== oType || renderBullet !== oRenderBullet || renderCustom !== oRenderCustom || renderFraction !== oRenderFraction) {
+      render()
+    }
+    update()
+  });
   on('activeIndexChange', () => {
-    if (carousel.params.vtsLoop) {
+    if (carousel.params.loop) {
       update();
     } else if (typeof carousel.snapIndex === 'undefined') {
       update();
     }
   });
   on('snapIndexChange', () => {
-    if (!carousel.params.vtsLoop) {
+    if (!carousel.params.loop) {
       update();
     }
   });
   on('slidesLengthChange', () => {
-    if (carousel.params.vtsLoop) {
+    if (carousel.params.loop) {
       render();
       update();
     }
   });
   on('snapGridLengthChange', () => {
-    if (!carousel.params.vtsLoop) {
+    if (!carousel.params.loop) {
       render();
       update();
     }
@@ -390,9 +423,9 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     destroy();
   });
   on('enable disable', () => {
-    const { $el } = carousel.vtsPagination;
+    const { $el } = carousel.pagination;
     if ($el) {
-      $el[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.vtsPagination.lockClass);
+      $el[carousel.enabled ? 'removeClass' : 'addClass'](carousel.params.pagination.lockClass);
     }
   });
   on('lock unlock', () => {
@@ -400,49 +433,51 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
   });
   on('click', (_s, e) => {
     const targetEl = e.target;
-    const { $el } = carousel.vtsPagination;
+    const { $el } = carousel.pagination;
     if (
-      carousel.params.vtsPagination.el &&
-      carousel.params.vtsPagination.hideOnClick &&
+      carousel.params.pagination.el &&
+      carousel.params.pagination.hideOnClick &&
       $el &&
       $el.length > 0 &&
-      !$(targetEl).hasClass(carousel.params.vtsPagination.bulletClass)
+      !$(targetEl).hasClass(carousel.params.pagination.bulletClass)
     ) {
       if (
-        carousel.vtsNavigation &&
-        ((carousel.vtsNavigation.nextEl && targetEl === carousel.vtsNavigation.nextEl) ||
-          (carousel.vtsNavigation.prevEl && targetEl === carousel.vtsNavigation.prevEl))
+        carousel.navigation &&
+        ((carousel.navigation.nextEl && targetEl === carousel.navigation.nextEl) ||
+          (carousel.navigation.prevEl && targetEl === carousel.navigation.prevEl))
       )
         return;
-      const isHidden = $el.hasClass(carousel.params.vtsPagination.hiddenClass);
+      const isHidden = $el.hasClass(carousel.params.pagination.hiddenClass);
       if (isHidden === true) {
         emit('paginationShow');
       } else {
         emit('paginationHide');
       }
-      $el.toggleClass(carousel.params.vtsPagination.hiddenClass);
+      $el.toggleClass(carousel.params.pagination.hiddenClass);
     }
   });
 
   const enable = () => {
-    carousel.$el.removeClass(carousel.params.vtsPagination.paginationDisabledClass);
-    if (carousel.vtsPagination.$el) {
-      carousel.vtsPagination.$el.removeClass(carousel.params.vtsPagination.paginationDisabledClass);
+    carousel.$el.removeClass(carousel.params.pagination.paginationDisabledClass);
+    if (carousel.pagination.$el) {
+      carousel.pagination.$el.removeClass(carousel.params.pagination.paginationDisabledClass);
     }
     init();
     render();
     update();
+    carousel.pagination.enabled = true
   };
 
   const disable = () => {
-    carousel.$el.addClass(carousel.params.vtsPagination.paginationDisabledClass);
-    if (carousel.vtsPagination.$el) {
-      carousel.vtsPagination.$el.addClass(carousel.params.vtsPagination.paginationDisabledClass);
+    carousel.$el.addClass(carousel.params.pagination.paginationDisabledClass);
+    if (carousel.pagination.$el) {
+      carousel.pagination.$el.addClass(carousel.params.pagination.paginationDisabledClass);
     }
     destroy();
+    carousel.pagination.enabled = false
   };
 
-  Object.assign(carousel.vtsPagination, {
+  Object.assign(carousel.pagination, {
     enable,
     disable,
     render,

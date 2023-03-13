@@ -7,8 +7,8 @@ const isGridEnabled = (carousel, params) => {
 
 export default function setBreakpoint() {
   const carousel = this;
-  const { activeIndex, initialized, vtsLoopedSlides = 0, params, $el } = carousel;
-  const breakpoints = params.vtsBreakpoints;
+  const { activeIndex, initialized, loopedSlides = 0, params, $el } = carousel;
+  const breakpoints = params.breakpoints;
   if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) return;
 
   // Get breakpoint for window width and update parameters
@@ -44,7 +44,7 @@ export default function setBreakpoint() {
   }
 
   // Toggle navigation, pagination, scrollbar
-  ['vtsNavigation', 'vtsPagination', 'scrollbar'].forEach(prop => {
+  ['navigation', 'pagination', 'scrollbar'].forEach(prop => {
     const wasModuleEnabled = params[prop] && params[prop].enabled;
     const isModuleEnabled = breakpointParams[prop] && breakpointParams[prop].enabled;
     if (wasModuleEnabled && !isModuleEnabled) {
@@ -56,10 +56,10 @@ export default function setBreakpoint() {
   });
 
   const directionChanged =
-    breakpointParams.direction && breakpointParams.direction !== params.vtsDirection;
+    breakpointParams.direction && breakpointParams.direction !== params.direction;
   const needsReLoop =
-    params.vtsLoop &&
-    (breakpointParams.vtsSlidesPerView !== params.vtsSlidesPerView || directionChanged);
+    params.loop &&
+    (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
 
   if (directionChanged && initialized) {
     carousel.changeDirection();
@@ -70,8 +70,8 @@ export default function setBreakpoint() {
 
   Object.assign(carousel, {
     allowTouchMove: carousel.params.allowTouchMove,
-    vtsAllowSlideNext: carousel.params.vtsAllowSlideNext,
-    vtsAllowSlidePrev: carousel.params.vtsAllowSlidePrev
+    allowSlideNext: carousel.params.allowSlideNext,
+    allowSlidePrev: carousel.params.allowSlidePrev
   });
 
   if (wasEnabled && !isEnabled) {
@@ -88,7 +88,7 @@ export default function setBreakpoint() {
     carousel.loopDestroy();
     carousel.loopCreate();
     carousel.updateSlides();
-    carousel.slideTo(activeIndex - vtsLoopedSlides + carousel.vtsLoopedSlides, 0, false);
+    carousel.slideTo(activeIndex - loopedSlides + carousel.loopedSlides, 0, false);
   }
 
   carousel.emit('breakpoint', breakpointParams);

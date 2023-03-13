@@ -157,10 +157,10 @@ class Carousel {
 
       // isDirection
       isHorizontal() {
-        return carousel.params.vtsDirection === 'horizontal';
+        return carousel.params.direction === 'horizontal';
       },
       isVertical() {
-        return carousel.params.vtsDirection === 'vertical';
+        return carousel.params.direction === 'vertical';
       },
 
       // Indexes
@@ -179,8 +179,8 @@ class Carousel {
       animating: false,
 
       // Locks
-      vtsAllowSlideNext: carousel.params.vtsAllowSlideNext,
-      vtsAllowSlidePrev: carousel.params.vtsAllowSlidePrev,
+      allowSlideNext: carousel.params.allowSlideNext,
+      allowSlidePrev: carousel.params.allowSlidePrev,
 
       // Touch Events
       touchEvents: (function touchEvents() {
@@ -257,9 +257,9 @@ class Carousel {
     this.loopDestroy = undefined;
     this.loopedSlides = undefined;
     this.lazy = undefined;
-    this.vtsController = undefined;
-    this.vtsAllowSlideNext = undefined;
-    this.vtsAllowSlidePrev = undefined;
+    this.controller = undefined;
+    this.allowSlideNext = undefined;
+    this.allowSlidePrev = undefined;
     this.currentBreakpoint = undefined;
   }
 
@@ -315,7 +315,7 @@ class Carousel {
       .filter(className => {
         return (
           className.indexOf('vts-carousel-slide') === 0 ||
-          className.indexOf(carousel.params.vtsSlideClass) === 0
+          className.indexOf(carousel.params.slideClass) === 0
         );
       })
       .join(' ');
@@ -328,7 +328,7 @@ class Carousel {
     carousel.slides.each(slideEl => {
       const classNames = carousel.getSlideClasses(slideEl);
       updates.push({ slideEl, classNames });
-      carousel.emit('_vtsSlideClass', slideEl, classNames);
+      carousel.emit('_slideClass', slideEl, classNames);
     });
     carousel.emit('_slideClasses', updates);
   }
@@ -390,7 +390,7 @@ class Carousel {
     if (!carousel || carousel.destroyed) return;
     const { snapGrid, params } = carousel;
     // Breakpoints
-    if (params.vtsBreakpoints) {
+    if (params.breakpoints) {
       carousel.setBreakpoint();
     }
     carousel.updateSize();
@@ -416,7 +416,7 @@ class Carousel {
       }
     } else {
       if (
-        (carousel.params.vtsSlidesPerView === 'auto' || carousel.params.vtsSlidesPerView > 1) &&
+        (carousel.params.slidesPerView === 'auto' || carousel.params.slidesPerView > 1) &&
         carousel.isEnd &&
         !carousel.params.centeredSlides
       ) {
@@ -436,7 +436,7 @@ class Carousel {
 
   changeDirection(newDirection, needUpdate = true) {
     const carousel = this;
-    const currentDirection = carousel.params.vtsDirection;
+    const currentDirection = carousel.params.direction;
     if (!newDirection) {
       // eslint-disable-next-line
       newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
@@ -453,7 +453,7 @@ class Carousel {
       .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
     carousel.emitContainerClasses();
 
-    carousel.params.vtsDirection = newDirection;
+    carousel.params.direction = newDirection;
 
     carousel.slides.each(slideEl => {
       if (newDirection === 'vertical') {
@@ -471,10 +471,10 @@ class Carousel {
 
   changeLanguageDirection(direction) {
     const carousel = this;
-    if ((carousel.rtl && vtsDirection === 'rtl') || (!carousel.rtl && vtsDirection === 'ltr'))
+    if ((carousel.rtl && direction === 'rtl') || (!carousel.rtl && direction === 'ltr'))
       return;
     carousel.rtl = direction === 'rtl';
-    carousel.rtlTranslate = carousel.params.vtsDirection === 'horizontal' && carousel.rtl;
+    carousel.rtlTranslate = carousel.params.direction === 'horizontal' && carousel.rtl;
     if (carousel.rtl) {
       carousel.$el.addClass(`${carousel.params.containerModifierClass}rtl`);
       carousel.el.dir = 'rtl';
@@ -500,7 +500,7 @@ class Carousel {
     el.carousel = carousel;
 
     const getWrapperSelector = () => {
-      return `.${(carousel.params.vtsWrapperClass || '').trim().split(' ').join('.')}`;
+      return `.${(carousel.params.wrapperClass || '').trim().split(' ').join('.')}`;
     };
 
     const getWrapper = () => {
@@ -523,7 +523,7 @@ class Carousel {
       $wrapperEl = $(wrapper);
       wrapper.className = carousel.params.wrapperClass;
       $el.append(wrapper);
-      $el.children(`.${carousel.params.vtsSlideClass}`).each(slideEl => {
+      $el.children(`.${carousel.params.slideClass}`).each(slideEl => {
         $wrapperEl.append(slideEl);
       });
     }
@@ -538,7 +538,7 @@ class Carousel {
       // RTL
       rtl: el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl',
       rtlTranslate:
-        carousel.params.vtsDirection === 'horizontal' &&
+        carousel.params.direction === 'horizontal' &&
         (el.dir.toLowerCase() === 'rtl' || $el.css('direction') === 'rtl'),
       wrongRTL: $wrapperEl.css('display') === '-webkit-box'
     });
@@ -564,7 +564,7 @@ class Carousel {
     carousel.addClasses();
 
     // Create loop
-    if (carousel.params.vtsLoop) {
+    if (carousel.params.loop) {
       carousel.loopCreate();
     }
 
@@ -588,9 +588,9 @@ class Carousel {
     }
 
     // Slide To Initial Slide
-    if (carousel.params.vtsLoop) {
+    if (carousel.params.loop) {
       carousel.slideTo(
-        carousel.params.initialSlide + carousel.vtsLoopedSlides,
+        carousel.params.initialSlide + carousel.loopedSlides,
         0,
         carousel.params.runCallbacksOnInit,
         false,
@@ -636,7 +636,7 @@ class Carousel {
     carousel.detachEvents();
 
     // Destroy loop
-    if (params.vtsLoop) {
+    if (params.loop) {
       carousel.loopDestroy();
     }
 

@@ -1,7 +1,7 @@
 //@ts-nocheck
 /* eslint no-unused-vars: "off" */
 export default function slideToClosest(
-  vtsSpeed = this.params.vtsSpeed,
+  speed = this.params.speed,
   runCallbacks = true,
   internal,
   threshold = 0.5
@@ -33,5 +33,5 @@ export default function slideToClosest(
   index = Math.max(index, 0);
   index = Math.min(index, carousel.slidesGrid.length - 1);
 
-  return carousel.slideTo(index, vtsSpeed, runCallbacks, internal);
+  return carousel.slideTo(index, speed, runCallbacks, internal);
 }

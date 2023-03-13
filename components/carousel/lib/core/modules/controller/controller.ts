@@ -4,14 +4,14 @@ import { nextTick } from '../../../shared/utils';
 
 export default function Controller({ carousel, extendParams, on }) {
   extendParams({
-    vtsController: {
+    controller: {
       control: undefined,
       inverse: false,
       by: 'slide' // or 'container'
     }
   });
 
-  carousel.vtsController = {
+  carousel.controller = {
     control: undefined
   };
 
@@ -60,14 +60,14 @@ export default function Controller({ carousel, extendParams, on }) {
   }
   // xxx: for now i will just save one spline function to to
   function getInterpolateFunction(c) {
-    if (!carousel.vtsController.spline) {
-      carousel.vtsController.spline = carousel.params.vtsLoop
+    if (!carousel.controller.spline) {
+      carousel.controller.spline = carousel.params.loop
         ? new LinearSpline(carousel.slidesGrid, c.slidesGrid)
         : new LinearSpline(carousel.snapGrid, c.snapGrid);
     }
   }
   function setTranslate(_t, byController) {
-    const controlled = carousel.vtsController.control;
+    const controlled = carousel.controller.control;
     let multiplier;
     let controlledTranslate;
     const carousel = carousel.constructor;
@@ -77,21 +77,21 @@ export default function Controller({ carousel, extendParams, on }) {
       // it makes sense to create this only once and recall it for the interpolation
       // the function does a lot of value caching for performance
       const translate = carousel.rtlTranslate ? -carousel.translate : carousel.translate;
-      if (carousel.params.vtsController.by === 'slide') {
+      if (carousel.params.controller.by === 'slide') {
         getInterpolateFunction(c);
         // i am not sure why the values have to be multiplicated this way, tried to invert the snapGrid
         // but it did not work out
-        controlledTranslate = -carousel.vtsController.spline.interpolate(-translate);
+        controlledTranslate = -carousel.controller.spline.interpolate(-translate);
       }
 
-      if (!controlledTranslate || carousel.params.vtsController.by === 'container') {
+      if (!controlledTranslate || carousel.params.controller.by === 'container') {
         multiplier =
           (c.maxTranslate() - c.minTranslate()) /
           (carousel.maxTranslate() - carousel.minTranslate());
         controlledTranslate = (translate - carousel.minTranslate()) * multiplier + c.minTranslate();
       }
 
-      if (carousel.params.vtsController.inverse) {
+      if (carousel.params.controller.inverse) {
         controlledTranslate = c.maxTranslate() - controlledTranslate;
       }
       c.updateProgress(controlledTranslate);
@@ -111,7 +111,7 @@ export default function Controller({ carousel, extendParams, on }) {
   }
   function setTransition(duration, byController) {
     const carousel = carousel.constructor;
-    const controlled = carousel.vtsController.control;
+    const controlled = carousel.controller.control;
     let i;
     function setControlledTransition(c) {
       c.setTransition(duration, carousel);
@@ -124,7 +124,7 @@ export default function Controller({ carousel, extendParams, on }) {
         }
         c.$wrapperEl.transitionEnd(() => {
           if (!controlled) return;
-          if (c.params.vtsLoop && carousel.params.vtsController.by === 'slide') {
+          if (c.params.loop && carousel.params.controller.by === 'slide') {
             c.loopFix();
           }
           c.transitionEnd();
@@ -143,14 +143,14 @@ export default function Controller({ carousel, extendParams, on }) {
   }
 
   function removeSpline() {
-    if (!carousel.vtsController.control) return;
-    if (carousel.vtsController.spline) {
-      carousel.vtsController.spline = undefined;
-      delete carousel.vtsController.spline;
+    if (!carousel.controller.control) return;
+    if (carousel.controller.spline) {
+      carousel.controller.spline = undefined;
+      delete carousel.controller.spline;
     }
   }
   on('beforeInit', () => {
-    carousel.vtsController.control = carousel.params.vtsController.control;
+    carousel.controller.control = carousel.params.controller.control;
   });
   on('update', () => {
     removeSpline();
@@ -162,15 +162,15 @@ export default function Controller({ carousel, extendParams, on }) {
     removeSpline();
   });
   on('setTranslate', (_s, translate, byController) => {
-    if (!carousel.vtsController.control) return;
-    carousel.vtsController.setTranslate(translate, byController);
+    if (!carousel.controller.control) return;
+    carousel.controller.setTranslate(translate, byController);
   });
   on('setTransition', (_s, duration, byController) => {
-    if (!carousel.vtsController.control) return;
-    carousel.vtsController.setTransition(duration, byController);
+    if (!carousel.controller.control) return;
+    carousel.controller.setTransition(duration, byController);
   });
 
-  Object.assign(carousel.vtsController, {
+  Object.assign(carousel.controller, {
     setTranslate,
     setTransition
   });

@@ -4,9 +4,9 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-carousel-slides-only',
   template: `
     <vts-carousel [vtsSlidesPerView]="vtsSlidesPerView">
-      <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src="{{ item.src }}" alt="" />
-      </ng-template>
+      <ng-container *ngFor="let item of array">
+        <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
+      </ng-container>
     </vts-carousel>
   `,
   styles: [

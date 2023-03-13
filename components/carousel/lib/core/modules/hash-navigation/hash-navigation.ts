@@ -19,7 +19,7 @@ export default function HashNavigation({ carousel, extendParams, emit, on }) {
     const activeSlideHash = carousel.slides.eq(carousel.activeIndex).attr('data-hash');
     if (newHash !== activeSlideHash) {
       const newIndex = carousel.$wrapperEl
-        .children(`.${carousel.params.vtsSlideClass}[data-hash="${newHash}"]`)
+        .children(`.${carousel.params.slideClass}[data-hash="${newHash}"]`)
         .index();
       if (typeof newIndex === 'undefined') return;
       carousel.slideTo(newIndex);
@@ -58,7 +58,7 @@ export default function HashNavigation({ carousel, extendParams, emit, on }) {
       for (let i = 0, length = carousel.slides.length; i < length; i += 1) {
         const slide = carousel.slides.eq(i);
         const slideHash = slide.attr('data-hash') || slide.attr('data-history');
-        if (slideHash === hash && !slide.hasClass(carousel.params.vtsSlideDuplicateClass)) {
+        if (slideHash === hash && !slide.hasClass(carousel.params.slideDuplicateClass)) {
           const index = slide.index();
           carousel.slideTo(index, speed, carousel.params.runCallbacksOnInit, true);
         }

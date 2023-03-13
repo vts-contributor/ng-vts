@@ -4,7 +4,7 @@ import $ from '../../../shared/dom';
 
 export default function Navigation({ carousel, extendParams, on, emit }) {
   extendParams({
-    vtsNavigation: {
+    navigation: {
       nextEl: null,
       prevEl: null,
 
@@ -16,7 +16,7 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
     }
   });
 
-  carousel.vtsNavigation = {
+  carousel.navigation = {
     nextEl: null,
     $nextEl: null,
     prevEl: null,
@@ -40,7 +40,7 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
   }
 
   function toggleEl($el, disabled) {
-    const params = carousel.params.vtsNavigation;
+    const params = carousel.params.navigation;
     if ($el && $el.length > 0) {
       $el[disabled ? 'addClass' : 'removeClass'](params.disabledClass);
       if ($el[0] && $el[0].tagName === 'BUTTON') $el[0].disabled = disabled;
@@ -51,31 +51,37 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
   }
   function update() {
     // Update Navigation Buttons
-    if (carousel.params.vtsLoop) return;
-    const { $nextEl, $prevEl } = carousel.vtsNavigation;
+    if (carousel.params.loop) return;
+    const { $nextEl, $prevEl } = carousel.navigation;
 
     toggleEl($prevEl, carousel.isBeginning && !carousel.params.rewind);
     toggleEl($nextEl, carousel.isEnd && !carousel.params.rewind);
   }
   function onPrevClick(e) {
     e.preventDefault();
-    if (carousel.isBeginning && !carousel.params.vtsLoop && !carousel.params.rewind) return;
+    if (carousel.isBeginning && !carousel.params.loop && !carousel.params.rewind) return;
     carousel.slidePrev();
     emit('navigationPrev');
   }
   function onNextClick(e) {
     e.preventDefault();
-    if (carousel.isEnd && !carousel.params.vtsLoop && !carousel.params.rewind) return;
+    if (carousel.isEnd && !carousel.params.loop && !carousel.params.rewind) return;
     carousel.slideNext();
     emit('navigationNext');
   }
   function init() {
-    const params = carousel.params.vtsNavigation;
+    const params = carousel.params.navigation;
 
-    carousel.params.vtsNavigation = createElementIfNotDefined(
+    if (!params.nextEl)
+      params.nextEl = 'vts-carousel-button-next'
+
+    if (!params.nextEl)
+      params.prevEl = 'vts-carousel-button-prev'
+
+    carousel.params.navigation = createElementIfNotDefined(
       carousel,
-      carousel.originalParams.vtsNavigation,
-      carousel.params.vtsNavigation,
+      carousel.originalParams.navigation,
+      carousel.params.navigation,
       {
         nextEl: 'vts-carousel-button-next',
         prevEl: 'vts-carousel-button-prev'
@@ -93,7 +99,7 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
       $prevEl.on('click', onPrevClick);
     }
 
-    Object.assign(carousel.vtsNavigation, {
+    Object.assign(carousel.navigation, {
       $nextEl,
       nextEl: $nextEl && $nextEl[0],
       $prevEl,
@@ -106,25 +112,33 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
     }
   }
   function destroy() {
-    const { $nextEl, $prevEl } = carousel.vtsNavigation;
+    const { $nextEl, $prevEl } = carousel.navigation;
     if ($nextEl && $nextEl.length) {
       $nextEl.off('click', onNextClick);
-      $nextEl.removeClass(carousel.params.vtsNavigation.disabledClass);
+      $nextEl.removeClass(carousel.params.navigation.disabledClass);
     }
     if ($prevEl && $prevEl.length) {
       $prevEl.off('click', onPrevClick);
-      $prevEl.removeClass(carousel.params.vtsNavigation.disabledClass);
+      $prevEl.removeClass(carousel.params.navigation.disabledClass);
     }
   }
 
   on('init', () => {
-    if (carousel.params.vtsNavigation.enabled === false) {
+    if (carousel.params.navigation.enabled === false) {
       // eslint-disable-next-line
       disable();
     } else {
       init();
       update();
+      carousel.navigation.enabled = true
     }
+  });
+  on('update', () => {
+    const { enabled } = carousel.params.navigation;
+    if (!enabled && !!carousel.navigation.enabled)
+      disable()
+    if (enabled && !carousel.navigation.enabled)
+      enable()
   });
   on('toEdge fromEdge lock unlock', () => {
     update();
@@ -133,38 +147,38 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
     destroy();
   });
   on('enable disable', () => {
-    const { $nextEl, $prevEl } = carousel.vtsNavigation;
+    const { $nextEl, $prevEl } = carousel.navigation;
     if ($nextEl) {
       $nextEl[carousel.enabled ? 'removeClass' : 'addClass'](
-        carousel.params.vtsNavigation.lockClass
+        carousel.params.navigation.lockClass
       );
     }
     if ($prevEl) {
       $prevEl[carousel.enabled ? 'removeClass' : 'addClass'](
-        carousel.params.vtsNavigation.lockClass
+        carousel.params.navigation.lockClass
       );
     }
   });
   on('click', (_s, e) => {
-    const { $nextEl, $prevEl } = carousel.vtsNavigation;
+    const { $nextEl, $prevEl } = carousel.navigation;
     const targetEl = e.target;
     if (
-      carousel.params.vtsNavigation.hideOnClick &&
+      carousel.params.navigation.hideOnClick &&
       !$(targetEl).is($prevEl) &&
       !$(targetEl).is($nextEl)
     ) {
       if (
-        carousel.vtsPagination &&
-        carousel.params.vtsPagination &&
-        carousel.params.vtsPagination.clickable &&
-        (carousel.vtsPagination.el === targetEl || carousel.vtsPagination.el.contains(targetEl))
+        carousel.pagination &&
+        carousel.params.pagination &&
+        carousel.params.pagination.clickable &&
+        (carousel.pagination.el === targetEl || carousel.pagination.el.contains(targetEl))
       )
         return;
       let isHidden;
       if ($nextEl) {
-        isHidden = $nextEl.hasClass(carousel.params.vtsNavigation.hiddenClass);
+        isHidden = $nextEl.hasClass(carousel.params.navigation.hiddenClass);
       } else if ($prevEl) {
-        isHidden = $prevEl.hasClass(carousel.params.vtsNavigation.hiddenClass);
+        isHidden = $prevEl.hasClass(carousel.params.navigation.hiddenClass);
       }
       if (isHidden === true) {
         emit('navigationShow');
@@ -172,26 +186,28 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
         emit('navigationHide');
       }
       if ($nextEl) {
-        $nextEl.toggleClass(carousel.params.vtsNavigation.hiddenClass);
+        $nextEl.toggleClass(carousel.params.navigation.hiddenClass);
       }
       if ($prevEl) {
-        $prevEl.toggleClass(carousel.params.vtsNavigation.hiddenClass);
+        $prevEl.toggleClass(carousel.params.navigation.hiddenClass);
       }
     }
   });
 
   const enable = () => {
-    carousel.$el.removeClass(carousel.params.vtsNavigation.navigationDisabledClass);
+    carousel.$el.removeClass(carousel.params.navigation.navigationDisabledClass);
     init();
     update();
+    carousel.navigation.enabled = true
   };
 
   const disable = () => {
-    carousel.$el.addClass(carousel.params.vtsNavigation.navigationDisabledClass);
+    carousel.$el.addClass(carousel.params.navigation.navigationDisabledClass);
     destroy();
+    carousel.navigation.enabled = false
   };
 
-  Object.assign(carousel.vtsNavigation, {
+  Object.assign(carousel.navigation, {
     enable,
     disable,
     update,

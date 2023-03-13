@@ -74,11 +74,11 @@ export default function A11y({ carousel, extendParams, on }) {
     const params = carousel.params.a11y;
     const $targetEl = $(e.target);
     if (
-      carousel.vtsNavigation &&
-      carousel.vtsNavigation.$nextEl &&
-      $targetEl.is(carousel.vtsNavigation.$nextEl)
+      carousel.navigation &&
+      carousel.navigation.$nextEl &&
+      $targetEl.is(carousel.navigation.$nextEl)
     ) {
-      if (!(carousel.isEnd && !carousel.params.vtsLoop)) {
+      if (!(carousel.isEnd && !carousel.params.loop)) {
         carousel.slideNext();
       }
       if (carousel.isEnd) {
@@ -88,11 +88,11 @@ export default function A11y({ carousel, extendParams, on }) {
       }
     }
     if (
-      carousel.vtsNavigation &&
-      carousel.vtsNavigation.$prevEl &&
-      $targetEl.is(carousel.vtsNavigation.$prevEl)
+      carousel.navigation &&
+      carousel.navigation.$prevEl &&
+      $targetEl.is(carousel.navigation.$prevEl)
     ) {
-      if (!(carousel.isBeginning && !carousel.params.vtsLoop)) {
+      if (!(carousel.isBeginning && !carousel.params.loop)) {
         carousel.slidePrev();
       }
       if (carousel.isBeginning) {
@@ -103,16 +103,16 @@ export default function A11y({ carousel, extendParams, on }) {
     }
 
     if (
-      carousel.vtsPagination &&
-      $targetEl.is(classesToSelector(carousel.params.vtsPagination.bulletClass))
+      carousel.pagination &&
+      $targetEl.is(classesToSelector(carousel.params.pagination.bulletClass))
     ) {
       $targetEl[0].click();
     }
   }
 
   function updateNavigation() {
-    if (carousel.params.vtsLoop || carousel.params.rewind || !carousel.vtsNavigation) return;
-    const { $nextEl, $prevEl } = carousel.vtsNavigation;
+    if (carousel.params.loop || carousel.params.rewind || !carousel.navigation) return;
+    const { $nextEl, $prevEl } = carousel.navigation;
 
     if ($prevEl && $prevEl.length > 0) {
       if (carousel.isBeginning) {
@@ -136,24 +136,24 @@ export default function A11y({ carousel, extendParams, on }) {
 
   function hasPagination() {
     return (
-      carousel.vtsPagination &&
-      carousel.vtsPagination.bullets &&
-      carousel.vtsPagination.bullets.length
+      carousel.pagination &&
+      carousel.pagination.bullets &&
+      carousel.pagination.bullets.length
     );
   }
 
   function hasClickablePagination() {
-    return hasPagination() && carousel.params.vtsPagination.clickable;
+    return hasPagination() && carousel.params.pagination.clickable;
   }
 
   function updatePagination() {
     const params = carousel.params.a11y;
     if (!hasPagination()) return;
-    carousel.vtsPagination.bullets.each(bulletEl => {
+    carousel.pagination.bullets.each(bulletEl => {
       const $bulletEl = $(bulletEl);
-      if (carousel.params.vtsPagination.clickable) {
+      if (carousel.params.pagination.clickable) {
         makeElFocusable($bulletEl);
-        if (!carousel.params.vtsPagination.renderBullet) {
+        if (!carousel.params.pagination.renderBullet) {
           addElRole($bulletEl, 'button');
           addElLabel(
             $bulletEl,
@@ -161,7 +161,7 @@ export default function A11y({ carousel, extendParams, on }) {
           );
         }
       }
-      if ($bulletEl.is(`.${carousel.params.vtsPagination.bulletActiveClass}`)) {
+      if ($bulletEl.is(`.${carousel.params.pagination.bulletActiveClass}`)) {
         $bulletEl.attr('aria-current', 'true');
       } else {
         $bulletEl.removeAttr('aria-current');
@@ -193,7 +193,7 @@ export default function A11y({ carousel, extendParams, on }) {
 
   const handleFocus = e => {
     if (carousel.a11y.clicked) return;
-    const slideEl = e.target.closest(`.${carousel.params.vtsSlideClass}`);
+    const slideEl = e.target.closest(`.${carousel.params.slideClass}`);
     if (!slideEl || !carousel.slides.includes(slideEl)) return;
     const isActive = carousel.slides.indexOf(slideEl) === carousel.activeIndex;
     const isVisible =
@@ -219,14 +219,14 @@ export default function A11y({ carousel, extendParams, on }) {
       addElRole($(carousel.slides), params.slideRole);
     }
 
-    const slidesLength = carousel.params.vtsLoop
-      ? carousel.slides.filter(el => !el.classList.contains(carousel.params.vtsSlideDuplicateClass))
+    const slidesLength = carousel.params.loop
+      ? carousel.slides.filter(el => !el.classList.contains(carousel.params.slideDuplicateClass))
           .length
       : carousel.slides.length;
     if (params.slideLabelMessage) {
       carousel.slides.each((slideEl, index) => {
         const $slideEl = $(slideEl);
-        const slideIndex = carousel.params.vtsLoop
+        const slideIndex = carousel.params.loop
           ? parseInt($slideEl.attr('data-carousel-slide-index'), 10)
           : index;
         const ariaLabelMessage = params.slideLabelMessage
@@ -256,7 +256,7 @@ export default function A11y({ carousel, extendParams, on }) {
     const wrapperId =
       params.id || $wrapperEl.attr('id') || `carousel-wrapper-${getRandomNumber(16)}`;
     const live =
-      carousel.params.vtsAutoplay && carousel.params.vtsAutoplay.enabled ? 'off' : 'polite';
+      carousel.params.autoplay && carousel.params.autoplay.enabled ? 'off' : 'polite';
     addElId($wrapperEl, wrapperId);
     addElLive($wrapperEl, live);
 
@@ -266,11 +266,11 @@ export default function A11y({ carousel, extendParams, on }) {
     // Navigation
     let $nextEl;
     let $prevEl;
-    if (carousel.vtsNavigation && carousel.vtsNavigation.$nextEl) {
-      $nextEl = carousel.vtsNavigation.$nextEl;
+    if (carousel.navigation && carousel.navigation.$nextEl) {
+      $nextEl = carousel.navigation.$nextEl;
     }
-    if (carousel.vtsNavigation && carousel.vtsNavigation.$prevEl) {
-      $prevEl = carousel.vtsNavigation.$prevEl;
+    if (carousel.navigation && carousel.navigation.$prevEl) {
+      $prevEl = carousel.navigation.$prevEl;
     }
 
     if ($nextEl && $nextEl.length) {
@@ -282,9 +282,9 @@ export default function A11y({ carousel, extendParams, on }) {
 
     // Pagination
     if (hasClickablePagination()) {
-      carousel.vtsPagination.$el.on(
+      carousel.pagination.$el.on(
         'keydown',
-        classesToSelector(carousel.params.vtsPagination.bulletClass),
+        classesToSelector(carousel.params.pagination.bulletClass),
         onEnterOrSpaceKey
       );
     }
@@ -299,11 +299,11 @@ export default function A11y({ carousel, extendParams, on }) {
 
     let $nextEl;
     let $prevEl;
-    if (carousel.vtsNavigation && carousel.vtsNavigation.$nextEl) {
-      $nextEl = carousel.vtsNavigation.$nextEl;
+    if (carousel.navigation && carousel.navigation.$nextEl) {
+      $nextEl = carousel.navigation.$nextEl;
     }
-    if (carousel.vtsNavigation && carousel.vtsNavigation.$prevEl) {
-      $prevEl = carousel.vtsNavigation.$prevEl;
+    if (carousel.navigation && carousel.navigation.$prevEl) {
+      $prevEl = carousel.navigation.$prevEl;
     }
     if ($nextEl) {
       $nextEl.off('keydown', onEnterOrSpaceKey);
@@ -314,9 +314,9 @@ export default function A11y({ carousel, extendParams, on }) {
 
     // Pagination
     if (hasClickablePagination()) {
-      carousel.vtsPagination.$el.off(
+      carousel.pagination.$el.off(
         'keydown',
-        classesToSelector(carousel.params.vtsPagination.bulletClass),
+        classesToSelector(carousel.params.pagination.bulletClass),
         onEnterOrSpaceKey
       );
     }

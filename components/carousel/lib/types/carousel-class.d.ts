@@ -438,7 +438,7 @@ interface ICarousel extends CarouselClass<CarouselEvents> {
 
   a11y: A11yMethods;
   autoplay: AutoplayMethods;
-  vtsController: ControllerMethods;
+  controller: ControllerMethods;
   coverflowEffect: CoverflowEffectMethods;
   cubeEffect: CubeEffectMethods;
   fadeEffect: FadeEffectMethods;
