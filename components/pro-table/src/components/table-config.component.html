@@ -1,7 +1,13 @@
 <div class='vts-protable-configuration'>
   <!-- filters config -->
-  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties"
-    (rowHeightChanger)="handleChangeRowHeight($event)" (reloadTable)="onReloadTable($event)"></vts-group-filter>
+  <vts-group-filter 
+    [filterGroupConfig]="filterGroupConfig" 
+    [properties]="properties"
+    (rowHeightChanger)="handleChangeRowHeight($event)" 
+    (reloadTable)="onReloadTable($event)" 
+    (onChangeHeaders)="onChangeTableHeaders($event)"
+    (putSearchData)="onSearchingByKey($event)"
+  ></vts-group-filter>
 
   <!-- selected items label-->
   <vts-selected-label-config [selectedItemsAmount]="checkedItemsAmount > 0 ? checkedItemsAmount : 0"
@@ -127,7 +133,7 @@
 
 <!-- display status -->
 <ng-template #colorDisplay let-value="status">
-  <vts-tag [vtsColor]="getSelectedStatus(value)?.color">
+  <vts-tag [vtsColor]="getSelectedStatus(value)?.color" class="tag-status">
     <span>{{getSelectedStatus(value)?.text}}</span>
   </vts-tag>
 </ng-template>

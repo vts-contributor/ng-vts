@@ -1,4 +1,3 @@
-import { VtsSafeAny } from './../../../core/types/any';
 import { PropertyType } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
@@ -34,29 +33,24 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       <div style="display:flex; flex-direction: row; align-items: center; flex-basis: 80%">
         <div class="common-group-filter">
           <vts-input-group class="filter-item" [vtsSuffix]="suffixIconSearch">
-            <input type="text" vts-input placeholder="Search all ..." />
+            <input type="text" [(ngModel)]="searchString" vts-input placeholder="Search all ..." (keyup.enter)="onSearch()"/>
           </vts-input-group>
           <ng-template #suffixIconSearch>
             <span vts-icon vtsType="SearchDoutone"></span>
           </ng-template>
     
           <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
-            <vts-input-group class="filter-item" [vtsAddOnBefore]="filter.filterText">
-              <!-- <vts-select style="width: 100%;"
-                [(ngModel)]="filter['selectedValues']"
+            <vts-input-group class="filter-item" [vtsAddOnBefore]="filter.filterText" style="padding-left: 2px">
+              <vts-select
+                [vtsMaxTagCount]="1"
+                [(ngModel)]="filter.selectedValues"
                 vtsMode="multiple" vtsAllowClear="false"
                 [vtsTokenSeparators]="[',']"
+                [vtsCustomTemplate]="multipleTemplate"
+                vtsBorderless
               >
                 <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
-              </vts-select> -->
-              <vts-select style="width: 100%;"
-                  [(ngModel)]="filter['selectedValues']"
-                  vtsMode="multiple" vtsAllowClear="false"
-                  [vtsTokenSeparators]="[',']"
-                  [vtsCustomTemplate]="multipleTemplate"
-                >
-                  <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
-                </vts-select>
+              </vts-select>
             </vts-input-group>
               <ng-template #multipleTemplate let-selected>
                 <div class="vts-select-selection-item-content">
@@ -66,17 +60,40 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           </ng-container>
         </div>
         <div>
-          <button vts-button class="btn-table-config" vtsType="default" (click)="reloadTableData()">
-            <i vts-icon vtsType="FilterFramesDoutone"></i>
-          </button>
+          <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuFilters" [vtsPlacement]="'bottomRight'">
+            <i vts-icon vtsType="FilterFramesDoutone" ></i>
+          </a>
           <vts-badge [vtsCount]="5" style="margin-bottom: 20px;">
             <a class="head-example"></a>
           </vts-badge>
+          <vts-dropdown-menu #menuFilters="vtsDropdownMenu">
+          <!-- <ul vts-menu>
+            <vts-form-item>
+            <vts-form-control>
+              <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
+                <vts-option [vtsValue]="filter.filterText" [vtsLabel]="filter.filterText"></vts-option>
+                <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
+              </ng-container>
+            </vts-form-control>
+            </vts-form-item>
+          </ul> -->
+
+            <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
+              <ul vts-menu>
+                <li vts-menu-item>{{filter.filterText}}</li>
+                <li vts-menu>
+                  <ul *ngFor="let filterItem of filter.filterValues">
+                    <li vts-menu-item>{{filterItem.label}}</li>
+                  </ul>
+                </li>
+              </ul>
+            </ng-container>
+          </vts-dropdown-menu>
         </div>
       </div>
 
       <div vts-col class="btn-config-area" style="flex-basis: 20%">
-        <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert">
+        <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert" [vtsPlacement]="'bottomRight'">
           <i vts-icon vtsType="HeightDoutone"></i>
         </a>
         <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
@@ -108,9 +125,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
             </ng-container>
             <vts-divider style="margin: 0;"></vts-divider>
             <div class="btn-config-area">
-              <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary"
+              <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary" (click)="onSavePropsConfig()"
                 >Save</button>
-              <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default"
+              <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default" (click)="onResetPropsConfig()"
                 >Reset</button>
             </div>
           </ul>
@@ -190,12 +207,21 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       .btn-config-area {
         display: flex;
         justify-content: right;
+        padding-top: 4px
       }
 
       .btn-table-config {
         margin-left: 8px;
         border: none;
         color: #73777A;
+      }
+
+      .vts-select-multiple .vts-select-selector {
+        flex-wrap: unset;
+      }
+
+      .vts-dropdown {
+        position: inherit;
       }
   `],
   host: {
@@ -206,6 +232,7 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
   dir: Direction = 'ltr';
   private destroy$ = new Subject<void>();
   validateForm!: FormGroup;
+  filterForm!: FormGroup;
   controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
 
   @Input() vtsIsCollapse = true;
@@ -216,7 +243,7 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
   @Input() vtsPageIndex: number = 1;
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
 
-  @Output() putSearchData: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
+  @Output() putSearchData: EventEmitter<string> = new EventEmitter<string>();
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() reloadTable = new EventEmitter<boolean>();
   @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
@@ -226,7 +253,7 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
   vtsNoDisplayProperties: number = 0;
   vtsTotalProperties: number = 0;
   vtsOffsetButton = 0;
-  inputValue: string = 'my site';
+  searchString: string = '';
   vtsRowHeight: string | number = 54;
   allChecked = false;
   indeterminateConfig = true;
@@ -253,12 +280,13 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
       this.totalProps = changes.headers.currentValue;
       this.totalProps = this.totalProps.filter(prop => prop.headerTitle && prop.headerTitle != null);
       this.displayedProps = this.totalProps;
-      this.vtsNoDisplayProperties = this.displayedProps.length > 3 ? 3 : this.totalProps.length;
-      this.vtsTotalProperties = this.totalProps.length;
-      this.validateForm = this.fb.group({});
-      for (let i = 1; i <= this.vtsTotalProperties; i++) {
-        this.controlArray.push({ index: i, show: i <= this.vtsNoDisplayProperties, title: this.displayedProps[i - 1].headerTitle, controlKey: this.displayedProps[i - 1].propertyName });
-        this.validateForm.addControl(`${this.displayedProps[i - 1].propertyName}`, new FormControl());
+    }
+
+    if (changes.filterGroupConfig) {
+      let currentFilterGroupConfig = changes.filterGroupConfig.currentValue;
+      this.filterForm = this.fb.group({});
+      for (let i = 0; i < currentFilterGroupConfig.length; i++) {
+        this.filterForm.addControl(`${currentFilterGroupConfig[i].filterText}`, new FormControl());
       }
     }
   }
@@ -268,20 +296,8 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
     this.destroy$.complete();
   }
 
-  toggleCollapse(): void {
-    this.vtsIsCollapse = !this.vtsIsCollapse;
-    this.controlArray.forEach((c, index) => {
-      c.show = this.vtsIsCollapse ? index < this.vtsNoDisplayProperties : true;
-    });
-  }
-
-  resetForm(): void {
-    this.validateForm.reset();
-    this.putSearchData.emit(this.validateForm.value);
-  }
-
   onSearch() {
-    this.putSearchData.emit(this.validateForm.value);
+    this.putSearchData.emit(this.searchString);
   }
 
   drop(event: CdkDragDrop<string[]>): void {
@@ -325,7 +341,6 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
     } else {
       this.indeterminateConfig = true;
     }
-    this.onChangeHeaders.emit(this.properties);
   }
 
   updateAllChecked(): void {
@@ -341,7 +356,6 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
         checked: false
       }));
     }
-    this.onChangeHeaders.emit(this.properties);
     this.changeDetector.detectChanges();
   }
 
@@ -353,11 +367,21 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
       };
       // get label of selected values for current filter
       let selectedLabels = [...currentFilter.filterValues.filter((x: any) => currentFilter.selectedValues.indexOf(x.value) >= 0).map((x: any) => x.label)];
-      if (selectedLabels.length > 1) {
-        output = selectedLabels[0] + ',...';
-      }
-      else output = selectedLabels[0];
+      output = selectedLabels[0];
     }
     return output;
+  }
+
+  onSavePropsConfig() {
+    localStorage.setItem('properties', this.properties.toString());
+    this.onChangeHeaders.emit(this.properties);
+  }
+
+  onResetPropsConfig() {
+    this.properties.forEach(prop => {
+      prop.checked = true;
+    })
+    localStorage.setItem('properties', this.properties.toString());
+    this.onChangeHeaders.emit(this.properties);
   }
 }

@@ -405,7 +405,6 @@ export class VtsSelectComponent
   }
 
   updateListOfValue(listOfValue: VtsSafeAny[]): void {
-    console.log(listOfValue);
     const covertListToModel = (
       list: VtsSafeAny[],
       mode: VtsSelectModeType

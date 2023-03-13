@@ -95,7 +95,7 @@ td {
   cursor: pointer;
 }
 
-.vts-tabs-top > .vts-tabs-nav {
+.vts-tabs-top>.vts-tabs-nav {
   margin-bottom: 0px;
 }
 
@@ -108,4 +108,15 @@ td {
 
 .vts-table-column-sorters {
   width: auto !important;
+}
+
+.tag-status {
+  border-radius: 6px;
+  padding: 3px 8px 5px;
+  height: 32px;
+  font-family: 'Sarabun';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
 }

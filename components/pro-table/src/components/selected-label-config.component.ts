@@ -31,38 +31,27 @@ import { takeUntil } from 'rxjs/operators';
     <div class="selected-label">
       <span>
         <span class="text-format bold-text">{{ selectedItemsAmount }}</span><span class="text-format normal-text"> items is selected</span>
-        <span class="divider-s">|</span>
-        <span>
-          <ng-container *ngIf="selectedItemsAmount>0 else disabedClearAll">
-            <a class="text-format bold-text lable-btn" (click)="onClearAll()"><i vts-icon vtsType="ClearDoutone"></i>Clear Selected</a>
-          </ng-container>
-          <ng-template #disabedClearAll>
-            <a class="text-format bold-text lable-btn" (click)="onClearAll()" disabled><i vts-icon vtsType="ClearDoutone"></i>Clear Selected</a>
-          </ng-template>
-        </span>
+        <ng-container *ngIf="selectedItemsAmount>0">
+          <span class="divider-s">|</span>
+          <span>
+            <a class="text-format bold-text lable-btn" (click)="onClearAll()"><i vts-icon class="pr-4" vtsType="ClearDoutone"></i>Clear Selected</a>
+          </span>
+        </ng-container>
       </span>
 
-      <span>
-        <ng-container *ngIf="selectedItemsAmount>0 else disabedAction">
+      <ng-container *ngIf="selectedItemsAmount>0">
         <span>
-          <a class="text-format bold-text lable-btn" (click)="onDeleteSelectedItems()"><i vts-icon vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
+          <span>
+            <a class="text-format bold-text lable-btn" (click)="onDeleteSelectedItems()"><i vts-icon class="pr-4" vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
+          </span>
+          <span>
+            <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()"><i vts-icon class="pr-4" vtsType="CloudUploadDoutone"></i>Export Selected</a>
+          </span>
+          <span>
+            <a class="text-format bold-text lable-btn"><i vts-icon class="pr-4" vtsType="ArrowDownOutline"></i>More action</a>
+          </span>
         </span>
-        <span>
-          <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()"><i vts-icon vtsType="CloudUploadDoutone"></i>Export Selected</a>
-        </span>
-        </ng-container>
-        <ng-template #disabedAction>
-        <span>
-          <a class="text-format bold-text lable-btn" (click)="onDeleteSelectedItems()" disabled><i vts-icon vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
-        </span>
-        <span>
-          <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()" disabled><i vts-icon vtsType="CloudUploadDoutone"></i>Export Selected</a>
-        </span>
-        </ng-template>
-        <span>
-          <a class="text-format bold-text lable-btn"><i vts-icon vtsType="ArrowDownOutline"></i>More action</a>
-        </span>
-      </span>
+      </ng-container>
     </div>
   `,
   styles: [`
@@ -105,6 +94,10 @@ import { takeUntil } from 'rxjs/operators';
 
     .lable-btn {
       color: #0663C7;
+    }
+
+    .pr-4 {
+      padding-right: 4px !important;
     }
   `],
   host: {

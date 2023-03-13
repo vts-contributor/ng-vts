@@ -126,6 +126,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.properties) {
       this.properties = this.properties.filter(item => item.headerTitle || item.headerTitle != null);
+      this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
       console.log('on change', changes.properties);
     }
 
@@ -137,8 +138,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       console.log(changes.listData.currentValue);
       this.loading = true;
       this.displayedData = [...this.listData];
-      this.filteredList = [...this.listData];
-      this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
+      this.filteredList = [...this.listData]
       this.loading = false;
     }
 
@@ -388,7 +388,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   exportDataToFile(mode?: string) {
     this.visibleExport = true;
     if (this.exportRequest) {
-      this.exportRequest.body = mode=='all'? this.listData: this.setOfCheckedId;
+      this.exportRequest.body = mode == 'all' ? this.listData : this.setOfCheckedId;
       let url = this.exportRequest.url;
       this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
         const data = res;
@@ -579,4 +579,28 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     }
   }
 
+  onChangeTableHeaders(event: VtsSafeAny) {
+    console.log('onchange headers', event);
+    if (event) {
+      this.properties = [...event];
+      if (this.properties.filter(prop => prop.checked === false).length = 0) {
+        this.displayedData = [];
+      }
+    }
+  }
+
+  onSearchingByKey(event: string) {
+    if (event && this.getRequest) {
+      this.getRequest.body = {
+        ...this.getRequest.body,
+        'keyword': event
+      };
+      let url = this.getRequest.url + '?keyword=' + event;
+      this.service.searchByKeyword({ ...this.getRequest, url }).subscribe(res => {
+        this.displayedData = [...res.body];
+        this.vtsTotal = +res.headers.get('X-Total-Count');
+        this.changeDetector.detectChanges();
+      });
+    }
+  }
 }

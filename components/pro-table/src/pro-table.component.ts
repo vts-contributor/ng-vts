@@ -206,7 +206,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             value: 'Country'
           },
         ],
-        defaultValue: 'Home'
+        selectedValues: []
       },
       {
         filterText: 'Filter 2',
@@ -220,7 +220,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             value: 'Country'
           },
         ],
-        defaultValue: 'Home'
+        selectedValues: []
       },
     ];
   }

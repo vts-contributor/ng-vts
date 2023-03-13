@@ -54,6 +54,16 @@ export class ProtableService {
     }
   }
 
+  searchByKeyword(request: Request): Observable<any> {
+    if (request.type == 'GET') {
+      return this.http.get(request.url, {observe: 'response'});
+    } else {
+      return this.http.post(request.url, request.body, {
+        observe: 'response'
+      });
+    }
+  }
+
   exportSelectedDataToFile(request: Request) {
     if (request) {
       return this.http.post(request.url, request.body, { observe: 'body' });
