@@ -5,7 +5,15 @@ import { VtsChartOptions } from '@ui-vts/ng-vts/chart';
   selector: 'vts-demo-chart-vertical-grouped',
   template: `
     <vts-vertical-grouped-chart [vtsOptions]="chartOptions"></vts-vertical-grouped-chart>
-  `
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+    `
+  ]
 })
 export class VtsDemoChartVerticalGroupedComponent {
   chartOptions: VtsChartOptions = {

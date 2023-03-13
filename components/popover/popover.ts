@@ -8,8 +8,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -62,8 +62,8 @@ export class VtsPopoverDirective extends VtsTooltipBaseDirective {
   @Output('vtsPopoverVisibleChange')
   override readonly visibleChange = new EventEmitter<boolean>();
 
-  override componentFactory: ComponentFactory<VtsPopoverComponent> =
-    this.resolver.resolveComponentFactory(VtsPopoverComponent);
+  override componentRef: ComponentRef<VtsPopoverComponent> =
+    this.hostView.createComponent(VtsPopoverComponent);
 
   protected override getProxyPropertyMap(): PropertyMapping {
     return {

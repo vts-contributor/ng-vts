@@ -48,6 +48,7 @@ function generateDemoModule(content) {
     .replace(/{{imports}}/g, imports)
     .replace(/{{declarations}}/g, declarations)
     .replace(/{{component}}/g, componentName(component))
+    .replace(/{{lowerComponent}}/g, componentName(component).toLowerCase())
     .replace(/{{entryComponents}}/g, entryComponents.join(',\n'));
 }
 

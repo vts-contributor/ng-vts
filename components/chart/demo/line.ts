@@ -5,7 +5,15 @@ import { VtsChartOptions } from '@ui-vts/ng-vts/chart';
   selector: 'vts-demo-chart-line',
   template: `
     <vts-line-chart [vtsOptions]="chartOptions"></vts-line-chart>
-  `
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+    `
+  ]
 })
 export class VtsDemoChartLineComponent {
   chartOptions: VtsChartOptions = {

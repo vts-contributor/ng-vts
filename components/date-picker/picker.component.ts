@@ -199,7 +199,7 @@ export type Placement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
         class="vts-picker-wrapper"
         [vtsNoAnimation]="noAnimation"
         [@slideMotion]="'enter'"
-        style="position: relative;"
+        (@slideMotion.done)="onAnimateEnd()"
       >
         <ng-container *ngTemplateOutlet="inlineMode"></ng-container>
       </div>
@@ -538,6 +538,11 @@ export class VtsPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
   // Whether open state is permanently controlled by user himself
   isOpenHandledByUser(): boolean {
     return this.open !== undefined;
+  }
+
+  // Handle wrong position on open
+  onAnimateEnd() {
+    this.cdkConnectedOverlay?.overlayRef?.updatePosition();
   }
 
   private setPlacement(placement: Placement): void {
