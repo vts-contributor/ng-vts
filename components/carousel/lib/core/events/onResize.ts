@@ -7,23 +7,23 @@ export default function onResize() {
   if (el && el.offsetWidth === 0) return;
 
   // Breakpoints
-  if (params.vtsBreakpoints) {
+  if (params.breakpoints) {
     carousel.setBreakpoint();
   }
 
   // Save locks
-  const { vtsAllowSlideNext, vtsAllowSlidePrev, snapGrid } = carousel;
+  const { allowSlideNext, allowSlidePrev, snapGrid } = carousel;
 
   // Disable locks on resize
-  carousel.vtsAllowSlideNext = true;
-  carousel.vtsAllowSlidePrev = true;
+  carousel.allowSlideNext = true;
+  carousel.allowSlidePrev = true;
 
   carousel.updateSize();
   carousel.updateSlides();
 
   carousel.updateSlidesClasses();
   if (
-    (params.vtsSlidesPerView === 'auto' || params.vtsSlidesPerView > 1) &&
+    (params.slidesPerView === 'auto' || params.slidesPerView > 1) &&
     carousel.isEnd &&
     !carousel.isBeginning &&
     !carousel.params.centeredSlides
@@ -33,12 +33,12 @@ export default function onResize() {
     carousel.slideTo(carousel.activeIndex, 0, false, true);
   }
 
-  if (carousel.vtsAutoplay && carousel.vtsAutoplay.running && carousel.vtsAutoplay.paused) {
-    carousel.vtsAutoplay.run();
+  if (carousel.autoplay && carousel.autoplay.running && carousel.autoplay.paused) {
+    carousel.autoplay.run();
   }
   // Return locks after resize
-  carousel.vtsAllowSlidePrev = vtsAllowSlidePrev;
-  carousel.vtsAllowSlideNext = vtsAllowSlideNext;
+  carousel.allowSlidePrev = allowSlidePrev;
+  carousel.allowSlideNext = allowSlideNext;
 
   if (carousel.params.watchOverflow && snapGrid !== carousel.snapGrid) {
     carousel.checkOverflow();

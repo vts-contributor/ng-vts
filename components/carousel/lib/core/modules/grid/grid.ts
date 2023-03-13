@@ -12,7 +12,7 @@ export default function Grid({ carousel, extendParams }) {
   let numFullColumns;
 
   const initSlides = slidesLength => {
-    const { vtsSlidesPerView } = carousel.params;
+    const { slidesPerView } = carousel.params;
     const { rows, fill } = carousel.params.grid;
     slidesPerRow = slidesNumberEvenToRows / rows;
     numFullColumns = Math.floor(slidesLength / rows);
@@ -21,13 +21,13 @@ export default function Grid({ carousel, extendParams }) {
     } else {
       slidesNumberEvenToRows = Math.ceil(slidesLength / rows) * rows;
     }
-    if (vtsSlidesPerView !== 'auto' && fill === 'row') {
-      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, vtsSlidesPerView * rows);
+    if (slidesPerView !== 'auto' && fill === 'row') {
+      slidesNumberEvenToRows = Math.max(slidesNumberEvenToRows, slidesPerView * rows);
     }
   };
 
   const updateSlide = (i, slide, slidesLength, getDirectionLabel) => {
-    const { slidesPerGroup, vtsSpaceBetween } = carousel.params;
+    const { slidesPerGroup, spaceBetween } = carousel.params;
     const { rows, fill } = carousel.params.grid;
     // Set slides order
     let newSlideOrderIndex;
@@ -67,17 +67,17 @@ export default function Grid({ carousel, extendParams }) {
     }
     slide.css(
       getDirectionLabel('margin-top'),
-      row !== 0 ? vtsSpaceBetween && `${vtsSpaceBetween}px` : ''
+      row !== 0 ? spaceBetween && `${spaceBetween}px` : ''
     );
   };
 
   const updateWrapperSize = (slideSize, snapGrid, getDirectionLabel) => {
-    const { vtsSpaceBetween, centeredSlides, roundLengths } = carousel.params;
+    const { spaceBetween, centeredSlides, roundLengths } = carousel.params;
     const { rows } = carousel.params.grid;
-    carousel.virtualSize = (slideSize + vtsSpaceBetween) * slidesNumberEvenToRows;
-    carousel.virtualSize = Math.ceil(carousel.virtualSize / rows) - vtsSpaceBetween;
+    carousel.virtualSize = (slideSize + spaceBetween) * slidesNumberEvenToRows;
+    carousel.virtualSize = Math.ceil(carousel.virtualSize / rows) - spaceBetween;
     carousel.$wrapperEl.css({
-      [getDirectionLabel('width')]: `${carousel.virtualSize + vtsSpaceBetween}px`
+      [getDirectionLabel('width')]: `${carousel.virtualSize + spaceBetween}px`
     });
     if (centeredSlides) {
       snapGrid.splice(0, snapGrid.length);

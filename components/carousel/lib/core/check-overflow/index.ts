@@ -14,11 +14,11 @@ function checkOverflow() {
   } else {
     carousel.isLocked = carousel.snapGrid.length === 1;
   }
-  if (params.vtsAllowSlideNext === true) {
-    carousel.vtsAllowSlideNext = !carousel.isLocked;
+  if (params.allowSlideNext === true) {
+    carousel.allowSlideNext = !carousel.isLocked;
   }
-  if (params.vtsAllowSlidePrev === true) {
-    carousel.vtsAllowSlidePrev = !carousel.isLocked;
+  if (params.allowSlidePrev === true) {
+    carousel.allowSlidePrev = !carousel.isLocked;
   }
 
   if (wasLocked && wasLocked !== carousel.isLocked) {

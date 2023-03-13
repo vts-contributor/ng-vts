@@ -8,13 +8,15 @@ import { Component } from '@angular/core';
       [vtsNavigation]="vtsNavigation"
       [vtsPagination]="vtsPagination"
     >
-      <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src="{{ item.src }}" alt="" />
-        <div class="caption">
-          <div class="title">{{ item.title }}</div>
-          <div class="content">{{ item.content }}</div>
-        </div>
-      </ng-template>
+      <ng-container *ngFor="let item of array">
+        <ng-container *vtsCarouselSlide>
+          <img src="{{ item.src }}" alt="" />
+          <div class="caption">
+            <div class="title">{{ item.title }}</div>
+            <div class="content">{{ item.content }}</div>
+          </div>
+        </ng-container>
+      </ng-container>
     </vts-carousel>
     <div class="pagination-custom"></div>
   `,

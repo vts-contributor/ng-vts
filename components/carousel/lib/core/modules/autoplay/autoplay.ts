@@ -7,13 +7,13 @@ import { nextTick } from '../../../shared/utils';
 export default function Autoplay({ carousel, extendParams, on, emit }) {
   let timeout;
 
-  carousel.vtsAutoplay = {
+  carousel.autoplay = {
     running: false,
     paused: false
   };
 
   extendParams({
-    vtsAutoplay: {
+    autoplay: {
       enabled: false,
       delay: 3000,
       waitForTransition: true,
@@ -26,30 +26,30 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
 
   function run() {
     if (!carousel.size) {
-      carousel.vtsAutoplay.running = false;
-      carousel.vtsAutoplay.paused = false;
+      carousel.autoplay.running = false;
+      carousel.autoplay.paused = false;
       return;
     }
     const $activeSlideEl = carousel.slides.eq(carousel.activeIndex);
-    let delay = carousel.params.vtsAutoplay.delay;
+    let delay = carousel.params.autoplay.delay;
     if ($activeSlideEl.attr('data-carousel-autoplay')) {
-      delay = $activeSlideEl.attr('data-carousel-autoplay') || carousel.params.vtsAutoplay.delay;
+      delay = $activeSlideEl.attr('data-carousel-autoplay') || carousel.params.autoplay.delay;
     }
     clearTimeout(timeout);
     timeout = nextTick(() => {
       let autoplayResult;
-      if (carousel.params.vtsAutoplay.reverseDirection) {
-        if (carousel.params.vtsLoop) {
+      if (carousel.params.autoplay.reverseDirection) {
+        if (carousel.params.loop) {
           carousel.loopFix();
-          autoplayResult = carousel.slidePrev(carousel.params.vtsSpeed, true, true);
+          autoplayResult = carousel.slidePrev(carousel.params.speed, true, true);
           emit('autoplay');
         } else if (!carousel.isBeginning) {
-          autoplayResult = carousel.slidePrev(carousel.params.vtsSpeed, true, true);
+          autoplayResult = carousel.slidePrev(carousel.params.speed, true, true);
           emit('autoplay');
-        } else if (!carousel.params.vtsAutoplay.stopOnLastSlide) {
+        } else if (!carousel.params.autoplay.stopOnLastSlide) {
           autoplayResult = carousel.slideTo(
             carousel.slides.length - 1,
-            carousel.params.vtsSpeed,
+            carousel.params.speed,
             true,
             true
           );
@@ -57,20 +57,20 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
         } else {
           stop();
         }
-      } else if (carousel.params.vtsLoop) {
+      } else if (carousel.params.loop) {
         carousel.loopFix();
-        autoplayResult = carousel.slideNext(carousel.params.vtsSpeed, true, true);
+        autoplayResult = carousel.slideNext(carousel.params.speed, true, true);
         emit('autoplay');
       } else if (!carousel.isEnd) {
-        autoplayResult = carousel.slideNext(carousel.params.vtsSpeed, true, true);
+        autoplayResult = carousel.slideNext(carousel.params.speed, true, true);
         emit('autoplay');
-      } else if (!carousel.params.vtsAutoplay.stopOnLastSlide) {
-        autoplayResult = carousel.slideTo(0, carousel.params.vtsSpeed, true, true);
+      } else if (!carousel.params.autoplay.stopOnLastSlide) {
+        autoplayResult = carousel.slideTo(0, carousel.params.speed, true, true);
         emit('autoplay');
       } else {
         stop();
       }
-      if (carousel.params.cssMode && carousel.vtsAutoplay.running) run();
+      if (carousel.params.cssMode && carousel.autoplay.running) run();
       else if (autoplayResult === false) {
         run();
       }
@@ -78,31 +78,31 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
   }
   function start() {
     if (typeof timeout !== 'undefined') return false;
-    if (carousel.vtsAutoplay.running) return false;
-    carousel.vtsAutoplay.running = true;
+    if (carousel.autoplay.running) return false;
+    carousel.autoplay.running = true;
     emit('autoplayStart');
     run();
     return true;
   }
   function stop() {
-    if (!carousel.vtsAutoplay.running) return false;
+    if (!carousel.autoplay.running) return false;
     if (typeof timeout === 'undefined') return false;
 
     if (timeout) {
       clearTimeout(timeout);
       timeout = undefined;
     }
-    carousel.vtsAutoplay.running = false;
+    carousel.autoplay.running = false;
     emit('autoplayStop');
     return true;
   }
   function pause(speed) {
-    if (!carousel.vtsAutoplay.running) return;
-    if (carousel.vtsAutoplay.paused) return;
+    if (!carousel.autoplay.running) return;
+    if (carousel.autoplay.paused) return;
     if (timeout) clearTimeout(timeout);
-    carousel.vtsAutoplay.paused = true;
-    if (speed === 0 || !carousel.params.vtsAutoplay.waitForTransition) {
-      carousel.vtsAutoplay.paused = false;
+    carousel.autoplay.paused = true;
+    if (speed === 0 || !carousel.params.autoplay.waitForTransition) {
+      carousel.autoplay.paused = false;
       run();
     } else {
       ['transitionend', 'webkitTransitionEnd'].forEach(event => {
@@ -112,12 +112,12 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
   }
   function onVisibilityChange() {
     const document = getDocument();
-    if (document.visibilityState === 'hidden' && carousel.vtsAutoplay.running) {
+    if (document.visibilityState === 'hidden' && carousel.autoplay.running) {
       pause();
     }
-    if (document.visibilityState === 'visible' && carousel.vtsAutoplay.paused) {
+    if (document.visibilityState === 'visible' && carousel.autoplay.paused) {
       run();
-      carousel.vtsAutoplay.paused = false;
+      carousel.autoplay.paused = false;
     }
   }
   function onTransitionEnd(e) {
@@ -126,15 +126,15 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
     ['transitionend', 'webkitTransitionEnd'].forEach(event => {
       carousel.$wrapperEl[0].removeEventListener(event, onTransitionEnd);
     });
-    carousel.vtsAutoplay.paused = false;
-    if (!carousel.vtsAutoplay.running) {
+    carousel.autoplay.paused = false;
+    if (!carousel.autoplay.running) {
       stop();
     } else {
       run();
     }
   }
   function onMouseEnter() {
-    if (carousel.params.vtsAutoplay.disableOnInteraction) {
+    if (carousel.params.autoplay.disableOnInteraction) {
       stop();
     } else {
       emit('autoplayPause');
@@ -146,15 +146,15 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
     });
   }
   function onMouseLeave() {
-    if (carousel.params.vtsAutoplay.disableOnInteraction) {
+    if (carousel.params.autoplay.disableOnInteraction) {
       return;
     }
-    carousel.vtsAutoplay.paused = false;
+    carousel.autoplay.paused = false;
     emit('autoplayResume');
     run();
   }
   function attachMouseEvents() {
-    if (carousel.params.vtsAutoplay.pauseOnMouseEnter) {
+    if (carousel.params.autoplay.pauseOnMouseEnter) {
       carousel.$el.on('mouseenter', onMouseEnter);
       carousel.$el.on('mouseleave', onMouseLeave);
     }
@@ -165,7 +165,7 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
   }
 
   on('init', () => {
-    if (carousel.params.vtsAutoplay.enabled) {
+    if (carousel.params.autoplay.enabled) {
       start();
       const document = getDocument();
       document.addEventListener('visibilitychange', onVisibilityChange);
@@ -173,17 +173,17 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
     }
   });
   on('beforeTransitionStart', (_s, speed, internal) => {
-    if (carousel.vtsAutoplay.running) {
-      if (internal || !carousel.params.vtsAutoplay.disableOnInteraction) {
-        carousel.vtsAutoplay.pause(speed);
+    if (carousel.autoplay.running) {
+      if (internal || !carousel.params.autoplay.disableOnInteraction) {
+        carousel.autoplay.pause(speed);
       } else {
         stop();
       }
     }
   });
   on('sliderFirstMove', () => {
-    if (carousel.vtsAutoplay.running) {
-      if (carousel.params.vtsAutoplay.disableOnInteraction) {
+    if (carousel.autoplay.running) {
+      if (carousel.params.autoplay.disableOnInteraction) {
         stop();
       } else {
         pause();
@@ -193,22 +193,22 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
   on('touchEnd', () => {
     if (
       carousel.params.cssMode &&
-      carousel.vtsAutoplay.paused &&
-      !carousel.params.vtsAutoplay.disableOnInteraction
+      carousel.autoplay.paused &&
+      !carousel.params.autoplay.disableOnInteraction
     ) {
       run();
     }
   });
   on('destroy', () => {
     detachMouseEvents();
-    if (carousel.vtsAutoplay.running) {
+    if (carousel.autoplay.running) {
       stop();
     }
     const document = getDocument();
     document.removeEventListener('visibilitychange', onVisibilityChange);
   });
 
-  Object.assign(carousel.vtsAutoplay, {
+  Object.assign(carousel.autoplay, {
     pause,
     run,
     start,

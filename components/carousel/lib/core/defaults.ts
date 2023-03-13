@@ -1,10 +1,10 @@
 //@ts-nocheck
 export default {
   init: true,
-  vtsDirection: 'horizontal',
+  direction: 'horizontal',
   touchEventsTarget: 'wrapper',
   initialSlide: 0,
-  vtsSpeed: 300,
+  speed: 300,
   cssMode: false,
   updateOnWindowResize: true,
   resizeObserver: true,
@@ -25,8 +25,8 @@ export default {
   url: null,
 
   // To support iOS's swipe-to-go-back gesture (when being used in-app).
-  vtsEdgeSwipeDetection: false,
-  vtsEdgeSwipeThreshold: 20,
+  edgeSwipeDetection: false,
+  edgeSwipeThreshold: 20,
 
   // Autoheight
   autoHeight: false,
@@ -45,8 +45,8 @@ export default {
   breakpointsBase: 'window',
 
   // Slides grid
-  vtsSpaceBetween: 0,
-  vtsSlidesPerView: 1,
+  spaceBetween: 0,
+  slidesPerView: 1,
   slidesPerGroup: 1,
   slidesPerGroupSkip: 0,
   slidesPerGroupAuto: false,
@@ -102,9 +102,9 @@ export default {
   updateOnImagesReady: true,
 
   // loop
-  vtsLoop: false,
-  vtsLoopAdditionalSlides: 0,
-  vtsLoopedSlides: null,
+  loop: false,
+  loopAdditionalSlides: 0,
+  loopedSlides: null,
   loopedSlidesLimit: true,
   loopFillGroupWithBlank: false,
   loopPreventsSlide: true,
@@ -113,8 +113,8 @@ export default {
   rewind: false,
 
   // Swiping/no swiping
-  vtsAllowSlidePrev: true,
-  vtsAllowSlideNext: true,
+  allowSlidePrev: true,
+  allowSlideNext: true,
   swipeHandler: null, // '.swipe-handler',
   noSwiping: true,
   noSwipingClass: 'vts-carousel-no-swiping',
@@ -127,17 +127,17 @@ export default {
 
   // NS
   containerModifierClass: 'vts-carousel-', // NEW
-  vtsSlideClass: 'vts-carousel-slide',
+  slideClass: 'vts-carousel-slide',
   slideBlankClass: 'vts-carousel-slide-invisible-blank',
   slideActiveClass: 'vts-carousel-slide-active',
   slideDuplicateActiveClass: 'vts-carousel-slide-duplicate-active',
   slideVisibleClass: 'vts-carousel-slide-visible',
-  vtsSlideDuplicateClass: 'vts-carousel-slide-duplicate',
+  slideDuplicateClass: 'vts-carousel-slide-duplicate',
   slideNextClass: 'vts-carousel-slide-next',
   slideDuplicateNextClass: 'vts-carousel-slide-duplicate-next',
   slidePrevClass: 'vts-carousel-slide-prev',
   slideDuplicatePrevClass: 'vts-carousel-slide-duplicate-prev',
-  vtsWrapperClass: 'vts-carousel-wrapper',
+  wrapperClass: 'vts-carousel-wrapper',
 
   // Callbacks
   runCallbacksOnInit: true,

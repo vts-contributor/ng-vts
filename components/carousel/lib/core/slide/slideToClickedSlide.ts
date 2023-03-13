@@ -6,22 +6,22 @@ export default function slideToClickedSlide() {
   const carousel = this;
   const { params, $wrapperEl } = carousel;
 
-  const vtsSlidesPerView =
-    params.vtsSlidesPerView === 'auto' ? carousel.slidesPerViewDynamic() : params.vtsSlidesPerView;
+  const slidesPerView =
+    params.slidesPerView === 'auto' ? carousel.slidesPerViewDynamic() : params.slidesPerView;
   let slideToIndex = carousel.clickedIndex;
   let realIndex;
-  if (params.vtsLoop) {
+  if (params.loop) {
     if (carousel.animating) return;
     realIndex = parseInt($(carousel.clickedSlide).attr('data-carousel-slide-index'), 10);
     if (params.centeredSlides) {
       if (
-        slideToIndex < carousel.vtsLoopedSlides - vtsSlidesPerView / 2 ||
-        slideToIndex > carousel.slides.length - carousel.vtsLoopedSlides + vtsSlidesPerView / 2
+        slideToIndex < carousel.loopedSlides - slidesPerView / 2 ||
+        slideToIndex > carousel.slides.length - carousel.loopedSlides + slidesPerView / 2
       ) {
         carousel.loopFix();
         slideToIndex = $wrapperEl
           .children(
-            `.${params.vtsSlideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.vtsSlideDuplicateClass})`
+            `.${params.slideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`
           )
           .eq(0)
           .index();
@@ -32,11 +32,11 @@ export default function slideToClickedSlide() {
       } else {
         carousel.slideTo(slideToIndex);
       }
-    } else if (slideToIndex > carousel.slides.length - vtsSlidesPerView) {
+    } else if (slideToIndex > carousel.slides.length - slidesPerView) {
       carousel.loopFix();
       slideToIndex = $wrapperEl
         .children(
-          `.${params.vtsSlideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.vtsSlideDuplicateClass})`
+          `.${params.slideClass}[data-carousel-slide-index="${realIndex}"]:not(.${params.slideDuplicateClass})`
         )
         .eq(0)
         .index();

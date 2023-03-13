@@ -1,9 +1,9 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 import { coerceBooleanProperty } from './lib/utils/utils';
 @Directive({
-  selector: 'ng-template[vts-carousel-slide]'
+  selector: 'ng-template[vtsCarouselSlide]'
 })
-export class CarouselSlideDirective {
+export class VtsCarouselSlideDirective {
   @Input() virtualIndex: number = 0;
   @Input() class: string = '';
   @Input()

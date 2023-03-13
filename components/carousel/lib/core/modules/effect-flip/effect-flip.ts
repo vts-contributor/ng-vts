@@ -101,10 +101,10 @@ export default function EffectFlip({ carousel, extendParams, on }) {
     getEffectParams: () => carousel.params.flipEffect,
     perspective: () => true,
     overwriteParams: () => ({
-      vtsSlidesPerView: 1,
+      slidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
-      vtsSpaceBetween: 0,
+      spaceBetween: 0,
       virtualTranslate: !carousel.params.cssMode
     })
   });

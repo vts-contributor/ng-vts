@@ -12,7 +12,7 @@ export default function updateSlidesClasses() {
   let activeSlide;
   if (isVirtual) {
     activeSlide = carousel.$wrapperEl.find(
-      `.${params.vtsSlideClass}[data-carousel-slide-index="${activeIndex}"]`
+      `.${params.slideClass}[data-carousel-slide-index="${activeIndex}"]`
     );
   } else {
     activeSlide = slides.eq(activeIndex);
@@ -21,72 +21,72 @@ export default function updateSlidesClasses() {
   // Active classes
   activeSlide.addClass(params.slideActiveClass);
 
-  if (params.vtsLoop) {
+  if (params.loop) {
     // Duplicate to all looped slides
-    if (activeSlide.hasClass(params.vtsSlideDuplicateClass)) {
+    if (activeSlide.hasClass(params.slideDuplicateClass)) {
       $wrapperEl
         .children(
-          `.${params.vtsSlideClass}:not(.${params.vtsSlideDuplicateClass})[data-carousel-slide-index="${realIndex}"]`
+          `.${params.slideClass}:not(.${params.slideDuplicateClass})[data-carousel-slide-index="${realIndex}"]`
         )
         .addClass(params.slideDuplicateActiveClass);
     } else {
       $wrapperEl
         .children(
-          `.${params.vtsSlideClass}.${params.vtsSlideDuplicateClass}[data-carousel-slide-index="${realIndex}"]`
+          `.${params.slideClass}.${params.slideDuplicateClass}[data-carousel-slide-index="${realIndex}"]`
         )
         .addClass(params.slideDuplicateActiveClass);
     }
   }
   // Next Slide
   let nextSlide = activeSlide
-    .nextAll(`.${params.vtsSlideClass}`)
+    .nextAll(`.${params.slideClass}`)
     .eq(0)
     .addClass(params.slideNextClass);
-  if (params.vtsLoop && nextSlide.length === 0) {
+  if (params.loop && nextSlide.length === 0) {
     nextSlide = slides.eq(0);
     nextSlide.addClass(params.slideNextClass);
   }
   // Prev Slide
   let prevSlide = activeSlide
-    .prevAll(`.${params.vtsSlideClass}`)
+    .prevAll(`.${params.slideClass}`)
     .eq(0)
     .addClass(params.slidePrevClass);
-  if (params.vtsLoop && prevSlide.length === 0) {
+  if (params.loop && prevSlide.length === 0) {
     prevSlide = slides.eq(-1);
     prevSlide.addClass(params.slidePrevClass);
   }
-  if (params.vtsLoop) {
+  if (params.loop) {
     // Duplicate to all looped slides
-    if (nextSlide.hasClass(params.vtsSlideDuplicateClass)) {
+    if (nextSlide.hasClass(params.slideDuplicateClass)) {
       $wrapperEl
         .children(
-          `.${params.vtsSlideClass}:not(.${
-            params.vtsSlideDuplicateClass
+          `.${params.slideClass}:not(.${
+            params.slideDuplicateClass
           })[data-carousel-slide-index="${nextSlide.attr('data-carousel-slide-index')}"]`
         )
         .addClass(params.slideDuplicateNextClass);
     } else {
       $wrapperEl
         .children(
-          `.${params.vtsSlideClass}.${
-            params.vtsSlideDuplicateClass
+          `.${params.slideClass}.${
+            params.slideDuplicateClass
           }[data-carousel-slide-index="${nextSlide.attr('data-carousel-slide-index')}"]`
         )
         .addClass(params.slideDuplicateNextClass);
     }
-    if (prevSlide.hasClass(params.vtsSlideDuplicateClass)) {
+    if (prevSlide.hasClass(params.slideDuplicateClass)) {
       $wrapperEl
         .children(
-          `.${params.vtsSlideClass}:not(.${
-            params.vtsSlideDuplicateClass
+          `.${params.slideClass}:not(.${
+            params.slideDuplicateClass
           })[data-carousel-slide-index="${prevSlide.attr('data-carousel-slide-index')}"]`
         )
         .addClass(params.slideDuplicatePrevClass);
     } else {
       $wrapperEl
         .children(
-          `.${params.vtsSlideClass}.${
-            params.vtsSlideDuplicateClass
+          `.${params.slideClass}.${
+            params.slideDuplicateClass
           }[data-carousel-slide-index="${prevSlide.attr('data-carousel-slide-index')}"]`
         )
         .addClass(params.slideDuplicatePrevClass);

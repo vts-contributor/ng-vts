@@ -28,7 +28,7 @@ export default function updateSlides() {
   const { $wrapperEl, size: carouselSize, rtlTranslate: rtl, wrongRTL } = carousel;
   const isVirtual = carousel.virtual && params.virtual.enabled;
   const previousSlidesLength = isVirtual ? carousel.virtual.slides.length : carousel.slides.length;
-  const slides = $wrapperEl.children(`.${carousel.params.vtsSlideClass}`);
+  const slides = $wrapperEl.children(`.${carousel.params.slideClass}`);
   const slidesLength = isVirtual ? carousel.virtual.slides.length : slides.length;
   let snapGrid = [];
   const slidesGrid = [];
@@ -47,18 +47,18 @@ export default function updateSlides() {
   const previousSnapGridLength = carousel.snapGrid.length;
   const previousSlidesGridLength = carousel.slidesGrid.length;
 
-  let vtsSpaceBetween = params.vtsSpaceBetween;
+  let spaceBetween = params.spaceBetween;
   let slidePosition = -offsetBefore;
   let prevSlideSize = 0;
   let index = 0;
   if (typeof carouselSize === 'undefined') {
     return;
   }
-  if (typeof vtsSpaceBetween === 'string' && vtsSpaceBetween.indexOf('%') >= 0) {
-    vtsSpaceBetween = (parseFloat(vtsSpaceBetween.replace('%', '')) / 100) * carouselSize;
+  if (typeof spaceBetween === 'string' && spaceBetween.indexOf('%') >= 0) {
+    spaceBetween = (parseFloat(spaceBetween.replace('%', '')) / 100) * carouselSize;
   }
 
-  carousel.virtualSize = -vtsSpaceBetween;
+  carousel.virtualSize = -spaceBetween;
 
   // reset margins
   if (rtl) slides.css({ marginLeft: '', marginBottom: '', marginTop: '' });
@@ -79,10 +79,10 @@ export default function updateSlides() {
   let slideSize;
 
   const shouldResetSlideSize =
-    params.vtsSlidesPerView === 'auto' &&
-    params.vtsBreakpoints &&
-    Object.keys(params.vtsBreakpoints).filter(key => {
-      return typeof params.vtsBreakpoints[key].vtsSlidesPerView !== 'undefined';
+    params.slidesPerView === 'auto' &&
+    params.breakpoints &&
+    Object.keys(params.breakpoints).filter(key => {
+      return typeof params.breakpoints[key].slidesPerView !== 'undefined';
     }).length > 0;
 
   for (let i = 0; i < slidesLength; i += 1) {
@@ -93,7 +93,7 @@ export default function updateSlides() {
     }
     if (slide.css('display') === 'none') continue; // eslint-disable-line
 
-    if (params.vtsSlidesPerView === 'auto') {
+    if (params.slidesPerView === 'auto') {
       if (shouldResetSlideSize) {
         slides[i].style[getDirectionLabel('width')] = ``;
       }
@@ -138,7 +138,7 @@ export default function updateSlides() {
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
       slideSize =
-        (carouselSize - (params.vtsSlidesPerView - 1) * vtsSpaceBetween) / params.vtsSlidesPerView;
+        (carouselSize - (params.slidesPerView - 1) * spaceBetween) / params.slidesPerView;
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
       if (slides[i]) {
@@ -151,10 +151,10 @@ export default function updateSlides() {
     slidesSizesGrid.push(slideSize);
 
     if (params.centeredSlides) {
-      slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + vtsSpaceBetween;
+      slidePosition = slidePosition + slideSize / 2 + prevSlideSize / 2 + spaceBetween;
       if (prevSlideSize === 0 && i !== 0)
-        slidePosition = slidePosition - carouselSize / 2 - vtsSpaceBetween;
-      if (i === 0) slidePosition = slidePosition - carouselSize / 2 - vtsSpaceBetween;
+        slidePosition = slidePosition - carouselSize / 2 - spaceBetween;
+      if (i === 0) slidePosition = slidePosition - carouselSize / 2 - spaceBetween;
       if (Math.abs(slidePosition) < 1 / 1000) slidePosition = 0;
       if (params.roundLengths) slidePosition = Math.floor(slidePosition);
       if (index % params.slidesPerGroup === 0) snapGrid.push(slidePosition);
@@ -168,10 +168,10 @@ export default function updateSlides() {
       )
         snapGrid.push(slidePosition);
       slidesGrid.push(slidePosition);
-      slidePosition = slidePosition + slideSize + vtsSpaceBetween;
+      slidePosition = slidePosition + slideSize + spaceBetween;
     }
 
-    carousel.virtualSize += slideSize + vtsSpaceBetween;
+    carousel.virtualSize += slideSize + spaceBetween;
 
     prevSlideSize = slideSize;
 
@@ -180,11 +180,11 @@ export default function updateSlides() {
   carousel.virtualSize = Math.max(carousel.virtualSize, carouselSize) + offsetAfter;
 
   if (rtl && wrongRTL && (params.effect === 'slide' || params.effect === 'coverflow')) {
-    $wrapperEl.css({ width: `${carousel.virtualSize + params.vtsSpaceBetween}px` });
+    $wrapperEl.css({ width: `${carousel.virtualSize + params.spaceBetween}px` });
   }
   if (params.setWrapperSize) {
     $wrapperEl.css({
-      [getDirectionLabel('width')]: `${carousel.virtualSize + params.vtsSpaceBetween}px`
+      [getDirectionLabel('width')]: `${carousel.virtualSize + params.spaceBetween}px`
     });
   }
 
@@ -213,7 +213,7 @@ export default function updateSlides() {
   }
   if (snapGrid.length === 0) snapGrid = [0];
 
-  if (params.vtsSpaceBetween !== 0) {
+  if (params.spaceBetween !== 0) {
     const key = carousel.isHorizontal() && rtl ? 'marginLeft' : getDirectionLabel('marginRight');
     slides
       .filter((_, slideIndex) => {
@@ -223,15 +223,15 @@ export default function updateSlides() {
         }
         return true;
       })
-      .css({ [key]: `${vtsSpaceBetween}px` });
+      .css({ [key]: `${spaceBetween}px` });
   }
 
   if (params.centeredSlides && params.centeredSlidesBounds) {
     let allSlidesSize = 0;
     slidesSizesGrid.forEach(slideSizeValue => {
-      allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
+      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
     });
-    allSlidesSize -= params.vtsSpaceBetween;
+    allSlidesSize -= params.spaceBetween;
     const maxSnap = allSlidesSize - carouselSize;
     snapGrid = snapGrid.map(snap => {
       if (snap < 0) return -offsetBefore;
@@ -243,9 +243,9 @@ export default function updateSlides() {
   if (params.centerInsufficientSlides) {
     let allSlidesSize = 0;
     slidesSizesGrid.forEach(slideSizeValue => {
-      allSlidesSize += slideSizeValue + (params.vtsSpaceBetween ? params.vtsSpaceBetween : 0);
+      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
     });
-    allSlidesSize -= params.vtsSpaceBetween;
+    allSlidesSize -= params.spaceBetween;
     if (allSlidesSize < carouselSize) {
       const allSlidesOffset = (carouselSize - allSlidesSize) / 2;
       snapGrid.forEach((snap, snapIndex) => {

@@ -65,7 +65,7 @@ export default function Parallax({ carousel, extendParams, on }) {
       });
     slides.each((slideEl, slideIndex) => {
       let slideProgress = slideEl.progress;
-      if (carousel.params.slidesPerGroup > 1 && carousel.params.vtsSlidesPerView !== 'auto') {
+      if (carousel.params.slidesPerGroup > 1 && carousel.params.slidesPerView !== 'auto') {
         slideProgress += Math.ceil(slideIndex / 2) - progress * (snapGrid.length - 1);
       }
       slideProgress = Math.min(Math.max(slideProgress, -1), 1);
@@ -79,7 +79,7 @@ export default function Parallax({ carousel, extendParams, on }) {
     });
   };
 
-  const setTransition = (duration = carousel.params.vtsSpeed) => {
+  const setTransition = (duration = carousel.params.speed) => {
     const { $el } = carousel;
     $el
       .find(

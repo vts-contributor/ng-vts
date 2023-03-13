@@ -42,7 +42,7 @@ export default function onTouchMove(event) {
     }
     return;
   }
-  if (data.isTouchEvent && params.touchReleaseOnEdges && !params.vtsLoop) {
+  if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) {
     if (carousel.isVertical()) {
       // Vertical
       if (
@@ -121,7 +121,7 @@ export default function onTouchMove(event) {
   }
 
   if (!data.isMoved) {
-    if (params.vtsLoop && !params.cssMode) {
+    if (params.loop && !params.cssMode) {
       carousel.loopFix();
     }
     data.startTranslate = carousel.getTranslate();
@@ -133,7 +133,7 @@ export default function onTouchMove(event) {
     // Grab Cursor
     if (
       params.grabCursor &&
-      (carousel.vtsAllowSlideNext === true || carousel.vtsAllowSlidePrev === true)
+      (carousel.allowSlideNext === true || carousel.allowSlidePrev === true)
     ) {
       carousel.setGrabCursor(true);
     }
@@ -178,20 +178,20 @@ export default function onTouchMove(event) {
 
   // Directions locks
   if (
-    !carousel.vtsAllowSlideNext &&
+    !carousel.allowSlideNext &&
     carousel.swipeDirection === 'next' &&
     data.currentTranslate < data.startTranslate
   ) {
     data.currentTranslate = data.startTranslate;
   }
   if (
-    !carousel.vtsAllowSlidePrev &&
+    !carousel.allowSlidePrev &&
     carousel.swipeDirection === 'prev' &&
     data.currentTranslate > data.startTranslate
   ) {
     data.currentTranslate = data.startTranslate;
   }
-  if (!carousel.vtsAllowSlidePrev && !carousel.vtsAllowSlideNext) {
+  if (!carousel.allowSlidePrev && !carousel.allowSlideNext) {
     data.currentTranslate = data.startTranslate;
   }
 

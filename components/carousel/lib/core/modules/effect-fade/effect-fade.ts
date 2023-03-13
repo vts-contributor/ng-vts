@@ -50,10 +50,10 @@ export default function EffectFade({ carousel, extendParams, on }) {
     setTranslate,
     setTransition,
     overwriteParams: () => ({
-      vtsSlidesPerView: 1,
+      slidesPerView: 1,
       slidesPerGroup: 1,
       watchSlidesProgress: true,
-      vtsSpaceBetween: 0,
+      spaceBetween: 0,
       virtualTranslate: !carousel.params.cssMode
     })
   });

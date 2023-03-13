@@ -1,16 +1,16 @@
 //@ts-nocheck
 import $ from '../../shared/dom';
 
-export default function updateAutoHeight(vtsSpeed) {
+export default function updateAutoHeight(speed) {
   const carousel = this;
   const activeSlides = [];
   const isVirtual = carousel.virtual && carousel.params.virtual.enabled;
   let newHeight = 0;
   let i;
-  if (typeof vtsSpeed === 'number') {
-    carousel.setTransition(vtsSpeed);
-  } else if (vtsSpeed === true) {
-    carousel.setTransition(carousel.params.vtsSpeed);
+  if (typeof speed === 'number') {
+    carousel.setTransition(speed);
+  } else if (speed === true) {
+    carousel.setTransition(carousel.params.speed);
   }
 
   const getSlideByIndex = index => {
@@ -22,13 +22,13 @@ export default function updateAutoHeight(vtsSpeed) {
     return carousel.slides.eq(index)[0];
   };
   // Find slides currently in view
-  if (carousel.params.vtsSlidesPerView !== 'auto' && carousel.params.vtsSlidesPerView > 1) {
+  if (carousel.params.slidesPerView !== 'auto' && carousel.params.slidesPerView > 1) {
     if (carousel.params.centeredSlides) {
       (carousel.visibleSlides || $([])).each(slide => {
         activeSlides.push(slide);
       });
     } else {
-      for (i = 0; i < Math.ceil(carousel.params.vtsSlidesPerView); i += 1) {
+      for (i = 0; i < Math.ceil(carousel.params.slidesPerView); i += 1) {
         const index = carousel.activeIndex + i;
         if (index > carousel.slides.length && !isVirtual) break;
         activeSlides.push(getSlideByIndex(index));

@@ -1,7 +1,7 @@
 //@ts-nocheck
 export default function slideToLoop(
   index = 0,
-  vtsSpeed = this.params.vtsSpeed,
+  speed = this.params.speed,
   runCallbacks = true,
   internal
 ) {
@@ -32,9 +32,9 @@ export default function slideToLoop(
 
   const carousel = this;
   let newIndex = index;
-  if (carousel.params.vtsLoop) {
-    newIndex += carousel.vtsLoopedSlides;
+  if (carousel.params.loop) {
+    newIndex += carousel.loopedSlides;
   }
 
-  return carousel.slideTo(newIndex, vtsSpeed, runCallbacks, internal);
+  return carousel.slideTo(newIndex, speed, runCallbacks, internal);
 }
