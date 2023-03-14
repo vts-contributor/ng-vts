@@ -70,6 +70,13 @@ export interface NavigationOptions {
   prevEl?: CSSSelector | HTMLElement | null;
 
   /**
+   * Position of navigation buttons
+   *
+   * @default null
+   */
+  position?: 'inner' | 'edge';
+
+  /**
    * Toggle navigation buttons visibility after click on Slider's container
    *
    * @default false

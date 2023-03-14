@@ -14,9 +14,15 @@
   </div>
 </ng-container>
 <div *ngIf="vtsScrollbar && showScrollbar" class="vts-carousel-scrollbar" #vtsScrollbarElRef></div>
-<div *ngIf="vtsPagination && showPagination" class="vts-carousel-pagination"
-  #vtsPaginationElRef>
-</div>
+<ng-container *ngIf="vtsPagination && showPagination">
+  <ng-container *ngIf="_useCustomPagination; else defaultPagination">
+    <ng-content select="vts-carousel-pagination"></ng-content>
+  </ng-container>
+  <ng-template #defaultPagination>
+    <div class="vts-carousel-pagination" #vtsPaginationElRef></div>
+  </ng-template>
+</ng-container>
+
 <div [ngClass]="vtsWrapperClass" [attr.id]="id">
   <ng-content select="[slot=wrapper-start]"></ng-content>
   <ng-template

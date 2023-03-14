@@ -1,41 +1,79 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { VtsCarouselNavigationOptions } from '@ui-vts/ng-vts/carousel';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { VtsCarouselOptions, VtsCarouselPaginationOptions } from '@ui-vts/ng-vts/carousel';
 
 @Component({
   selector: 'vts-demo-carousel-pagination',
   template: `
     <p>Basic:</p>
+    <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
+      <span *vtsSpaceItem>
+        Direction: &nbsp;
+        <vts-radio-group [(ngModel)]="direction">
+          <label vts-radio-button vtsValue="horizontal">Horizontal</label>
+          <label vts-radio-button vtsValue="vertical">Vertical</label>
+        </vts-radio-group>
+      </span>
+    </vts-space>
+    <p></p>
     <form [formGroup]="formGroup">
       <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
         <span *vtsSpaceItem>
-          Active: &nbsp;
+          Enable: &nbsp;
           <vts-switch formControlName="enabled"></vts-switch>
         </span>
         <span *vtsSpaceItem>
           Hide on click: &nbsp;
           <vts-switch formControlName="hideOnClick"></vts-switch>
         </span>
+        <span *vtsSpaceItem>
+          Clickable: &nbsp;
+          <vts-switch formControlName="clickable"></vts-switch>
+        </span>
+        <span *vtsSpaceItem>
+          Type: &nbsp;
+          <vts-radio-group formControlName="type">
+            <label vts-radio-button vtsValue="bullets">Bullets</label>
+            <label vts-radio-button vtsValue="fraction">Fraction</label>
+            <label vts-radio-button vtsValue="progressbar">Progress Bar</label>
+          </vts-radio-group>
+        </span>
       </vts-space>
     </form>
     <br />
-    <vts-carousel [vtsSlidesPerView]="1" [vtsNavigation]="navOptions">
+    <vts-carousel [vtsSlidesPerView]="1" [vtsPagination]="pageOptions" [vtsDirection]="direction">
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
     <br />
     <br />
-    <p>Custom:</p>
-    <div class='custom-container'>
-      <vts-carousel [vtsSlidesPerView]="1" [vtsNavigation]="customNavOptions">
-        <ng-container *ngFor="let item of images">
-          <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
-        </ng-container>
-      </vts-carousel>
-    </div>
-    
-  `,
+    <p>Custom Render:</p>
+    <vts-carousel [vtsSlidesPerView]="1" [vtsPagination]="customRenderPageOptions">
+      <ng-container *ngFor="let item of images">
+        <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
+      </ng-container>
+    </vts-carousel>
+    <br />
+    <br />
+    <p>Dynamic Bullets:</p>
+    <vts-carousel [vtsSlidesPerView]="1" [vtsPagination]="dynamicBulletPageOptions">
+      <ng-container *ngFor="let item of images">
+        <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
+      </ng-container>
+    </vts-carousel>
+    <br />
+    <br />
+    <p>Custom Element:</p>
+    <vts-carousel [vtsSlidesPerView]="1" [vtsPagination]="customElementPageOptions" #c="vtsCarousel">
+      <ng-container *ngFor="let item of images">
+        <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
+      </ng-container>
+      <vts-carousel-pagination class="custom-pagination">
+        {{(c.activeIndex + 1)}} / {{c.total}}
+      </vts-carousel-pagination>
+    </vts-carousel>
+    `,
   styles: [
     `
       .vts-carousel {
@@ -50,70 +88,83 @@ import { VtsCarouselNavigationOptions } from '@ui-vts/ng-vts/carousel';
 
       .custom-container {
         position: relative;
-        margin: 0 24px;
       }
 
-      .custom-prev-btn, .custom-next-btn {
-        position: absolute;
-        background: #73777A;
-        top: 50%;
-        height: 48px;
-        width: 48px;
-        z-index: 100;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
+      ::ng-deep .custom-carousel-pagination-bullet {
+        height: 24px;
+        width: 24px;
+        background: #ee0033;
         color: white;
-        cursor: pointer;
       }
 
-      .custom-prev-btn {
+      .custom-pagination {
+        position: absolute;
+        top: 0;
         left: 0;
-        transform: translateX(-50%);
-      }
-
-      .custom-next-btn {
-        right: 0;
-        transform: translateX(50%);
+        background: #ee0033;
+        z-index: 100;
+        padding: 4px 8px;
+        color: white;
       }
     `
   ]
 })
 export class VtsDemoCarouselPaginationComponent implements OnInit {
+  direction: VtsCarouselOptions['direction'] = 'horizontal'
   images = [
     {
-      src: 'https://picsum.photos/1800/400?v=1'
+      src: 'https://picsum.photos/1800/400?v=4'
     },
     {
-      src: 'https://picsum.photos/1800/400?v=2'
+      src: 'https://picsum.photos/1800/400?v=5'
     },
     {
-      src: 'https://picsum.photos/1800/400?v=3'
+      src: 'https://picsum.photos/1800/400?v=6'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=7'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=8'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=9'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=10'
     },
   ];
 
-  formGroup: UntypedFormGroup = new UntypedFormGroup({
-    enabled: new UntypedFormControl(true, {}),
-    hideOnClick: new UntypedFormControl(false, {}),
+  formGroup = new FormGroup({
+    enabled: new FormControl(true, {nonNullable: true}),
+    hideOnClick: new FormControl(false, {nonNullable: true}),
+    clickable: new FormControl(false, {nonNullable: true}),
+    type: new FormControl<VtsCarouselPaginationOptions['type']>('bullets', {nonNullable: true}),
   });
 
-  navOptions: VtsCarouselNavigationOptions = this.formGroup.value
-    
-  @ViewChild('nextBtn', {static: true}) nextEl!: ElementRef
-  customNavOptions: VtsCarouselNavigationOptions | boolean = false 
+  pageOptions: VtsCarouselPaginationOptions = this.formGroup.value
+  customRenderPageOptions: VtsCarouselPaginationOptions = {
+    enabled: true,
+    type: 'bullets',
+    clickable: true,
+    renderBullet: (index, className) => `<span class="${className} custom-carousel-pagination-bullet">${index}</span>`,
+  }
+  dynamicBulletPageOptions: VtsCarouselPaginationOptions = {
+    enabled: true,
+    type: 'bullets',
+    clickable: true,
+    dynamicBullets: true,
+    dynamicMainBullets: 2
+  }
 
+  customElementPageOptions: VtsCarouselPaginationOptions | boolean = true
+    
   constructor() {
     this.formGroup.valueChanges.subscribe((d) => {
-      this.navOptions = {...d}
+      this.pageOptions = {...d, dynamicBullets: false}
     })
   }
 
   ngOnInit(): void {
-    this.customNavOptions = {
-      enabled: true,
-      prevEl: '.custom-prev-btn', // Selector or HTMLElement
-      nextEl: this.nextEl.nativeElement // Selector or HTMLElement
-    }
   }
 }
