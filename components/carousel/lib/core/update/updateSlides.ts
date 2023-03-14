@@ -142,6 +142,9 @@ export default function updateSlides() {
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
       if (slides[i]) {
+        // Reset
+        slides[i].style['width'] = ''
+        slides[i].style['height'] = ''
         slides[i].style[getDirectionLabel('width')] = `${slideSize}px`;
       }
     }

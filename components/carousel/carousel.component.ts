@@ -41,12 +41,13 @@ import {
   VirtualOptions as VtsCarouselVirtualOptions,
   ControllerOptions as VtsCarouselControllerOptions,
   ThumbsOptions as VtsCarouselThumbsOptions,
+  AutoplayOptions as VtsCarouselAutoplayOptions,
   ICarousel
 } from './lib/types';
 import { isPlatformBrowser } from '@angular/common';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { camelCase, upperFirst } from '@ui-vts/ng-vts/core/util';
-import { EventMappers, EventPerformTick } from './lib/utils/events';
+import { EventMappers } from './lib/utils/events';
 import { VtsCarouselPaginationComponent } from './carousel-pagination.component';
 import { VtsDestroyService } from '@ui-vts/ng-vts/core/services';
 import { takeUntil } from 'rxjs/operators';
@@ -169,7 +170,7 @@ export class VtsCarouselComponent implements OnInit {
   @Input() vtsSlideClass?: string = 'vts-carousel-slide';
   @Input() vtsSlideDuplicateClass: string = 'slideDuplicateClass';
   @Input() vtsWrapperClass: string = 'vts-carousel-wrapper';
-  @Input() vtsAutoplay?: boolean;
+  @Input() vtsAutoplay?: VtsCarouselAutoplayOptions | boolean | '';
   @Input() vtsController?: VtsCarouselControllerOptions;
   @Input() vtsThumbs?: VtsCarouselThumbsOptions;
   @Input() class: string = '';
@@ -456,10 +457,6 @@ export class VtsCarouselComponent implements OnInit {
     EventsParams['sliderFirstMove']
   >();
 
-  @Output() vtsSlidesLengthChange = new EventEmitter<
-    EventsParams['slidesLengthChange']
-  >();
-
   @Output() vtsSlidesGridLengthChange = new EventEmitter<
     EventsParams['slidesGridLengthChange']
   >();
@@ -504,22 +501,9 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsActiveIndexChange = new EventEmitter<number>()
 
+  @Output() vtsSlidesLengthChange = new EventEmitter<number>();
+
   // Public properties
-  activeIndex: number = 0
-  total: number = 0
-  initPublicProps() {
-    // this.vtsCarousel.pipe(takeUntil(this.vtsDestroyService)).subscribe(([c]) => {
-    //   console.log('here')
-    //   console.log(c.slides)
-    //   this.activeIndex = c.slides.length
-    // })
-    this.vtsActiveIndexChange.pipe(takeUntil(this.vtsDestroyService)).subscribe(i => this.activeIndex = i)
-    this.vtsCarousel.pipe(takeUntil(this.vtsDestroyService)).subscribe(() => {
-      const c = this.carouselRef!
-      this.total = c.slides.length
-      this.activeIndex = c.activeIndex
-    })
-  }
   
   //#endregion
 
@@ -586,9 +570,6 @@ export class VtsCarouselComponent implements OnInit {
   }
 
   get zoomContainerClass() {
-    // return this.zoom && typeof this.zoom !== 'boolean'
-    //   ? this.zoom.containerClass
-    //   : 'vts-carousel-zoom-container';
     return 'vts-carousel-zoom-container';
   }
 
@@ -598,7 +579,7 @@ export class VtsCarouselComponent implements OnInit {
     private elementRef: ElementRef,
     private _changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private _platformId: Object,
-    private vtsDestroyService: VtsDestroyService
+    private vtsDestroyService: VtsDestroyService,
   ) {
     this._vtsPagination = false;
     this._vtsNavigation = false;
@@ -666,7 +647,10 @@ export class VtsCarouselComponent implements OnInit {
         this.carouselRef!.virtual.update(true);
       });
     }
-    this._changeDetectorRef.detectChanges();
+    this._changeDetectorRef.detectChanges()
+    this._ngZone.runOutsideAngular(() => {
+      this.carouselRef?.update()
+    });
   };
 
   get isCarouselActive() {
@@ -692,9 +676,6 @@ export class VtsCarouselComponent implements OnInit {
             emitter.emit(EventMappers[eventName as keyof typeof EventMappers](args as any))
           }
           else emitter.emit([...args]);
-
-          if (EventPerformTick.includes(eventName))
-            this._ngZone.run(() => this._changeDetectorRef.detectChanges())
         }
       };
       const _slideClasses: VtsCarouselEvents['_slideClasses'] = (_, updated) => {
@@ -753,8 +734,6 @@ export class VtsCarouselComponent implements OnInit {
         }
         this._changeDetectorRef.detectChanges();
       }
-
-      this.initPublicProps()
     });
   }
 
@@ -997,4 +976,5 @@ export {
   VtsCarouselVirtualOptions,
   VtsCarouselControllerOptions,
   VtsCarouselThumbsOptions,
+  VtsCarouselAutoplayOptions
 }

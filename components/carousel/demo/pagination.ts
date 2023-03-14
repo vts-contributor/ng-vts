@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { VtsCarouselOptions, VtsCarouselPaginationOptions } from '@ui-vts/ng-vts/carousel';
 
@@ -65,12 +65,17 @@ import { VtsCarouselOptions, VtsCarouselPaginationOptions } from '@ui-vts/ng-vts
     <br />
     <br />
     <p>Custom Element:</p>
-    <vts-carousel [vtsSlidesPerView]="1" [vtsPagination]="customElementPageOptions" #c="vtsCarousel">
+    <vts-carousel 
+      [vtsSlidesPerView]="1" 
+      [vtsPagination]="customElementPageOptions" 
+      (vtsActiveIndexChange)="onActiveIndexChange($event)" 
+      (vtsSlidesLengthChange)="onSlideLengthChange($event)"
+    >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
       <vts-carousel-pagination class="custom-pagination">
-        {{(c.activeIndex + 1)}} / {{c.total}}
+        {{(currentIndex + 1)}} / {{currentLength}}
       </vts-carousel-pagination>
     </vts-carousel>
     `,
@@ -132,8 +137,23 @@ export class VtsDemoCarouselPaginationComponent implements OnInit {
     },
     {
       src: 'https://picsum.photos/1800/400?v=10'
-    },
+    }
   ];
+  
+  currentIndex = 0
+  currentLength = 0
+  onActiveIndexChange(idx: number) {
+    this.currentIndex = idx
+    // Custom element may not be updated itself
+    // Call detectChanges() to ensure view updated
+    this.cdr.detectChanges()
+  }
+  onSlideLengthChange(length: number) {
+    this.currentLength = length
+    // Custom element may not be updated itself
+    // Call detectChanges() to ensure view updated
+    this.cdr.detectChanges()
+  }
 
   formGroup = new FormGroup({
     enabled: new FormControl(true, {nonNullable: true}),
@@ -159,12 +179,11 @@ export class VtsDemoCarouselPaginationComponent implements OnInit {
 
   customElementPageOptions: VtsCarouselPaginationOptions | boolean = true
     
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.formGroup.valueChanges.subscribe((d) => {
       this.pageOptions = {...d, dynamicBullets: false}
     })
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 }

@@ -74,7 +74,7 @@ export interface NavigationOptions {
    *
    * @default null
    */
-  position?: 'inner' | 'edge';
+  position?: 'inner';
 
   /**
    * Toggle navigation buttons visibility after click on Slider's container

@@ -100,7 +100,7 @@ import { VtsCarouselNavigationOptions, VtsCarouselOptions } from '@ui-vts/ng-vts
   ]
 })
 export class VtsDemoCarouselNavigationComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'vertical'
+  direction: VtsCarouselOptions['direction'] = 'horizontal'
   images = [
     {
       src: 'https://picsum.photos/1800/400?v=1'
