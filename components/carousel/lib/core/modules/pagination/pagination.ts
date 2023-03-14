@@ -73,6 +73,9 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
         ? carousel.virtual.slides.length
         : carousel.slides.length;
     const $el = carousel.pagination.$el;
+    // Direction
+    $el.removeClass([params.verticalClass, params.horizontalClass].join(' '));
+    $el.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
     // Current/Total
     let current;
     const total = carousel.params.loop
@@ -93,99 +96,123 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       current = carousel.activeIndex || 0;
     }
     // Types
-    if (
-      params.type === 'bullets' &&
-      carousel.pagination.bullets &&
-      carousel.pagination.bullets.length > 0
-    ) {
-      const bullets = carousel.pagination.bullets;
-      let firstIndex;
-      let lastIndex;
-      let midIndex;
-      if (params.dynamicBullets) {
-        bulletSize = bullets.eq(0)[carousel.isHorizontal() ? 'outerWidth' : 'outerHeight'](true);
-        $el.css(
-          carousel.isHorizontal() ? 'width' : 'height',
-          `${bulletSize * (params.dynamicMainBullets + 4)}px`
+    if (params.type === 'bullets') {
+      if (carousel.pagination.bullets && carousel.pagination.bullets.length > 0) {
+        const bullets = carousel.pagination.bullets;
+        const offsetProp = rtl ? 'right' : 'left';
+        let firstIndex;
+        let lastIndex;
+        let midIndex;
+
+        // Reset default styles and class
+        $el.css('width', null)
+        $el.css('height', null)
+        bullets.css(offsetProp, null);
+        bullets.css('top', null);
+        $el.removeClass(`${params.modifierClass}${params.type}-dynamic`);
+
+        bullets.removeClass(
+          ['', '-next', '-next-next', '-prev', '-prev-prev', '-main']
+            .map(suffix => `${params.bulletActiveClass}${suffix}`)
+            .join(' ')
         );
-        if (params.dynamicMainBullets > 1 && carousel.previousIndex !== undefined) {
-          dynamicBulletIndex += current - (carousel.previousIndex - carousel.loopedSlides || 0);
-          if (dynamicBulletIndex > params.dynamicMainBullets - 1) {
-            dynamicBulletIndex = params.dynamicMainBullets - 1;
-          } else if (dynamicBulletIndex < 0) {
-            dynamicBulletIndex = 0;
-          }
-        }
-        firstIndex = Math.max(current - dynamicBulletIndex, 0);
-        lastIndex = firstIndex + (Math.min(bullets.length, params.dynamicMainBullets) - 1);
-        midIndex = (lastIndex + firstIndex) / 2;
-      }
-      bullets.removeClass(
-        ['', '-next', '-next-next', '-prev', '-prev-prev', '-main']
-          .map(suffix => `${params.bulletActiveClass}${suffix}`)
-          .join(' ')
-      );
-      if ($el.length > 1) {
-        bullets.each(bullet => {
-          const $bullet = $(bullet);
-          const bulletIndex = $bullet.index();
-          if (bulletIndex === current) {
-            $bullet.addClass(params.bulletActiveClass);
-          }
-          if (params.dynamicBullets) {
-            if (bulletIndex >= firstIndex && bulletIndex <= lastIndex) {
-              $bullet.addClass(`${params.bulletActiveClass}-main`);
-            }
-            if (bulletIndex === firstIndex) {
-              setSideBullets($bullet, 'prev');
-            }
-            if (bulletIndex === lastIndex) {
-              setSideBullets($bullet, 'next');
-            }
-          }
-        });
-      } else {
-        const $bullet = bullets.eq(current);
-        const bulletIndex = $bullet.index();
-        $bullet.addClass(params.bulletActiveClass);
+
+        // Detect changes
         if (params.dynamicBullets) {
-          const $firstDisplayedBullet = bullets.eq(firstIndex);
-          const $lastDisplayedBullet = bullets.eq(lastIndex);
-          for (let i = firstIndex; i <= lastIndex; i += 1) {
-            bullets.eq(i).addClass(`${params.bulletActiveClass}-main`);
+          bulletSize = bullets.eq(0)[carousel.isHorizontal() ? 'outerWidth' : 'outerHeight'](true);
+          $el.css(
+            carousel.isHorizontal() ? 'width' : 'height',
+            `${bulletSize * (params.dynamicMainBullets + 4)}px`
+          );
+          if (params.dynamicMainBullets > 1 && carousel.previousIndex !== undefined) {
+            dynamicBulletIndex += current - (carousel.previousIndex - carousel.loopedSlides || 0);
+            if (dynamicBulletIndex > params.dynamicMainBullets - 1) {
+              dynamicBulletIndex = params.dynamicMainBullets - 1;
+            } else if (dynamicBulletIndex < 0) {
+              dynamicBulletIndex = 0;
+            }
           }
-          if (carousel.params.loop) {
-            if (bulletIndex >= bullets.length) {
-              for (let i = params.dynamicMainBullets; i >= 0; i -= 1) {
-                bullets.eq(bullets.length - i).addClass(`${params.bulletActiveClass}-main`);
+          firstIndex = Math.max(current - dynamicBulletIndex, 0);
+          lastIndex = firstIndex + (Math.min(bullets.length, params.dynamicMainBullets) - 1);
+          midIndex = (lastIndex + firstIndex) / 2;
+
+          const dynamicBulletsLength = Math.min(bullets.length, params.dynamicMainBullets + 4);
+          const bulletsOffset =
+            (bulletSize * dynamicBulletsLength - bulletSize) / 2 - midIndex * bulletSize;
+          bullets.css(carousel.isHorizontal() ? offsetProp : 'top', `${bulletsOffset}px`);
+          $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
+        } 
+
+        if ($el.length > 1) {
+          bullets.each(bullet => {
+            const $bullet = $(bullet);
+            const bulletIndex = $bullet.index();
+            if (bulletIndex === current) {
+              $bullet.addClass(params.bulletActiveClass);
+            }
+            if (params.dynamicBullets) {
+              if (bulletIndex >= firstIndex && bulletIndex <= lastIndex) {
+                $bullet.addClass(`${params.bulletActiveClass}-main`);
               }
-              bullets
-                .eq(bullets.length - params.dynamicMainBullets - 1)
-                .addClass(`${params.bulletActiveClass}-prev`);
+              if (bulletIndex === firstIndex) {
+                setSideBullets($bullet, 'prev');
+              }
+              if (bulletIndex === lastIndex) {
+                setSideBullets($bullet, 'next');
+              }
+            }
+          });
+        } else {
+          const $bullet = bullets.eq(current);
+          const bulletIndex = $bullet.index();
+          $bullet.addClass(params.bulletActiveClass);
+          if (params.dynamicBullets) {
+            const $firstDisplayedBullet = bullets.eq(firstIndex);
+            const $lastDisplayedBullet = bullets.eq(lastIndex);
+            for (let i = firstIndex; i <= lastIndex; i += 1) {
+              bullets.eq(i).addClass(`${params.bulletActiveClass}-main`);
+            }
+            if (carousel.params.loop) {
+              if (bulletIndex >= bullets.length) {
+                for (let i = params.dynamicMainBullets; i >= 0; i -= 1) {
+                  bullets.eq(bullets.length - i).addClass(`${params.bulletActiveClass}-main`);
+                }
+                bullets
+                  .eq(bullets.length - params.dynamicMainBullets - 1)
+                  .addClass(`${params.bulletActiveClass}-prev`);
+              } else {
+                setSideBullets($firstDisplayedBullet, 'prev');
+                setSideBullets($lastDisplayedBullet, 'next');
+              }
             } else {
               setSideBullets($firstDisplayedBullet, 'prev');
               setSideBullets($lastDisplayedBullet, 'next');
             }
-          } else {
-            setSideBullets($firstDisplayedBullet, 'prev');
-            setSideBullets($lastDisplayedBullet, 'next');
           }
         }
       }
-      if (params.dynamicBullets) {
-        const dynamicBulletsLength = Math.min(bullets.length, params.dynamicMainBullets + 4);
-        const bulletsOffset =
-          (bulletSize * dynamicBulletsLength - bulletSize) / 2 - midIndex * bulletSize;
-        const offsetProp = rtl ? 'right' : 'left';
-        bullets.css(carousel.isHorizontal() ? offsetProp : 'top', `${bulletsOffset}px`);
+
+      if (params.clickable) {
+        $el.addClass(params.clickableClass);
+        $el.on('click', classesToSelector(params.bulletClass), function onClick(e) {
+          e.preventDefault();
+          let index = $(this).index() * carousel.params.slidesPerGroup;
+          if (carousel.params.loop) index += carousel.loopedSlides;
+          carousel.slideTo(index);
+        });
+      } else {
+        $el.removeClass(params.clickableClass);
+        $el.off('click', classesToSelector(params.bulletClass))
       }
     }
+
     if (params.type === 'fraction') {
       $el
         .find(classesToSelector(params.currentClass))
         .text(params.formatFractionCurrent(current + 1));
       $el.find(classesToSelector(params.totalClass)).text(params.formatFractionTotal(total));
     }
+
     if (params.type === 'progressbar') {
       let progressbarDirection;
       if (params.progressbarOpposite) {
@@ -206,32 +233,20 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
         .transform(`translate3d(0,0,0) scaleX(${scaleX}) scaleY(${scaleY})`)
         .transition(carousel.params.speed);
     }
-    if (params.type === 'custom' && params.renderCustom) {
-      $el.html(params.renderCustom(carousel, current + 1, total));
-      emit('paginationRender', $el[0]);
-    } else {
-      emit('paginationUpdate', $el[0]);
-    }
+
+    // Not happening
+    // if (params.type === 'custom' && params.renderCustom) {
+    //   $el.html(params.renderCustom(carousel, current + 1, total));
+    //   emit('paginationRender', $el[0]);
+    // } else {
+    //   emit('paginationUpdate', $el[0]);
+    // }
+
     if (carousel.params.watchOverflow && carousel.enabled) {
       $el[carousel.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
     }
-    
-    if (params.type === 'bullets' && params.clickable) {
-      $el.addClass(params.clickableClass);
-    } else {
-      $el.removeClass(params.clickableClass);
-    }
-
-    if (params.clickable) {
-      $el.on('click', classesToSelector(params.bulletClass), function onClick(e) {
-        e.preventDefault();
-        let index = $(this).index() * carousel.params.slidesPerGroup;
-        if (carousel.params.loop) index += carousel.loopedSlides;
-        carousel.slideTo(index);
-      });
-    } else
-      $el.off('click', classesToSelector(params.bulletClass))
   }
+
   function render() {
     // Render Container
     const params = carousel.params.pagination;
@@ -249,15 +264,6 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     }
 
     $el.addClass(params.modifierClass + params.type);
-    $el.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
-    
-    if (params.type === 'bullets' && params.dynamicBullets) {
-      $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
-      dynamicBulletIndex = 0;
-      if (params.dynamicMainBullets < 1) {
-        params.dynamicMainBullets = 1;
-      }
-    }
 
     if (params.type === 'bullets') {
       let numberOfBullets = carousel.params.loop
@@ -265,7 +271,6 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
         : carousel.snapGrid.length;
 
       if (params.dynamicBullets) {
-        $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
         dynamicBulletIndex = 0;
         if (params.dynamicMainBullets < 1) {
           params.dynamicMainBullets = 1;
@@ -401,6 +406,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     } else if (typeof carousel.snapIndex === 'undefined') {
       update();
     }
+    update()
   });
   on('snapIndexChange', () => {
     if (!carousel.params.loop) {

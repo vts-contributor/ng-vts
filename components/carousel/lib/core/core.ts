@@ -437,6 +437,12 @@ class Carousel {
   changeDirection(newDirection, needUpdate = true) {
     const carousel = this;
     const currentDirection = carousel.params.direction;
+
+    carousel.$el
+    .removeClass(`${carousel.params.containerModifierClass}horizontal`)
+    .removeClass(`${carousel.params.containerModifierClass}vertical`)
+    .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
+
     if (!newDirection) {
       // eslint-disable-next-line
       newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
@@ -448,9 +454,6 @@ class Carousel {
       return carousel;
     }
 
-    carousel.$el
-      .removeClass(`${carousel.params.containerModifierClass}${currentDirection}`)
-      .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
     carousel.emitContainerClasses();
 
     carousel.params.direction = newDirection;
@@ -613,7 +616,7 @@ class Carousel {
     carousel.initialized = true;
 
     // Emit
-    carousel.emit('init');
+    carousel.emit('inited');
     carousel.emit('afterInit');
 
     return carousel;

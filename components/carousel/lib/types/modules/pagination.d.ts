@@ -71,7 +71,7 @@ export interface PaginationOptions {
   el?: CSSSelector | HTMLElement | null;
 
   /**
-   * String with type of pagination. Can be `'bullets'`, `'fraction'`, `'progressbar'` or `'custom'`
+   * String with type of pagination. Can be `'bullets'`, `'fraction'`, `'progressbar'`
    *
    * @default 'bullets'
    */

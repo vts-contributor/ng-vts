@@ -1,15 +1,25 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { VtsCarouselNavigationOptions } from '@ui-vts/ng-vts/carousel';
+import { VtsCarouselNavigationOptions, VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
 
 @Component({
   selector: 'vts-demo-carousel-navigation',
   template: `
     <p>Basic:</p>
+    <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
+      <span *vtsSpaceItem>
+        Direction: &nbsp;
+        <vts-radio-group [(ngModel)]="direction">
+          <label vts-radio-button vtsValue="horizontal">Horizontal</label>
+          <label vts-radio-button vtsValue="vertical">Vertical</label>
+        </vts-radio-group>
+      </span>
+    </vts-space>
+    <p></p>
     <form [formGroup]="formGroup">
       <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
         <span *vtsSpaceItem>
-          Active: &nbsp;
+          Enable: &nbsp;
           <vts-switch formControlName="enabled"></vts-switch>
         </span>
         <span *vtsSpaceItem>
@@ -19,7 +29,7 @@ import { VtsCarouselNavigationOptions } from '@ui-vts/ng-vts/carousel';
       </vts-space>
     </form>
     <br />
-    <vts-carousel [vtsSlidesPerView]="1" [vtsNavigation]="navOptions">
+    <vts-carousel [vtsSlidesPerView]="1" [vtsNavigation]="navOptions" [vtsDirection]="direction">
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
@@ -60,7 +70,6 @@ import { VtsCarouselNavigationOptions } from '@ui-vts/ng-vts/carousel';
 
       .custom-container {
         position: relative;
-        margin: 0 24px;
       }
 
       .custom-prev-btn, .custom-next-btn {
@@ -91,6 +100,7 @@ import { VtsCarouselNavigationOptions } from '@ui-vts/ng-vts/carousel';
   ]
 })
 export class VtsDemoCarouselNavigationComponent implements OnInit {
+  direction: VtsCarouselOptions['direction'] = 'vertical'
   images = [
     {
       src: 'https://picsum.photos/1800/400?v=1'

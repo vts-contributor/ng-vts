@@ -80,14 +80,14 @@ export interface CarouselOptions {
    *
    * @default 'horizontal'
    */
-  vtsDirection?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
 
   /**
    * Duration of transition between slides (in ms)
    *
    * @default 300
    */
-  vtsSpeed?: number;
+  speed?: number;
 
   /**
    * Enabled this option and plugin will set width/height on carousel wrapper equal to total size of all slides.
@@ -261,7 +261,7 @@ export interface CarouselOptions {
    *
    * @note If you use "margin" css property to the elements which go into carousel in which you pass "vtsSpaceBetween" into, navigation might not work properly.
    */
-  vtsSpaceBetween?: number;
+  spaceBetween?: number;
 
   /**
    * Number of slides per view (slides visible at the same time on slider's container).
@@ -270,7 +270,7 @@ export interface CarouselOptions {
    *
    * @default 1
    */
-  vtsSlidesPerView?: number | 'auto';
+  slidesPerView?: number | 'auto';
 
   /**
    * If total number of slides less than specified here value, then carousel will enable `backface-visibility: hidden` on slide elements to reduce visual "flicker" in Safari.
@@ -458,14 +458,14 @@ export interface CarouselOptions {
    *
    * @default false
    */
-  vtsEdgeSwipeDetection?: boolean | string;
+  edgeSwipeDetection?: boolean | string;
 
   /**
    * Area (in px) from left edge of the screen to release touch events for swipe-back in app
    *
    * @default 20
    */
-  vtsEdgeSwipeThreshold?: number;
+  edgeSwipeThreshold?: number;
 
   /**
    * Enable to release touch events on slider edge position (beginning, end) to allow for further page scrolling
@@ -511,14 +511,14 @@ export interface CarouselOptions {
    *
    * @default true
    */
-  vtsAllowSlidePrev?: boolean;
+  allowSlidePrev?: boolean;
 
   /**
    * Set to `false` to disable swiping to next slide direction (to right or bottom)
    *
    * @default true
    */
-  vtsAllowSlideNext?: boolean;
+  allowSlideNext?: boolean;
 
   /**
    * Enable/disable swiping on elements matched to class specified in `noSwipingClass`
@@ -607,7 +607,7 @@ export interface CarouselOptions {
    *
    * @note If you use it along with `slidesPerView: 'auto'` then you need to specify `loopedSlides` parameter with amount of slides to loop (duplicate). Should not be used together with `rewind` mode
    */
-  vtsLoop?: boolean;
+  loop?: boolean;
 
   /**
    * Set to `true` to enable "rewind" mode. When enabled, clicking "next" navigation button (or calling `.slideNext()`) when on last slide will slide back to the first slide. Clicking "prev" navigation button (or calling `.slidePrev()`) when on first slide will slide forward to the last slide.
@@ -623,14 +623,14 @@ export interface CarouselOptions {
    *
    * @default 0
    */
-  vtsLoopAdditionalSlides?: number;
+  loopAdditionalSlides?: number;
 
   /**
    * If you use `slidesPerView:'auto'` with loop mode you should tell to carousel how many slides it should loop (duplicate) using this parameter
    *
    * @default null
    */
-  vtsLoopedSlides?: number | null;
+  loopedSlides?: number | null;
 
   /**
    * When enabled then amount of duplicated slides will not exceed amount of original slides. Useful to disable and increase `loopedSlides` when you have a lot of slides per view and not sufficient amount of original slides
@@ -705,7 +705,7 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsBreakpoints?: {
+  breakpoints?: {
     [width: number]: CarouselOptions;
     [ratio: string]: CarouselOptions;
   };
@@ -756,7 +756,7 @@ export interface CarouselOptions {
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue components
    */
-  vtsSlideClass?: string;
+  slideClass?: string;
 
   /**
    * CSS class name of currently active slide
@@ -800,7 +800,7 @@ export interface CarouselOptions {
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue
    */
-  vtsSlideDuplicateClass?: string;
+  slideDuplicateClass?: string;
 
   /**
    * CSS class name of slide which is right after currently active slide
@@ -867,7 +867,7 @@ export interface CarouselOptions {
    * @note Not supported in carousel Angular/React/Svelte/Vue
    *
    */
-  vtsWrapperClass?: string;
+  wrapperClass?: string;
 
   /**
    * Object with a11y parameters or boolean `true` to enable with default settings.
@@ -896,7 +896,7 @@ export interface CarouselOptions {
    *});
    * ```
    */
-  vtsAutoplay?: AutoplayOptions | boolean;
+  autoplay?: AutoplayOptions | boolean;
 
   /**
    * Object with controller parameters or boolean `true` to enable with default settings
@@ -910,7 +910,7 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsController?: ControllerOptions;
+  controller?: ControllerOptions;
 
   /**
    * Object with Coverflow-effect parameters.
@@ -1103,7 +1103,7 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsNavigation?: NavigationOptions | boolean;
+  navigation?: NavigationOptions | boolean;
 
   /**
    * Object with pagination parameters or boolean `true` to enable with default settings.
@@ -1118,7 +1118,7 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsPagination?: PaginationOptions | boolean;
+  pagination?: PaginationOptions | boolean;
 
   /**
    * Object with parallax parameters or boolean `true` to enable with default settings.
@@ -1160,7 +1160,7 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsThumbs?: ThumbsOptions;
+  thumbs?: ThumbsOptions;
 
   /**
    * Enables virtual slides functionality. Object with virtual slides parameters or boolean `true` to enable with default settings.
@@ -1224,7 +1224,7 @@ export interface CarouselOptions {
   grid?: GridOptions;
 
   /**
-   * !INTERNAL When enabled will emit "_containerClasses" and "_vtsSlideClass" events
+   * !INTERNAL When enabled will emit "_containerClasses" and "_slideClass" events
    */
   _emitClasses?: boolean;
 }

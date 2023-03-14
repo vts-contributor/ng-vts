@@ -3,6 +3,7 @@ import createElementIfNotDefined from '../../../shared/create-element-if-not-def
 import $ from '../../../shared/dom';
 
 export default function Navigation({ carousel, extendParams, on, emit }) {
+  const pfx = 'vts-carousel-navigation';
   extendParams({
     navigation: {
       nextEl: null,
@@ -12,7 +13,10 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
       disabledClass: 'vts-carousel-button-disabled',
       hiddenClass: 'vts-carousel-button-hidden',
       lockClass: 'vts-carousel-button-lock',
-      navigationDisabledClass: 'vts-carousel-navigation-disabled'
+      navigationDisabledClass: `${pfx}-disabled`,
+      horizontalClass: `${pfx}-horizontal`,
+      verticalClass: `${pfx}-vertical`,
+      position: `inner`
     }
   });
 
@@ -53,6 +57,24 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
     // Update Navigation Buttons
     if (carousel.params.loop) return;
     const { $nextEl, $prevEl } = carousel.navigation;
+
+    // Direction
+    const params = carousel.params.navigation;
+    const removeCls = [
+      ...['-inner', '-edge'].map(suffix => `${pfx}${suffix}`),
+      params.horizontalClass,
+      params.verticalClass
+    ].join(' ')
+    if ($nextEl) {
+      $nextEl.removeClass(removeCls);
+      $nextEl.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
+      $nextEl.addClass(`${pfx}-${params.position}`);
+    }
+    if ($prevEl) {
+      $prevEl.removeClass(removeCls);
+      $prevEl.addClass(carousel.isHorizontal() ? params.horizontalClass : params.verticalClass);
+      $prevEl.addClass(`${pfx}-${params.position}`);
+    }
 
     toggleEl($prevEl, carousel.isBeginning && !carousel.params.rewind);
     toggleEl($nextEl, carousel.isEnd && !carousel.params.rewind);
@@ -139,6 +161,7 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
       disable()
     if (enabled && !carousel.navigation.enabled)
       enable()
+    update()
   });
   on('toEdge fromEdge lock unlock', () => {
     update();
