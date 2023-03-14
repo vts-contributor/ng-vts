@@ -39,6 +39,7 @@ import { VtsTableUploadComponent } from './components/table-upload.component';
 import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
 import { VtsProTableGroupFilterComponent } from './components/group-filter.component';
 import { VtsProTableSelectedLabelConfigComponent } from './components/selected-label-config.component';
+import { VtsProtableFilterDrawerComponent } from './components/filter-drawer.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { VtsProTableSelectedLabelConfigComponent } from './components/selected-l
     ProtableDrawerComponent,
     VtsTableDeleteComponent,
     VtsTableUploadComponent,
-    VtsProTableSelectedLabelConfigComponent
+    VtsProTableSelectedLabelConfigComponent,
+    VtsProtableFilterDrawerComponent
   ],
   exports: [
     VtsProTableContainerComponent,

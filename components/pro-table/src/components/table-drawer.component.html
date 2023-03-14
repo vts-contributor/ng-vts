@@ -1,15 +1,24 @@
 <!-- Open with drawer -->
-<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="300"
-  [vtsVisible]="visibleDrawer" [vtsTitle]="title" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
-  
+<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="600" [vtsCloseIcon]="'Close'"
+  [vtsVisible]="visibleDrawer" [vtsTitle]="titleTpl" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
+
   <ng-container *vtsDrawerContent>
-    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    <ng-container *ngIf="mode!='view'; else viewModeTemp">
+      <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </ng-container>
   </ng-container>
+
+  <ng-template #titleTpl>
+    <span class="text-custom title-custom mg-64">{{title}}</span>
+  </ng-template>
 
   <ng-template #footerTpl>
     <div style="float: right">
-      <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
-      <button vts-button (click)="closeDrawer()">Close</button>
+      <button *ngIf="mode=='edit'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+      <ng-container *ngIf="mode=='create'"></ng-container>
+      <button vts-button (click)="closeDrawer()" style="margin-right: 8px">Cancle</button>
+      <button vts-button (click)="closeDrawer()" style="margin-right: 8px">Create and another</button>
+      <button vts-button (click)="closeDrawer()" style="margin-right: 8px" vtsType="primary">Create</button>
     </div>
   </ng-template>
 </vts-drawer>
@@ -23,34 +32,37 @@
     <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
   </ng-container>
   <div *vtsModalFooter>
-    <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+    <button *ngIf="mode!=='view'" vts-button vtsType="primary" style="margin-right: 8px"
+      (click)="onSave()">Save</button>
     <button vts-button (click)="closeDrawer()">Close</button>
   </div>
 </vts-modal>
 
 <!-- Content of the drawer/dialog -->
 <ng-template #contentTemplate>
-  <form vts-form [formGroup]="formGroup" vtsLayout="vertical">
+  <form vts-form [formGroup]="formGroup" vtsLayout="vertical" class="mg-64">
     <div *ngFor="let item of displayHeaders; let i = index">
       <ng-container [ngSwitch]="item.datatype">
 
         <!-- status type -->
         <ng-container *ngSwitchCase="'status'">
           <ng-container
-            *ngTemplateOutlet="statusDisplay; context: {title: item.headerTitle, value: selectedStatus[item.propertyName], property: item.propertyName}">
+            *ngTemplateOutlet="statusDisplay; context: {title: item.headerTitle, value: selectedStatus[item.propertyName], property: item.propertyName, required:item.required} ">
           </ng-container>
         </ng-container>
 
         <!-- date type -->
         <ng-container *ngSwitchCase="'date'">
           <vts-form-item>
-            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-label style="padding-bottom: 4px;">
+              <span class="text-custom label-view">{{ item.headerTitle }}</span>
+              <ng-container *ngIf="item.required">
+                <span class="text-custom label-view" style="color: #EE0033;">*</span>
+              </ng-container>
+            </vts-form-label>
             <vts-form-control>
-              <vts-date-picker
-                vtsPlaceHolder="DD/MM/YYYY"
-                [vtsSize]="datePickerSize"
-                [formControlName]="item.propertyName"
-              ></vts-date-picker>
+              <vts-date-picker vtsPlaceHolder="DD/MM/YYYY" [vtsSize]="datePickerSize"
+                [formControlName]="item.propertyName"></vts-date-picker>
             </vts-form-control>
           </vts-form-item>
         </ng-container>
@@ -58,10 +70,14 @@
         <!-- number type -->
         <ng-container *ngSwitchCase="'number'">
           <vts-form-item>
-            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-label style="padding-bottom: 4px;">
+              <span class="text-custom label-view">{{ item.headerTitle }}</span>
+              <ng-container *ngIf="item.required">
+                <span class="text-custom label-view" style="color: #EE0033;">*</span>
+              </ng-container>
+            </vts-form-label>
             <vts-form-control>
-              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"
-                [vtsDisabled]="mode == 'view'"></vts-input-number>
+              <vts-input-number [vtsFormatter]="formatNumber" [formControlName]="item.propertyName"></vts-input-number>
             </vts-form-control>
           </vts-form-item>
         </ng-container>
@@ -69,7 +85,12 @@
         <!-- string type - default -->
         <ng-container *ngSwitchDefault>
           <vts-form-item>
-            <vts-form-label>{{ item.headerTitle }}</vts-form-label>
+            <vts-form-label style="padding-bottom: 4px;">
+              <span class="text-custom label-view">{{ item.headerTitle }}</span>
+              <ng-container *ngIf="item.required">
+                <span class="text-custom label-view" style="color: #EE0033;">*</span>
+              </ng-container>
+            </vts-form-label>
             <vts-form-control>
               <input vts-input placeholder="" [formControlName]="item.propertyName" />
             </vts-form-control>
@@ -81,25 +102,83 @@
   </form>
 </ng-template>
 
+
 <!-- Status display -->
-<ng-template #statusDisplay let-title="title" let-value="value" let-property="property">
+<ng-template #statusDisplay let-title="title" let-required="required" let-value="value" let-property="property">
   <div style="margin-bottom: 12px;">
-    <h4>{{title}}</h4>
-    <ng-container *ngIf="mode!=='view'; else viewMode">
-      <ng-container *ngFor="let status of listStatus">
-        <vts-tag [vtsColor]="status.color" style="margin-bottom: 5px; cursor: pointer;" (click)="onChangeStatus(property ,status.value)">
-          <ng-container *ngIf="value == status.value">
-            <i vts-icon vtsType="CheckCircle"></i>
-          </ng-container>
-          <span>{{status.text}}</span>
-        </vts-tag>
+    <vts-form-label style="padding-bottom: 4px;">
+      <span class="text-custom label-view">{{ title }}</span>
+      <ng-container *ngIf="required">
+        <span class="text-custom label-view" style="color: #EE0033;">*</span>
       </ng-container>
-    </ng-container>
-    <ng-template #viewMode>
-      <vts-tag [vtsColor]="getSelectedStatus(value)?.color" style="margin-bottom: 5px;">
-        <i vts-icon vtsType="CheckCircle"></i>
-        <span>{{getSelectedStatus(value)?.text}}</span>
+    </vts-form-label>
+    <br>
+    <ng-container *ngFor="let status of listStatus">
+      <vts-tag [vtsColor]="status.color" style="margin-bottom: 5px; cursor: pointer;"
+        (click)="onChangeStatus(property ,status.value)">
+        <ng-container *ngIf="value == status.value">
+          <i vts-icon vtsType="CheckCircle"></i>
+        </ng-container>
+        <span>{{status.text}}</span>
       </vts-tag>
-    </ng-template>
+    </ng-container>
   </div>
+</ng-template>
+
+<!-- Content of the drawer/dialog -->
+<ng-template #viewModeTemp>
+  <a vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions"
+    [vtsPlacement]="'bottomRight'" style="position: absolute;right: 48px;top: 12px;">
+    <i class="collapse-icon" vts-icon [vtsType]="'ArrowMiniDown'"></i>
+  </a>
+  <vts-dropdown-menu #menuActions="vtsDropdownMenu">
+    <ul vts-menu>
+      <li vts-menu-item (click)="onChangeToEdit()">
+        <i class="pr-8" vts-icon vtsType="EditDoutone"></i>
+        Edit
+      </li>
+      <li vts-menu-item>
+        <vts-switch class="pr-8" vtsSize="sm">
+        </vts-switch>Enable/Disable
+      </li>
+      <li vts-menu-item style="color: #EE0033;">
+        <i class="pr-8" vts-icon vtsType="DeleteDoutone"></i>
+        Delete
+      </li>
+    </ul>
+  </vts-dropdown-menu>
+
+  <form vts-form [formGroup]="formGroup" vtsLayout="vertical" class="mg-64">
+    <div *ngFor="let item of displayHeaders; let i = index">
+      <ng-container [ngSwitch]="item.datatype">
+        <!-- status type -->
+        <ng-container *ngSwitchCase="'status'">
+          <vts-form-item>
+            <vts-form-label style="padding-bottom: 4px;">
+              <span class="text-custom label-view">{{ item.headerTitle }}</span>
+              <ng-container *ngIf="item.required">
+                <span class="text-custom label-view" style="color: #EE0033;">*</span>
+              </ng-container>
+            </vts-form-label>
+            <vts-form-label><span class="text-custom content-view">{{ selectedStatus[item.propertyName] }}</span>
+            </vts-form-label>
+          </vts-form-item>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <vts-form-item>
+            <vts-form-label style="padding-bottom: 4px;">
+              <span class="text-custom label-view">{{ item.headerTitle }}</span>
+              <ng-container *ngIf="item.required">
+                <span class="text-custom label-view" style="color: #EE0033;">*</span>
+              </ng-container>
+            </vts-form-label>
+            <vts-form-label><span class="text-custom content-view">{{ formGroup.value[item.propertyName] }}</span>
+            </vts-form-label>
+          </vts-form-item>
+        </ng-container>
+
+      </ng-container>
+    </div>
+  </form>
 </ng-template>

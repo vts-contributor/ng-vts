@@ -99,6 +99,7 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
           [vtsTotal]="vtsTotal"
           [action]="actionType"
           [tabConfig]="tabConfig"
+          [moreActionConfig]="moreActionConfig"
         >
       </vts-table-config>
       </vts-spin>
@@ -202,8 +203,12 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             value: 'Home'
           },
           {
-            label: 'Country',
-            value: 'Country'
+            label: 'Country 1',
+            value: 'Country 1'
+          },
+          {
+            label: 'Country 2',
+            value: 'Country 2'
           },
         ],
         selectedValues: []
@@ -216,9 +221,66 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             value: 'Home'
           },
           {
+            label: 'Country 1',
+            value: 'Country 1'
+          },
+          {
+            label: 'Country 2',
+            value: 'Country 2'
+          },
+          
+        ],
+        selectedValues: []
+      },
+      {
+        filterText: 'Filter 3',
+        filterValues: [
+          {
+            label: 'Home',
+            value: 'Home'
+          },
+          {
+            label: 'Country 1',
+            value: 'Country 1'
+          },
+          {
+            label: 'Country 2',
+            value: 'Country 2'
+          },
+        ],
+        selectedValues: []
+      },
+      {
+        filterText: 'Filter 4',
+        filterValues: [
+          {
+            label: 'Home',
+            value: 'Home'
+          },
+          {
+            label: 'Country 1',
+            value: 'Country 1'
+          },
+          {
+            label: 'Country 2',
+            value: 'Country 2'
+          },
+        ],
+        selectedValues: []
+      },
+      {
+        filterText: 'Filter 5',
+        filterValues: [
+          {
+            label: 'Home',
+            value: 'Home'
+          },
+          {
             label: 'Country',
             value: 'Country'
           },
+          
+          
         ],
         selectedValues: []
       },

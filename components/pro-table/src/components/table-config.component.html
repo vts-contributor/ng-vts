@@ -1,18 +1,13 @@
 <div class='vts-protable-configuration'>
   <!-- filters config -->
-  <vts-group-filter 
-    [filterGroupConfig]="filterGroupConfig" 
-    [properties]="properties"
-    (rowHeightChanger)="handleChangeRowHeight($event)" 
-    (reloadTable)="onReloadTable($event)" 
-    (onChangeHeaders)="onChangeTableHeaders($event)"
-    (putSearchData)="onSearchingByKey($event)"
-  ></vts-group-filter>
+  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties"
+    (rowHeightChanger)="handleChangeRowHeight($event)" (reloadTable)="onReloadTable($event)"
+    (onChangeHeaders)="onChangeTableHeaders($event)" (putSearchData)="onSearchingByKey($event)"></vts-group-filter>
 
   <!-- selected items label-->
   <vts-selected-label-config [selectedItemsAmount]="checkedItemsAmount > 0 ? checkedItemsAmount : 0"
-    (clearAllSelectedItems)="clearAllSelectedItems($event)" (deleteSelectedItems)="deleteSelectedItems($event)"
-    (exportSelectedItems)="exportSelectedItems($event)">
+    [moreActionConfig]="moreActionConfig" (clearAllSelectedItems)="clearAllSelectedItems($event)"
+    (deleteSelectedItems)="deleteSelectedItems($event)" (exportSelectedItems)="exportSelectedItems($event)">
   </vts-selected-label-config>
 
   <!-- table-data -->
@@ -27,7 +22,7 @@
             <ng-container *ngFor="let property of properties">
               <ng-container *ngIf="property.headerTitle && property.headerTitle != null">
                 <th [vtsSortFn]="sortFn" [vtsSortDirections]="sortDirections" *ngIf="property.checked"
-                  (click)="sortValue(property)">
+                  (click)="sortValue(property)" class="col-poiter">
                   {{property.headerTitle}}
                 </th>
               </ng-container>
@@ -50,21 +45,26 @@
                 </ng-container>
               </ng-container>
               <td>
-                <button vts-button vtsType="text" (click)="onViewDataItem(data.id)">
+                <a vts-button vtsType="text" (click)="onViewDataItem(data.id)">
                   <i vts-icon vtsType="RemoveRedEyeDoutone"></i>
-                </button>
-                <button vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions">
+                </a>
+                <a vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions" [vtsPlacement]="'bottomRight'">
                   <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
-                </button>
+                </a>
                 <vts-dropdown-menu #menuActions="vtsDropdownMenu">
                   <ul vts-menu>
-                    <li vts-menu-item (click)="onEditDataItem(data.id)"><i vts-icon vtsType="EditDoutone"></i>Edit</li>
+                    <li vts-menu-item (click)="onEditDataItem(data.id)">
+                      <i class="pr-8" vts-icon vtsType="EditDoutone"></i>
+                      Edit
+                    </li>
                     <li vts-menu-item (click)="changeStatusItem(data.id)">
-                      <vts-switch vtsSize="sm" [(ngModel)]="data.disabled" (click)="changeStatusItem(data.id)">
+                      <vts-switch class="pr-8" vtsSize="sm" [(ngModel)]="data.disabled" (click)="changeStatusItem(data.id)">
                       </vts-switch>Enable/Disable
                     </li>
-                    <li vts-menu-item (click)="showDeleteItemModal(data.id)" style="color: #EE0033;"><i vts-icon
-                        vtsType="DeleteDoutone"></i>Delete</li>
+                    <li vts-menu-item (click)="showDeleteItemModal(data.id)" style="color: #EE0033;">
+                      <i class="pr-8" vts-icon vtsType="DeleteDoutone"></i>
+                      Delete
+                    </li>
                   </ul>
                 </vts-dropdown-menu>
               </td>
@@ -103,11 +103,11 @@
   (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
 <!-- Create, view, edit -->
-<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer"
+<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer" (modeChanger)="onModeChanger($event)"
   [drawerConfig]="drawerConfig" [listStatus]="listStatus" [mode]="mode" [data]="drawerData"></table-drawer>
 
 <!-- Modal download -->
-<vts-drawer [vtsClosable]="false" [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"
+<vts-drawer [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"
   vtsHeight="80px">
   <div style="display: flex; align-items: center; justify-content: space-between;">
     <span>my_demo_download_file.xlsx is downloaded</span>
@@ -133,7 +133,7 @@
 
 <!-- display status -->
 <ng-template #colorDisplay let-value="status">
-  <vts-tag [vtsColor]="getSelectedStatus(value)?.color" class="tag-status">
+  <vts-tag [vtsColor]="getSelectedStatus(value)?.color" [ngClass]="getSelectedStatus(value)!=null? 'tag-status':''">
     <span>{{getSelectedStatus(value)?.text}}</span>
   </vts-tag>
 </ng-template>

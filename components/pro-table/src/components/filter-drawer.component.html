@@ -1,0 +1,29 @@
+<vts-modal [(vtsVisible)]="isVisibleModal" [vtsWidth]="720">
+  <div *vtsModalTitle>
+    {{title}}
+  </div>
+  <ng-container *vtsModalContent>
+    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+  </ng-container>
+  <div *vtsModalFooter>
+    <button vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+    <button vts-button (click)="closeDrawer()">Close</button>
+  </div>
+</vts-modal>
+
+<ng-template #contentTemplate>
+  <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+      <vts-form-item>
+        <vts-form-label class="filter-label text-format">{{filter.filterText}}</vts-form-label>
+        <vts-form-control vtsErrorTip="Error message">
+          <vts-select vtsMode="multiple" formControlName="inputValue" [vtsPlaceHolder]="placeholder" [vtsSize]="size"
+            vtsShowSearch vtsAllowClear>
+            <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value">
+            </vts-option>
+          </vts-select>
+        </vts-form-control>
+      </vts-form-item>
+    </form>
+  </ng-container>
+</ng-template>

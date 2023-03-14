@@ -40,7 +40,6 @@
 td,
 th {
   border-bottom: 1px solid #d1d1d1;
-  background: #FFFFFF;
   box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
 }
 
@@ -78,7 +77,8 @@ td {
 }
 
 .selected-item-data:hover {
-  background: #FFF5F6 !important;
+  background: #F0F0F0;
+  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
 }
 
 .vts-pagination-total-text {
@@ -119,4 +119,13 @@ td {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+}
+
+.col-poiter:hover {
+  cursor: pointer;
+  background: #F0F0F0 !important;
+}
+
+.pr-8 {
+  padding-right: 4px;
 }

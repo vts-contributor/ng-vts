@@ -34,11 +34,10 @@ function generateNav(componentsDocMap) {
   const reverseMap = {};
   let routes = '';
 
-  // const filters = ['table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'carousel',
-  //   'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result',
-  //   'modal', 'form', 'pro-table', 'prolayout'];
-  const filters = ['table', 'pro-table', 'prolayout'];
-  console.log(filters)
+  const filters = ['table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'carousel',
+    'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result',
+    'modal', 'form', 'pro-table', 'prolayout'];
+  
   for (const key in componentsDocMap) {
     if (!filters.includes(key))
       continue

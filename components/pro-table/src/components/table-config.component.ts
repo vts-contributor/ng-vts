@@ -1,4 +1,4 @@
-import { TabConfig } from './../pro-table.type';
+import { ButtonConfig, TabConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -79,7 +79,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     key: ''
   };
   @Input() tabConfig: TabConfig | undefined;
-
+  @Input() moreActionConfig:  ButtonConfig[] | undefined;
 
   vtsRowHeight: string = '48px';
   loading: boolean = false;
@@ -393,13 +393,11 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
         const data = res;
         console.log(data);
-      });
-      setTimeout(() => {
         this.visibleExport = false;
-      }, 3000);
+      });
     }
-    // send Set of item ID to server, must server returns content data to exporting
 
+    // send Set of item ID to server, must server returns content data to exporting
   }
 
   formatNumber(value: number): string {
@@ -539,8 +537,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   onClickActionButtons(actionType: string) {
     switch (actionType) {
       case 'new':
-        this.visibleDrawer = true;
-        this.mode = 'create';
+        this.openDrawer();
         break;
       case 'import':
         this.showUploadModal();
@@ -601,6 +598,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.vtsTotal = +res.headers.get('X-Total-Count');
         this.changeDetector.detectChanges();
       });
+    }
+  }
+
+  onModeChanger(event: ViewMode) {
+    if (event) {
+      this.mode = event;
     }
   }
 }

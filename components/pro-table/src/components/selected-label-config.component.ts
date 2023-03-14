@@ -1,3 +1,4 @@
+import { ButtonConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -20,6 +21,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { VtsButtonSize } from '@ui-vts/ng-vts/button';
 
 @Component({
   selector: 'vts-selected-label-config',
@@ -48,7 +50,22 @@ import { takeUntil } from 'rxjs/operators';
             <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()"><i vts-icon class="pr-4" vtsType="CloudUploadDoutone"></i>Export Selected</a>
           </span>
           <span>
-            <a class="text-format bold-text lable-btn"><i vts-icon class="pr-4" vtsType="ArrowDownOutline"></i>More action</a>
+            
+            <ng-container *ngIf="moreActionConfig">
+              <vts-button-group [vtsSize]="buttonSize">
+                <a class="text-format bold-text lable-btn" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction" [vtsPlacement]="'bottomRight'">
+                  <i vts-icon class="pr-4" vtsType="ArrowDownOutline"></i>
+                  More action
+                </a>
+              </vts-button-group>
+              <vts-dropdown-menu #moreAction="vtsDropdownMenu">
+                <ul vts-menu style="padding: 0px">
+                  <ng-container *ngFor="let action of moreActionConfig">
+                    <li vts-menu-item [ngStyle]="action.style">{{action.buttonText}}</li>
+                  </ng-container>
+                </ul>
+              </vts-dropdown-menu>
+            </ng-container> 
           </span>
         </span>
       </ng-container>
@@ -111,25 +128,27 @@ export class VtsProTableSelectedLabelConfigComponent implements OnDestroy, OnIni
   controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
 
   @Input() selectedItemsAmount = 0;
-  @Input() moreActions = [];
+  @Input() moreActionConfig:  ButtonConfig[] | undefined;
 
   @Output() clearAllSelectedItems = new EventEmitter<boolean>();
   @Output() deleteSelectedItems = new EventEmitter<boolean>();
   @Output() exportSelectedItems = new EventEmitter<boolean>();
   @Output() moreActionEvents = new EventEmitter<boolean[]>();
 
+  buttonSize: VtsButtonSize = 'xs';
+
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-search-form');
   }
-  
+
   ngOnInit(): void {
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;
     });
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedItemsAmount) {
       console.log(changes.selectedItemsAmount);

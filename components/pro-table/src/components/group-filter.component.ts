@@ -1,3 +1,4 @@
+import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { PropertyType } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
@@ -40,60 +41,40 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           </ng-template>
     
           <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
-            <vts-input-group class="filter-item" [vtsAddOnBefore]="filter.filterText" style="padding-left: 2px">
-              <vts-select
-                [vtsMaxTagCount]="1"
-                [(ngModel)]="filter.selectedValues"
-                vtsMode="multiple" vtsAllowClear="false"
-                [vtsTokenSeparators]="[',']"
-                [vtsCustomTemplate]="multipleTemplate"
-                vtsBorderless
-              >
-                <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
-              </vts-select>
-            </vts-input-group>
-              <ng-template #multipleTemplate let-selected>
-                <div class="vts-select-selection-item-content">
-                  {{ renderSelectedItems(i) }}
-                </div>
-              </ng-template>
+            <ng-container *ngIf="i<2">
+              <vts-input-group class="filter-item" [vtsAddOnBefore]="filter.filterText" style="padding-left: 2px">
+                <vts-select
+                  [vtsMaxTagCount]="1"
+                  [(ngModel)]="filter.selectedValues"
+                  vtsMode="multiple" vtsAllowClear="false"
+                  [vtsTokenSeparators]="[',']"
+                  [vtsCustomTemplate]="multipleTemplate"
+                  [vtsDropdownStyle]="{'width':'320px', 'margin-left':'-90px'}"
+                  vtsBorderless
+                >
+                  <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
+                </vts-select>
+              </vts-input-group>
+            </ng-container>
+            <ng-template #multipleTemplate let-selected>
+              <div class="vts-select-selection-item-content">
+                {{ renderSelectedItems(i) }}
+              </div>
+            </ng-template>
           </ng-container>
         </div>
         <div>
-          <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuFilters" [vtsPlacement]="'bottomRight'">
+          <a vts-button class="btn-table-config" vtsType="text" (click)="openFilterModal()">
             <i vts-icon vtsType="FilterFramesDoutone" ></i>
           </a>
-          <vts-badge [vtsCount]="5" style="margin-bottom: 20px;">
+          <vts-badge [vtsCount]="filterGroupConfig?.length" style="margin-bottom: 20px;">
             <a class="head-example"></a>
           </vts-badge>
-          <vts-dropdown-menu #menuFilters="vtsDropdownMenu">
-          <!-- <ul vts-menu>
-            <vts-form-item>
-            <vts-form-control>
-              <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
-                <vts-option [vtsValue]="filter.filterText" [vtsLabel]="filter.filterText"></vts-option>
-                <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
-              </ng-container>
-            </vts-form-control>
-            </vts-form-item>
-          </ul> -->
-
-            <ng-container *ngFor="let filter of filterGroupConfig; let i = index">
-              <ul vts-menu>
-                <li vts-menu-item>{{filter.filterText}}</li>
-                <li vts-menu>
-                  <ul *ngFor="let filterItem of filter.filterValues">
-                    <li vts-menu-item>{{filterItem.label}}</li>
-                  </ul>
-                </li>
-              </ul>
-            </ng-container>
-          </vts-dropdown-menu>
         </div>
       </div>
 
       <div vts-col class="btn-config-area" style="flex-basis: 20%">
-        <a vts-button class="btn-table-config" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert" [vtsPlacement]="'bottomRight'">
+        <a vts-button class="btn-table-config" vts-dropdown vtsType="text" vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert" [vtsPlacement]="'bottomRight'">
           <i vts-icon vtsType="HeightDoutone"></i>
         </a>
         <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
@@ -104,7 +85,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           </ul>
         </vts-dropdown-menu>
   
-        <a vts-button vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuSettings" class="btn-table-config">
+        <a vts-button vts-dropdown vtsTrigger="click" vtsType="text" [vtsDropdownMenu]="menuSettings" class="btn-table-config">
           <i vts-icon vtsType="ReorderDoutone"></i>
         </a>
         <vts-dropdown-menu #menuSettings="vtsDropdownMenu" style="min-width: 200px;">
@@ -114,6 +95,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                 [vtsIndeterminate]="indeterminateConfig">Display all column</label>
             </li>
             <vts-divider style="margin: 0;"></vts-divider>
+
             <ng-container *ngFor="let property of properties">
               <ng-container *ngIf="property.headerTitle && property.headerTitle != null">
                 <li vts-menu-item cdkDrag style="list-style-type: none;">
@@ -133,11 +115,19 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           </ul>
         </vts-dropdown-menu>
         
-        <button vts-button class="btn-table-config" vtsType="default" (click)="reloadTableData()">
+        <a vts-button class="btn-table-config" vtsType="text" (click)="reloadTableData()">
           <i vts-icon vtsType="Sync"></i>
-        </button>
+        </a>
       </div>
     </div>
+
+    <!-- filters modal -->
+    <filter-drawer 
+      [filterGroupConfig]="filterGroupConfig" 
+      [isVisibleModal]="isVisibleModal"
+      (submit)="handleOkModal()"
+      (cancel)="handleCancelModal()"
+    ></filter-drawer>
     
   `,
   styles: [`
@@ -177,11 +167,13 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         border-radius: 6px;
         color: #8F9294;
         margin: 0px 4px;
+        width: 320px;
       }
 
       .filter-item:first-child,
       .filter-item:last-child {
         margin-left: 0px;
+        margin-right: 0px;
       }
       
       .filter-item-select {
@@ -200,7 +192,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       }
 
       .vts-select-selector {
-        border: none !important;
         height: 36px !important;
       }
 
@@ -223,6 +214,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       .vts-dropdown {
         position: inherit;
       }
+
   `],
   host: {
     '[class.vts-search-form-rtl]': `dir === 'rtl'`,
@@ -258,6 +250,7 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
   allChecked = false;
   indeterminateConfig = true;
   listOfFilter = [];
+  isVisibleModal = false;
 
   constructor(
     private elementRef: ElementRef,
@@ -383,5 +376,22 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
     })
     localStorage.setItem('properties', this.properties.toString());
     this.onChangeHeaders.emit(this.properties);
+  }
+
+  openFilterModal() {
+    this.isVisibleModal = true;
+  }
+
+  handleOkModal(): void {
+    this.isVisibleModal = false;
+  }
+
+  handleCancelModal(): void {
+    this.isVisibleModal = false;
+  }
+
+  handleChangeModal(event: VtsSafeAny) {
+    console.log(event);
+
   }
 }
