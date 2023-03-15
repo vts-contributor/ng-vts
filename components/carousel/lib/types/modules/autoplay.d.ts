@@ -69,6 +69,11 @@ export interface AutoplayEvents {
  */
 export interface AutoplayOptions {
   /**
+   * Boolean property to enable/disable autoplay
+   */
+    enabled?: boolean;
+
+  /**
    * Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
    *
    * If you need to specify different delay for specific slides you can do it by using
@@ -113,7 +118,7 @@ export interface AutoplayOptions {
    *
    * @default true
    */
-  waitForTransition?: boolean;
+  // waitForTransition?: boolean;
 
   /**
    * When enabled autoplay will be paused on mouse enter over carousel container. If `disableOnInteraction` is also enabled, it will stop autoplay instead of pause

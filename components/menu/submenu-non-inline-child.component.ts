@@ -7,6 +7,7 @@ import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -16,6 +17,7 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
+  ViewChild,
   ViewEncapsulation
 } from '@angular/core';
 import { slideMotion, zoomBigMotion } from '@ui-vts/ng-vts/core/animation';
@@ -32,8 +34,8 @@ import { VtsMenuModeType } from './menu.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
+      #container
       [class.vts-dropdown-menu]="isMenuInsideDropDown"
-      [class.vts-menu]="!isMenuInsideDropDown"
       [class.vts-dropdown-menu-vertical]="isMenuInsideDropDown"
       [class.vts-dropdown-menu-sub]="isMenuInsideDropDown"
       [class.vts-menu-sub]="!isMenuInsideDropDown"
@@ -75,6 +77,11 @@ export class VtsSubmenuNoneInlineChildComponent implements OnDestroy, OnInit, On
   @Input() isFirst: boolean | null = null;
   @Input() isLasted: boolean | null = null;
   @Output() readonly subMenuMouseState = new EventEmitter<boolean>();
+  @ViewChild('container')
+  set containerEl(el: ElementRef) {
+    if (el)
+      el.nativeElement.classList.add('vts-menu')
+  }
 
   constructor(@Optional() private directionality: Directionality) {}
 

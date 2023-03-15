@@ -57,7 +57,7 @@ export interface CarouselEvents {
    * });
    * ```
    */
-  inited: (carousel: ICarousel) => any;
+  init: (carousel: ICarousel) => any;
 
   /**
    * Event will be fired right before carousel destroyed

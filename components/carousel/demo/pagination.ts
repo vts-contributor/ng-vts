@@ -118,6 +118,15 @@ export class VtsDemoCarouselPaginationComponent implements OnInit {
   direction: VtsCarouselOptions['direction'] = 'horizontal'
   images = [
     {
+      src: 'https://picsum.photos/1800/400?v=1'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=2'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=3'
+    },
+    {
       src: 'https://picsum.photos/1800/400?v=4'
     },
     {
@@ -128,15 +137,6 @@ export class VtsDemoCarouselPaginationComponent implements OnInit {
     },
     {
       src: 'https://picsum.photos/1800/400?v=7'
-    },
-    {
-      src: 'https://picsum.photos/1800/400?v=8'
-    },
-    {
-      src: 'https://picsum.photos/1800/400?v=9'
-    },
-    {
-      src: 'https://picsum.photos/1800/400?v=10'
     }
   ];
   

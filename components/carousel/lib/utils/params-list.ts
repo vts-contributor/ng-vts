@@ -19,8 +19,8 @@ export const paramsList = [
   '_autoHeight',
   'setWrapperSize',
   'virtualTranslate',
-  '_effect',
 
+  'vtsEffect',
   'vtsDirection',
   'vtsEdgeSwipeDetection',
   'vtsEdgeSwipeThreshold',

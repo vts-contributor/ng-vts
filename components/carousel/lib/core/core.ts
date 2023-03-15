@@ -389,6 +389,7 @@ class Carousel {
     const carousel = this;
     if (!carousel || carousel.destroyed) return;
     const { snapGrid, params } = carousel;
+
     // Breakpoints
     if (params.breakpoints) {
       carousel.setBreakpoint();
@@ -431,6 +432,13 @@ class Carousel {
     if (params.watchOverflow && snapGrid !== carousel.snapGrid) {
       carousel.checkOverflow();
     }
+
+    // Loop recreation
+    if (carousel.params.loop) {
+      carousel.loopDestroy();
+      carousel.loopCreate();
+    }
+
     carousel.emit('update');
   }
 
@@ -616,7 +624,7 @@ class Carousel {
     carousel.initialized = true;
 
     // Emit
-    carousel.emit('inited');
+    carousel.emit('init');
     carousel.emit('afterInit');
 
     return carousel;

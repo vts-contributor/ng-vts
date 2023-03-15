@@ -157,11 +157,13 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
     if (carousel.params.autoplay.pauseOnMouseEnter) {
       carousel.$el.on('mouseenter', onMouseEnter);
       carousel.$el.on('mouseleave', onMouseLeave);
+      carousel.autoplay.pauseOnMouseEnter = true
     }
   }
   function detachMouseEvents() {
     carousel.$el.off('mouseenter', onMouseEnter);
     carousel.$el.off('mouseleave', onMouseLeave);
+    carousel.autoplay.pauseOnMouseEnter = false
   }
 
   on('init', () => {
@@ -170,6 +172,18 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
       const document = getDocument();
       document.addEventListener('visibilitychange', onVisibilityChange);
       attachMouseEvents();
+    }
+  });
+  on('update', () => {
+    if (!carousel.params.autoplay.enabled && carousel.autoplay.running) {
+      stop()
+    } else if (carousel.params.autoplay.enabled && !carousel.autoplay.running) {
+      start()
+    }
+    if (!carousel.params.autoplay.pauseOnMouseEnter && carousel.autoplay.pauseOnMouseEnter) {
+      detachMouseEvents()
+    } else if (carousel.params.autoplay.pauseOnMouseEnter && !carousel.autoplay.pauseOnMouseEnter) {
+      attachMouseEvents()
     }
   });
   on('beforeTransitionStart', (_s, speed, internal) => {

@@ -9,7 +9,8 @@ export default function effectInit(params) {
     overwriteParams,
     perspective,
     recreateShadows,
-    getEffectParams
+    getEffectParams,
+    containerModifierClass
   } = params;
 
   on('beforeInit', () => {
@@ -32,7 +33,6 @@ export default function effectInit(params) {
     if (carousel.params.effect !== effect) return;
     setTransition(duration);
   });
-
   on('transitionEnd', () => {
     if (carousel.params.effect !== effect) return;
     if (recreateShadows) {

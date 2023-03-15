@@ -57,12 +57,13 @@ export default function setBreakpoint() {
 
   const directionChanged =
     breakpointParams.direction && breakpointParams.direction !== params.direction;
-  const needsReLoop =
-    params.loop &&
-    (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
+  const needsReLoop = params.loop
+  // const needsReLoop =
+  //   params.loop &&
+  //   (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
 
   if (directionChanged && initialized) {
-    carousel.changeDirection();
+    carousel.changeDirection(breakpointParams.direction);
   }
   extend(carousel.params, breakpointParams);
 
@@ -84,7 +85,7 @@ export default function setBreakpoint() {
 
   carousel.emit('_beforeBreakpoint', breakpointParams);
 
-  if (needsReLoop && initialized) {
+  if (initialized && needsReLoop) {
     carousel.loopDestroy();
     carousel.loopCreate();
     carousel.updateSlides();
