@@ -49,8 +49,14 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
                   vtsMode="multiple" vtsAllowClear="false"
                   [vtsTokenSeparators]="[',']"
                   [vtsCustomTemplate]="multipleTemplate"
-                  [vtsDropdownStyle]="{'width':'320px', 'margin-left':'-90px'}"
+                  [vtsDropdownStyle]="{'width':'18vw', 
+                    'margin-left':'-90px',
+                    'box-shadow': '0px 4px 10px rgba(0, 0, 0, 0.1), 0px 0px 3px rgba(0, 0, 0, 0.5)',
+                    'border-radius': '6px',
+                    'padding':'12px 0px'
+                  }"
                   vtsBorderless
+                  style="width: 100%;"
                 >
                   <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value"></vts-option>
                 </vts-select>
@@ -67,50 +73,51 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           <a vts-button class="btn-table-config" vtsType="text" (click)="openFilterModal()">
             <i vts-icon vtsType="FilterFramesDoutone" ></i>
           </a>
-          <vts-badge [vtsCount]="filterGroupConfig?.length" style="margin-bottom: 20px;">
+          <vts-badge [vtsCount]="filterGroupConfig?.length" [vtsStyle]="{'background': '#EE0033'}" style="margin-bottom: 20px">
             <a class="head-example"></a>
           </vts-badge>
         </div>
       </div>
 
       <div vts-col class="btn-config-area" style="flex-basis: 20%">
-        <a vts-button class="btn-table-config" vts-dropdown vtsType="text" vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert" [vtsPlacement]="'bottomRight'">
+        <a vts-button class="btn-table-config" vts-dropdown vtsType="text" 
+          vtsTrigger="click" [vtsDropdownMenu]="menuSwapVert" [vtsPlacement]="'bottomRight'">
           <i vts-icon vtsType="HeightDoutone"></i>
         </a>
         <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
-          <ul vts-menu>
-            <li vts-menu-item (click)="handleChangeRowHeight('normal')">Normal</li>
-            <li vts-menu-item (click)="handleChangeRowHeight('expand')">Expand</li>
-            <li vts-menu-item (click)="handleChangeRowHeight('narrow')">Narrow</li>
+          <ul vts-menu style="padding: 12px 0" class="drag-area">
+            <div class="triangle-up"></div>
+            <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('normal')">Normal</li>
+            <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('expand')">Expand</li>
+            <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('narrow')">Narrow</li>
           </ul>
         </vts-dropdown-menu>
-  
-        <a vts-button vts-dropdown vtsTrigger="click" vtsType="text" [vtsDropdownMenu]="menuSettings" class="btn-table-config">
+        <a vts-button vts-dropdown vtsTrigger="click" vtsType="text" [vtsDropdownMenu]="menuSettings" class="btn-table-config" [vtsPlacement]="'bottomRight'">
           <i vts-icon vtsType="ReorderDoutone"></i>
         </a>
-        <vts-dropdown-menu #menuSettings="vtsDropdownMenu" style="min-width: 200px;">
-          <ul vts-menu cdkDropList (cdkDropListDropped)="drop($event)">
+        <vts-dropdown-menu #menuSettings="vtsDropdownMenu" style="min-width: 12vw;">
+          <ul vts-menu cdkDropList (cdkDropListDropped)="drop($event)" class="drag-area">
+            <div class="triangle-up"></div>
             <li vts-menu-item>
               <label vts-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()"
                 [vtsIndeterminate]="indeterminateConfig">Display all column</label>
             </li>
-            <vts-divider style="margin: 0;"></vts-divider>
+            <vts-divider style="margin: 0; padding: 4px 0px; width: 220px"></vts-divider>
 
             <ng-container *ngFor="let property of properties">
               <ng-container *ngIf="property.headerTitle && property.headerTitle != null">
-                <li vts-menu-item cdkDrag style="list-style-type: none;">
-                  <i vts-icon vtsType="FullScreen"></i>
+                <li vts-menu-item cdkDrag style="list-style-type: none; width: 100%">
                   <label vts-checkbox [(ngModel)]="property.checked"
                     (ngModelChange)="updateSingleChecked()">{{property.headerTitle}}</label>
                 </li>
               </ng-container>
             </ng-container>
-            <vts-divider style="margin: 0;"></vts-divider>
+            <vts-divider style="margin: 0; padding: 4px 0px"></vts-divider>
             <div class="btn-config-area">
-              <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="primary" (click)="onSavePropsConfig()"
-                >Save</button>
-              <button class="btn-properties-config" vts-button [vtsSize]="'xs'" vtsType="default" (click)="onResetPropsConfig()"
-                >Reset</button>
+              <button class="btn-config-item" vts-button [vtsSize]="'xs'" vtsType="primary" (click)="onSavePropsConfig()"
+                ><i vts-icon vtsType="SaveOutline"></i>Save</button>
+              <button class="btn-config-item" style="margin-left: 8px" vts-button [vtsSize]="'xs'" vtsType="default" (click)="onResetPropsConfig()"
+                ><i vts-icon vtsType="RestoreOutline"></i>Reset</button>
             </div>
           </ul>
         </vts-dropdown-menu>
@@ -142,7 +149,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         display: flex;
         flex-direction: row;
         padding: 12px 0;
-        width: 100%;
       }
 
       .text-format {
@@ -167,7 +173,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         border-radius: 6px;
         color: #8F9294;
         margin: 0px 4px;
-        width: 320px;
+        width: 18vw;
       }
 
       .filter-item:first-child,
@@ -197,8 +203,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
       .btn-config-area {
         display: flex;
-        justify-content: right;
-        padding-top: 4px
+        justify-content: center;
+        align-items: center;
       }
 
       .btn-table-config {
@@ -215,6 +221,32 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         position: inherit;
       }
 
+      .height-dropdown-item {
+        width: 10vw;
+      }
+
+      .drag-area {
+        padding: 8px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-radius: 6px;
+      }
+
+      .btn-config-item {
+        border-radius: 6px;
+      }
+
+      .triangle-up {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 25px solid #fff;
+        position: absolute;
+        top: -8px;
+        right: 4px;
+      }
   `],
   host: {
     '[class.vts-search-form-rtl]': `dir === 'rtl'`,

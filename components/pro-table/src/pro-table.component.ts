@@ -50,9 +50,11 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
         </button>
 
         <ng-container *ngIf="moreActionConfig">
-          <vts-button-group [vtsSize]="buttonSize">
-            <button vts-button vtsType="primary" class="btn-table-config btn-more-action" [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction">
+          <vts-button-group [vtsSize]="buttonSize" vtsType="primary" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction">
+            <button vts-button vtsType="primary" class="btn-table-config btn-more-action btn-more-action-content" [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click">
               More action
+            </button>
+            <button vts-button vtsType="primary" class="btn-table-config btn-more-action btn-more-action-arrow" [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click">
               <span vts-icon vtsType="ArrowDownOutline"></span>
             </button>
           </vts-button-group>
@@ -123,11 +125,30 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
         background: #FFFFFF;
         color: #737373;
         margin-right: 8px;
+        width: 106px;
+        display: flex;
+        align-items: end;
+        justify-content: center;
       }
 
       .btn-more-action {
         border-radius: 6px !important;
         color: #FFFFFF !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .btn-more-action-content {
+        width: 106px;
+        border-top-right-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+      }
+
+      .btn-more-action-arrow {
+        margin-left: 1px !important; 
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
       }
 
       .vts-tabs-tab-btn {
@@ -228,7 +249,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             label: 'Country 2',
             value: 'Country 2'
           },
-          
+
         ],
         selectedValues: []
       },
@@ -279,8 +300,8 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
             label: 'Country',
             value: 'Country'
           },
-          
-          
+
+
         ],
         selectedValues: []
       },

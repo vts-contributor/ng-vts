@@ -1,3 +1,4 @@
+import { VtsPopoverModule } from './../../popover/popover.module';
 import { VtsSwitchModule } from './../../switch/switch.module';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsInputModule } from '@ui-vts/ng-vts/input/input.module';
@@ -39,7 +40,7 @@ import { VtsTableUploadComponent } from './components/table-upload.component';
 import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
 import { VtsProTableGroupFilterComponent } from './components/group-filter.component';
 import { VtsProTableSelectedLabelConfigComponent } from './components/selected-label-config.component';
-import { VtsProtableFilterDrawerComponent } from './components/filter-drawer.component';
+import { VtsProtableFilterPopupComponent } from './components/filter-popup.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import { VtsProtableFilterDrawerComponent } from './components/filter-drawer.com
     VtsTableDeleteComponent,
     VtsTableUploadComponent,
     VtsProTableSelectedLabelConfigComponent,
-    VtsProtableFilterDrawerComponent
+    VtsProtableFilterPopupComponent
   ],
   exports: [
     VtsProTableContainerComponent,
@@ -95,7 +96,8 @@ import { VtsProtableFilterDrawerComponent } from './components/filter-drawer.com
     VtsTabsModule,
     VtsBadgeModule,
     VtsDatePickerModule,
-    VtsSwitchModule
+    VtsSwitchModule,
+    VtsPopoverModule
   ]
 })
 export class VtsProTableModule { }

@@ -52,9 +52,9 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
           <span>
             
             <ng-container *ngIf="moreActionConfig">
-              <vts-button-group [vtsSize]="buttonSize">
-                <a class="text-format bold-text lable-btn" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction" [vtsPlacement]="'bottomRight'">
-                  <i vts-icon class="pr-4" vtsType="ArrowDownOutline"></i>
+              <vts-button-group [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction" [vtsPlacement]="'bottomRight'">
+                <a class="text-format bold-text lable-btn">
+                  <i vts-icon vtsType="ArrowDownOutline"></i>
                   More action
                 </a>
               </vts-button-group>

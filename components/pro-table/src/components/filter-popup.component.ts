@@ -16,7 +16,7 @@ import { PropertyType } from '../pro-table.type';
 
 @Component({
   selector: 'filter-drawer',
-  templateUrl: 'filter-drawer.component.html',
+  templateUrl: 'filter-popup.component.html',
   styles: [
     `
       .vts-input-number {
@@ -39,7 +39,7 @@ import { PropertyType } from '../pro-table.type';
     `
   ]
 })
-export class VtsProtableFilterDrawerComponent implements OnInit, OnChanges {
+export class VtsProtableFilterPopupComponent implements OnInit, OnChanges {
 
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() isVisibleModal: boolean = false;
