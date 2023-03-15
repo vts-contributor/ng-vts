@@ -70,6 +70,7 @@ td {
 .vts-pagination-prev,
 .vts-pagination-item,
 .vts-pagination-next,
+.vts-pagination-item-ellipsis,
 .vts-pagination-last {
   margin-right: 4px;
 }
@@ -85,7 +86,6 @@ td {
 
 .selected-item-data:hover {
   background: #F0F0F0;
-  box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
 }
 
 .vts-pagination-total-text {

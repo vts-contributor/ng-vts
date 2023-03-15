@@ -132,7 +132,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
     <filter-drawer 
       [filterGroupConfig]="filterGroupConfig" 
       [isVisibleModal]="isVisibleModal"
-      (submit)="handleOkModal()"
+      (submit)="handleOkModal($event)"
       (cancel)="handleCancelModal()"
     ></filter-drawer>
     
@@ -236,16 +236,16 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         border-radius: 6px;
       }
 
-      /* .triangle-up {
+      .triangle-up {
         width: 0;
         height: 0;
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
-        border-bottom: 25px solid red;
+        border-bottom: 25px solid #fff;
         position: absolute;
         top: -8px;
         right: 4px;
-      } */
+      }
   `],
   host: {
     '[class.vts-search-form-rtl]': `dir === 'rtl'`,
@@ -413,7 +413,10 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
     this.isVisibleModal = true;
   }
 
-  handleOkModal(): void {
+  handleOkModal(event: any): void {
+    if (event) {
+      this.putSearchData.emit(event);
+    }
     this.isVisibleModal = false;
   }
 
@@ -423,6 +426,5 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
 
   handleChangeModal(event: VtsSafeAny) {
     console.log(event);
-
   }
 }

@@ -46,17 +46,17 @@ export class VtsProtableFilterPopupComponent implements OnInit, OnChanges {
   @Input() data: { [key: string]: any } = {};
   @Input() headers: PropertyType[] = [];
   @Input() properties: PropertyType[] = [];
+  @Input() title: string = "Advanced searching";
 
   @Output() onSearchByFilter: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() submit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
 
   placeholder = '';
   size: any = 'md';
   listOfOption: Array<{ label: string; value: string }> = [];
   formGroup: FormGroup = new FormGroup({});
-  title: string = "Advanced searching";
 
   constructor(
   ) { }
@@ -72,7 +72,7 @@ export class VtsProtableFilterPopupComponent implements OnInit, OnChanges {
   }
 
   onSave() {
-    this.submit.emit(false);
+    this.submit.emit(this.formGroup.value);
   }
 
   closeDrawer() {

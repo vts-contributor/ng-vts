@@ -23,7 +23,7 @@
               <ng-container *ngIf="property.headerTitle && property.headerTitle != null">
                 <th [vtsSortFn]="sortFn" [vtsSortDirections]="sortDirections" *ngIf="property.checked"
                   (click)="sortValue(property)" class="col-poiter">
-                  {{property.headerTitle}}
+                  <span style="padding-right: 4px;">{{property.headerTitle}}</span>
                 </th>
               </ng-container>
             </ng-container>
@@ -48,7 +48,8 @@
                 <a vts-button vtsType="text" (click)="onViewDataItem(data.id)">
                   <i vts-icon vtsType="RemoveRedEyeDoutone"></i>
                 </a>
-                <a vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions" [vtsPlacement]="'bottomRight'">
+                <a vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions"
+                  [vtsPlacement]="'bottomRight'">
                   <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
                 </a>
                 <vts-dropdown-menu #menuActions="vtsDropdownMenu">
@@ -59,7 +60,8 @@
                       Edit
                     </li>
                     <li vts-menu-item (click)="changeStatusItem(data.id)">
-                      <vts-switch class="pr-8" vtsSize="sm" [(ngModel)]="data.disabled" (click)="changeStatusItem(data.id)">
+                      <vts-switch class="pr-8" vtsSize="sm" [(ngModel)]="data.disabled"
+                        (click)="changeStatusItem(data.id)">
                       </vts-switch>Enable/Disable
                     </li>
                     <li vts-menu-item (click)="showDeleteItemModal(data.id)" style="color: #EE0033;">
@@ -104,12 +106,12 @@
   (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
 <!-- Create, view, edit -->
-<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer" (modeChanger)="onModeChanger($event)"
-  [drawerConfig]="drawerConfig" [listStatus]="listStatus" [mode]="mode" [data]="drawerData"></table-drawer>
+<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer"
+  (modeChanger)="onModeChanger($event)" (createAnotherData)="onCreateAnotherData($event)" [drawerConfig]="drawerConfig"
+  [listStatus]="listStatus" [mode]="mode" [data]="drawerData"></table-drawer>
 
 <!-- Modal download -->
-<vts-drawer [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false"
-  vtsHeight="80px">
+<vts-drawer [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false" vtsHeight="80px">
   <div style="display: flex; align-items: center; justify-content: space-between;">
     <span>my_demo_download_file.xlsx is downloaded</span>
     <a vts-button [vtsType]="'text'" (click)="closeExported()">

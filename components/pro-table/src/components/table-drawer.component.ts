@@ -42,8 +42,10 @@ import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode } from '../
         color: #000000;
       }
 
-      .mg-64 {
-        margin: 0 64px
+      .vts-input,
+      .vts-input-number,
+      .vts-picker {
+        border-radius: 6px;
       }
     `
   ]
@@ -79,6 +81,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() modeChanger: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
+  @Output() createAnotherData: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   closeDrawer() {
     this.close.emit(false);
@@ -92,25 +95,10 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       this.displayHeaders = [...headers.currentValue.filter((h: PropertyType) => h.headerTitle)];
     }
     if (mode) {
-      if (typeof this.drawerConfig != "undefined") this.setTitle(this.drawerConfig);
+      if (typeof this.drawerConfig != "undefined" && this.mode != 'create-another') this.setTitle(this.drawerConfig);
     }
     if (data) {
-      let form = new FormGroup({});
-      let selectedStatus: { [key: string]: string } = {};
-      let value = {
-        ...data.currentValue
-      };
-      this.displayHeaders.forEach(header => {
-        if (header.datatype == "status") {
-          selectedStatus[header.propertyName] = value[header.propertyName]
-        }
-        else {
-          form.addControl(header.propertyName, new FormControl(value[header.propertyName]));
-        }
-      });
-      this.formGroup = form;
-      this.selectedStatus = { ...selectedStatus };
-
+      this.initForm();
       if (typeof this.drawerConfig != "undefined") {
         this.setTitle(this.drawerConfig);
       }
@@ -154,12 +142,31 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       }
     }
     else if (mode) {
-      if (typeof this.drawerConfig != "undefined") this.setTitle(this.drawerConfig);
+      if (typeof this.drawerConfig != "undefined" && this.mode != 'create-another') this.setTitle(this.drawerConfig);
+      if (this.mode == 'create-another' || mode.previousValue == 'create-another') this.initForm();
     }
     else {
       this.visibleDrawer = false;
       this.visibleModal = false;
     }
+  }
+
+  initForm() {
+    let form = new FormGroup({});
+      let selectedStatus: { [key: string]: string } = {};
+      let value = {
+        ...this.data
+      };
+      this.displayHeaders.forEach(header => {
+        if (header.datatype == "status") {
+          selectedStatus[header.propertyName] = value[header.propertyName]
+        }
+        else {
+          form.addControl(header.propertyName, new FormControl(value[header.propertyName]));
+        }
+      });
+      this.formGroup = form;
+      this.selectedStatus = { ...selectedStatus };
   }
 
   setTitle(config: DrawerConfig) {
@@ -264,5 +271,10 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   onChangeToEdit() {
     this.mode = 'edit';
     this.modeChanger.emit(this.mode);
+  }
+
+  onCreateAnother() {
+    this.onSave();
+    this.modeChanger.emit('create-another');
   }
 }

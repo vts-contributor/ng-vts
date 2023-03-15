@@ -42,7 +42,7 @@ export type Request = {
   onError?: (data: {[key: string]: VtsSafeAny}) => void
 }
 
-export type ViewMode = "view" | "edit" | "create";
+export type ViewMode = "view" | "edit" | "create" | "create-another";
 
 export type DrawerConfig = {
   openWith: "drawer" | "modal",

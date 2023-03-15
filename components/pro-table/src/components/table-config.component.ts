@@ -606,4 +606,11 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.mode = event;
     }
   }
+
+  onCreateAnotherData(event: boolean) {
+    if (event) {
+      console.log('create another');
+      this.openDrawer();
+    }
+  }
 }
