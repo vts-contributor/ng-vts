@@ -85,8 +85,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           <i vts-icon vtsType="HeightDoutone"></i>
         </a>
         <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
+          <div class="triangle-up"></div>
           <ul vts-menu style="padding: 12px 0" class="drag-area">
-            <div class="triangle-up"></div>
             <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('normal')">Normal</li>
             <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('expand')">Expand</li>
             <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('narrow')">Narrow</li>
@@ -96,8 +96,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
           <i vts-icon vtsType="ReorderDoutone"></i>
         </a>
         <vts-dropdown-menu #menuSettings="vtsDropdownMenu" style="min-width: 12vw;">
+          <div class="triangle-up"></div>
           <ul vts-menu cdkDropList (cdkDropListDropped)="drop($event)" class="drag-area">
-            <div class="triangle-up"></div>
             <li vts-menu-item>
               <label vts-checkbox [(ngModel)]="allChecked" (ngModelChange)="updateAllChecked()"
                 [vtsIndeterminate]="indeterminateConfig">Display all column</label>
@@ -226,27 +226,26 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       }
 
       .drag-area {
-        padding: 8px 16px;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
         border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px, rgba(0, 0, 0, 0.5) 0px 0px 3px;
       }
 
       .btn-config-item {
         border-radius: 6px;
       }
 
-      .triangle-up {
+      /* .triangle-up {
         width: 0;
         height: 0;
         border-left: 12px solid transparent;
         border-right: 12px solid transparent;
-        border-bottom: 25px solid #fff;
+        border-bottom: 25px solid red;
         position: absolute;
         top: -8px;
         right: 4px;
-      }
+      } */
   `],
   host: {
     '[class.vts-search-form-rtl]': `dir === 'rtl'`,

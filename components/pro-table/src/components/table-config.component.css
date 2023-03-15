@@ -37,14 +37,13 @@
   padding: 4px 16px;
 }
 
-td,
 th {
   border-bottom: 1px solid #d1d1d1;
   box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
 }
 
 td {
-  border-top: 1px solid #d1d1d1;
+  border-bottom: 1px solid #d1d1d1;
 }
 
 .btn-properties-config {
@@ -65,6 +64,14 @@ td {
   font-size: 14px;
   line-height: 18px;
   color: #CB002B;
+}
+
+.vts-pagination-begin,
+.vts-pagination-prev,
+.vts-pagination-item,
+.vts-pagination-next,
+.vts-pagination-last {
+  margin-right: 4px;
 }
 
 .vts-pagination-item>a {

@@ -390,6 +390,11 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
 
       forkJoin(urlsFork).subscribe(res => {
         this.totalDataWithFilter = res;
+        if (this.tabGroupConfig) {
+          for (let i=0; i<this.tabGroupConfig.tabValueConfig.length; i++) {
+            this.tabGroupConfig.tabValueConfig[i].total = +this.totalDataWithFilter[i].headers.get('X-Total-Count');
+          }
+        }
         this.listData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
         this.vtsTotal = +this.totalDataWithFilter[this.selectedTabIndex].headers.get('X-Total-Count');
       })

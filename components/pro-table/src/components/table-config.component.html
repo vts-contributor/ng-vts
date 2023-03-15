@@ -52,7 +52,8 @@
                   <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
                 </a>
                 <vts-dropdown-menu #menuActions="vtsDropdownMenu">
-                  <ul vts-menu>
+                  <div class="triangle-up"></div>
+                  <ul vts-menu class="drag-area">
                     <li vts-menu-item (click)="onEditDataItem(data.id)">
                       <i class="pr-8" vts-icon vtsType="EditDoutone"></i>
                       Edit

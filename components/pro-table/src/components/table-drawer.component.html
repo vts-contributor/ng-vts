@@ -13,13 +13,19 @@
   </ng-template>
 
   <ng-template #footerTpl>
-    <div style="float: right">
-      <button *ngIf="mode=='edit'" vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
-      <ng-container *ngIf="mode=='create'"></ng-container>
-      <button vts-button (click)="closeDrawer()" style="margin-right: 8px">Cancle</button>
-      <button vts-button (click)="closeDrawer()" style="margin-right: 8px">Create and another</button>
-      <button vts-button (click)="closeDrawer()" style="margin-right: 8px" vtsType="primary">Create</button>
-    </div>
+    <ng-container *ngIf="mode=='edit'">
+      <div style="float: right">
+        <button vts-button vtsType="primary" style="margin-right: 8px"
+          (click)="onSave()">Save</button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="mode=='create'">
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <button vts-button (click)="closeDrawer()" style="margin-right: 8px">Cancel</button>
+        <button vts-button (click)="closeDrawer()" style="margin-right: 8px">Create and another</button>
+        <button vts-button (click)="closeDrawer()" vtsType="primary">Create</button>
+      </div>
+    </ng-container>
   </ng-template>
 </vts-drawer>
 
@@ -131,6 +137,7 @@
     [vtsPlacement]="'bottomRight'" style="position: absolute;right: 48px;top: 12px;">
     <i class="collapse-icon" vts-icon [vtsType]="'ArrowMiniDown'"></i>
   </a>
+  <div class="triangle-up"></div>
   <vts-dropdown-menu #menuActions="vtsDropdownMenu">
     <ul vts-menu>
       <li vts-menu-item (click)="onChangeToEdit()">
