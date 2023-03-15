@@ -18,5 +18,5 @@
 </ng-container>
 
 <ng-template #menuChild>
-    <li vts-menu-item [vtsSelected]="menuItem.isSelected">{{menuItem.title}}</li>
+    <li vts-menu-item [vtsMatchRouterExact]="true">{{menuItem.title}}</li>
 </ng-template>

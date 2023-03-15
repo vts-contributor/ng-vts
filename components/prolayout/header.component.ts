@@ -12,7 +12,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  SimpleChange
+  SimpleChange,
+  TemplateRef
 } from '@angular/core';
 import { VtsMenuThemeType } from '../menu';
 import { MenuItemProLayout } from './pro-layout.types';
@@ -23,14 +24,20 @@ import { MenuItemProLayout } from './pro-layout.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
-  template: `
-    <div class="logo-header vts-logo" *ngIf="showLogo"></div>
-    <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu" [vtsTheme]="vtsTheme" *ngIf="!useSplitMenu">
-      <ng-container *ngFor="let item of menuData">
-        <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
-      </ng-container>
-    </ul>
-  `,
+  // template: `
+  //   <div class="logo-header vts-logo" *ngIf="showLogo"></div>
+  //   <div class="title-container">
+  //     <ng-container *ngIf="title">
+  //       {{ title }}
+  //     </ng-container>
+  //     <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu" [vtsTheme]="vtsTheme" *ngIf="!useSplitMenu">
+  //       <ng-container *ngFor="let item of menuData">
+  //         <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
+  //       </ng-container>
+  //     </ul>
+  //   </div>
+  // `,
+  templateUrl: 'pro-header.component.html',
   styles: [
     `
       .logo-header {
@@ -46,6 +53,11 @@ import { MenuItemProLayout } from './pro-layout.types';
       .header-menu {
         line-height: 63px;
       }
+
+      .title-container {
+        display: flex;
+        padding-left: 24px;
+      }
     `
   ]
 })
@@ -59,12 +71,30 @@ export class VtsHeaderComponent implements OnChanges {
   @Input() menuData: MenuItemProLayout[] = [];
   @Input() vtsTheme: VtsMenuThemeType = 'light';
   @Input() useSplitMenu: boolean = false;
+  @Input() title: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
 
   ngOnChanges(changes: SimpleChanges) {
-    const {isFixedHeader, isFixedSider } = changes;
+    const {isFixedHeader, isFixedSider, menuData, title } = changes;
     this.handleChangeFixedStatus(isFixedHeader, isFixedSider);    
+    if(menuData){
+      if(this.title || (title && title.currentValue)){
+        // add a wrapper item to create a menu button
+        let newMenuData: MenuItemProLayout[] = [
+          {
+            icon: "toc",
+            title: "",
+            children: [
+              ...menuData.currentValue
+            ]
+          }
+        ];
+        this.menuData = [
+          ...newMenuData
+        ];
+      }
+    }
   }
 
   handleChangeFixedStatus(isFixedHeader: SimpleChange, isFixedSider: SimpleChange){
