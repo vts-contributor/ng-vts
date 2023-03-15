@@ -7,7 +7,8 @@ export type MenuItemProLayout = {
     children?: MenuItemProLayout[],
     isOpen?: boolean,
     isSelected?: boolean,
-    icon?: string
+    icon?: string,
+    id?: string | number
 }
 
 export type ThemeColorType = {

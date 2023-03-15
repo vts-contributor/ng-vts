@@ -16,7 +16,8 @@ import {
   // Optional,
   // OnChanges,
   // QueryList,
-  ViewEncapsulation
+  ViewEncapsulation,
+  TemplateRef
 } from '@angular/core';
 // import { Subject } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
@@ -37,7 +38,6 @@ import { MenuItemProLayout } from './pro-layout.types';
 
       .vts-breadcrumb {
         margin-bottom: 24px;
-        margin-left: 24px;
       }
 
       .inner-layout {
@@ -78,6 +78,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
   @Input() isMenuSplitted: boolean = false;
   @Input() menuHeader: MenuItemProLayout[] = [];
   @Input() menuSider: MenuItemProLayout[] = [];  
+  @Input() headerTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
 
   onChangeFixedSider(isFixed: boolean) {
     this.isFixedSider = isFixed;
@@ -130,6 +131,25 @@ export class VtsProLayoutContainerComponent implements OnInit {
     this.menuSider = [
       ...this.menuSider
     ]
+  }
+
+  onSelectMenuSiderItem(selected: MenuItemProLayout){
+    let menuSider = [
+      ...this.menuSider
+    ];
+    menuSider.forEach(item => {
+      if(item.isSelected){
+        item.isSelected = false;
+      }
+    })
+    menuSider.forEach(item => {
+      if(item.id == selected.id){
+        item.isSelected = true;
+      }
+    })
+    this.menuSider = [
+      ...menuSider
+    ];
   }
 
   ngOnInit(): void { }

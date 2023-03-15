@@ -3,11 +3,11 @@
         [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [menuData]="menuSider" [menuHeader]="menuHeader"></vts-prolayout-sider> 
 
     <vts-prolayout-header [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [menuData]="menuHeader" [vtsTheme]="useDarkMode ? 'dark': 'light'"
-        *ngIf="isShowHeader && !isFixedSider" [useSplitMenu]="isMenuSplitted"></vts-prolayout-header>
+        *ngIf="isShowHeader && !isFixedSider" [useSplitMenu]="isMenuSplitted" [title]="headerTitle"></vts-prolayout-header>
 
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
         <vts-prolayout-header [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" *ngIf="isShowHeader" [vtsTheme]="useDarkMode ? 'dark': 'light'"
-            [menuData]="menuHeader" [useSplitMenu]="isMenuSplitted"></vts-prolayout-header>
+            [menuData]="menuHeader" [useSplitMenu]="isMenuSplitted" [title]="headerTitle"></vts-prolayout-header>
         <vts-prolayout-content class="outer-content">
             <vts-breadcrumb>
                 <vts-breadcrumb-item>Home</vts-breadcrumb-item>
@@ -20,7 +20,7 @@
                 </vts-prolayout-content>
             </vts-prolayout>
 
-            <vts-prolayout-footer *ngIf="isShowFooter">NG-VTS</vts-prolayout-footer>
+            <vts-prolayout-footer *ngIf="isShowFooter">Copyright by Viettel Solution - Government Solution Center Platform</vts-prolayout-footer>
         </vts-prolayout-content>
     </vts-prolayout>
 
@@ -45,7 +45,7 @@
                 </vts-prolayout-content>
             </ng-template>
 
-            <vts-prolayout-footer *ngIf="isShowFooter">NG-VTS</vts-prolayout-footer>
+            <vts-prolayout-footer *ngIf="isShowFooter">Copyright by Viettel Solution - Government Solution Center Platform</vts-prolayout-footer>
         </vts-prolayout-content>
     </ng-template>
 
