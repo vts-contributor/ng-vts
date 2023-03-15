@@ -20,9 +20,9 @@ import Manipulation from './core/modules/manipulation/manipulation';
 import Effectfade from './core/modules/effect-fade/effect-fade';
 import Effectcube from './core/modules/effect-cube/effect-cube';
 import Effectflip from './core/modules/effect-flip/effect-flip';
-import Effectcoverflow from './core/modules/effect-coverflow/effect-coverflow';
-import Effectcreative from './core/modules/effect-creative/effect-creative';
-import Effectcards from './core/modules/effect-cards/effect-cards';
+// import Effectcoverflow from './core/modules/effect-coverflow/effect-coverflow';
+// import Effectcreative from './core/modules/effect-creative/effect-creative';
+// import Effectcards from './core/modules/effect-cards/effect-cards';
 
 // Carousel Class
 const modules = [
@@ -47,9 +47,9 @@ const modules = [
   Effectfade,
   Effectcube,
   Effectflip,
-  Effectcoverflow,
-  Effectcreative,
-  Effectcards
+  // Effectcoverflow,
+  // Effectcreative,
+  // Effectcards
 ];
 Carousel.use(modules);
 

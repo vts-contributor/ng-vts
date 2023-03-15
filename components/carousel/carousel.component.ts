@@ -79,7 +79,6 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() autoHeight: "autoHeight";
   // @Input() setWrapperSize: "setWrapperSize";
   // @Input() virtualTranslate: "virtualTranslate";
-  // @Input() effect: "effect";
   // @Input() maxBackfaceHiddenSlides: "maxBackfaceHiddenSlides";
   // @Input() grid: "grid";
   // @Input() slidesPerGroup: "slidesPerGroup";
@@ -152,19 +151,17 @@ export class VtsCarouselComponent implements OnInit {
   // @Input() parallax: "parallax";
   // @Input() zoom: "zoom";
 
+  @Input() vtsInitialSlide?: number = 0;
   @Input() vtsDirection?: VtsCarouselOptions['direction'] = 'horizontal';
   @Input() vtsSpeed?: number;
   @Input() vtsEdgeSwipeDetection: boolean | string = '';
   @Input() vtsEdgeSwipeThreshold: number = 1;
-  @Input() vtsBreakpoints?: {
-    [width: number]: VtsCarouselOptions;
-    [ratio: string]: VtsCarouselOptions;
-  };
+  @Input() vtsBreakpoints?: VtsCarouselBreakpointOptions;
   @Input() vtsSpaceBetween?: number;
   @Input() vtsSlidesPerView?: number | 'auto';
   @Input() vtsLoop?: boolean;
-  @Input() vtsLoopAdditionalSlides?: number;
-  @Input() vtsLoopedSlides?: number | null;
+  vtsLoopAdditionalSlides?: number;
+  vtsLoopedSlides?: number | null;
   @Input() vtsAllowSlidePrev?: boolean;
   @Input() vtsAllowSlideNext?: boolean;
   @Input() vtsSlideClass?: string = 'vts-carousel-slide';
@@ -173,6 +170,8 @@ export class VtsCarouselComponent implements OnInit {
   @Input() vtsAutoplay?: VtsCarouselAutoplayOptions | boolean | '';
   @Input() vtsController?: VtsCarouselControllerOptions;
   @Input() vtsThumbs?: VtsCarouselThumbsOptions;
+  @Input() vtsEffect?: VtsCarouselOptions['effect'] = "slide";
+
   @Input() class: string = '';
   @Input() id: string = '';
   @Input()
@@ -279,7 +278,7 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsAfterInit = new EventEmitter<EventsParams['afterInit']>();
 
-  // @Output('vtsAutoplay') vtsAutoplay = new EventEmitter<EventsParams['autoplay']>();
+  @Output() vtsAutoplayChange = new EventEmitter<EventsParams['autoplay']>();
 
   @Output() vtsAutoplayStart = new EventEmitter<EventsParams['autoplayStart']>();
 
@@ -329,7 +328,7 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsImagesReady = new EventEmitter<EventsParams['imagesReady']>();
 
-  @Output() vtsInited = new EventEmitter<EventsParams['inited']>();
+  @Output() vtsInited = new EventEmitter<EventsParams['init']>();
 
   @Output() vtsKeyPress = new EventEmitter<EventsParams['keyPress']>();
 
@@ -708,8 +707,6 @@ export class VtsCarouselComponent implements OnInit {
         _slideClasses
       });
       const carouselRef = new Carousel(carouselParams) as any as ICarousel;
-      carouselRef.loopCreate = () => {};
-      carouselRef.loopDestroy = () => {};
       if (carouselParams.vtsLoop) {
         carouselRef.vtsLoopedSlides = this.vtsLoopedSlides!;
       }
@@ -966,6 +963,10 @@ export class VtsCarouselComponent implements OnInit {
 }
 
 type OmitPaginationOptions = Omit<VtsCarouselPaginationOptions, 'el' | 'renderCustom'>
+type VtsCarouselBreakpointOptions = {
+  [width: number]: VtsCarouselOptions;
+  [ratio: string]: VtsCarouselOptions;
+}
 
 export {
   VtsCarouselOptions,
@@ -976,5 +977,6 @@ export {
   VtsCarouselVirtualOptions,
   VtsCarouselControllerOptions,
   VtsCarouselThumbsOptions,
-  VtsCarouselAutoplayOptions
+  VtsCarouselAutoplayOptions,
+  VtsCarouselBreakpointOptions,
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
 
 @Component({
-  selector: 'vts-demo-carousel-multiple',
+  selector: 'vts-demo-carousel-loop',
   template: `
     <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
       <span *vtsSpaceItem>
@@ -14,22 +14,12 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
       </span>
     </vts-space>
     <p></p>
-    <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
-      <span *vtsSpaceItem>
-        Item per view: &nbsp;
-        <vts-input-number [vtsMin]="1" [vtsStep]="1" [(ngModel)]="slidesPerView"></vts-input-number>
-      </span>
-      <span *vtsSpaceItem>
-        Space between: &nbsp;
-        <vts-input-number [vtsMin]="0" [vtsStep]="4" [(ngModel)]="spaceBetween"></vts-input-number>
-      </span>
-    </vts-space>
-    <p></p>
     <br />
     <vts-carousel 
       [vtsDirection]="direction" 
-      [vtsSlidesPerView]="slidesPerView"
-      [vtsSpaceBetween]="spaceBetween"
+      [vtsSlidesPerView]="3"
+      [vtsSpaceBetween]="8"
+      [vtsLoop]="true"
     >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
@@ -50,10 +40,8 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
     `
   ]
 })
-export class VtsDemoCarouselMultipleComponent implements OnInit {
+export class VtsDemoCarouselLoopComponent implements OnInit {
   direction: VtsCarouselOptions['direction'] = 'horizontal'
-  slidesPerView = 2
-  spaceBetween = 0
 
   images = [
     {
@@ -78,7 +66,7 @@ export class VtsDemoCarouselMultipleComponent implements OnInit {
       src: 'https://picsum.photos/1800/400?v=7'
     }
   ];
-  
+
   constructor() {
   }
 

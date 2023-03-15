@@ -5,7 +5,6 @@ import { VtsCarouselAutoplayOptions, VtsCarouselOptions } from '@ui-vts/ng-vts/c
 @Component({
   selector: 'vts-demo-carousel-autoplay',
   template: `
-    <p>Basic:</p>
     <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
       <span *vtsSpaceItem>
         Direction: &nbsp;
@@ -19,8 +18,28 @@ import { VtsCarouselAutoplayOptions, VtsCarouselOptions } from '@ui-vts/ng-vts/c
     <form [formGroup]="formGroup">
       <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
         <span *vtsSpaceItem>
+          Enable: &nbsp;
+          <vts-switch formControlName="enabled"></vts-switch>
+        </span>
+        <span *vtsSpaceItem>
           Delay: &nbsp;
           <vts-input-number [vtsMin]="1000" [vtsStep]="1000" formControlName="delay"></vts-input-number>
+        </span>
+        <span *vtsSpaceItem>
+          Stop at last slide: &nbsp;
+          <vts-switch formControlName="stopOnLastSlide"></vts-switch>
+        </span>
+        <span *vtsSpaceItem>
+          Stop on interction: &nbsp;
+          <vts-switch formControlName="disableOnInteraction"></vts-switch>
+        </span>
+        <span *vtsSpaceItem>
+          Pause on mouse enter: &nbsp;
+          <vts-switch formControlName="pauseOnMouseEnter"></vts-switch>
+        </span>
+        <span *vtsSpaceItem>
+          Reversed: &nbsp;
+          <vts-switch formControlName="reverseDirection"></vts-switch>
         </span>
       </vts-space>
     </form>
@@ -30,7 +49,7 @@ import { VtsCarouselAutoplayOptions, VtsCarouselOptions } from '@ui-vts/ng-vts/c
       [vtsDirection]="direction" 
       [vtsSlidesPerView]="3"
       [vtsSpaceBetween]="8"
-      [vtsAutoplay]="true"
+      [vtsAutoplay]="autoplayOptions"
     >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
@@ -79,11 +98,20 @@ export class VtsDemoCarouselAutoplayComponent implements OnInit {
   ];
 
   formGroup = new FormGroup({
+    enabled: new FormControl(true, {nonNullable: true}),
     delay: new FormControl(1000, {nonNullable: true}),
+    stopOnLastSlide: new FormControl(false, {nonNullable: true}),
+    disableOnInteraction: new FormControl(false, {nonNullable: true}),
+    pauseOnMouseEnter: new FormControl(false, {nonNullable: true}),
+    reverseDirection: new FormControl(false, {nonNullable: true}),
   });
+
   autoplayOptions: VtsCarouselAutoplayOptions = this.formGroup.value
   
   constructor() {
+    this.formGroup.valueChanges.subscribe((d) => {
+      this.autoplayOptions = {...d}
+    })
   }
 
   ngOnInit(): void { }
