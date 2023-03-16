@@ -44,6 +44,13 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
+| `[tableTitle]` | The title of table | `string` | `undefined` |
+| `[moreActionConfig]` | The configuration object for more actions rendering | `ButtonConfig[]` |
+| `[tabGroupConfig]` | The configuration object for categorys filtering | `TabGroupConfig` |
+| `[filterGroupConfig]` | The configuration object for data filtering  | `{ [key: string]: any }[]` |
+| `[drawerConfig]` | The configuration object for data filtering  | `DrawerConfig` |
+| `[modalDeleteConfig]` | The configuration object for deletion modal  | `ModalDeleteConfig` |
+| `[modalUploadConfig]` | The configuration object for uploading modal  | `ModalUploadConfig` |
 | `[loading]` | Render loading template, use for server pagination | `boolean` | `false` |
 | `[properties]` | Property array to be render headers | `PropertyType[]` |
 | `[listData]` | Data array to be rendered | `{ [key: string]: VtsSafeAny }[]` |
@@ -54,6 +61,7 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | `[saveRequest]` | The request object for data fetching and auto render data | `Request` |
 | `[exportRequest]` | The request object for data fetching and auto render data | `Request` |
 | `[configTableRequest]` | The request object for data fetching and auto render data | `Request` |
+| `[listStatus]` | The status array of data item | `StatusConfig[]` |
 | `[pageSize]` | Bind current pageSize | `number` | `10` |
 | `[onPageSizeChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
 | `[onPageIndexChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
