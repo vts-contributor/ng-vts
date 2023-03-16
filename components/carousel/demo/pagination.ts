@@ -65,20 +65,20 @@ import { VtsCarouselOptions, VtsCarouselPaginationOptions } from '@ui-vts/ng-vts
     <br />
     <br />
     <p>Custom Element:</p>
-    <vts-carousel 
-      [vtsSlidesPerView]="1" 
-      [vtsPagination]="customElementPageOptions" 
-      (vtsActiveIndexChange)="onActiveIndexChange($event)" 
+    <vts-carousel
+      [vtsSlidesPerView]="1"
+      [vtsPagination]="customElementPageOptions"
+      (vtsActiveIndexChange)="onActiveIndexChange($event)"
       (vtsSlidesLengthChange)="onSlideLengthChange($event)"
     >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
       <vts-carousel-pagination class="custom-pagination">
-        {{(currentIndex + 1)}} / {{currentLength}}
+        {{ currentIndex + 1 }} / {{ currentLength }}
       </vts-carousel-pagination>
     </vts-carousel>
-    `,
+  `,
   styles: [
     `
       .vts-carousel {
@@ -115,7 +115,7 @@ import { VtsCarouselOptions, VtsCarouselPaginationOptions } from '@ui-vts/ng-vts
   ]
 })
 export class VtsDemoCarouselPaginationComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'horizontal'
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
   images = [
     {
       src: 'https://picsum.photos/1800/400?v=1'
@@ -139,51 +139,52 @@ export class VtsDemoCarouselPaginationComponent implements OnInit {
       src: 'https://picsum.photos/1800/400?v=7'
     }
   ];
-  
-  currentIndex = 0
-  currentLength = 0
+
+  currentIndex = 0;
+  currentLength = 0;
   onActiveIndexChange(idx: number) {
-    this.currentIndex = idx
+    this.currentIndex = idx;
     // Custom element may not be updated itself
     // Call detectChanges() to ensure view updated
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
   onSlideLengthChange(length: number) {
-    this.currentLength = length
+    this.currentLength = length;
     // Custom element may not be updated itself
     // Call detectChanges() to ensure view updated
-    this.cdr.detectChanges()
+    this.cdr.detectChanges();
   }
 
   formGroup = new FormGroup({
-    enabled: new FormControl(true, {nonNullable: true}),
-    hideOnClick: new FormControl(false, {nonNullable: true}),
-    clickable: new FormControl(false, {nonNullable: true}),
-    type: new FormControl<VtsCarouselPaginationOptions['type']>('bullets', {nonNullable: true}),
+    enabled: new FormControl(true, { nonNullable: true }),
+    hideOnClick: new FormControl(false, { nonNullable: true }),
+    clickable: new FormControl(false, { nonNullable: true }),
+    type: new FormControl<VtsCarouselPaginationOptions['type']>('bullets', { nonNullable: true })
   });
 
-  pageOptions: VtsCarouselPaginationOptions = this.formGroup.value
+  pageOptions: VtsCarouselPaginationOptions = this.formGroup.value;
   customRenderPageOptions: VtsCarouselPaginationOptions = {
     enabled: true,
     type: 'bullets',
     clickable: true,
-    renderBullet: (index, className) => `<span class="${className} custom-carousel-pagination-bullet">${index}</span>`,
-  }
+    renderBullet: (index, className) =>
+      `<span class="${className} custom-carousel-pagination-bullet">${index}</span>`
+  };
   dynamicBulletPageOptions: VtsCarouselPaginationOptions = {
     enabled: true,
     type: 'bullets',
     clickable: true,
     dynamicBullets: true,
     dynamicMainBullets: 2
-  }
+  };
 
-  customElementPageOptions: VtsCarouselPaginationOptions | boolean = true
-    
+  customElementPageOptions: VtsCarouselPaginationOptions | boolean = true;
+
   constructor(private cdr: ChangeDetectorRef) {
-    this.formGroup.valueChanges.subscribe((d) => {
-      this.pageOptions = {...d, dynamicBullets: false}
-    })
+    this.formGroup.valueChanges.subscribe(d => {
+      this.pageOptions = { ...d, dynamicBullets: false };
+    });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

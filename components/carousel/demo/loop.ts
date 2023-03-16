@@ -15,8 +15,8 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
     </vts-space>
     <p></p>
     <br />
-    <vts-carousel 
-      [vtsDirection]="direction" 
+    <vts-carousel
+      [vtsDirection]="direction"
       [vtsSlidesPerView]="3"
       [vtsSpaceBetween]="8"
       [vtsLoop]="true"
@@ -25,7 +25,7 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
-    `,
+  `,
   styles: [
     `
       .vts-carousel {
@@ -41,7 +41,7 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
   ]
 })
 export class VtsDemoCarouselLoopComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'horizontal'
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
 
   images = [
     {
@@ -67,8 +67,7 @@ export class VtsDemoCarouselLoopComponent implements OnInit {
     }
   ];
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

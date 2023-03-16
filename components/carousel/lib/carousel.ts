@@ -46,7 +46,7 @@ const modules = [
   Manipulation,
   Effectfade,
   Effectcube,
-  Effectflip,
+  Effectflip
   // Effectcoverflow,
   // Effectcreative,
   // Effectcards

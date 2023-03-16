@@ -61,9 +61,8 @@ export default function updateActiveIndex(newActiveIndex) {
   });
   carousel.emit('activeIndexChange');
   carousel.emit('snapIndexChange');
-  if (previousRealIndex !== realIndex) {
-    carousel.emit('realIndexChange');
-  }
+  carousel.emit('realIndexChange');
+
   if (carousel.initialized || carousel.params.runCallbacksOnInit) {
     carousel.emit('slideChange');
   }

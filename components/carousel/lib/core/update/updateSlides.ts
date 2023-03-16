@@ -137,14 +137,13 @@ export default function updateSlides() {
       }
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
-      slideSize =
-        (carouselSize - (params.slidesPerView - 1) * spaceBetween) / params.slidesPerView;
+      slideSize = (carouselSize - (params.slidesPerView - 1) * spaceBetween) / params.slidesPerView;
       if (params.roundLengths) slideSize = Math.floor(slideSize);
 
       if (slides[i]) {
         // Reset
-        slides[i].style['width'] = ''
-        slides[i].style['height'] = ''
+        slides[i].style['width'] = '';
+        slides[i].style['height'] = '';
         slides[i].style[getDirectionLabel('width')] = `${slideSize}px`;
       }
     }

@@ -26,12 +26,9 @@ export default function loopCreate() {
     }
   }
 
-  if (params.slidesPerView === 'auto' && !params.loopedSlides)
-    params.loopedSlides = slides.length;
+  if (params.slidesPerView === 'auto' && !params.loopedSlides) params.loopedSlides = slides.length;
 
-  carousel.loopedSlides = Math.ceil(
-    parseFloat(params.loopedSlides || params.slidesPerView, 10)
-  );
+  carousel.loopedSlides = Math.ceil(parseFloat(params.loopedSlides || params.slidesPerView, 10));
   carousel.loopedSlides += params.loopAdditionalSlides;
   if (carousel.loopedSlides > slides.length && carousel.params.loopedSlidesLimit) {
     carousel.loopedSlides = slides.length;

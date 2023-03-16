@@ -4,15 +4,12 @@ import { VtsCarouselBreakpointOptions, VtsCarouselOptions } from '@ui-vts/ng-vts
 @Component({
   selector: 'vts-demo-carousel-breakpoint',
   template: `
-    <vts-carousel 
-      [vtsBreakpoints]="breakpoints"
-      [vtsLoop]="true"
-    >
+    <vts-carousel [vtsBreakpoints]="breakpoints" [vtsLoop]="true">
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
-    `,
+  `,
   styles: [
     `
       .vts-carousel {
@@ -28,25 +25,25 @@ import { VtsCarouselBreakpointOptions, VtsCarouselOptions } from '@ui-vts/ng-vts
   ]
 })
 export class VtsDemoCarouselBreakpointComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'horizontal'
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
 
   breakpoints: VtsCarouselBreakpointOptions = {
     0: {
       direction: 'horizontal',
-      slidesPerView: 1,
+      slidesPerView: 1
     },
     576: {
       direction: 'vertical',
-      slidesPerView: 2,
+      slidesPerView: 2
     },
     920: {
       slidesPerView: 2,
       spaceBetween: 4,
-      direction: 'horizontal',
+      direction: 'horizontal'
     },
     1360: {
       slidesPerView: 3,
-      spaceBetween: 16,
+      spaceBetween: 16
     }
   };
 
@@ -74,7 +71,7 @@ export class VtsDemoCarouselBreakpointComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

@@ -105,8 +105,8 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
         let midIndex;
 
         // Reset default styles and class
-        $el.css('width', null)
-        $el.css('height', null)
+        $el.css('width', null);
+        $el.css('height', null);
         bullets.css(offsetProp, null);
         bullets.css('top', null);
         $el.removeClass(`${params.modifierClass}${params.type}-dynamic`);
@@ -141,7 +141,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
             (bulletSize * dynamicBulletsLength - bulletSize) / 2 - midIndex * bulletSize;
           bullets.css(carousel.isHorizontal() ? offsetProp : 'top', `${bulletsOffset}px`);
           $el.addClass(`${params.modifierClass}${params.type}-dynamic`);
-        } 
+        }
 
         if ($el.length > 1) {
           bullets.each(bullet => {
@@ -202,7 +202,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
         });
       } else {
         $el.removeClass(params.clickableClass);
-        $el.off('click', classesToSelector(params.bulletClass))
+        $el.off('click', classesToSelector(params.bulletClass));
       }
     }
 
@@ -326,7 +326,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     if (params.type !== 'custom') {
       emit('paginationRender', carousel.pagination.$el[0]);
     }
-    carousel.pagination.prevParams = {...params}
+    carousel.pagination.prevParams = { ...params };
   }
   function init() {
     carousel.params.pagination = createElementIfNotDefined(
@@ -384,21 +384,31 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       init();
       render();
       update();
-      carousel.pagination.enabled = true
+      carousel.pagination.enabled = true;
     }
   });
   on('update', () => {
-    const { enabled, type, renderBullet, renderCustom, renderFraction, renderProgressbar } = carousel.params.pagination;
-    const { type: oType, renderBullet: oRenderBullet, renderCustom: oRenderCustom, renderFraction: oRenderFraction, renderProgressbar: oRenderProgressbar } = carousel.pagination.prevParams || {}
-    if (!enabled && !!carousel.pagination.enabled)
-      disable()
-    if (enabled && !carousel.pagination.enabled)
-      enable()
+    const { enabled, type, renderBullet, renderCustom, renderFraction, renderProgressbar } =
+      carousel.params.pagination;
+    const {
+      type: oType,
+      renderBullet: oRenderBullet,
+      renderCustom: oRenderCustom,
+      renderFraction: oRenderFraction,
+      renderProgressbar: oRenderProgressbar
+    } = carousel.pagination.prevParams || {};
+    if (!enabled && !!carousel.pagination.enabled) disable();
+    if (enabled && !carousel.pagination.enabled) enable();
 
-    if (type !== oType || renderBullet !== oRenderBullet || renderCustom !== oRenderCustom || renderFraction !== oRenderFraction) {
-      render()
+    if (
+      type !== oType ||
+      renderBullet !== oRenderBullet ||
+      renderCustom !== oRenderCustom ||
+      renderFraction !== oRenderFraction
+    ) {
+      render();
     }
-    update()
+    update();
   });
   on('activeIndexChange', () => {
     if (carousel.params.loop) {
@@ -406,7 +416,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     } else if (typeof carousel.snapIndex === 'undefined') {
       update();
     }
-    update()
+    update();
   });
   on('snapIndexChange', () => {
     if (!carousel.params.loop) {
@@ -471,7 +481,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
     init();
     render();
     update();
-    carousel.pagination.enabled = true
+    carousel.pagination.enabled = true;
   };
 
   const disable = () => {
@@ -480,7 +490,7 @@ export default function Pagination({ carousel, extendParams, on, emit }) {
       carousel.pagination.$el.addClass(carousel.params.pagination.paginationDisabledClass);
     }
     destroy();
-    carousel.pagination.enabled = false
+    carousel.pagination.enabled = false;
   };
 
   Object.assign(carousel.pagination, {

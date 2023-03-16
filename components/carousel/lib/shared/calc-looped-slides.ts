@@ -6,16 +6,12 @@ export const calcLoopedSlides = (slides, carouselParams) => {
   if (carouselParams.breakpoints) {
     const breakpoint = carousel.prototype.getBreakpoint(carouselParams.breakpoints);
     const breakpointOnlyParams =
-      breakpoint in carouselParams.breakpoints
-        ? carouselParams.breakpoints[breakpoint]
-        : undefined;
+      breakpoint in carouselParams.breakpoints ? carouselParams.breakpoints[breakpoint] : undefined;
     if (breakpointOnlyParams && breakpointOnlyParams.slidesPerView) {
       slidesPerViewParams = breakpointOnlyParams.slidesPerView;
     }
   }
-  let loopedSlides = Math.ceil(
-    parseFloat(carouselParams.loopedSlides || slidesPerViewParams, 10)
-  );
+  let loopedSlides = Math.ceil(parseFloat(carouselParams.loopedSlides || slidesPerViewParams, 10));
 
   loopedSlides += carouselParams.loopAdditionalSlides;
 

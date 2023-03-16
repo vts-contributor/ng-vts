@@ -11,7 +11,10 @@ export default function updateProgress(translate) {
   let { progress, isBeginning, isEnd } = carousel;
   const wasBeginning = isBeginning;
   const wasEnd = isEnd;
-  if (translatesDiff === 0) {
+  if (params.loop) {
+    isBeginning = false;
+    isEnd = false;
+  } else if (translatesDiff === 0) {
     progress = 0;
     isBeginning = true;
     isEnd = true;

@@ -18,28 +18,48 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
       </span>
     </vts-space>
     <p>Slide</p>
-    <vts-carousel [vtsSlidesPerView]="2" [vtsDirection]="direction" vtsEffect="slide" [vtsSpeed]="speed">
+    <vts-carousel
+      [vtsSlidesPerView]="2"
+      [vtsDirection]="direction"
+      vtsEffect="slide"
+      [vtsSpeed]="speed"
+    >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
     <br />
     <p>Fade</p>
-    <vts-carousel [vtsSlidesPerView]="2" [vtsDirection]="direction" vtsEffect="fade" [vtsSpeed]="speed">
+    <vts-carousel
+      [vtsSlidesPerView]="2"
+      [vtsDirection]="direction"
+      vtsEffect="fade"
+      [vtsSpeed]="speed"
+    >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
     <br />
     <p>Flip</p>
-    <vts-carousel [vtsSlidesPerView]="2" [vtsDirection]="direction" vtsEffect="flip" [vtsSpeed]="speed">
+    <vts-carousel
+      [vtsSlidesPerView]="2"
+      [vtsDirection]="direction"
+      vtsEffect="flip"
+      [vtsSpeed]="speed"
+    >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
     <br />
     <p>Cube</p>
-    <vts-carousel [vtsSlidesPerView]="2" [vtsDirection]="direction" vtsEffect="cube" [vtsSpeed]="speed">
+    <vts-carousel
+      [vtsSlidesPerView]="2"
+      [vtsDirection]="direction"
+      vtsEffect="cube"
+      [vtsSpeed]="speed"
+    >
       <ng-container *ngFor="let item of images">
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
@@ -60,8 +80,8 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
   ]
 })
 export class VtsDemoCarouselEffectComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'horizontal'
-  speed = 500
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
+  speed = 500;
 
   images = [
     {
@@ -75,7 +95,7 @@ export class VtsDemoCarouselEffectComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

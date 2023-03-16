@@ -71,7 +71,7 @@ export interface AutoplayOptions {
   /**
    * Boolean property to enable/disable autoplay
    */
-    enabled?: boolean;
+  enabled?: boolean;
 
   /**
    * Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled

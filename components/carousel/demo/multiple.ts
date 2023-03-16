@@ -26,8 +26,8 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
     </vts-space>
     <p></p>
     <br />
-    <vts-carousel 
-      [vtsDirection]="direction" 
+    <vts-carousel
+      [vtsDirection]="direction"
       [vtsSlidesPerView]="slidesPerView"
       [vtsSpaceBetween]="spaceBetween"
     >
@@ -35,7 +35,7 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
         <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
       </ng-container>
     </vts-carousel>
-    `,
+  `,
   styles: [
     `
       .vts-carousel {
@@ -51,9 +51,9 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
   ]
 })
 export class VtsDemoCarouselMultipleComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'horizontal'
-  slidesPerView = 2
-  spaceBetween = 0
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
+  slidesPerView = 2;
+  spaceBetween = 0;
 
   images = [
     {
@@ -78,9 +78,8 @@ export class VtsDemoCarouselMultipleComponent implements OnInit {
       src: 'https://picsum.photos/1800/400?v=7'
     }
   ];
-  
-  constructor() {
-  }
 
-  ngOnInit(): void { }
+  constructor() {}
+
+  ngOnInit(): void {}
 }

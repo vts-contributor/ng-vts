@@ -16,7 +16,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
-  ContentChild,
+  ContentChild
 } from '@angular/core';
 import Carousel from './lib/carousel';
 import { Observable, of, Subject } from 'rxjs';
@@ -170,7 +170,7 @@ export class VtsCarouselComponent implements OnInit {
   @Input() vtsAutoplay?: VtsCarouselAutoplayOptions | boolean | '';
   @Input() vtsController?: VtsCarouselControllerOptions;
   @Input() vtsThumbs?: VtsCarouselThumbsOptions;
-  @Input() vtsEffect?: VtsCarouselOptions['effect'] = "slide";
+  @Input() vtsEffect?: VtsCarouselOptions['effect'] = 'slide';
 
   @Input() class: string = '';
   @Input() id: string = '';
@@ -186,16 +186,17 @@ export class VtsCarouselComponent implements OnInit {
         : null;
 
     const newVal: typeof this._vtsNavigation = setProperty(val, {
+      enabled: true,
       nextEl: currentNext || null,
       prevEl: currentPrev || null
-    }) as VtsCarouselNavigationOptions
+    }) as VtsCarouselNavigationOptions;
 
     // Set default
-    newVal.nextEl = newVal.nextEl || this._nextElRef?.nativeElement
-    newVal.prevEl = newVal.prevEl || this._prevElRef?.nativeElement
-    
+    newVal.nextEl = newVal.nextEl || this._nextElRef?.nativeElement;
+    newVal.prevEl = newVal.prevEl || this._prevElRef?.nativeElement;
+
     this._vtsNavigation = newVal;
-    
+
     this.showNextNavigation = !(
       coerceBooleanProperty(val) !== true ||
       (this._vtsNavigation &&
@@ -225,14 +226,11 @@ export class VtsCarouselComponent implements OnInit {
 
   @Input()
   set vtsPagination(val) {
-    // const current =
-    //   typeof this._vtsPagination !== 'boolean' && this._vtsPagination !== ''
-    //     ? this._vtsPagination?.el
-    //     : null;
-    const current = this._paginationElRef
+    const current = this._paginationElRef;
     this._vtsPagination = setProperty(val, {
+      enabled: true,
       el: current || null,
-      type: this._useCustomPagination ? 'custom' : null
+      type: this._useCustomPagination ? 'custom' : 'bullets'
     });
     this.showPagination = isShowEl(val, this._vtsPagination, this._paginationElRef);
   }
@@ -245,8 +243,11 @@ export class VtsCarouselComponent implements OnInit {
   @Input()
   set vtsScrollbar(val) {
     const current =
-      typeof this._vtsScrollbar !== 'boolean' && this._vtsScrollbar !== '' ? this._vtsScrollbar?.el : null;
+      typeof this._vtsScrollbar !== 'boolean' && this._vtsScrollbar !== ''
+        ? this._vtsScrollbar?.el
+        : null;
     this._vtsScrollbar = setProperty(val, {
+      enabled: true,
       el: current || null
     });
     this.showScrollbar = isShowEl(val, this._vtsScrollbar, this._vtsScrollbarElRef);
@@ -259,22 +260,23 @@ export class VtsCarouselComponent implements OnInit {
 
   @Input()
   set virtual(val) {
-    this._vtsVirtual = setProperty(val);
+    this._vtsVirtual = setProperty(val, {
+      enabled: true
+    });
   }
   get virtual() {
     return this._vtsVirtual;
   }
   private _vtsVirtual: VtsCarouselVirtualOptions | boolean | '';
 
-  
   @Input()
   set config(val: VtsCarouselOptions) {
     this.updateCarousel(val);
     const { params } = getParams(val);
-    this.setSelfParams(params)
+    this.setSelfParams(params);
   }
 
-  //#region Public 
+  //#region Public
 
   @Output() vtsAfterInit = new EventEmitter<EventsParams['afterInit']>();
 
@@ -286,9 +288,7 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsAutoplayPause = new EventEmitter<EventsParams['autoplayPause']>();
 
-  @Output() vtsAutoplayResume = new EventEmitter<
-    EventsParams['autoplayResume']
-  >();
+  @Output() vtsAutoplayResume = new EventEmitter<EventsParams['autoplayResume']>();
 
   @Output() vtsBeforeDestroy = new EventEmitter<EventsParams['beforeDestroy']>();
 
@@ -298,19 +298,13 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsBeforeResize = new EventEmitter<EventsParams['beforeResize']>();
 
-  @Output() vtsBeforeSlideChangeStart = new EventEmitter<
-    EventsParams['beforeSlideChangeStart']
-  >();
+  @Output() vtsBeforeSlideChangeStart = new EventEmitter<EventsParams['beforeSlideChangeStart']>();
 
-  @Output() vtsBeforeTransitionStart = new EventEmitter<
-    EventsParams['beforeTransitionStart']
-  >();
+  @Output() vtsBeforeTransitionStart = new EventEmitter<EventsParams['beforeTransitionStart']>();
 
   @Output() vtsBreakpoint = new EventEmitter<EventsParams['breakpoint']>();
 
-  @Output() vtsChangeDirection = new EventEmitter<
-    EventsParams['changeDirection']
-  >();
+  @Output() vtsChangeDirection = new EventEmitter<EventsParams['changeDirection']>();
 
   @Output() vtsClick = new EventEmitter<EventsParams['click']>();
 
@@ -334,83 +328,47 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsLazyImageLoad = new EventEmitter<EventsParams['lazyImageLoad']>();
 
-  @Output() vtsLazyImageReady = new EventEmitter<
-    EventsParams['lazyImageReady']
-  >();
+  @Output() vtsLazyImageReady = new EventEmitter<EventsParams['lazyImageReady']>();
 
   @Output() vtsLoopFix = new EventEmitter<EventsParams['loopFix']>();
 
-  @Output() vtsMomentumBounce = new EventEmitter<
-    EventsParams['momentumBounce']
-  >();
+  @Output() vtsMomentumBounce = new EventEmitter<EventsParams['momentumBounce']>();
 
-  @Output() vtsNavigationHide = new EventEmitter<
-    EventsParams['navigationHide']
-  >();
+  @Output() vtsNavigationHide = new EventEmitter<EventsParams['navigationHide']>();
 
-  @Output() vtsNavigationShow = new EventEmitter<
-    EventsParams['navigationShow']
-  >();
+  @Output() vtsNavigationShow = new EventEmitter<EventsParams['navigationShow']>();
 
-  @Output() vtsNavigationPrev = new EventEmitter<
-    EventsParams['navigationPrev']
-  >();
+  @Output() vtsNavigationPrev = new EventEmitter<EventsParams['navigationPrev']>();
 
-  @Output() vtsNavigationNext = new EventEmitter<
-    EventsParams['navigationNext']
-  >();
+  @Output() vtsNavigationNext = new EventEmitter<EventsParams['navigationNext']>();
 
-  @Output() vtsObserverUpdate = new EventEmitter<
-    EventsParams['observerUpdate']
-  >();
+  @Output() vtsObserverUpdate = new EventEmitter<EventsParams['observerUpdate']>();
 
-  @Output() vtsOrientationchange = new EventEmitter<
-    EventsParams['orientationchange']
-  >();
+  @Output() vtsOrientationchange = new EventEmitter<EventsParams['orientationchange']>();
 
-  @Output() vtsPaginationHide = new EventEmitter<
-    EventsParams['paginationHide']
-  >();
+  @Output() vtsPaginationHide = new EventEmitter<EventsParams['paginationHide']>();
 
-  @Output() vtsPaginationRender = new EventEmitter<
-    EventsParams['paginationRender']
-  >();
+  @Output() vtsPaginationRender = new EventEmitter<EventsParams['paginationRender']>();
 
-  @Output() vtsPaginationShow = new EventEmitter<
-    EventsParams['paginationShow']
-  >();
+  @Output() vtsPaginationShow = new EventEmitter<EventsParams['paginationShow']>();
 
-  @Output() vtsPaginationUpdate = new EventEmitter<
-    EventsParams['paginationUpdate']
-  >();
+  @Output() vtsPaginationUpdate = new EventEmitter<EventsParams['paginationUpdate']>();
 
   @Output() vtsProgress = new EventEmitter<EventsParams['progress']>();
 
-  @Output() vtsReachBeginning = new EventEmitter<
-    EventsParams['reachBeginning']
-  >();
+  @Output() vtsReachBeginning = new EventEmitter<EventsParams['reachBeginning']>();
 
   @Output() vtsReachEnd = new EventEmitter<EventsParams['reachEnd']>();
-
-  @Output() vtsRealIndexChange = new EventEmitter<
-    EventsParams['realIndexChange']
-  >();
 
   @Output() vtsResize = new EventEmitter<EventsParams['resize']>();
 
   @Output() vtsScroll = new EventEmitter<EventsParams['scroll']>();
 
-  @Output() vtsScrollbarDragEnd = new EventEmitter<
-    EventsParams['scrollbarDragEnd']
-  >();
+  @Output() vtsScrollbarDragEnd = new EventEmitter<EventsParams['scrollbarDragEnd']>();
 
-  @Output() vtsScrollbarDragMove = new EventEmitter<
-    EventsParams['scrollbarDragMove']
-  >();
+  @Output() vtsScrollbarDragMove = new EventEmitter<EventsParams['scrollbarDragMove']>();
 
-  @Output() vtsScrollbarDragStart = new EventEmitter<
-    EventsParams['scrollbarDragStart']
-  >();
+  @Output() vtsScrollbarDragStart = new EventEmitter<EventsParams['scrollbarDragStart']>();
 
   @Output() vtsSetTransition = new EventEmitter<EventsParams['setTransition']>();
 
@@ -426,17 +384,13 @@ export class VtsCarouselComponent implements OnInit {
     EventsParams['slideChangeTransitionStart']
   >();
 
-  @Output() vtsSlideNextTransitionEnd = new EventEmitter<
-    EventsParams['slideNextTransitionEnd']
-  >();
+  @Output() vtsSlideNextTransitionEnd = new EventEmitter<EventsParams['slideNextTransitionEnd']>();
 
   @Output() vtsSlideNextTransitionStart = new EventEmitter<
     EventsParams['slideNextTransitionStart']
   >();
 
-  @Output() vtsSlidePrevTransitionEnd = new EventEmitter<
-    EventsParams['slidePrevTransitionEnd']
-  >();
+  @Output() vtsSlidePrevTransitionEnd = new EventEmitter<EventsParams['slidePrevTransitionEnd']>();
 
   @Output() vtsSlidePrevTransitionStart = new EventEmitter<
     EventsParams['slidePrevTransitionStart']
@@ -452,21 +406,13 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsSliderMove = new EventEmitter<EventsParams['sliderMove']>();
 
-  @Output() sliderFirstMove = new EventEmitter<
-    EventsParams['sliderFirstMove']
-  >();
+  @Output() sliderFirstMove = new EventEmitter<EventsParams['sliderFirstMove']>();
 
-  @Output() vtsSlidesGridLengthChange = new EventEmitter<
-    EventsParams['slidesGridLengthChange']
-  >();
+  @Output() vtsSlidesGridLengthChange = new EventEmitter<EventsParams['slidesGridLengthChange']>();
 
-  @Output() vtsSnapGridLengthChange = new EventEmitter<
-    EventsParams['snapGridLengthChange']
-  >();
+  @Output() vtsSnapGridLengthChange = new EventEmitter<EventsParams['snapGridLengthChange']>();
 
-  @Output() vtsSnapIndexChange = new EventEmitter<
-    EventsParams['snapIndexChange']
-  >();
+  @Output() vtsSnapIndexChange = new EventEmitter<EventsParams['snapIndexChange']>();
 
   @Output() vtsTap = new EventEmitter<EventsParams['tap']>();
 
@@ -476,17 +422,13 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsTouchMove = new EventEmitter<EventsParams['touchMove']>();
 
-  @Output() vtsTouchMoveOpposite = new EventEmitter<
-    EventsParams['touchMoveOpposite']
-  >();
+  @Output() vtsTouchMoveOpposite = new EventEmitter<EventsParams['touchMoveOpposite']>();
 
   @Output() vtsTouchStart = new EventEmitter<EventsParams['touchStart']>();
 
   @Output() vtsTransitionEnd = new EventEmitter<EventsParams['transitionEnd']>();
 
-  @Output() vtsTransitionStart = new EventEmitter<
-    EventsParams['transitionStart']
-  >();
+  @Output() vtsTransitionStart = new EventEmitter<EventsParams['transitionStart']>();
 
   @Output() vtsUpdate = new EventEmitter<EventsParams['update']>();
 
@@ -498,12 +440,15 @@ export class VtsCarouselComponent implements OnInit {
 
   @Output() vtsUnlock = new EventEmitter<EventsParams['unlock']>();
 
-  @Output() vtsActiveIndexChange = new EventEmitter<number>()
+  @Output() vtsActiveIndexChange = new EventEmitter<number>();
 
   @Output() vtsSlidesLengthChange = new EventEmitter<number>();
 
+  // vtsActiveIndexChange emit real index instead of this
+  // @Output() vtsRealIndexChange = new EventEmitter<number>();
+
   // Public properties
-  
+
   //#endregion
 
   @ViewChild('vtsPrevElRef', { static: false })
@@ -528,8 +473,8 @@ export class VtsCarouselComponent implements OnInit {
   // #region "Pagination"
 
   _paginationElRef!: ElementRef;
-  _useCustomPagination: boolean = false
-  
+  _useCustomPagination: boolean = false;
+
   // Default pagination
   @ViewChild('vtsPaginationElRef', { static: false, read: ElementRef })
   set paginationElRef(el: ElementRef) {
@@ -540,10 +485,10 @@ export class VtsCarouselComponent implements OnInit {
   }
 
   // Custom pagination
-  @ContentChild(VtsCarouselPaginationComponent, {static: false})
+  @ContentChild(VtsCarouselPaginationComponent, { static: false })
   set customPaginationRef(custom: VtsCarouselPaginationComponent) {
     if (custom) {
-      this._useCustomPagination = true
+      this._useCustomPagination = true;
       this._paginationElRef = custom.elementRef;
       this._setElement(custom.elementRef, this.vtsPagination, 'vtsPagination');
     }
@@ -578,7 +523,7 @@ export class VtsCarouselComponent implements OnInit {
     private elementRef: ElementRef,
     private _changeDetectorRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private _platformId: Object,
-    private vtsDestroyService: VtsDestroyService,
+    private vtsDestroyService: VtsDestroyService
   ) {
     this._vtsPagination = false;
     this._vtsNavigation = false;
@@ -601,7 +546,7 @@ export class VtsCarouselComponent implements OnInit {
 
   ngOnInit(): void {
     const { params } = getParams(this);
-    this.setSelfParams(params)
+    this.setSelfParams(params);
   }
 
   ngAfterViewInit() {
@@ -615,10 +560,10 @@ export class VtsCarouselComponent implements OnInit {
 
   private setSelfParams(params: any) {
     Object.keys(params).forEach(k => {
-      const selfKey = `vts${upperFirst(k)}`
+      const selfKey = `vts${upperFirst(k)}`;
       //@ts-ignore
-      this[selfKey] = params[k]
-    })
+      this[selfKey] = params[k];
+    });
   }
 
   private childrenSlidesInit() {
@@ -646,9 +591,10 @@ export class VtsCarouselComponent implements OnInit {
         this.carouselRef!.virtual.update(true);
       });
     }
-    this._changeDetectorRef.detectChanges()
+
+    this._changeDetectorRef.detectChanges();
     this._ngZone.runOutsideAngular(() => {
-      this.carouselRef?.update()
+      this.carouselRef?.update();
     });
   };
 
@@ -659,7 +605,7 @@ export class VtsCarouselComponent implements OnInit {
   initCarousel() {
     // const { params: carouselParams, passedParams } = getParams(this);
     const { params: carouselParams } = getParams(this);
-    this.setSelfParams(carouselParams)
+    this.setSelfParams(carouselParams);
     this._ngZone.runOutsideAngular(() => {
       carouselParams.init = false;
       if (!carouselParams.virtual) {
@@ -667,14 +613,14 @@ export class VtsCarouselComponent implements OnInit {
       }
 
       carouselParams.onAny = (eventName: keyof VtsCarouselComponent, ...args: any[]) => {
-        const emitter = this[('vts' + upperFirst(eventName)) as keyof VtsCarouselComponent] as EventEmitter<any>;
+        const emitter = this[
+          ('vts' + upperFirst(eventName)) as keyof VtsCarouselComponent
+        ] as EventEmitter<any>;
         if (emitter) {
-          if (!(emitter instanceof EventEmitter))
-            return
+          if (!(emitter instanceof EventEmitter)) return;
           if (Object.keys(EventMappers).includes(eventName)) {
-            emitter.emit(EventMappers[eventName as keyof typeof EventMappers](args as any))
-          }
-          else emitter.emit([...args]);
+            emitter.emit(EventMappers[eventName as keyof typeof EventMappers](args as any));
+          } else emitter.emit([...args]);
         }
       };
       const _slideClasses: VtsCarouselEvents['_slideClasses'] = (_, updated) => {
@@ -962,11 +908,11 @@ export class VtsCarouselComponent implements OnInit {
   }
 }
 
-type OmitPaginationOptions = Omit<VtsCarouselPaginationOptions, 'el' | 'renderCustom'>
+type OmitPaginationOptions = Omit<VtsCarouselPaginationOptions, 'el' | 'renderCustom'>;
 type VtsCarouselBreakpointOptions = {
   [width: number]: VtsCarouselOptions;
   [ratio: string]: VtsCarouselOptions;
-}
+};
 
 export {
   VtsCarouselOptions,
@@ -978,5 +924,5 @@ export {
   VtsCarouselControllerOptions,
   VtsCarouselThumbsOptions,
   VtsCarouselAutoplayOptions,
-  VtsCarouselBreakpointOptions,
-}
+  VtsCarouselBreakpointOptions
+};
