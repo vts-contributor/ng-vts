@@ -2,6 +2,8 @@
  * Export types using for pro-layout
  */
 
+import { VtsSizeLDSType } from "../core/types"
+
 export type MenuItemProLayout = {
     title: string,
     children?: MenuItemProLayout[],
@@ -14,4 +16,17 @@ export type MenuItemProLayout = {
 export type ThemeColorType = {
     value: string,
     isChecked: boolean
+}
+
+export type AvatarUser = {
+    name?: string,
+    subname?: string,
+    imgUrl?: string,
+    size: VtsSizeLDSType,
+    menu: AvatarMenu[]
+}
+
+export type AvatarMenu = {
+    url: string,
+    label: string
 }

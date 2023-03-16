@@ -16,7 +16,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { VtsMenuThemeType } from '../menu';
-import { MenuItemProLayout } from './pro-layout.types';
+import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -74,6 +74,22 @@ export class VtsHeaderComponent implements OnChanges {
   @Input() title: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
+  avatar: AvatarUser = {
+    size: "md",
+    name: "Shiba inu",
+    subname: "Viettel Solution",
+    menu: [
+      {
+        label: "Quản lý tài khoản",
+        url: "/"
+      },
+      {
+        label: "Logout",
+        url: ""
+      }
+    ]
+  }
+  showMenu: boolean = false;
 
   ngOnChanges(changes: SimpleChanges) {
     const {isFixedHeader, isFixedSider, menuData, title } = changes;
@@ -131,5 +147,9 @@ export class VtsHeaderComponent implements OnChanges {
         this.showLogo = false;
       }
     }
+  }
+
+  onOpenMenuAvatar(){
+    this.showMenu = !this.showMenu;
   }
 }
