@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode } from '../pro-table.type';
@@ -165,6 +165,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
         }
         else {
           form.addControl(header.propertyName, new FormControl(value[header.propertyName]));
+          if (header.required) form.controls[header.propertyName].setValidators([Validators.required]);
         }
       });
       this.formGroup = form;
@@ -225,7 +226,6 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       ...this.formGroup.value,
       ...newDateObj
     }
-    console.log(this.entity);
 
     if (typeof this.saveRequest != "undefined") {
       let { onSuccess, onError } = this.saveRequest;
@@ -240,7 +240,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
               onSave(data);
             }
           }
-          this.closeDrawer();
+          if (this.mode == 'create') this.closeDrawer();
         }, error => {
           if (onError) {
             onError(error);
@@ -276,8 +276,9 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   }
 
   onCreateAnother() {
+    this.mode = 'create-another';
     this.onSave();
-    this.modeChanger.emit('create-another');
+    this.modeChanger.emit(this.mode);
   }
 
   onDeleteItem() {

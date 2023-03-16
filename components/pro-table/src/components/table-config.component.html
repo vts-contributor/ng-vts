@@ -1,6 +1,6 @@
 <div class='vts-protable-configuration'>
   <!-- filters config -->
-  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties"
+  <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties" [headers]="displayedProperties"
     (rowHeightChanger)="handleChangeRowHeight($event)" (reloadTable)="onReloadTable($event)"
     (onChangeHeaders)="onChangeTableHeaders($event)" (putSearchData)="onSearchingByKey($event)"></vts-group-filter>
 
@@ -11,7 +11,7 @@
   </vts-selected-label-config>
 
   <!-- table-data -->
-  <ng-container *ngIf="indeterminateConfig || allChecked; else noData">
+  <ng-container *ngIf="displayedData.length>0 ; else noData">
     <vts-spin [vtsSpinning]="loading">
       <table style="width: -webkit-fill-available; margin-top: 16px;">
         <thead>
@@ -75,18 +75,20 @@
           </ng-container>
         </tbody>
       </table>
-      <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'bottom'">
-        <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
-      </ng-container>
-      <ng-template #paginationTemplate>
-        <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize"
-          [vtsShowTotal]="rangeTemplate" class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
-        </vts-pagination>
-        <ng-template #rangeTemplate let-range="range" let-total>
-          <span class="text-custom" style="color: #73777A; font-weight: 400;">{{ range[0] }} - {{range[1] }} / {{ total
-            }} items</span>
+      <ng-container *ngIf="displayedData.length>0">
+        <ng-container *ngIf="vtsPaginationPosition === 'both' || vtsPaginationPosition === 'bottom'">
+          <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+        </ng-container>
+        <ng-template #paginationTemplate>
+          <vts-pagination [vtsPageIndex]="vtsPageIndex" [vtsTotal]="vtsTotal" [vtsPageSize]="vtsPageSize"
+            [vtsShowTotal]="rangeTemplate" class="protable-paging" (vtsPageIndexChange)="onChangePageIndex($event)">
+          </vts-pagination>
+          <ng-template #rangeTemplate let-range="range" let-total>
+            <span class="text-custom" style="color: #73777A; font-weight: 400;">{{ range[0] }} - {{range[1] }} / {{ total
+              }} items</span>
+          </ng-template>
         </ng-template>
-      </ng-template>
+      </ng-container>
     </vts-spin>
     <ng-container *ngIf="displayedData.length<=0">
       <vts-empty style="padding-top: 16px;"></vts-empty>

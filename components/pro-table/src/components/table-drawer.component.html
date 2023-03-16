@@ -20,9 +20,9 @@
           style="margin-right: 8px; border: 1px solid #737373; border-radius: 6px; color: #737373; width: 8vw;"><i
             vts-icon vtsType="Close"></i>Cancel</button>
         <button vts-button (click)="onCreateAnother()" vtsType="default"
-          style="margin-right: 8px; border: 1px solid #737373; border-radius: 6px; color: #737373; width: 20vw;"><i
+          [ngStyle]="{'margin-right': '8px', 'border': '1px solid #737373', 'border-radius': '6px', 'color': '#737373', 'width': '20vw'}" [disabled]="!formGroup.valid"><i
             vts-icon vtsType="AddToPhotosDoutone"></i>Create and another</button>
-        <button vts-button (click)="onSave()" vtsType="primary" style="width: 8vw; border-radius: 6px;"><i vts-icon
+        <button vts-button (click)="onSave()" vtsType="primary" style="width: 8vw; border-radius: 6px;" [disabled]="!formGroup.valid"><i vts-icon
             vtsType="AddCircle"></i>Create</button>
       </div>
     </ng-container>

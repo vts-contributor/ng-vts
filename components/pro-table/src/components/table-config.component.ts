@@ -26,7 +26,6 @@ import _ from 'lodash';
 import { DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'vts-table-config',
@@ -147,10 +146,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  drop(event: CdkDragDrop<string[]>): void {
-    moveItemInArray(this.properties, event.previousIndex, event.currentIndex);
   }
 
   showDeleteItemModal(itemId: string | number): void {
@@ -475,36 +470,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     // console.log('change status OK');
   }
 
-  updateAllChecked(): void {
-    this.indeterminateConfig = false;
-    if (this.allChecked) {
-      this.properties = this.properties.map(item => ({
-        ...item,
-        checked: true
-      }));
-    } else {
-      this.properties = this.properties.map(item => ({
-        ...item,
-        checked: false
-      }));
-    }
-    this.onChangeHeaders.emit(this.properties);
-    this.changeDetector.detectChanges();
-  }
-
-  updateSingleChecked(): void {
-    if (this.properties.every(item => !item.checked)) {
-      this.allChecked = false;
-      this.indeterminateConfig = false;
-    } else if (this.properties.every(item => item.checked)) {
-      this.allChecked = true;
-      this.indeterminateConfig = false;
-    } else {
-      this.indeterminateConfig = true;
-    }
-    this.onChangeHeaders.emit(this.properties);
-  }
-
   sorted = false;
   sortValue(prop: PropertyType) {
     if (prop.datatype === 'number') {
@@ -600,11 +565,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onChangeTableHeaders(event: VtsSafeAny) {
-    console.log('onchange headers', event);
     if (event) {
       this.properties = [...event];
-      if (this.properties.filter(prop => prop.checked === false).length = 0) {
+      if (this.properties.filter(prop => prop.checked == false).length == event.length) {
         this.displayedData = [];
+      } else {
+        this.displayedData = this.listData;
       }
     }
   }
@@ -646,7 +612,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onCreateAnotherData(event: boolean) {
     if (event) {
-      console.log('create another');
       this.openDrawer();
     }
   }
