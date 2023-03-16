@@ -15,7 +15,7 @@ import {
   SimpleChange,
   TemplateRef
 } from '@angular/core';
-import { VtsMenuThemeType } from '../menu';
+import { VtsMenuThemeType } from '@ui-vts/ng-vts/menu';
 import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
