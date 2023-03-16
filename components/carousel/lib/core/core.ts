@@ -390,6 +390,11 @@ class Carousel {
     if (!carousel || carousel.destroyed) return;
     const { snapGrid, params } = carousel;
 
+    // Loop recreation
+    if (params.loop) {
+      carousel.loopDestroy();
+      carousel.loopCreate();
+    }
     // Breakpoints
     if (params.breakpoints) {
       carousel.setBreakpoint();
@@ -416,7 +421,9 @@ class Carousel {
         carousel.updateAutoHeight();
       }
     } else {
-      if (
+      if (params.loop) {
+        translated = carousel.slideTo(carousel.realIndex + carousel.loopedSlides, 0, false, true);
+      } else if (
         (carousel.params.slidesPerView === 'auto' || carousel.params.slidesPerView > 1) &&
         carousel.isEnd &&
         !carousel.params.centeredSlides
@@ -433,12 +440,6 @@ class Carousel {
       carousel.checkOverflow();
     }
 
-    // Loop recreation
-    if (carousel.params.loop) {
-      carousel.loopDestroy();
-      carousel.loopCreate();
-    }
-
     carousel.emit('update');
   }
 
@@ -447,9 +448,9 @@ class Carousel {
     const currentDirection = carousel.params.direction;
 
     carousel.$el
-    .removeClass(`${carousel.params.containerModifierClass}horizontal`)
-    .removeClass(`${carousel.params.containerModifierClass}vertical`)
-    .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
+      .removeClass(`${carousel.params.containerModifierClass}horizontal`)
+      .removeClass(`${carousel.params.containerModifierClass}vertical`)
+      .addClass(`${carousel.params.containerModifierClass}${newDirection}`);
 
     if (!newDirection) {
       // eslint-disable-next-line
@@ -482,8 +483,7 @@ class Carousel {
 
   changeLanguageDirection(direction) {
     const carousel = this;
-    if ((carousel.rtl && direction === 'rtl') || (!carousel.rtl && direction === 'ltr'))
-      return;
+    if ((carousel.rtl && direction === 'rtl') || (!carousel.rtl && direction === 'ltr')) return;
     carousel.rtl = direction === 'rtl';
     carousel.rtlTranslate = carousel.params.direction === 'horizontal' && carousel.rtl;
     if (carousel.rtl) {

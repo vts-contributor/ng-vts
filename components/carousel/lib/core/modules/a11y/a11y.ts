@@ -135,11 +135,7 @@ export default function A11y({ carousel, extendParams, on }) {
   }
 
   function hasPagination() {
-    return (
-      carousel.pagination &&
-      carousel.pagination.bullets &&
-      carousel.pagination.bullets.length
-    );
+    return carousel.pagination && carousel.pagination.bullets && carousel.pagination.bullets.length;
   }
 
   function hasClickablePagination() {
@@ -255,8 +251,7 @@ export default function A11y({ carousel, extendParams, on }) {
     const $wrapperEl = carousel.$wrapperEl;
     const wrapperId =
       params.id || $wrapperEl.attr('id') || `carousel-wrapper-${getRandomNumber(16)}`;
-    const live =
-      carousel.params.autoplay && carousel.params.autoplay.enabled ? 'off' : 'polite';
+    const live = carousel.params.autoplay && carousel.params.autoplay.enabled ? 'off' : 'polite';
     addElId($wrapperEl, wrapperId);
     addElLive($wrapperEl, live);
 

@@ -4,8 +4,8 @@ import { paramsList } from './params-list';
 import { extend, isObject } from './utils';
 type KeyValueType = { [x: string]: any };
 
-export const allowedParams = paramsList
-export const getKey = (key: string) => camelCase(key.replace(/^_/, '').replace(/^vts/, ''))
+export const allowedParams = paramsList;
+export const getKey = (key: string) => camelCase(key.replace(/^_/, '').replace(/^vts/, ''));
 
 export function getParams(obj: any = {}) {
   const params: any = {
@@ -21,7 +21,7 @@ export function getParams(obj: any = {}) {
   const rest: KeyValueType = {};
   Object.keys(obj).forEach((key: string) => {
     if (allowedParams.indexOf(key) >= 0) {
-      const _key = getKey(key)
+      const _key = getKey(key);
       if (isObject(obj[key])) {
         params[_key] = {};
         passedParams[_key] = {};
@@ -31,8 +31,7 @@ export function getParams(obj: any = {}) {
         params[_key] = obj[key];
         passedParams[_key] = obj[key];
       }
-    }
-    else {
+    } else {
       rest[key] = obj[key];
     }
   });

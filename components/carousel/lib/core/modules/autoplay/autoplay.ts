@@ -157,13 +157,13 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
     if (carousel.params.autoplay.pauseOnMouseEnter) {
       carousel.$el.on('mouseenter', onMouseEnter);
       carousel.$el.on('mouseleave', onMouseLeave);
-      carousel.autoplay.pauseOnMouseEnter = true
+      carousel.autoplay.pauseOnMouseEnter = true;
     }
   }
   function detachMouseEvents() {
     carousel.$el.off('mouseenter', onMouseEnter);
     carousel.$el.off('mouseleave', onMouseLeave);
-    carousel.autoplay.pauseOnMouseEnter = false
+    carousel.autoplay.pauseOnMouseEnter = false;
   }
 
   on('init', () => {
@@ -176,14 +176,14 @@ export default function Autoplay({ carousel, extendParams, on, emit }) {
   });
   on('update', () => {
     if (!carousel.params.autoplay.enabled && carousel.autoplay.running) {
-      stop()
+      stop();
     } else if (carousel.params.autoplay.enabled && !carousel.autoplay.running) {
-      start()
+      start();
     }
     if (!carousel.params.autoplay.pauseOnMouseEnter && carousel.autoplay.pauseOnMouseEnter) {
-      detachMouseEvents()
+      detachMouseEvents();
     } else if (carousel.params.autoplay.pauseOnMouseEnter && !carousel.autoplay.pauseOnMouseEnter) {
-      attachMouseEvents()
+      attachMouseEvents();
     }
   });
   on('beforeTransitionStart', (_s, speed, internal) => {

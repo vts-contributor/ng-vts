@@ -37,24 +37,41 @@ import { VtsCarouselNavigationOptions, VtsCarouselOptions } from '@ui-vts/ng-vts
     <br />
     <br />
     <p>Custom:</p>
-    <div class='custom-container'>
+    <div class="custom-container">
       <vts-carousel [vtsSlidesPerView]="1" [vtsNavigation]="customNavOptions">
         <ng-container *ngFor="let item of images">
           <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
         </ng-container>
       </vts-carousel>
       <div class="custom-prev-btn">
-        <svg width="8" height="15" viewBox="0 0 17 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15.93 1.485a1.875 1.875 0 0 0-2.655 0L.81 13.95a1.494 1.494 0 0 0 0 2.115L13.275 28.53c.735.735 1.92.735 2.655 0a1.874 1.874 0 0 0 0-2.655L5.07 15 15.945 4.125c.72-.72.72-1.92-.015-2.64Z" fill="currentColor"/>
+        <svg
+          width="8"
+          height="15"
+          viewBox="0 0 17 30"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15.93 1.485a1.875 1.875 0 0 0-2.655 0L.81 13.95a1.494 1.494 0 0 0 0 2.115L13.275 28.53c.735.735 1.92.735 2.655 0a1.874 1.874 0 0 0 0-2.655L5.07 15 15.945 4.125c.72-.72.72-1.92-.015-2.64Z"
+            fill="currentColor"
+          />
         </svg>
       </div>
       <div #nextBtn class="custom-next-btn">
-        <svg width="8" height="15" viewBox="0 0 17 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M1.07 28.515c.735.735 1.92.735 2.655 0L16.19 16.05a1.495 1.495 0 0 0 0-2.115L3.725 1.47a1.874 1.874 0 0 0-2.655 0 1.874 1.874 0 0 0 0 2.655L11.93 15 1.055 25.875c-.72.72-.72 1.92.015 2.64Z" fill="currentColor"/>
+        <svg
+          width="8"
+          height="15"
+          viewBox="0 0 17 30"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.07 28.515c.735.735 1.92.735 2.655 0L16.19 16.05a1.495 1.495 0 0 0 0-2.115L3.725 1.47a1.874 1.874 0 0 0-2.655 0 1.874 1.874 0 0 0 0 2.655L11.93 15 1.055 25.875c-.72.72-.72 1.92.015 2.64Z"
+            fill="currentColor"
+          />
         </svg>
       </div>
     </div>
-    
   `,
   styles: [
     `
@@ -72,9 +89,10 @@ import { VtsCarouselNavigationOptions, VtsCarouselOptions } from '@ui-vts/ng-vts
         position: relative;
       }
 
-      .custom-prev-btn, .custom-next-btn {
+      .custom-prev-btn,
+      .custom-next-btn {
         position: absolute;
-        background: #73777A;
+        background: #73777a;
         top: 50%;
         height: 48px;
         width: 48px;
@@ -100,7 +118,7 @@ import { VtsCarouselNavigationOptions, VtsCarouselOptions } from '@ui-vts/ng-vts
   ]
 })
 export class VtsDemoCarouselNavigationComponent implements OnInit {
-  direction: VtsCarouselOptions['direction'] = 'horizontal'
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
   images = [
     {
       src: 'https://picsum.photos/1800/400?v=1'
@@ -110,23 +128,23 @@ export class VtsDemoCarouselNavigationComponent implements OnInit {
     },
     {
       src: 'https://picsum.photos/1800/400?v=3'
-    },
+    }
   ];
 
   formGroup: UntypedFormGroup = new UntypedFormGroup({
     enabled: new UntypedFormControl(true, {}),
-    hideOnClick: new UntypedFormControl(false, {}),
+    hideOnClick: new UntypedFormControl(false, {})
   });
 
-  navOptions: VtsCarouselNavigationOptions = this.formGroup.value
-    
-  @ViewChild('nextBtn', {static: true}) nextEl!: ElementRef
-  customNavOptions: VtsCarouselNavigationOptions | boolean = false 
+  navOptions: VtsCarouselNavigationOptions = this.formGroup.value;
+
+  @ViewChild('nextBtn', { static: true }) nextEl!: ElementRef;
+  customNavOptions: VtsCarouselNavigationOptions | boolean = false;
 
   constructor() {
-    this.formGroup.valueChanges.subscribe((d) => {
-      this.navOptions = {...d}
-    })
+    this.formGroup.valueChanges.subscribe(d => {
+      this.navOptions = { ...d };
+    });
   }
 
   ngOnInit(): void {
@@ -134,6 +152,6 @@ export class VtsDemoCarouselNavigationComponent implements OnInit {
       enabled: true,
       prevEl: '.custom-prev-btn', // Selector or HTMLElement
       nextEl: this.nextEl.nativeElement // Selector or HTMLElement
-    }
+    };
   }
 }

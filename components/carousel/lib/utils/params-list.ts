@@ -70,7 +70,7 @@ export const paramsList = [
   '_slideToClickedSlide',
   '_preloadImages',
   'updateOnImagesReady',
-  
+
   '_loopedSlidesLimit',
   '_loopFillGroupWithBlank',
   'loopPreventsSlide',

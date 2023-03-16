@@ -32,10 +32,12 @@ export function extend(target: any, src: any) {
         return;
       }
       if (
-        typeof target[key] !== 'boolean' && 
-        typeof target[key] !== 'function' && 
-        typeof target[key] !== 'object' && 
-        target[key] && !src[key]) {
+        typeof target[key] !== 'boolean' &&
+        typeof target[key] !== 'function' &&
+        typeof target[key] !== 'object' &&
+        target[key] &&
+        !src[key]
+      ) {
         return;
       }
       if (isObject(src[key]) && isObject(target[key]) && Object.keys(src[key]).length > 0) {

@@ -5,11 +5,7 @@ export default function slideNext(speed = this.params.speed, runCallbacks = true
   const { animating, enabled, params } = carousel;
   if (!enabled) return carousel;
   let perGroup = params.slidesPerGroup;
-  if (
-    params.slidesPerView === 'auto' &&
-    params.slidesPerGroup === 1 &&
-    params.slidesPerGroupAuto
-  ) {
+  if (params.slidesPerView === 'auto' && params.slidesPerGroup === 1 && params.slidesPerGroupAuto) {
     perGroup = Math.max(carousel.slidesPerViewDynamic('current', true), 1);
   }
   const increment = carousel.activeIndex < params.slidesPerGroupSkip ? 1 : perGroup;

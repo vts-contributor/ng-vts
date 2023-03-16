@@ -79,8 +79,7 @@ export class VtsSubmenuNoneInlineChildComponent implements OnDestroy, OnInit, On
   @Output() readonly subMenuMouseState = new EventEmitter<boolean>();
   @ViewChild('container')
   set containerEl(el: ElementRef) {
-    if (el)
-      el.nativeElement.classList.add('vts-menu')
+    if (el) el.nativeElement.classList.add('vts-menu');
   }
 
   constructor(@Optional() private directionality: Directionality) {}

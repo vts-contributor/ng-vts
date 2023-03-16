@@ -57,7 +57,7 @@ export default function setBreakpoint() {
 
   const directionChanged =
     breakpointParams.direction && breakpointParams.direction !== params.direction;
-  const needsReLoop = params.loop
+  const needsReLoop = params.loop;
   // const needsReLoop =
   //   params.loop &&
   //   (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);

@@ -134,9 +134,8 @@ export default function Lazy({ carousel, extendParams, on, emit }) {
     function slideExist(index) {
       if (isVirtual) {
         if (
-          $wrapperEl.children(
-            `.${carouselParams.slideClass}[data-carousel-slide-index="${index}"]`
-          ).length
+          $wrapperEl.children(`.${carouselParams.slideClass}[data-carousel-slide-index="${index}"]`)
+            .length
         ) {
           return true;
         }

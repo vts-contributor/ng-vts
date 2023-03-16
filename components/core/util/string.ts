@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { words } from "./word";
+import { words } from './word';
 
 /**
  * Much like lodash.
@@ -28,36 +28,30 @@ export function getRepeatedElement(length: number, element: string): string {
 
 export function isNullOrEmpty(value?: string | null) {
   return !value;
-};
+}
 
 export function defaultValue(value?: string | null, defaultValue: string = '') {
   return isNullOrEmpty(value) ? defaultValue : value!;
-};
+}
 
 export function upperFirst(value?: string | null) {
   const val = defaultValue(value);
   return val.charAt(0).toUpperCase() + val.slice(1);
-};
+}
 
 export function camelCase(value?: string | null) {
-  const arr = words(defaultValue(value).replace(/['\u2019]/g, '')) as string[]
-  return arr.reduce(
-    (result, word, index) => {
-      word = word.toLowerCase();
-      return result + (index ? upperFirst(word) : word);
-    },
-    ''
-  );
-};
+  const arr = words(defaultValue(value).replace(/['\u2019]/g, '')) as string[];
+  return arr.reduce((result, word, index) => {
+    word = word.toLowerCase();
+    return result + (index ? upperFirst(word) : word);
+  }, '');
+}
 
 export function capitalize(value?: string | null) {
-  const arr = words(defaultValue(value).replace(/['\u2019]/g, '')) as string[]
+  const arr = words(defaultValue(value).replace(/['\u2019]/g, '')) as string[];
   return arr.reduce(
     (result, word, index) =>
-      result +
-      (index ? ' ' : '') +
-      (index ? word : upperFirst(word.toLowerCase())),
+      result + (index ? ' ' : '') + (index ? word : upperFirst(word.toLowerCase())),
     ''
   );
-};
-
+}
