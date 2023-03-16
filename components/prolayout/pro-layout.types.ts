@@ -2,7 +2,7 @@
  * Export types using for pro-layout
  */
 
-import { VtsSizeLDSType } from "../core/types"
+import { VtsSizeLDSType } from "@ui-vts/ng-vts/core/types"
 
 export type MenuItemProLayout = {
     title: string,
