@@ -136,3 +136,14 @@ td {
 .pr-8 {
   padding-right: 4px;
 }
+
+.triangle-up {
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 25px solid #d1d1d1;
+  position: absolute;
+  top: -8px;
+  right: 4px;
+}

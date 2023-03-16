@@ -214,99 +214,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   totalDataWithFilter: VtsSafeAny[] = [];
   tabConfig: VtsSafeAny;
 
-  ngOnInit(): void {
-    this.filterGroupConfig = [
-      {
-        filterText: 'Filter 1',
-        filterValues: [
-          {
-            label: 'Home',
-            value: 'Home'
-          },
-          {
-            label: 'Country 1',
-            value: 'Country 1'
-          },
-          {
-            label: 'Country 2',
-            value: 'Country 2'
-          },
-        ],
-        selectedValues: []
-      },
-      {
-        filterText: 'Filter 2',
-        filterValues: [
-          {
-            label: 'Home',
-            value: 'Home'
-          },
-          {
-            label: 'Country 1',
-            value: 'Country 1'
-          },
-          {
-            label: 'Country 2',
-            value: 'Country 2'
-          },
-
-        ],
-        selectedValues: []
-      },
-      {
-        filterText: 'Filter 3',
-        filterValues: [
-          {
-            label: 'Home',
-            value: 'Home'
-          },
-          {
-            label: 'Country 1',
-            value: 'Country 1'
-          },
-          {
-            label: 'Country 2',
-            value: 'Country 2'
-          },
-        ],
-        selectedValues: []
-      },
-      {
-        filterText: 'Filter 4',
-        filterValues: [
-          {
-            label: 'Home',
-            value: 'Home'
-          },
-          {
-            label: 'Country 1',
-            value: 'Country 1'
-          },
-          {
-            label: 'Country 2',
-            value: 'Country 2'
-          },
-        ],
-        selectedValues: []
-      },
-      {
-        filterText: 'Filter 5',
-        filterValues: [
-          {
-            label: 'Home',
-            value: 'Home'
-          },
-          {
-            label: 'Country',
-            value: 'Country'
-          },
-
-
-        ],
-        selectedValues: []
-      },
-    ];
-  }
+  ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.requestData) {
@@ -318,7 +226,6 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
     }
 
     if (changes.moreActionConfig) {
-      console.log(changes.moreActionConfig);
     }
 
     if (changes.properties) {
@@ -328,15 +235,21 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
 
   getRenderData(request?: Request) {
     if (request && request.url) {
+      let { onSuccess, onError } = request;
       this.loading = true;
       request.url += `?_page=${this.pageIndex}&_limit=${this.pageSize}`
       this.service.getRenderData({ ...request }).subscribe(data => {
         this.listData = [...data.body];
         this.vtsTotal = +data.headers.get('X-Total-Count');
         this.loading = false;
+        if (onSuccess) {
+          onSuccess(data);
+        }
         this.changeDetector.detectChanges();
-      }, err => {
-        console.log(err);
+      }, error => {
+        if (onError) {
+          onError(error);
+        }
         this.loading = false;
       });
     }
@@ -344,26 +257,44 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
 
   searchDataByForm(event: { [key: string]: any }) {
     if (event && typeof this.requestData !== `undefined`) {
+      let { onSuccess, onError } = this.requestData;
       this.searchData = event;
       this.requestData.body = event;
       this.service.getRenderData({ ...this.requestData }).subscribe(data => {
         this.listData = [...data.body];
         this.vtsTotal = +data.headers.get('X-Total-Count');
         this.loading = false;
+        if (onSuccess) {
+          onSuccess(data);
+        }
         this.changeDetector.detectChanges();
+      }, error => {
+        if (onError) {
+          onError(error);
+        }
       });
     }
   }
 
   reloadTable(event: boolean) {
     if (event && this.requestData) {
-      let url = this.requestData.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`
+      let { onSuccess, onError } = this.requestData;
+      let url = this.requestData.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
+
       this.service.getRenderData({ ...this.requestData, url }).subscribe(data => {
         this.listData = [...data.body];
         this.vtsTotal = +data.headers.get('X-Total-Count');
         this.loading = false;
+        if (onSuccess) {
+          onSuccess(data);
+        }
         this.changeDetector.detectChanges();
-      });
+      }, error => {
+        if (onError) {
+          onError(error);
+        }
+      }
+      );
     }
   }
 
@@ -378,26 +309,34 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
     const tabArray = this.tabGroupConfig?.tabValueConfig;
     const urlsFork = [];
     if (tabArray) {
-      for (let i = 0; i < tabArray.length; i++) {
-        if (this.requestData) {
+      if (this.requestData) {
+        for (let i = 0; i < tabArray.length; i++) {
           let url = this.requestData.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
           if (tabArray[i].tabCondition) {
             url += `&${this.tabGroupConfig?.tabProperty}=${tabArray[i].tabCondition?.threshold}`
           }
           urlsFork.push(this.httpClient.get(url, { observe: 'response' }));
         }
-      }
 
-      forkJoin(urlsFork).subscribe(res => {
-        this.totalDataWithFilter = res;
-        if (this.tabGroupConfig) {
-          for (let i=0; i<this.tabGroupConfig.tabValueConfig.length; i++) {
-            this.tabGroupConfig.tabValueConfig[i].total = +this.totalDataWithFilter[i].headers.get('X-Total-Count');
+        let { onSuccess, onError } = this.requestData;
+        forkJoin(urlsFork).subscribe(res => {
+          this.totalDataWithFilter = res;
+          if (this.tabGroupConfig) {
+            for (let i = 0; i < this.tabGroupConfig.tabValueConfig.length; i++) {
+              this.tabGroupConfig.tabValueConfig[i].total = +this.totalDataWithFilter[i].headers.get('X-Total-Count');
+            }
           }
-        }
-        this.listData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
-        this.vtsTotal = +this.totalDataWithFilter[this.selectedTabIndex].headers.get('X-Total-Count');
-      })
+          this.listData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
+          this.vtsTotal = +this.totalDataWithFilter[this.selectedTabIndex].headers.get('X-Total-Count');
+          if (onSuccess) {
+            this.onSuccess(res);
+          }
+        }, error => {
+          if (onError) {
+            onError(error);
+          }
+        })
+      }
     }
   }
 

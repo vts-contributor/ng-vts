@@ -71,9 +71,9 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         </div>
         <div>
           <a vts-button class="btn-table-config" vtsType="text" (click)="openFilterModal()">
-            <i vts-icon vtsType="FilterFramesDoutone" ></i>
+            <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
           </a>
-          <vts-badge [vtsCount]="filterGroupConfig?.length" [vtsStyle]="{'background': '#EE0033'}" style="margin-bottom: 20px">
+          <vts-badge [vtsCount]="filterGroupConfig?.length" [vtsStyle]="{'background': '#EE0033'}" style="margin-bottom: 16px">
             <a class="head-example"></a>
           </vts-badge>
         </div>
@@ -86,7 +86,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         </a>
         <vts-dropdown-menu #menuSwapVert="vtsDropdownMenu">
           <div class="triangle-up"></div>
-          <ul vts-menu style="padding: 12px 0" class="drag-area">
+          <ul vts-menu class="drag-area">
             <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('normal')">Normal</li>
             <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('expand')">Expand</li>
             <li vts-menu-item class="height-dropdown-item" (click)="handleChangeRowHeight('narrow')">Narrow</li>
@@ -230,21 +230,11 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
         flex-direction: column;
         border-radius: 6px;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px, rgba(0, 0, 0, 0.5) 0px 0px 3px;
+        padding: 12px 0;
       }
 
       .btn-config-item {
         border-radius: 6px;
-      }
-
-      .triangle-up {
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-bottom: 25px solid #fff;
-        position: absolute;
-        top: -8px;
-        right: 4px;
       }
   `],
   host: {

@@ -49,7 +49,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() isOkLoadingModal = false;
   @Input() isVisibleDelete: boolean = false;
   @Input() isOkLoadingDelete = false;
-  private itemIdToDelete: string = '';
+  private itemIdToDelete: string | number = '';
   @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
   @Input() modalUploadConfig: ModalUploadConfig | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
@@ -79,7 +79,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     key: ''
   };
   @Input() tabConfig: TabConfig | undefined;
-  @Input() moreActionConfig:  ButtonConfig[] | undefined;
+  @Input() moreActionConfig: ButtonConfig[] | undefined;
 
   vtsRowHeight: string = '48px';
   loading: boolean = false;
@@ -127,15 +127,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     if (changes.properties) {
       this.properties = this.properties.filter(item => item.headerTitle || item.headerTitle != null);
       this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
-      console.log('on change', changes.properties);
     }
 
     if (changes.searchData) {
-      console.log(changes.searchData.currentValue);
     }
 
     if (changes.listData) {
-      console.log(changes.listData.currentValue);
       this.loading = true;
       this.displayedData = [...this.listData];
       this.filteredList = [...this.listData]
@@ -156,9 +153,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     moveItemInArray(this.properties, event.previousIndex, event.currentIndex);
   }
 
-  showDeleteItemModal(itemId: string): void {
-    this.isVisibleDelete = true;
-    this.itemIdToDelete = itemId;
+  showDeleteItemModal(itemId: string | number): void {
+    if (this.modalDeleteConfig) {
+      this.modalDeleteConfig.content = `Do you want to delete item ${itemId}?`;
+      this.modalDeleteConfig.type = 'delete';
+      this.isVisibleDelete = true;
+      this.itemIdToDelete = itemId;
+    }
   }
   showUploadModal(): void {
     this.isVisibleUpload = true;
@@ -186,10 +187,18 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
           let url = this.deleteRequest.url;
           this.deleteRequest.body = this.setOfCheckedId;
           url += 'multiple-delete';
+          let { onSuccess, onError } = this.deleteRequest;
+
           this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
-            console.log(data);
+            if (onSuccess) {
+              onSuccess(data);
+            }
             this.visibleDrawer = true;
             this.changeDetector.detectChanges();
+          }, error => {
+            if (onError) {
+              onError(error);
+            }
           });
         }
         break;
@@ -198,10 +207,18 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
           if (this.deleteRequest) {
             let url = this.deleteRequest.url;
             url += this.itemIdToDelete;
+            let { onSuccess, onError } = this.deleteRequest;
+
             this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
-              console.log(data);
+              if (onSuccess) {
+                onSuccess(data);
+              }
               this.visibleDrawer = true;
               this.changeDetector.detectChanges();
+            }, error => {
+              if (onError) {
+                onError(error);
+              }
             });
           }
         }
@@ -324,10 +341,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     if (this.getRequest) {
       let url = this.getRequest.url;
       url += itemId;
+      let { onSuccess, onError } = this.getRequest;
+
       this.service.getDataById({ ...this.getRequest, url }).subscribe(data => {
+        if (onSuccess) onSuccess(data);
         this.drawerData = { ...data };
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
+      }, error => {
+        if (onError) onError(error);
       });
     }
     // callback when open drawer
@@ -344,10 +366,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.mode = 'view';
     if (this.getRequest) {
       let url = this.getRequest.url + itemId;
+      let { onSuccess, onError } = this.getRequest;
+
       this.service.getDataById({ ...this.getRequest, url }).subscribe(data => {
+        if (onSuccess) onSuccess(data);
         this.drawerData = { ...data };
         this.visibleDrawer = true;
         this.changeDetector.detectChanges();
+      }, error => {
+        if (onError) onError(error);
       });
     }
     // callback when open drawer
@@ -372,10 +399,15 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       // if (this.tabConfig?.tabCondition) {
       //   url += `$`
       // }
+      let { onSuccess, onError } = this.requestData;
+
       this.service.getRenderData({ ...this.requestData, url }).subscribe(res => {
+        if (onSuccess) onSuccess(res);
         this.displayedData = [...res.body];
         this.vtsTotal = +res.headers.get('X-Total-Count');
         this.changeDetector.detectChanges();
+      }, error => {
+        if (onError) onError(error)
       })
     }
   }
@@ -388,12 +420,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   exportDataToFile(mode?: string) {
     this.visibleExport = true;
     if (this.exportRequest) {
+      let { onSuccess, onError } = this.exportRequest;
       this.exportRequest.body = mode == 'all' ? this.listData : this.setOfCheckedId;
       let url = this.exportRequest.url;
       this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
-        const data = res;
-        console.log(data);
+        if (onSuccess) onSuccess(res);
         this.visibleExport = false;
+      }, error => {
+        if (onError) onError(error);
       });
     }
 
@@ -423,11 +457,16 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     if (this.editRequest) {
       let url = this.editRequest.url;
       url += itemId;
+      let { onSuccess, onError } = this.editRequest;
+
       this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
+        if (onSuccess) onSuccess(data);
         if (data) {
           data.disabled = !data.disabled;
         };
         this.changeDetector.detectChanges();
+      }, error => {
+        if (onError) onError(error);
       });
     }
 
@@ -464,22 +503,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.indeterminateConfig = true;
     }
     this.onChangeHeaders.emit(this.properties);
-  }
-
-  onSaveCheckedPropertiesChange() {
-    if (this.configTableRequest && this.configTableRequest.url) {
-      this.service.updateConfigTable({ ...this.configTableRequest }).subscribe(res => {
-        this.properties = [...res.properties];
-      })
-    }
-  }
-
-  onResetCheckedProperties() {
-    if (this.configTableRequest && this.configTableRequest.url) {
-      this.service.updateConfigTable({ ...this.configTableRequest }).subscribe(res => {
-        this.properties = [...res.properties];
-      })
-    }
   }
 
   sorted = false;
@@ -586,18 +609,32 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     }
   }
 
-  onSearchingByKey(event: string) {
-    if (event && this.getRequest) {
-      this.getRequest.body = {
-        ...this.getRequest.body,
-        'keyword': event
-      };
-      let url = this.getRequest.url + '?keyword=' + event;
-      this.service.searchByKeyword({ ...this.getRequest, url }).subscribe(res => {
-        this.displayedData = [...res.body];
-        this.vtsTotal = +res.headers.get('X-Total-Count');
-        this.changeDetector.detectChanges();
-      });
+  onSearchingByKey(event: string | any) {
+    if (this.getRequest) {
+      if (typeof event =='string') {
+        this.getRequest.body = {
+          ...this.getRequest.body,
+          'keyword': event
+        };
+
+        let url = this.getRequest.url;
+        if (event) {
+          url = this.getRequest.url + '?keyword=' + event;
+        }
+        let { onSuccess, onError } = this.getRequest;
+  
+        this.service.searchByKeyword({ ...this.getRequest, url }).subscribe(res => {
+          if (onSuccess) onSuccess(res);
+          this.displayedData = [...res.body];
+          this.vtsTotal = +res.headers.get('X-Total-Count');
+          this.changeDetector.detectChanges();
+        }, error => {
+          if (onError) onError(error);
+        });
+      } else {
+        console.log(2, [event]);
+        
+      }
     }
   }
 
@@ -611,6 +648,20 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     if (event) {
       console.log('create another');
       this.openDrawer();
+    }
+  }
+
+  onChangeItemStatus(event: string | number) {
+    if (event) {
+      this.changeStatusItem(event);
+    }
+  }
+
+  onDeleteItem(event: string | number) {
+    if (event && this.modalDeleteConfig) {
+      this.modalDeleteConfig.content = `Do you want to delete item ${event}?`;
+      this.modalDeleteConfig.type = 'delete';
+      this.isVisibleDelete = true;
     }
   }
 }

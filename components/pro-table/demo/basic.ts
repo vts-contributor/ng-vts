@@ -20,6 +20,7 @@ import { Component } from '@angular/core';
       [listStatus]="listStatus"
       [modalUploadConfig]="uploadConfig"
       [modalDeleteConfig]="modalDeleteConfig"
+      [filterGroupConfig]="filterGroupConfig"
     ></vts-protable-container>
   `
 })
@@ -143,6 +144,98 @@ export class VtsDemoProTableBasicComponent {
       required: true,
       datatype: 'date',
       checked: true
+    },
+  ];
+
+  filterGroupConfig: { [key: string]: any }[] = [
+    {
+      filterText: 'Filter 1',
+      filterValues: [
+        {
+          label: 'Home',
+          value: 'Home'
+        },
+        {
+          label: 'Country 1',
+          value: 'Country 1'
+        },
+        {
+          label: 'Country 2',
+          value: 'Country 2'
+        },
+      ],
+      selectedValues: []
+    },
+    {
+      filterText: 'Filter 2',
+      filterValues: [
+        {
+          label: 'Home',
+          value: 'Home'
+        },
+        {
+          label: 'Country 1',
+          value: 'Country 1'
+        },
+        {
+          label: 'Country 2',
+          value: 'Country 2'
+        },
+
+      ],
+      selectedValues: []
+    },
+    {
+      filterText: 'Filter 3',
+      filterValues: [
+        {
+          label: 'Home',
+          value: 'Home'
+        },
+        {
+          label: 'Country 1',
+          value: 'Country 1'
+        },
+        {
+          label: 'Country 2',
+          value: 'Country 2'
+        },
+      ],
+      selectedValues: []
+    },
+    {
+      filterText: 'Filter 4',
+      filterValues: [
+        {
+          label: 'Home',
+          value: 'Home'
+        },
+        {
+          label: 'Country 1',
+          value: 'Country 1'
+        },
+        {
+          label: 'Country 2',
+          value: 'Country 2'
+        },
+      ],
+      selectedValues: []
+    },
+    {
+      filterText: 'Filter 5',
+      filterValues: [
+        {
+          label: 'Home',
+          value: 'Home'
+        },
+        {
+          label: 'Country',
+          value: 'Country'
+        },
+
+
+      ],
+      selectedValues: []
     },
   ];
 

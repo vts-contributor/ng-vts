@@ -6,8 +6,9 @@
     <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
   </ng-container>
   <div *vtsModalFooter>
-    <button vts-button vtsType="primary" style="margin-right: 8px; border-radius: 6px;" (click)="onSave()">Search</button>
-    <button vts-button style="border-radius: 6px;" (click)="closeDrawer()">Close</button>
+    <button vts-button vtsType="primary" style="margin-right: 8px; border-radius: 6px;"
+      (click)="onSearch()">Search</button>
+    <button vts-button style="border-radius: 6px;" (click)="closeSearchPopup()">Close</button>
   </div>
 </vts-modal>
 
@@ -17,8 +18,7 @@
       <vts-form-item>
         <vts-form-label class="filter-label text-format">{{filter.filterText}}</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">
-          <vts-select vtsMode="multiple" formControlName="inputValue" [vtsPlaceHolder]="placeholder" [vtsSize]="size"
-            vtsShowSearch vtsAllowClear>
+          <vts-select vtsMode="multiple" [vtsPlaceHolder]="placeholder" [vtsSize]="size" vtsShowSearch vtsAllowClear [formControlName]="filter.filterText">
             <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value">
             </vts-option>
           </vts-select>

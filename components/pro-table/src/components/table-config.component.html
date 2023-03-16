@@ -46,11 +46,11 @@
               </ng-container>
               <td>
                 <a vts-button vtsType="text" (click)="onViewDataItem(data.id)">
-                  <i vts-icon vtsType="RemoveRedEyeDoutone"></i>
+                  <i class="fa fa-eye" aria-hidden="true"></i>
                 </a>
                 <a vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions"
                   [vtsPlacement]="'bottomRight'">
-                  <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                 </a>
                 <vts-dropdown-menu #menuActions="vtsDropdownMenu">
                   <div class="triangle-up"></div>
@@ -60,9 +60,9 @@
                       Edit
                     </li>
                     <li vts-menu-item (click)="changeStatusItem(data.id)">
-                      <vts-switch class="pr-8" vtsSize="sm" [(ngModel)]="data.disabled"
+                      <vts-switch class="pr-8" style="margin-left: -6px;" vtsSize="sm" [(ngModel)]="data.disabled"
                         (click)="changeStatusItem(data.id)">
-                      </vts-switch>Enable/Disable
+                      </vts-switch><span style="padding-left: 6px;">Enable/Disable</span>
                     </li>
                     <li vts-menu-item (click)="showDeleteItemModal(data.id)" style="color: #EE0033;">
                       <i class="pr-8" vts-icon vtsType="DeleteDoutone"></i>
@@ -106,9 +106,20 @@
   (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
 <!-- Create, view, edit -->
-<table-drawer [saveRequest]="saveRequest" [headers]="properties" (close)="closeDrawer()" [open]="visibleDrawer"
-  (modeChanger)="onModeChanger($event)" (createAnotherData)="onCreateAnotherData($event)" [drawerConfig]="drawerConfig"
-  [listStatus]="listStatus" [mode]="mode" [data]="drawerData"></table-drawer>
+<table-drawer 
+  [saveRequest]="saveRequest" 
+  [headers]="properties" 
+  [open]="visibleDrawer"
+  [drawerConfig]="drawerConfig" 
+  [listStatus]="listStatus" 
+  [mode]="mode" 
+  [data]="drawerData"
+  (close)="closeDrawer()" 
+  (modeChanger)="onModeChanger($event)" 
+  (createAnotherData)="onCreateAnotherData($event)" 
+  (changeItemStatus)="onChangeItemStatus($event)"
+  (deleteItem)="onDeleteItem($event)"
+></table-drawer>
 
 <!-- Modal download -->
 <vts-drawer [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false" vtsHeight="80px">

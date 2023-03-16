@@ -82,6 +82,8 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() modeChanger: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
   @Output() createAnotherData: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() changeItemStatus: EventEmitter<string | number> = new EventEmitter<string | number>();
+  @Output() deleteItem: EventEmitter<string | number> = new EventEmitter<string | number>();
 
   closeDrawer() {
     this.close.emit(false);
@@ -143,7 +145,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
     }
     else if (mode) {
       if (typeof this.drawerConfig != "undefined" && this.mode != 'create-another') this.setTitle(this.drawerConfig);
-      if (this.mode == 'create-another' || mode.previousValue == 'create-another') this.initForm();
+      if (this.mode == 'create-another') this.initForm();
     }
     else {
       this.visibleDrawer = false;
@@ -276,5 +278,13 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   onCreateAnother() {
     this.onSave();
     this.modeChanger.emit('create-another');
+  }
+
+  onDeleteItem() {
+    this.deleteItem.emit(this.data.id);
+  }
+
+  onChangeStatusItem() {
+    this.changeItemStatus.emit(this.data.id);
   }
 }

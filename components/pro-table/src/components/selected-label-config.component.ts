@@ -36,7 +36,7 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
         <ng-container *ngIf="selectedItemsAmount>0">
           <span class="divider-s">|</span>
           <span>
-            <a class="text-format bold-text lable-btn" (click)="onClearAll()"><i vts-icon class="pr-4" vtsType="ClearDoutone"></i>Clear Selected</a>
+            <a class="text-format bold-text lable-btn" (click)="onClearAll()"><i class="fa fa-eraser" aria-hidden="true"></i>Clear Selected</a>
           </span>
         </ng-container>
       </span>
@@ -151,7 +151,7 @@ export class VtsProTableSelectedLabelConfigComponent implements OnDestroy, OnIni
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedItemsAmount) {
-      console.log(changes.selectedItemsAmount);
+      
     }
   }
 

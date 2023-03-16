@@ -10,19 +10,20 @@
 
   <ng-template #footerTpl>
     <ng-container *ngIf="mode=='edit'">
-      <div style="float: right">
-        <button vts-button vtsType="primary" style="margin-right: 8px" (click)="onSave()">Save</button>
+      <div style="display: flex; justify-content: right; align-items: center; padding: 0 56px;">
+        <button vts-button vtsType="primary" (click)="onSave()">Save</button>
       </div>
     </ng-container>
     <ng-container *ngIf="mode=='create' || mode=='create-another'">
       <div style="display: flex; justify-content: center; align-items: center; padding: 0 54px;">
         <button vts-button (click)="closeDrawer()" vtsType="default"
-          style="margin-right: 8px; border: 1px solid #737373; border-radius: 6px; color: #737373; width: 8vw;"><i vts-icon
-            vtsType="Close"></i>Cancel</button>
+          style="margin-right: 8px; border: 1px solid #737373; border-radius: 6px; color: #737373; width: 8vw;"><i
+            vts-icon vtsType="Close"></i>Cancel</button>
         <button vts-button (click)="onCreateAnother()" vtsType="default"
-          style="margin-right: 8px; border: 1px solid #737373; border-radius: 6px; color: #737373; width: 20vw;"><i vts-icon
-            vtsType="AddToPhotosDoutone"></i>Create and another</button>
-        <button vts-button (click)="onSave()" vtsType="primary" style="width: 8vw; border-radius: 6px;"><i vts-icon vtsType="AddCircle"></i>Create</button>
+          style="margin-right: 8px; border: 1px solid #737373; border-radius: 6px; color: #737373; width: 20vw;"><i
+            vts-icon vtsType="AddToPhotosDoutone"></i>Create and another</button>
+        <button vts-button (click)="onSave()" vtsType="primary" style="width: 8vw; border-radius: 6px;"><i vts-icon
+            vtsType="AddCircle"></i>Create</button>
       </div>
     </ng-container>
   </ng-template>
@@ -149,20 +150,20 @@
       <span style="display: flex;">
         <a vts-button vtsType="text" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="menuActions"
           [vtsPlacement]="'bottomRight'">
-          <i class="collapse-icon" vts-icon [vtsType]="'ArrowMiniDown'"></i>
+          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </a>
-        <div class="triangle-up"></div>
         <vts-dropdown-menu #menuActions="vtsDropdownMenu">
-          <ul vts-menu>
+          <div class="triangle-up"></div>
+          <ul vts-menu class="drag-area">
             <li vts-menu-item (click)="onChangeToEdit()">
               <i class="pr-8" vts-icon vtsType="EditDoutone"></i>
               Edit
             </li>
-            <li vts-menu-item>
-              <vts-switch class="pr-8" vtsSize="sm">
-              </vts-switch>Enable/Disable
+            <li vts-menu-item (click)="onChangeStatusItem()">
+              <vts-switch class="pr-8" style="margin-left: -6px;" vtsSize="sm">
+              </vts-switch><span style="padding-left: 6px;">Enable/Disable</span>
             </li>
-            <li vts-menu-item style="color: #EE0033;">
+            <li vts-menu-item style="color: #EE0033;" (click)="onDeleteItem()">
               <i class="pr-8" vts-icon vtsType="DeleteDoutone"></i>
               Delete
             </li>

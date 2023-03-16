@@ -41,6 +41,7 @@ import { VtsTabsModule } from '@ui-vts/ng-vts/tabs';
 import { VtsProTableGroupFilterComponent } from './components/group-filter.component';
 import { VtsProTableSelectedLabelConfigComponent } from './components/selected-label-config.component';
 import { VtsProtableFilterPopupComponent } from './components/filter-popup.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { VtsProtableFilterPopupComponent } from './components/filter-popup.compo
     VtsBadgeModule,
     VtsDatePickerModule,
     VtsSwitchModule,
-    VtsPopoverModule
+    VtsPopoverModule,
+    FontAwesomeModule
   ]
 })
 export class VtsProTableModule { }

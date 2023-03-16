@@ -7,7 +7,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 // import { FormControl, FormGroup } from '@angular/forms';
 // import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
@@ -50,45 +50,44 @@ export class VtsProtableFilterPopupComponent implements OnInit, OnChanges {
 
   @Output() onSearchByFilter: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() submit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() submit: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
 
 
   placeholder = '';
   size: any = 'md';
-  listOfOption: Array<{ label: string; value: string }> = [];
   formGroup: FormGroup = new FormGroup({});
 
   constructor(
   ) { }
 
   ngOnInit(): void {
-
+    this.initForm();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.isVisibleModal) {
-      console.log(this.isVisibleModal);
+    if (changes.filterGroupConfig) {
+
     }
   }
 
-  onSave() {
+  onSearch() {
     this.submit.emit(this.formGroup.value);
   }
 
-  closeDrawer() {
+  closeSearchPopup() {
     this.cancel.emit(false);
   }
 
-  renderSelectedItems(index: number) {
-    let output = "";
-    if (typeof this.filterGroupConfig != "undefined") {
-      let currentFilter = {
-        ...this.filterGroupConfig[index]
-      };
-      // get label of selected values for current filter
-      let selectedLabels = [...currentFilter.filterValues.filter((x: any) => currentFilter.selectedValues.indexOf(x.value) >= 0).map((x: any) => x.label)];
-      output = selectedLabels[0];
+  initForm() {
+    let form = new FormGroup({});
+    if (this.filterGroupConfig) {
+      this.filterGroupConfig.forEach(filter => {
+        if (filter.filterText) {
+          form.addControl(filter.filterText, new FormControl([]));
+        }
+      });
     }
-    return output;
+    this.formGroup = form;
   }
+
 }
