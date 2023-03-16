@@ -10,12 +10,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsAvatarModule } from '../avatar';
 import { VtsBreadCrumbModule } from '../breadcrumb';
 import { VtsButtonModule } from '../button';
 import { VtsDividerModule } from '../divider';
 import { VtsDrawerModule } from '../drawer';
 import { VtsGridModule } from '../grid';
 import { VtsMenuModule } from '../menu';
+import { VtsSelectModule } from '../select';
 import { VtsSwitchModule } from '../switch';
 import { VtsTagModule } from '../tag';
 import { VtsContentComponent } from './content.component';
@@ -57,9 +59,11 @@ import { VtsSiderComponent } from './sider.component';
     FormsModule,
     VtsMenuModule,
     VtsBreadCrumbModule,
+    VtsAvatarModule,
     VtsDividerModule,
     VtsTagModule,
-    VtsGridModule
+    VtsGridModule,
+    VtsSelectModule
   ]
 })
 export class VtsProLayoutModule {}

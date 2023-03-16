@@ -10,9 +10,25 @@
             </ng-container>
         </ul>
     </div>
-    <div vts-col class="avatar-container">
-        <div>
-            <i vts-icon vtsType="Setting"></i>
+    <div vts-col vts-row class="avatar-container" [vtsGutter]="20">
+        <div vts-col>
+            <i vts-icon vtsType="Search" class="cursor-pointer" vtsSize="lg"></i>
+        </div>
+        <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" (click)="onOpenMenuAvatar()">
+            <vts-avatar vts-col vtsSize="lg" vtsIcon="user"></vts-avatar>
+            <div vts-col>
+                <div class="username">
+                    {{ avatar.name }}
+                </div>
+                <div class="subname">
+                    {{ avatar.subname }}
+                </div>
+            </div>
         </div>
     </div>
+    <ng-container #menuAvatar>
+        <vts-select class="listmenu-avatar">
+            <vts-option *ngFor="let item of avatar.menu" [vtsValue]="item.url" [vtsLabel]="item.label"></vts-option>
+        </vts-select>
+    </ng-container>
 </div>
