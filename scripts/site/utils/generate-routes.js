@@ -36,7 +36,7 @@ function generateNav(componentsDocMap) {
 
   const filters = ['table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'carousel',
     'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result',
-    'modal', 'form', 'pro-table', 'prolayout'];
+    'modal', 'form', 'pro-table'];
   
   for (const key in componentsDocMap) {
     if (!filters.includes(key))
