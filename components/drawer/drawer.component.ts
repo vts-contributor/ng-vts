@@ -202,7 +202,7 @@ export class VtsDrawerComponent<T = VtsSafeAny, R = VtsSafeAny, D = VtsSafeAny>
   private destroy$ = new Subject<void>();
   previouslyFocusedElement?: HTMLElement;
   placementChanging = false;
-  placementChangeTimeoutId = -1;
+  placementChangeTimeoutId: number | ReturnType<typeof setTimeout> = -1;
   vtsContentParams?: D; // only service
   overlayRef?: OverlayRef | null;
   portal?: TemplatePortal;

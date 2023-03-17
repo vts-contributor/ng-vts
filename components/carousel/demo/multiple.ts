@@ -1,95 +1,85 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
 
 @Component({
   selector: 'vts-demo-carousel-multiple',
   template: `
+    <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
+      <span *vtsSpaceItem>
+        Direction: &nbsp;
+        <vts-radio-group [(ngModel)]="direction">
+          <label vts-radio-button vtsValue="horizontal">Horizontal</label>
+          <label vts-radio-button vtsValue="vertical">Vertical</label>
+        </vts-radio-group>
+      </span>
+    </vts-space>
+    <p></p>
+    <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
+      <span *vtsSpaceItem>
+        Item per view: &nbsp;
+        <vts-input-number [vtsMin]="1" [vtsStep]="1" [(ngModel)]="slidesPerView"></vts-input-number>
+      </span>
+      <span *vtsSpaceItem>
+        Space between: &nbsp;
+        <vts-input-number [vtsMin]="0" [vtsStep]="4" [(ngModel)]="spaceBetween"></vts-input-number>
+      </span>
+    </vts-space>
+    <p></p>
+    <br />
     <vts-carousel
-      [vtsSlidesPerView]="vtsSlidesPerView"
-      [vtsNavigation]="vtsNavigation"
-      [vtsPagination]="vtsPagination"
-      [vtsSpaceBetween]="vtsSpaceBetween"
-      [vtsAutoplay]="vtsAutoplay"
+      [vtsDirection]="direction"
+      [vtsSlidesPerView]="slidesPerView"
+      [vtsSpaceBetween]="spaceBetween"
     >
-      <ng-template vts-carousel-slide *ngFor="let item of array">
-        <img src="{{ item.src }}" alt="" />
-      </ng-template>
+      <ng-container *ngFor="let item of images">
+        <img *vtsCarouselSlide src="{{ item.src }}" alt="" />
+      </ng-container>
     </vts-carousel>
-    <div class="navigation-btn mtl-next-btn"></div>
-    <div class="navigation-btn mtl-prev-btn"></div>
-    <div class="pagination-custom"></div>
   `,
   styles: [
     `
-      vts-carousel {
-        height: 200px;
+      .vts-carousel {
+        height: 400px;
       }
+
       img {
         height: 100%;
         width: 100%;
-      }
-      .pagination-custom {
-        text-align: center;
-      }
-      .navigation-btn {
-        position: absolute;
-        top: 150px;
-        width: calc(var(--carousel-navigation-size) / 44 * 27);
-        height: var(--carousel-navigation-size);
-        margin-top: calc(0px - (var(--carousel-navigation-size) / 2));
-        z-index: 10;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #73777a;
-        color: #fff;
-        border-radius: 50%;
-        width: 38px;
-        height: 38px;
-      }
-      .mtl-next-btn {
-        right: 0;
-      }
-      .mtl-next-btn:after {
-        font-family: carousel-icons;
-        font-size: 20px;
-        content: 'next';
-      }
-      .mtl-prev-btn {
-        left: 0;
-      }
-      .mtl-prev-btn:after {
-        font-family: carousel-icons;
-        font-size: 20px;
-        content: 'prev';
+        object-fit: cover;
       }
     `
   ]
 })
-export class VtsDemoCarouselMultipleComponent {
-  vtsSlidesPerView = 3;
-  vtsSpaceBetween = 20;
-  vtsNavigation = { nextEl: '.mtl-next-btn', prevEl: '.mtl-prev-btn' };
-  vtsPagination = { clickable: true, el: '.pagination-custom' };
-  vtsAutoplay = true;
-  array = [
+export class VtsDemoCarouselMultipleComponent implements OnInit {
+  direction: VtsCarouselOptions['direction'] = 'horizontal';
+  slidesPerView = 2;
+  spaceBetween = 0;
+
+  images = [
     {
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+      src: 'https://picsum.photos/1800/400?v=1'
     },
     {
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+      src: 'https://picsum.photos/1800/400?v=2'
     },
     {
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+      src: 'https://picsum.photos/1800/400?v=3'
     },
     {
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+      src: 'https://picsum.photos/1800/400?v=4'
     },
     {
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+      src: 'https://picsum.photos/1800/400?v=5'
     },
     {
-      src: 'https://i1-dulich.vnecdn.net/2023/02/06/Image-809267233-ExtractWord-2-4001-4429-1675670740.png?w=680&h=0&q=100&dpr=1&fit=crop&s=zz3jToDJI-F6KT1eZdRZxQ'
+      src: 'https://picsum.photos/1800/400?v=6'
+    },
+    {
+      src: 'https://picsum.photos/1800/400?v=7'
     }
   ];
+
+  constructor() {}
+
+  ngOnInit(): void {}
 }

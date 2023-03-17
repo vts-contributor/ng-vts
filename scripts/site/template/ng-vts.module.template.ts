@@ -11,7 +11,7 @@ import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsCalendarModule } from '@ui-vts/ng-vts/calendar';
 import { VtsCardModule } from '@ui-vts/ng-vts/card';
-import { VtscarouselModule } from '@ui-vts/ng-vts/carousel';
+import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 import { VtsCascaderModule } from '@ui-vts/ng-vts/cascader';
 import { VtsCheckboxModule } from '@ui-vts/ng-vts/checkbox';
 import { VtsAccordionModule } from '@ui-vts/ng-vts/accordion';
@@ -77,7 +77,7 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsBreadCrumbModule,
     VtsCalendarModule,
     VtsCardModule,
-    VtscarouselModule,
+    VtsCarouselModule,
     VtsCascaderModule,
     VtsCheckboxModule,
     VtsAccordionModule,

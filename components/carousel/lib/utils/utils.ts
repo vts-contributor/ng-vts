@@ -31,7 +31,13 @@ export function extend(target: any, src: any) {
         target[key] = src[key];
         return;
       }
-      if (target[key] && !src[key]) {
+      if (
+        typeof target[key] !== 'boolean' &&
+        typeof target[key] !== 'function' &&
+        typeof target[key] !== 'object' &&
+        target[key] &&
+        !src[key]
+      ) {
         return;
       }
       if (isObject(src[key]) && isObject(target[key]) && Object.keys(src[key]).length > 0) {
@@ -47,7 +53,7 @@ export function coerceBooleanProperty(value: any): boolean {
   return value != null && `${value}` !== 'false';
 }
 
-export const ignoreNgOnChanges = ['pagination', 'vtsNavigation', 'scrollbar', 'virtual'];
+export const ignoreNgOnChanges = ['vtsScrollbar', 'vtsVirtual'];
 
 export function setProperty(val: any, obj = {}): {} | false {
   if (isObject(val)) {

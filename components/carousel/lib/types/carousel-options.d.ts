@@ -31,9 +31,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * import carousel, { Navigation, Pagination } from 'carousel';
+   * import carousel, { Navigation, Pagination } from 'vts-carousel';
    *
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *    modules: [ Navigation, Pagination ],
    *  });
    * ```
@@ -80,14 +80,14 @@ export interface CarouselOptions {
    *
    * @default 'horizontal'
    */
-  vtsDirection?: 'horizontal' | 'vertical';
+  direction?: 'horizontal' | 'vertical';
 
   /**
    * Duration of transition between slides (in ms)
    *
    * @default 300
    */
-  vtsSpeed?: number;
+  speed?: number;
 
   /**
    * Enabled this option and plugin will set width/height on carousel wrapper equal to total size of all slides.
@@ -178,7 +178,8 @@ export interface CarouselOptions {
    *
    * @default 'slide'
    */
-  effect?: 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards';
+  effect?: 'slide' | 'fade' | 'cube' | 'flip';
+  // effect?: 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards';
 
   /**
    * Fire Transition/SlideChange/Start/End events on carousel initialization.
@@ -222,7 +223,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *    onAny(eventName, ...args) {
    *      console.log('Event: ', eventName);
    *      console.log('Event data: ', args);
@@ -261,7 +262,7 @@ export interface CarouselOptions {
    *
    * @note If you use "margin" css property to the elements which go into carousel in which you pass "vtsSpaceBetween" into, navigation might not work properly.
    */
-  vtsSpaceBetween?: number;
+  spaceBetween?: number;
 
   /**
    * Number of slides per view (slides visible at the same time on slider's container).
@@ -270,7 +271,7 @@ export interface CarouselOptions {
    *
    * @default 1
    */
-  vtsSlidesPerView?: number | 'auto';
+  slidesPerView?: number | 'auto';
 
   /**
    * If total number of slides less than specified here value, then carousel will enable `backface-visibility: hidden` on slide elements to reduce visual "flicker" in Safari.
@@ -458,14 +459,14 @@ export interface CarouselOptions {
    *
    * @default false
    */
-  vtsEdgeSwipeDetection?: boolean | string;
+  edgeSwipeDetection?: boolean | string;
 
   /**
    * Area (in px) from left edge of the screen to release touch events for swipe-back in app
    *
    * @default 20
    */
-  vtsEdgeSwipeThreshold?: number;
+  edgeSwipeThreshold?: number;
 
   /**
    * Enable to release touch events on slider edge position (beginning, end) to allow for further page scrolling
@@ -511,14 +512,14 @@ export interface CarouselOptions {
    *
    * @default true
    */
-  vtsAllowSlidePrev?: boolean;
+  allowSlidePrev?: boolean;
 
   /**
    * Set to `false` to disable swiping to next slide direction (to right or bottom)
    *
    * @default true
    */
-  vtsAllowSlideNext?: boolean;
+  allowSlideNext?: boolean;
 
   /**
    * Enable/disable swiping on elements matched to class specified in `noSwipingClass`
@@ -530,7 +531,7 @@ export interface CarouselOptions {
   /**
    * Specify `noSwiping`'s element css class
    *
-   * @default 'carousel-no-swiping'
+   * @default 'vts-carousel-no-swiping'
    */
   noSwipingClass?: string;
 
@@ -607,7 +608,7 @@ export interface CarouselOptions {
    *
    * @note If you use it along with `slidesPerView: 'auto'` then you need to specify `loopedSlides` parameter with amount of slides to loop (duplicate). Should not be used together with `rewind` mode
    */
-  vtsLoop?: boolean;
+  loop?: boolean;
 
   /**
    * Set to `true` to enable "rewind" mode. When enabled, clicking "next" navigation button (or calling `.slideNext()`) when on last slide will slide back to the first slide. Clicking "prev" navigation button (or calling `.slidePrev()`) when on first slide will slide forward to the last slide.
@@ -623,14 +624,14 @@ export interface CarouselOptions {
    *
    * @default 0
    */
-  vtsLoopAdditionalSlides?: number;
+  loopAdditionalSlides?: number;
 
   /**
    * If you use `slidesPerView:'auto'` with loop mode you should tell to carousel how many slides it should loop (duplicate) using this parameter
    *
    * @default null
    */
-  vtsLoopedSlides?: number | null;
+  loopedSlides?: number | null;
 
   /**
    * When enabled then amount of duplicated slides will not exceed amount of original slides. Useful to disable and increase `loopedSlides` when you have a lot of slides per view and not sufficient amount of original slides
@@ -657,7 +658,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   // Default parameters
    *   slidesPerView: 1,
    *   vtsSpaceBetween: 10,
@@ -684,7 +685,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   slidesPerView: 1,
    *   vtsSpaceBetween: 10,
    *   // using "ratio" endpoints
@@ -705,7 +706,7 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsBreakpoints?: {
+  breakpoints?: {
     [width: number]: CarouselOptions;
     [ratio: string]: CarouselOptions;
   };
@@ -743,25 +744,25 @@ export interface CarouselOptions {
   /**
    * The beginning of the modifier CSS class that can be added to carousel container depending on different parameters
    *
-   * @default 'carousel-'
+   * @default 'vts-carousel-'
    */
   containerModifierClass?: string;
 
   /**
    * CSS class name of slide
    *
-   * @default 'carousel-slide'
+   * @default 'vts-carousel-slide'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue components
    */
-  vtsSlideClass?: string;
+  slideClass?: string;
 
   /**
    * CSS class name of currently active slide
    *
-   * @default 'carousel-slide-active'
+   * @default 'vts-carousel-slide-active'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -772,7 +773,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of duplicated slide which represents the currently active slide
    *
-   * @default 'carousel-slide-duplicate-active'
+   * @default 'vts-carousel-slide-duplicate-active'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -783,7 +784,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of currently visible slide
    *
-   * @default 'carousel-slide-visible'
+   * @default 'vts-carousel-slide-visible'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -794,18 +795,18 @@ export interface CarouselOptions {
   /**
    * CSS class name of slide duplicated by loop mode
    *
-   * @default 'carousel-slide-duplicate'
+   * @default 'vts-carousel-slide-duplicate'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue
    */
-  vtsSlideDuplicateClass?: string;
+  slideDuplicateClass?: string;
 
   /**
    * CSS class name of slide which is right after currently active slide
    *
-   * @default 'carousel-slide-next'
+   * @default 'vts-carousel-slide-next'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -816,7 +817,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of duplicated slide which represents the slide next to active slide
    *
-   * @default 'carousel-slide-duplicate-next'
+   * @default 'vts-carousel-slide-duplicate-next'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -827,7 +828,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of slide which is right before currently active slide
    *
-   * @default 'carousel-slide-prev'
+   * @default 'vts-carousel-slide-prev'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -838,7 +839,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of duplicated slide which represents the slide previous to active slide
    *
-   * @default 'carousel-slide-duplicate-prev'
+   * @default 'vts-carousel-slide-duplicate-prev'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -849,7 +850,7 @@ export interface CarouselOptions {
   /**
    * CSS class name of blank slide append to fill groups in loop mode when `loopFillGroupWithBlank` is also enabled
    *
-   * @default 'carousel-slide-invisible-blank'
+   * @default 'vts-carousel-slide-invisible-blank'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
@@ -860,21 +861,21 @@ export interface CarouselOptions {
   /**
    * CSS class name of slides' wrapper
    *
-   * @default 'carousel-wrapper'
+   * @default 'vts-carousel-wrapper'
    *
    * @note By changing classes you will also need to change carousel's CSS to reflect changed classes
    *
    * @note Not supported in carousel Angular/React/Svelte/Vue
    *
    */
-  vtsWrapperClass?: string;
+  wrapperClass?: string;
 
   /**
    * Object with a11y parameters or boolean `true` to enable with default settings.
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   a11y: {
    *     prevSlideMessage: 'Previous slide',
    *     nextSlideMessage: 'Next slide',
@@ -889,35 +890,35 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *  autoplay: {
    *    delay: 5000,
    *  },
    *});
    * ```
    */
-  vtsAutoplay?: AutoplayOptions | boolean;
+  autoplay?: AutoplayOptions | boolean;
 
   /**
    * Object with controller parameters or boolean `true` to enable with default settings
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   controller: {
    *     inverse: true,
    *   },
    * });
    * ```
    */
-  vtsController?: ControllerOptions;
+  controller?: ControllerOptions;
 
   /**
    * Object with Coverflow-effect parameters.
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'coverflow',
    *   coverflowEffect: {
    *     rotate: 30,
@@ -933,7 +934,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'cube',
    *   cubeEffect: {
    *     slideShadows: false,
@@ -948,7 +949,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'fade',
    *   fadeEffect: {
    *     crossFade: true
@@ -963,7 +964,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'flip',
    *   flipEffect: {
    *     slideShadows: false,
@@ -978,7 +979,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'creative',
    *   creativeEffect: {
    *     prev: {
@@ -1000,7 +1001,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   effect: 'cards',
    *   cardsEffect: {
    *     // ...
@@ -1016,7 +1017,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   hashNavigation: {
    *     replaceState: true,
    *   },
@@ -1032,7 +1033,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   history: {
    *     replaceState: true,
    *   },
@@ -1042,7 +1043,7 @@ export interface CarouselOptions {
    * @example
    * ```html
    * <!-- will produce "slides/slide1" url in browser history -->
-   * <div class="carousel-slide" data-history="slide1"></div>
+   * <div class="vts-carousel-slide" data-history="slide1"></div>
    * ```
    */
   history?: HistoryOptions | boolean;
@@ -1052,7 +1053,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   keyboard: {
    *     enabled: true,
    *     onlyInViewport: false,
@@ -1067,7 +1068,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   lazy: {
    *     loadPrevNext: true,
    *   },
@@ -1081,7 +1082,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   mousewheel: {
    *     invert: true,
    *   },
@@ -1095,37 +1096,37 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   navigation: {
-   *     nextEl: '.carousel-button-next',
-   *     prevEl: '.carousel-button-prev',
+   *     nextEl: '.vts-carousel-button-next',
+   *     prevEl: '.vts-carousel-button-prev',
    *   },
    * });
    * ```
    */
-  vtsNavigation?: NavigationOptions | boolean;
+  navigation?: NavigationOptions | boolean;
 
   /**
    * Object with pagination parameters or boolean `true` to enable with default settings.
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   pagination: {
-   *     el: '.carousel-pagination',
+   *     el: '.vts-carousel-pagination',
    *     type: 'bullets',
    *   },
    * });
    * ```
    */
-  vtsPagination?: PaginationOptions | boolean;
+  pagination?: PaginationOptions | boolean;
 
   /**
    * Object with parallax parameters or boolean `true` to enable with default settings.
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   parallax: true,
    * });
    * ```
@@ -1137,9 +1138,9 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   scrollbar: {
-   *     el: '.carousel-scrollbar',
+   *     el: '.vts-carousel-scrollbar',
    *     draggable: true,
    *   },
    * });
@@ -1152,7 +1153,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   ...
    *   thumbs: {
    *     carousel: thumbscarousel
@@ -1160,14 +1161,14 @@ export interface CarouselOptions {
    * });
    * ```
    */
-  vtsThumbs?: ThumbsOptions;
+  thumbs?: ThumbsOptions;
 
   /**
    * Enables virtual slides functionality. Object with virtual slides parameters or boolean `true` to enable with default settings.
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   virtual: {
    *     slides: ['Slide 1', 'Slide 2', 'Slide 3', 'Slide 4', 'Slide 5'],
    *   },
@@ -1181,7 +1182,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   zoom: {
    *     maxRatio: 5,
    *   },
@@ -1195,11 +1196,11 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   freeMode: true,
    * });
    *
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   freeMode: {
    *     enabled: true,
    *     sticky: true,
@@ -1214,7 +1215,7 @@ export interface CarouselOptions {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   grid: {
    *     rows: 2,
    *   },
@@ -1224,7 +1225,7 @@ export interface CarouselOptions {
   grid?: GridOptions;
 
   /**
-   * !INTERNAL When enabled will emit "_containerClasses" and "_vtsSlideClass" events
+   * !INTERNAL When enabled will emit "_containerClasses" and "_slideClass" events
    */
   _emitClasses?: boolean;
 }

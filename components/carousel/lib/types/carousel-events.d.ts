@@ -1,5 +1,5 @@
 import { carouselOptions } from './carousel-options';
-import carousel from './carousel-class';
+import { ICarousel } from './carousel-class';
 
 import { A11yEvents } from './modules/a11y';
 import { AutoplayEvents } from './modules/autoplay';
@@ -33,7 +33,7 @@ export interface CarouselEvents {
    *
    * @example
    * ```js
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   init: false,
    *   // other parameters
    * });
@@ -47,7 +47,7 @@ export interface CarouselEvents {
    * @example
    * ```js
    * // Otherwise use it as the parameter:
-   * const carousel = new carousel('.carousel', {
+   * const carousel = new carousel('.vts-carousel', {
    *   // other parameters
    *   on: {
    *     init: function () {
@@ -57,284 +57,284 @@ export interface CarouselEvents {
    * });
    * ```
    */
-  init: (carousel: carousel) => any;
+  init: (carousel: ICarousel) => any;
 
   /**
    * Event will be fired right before carousel destroyed
    */
-  beforeDestroy: (carousel: carousel) => void;
+  beforeDestroy: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when currently active slide is changed
    */
-  slideChange: (carousel: carousel) => void;
+  slideChange: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired in the beginning of animation to other slide (next or previous).
    */
-  slideChangeTransitionStart: (carousel: carousel) => void;
+  slideChangeTransitionStart: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired after animation to other slide (next or previous).
    */
-  slideChangeTransitionEnd: (carousel: carousel) => void;
+  slideChangeTransitionEnd: (carousel: ICarousel) => void;
 
   /**
    * Same as "slideChangeTransitionStart" but for "forward" direction only
    */
-  slideNextTransitionStart: (carousel: carousel) => void;
+  slideNextTransitionStart: (carousel: ICarousel) => void;
 
   /**
    * Same as "slideChangeTransitionEnd" but for "forward" direction only
    */
-  slideNextTransitionEnd: (carousel: carousel) => void;
+  slideNextTransitionEnd: (carousel: ICarousel) => void;
 
   /**
    * Same as "slideChangeTransitionStart" but for "backward" direction only
    */
-  slidePrevTransitionStart: (carousel: carousel) => void;
+  slidePrevTransitionStart: (carousel: ICarousel) => void;
 
   /**
    * Same as "slideChangeTransitionEnd" but for "backward" direction only
    */
-  slidePrevTransitionEnd: (carousel: carousel) => void;
+  slidePrevTransitionEnd: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired in the beginning of transition.
    */
-  transitionStart: (carousel: carousel) => void;
+  transitionStart: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired after transition.
    */
-  transitionEnd: (carousel: carousel) => void;
+  transitionEnd: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when user touch carousel. Receives `touchstart` event as an arguments.
    */
-  touchStart: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  touchStart: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user touch and move finger over carousel. Receives `touchmove` event as an arguments.
    */
-  touchMove: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  touchMove: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user touch and move finger over carousel in direction opposite to direction parameter. Receives `touchmove` event as an arguments.
    */
-  touchMoveOpposite: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  touchMoveOpposite: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user touch and move finger over carousel and move it. Receives `touchmove` event as an arguments.
    */
-  sliderMove: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  sliderMove: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user release carousel. Receives `touchend` event as an arguments.
    */
-  touchEnd: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  touchEnd: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user click/tap on carousel. Receives `touchend` event as an arguments.
    */
-  click: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  click: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user click/tap on carousel. Receives `touchend` event as an arguments.
    */
-  tap: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  tap: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired when user double tap on carousel's container. Receives `touchend` event as an arguments
    */
-  doubleTap: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  doubleTap: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
 
   /**
    * Event will be fired right after all inner images are loaded. updateOnImagesReady should be also enabled
    */
-  imagesReady: (carousel: carousel) => void;
+  imagesReady: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when carousel progress is changed, as an arguments it receives progress that is always from 0 to 1
    */
-  progress: (carousel: carousel, progress: number) => void;
+  progress: (carousel: ICarousel, progress: number) => void;
 
   /**
    * Event will be fired when carousel reach its beginning (initial position)
    */
-  reachBeginning: (carousel: carousel) => void;
+  reachBeginning: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when carousel reach last slide
    */
-  reachEnd: (carousel: carousel) => void;
+  reachEnd: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when carousel goes to beginning or end position
    */
-  toEdge: (carousel: carousel) => void;
+  toEdge: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when carousel goes from beginning or end position
    */
-  fromEdge: (carousel: carousel) => void;
+  fromEdge: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired when carousel's wrapper change its position. Receives current translate value as an arguments
    */
-  setTranslate: (carousel: carousel, translate: number) => void;
+  setTranslate: (carousel: ICarousel, translate: number) => void;
 
   /**
    * Event will be fired everytime when carousel starts animation. Receives current transition duration (in ms) as an arguments
    */
-  setTransition: (carousel: carousel, transition: number) => void;
+  setTransition: (carousel: ICarousel, transition: number) => void;
 
   /**
    * Event will be fired on window resize right before carousel's onresize manipulation
    */
-  resize: (carousel: carousel) => void;
+  resize: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired if observer is enabled and it detects DOM mutations
    */
-  observerUpdate: (carousel: carousel) => void;
+  observerUpdate: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired right before "loop fix"
    */
-  beforeLoopFix: (carousel: carousel) => void;
+  beforeLoopFix: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired after "loop fix"
    */
-  loopFix: (carousel: carousel) => void;
+  loopFix: (carousel: ICarousel) => void;
 
   /**
    * Event will be fired on breakpoint change
    */
-  breakpoint: (carousel: carousel, breakpointParams: carouselOptions) => void;
+  breakpoint: (carousel: ICarousel, breakpointParams: carouselOptions) => void;
 
   /**
    * !INTERNAL: Event will fired right before breakpoint change
    */
-  _beforeBreakpoint?: (carousel: carousel, breakpointParams: carouselOptions) => void;
+  _beforeBreakpoint?: (carousel: ICarousel, breakpointParams: carouselOptions) => void;
 
   /**
    * !INTERNAL: Event will fired after setting CSS classes on carousel container element
    */
-  _containerClasses?: (carousel: carousel, classNames: string) => void;
+  _containerClasses?: (carousel: ICarousel, classNames: string) => void;
 
   /**
    * !INTERNAL: Event will fired after setting CSS classes on carousel slide element
    */
-  _vtsSlideClass?: (carousel: carousel, slideEl: HTMLElement, classNames: string) => void;
+  _slideClass?: (carousel: ICarousel, slideEl: HTMLElement, classNames: string) => void;
 
   /**
    * !INTERNAL: Event will fired after setting CSS classes on all carousel slides
    */
   _slideClasses?: (
-    carousel: carousel,
+    carousel: ICarousel,
     slides: { slideEl: HTMLElement; classNames: string; index: number }[]
   ) => void;
 
   /**
    * !INTERNAL: Event will fired as soon as carousel instance available (before init)
    */
-  _carousel?: (carousel: carousel) => void;
+  _carousel?: (carousel: ICarousel) => void;
 
   /**
    * !INTERNAL: Event will be fired on free mode touch end (release) and there will no be momentum
    */
-  _freeModeNoMomentumRelease?: (carousel: carousel) => void;
+  _freeModeNoMomentumRelease?: (carousel: ICarousel) => void;
 
   /**
    * Event will fired on active index change
    */
-  activeIndexChange: (carousel: carousel) => void;
+  activeIndexChange: (carousel: ICarousel) => void;
   /**
    * Event will fired on snap index change
    */
-  snapIndexChange: (carousel: carousel) => void;
+  snapIndexChange: (carousel: ICarousel) => void;
   /**
    * Event will fired on real index change
    */
-  realIndexChange: (carousel: carousel) => void;
+  realIndexChange: (carousel: ICarousel) => void;
   /**
    * Event will fired right after initialization
    */
-  afterInit: (carousel: carousel) => void;
+  afterInit: (carousel: ICarousel) => void;
   /**
    * Event will fired right before initialization
    */
-  beforeInit: (carousel: carousel) => void;
+  beforeInit: (carousel: ICarousel) => void;
   /**
    * Event will fired before resize handler
    */
-  beforeResize: (carousel: carousel) => void;
+  beforeResize: (carousel: ICarousel) => void;
   /**
    * Event will fired before slide change transition start
    */
-  beforeSlideChangeStart: (carousel: carousel) => void;
+  beforeSlideChangeStart: (carousel: ICarousel) => void;
   /**
    * Event will fired before transition start
    */
-  beforeTransitionStart: (carousel: carousel, speed: number, internal: any) => void; // what is internal?
+  beforeTransitionStart: (carousel: ICarousel, speed: number, internal: any) => void; // what is internal?
   /**
    * Event will fired on direction change
    */
-  changeDirection: (carousel: carousel) => void;
+  changeDirection: (carousel: ICarousel) => void;
   /**
    * Event will be fired when user double click/tap on carousel
    */
-  doubleClick: (carousel: carousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
+  doubleClick: (carousel: ICarousel, event: MouseEvent | TouchEvent | PointerEvent) => void;
   /**
    * Event will be fired on carousel destroy
    */
-  destroy: (carousel: carousel) => void;
+  destroy: (carousel: ICarousel) => void;
   /**
    * Event will be fired on momentum bounce
    */
-  momentumBounce: (carousel: carousel) => void;
+  momentumBounce: (carousel: ICarousel) => void;
   /**
    * Event will be fired on orientation change (e.g. landscape -> portrait)
    */
-  orientationchange: (carousel: carousel) => void;
+  orientationchange: (carousel: ICarousel) => void;
   /**
    * Event will be fired in the beginning of animation of resetting slide to current one
    */
-  slideResetTransitionStart: (carousel: carousel) => void;
+  slideResetTransitionStart: (carousel: ICarousel) => void;
   /**
    * Event will be fired in the end of animation of resetting slide to current one
    */
-  slideResetTransitionEnd: (carousel: carousel) => void;
+  slideResetTransitionEnd: (carousel: ICarousel) => void;
   /**
    * Event will be fired with first touch/drag move
    */
-  sliderFirstMove: (carousel: carousel, event: TouchEvent) => void;
+  sliderFirstMove: (carousel: ICarousel, event: TouchEvent) => void;
   /**
    * Event will be fired when number of slides has changed
    */
-  slidesLengthChange: (carousel: carousel) => void;
+  slidesLengthChange: (carousel: ICarousel) => void;
   /**
    * Event will be fired when slides grid has changed
    */
-  slidesGridLengthChange: (carousel: carousel) => void;
+  slidesGridLengthChange: (carousel: ICarousel) => void;
   /**
    * Event will be fired when snap grid has changed
    */
-  snapGridLengthChange: (carousel: carousel) => void;
+  snapGridLengthChange: (carousel: ICarousel) => void;
   /**
    * Event will be fired after carousel.update() call
    */
-  update: (carousel: carousel) => void;
+  update: (carousel: ICarousel) => void;
   /**
    * Event will be fired when carousel is locked (when `watchOverflow` enabled)
    */
-  lock: (carousel: carousel) => void;
+  lock: (carousel: ICarousel) => void;
   /**
    * Event will be fired when carousel is unlocked (when `watchOverflow` enabled)
    */
-  unlock: (carousel: carousel) => void;
+  unlock: (carousel: ICarousel) => void;
   // CORE_EVENTS_END
 }
 

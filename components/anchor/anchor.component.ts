@@ -102,7 +102,7 @@ export class VtsAnchorComponent implements OnDestroy, AfterViewInit, OnChanges {
   private links: VtsAnchorLinkComponent[] = [];
   private animating = false;
   private destroy$ = new Subject();
-  private handleScrollTimeoutID = -1;
+  private handleScrollTimeoutID: number | ReturnType<typeof setTimeout> = -1;
 
   constructor(
     @Inject(DOCUMENT) private doc: VtsSafeAny,

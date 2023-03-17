@@ -6,11 +6,11 @@ export interface ManipulationMethods {
    *
    * @example
    * ```js
-   * appendSlide('<div class="carousel-slide">Slide 10"</div>')
+   * appendSlide('<div class="vts-carousel-slide">Slide 10"</div>')
    *
    * appendSlide([
-   *  '<div class="carousel-slide">Slide 10"</div>',
-   *  '<div class="carousel-slide">Slide 11"</div>'
+   *  '<div class="vts-carousel-slide">Slide 10"</div>',
+   *  '<div class="vts-carousel-slide">Slide 11"</div>'
    * ]);
    * ```
    */
@@ -22,11 +22,11 @@ export interface ManipulationMethods {
    *
    * @example
    * ```js
-   * prependSlide('<div class="carousel-slide">Slide 0"</div>')
+   * prependSlide('<div class="vts-carousel-slide">Slide 0"</div>')
    *
    * prependSlide([
-   *  '<div class="carousel-slide">Slide 1"</div>',
-   *  '<div class="carousel-slide">Slide 2"</div>'
+   *  '<div class="vts-carousel-slide">Slide 1"</div>',
+   *  '<div class="vts-carousel-slide">Slide 2"</div>'
    * ]);
    * ```
    */
@@ -37,11 +37,11 @@ export interface ManipulationMethods {
    *
    * @example
    * ```js
-   * addSlide(1, '<div class="carousel-slide">Slide 10"</div>')
+   * addSlide(1, '<div class="vts-carousel-slide">Slide 10"</div>')
    *
    * addSlide(1, [
-   *  '<div class="carousel-slide">Slide 10"</div>',
-   *  '<div class="carousel-slide">Slide 11"</div>'
+   *  '<div class="vts-carousel-slide">Slide 10"</div>',
+   *  '<div class="vts-carousel-slide">Slide 11"</div>'
    * ]);
    * ```
    */
