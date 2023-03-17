@@ -26,7 +26,6 @@ import { VtsPaginationModule } from '@ui-vts/ng-vts/pagination';
 import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
 import { VtsSpinModule } from '@ui-vts/ng-vts/spin';
 import { VtsFormModule } from '@ui-vts/ng-vts/form';
-import { VtsTableModule } from '@ui-vts/ng-vts/table';
 import { VtsProTableContainerComponent } from './pro-table.component';
 import { VtsProTableSearchFormComponent } from './components/search-form.component';
 import { VtsProTableConfigComponent } from './components/table-config.component';
@@ -42,6 +41,15 @@ import { VtsProTableGroupFilterComponent } from './components/group-filter.compo
 import { VtsProTableSelectedLabelConfigComponent } from './components/selected-label-config.component';
 import { VtsProtableFilterPopupComponent } from './components/filter-popup.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VtsThSelectionComponent } from './components/th-selection.component';
+import { VtsProTableSelectionComponent } from './components/selection.component';
+import { VtsTdAddOnComponent } from './components/td-addon.component';
+import { VtsRowIndentDirective } from './components/row-indent.directive';
+import { VtsThAddOnComponent } from './components/th-addon.component';
+import { VtsProTableSortersComponent } from './components/sorters.component';
+import { VtsRowExpandButtonComponent } from './components/row-expand-button.directive';
+import { VtsProTableFilterComponent } from './components/filter.component';
+import { VtsFilterTriggerComponent } from './components/filter-trigger.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +61,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     VtsTableDeleteComponent,
     VtsTableUploadComponent,
     VtsProTableSelectedLabelConfigComponent,
-    VtsProtableFilterPopupComponent
+    VtsProtableFilterPopupComponent,
+    VtsThSelectionComponent,
+    VtsProTableSelectionComponent,
+    VtsTdAddOnComponent,
+    VtsRowIndentDirective,
+    VtsThAddOnComponent,
+    VtsProTableSortersComponent,
+    VtsRowExpandButtonComponent,
+    VtsProTableFilterComponent,
+    VtsFilterTriggerComponent
   ],
   exports: [
     VtsProTableContainerComponent,
@@ -88,7 +105,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     VtsFormModule,
     VtsSelectModule,
     VtsUploadModule,
-    VtsTableModule,
     VtsDividerModule,
     DragDropModule,
     VtsInputNumberModule,

@@ -105,3 +105,26 @@ export type VtsProTableFilterList = Array<{
   value: VtsSafeAny;
   byDefault?: boolean;
 }>;
+
+export type VtsTableData =
+  | VtsSafeAny
+  | {
+      [key: string]: VtsTableData;
+    };
+export type VtsTableLayout = 'fixed' | 'auto';
+export type VtsTablePaginationPosition = 'top' | 'bottom' | 'both';
+export type VtsTablePaginationType = 'default' | 'small';
+export type VtsTableSize = 'middle' | 'default' | 'small';
+export type VtsTableFilterList = Array<{
+  text: string;
+  value: VtsSafeAny;
+  byDefault?: boolean;
+}>;
+export type VtsTableSortOrder = string | 'ascend' | 'descend' | null;
+export type VtsTableSortFn = (
+  a: VtsTableData,
+  b: VtsTableData,
+  sortOrder?: VtsTableSortOrder
+) => number;
+export type VtsTableFilterValue = VtsSafeAny[] | VtsSafeAny;
+export type VtsTableFilterFn = (value: VtsTableFilterValue, data: VtsTableData) => boolean;

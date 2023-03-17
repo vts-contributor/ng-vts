@@ -124,8 +124,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     }
 
     if (changes.listData) {
-      this.loading = true;
-      console.log(changes.listData.currentValue);
+      this.loading = true;      
       this.displayedData = [...this.listData];
       this.filteredList = [...this.listData]
       this.loading = false;

@@ -29,85 +29,7 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
   exportAs: 'vtsProTableContainer',
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
-  template: `
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <div [ngStyle]="{'display': 'flex', 'flex-direction':'row', 'justify-content':tableTitle?'space-between':'right'}">
-      <ng-container *ngIf="tableTitle">
-        <span class="title-table">{{tableTitle}}</span>
-      </ng-container>
-      <div vts-col class="btn-control-area">
-        <button vts-button vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('new')">
-          <span vts-icon vtsType="AddDoutone"></span>
-          New
-        </button>
-        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('export')">
-          <span vts-icon vtsType="CloudUploadDoutone"></span>
-          Export
-        </button>
-        <button vts-button class="btn-table-config" vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('import')">
-          <span vts-icon vtsType="SaveAltDoutone"></span>
-          Import
-        </button>
-
-        <ng-container *ngIf="moreActionConfig">
-          <vts-button-group [vtsSize]="buttonSize" vtsType="primary" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction">
-            <button vts-button vtsType="primary" class="btn-table-config btn-more-action btn-more-action-content" [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click">
-              More action
-            </button>
-            <button vts-button vtsType="primary" class="btn-table-config btn-more-action btn-more-action-arrow" [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click">
-              <span vts-icon vtsType="ArrowDownOutline"></span>
-            </button>
-          </vts-button-group>
-          <vts-dropdown-menu #moreAction="vtsDropdownMenu">
-            <ul vts-menu style="padding: 0px">
-              <ng-container *ngFor="let action of moreActionConfig">
-                <li vts-menu-item [ngStyle]="action.style">{{action.buttonText}}</li>
-              </ng-container>
-            </ul>
-          </vts-dropdown-menu>
-        </ng-container> 
-      </div>
-    </div>
-
-    <ng-container *ngIf="tabGroupConfig; else tableArea">
-      <vts-tabset [(vtsSelectedIndex)]="selectedTabIndex" (vtsSelectedIndexChange)="onChangeTabFilter($event)">
-        <ng-container *ngFor="let tabConfig of tabGroupConfig.tabValueConfig">
-          <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{tabConfig.total}})">
-            </vts-tab>
-          </ng-container>
-        </vts-tabset>
-        <ng-container *ngTemplateOutlet="tableArea"></ng-container>
-    </ng-container>
-
-    <ng-template #tableArea>
-      <vts-spin [vtsSpinning]="loading">
-        <vts-table-config 
-          [listData]="listData" 
-          [properties]="properties"
-          [requestData]="requestData"
-          [getRequest]="getRequest"
-          [editRequest]="editRequest"
-          [deleteRequest]="deleteRequest" 
-          [saveRequest]="saveRequest"
-          [exportRequest]="exportRequest"
-          [configTableRequest]="configTableRequest"
-          [filterGroupConfig]="filterGroupConfig"
-          [searchData]="searchData" 
-          (reloadTable)="reloadTable($event)"
-          [drawerConfig]="drawerConfig"
-          [listStatus]="listStatus" 
-          [modalUploadConfig]="modalUploadConfig"
-          [modalDeleteConfig]="modalDeleteConfig"
-          [vtsTotal]="vtsTotal"
-          [action]="actionType"
-          [tabConfig]="tabConfig"
-          [moreActionConfig]="moreActionConfig"
-        >
-      </vts-table-config>
-      </vts-spin>
-    </ng-template>
-    
-  `,
+  templateUrl: './pro-table.component.html',
   styles: [
     `
       .title-table {
@@ -286,6 +208,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
         }
         this.changeDetector.detectChanges();
       }, error => {
+        this.listData = [];
         if (onError) {
           onError(error);
         }
