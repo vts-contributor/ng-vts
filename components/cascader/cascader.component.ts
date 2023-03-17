@@ -305,8 +305,8 @@ export class VtsCascaderComponent
   private destroy$ = new Subject<void>();
   private inputString = '';
   private isOpening = false;
-  private delayMenuTimer: number | null = null;
-  private delaySelectTimer: number | null = null;
+  private delayMenuTimer: number | ReturnType<typeof setTimeout> | null = null;
+  private delaySelectTimer: number | ReturnType<typeof setTimeout> | null = null;
 
   get inSearchingMode(): boolean {
     return this.cascaderService.inSearchingMode;

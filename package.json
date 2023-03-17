@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "@ui-vts/ng-vts": "file:components",
-    "ngx-hover-preload": "0.0.3"
+    "ngx-hover-preload": "0.0.3",
+    "@ui-vts/theme": "file:../ui-vts/ui-vts-theme-git"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.10",
@@ -48,6 +49,9 @@
     "@commitlint/config-angular": "^12.1.4",
     "@nguniversal/builders": "^14.2.3",
     "@nguniversal/express-engine": "^14.2.3",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "5.0.2",
     "@schematics/angular": "^12.1.0",
     "@types/d3": "^6.2.0",
     "@types/fs-extra": "^9.0.5",
@@ -110,9 +114,11 @@
     "readline-sync": "^1.4.10",
     "remark": "^13.0.0",
     "resolve-bin": "^0.4.0",
+    "rollup": "^2.77.2",
     "rxjs": "^6.6.7",
     "shelljs": "^0.8.4",
     "sitemap": "^4.1.1",
+    "ssr-window": "^4.0.0",
     "terser": "^5.5.1",
     "ts-node": "~9.1.1",
     "tslib": "^2.0.3",

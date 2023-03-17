@@ -1,5 +1,5 @@
 import { Dom7Array } from 'dom7';
-import { CSSSelector } from '../shared';
+import { CSSSelector } from '../../../shared';
 import carousel from '../carousel-class';
 
 export interface LazyMethods {
@@ -64,25 +64,25 @@ export interface LazyOptions {
   /**
    * CSS class name of lazy element
    *
-   * @default 'carousel-lazy'
+   * @default 'vts-carousel-lazy'
    */
   elementClass?: string;
   /**
    * CSS class name of lazy loading element
    *
-   * @default 'carousel-lazy-loading'
+   * @default 'vts-carousel-lazy-loading'
    */
   loadingClass?: string;
   /**
    * CSS class name of lazy loaded element
    *
-   * @default 'carousel-lazy-loaded'
+   * @default 'vts-carousel-lazy-loaded'
    */
   loadedClass?: string;
   /**
    * CSS class name of lazy preloader
    *
-   * @default 'carousel-lazy-preloader'
+   * @default 'vts-carousel-lazy-preloader'
    */
   preloaderClass?: string;
 }

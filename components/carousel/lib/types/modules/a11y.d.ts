@@ -48,7 +48,7 @@ export interface A11yOptions {
   /**
    * CSS class name of A11y notification
    *
-   * @default 'carousel-notification'
+   * @default 'vts-carousel-notification'
    */
   notificationClass?: string;
 

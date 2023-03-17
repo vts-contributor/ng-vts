@@ -32,7 +32,7 @@ export class VtsModalRef<T = VtsSafeAny, R = VtsSafeAny> implements VtsModalLega
   afterClose: Subject<R> = new Subject();
   afterOpen: Subject<void> = new Subject();
 
-  private closeTimeout?: number;
+  private closeTimeout?: number | ReturnType<typeof setTimeout>;
 
   constructor(
     private overlayRef: OverlayRef,

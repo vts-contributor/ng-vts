@@ -5,5 +5,13 @@
   "lib": {
     "entryFile": "./public_api.ts"
   },
-  "allowedNonPeerDependencies": ["tslib", "angular", "@ui-vts/theme", "apexcharts", "date-fns", "@ui-vts/icons-angular", "dom7"]
+  "allowedNonPeerDependencies": [
+    "tslib", 
+    "angular", 
+    "@ui-vts/theme", 
+    "@ui-vts/icons-angular", 
+    "apexcharts", 
+    "date-fns", 
+    "dom7"
+  ]
 }

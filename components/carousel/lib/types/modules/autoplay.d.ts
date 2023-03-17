@@ -60,7 +60,7 @@ export interface AutoplayEvents {
  *
  * @example
  * ```js
- * const carousel = new carousel('.carousel', {
+ * const carousel = new carousel('.vts-carousel', {
  *   autoplay: {
  *     delay: 5000,
  *   },
@@ -68,6 +68,11 @@ export interface AutoplayEvents {
  * ```
  */
 export interface AutoplayOptions {
+  /**
+   * Boolean property to enable/disable autoplay
+   */
+  enabled?: boolean;
+
   /**
    * Delay between transitions (in ms). If this parameter is not specified, auto play will be disabled
    *
@@ -77,7 +82,7 @@ export interface AutoplayOptions {
    * @example
    * ```html
    * <!-- hold this slide for 2 seconds -->
-   * <div class="carousel-slide" data-carousel-autoplay="2000">
+   * <div class="vts-carousel-slide" data-carousel-autoplay="2000">
    * ```
    *
    * @default 3000
@@ -113,7 +118,7 @@ export interface AutoplayOptions {
    *
    * @default true
    */
-  waitForTransition?: boolean;
+  // waitForTransition?: boolean;
 
   /**
    * When enabled autoplay will be paused on mouse enter over carousel container. If `disableOnInteraction` is also enabled, it will stop autoplay instead of pause

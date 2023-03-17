@@ -1,9 +1,9 @@
 import { Directive, Input, TemplateRef } from '@angular/core';
 import { coerceBooleanProperty } from './lib/utils/utils';
 @Directive({
-  selector: 'ng-template[vts-carousel-slide]'
+  selector: 'ng-template[vtsCarouselSlide]'
 })
-export class CarouselSlideDirective {
+export class VtsCarouselSlideDirective {
   @Input() virtualIndex: number = 0;
   @Input() class: string = '';
   @Input()
@@ -29,11 +29,14 @@ export class CarouselSlideDirective {
     }
     this._classNames = val;
     this.slideData = {
-      isActive: this._hasClass(['carousel-slide-active', 'carousel-slide-duplicate-active']),
-      isVisible: this._hasClass(['carousel-slide-visible']),
-      isDuplicate: this._hasClass(['carousel-slide-duplicate']),
-      isPrev: this._hasClass(['carousel-slide-prev', 'carousel-slide-duplicate-prev']),
-      isNext: this._hasClass(['carousel-slide-next', 'carousel-slide-duplicate-next'])
+      isActive: this._hasClass([
+        'vts-carousel-slide-active',
+        'vts-carousel-slide-duplicate-active'
+      ]),
+      isVisible: this._hasClass(['vts-carousel-slide-visible']),
+      isDuplicate: this._hasClass(['vts-carousel-slide-duplicate']),
+      isPrev: this._hasClass(['vts-carousel-slide-prev', 'vts-carousel-slide-duplicate-prev']),
+      isNext: this._hasClass(['vts-carousel-slide-next', 'vts-carousel-slide-duplicate-next'])
     };
   }
 

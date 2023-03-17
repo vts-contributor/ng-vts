@@ -1,9 +1,12 @@
-// @ts-ignore
-import Carousel from './carousel';
+import { camelCase } from '@ui-vts/ng-vts/core/util';
+import Carousel from '../carousel';
 import { paramsList } from './params-list';
 import { extend, isObject } from './utils';
 type KeyValueType = { [x: string]: any };
-export const allowedParams = paramsList.map(key => key.replace(/_/, ''));
+
+export const allowedParams = paramsList;
+export const getKey = (key: string) => camelCase(key.replace(/^_/, '').replace(/^vts/, ''));
+
 export function getParams(obj: any = {}) {
   const params: any = {
     on: {}
@@ -16,10 +19,9 @@ export function getParams(obj: any = {}) {
   params.init = false;
 
   const rest: KeyValueType = {};
-  const allowedParams = paramsList.map(key => key.replace(/_/, ''));
   Object.keys(obj).forEach((key: string) => {
-    const _key = key.replace(/^_/, '');
-    if (allowedParams.indexOf(_key) >= 0) {
+    if (allowedParams.indexOf(key) >= 0) {
+      const _key = getKey(key);
       if (isObject(obj[key])) {
         params[_key] = {};
         passedParams[_key] = {};
@@ -29,15 +31,11 @@ export function getParams(obj: any = {}) {
         params[_key] = obj[key];
         passedParams[_key] = obj[key];
       }
-    }
-    // else if (key.search(/on[A-Z]/) === 0 && typeof obj[key] === 'function') {
-    //   events[`${_key[2].toLowerCase()}${key.substr(3)}`] = obj[key];
-    // }
-    else {
-      rest[_key] = obj[key];
+    } else {
+      rest[key] = obj[key];
     }
   });
-  ['vtsNavigation', 'vtsPagination', 'scrollbar'].forEach(key => {
+  ['navigation', 'pagination', 'scrollbar'].forEach(key => {
     if (params[key] === true) params[key] = {};
     if (params[key] === false) delete params[key];
   });
