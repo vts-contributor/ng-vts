@@ -22,11 +22,11 @@
     "dom7": "^4.0.4"
   },
   "peerDependencies": {
-    "@angular/animations": "^14.2.12",
-    "@angular/common": "^14.2.12",
-    "@angular/forms": "^14.2.12",
-    "@angular/core": "^14.2.12",
-    "@angular/platform-browser": "^14.2.12",
-    "@angular/router": "^14.2.12"
+    "@angular/animations": ">=14",
+    "@angular/common": ">=14",
+    "@angular/forms": ">=14",
+    "@angular/core": ">=14",
+    "@angular/platform-browser": ">=14",
+    "@angular/router": ">=14"
   }
 }
