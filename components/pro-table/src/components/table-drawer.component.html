@@ -1,6 +1,6 @@
 <!-- Open with drawer -->
-<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="'40vw'"
-  [vtsBodyStyle]="{'padding':'0'}" [vtsVisible]="visibleDrawer" [vtsFooter]="footerTpl" (vtsOnClose)="closeDrawer()">
+<vts-drawer [vtsBodyStyle]="{ overflow: 'auto' }" [vtsMaskClosable]="false" [vtsWidth]="'36vw'"
+  [vtsBodyStyle]="{'padding':'0'}" [vtsVisible]="visibleDrawer" [vtsFooter]="mode!='view' ? footerTpl : ''" (vtsOnClose)="closeDrawer()">
 
   <ng-container *vtsDrawerContent>
     <ng-container *ngIf="mode!='view'; else viewModeTemp">
@@ -11,7 +11,7 @@
   <ng-template #footerTpl>
     <ng-container *ngIf="mode=='edit'">
       <div style="display: flex; justify-content: right; align-items: center; padding: 0 56px;">
-        <button vts-button vtsType="primary" (click)="onSave()">Save</button>
+        <button vts-button vtsType="primary" (click)="onSave()" style="border-radius: 6px;" [disabled]="!formGroup.valid">Save</button>
       </div>
     </ng-container>
     <ng-container *ngIf="mode=='create' || mode=='create-another'">

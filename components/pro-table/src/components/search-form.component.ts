@@ -4,7 +4,6 @@ import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
-  // ContentChildren,
   ElementRef,
   EventEmitter,
   Input,
@@ -14,7 +13,6 @@ import {
   Optional,
   Output,
   SimpleChanges,
-  // QueryList,
   ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
@@ -27,53 +25,7 @@ import { takeUntil } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
-  template: `
-    <form vts-form vtsLayout="vertical" [formGroup]="validateForm" class="vts-advanced-search-form">
-      <div vts-row>
-        <div vts-col [vtsXl]=" vtsIsCollapse ? 16 : 24" vtsLg="24">
-          <div vts-row [vtsGutter]="2">
-            <ng-container *ngFor="let control of controlArray">
-              <div vts-col *ngIf="control.show" vtsFlex="auto">
-                <vts-form-item>
-                  <vts-form-label [vtsFor]="control.controlKey">
-                    {{ control.title }}
-                  </vts-form-label>
-                  <vts-form-control>
-                    <input vts-input [vtsSize]="'sm'" placeholder="Input search data" [formControlName]="control.controlKey"
-                      [attr.id]="control.controlKey" />
-                  </vts-form-control>
-                </vts-form-item>
-              </div>
-            </ng-container>
-          </div>
-        </div>
-        <div vts-col vtsXl="8" vtsLg="24" *ngIf="vtsIsCollapse">
-          <ng-container>
-            <ng-template [ngTemplateOutlet]="searchBtns"></ng-template>
-          </ng-container>
-        </div>
-      </div>
-
-      <ng-container *ngIf="!vtsIsCollapse">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <ng-template [ngTemplateOutlet]="searchBtns"></ng-template>
-        </div>
-      </ng-container>
-
-      <ng-template #searchBtns>
-        <div vts-col [vtsOffset]="vtsOffsetButton" class="search-area">
-          <vts-form-label *ngIf="vtsIsCollapse"></vts-form-label>
-          <vts-form-item style="flex-direction: row; padding-top: 5px; width: max-content">
-            <button vts-button class="btn-search-item" [vtsType]="'primary'" [vtsSize]="'sm'" (click)="onSearch()">Search</button>
-            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="resetForm()">Reset</button>
-            <button vts-button class="btn-search-item" [vtsSize]="'sm'" (click)="toggleCollapse()">Collapse
-              <i class="collapse-icon" vts-icon [vtsType]="vtsIsCollapse ? 'ArrowMiniDown' : 'ArrowMiniUp'"></i>
-            </button>
-          </vts-form-item>
-        </div>
-      </ng-template>
-    </form>
-  `,
+  templateUrl: './search-form.component.html',
   styles: [`
     .vts-advanced-search-form {
       padding: 24px;
@@ -125,7 +77,6 @@ export class VtsProTableSearchFormComponent implements OnDestroy, OnInit, OnChan
   vtsOffsetButton = 0;
 
   constructor(private elementRef: ElementRef, @Optional() private directionality: Directionality, private fb: FormBuilder) {
-    // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-search-form');
   }
 

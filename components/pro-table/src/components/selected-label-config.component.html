@@ -1,0 +1,45 @@
+<div class="selected-label">
+  <span>
+    <span class="text-format bold-text">{{ selectedItemsAmount }}</span><span class="text-format normal-text"> items is
+      selected</span>
+    <ng-container *ngIf="selectedItemsAmount>0">
+      <span class="divider-s">|</span>
+      <span>
+        <a class="text-format bold-text lable-btn" (click)="onClearAll()"><i class="fa fa-eraser"
+            aria-hidden="true"></i>Clear Selected</a>
+      </span>
+    </ng-container>
+  </span>
+
+  <ng-container *ngIf="selectedItemsAmount>0">
+    <span>
+      <span>
+        <a class="text-format bold-text lable-btn" (click)="onDeleteSelectedItems()"><i vts-icon class="pr-4"
+            vtsType="DeleteOutlineDoutone"></i>Delete Selected</a>
+      </span>
+      <span>
+        <a class="text-format bold-text lable-btn" style="padding: 0 16px" (click)="onExportSelectedItems()"><i vts-icon
+            class="pr-4" vtsType="CloudUploadDoutone"></i>Export Selected</a>
+      </span>
+      <span>
+
+        <ng-container *ngIf="moreActionConfig">
+          <vts-button-group [vtsSize]="buttonSize" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="moreAction"
+            [vtsPlacement]="'bottomRight'">
+            <a class="text-format bold-text lable-btn">
+              <i vts-icon vtsType="ArrowDownOutline"></i>
+              More action
+            </a>
+          </vts-button-group>
+          <vts-dropdown-menu #moreAction="vtsDropdownMenu">
+            <ul vts-menu style="padding: 0px">
+              <ng-container *ngFor="let action of moreActionConfig">
+                <li vts-menu-item [ngStyle]="action.style">{{action.buttonText}}</li>
+              </ng-container>
+            </ul>
+          </vts-dropdown-menu>
+        </ng-container>
+      </span>
+    </span>
+  </ng-container>
+</div>

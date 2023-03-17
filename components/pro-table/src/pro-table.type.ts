@@ -47,7 +47,7 @@ export type ViewMode = "view" | "edit" | "create" | "create-another";
 export type DrawerConfig = {
   openWith: "drawer" | "modal",
   entityName: string,
-  showTitleBasedOnProp?: string, // Thêm mới (Chỉnh sửa) [entityName] entity[showTitleBasedOnProp]
+  showTitleBasedOnProp?: string,
   onOpen?: () => void,
   onClose?: () => void,
   onSave?: (data: {[key: string]: any}) => void,
@@ -76,7 +76,7 @@ export type ModalUploadConfig = ModalConfig & {
 }
 
 export type TabGroupConfig = {
-  tabProperty: string,  // property name
+  tabProperty: string,
   tabValueConfig: TabConfig[]
 }
 
@@ -94,8 +94,14 @@ export type TabCondition = {
 
 export type ButtonConfig = {
   buttonText: string,
-  buttonAPI?: string,
+  buttonAPI?: Request,
   style: {[key: string]: string},
   classNames?: string,
   onClick?: () => void
 }
+
+export type VtsProTableFilterList = Array<{
+  text: string;
+  value: VtsSafeAny;
+  byDefault?: boolean;
+}>;

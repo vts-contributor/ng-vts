@@ -85,10 +85,6 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Output() changeItemStatus: EventEmitter<string | number> = new EventEmitter<string | number>();
   @Output() deleteItem: EventEmitter<string | number> = new EventEmitter<string | number>();
 
-  closeDrawer() {
-    this.close.emit(false);
-  }
-
   ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -151,6 +147,10 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       this.visibleDrawer = false;
       this.visibleModal = false;
     }
+  }
+
+  closeDrawer() {
+    this.close.emit(false);
   }
 
   initForm() {

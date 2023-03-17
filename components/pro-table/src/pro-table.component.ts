@@ -173,7 +173,6 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
     private changeDetector: ChangeDetectorRef,
     private httpClient: HttpClient
   ) {
-    // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-protable-container');
   }
 
@@ -223,9 +222,6 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
 
     if (changes.tabGroupConfig) {
       this.getTotalDataWithTabConfig();
-    }
-
-    if (changes.moreActionConfig) {
     }
 
     if (changes.properties) {

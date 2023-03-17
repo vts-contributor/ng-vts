@@ -21,7 +21,7 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[url]` | The URL for querying data | `string` ||
+| `[url]` | The URL for querying data | `string` |
 | `[type]` | Type of request, HTTP methods | `string` |
 | `[params]` | Request params | `{[key: string]: VtsSafeAny}` |
 | `[body]` | Request body | `{[key: string]: VtsSafeAny}` |
@@ -33,12 +33,49 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[headerTitle]` | Column name for rendering, if `headerTitle` is `null` or not existed, the property is understood hidden field and not rendered | `string` ||
+| `[headerTitle]` | Column name for rendering, if `headerTitle` is `null` or not existed, the property is understood hidden field and not rendered | `string` |
 | `[propertyName]` | Column key, use for query data | `string` |
 | `[required]` | Mark field is required | `boolean` |
 | `[datatype]` | Type of column data | `string, number, datetime, status` |
 | `[checked]` | Mark field is checked for rendering | `boolean` |
 | `[align]` | Align data in table | `left, center, right` |
+
+### Drawer Configuration
+`DrawerConfig` is a format for table drawer defination.
+
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| `[openWith]` | Render mode | `'drawer' , 'popup'` |
+| `[entityName]` | Name  | `string` |
+| `[showTitleBasedOnProp]` | Title based on property | `string` |
+| `[onOpen]` | Triggered when open drawer | `() => void` |
+| `[onClose]` | Triggered when close drawer| `() => void` |
+| `[onSave]` | Triggered when submit drawer   | `(data: {[key: string]: any}) => void` |
+
+### TabGroup Configuration
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| `[tabProperty]` | Property key for tabs filtering | `string` |
+| `[tabValueConfig]` | Tab configuration | `TabConfig[]` |
+
+### TabConfig Configuration
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| `[tabTitle]` | Tab title for rendering | `string` |
+| `[tabValue]` | Tab value for configuration | `string` |
+| `[tabCondition]` | Condition for filtering | `TabCondition` |
+| `[total]` | Total data items with filter | `() => void` |
+
+### ButtonConfig Configuration
+`ButtonConfig` is a format for more actions rendering.
+
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| `[buttonText]` | Button title for rendering | `string` |
+| `[buttonAPI]` | Request is assigned for button | `Request` |
+| `[style]` | Assign CSS properties for button  | `{[key: string]: string}` |
+| `[classNames]` | Assign HTML class for button | `string` |
+| `[onClick]` | Triggered when click button | `() => void` |
  
 ### vts-protable
 

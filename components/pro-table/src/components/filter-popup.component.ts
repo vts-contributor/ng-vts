@@ -2,16 +2,11 @@ import {
   Component,
   Input,
   OnInit,
-  OnChanges,
-  SimpleChanges,
   Output,
   EventEmitter
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-// import { FormControl, FormGroup } from '@angular/forms';
-// import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
-// import { ProtableService } from '../pro-table.service';
 import { PropertyType } from '../pro-table.type';
 
 @Component({
@@ -39,7 +34,7 @@ import { PropertyType } from '../pro-table.type';
     `
   ]
 })
-export class VtsProtableFilterPopupComponent implements OnInit, OnChanges {
+export class VtsProtableFilterPopupComponent implements OnInit {
 
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() isVisibleModal: boolean = false;
@@ -62,12 +57,6 @@ export class VtsProtableFilterPopupComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.initForm();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filterGroupConfig) {
-
-    }
   }
 
   onSearch() {

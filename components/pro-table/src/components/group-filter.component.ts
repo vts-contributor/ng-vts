@@ -5,7 +5,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  // ContentChildren,
   ElementRef,
   EventEmitter,
   Input,
@@ -15,7 +14,6 @@ import {
   Optional,
   Output,
   SimpleChanges,
-  // QueryList,
   ViewEncapsulation
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';

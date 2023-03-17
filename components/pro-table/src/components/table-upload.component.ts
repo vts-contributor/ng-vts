@@ -7,7 +7,7 @@ import { ModalUploadConfig } from '../pro-table.type';
   templateUrl: 'table-upload.component.html'
 })
 export class VtsTableUploadComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
   @Input() isVisibleUpload: boolean = false;
   @Input() config: ModalUploadConfig | undefined;
@@ -16,31 +16,31 @@ export class VtsTableUploadComponent implements OnInit {
   @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() change: EventEmitter<VtsUploadChangeParam> = new EventEmitter<VtsUploadChangeParam>();
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onCancel(){
+  onCancel() {
     this.cancel.emit();
   }
 
-  onSubmit(){
+  onSubmit() {
     this.submit.emit();
   }
 
-  onChange(evt: VtsUploadChangeParam){
+  onChange(evt: VtsUploadChangeParam) {
     this.change.emit(evt);
   }
 
-  getMaxFileSizeInText(){
+  getMaxFileSizeInText() {
     let text = "và dung lượng không quá ";
-    if(this.config && this.config.maxFileSizeInKB){
-        let maxSize: number = this.config.maxFileSizeInKB;
-        if(maxSize < 1024){
-            return `${text} ${maxSize}KB`
-        }
-        else if(maxSize >= 1024 && maxSize < 1024*1024){
-            return `${text} ${maxSize / 1024}MB`
-        }
-        else return `${text} ${maxSize / (1024 * 1024)}GB`
+    if (this.config && this.config.maxFileSizeInKB) {
+      let maxSize: number = this.config.maxFileSizeInKB;
+      if (maxSize < 1024) {
+        return `${text} ${maxSize}KB`
+      }
+      else if (maxSize >= 1024 && maxSize < 1024 * 1024) {
+        return `${text} ${maxSize / 1024}MB`
+      }
+      else return `${text} ${maxSize / (1024 * 1024)}GB`
     }
     else return '';
   }

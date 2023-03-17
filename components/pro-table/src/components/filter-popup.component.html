@@ -18,7 +18,8 @@
       <vts-form-item>
         <vts-form-label class="filter-label text-format">{{filter.filterText}}</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">
-          <vts-select vtsMode="multiple" [vtsPlaceHolder]="placeholder" [vtsSize]="size" vtsShowSearch vtsAllowClear [formControlName]="filter.filterText">
+          <vts-select vtsMode="multiple" [vtsPlaceHolder]="placeholder" [vtsSize]="size" vtsShowSearch vtsAllowClear
+            [formControlName]="filter.filterText">
             <vts-option *ngFor="let option of filter.filterValues" [vtsLabel]="option.label" [vtsValue]="option.value">
             </vts-option>
           </vts-select>

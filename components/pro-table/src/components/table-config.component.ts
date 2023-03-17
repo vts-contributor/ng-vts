@@ -4,18 +4,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  // ContentChildren,
   ElementRef,
   EventEmitter,
-  // Inject,
   Input,
-  // LOCALE_ID,
   OnDestroy,
   OnInit,
   Optional,
   Output,
   SimpleChanges,
-  // QueryList,
   ViewEncapsulation
 } from '@angular/core';
 import { VtsDrawerPlacement } from '@ui-vts/ng-vts/drawer';
@@ -111,7 +107,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     private service: ProtableService,
     private changeDetector: ChangeDetectorRef
   ) {
-    // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-table-config');
   }
 
@@ -128,11 +123,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.displayedProperties = this.properties.filter(prop => prop.headerTitle);
     }
 
-    if (changes.searchData) {
-    }
-
     if (changes.listData) {
       this.loading = true;
+      console.log(changes.listData.currentValue);
       this.displayedData = [...this.listData];
       this.filteredList = [...this.listData]
       this.loading = false;
@@ -322,16 +315,14 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     this.checkedItemsAmount = this.setOfCheckedId.size;
   }
 
-  sortDirections = ['ascend', 'descend', null];
+  sortDirections = ['ascend', 'descend'];
   sortFn(item1: { [key: string]: VtsSafeAny }, item2: { [key: string]: VtsSafeAny }) {
-    alert(item1);
-    console.log(item2);
+    console.log(item1, item2);
     return 1;
   }
 
 
   onEditDataItem(itemId?: number | string) {
-    // get data with itemID 
     this.mode = 'edit';
     if (this.getRequest) {
       let url = this.getRequest.url;
@@ -357,7 +348,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onViewDataItem(itemId?: number | string) {
-    // get data with itemID 
     this.mode = 'view';
     if (this.getRequest) {
       let url = this.getRequest.url + itemId;
@@ -391,9 +381,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
       // only for json-server
       let url = this.requestData.url.split('?')[0] + `?_page=${event}&_limit=${this.vtsPageSize}`;
-      // if (this.tabConfig?.tabCondition) {
-      //   url += `$`
-      // }
       let { onSuccess, onError } = this.requestData;
 
       this.service.getRenderData({ ...this.requestData, url }).subscribe(res => {
@@ -425,8 +412,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         if (onError) onError(error);
       });
     }
-
-    // send Set of item ID to server, must server returns content data to exporting
   }
 
   formatNumber(value: number): string {
@@ -448,7 +433,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   changeStatusItem(itemId?: string | number) {
-    // send request to change status to server
     if (this.editRequest) {
       let url = this.editRequest.url;
       url += itemId;
@@ -467,7 +451,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
     let itemData = this.listData.find(item => item.id === itemId);
     if (itemData) itemData.disabled = !itemData.disabled;
-    // console.log('change status OK');
   }
 
   sorted = false;
@@ -549,7 +532,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   deleteSelectedItems(event: boolean) {
-    console.log(this.setOfCheckedId);
     if (event && this.modalDeleteConfig) {
       this.modalDeleteConfig.content = "Do you want to delete all selected items?";
       this.modalDeleteConfig.type = 'delete-multiple';
@@ -558,7 +540,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   exportSelectedItems(event: boolean) {
-    console.log(event);
     if (event) {
       this.exportDataToFile();
     }
@@ -599,7 +580,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         });
       } else {
         console.log(2, [event]);
-        
       }
     }
   }
