@@ -30,3 +30,9 @@ export type AvatarMenu = {
     url: string,
     label: string
 }
+
+export type BreadCrumb = {
+    label: string,
+    url: string,
+    status: 'active' | 'inactive'
+}

@@ -30,6 +30,7 @@ import { VtsProLayoutContainerComponent } from './pro-layout.component';
 import { VtsSettingDrawerComponent } from './setting-drawer.component';
 import { VtsSiderTriggerComponent } from './sider-trigger.component';
 import { VtsSiderComponent } from './sider.component';
+import { VtsProlayoutBreadCrumbComponent } from './breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { VtsSiderComponent } from './sider.component';
     VtsProLayoutContainerComponent,
     VtsProlayoutMenuItemComponent,
     VtsProlayoutMenuItemHorizontalComponent,
-    VtsSettingDrawerComponent
+    VtsSettingDrawerComponent,
+    VtsProlayoutBreadCrumbComponent
   ],
   exports: [
     VtsProLayoutContainerComponent
