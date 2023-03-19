@@ -34,8 +34,11 @@ function generateNav(componentsDocMap) {
   const reverseMap = {};
   let routes = '';
 
-  const filters = ['table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'menu',
-                    'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result', 'prolayout']
+  const filters = [
+    // 'table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'menu',
+    //                 'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result', 
+                    'prolayout'
+                  ]
   console.log(filters)
   for (const key in componentsDocMap) {
     if (!filters.includes(key))
@@ -48,7 +51,7 @@ function generateNav(componentsDocMap) {
     const experimental = componentsDocMap[key]['en'].experimental;
     routes += `  {'path': '${
       experimental ? 'experimental' : 'components'
-    }/${key}', 'loadChildren': () => import('./${key}/index.module').then(m => m.VtsDemo${moduleName}Module)},\n`;
+    }/${key}', 'loadChildren': () => import('./${key}/index.module').then(m => m.VtsDemo${moduleName}Module), data: { breadcrumbs: '${key}' }} \n`;
   }
   return { reverseMap, routes };
 }
