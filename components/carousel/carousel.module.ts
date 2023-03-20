@@ -1,18 +1,13 @@
-/**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
- */
+import { NgModule } from '@angular/core';
 import { BidiModule } from '@angular/cdk/bidi';
 import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-
-import { VtsCarouselContentDirective } from './carousel-content.directive';
 import { VtsCarouselComponent } from './carousel.component';
-
+import { VtsCarouselSlideDirective } from './carousel-slide.directive';
+import { VtsCarouselPaginationComponent } from './carousel-pagination.component';
 @NgModule({
-  declarations: [VtsCarouselComponent, VtsCarouselContentDirective],
-  exports: [VtsCarouselComponent, VtsCarouselContentDirective],
+  declarations: [VtsCarouselComponent, VtsCarouselSlideDirective, VtsCarouselPaginationComponent],
+  exports: [VtsCarouselComponent, VtsCarouselSlideDirective, VtsCarouselPaginationComponent],
   imports: [BidiModule, CommonModule, PlatformModule]
 })
 export class VtsCarouselModule {}

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-textarea-basic',
@@ -31,19 +36,20 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
           ></textarea>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
-        <vts-form-label>Input Label</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <textarea
-            rows="4"
-            placeholder="Textarea placeholder"
-            formControlName="inputValue"
-            vts-input
-          ></textarea>
-        </vts-form-control>
+        <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Input Label</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <textarea
+                rows="4"
+                placeholder="Textarea placeholder"
+                formControlName="inputValue"
+                vts-input
+              ></textarea>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `
@@ -55,8 +61,8 @@ export class VtsDemoTextareaBasicComponent implements OnInit {
     maxRows: 6
   };
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl('', {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('', {
       validators: [CustomValidator]
     })
   });

@@ -19,35 +19,31 @@ import {
 
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import {
+  BooleanInput,
   NgClassInterface,
   NgStyleInterface,
-  NumberInput,
-  VtsShapeSCType,
-  VtsSizeLDSType
+  NumberInput
 } from '@ui-vts/ng-vts/core/types';
-import { InputNumber } from '@ui-vts/ng-vts/core/util';
+import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
 
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'avatar';
+
+export type VtsAvatarSize = 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type VtsAvatarShape = 'rounded' | 'circle' | 'square';
 
 @Component({
   selector: 'vts-avatar',
   exportAs: 'vtsAvatar',
-  template: `
-    <i vts-icon *ngIf="vtsIcon && hasIcon" [vtsType]="vtsIcon"></i>
-    <img
-      *ngIf="vtsSrc && hasSrc"
-      [src]="vtsSrc"
-      [attr.srcset]="vtsSrcSet"
-      [attr.alt]="vtsAlt"
-      (error)="imgError($event)"
-    />
-    <span class="vts-avatar-string" #textEl [ngStyle]="textStyles" *ngIf="vtsText && hasText">
-      {{ vtsText }}
-    </span>
-  `,
+  templateUrl: './avatar.component.html',
   host: {
-    '[class.vts-avatar-lg]': `vtsSize === 'lg'`,
+    '[class.vts-avatar]': `true`,
+    '[class.vts-avatar-xxs]': `vtsSize === 'xxs'`,
+    '[class.vts-avatar-xs]': `vtsSize === 'xs'`,
     '[class.vts-avatar-sm]': `vtsSize === 'sm'`,
+    '[class.vts-avatar-md]': `vtsSize === 'md'`,
+    '[class.vts-avatar-lg]': `vtsSize === 'lg'`,
+    '[class.vts-avatar-xl]': `vtsSize === 'xl'`,
+    '[class.vts-avatar-rounded]': `vtsShape === 'rounded'`,
     '[class.vts-avatar-square]': `vtsShape === 'square'`,
     '[class.vts-avatar-circle]': `vtsShape === 'circle'`,
     '[class.vts-avatar-icon]': `vtsIcon`,
@@ -55,7 +51,6 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'avatar';
     '[style.width]': 'customSize',
     '[style.height]': 'customSize',
     '[style.line-height]': 'customSize',
-    // vtsSize type is number when customSize is true
     '[style.font-size.px]': '(hasIcon && customSize) ? $any(vtsSize) / 2 : null'
   },
   preserveWhitespaces: false,
@@ -64,16 +59,18 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'avatar';
 })
 export class VtsAvatarComponent implements OnChanges {
   static ngAcceptInputType_vtsGap: NumberInput;
+  static ngAcceptInputType_vtsLoading: BooleanInput;
 
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
-  @Input() @WithConfig() vtsShape: VtsShapeSCType = 'circle';
-  @Input() @WithConfig() vtsSize: VtsSizeLDSType | number = 'md';
+  @Input() @WithConfig() vtsShape: VtsAvatarShape = 'circle';
+  @Input() @WithConfig() vtsSize: VtsAvatarSize | number = 'xs';
   @Input() @WithConfig() @InputNumber() vtsGap = 4;
   @Input() vtsText?: string;
   @Input() vtsSrc?: string;
   @Input() vtsSrcSet?: string;
   @Input() vtsAlt?: string;
   @Input() vtsIcon?: string;
+  @Input() @InputBoolean() vtsLoading = false;
   @Output() readonly vtsError = new EventEmitter<Event>();
 
   hasText: boolean = false;
@@ -92,10 +89,7 @@ export class VtsAvatarComponent implements OnChanges {
     private elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
     private platform: Platform
-  ) {
-    // TODO: move to host after View Engine deprecation
-    this.elementRef.nativeElement.classList.add('vts-avatar');
-  }
+  ) {}
 
   imgError($event: Event): void {
     this.vtsError.emit($event);

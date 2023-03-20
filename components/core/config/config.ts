@@ -28,11 +28,12 @@ export interface VtsConfig {
   badge?: BadgeConfig;
   button?: ButtonConfig;
   card?: CardConfig;
+  cardLayout?: CardLayoutConfig;
   carousel?: CarouselConfig;
   cascader?: CascaderConfig;
   codeEditor?: CodeEditorConfig;
-  collapse?: CollapseConfig;
-  collapsePanel?: CollapsePanelConfig;
+  accordion?: AccordionConfig;
+  accordionPanel?: AccordionPanelConfig;
   datePicker?: DatePickerConfig;
   descriptions?: DescriptionsConfig;
   drawer?: DrawerConfig;
@@ -41,7 +42,6 @@ export interface VtsConfig {
   icon?: IconConfig;
   message?: MessageConfig;
   modal?: ModalConfig;
-  notification?: NotificationConfig;
   pageHeader?: PageHeaderConfig;
   pagination?: PaginationConfig;
   progress?: ProgressConfig;
@@ -52,6 +52,7 @@ export interface VtsConfig {
   table?: TableConfig;
   tabs?: TabsConfig;
   timePicker?: TimePickerConfig;
+  toast?: ToastConfig;
   tree?: TreeConfig;
   treeSelect?: TreeSelectConfig;
   typography?: TypographyConfig;
@@ -122,6 +123,11 @@ export interface CardConfig {
   vtsBorderless?: boolean;
 }
 
+export interface CardLayoutConfig {
+  vtsCardLayout?: 'basic' | 'cover';
+  vtsAlign?: 'left' | 'center' | 'right';
+}
+
 export interface CarouselConfig {
   vtsAutoPlay?: boolean;
   vtsAutoPlaySpeed?: boolean;
@@ -129,6 +135,10 @@ export interface CarouselConfig {
   vtsEffect?: 'scrollx' | 'fade' | string;
   vtsEnableSwipe?: boolean;
   vtsVertical?: boolean;
+  vtsNavigation?: boolean;
+  vtsRtl?: boolean;
+  vtsItems: number;
+  vtsSlideMargin: number;
 }
 
 export interface CascaderConfig {
@@ -136,13 +146,13 @@ export interface CascaderConfig {
   vtsBackdrop?: boolean;
 }
 
-export interface CollapseConfig {
+export interface AccordionConfig {
   vtsAccordion?: boolean;
   vtsBordered?: boolean;
   vtsGhost?: boolean;
 }
 
-export interface CollapsePanelConfig {
+export interface AccordionPanelConfig {
   vtsShowArrow?: boolean;
 }
 
@@ -197,7 +207,7 @@ export interface ModalConfig {
   vtsDirection?: Direction;
 }
 
-export interface NotificationConfig extends MessageConfig {
+export interface ToastConfig extends MessageConfig {
   vtsTop?: string | number;
   vtsBottom?: string | number;
   vtsPlacement?: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
@@ -307,7 +317,6 @@ export interface TypographyConfig {
 export interface ImageConfig {
   vtsFallback?: string;
   vtsPlaceholder?: string;
-  vtsDisablePreview?: string;
   vtsCloseOnNavigation?: boolean;
   vtsDirection?: Direction;
 }

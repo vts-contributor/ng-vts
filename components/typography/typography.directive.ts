@@ -45,7 +45,7 @@ interface EmbeddedProperty {
 }
 
 @Directive({
-  selector: `[vts-typography], [vts-typo]`,
+  selector: `[vts-typography], [vts-typo], vts-card-meta-title, vts-card-meta-description, vts-card-header-title, `,
   exportAs: 'vtsTypography'
 })
 export class VtsTypographyDirective implements OnInit, OnChanges {

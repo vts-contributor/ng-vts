@@ -8,7 +8,12 @@ import {
   tick,
   waitForAsync
 } from '@angular/core/testing';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { VtsRadioGroupComponent } from './radio-group.component';
@@ -435,9 +440,9 @@ export class VtsTestRadioGroupComponent {
   `
 })
 export class VtsTestRadioFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       radio: [false]
     });
@@ -461,9 +466,9 @@ export class VtsTestRadioFormComponent {
   `
 })
 export class VtsTestRadioGroupFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       radioGroup: ['B']
     });
@@ -508,10 +513,10 @@ export class VtsTestRadioGroupDisabledComponent {
   `
 })
 export class VtsTestRadioGroupDisabledFormComponent implements OnInit {
-  validateForm?: FormGroup;
+  validateForm?: UntypedFormGroup;
   radioValues = ['A', 'B', 'C', 'D'];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

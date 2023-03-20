@@ -1,10 +1,10 @@
 import { Component, DebugElement } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
-  FormControl,
+  UntypedFormBuilder,
+  UntypedFormControl,
   FormControlName,
-  FormGroup,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule,
   ValidatorFn,
@@ -77,7 +77,7 @@ describe('vts-form-control', () => {
   });
   describe('reactive status', () => {
     let testBed: ComponentBed<VtsTestReactiveFormControlComponent>;
-    let formGroup: FormGroup;
+    let formGroup: UntypedFormGroup;
     let formItems: DebugElement[];
     let formControls: DebugElement[];
     beforeEach(() => {
@@ -175,7 +175,7 @@ describe('vts-form-control', () => {
   describe('auto tips', () => {
     let testBed: ComponentBed<VtsTestReactiveFormAutoTipsComponent>;
     let testComponent: VtsTestReactiveFormAutoTipsComponent;
-    let formGroup: FormGroup;
+    let formGroup: UntypedFormGroup;
     let formControls: DebugElement[];
 
     beforeEach(() => {
@@ -428,16 +428,16 @@ export class VtsTestStaticFormControlComponent {
   `
 })
 export class VtsTestReactiveFormControlComponent {
-  formGroup: FormGroup;
-  validateStatus: string | FormControlName | FormControl;
+  formGroup: UntypedFormGroup;
+  validateStatus: string | FormControlName | UntypedFormControl;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       input: ['', [Validators.required]],
       input2: ['', [Validators.required]],
       input3: ['', [Validators.required]]
     });
-    this.validateStatus = this.formGroup.get('input2') as FormControl;
+    this.validateStatus = this.formGroup.get('input2') as UntypedFormControl;
   }
 }
 
@@ -454,9 +454,9 @@ export class VtsTestReactiveFormControlComponent {
   `
 })
 export class VtsTestReactiveFormControlInitStatusComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       input: ['', [Validators.required]]
     });
@@ -504,7 +504,7 @@ export class VtsTestReactiveFormControlInitStatusComponent {
   `
 })
 export class VtsTestReactiveFormAutoTipsComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   showConfirmPassword = false;
 
@@ -534,7 +534,7 @@ export class VtsTestReactiveFormAutoTipsComponent {
     }
   };
 
-  constructor(private formBuilder: FormBuilder, public i18n: VtsI18nService) {
+  constructor(private formBuilder: UntypedFormBuilder, public i18n: VtsI18nService) {
     const { required, minLength, email, mobile } = MyValidators;
     this.formGroup = this.formBuilder.group({
       userName: ['', [required, minLength(6)]],

@@ -83,7 +83,7 @@ export class VtsAffixComponent implements AfterViewInit, OnChanges, OnDestroy, O
   private positionChangeSubscription: Subscription = Subscription.EMPTY;
   private offsetChanged$ = new ReplaySubject(1);
   private destroy$ = new Subject<void>();
-  private timeout?: number;
+  private timeout?: number | ReturnType<typeof setTimeout>;
   private document: Document;
 
   private get target(): Element | Window {

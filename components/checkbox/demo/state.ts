@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-checkbox-state',
@@ -46,19 +51,24 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
           </vts-checkbox-wrapper>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
-      <vts-form-item formGroupName="inputGroup">
-        <vts-form-label>Label</vts-form-label>
-        <vts-form-control [vtsValidateStatus]="formGroup" vtsErrorTip="Error message">
-          <vts-checkbox-wrapper>
-            <vts-space vtsPreset="2" vtsDirection="vertical">
-              <label formControlName="A" *vtsSpaceItem vts-checkbox vtsValue="A">Checkbox</label>
-              <label formControlName="B" *vtsSpaceItem vts-checkbox vtsValue="B">Checkbox</label>
-            </vts-space>
-          </vts-checkbox-wrapper>
-        </vts-form-control>
+      <vts-form-item>
+        <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item formGroupName="inputGroup">
+            <vts-form-label>Label</vts-form-label>
+            <vts-form-control [vtsValidateStatus]="formGroup" vtsErrorTip="Error message">
+              <vts-checkbox-wrapper>
+                <vts-space vtsPreset="2" vtsDirection="vertical">
+                  <label formControlName="A" *vtsSpaceItem vts-checkbox vtsValue="A">
+                    Checkbox
+                  </label>
+                  <label formControlName="B" *vtsSpaceItem vts-checkbox vtsValue="B">
+                    Checkbox
+                  </label>
+                </vts-space>
+              </vts-checkbox-wrapper>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `
@@ -66,11 +76,11 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
 export class VtsDemoCheckboxStateComponent {
   disabled = true;
 
-  formGroup: FormGroup = new FormGroup({
-    inputGroup: new FormGroup(
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputGroup: new UntypedFormGroup(
       {
-        A: new FormControl(false),
-        B: new FormControl(false)
+        A: new UntypedFormControl(false),
+        B: new UntypedFormControl(false)
       },
       {
         validators: [CustomValidator]

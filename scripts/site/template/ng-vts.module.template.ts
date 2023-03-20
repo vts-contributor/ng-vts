@@ -14,7 +14,7 @@ import { VtsCardModule } from '@ui-vts/ng-vts/card';
 import { VtsCarouselModule } from '@ui-vts/ng-vts/carousel';
 import { VtsCascaderModule } from '@ui-vts/ng-vts/cascader';
 import { VtsCheckboxModule } from '@ui-vts/ng-vts/checkbox';
-import { VtsCollapseModule } from '@ui-vts/ng-vts/collapse';
+import { VtsAccordionModule } from '@ui-vts/ng-vts/accordion';
 import { VtsCommentModule } from '@ui-vts/ng-vts/comment';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsTransButtonModule } from '@ui-vts/ng-vts/core/trans-button';
@@ -38,7 +38,7 @@ import { VtsMentionModule } from '@ui-vts/ng-vts/mention';
 import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
 import { VtsMessageModule } from '@ui-vts/ng-vts/message';
 import { VtsModalModule } from '@ui-vts/ng-vts/modal';
-import { VtsNotificationModule } from '@ui-vts/ng-vts/notification';
+import { VtsToastModule } from '@ui-vts/ng-vts/toast';
 import { VtsPageHeaderModule } from '@ui-vts/ng-vts/page-header';
 import { VtsPaginationModule } from '@ui-vts/ng-vts/pagination';
 import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
@@ -81,7 +81,7 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsCarouselModule,
     VtsCascaderModule,
     VtsCheckboxModule,
-    VtsCollapseModule,
+    VtsAccordionModule,
     VtsCommentModule,
     VtsDatePickerModule,
     VtsDescriptionsModule,
@@ -102,7 +102,7 @@ import { VtsUploadModule } from '@ui-vts/ng-vts/upload';
     VtsMessageModule,
     VtsModalModule,
     VtsNoAnimationModule,
-    VtsNotificationModule,
+    VtsToastModule,
     VtsPageHeaderModule,
     VtsPaginationModule,
     VtsPopconfirmModule,

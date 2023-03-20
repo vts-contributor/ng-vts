@@ -21,7 +21,7 @@ import {
 import { NavigationEnd, Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
-import { combineLatest, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { MenuService } from './menu.service';
 import { VtsIsMenuInsideDropDownToken } from './menu.token';
@@ -33,33 +33,25 @@ import { VtsSubmenuService } from './submenu.service';
   host: {
     '[class.vts-dropdown-menu-item]': `isMenuInsideDropDown`,
     '[class.vts-dropdown-menu-item-selected]': `isMenuInsideDropDown && vtsSelected`,
-    '[class.vts-dropdown-menu-item-danger]': `isMenuInsideDropDown && vtsDanger`,
     '[class.vts-dropdown-menu-item-disabled]': `isMenuInsideDropDown && vtsDisabled`,
     '[class.vts-menu-item]': `!isMenuInsideDropDown`,
     '[class.vts-menu-item-selected]': `!isMenuInsideDropDown && vtsSelected`,
-    '[class.vts-menu-item-danger]': `!isMenuInsideDropDown && vtsDanger`,
     '[class.vts-menu-item-disabled]': `!isMenuInsideDropDown && vtsDisabled`,
-    '[style.paddingLeft.px]': `dir === 'rtl' ? null : vtsPaddingLeft || inlinePaddingLeft`,
-    '[style.paddingRight.px]': `dir === 'rtl' ? vtsPaddingLeft || inlinePaddingLeft : null`,
     '(click)': 'clickMenuItem($event)'
   }
 })
 export class VtsMenuItemDirective implements OnInit, OnChanges, OnDestroy, AfterContentInit {
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsSelected: BooleanInput;
-  static ngAcceptInputType_vtsDanger: BooleanInput;
   static ngAcceptInputType_vtsMatchRouterExact: BooleanInput;
   static ngAcceptInputType_vtsMatchRouter: BooleanInput;
 
   private destroy$ = new Subject();
   level = this.vtsSubmenuService ? this.vtsSubmenuService.level + 1 : 1;
   selected$ = new Subject<boolean>();
-  inlinePaddingLeft: number | null = null;
   dir: Direction = 'ltr';
-  @Input() vtsPaddingLeft?: number;
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() @InputBoolean() vtsSelected = false;
-  @Input() @InputBoolean() vtsDanger = false;
   @Input() @InputBoolean() vtsMatchRouterExact = false;
   @Input() @InputBoolean() vtsMatchRouter = false;
   @ContentChildren(RouterLink, { descendants: true })
@@ -105,6 +97,13 @@ export class VtsMenuItemDirective implements OnInit, OnChanges, OnDestroy, After
         this.vtsSelected = hasActiveLinks;
         this.setSelectedState(this.vtsSelected);
         this.cdr.markForCheck();
+        if (this.vtsSubmenuService) {
+          this.vtsSubmenuService.mode$.subscribe(mode => {
+            if (mode === 'inline') {
+              this.vtsSubmenuService.setOpenStateRecursive();
+            }
+          });
+        }
       }
     });
   }
@@ -121,7 +120,7 @@ export class VtsMenuItemDirective implements OnInit, OnChanges, OnDestroy, After
 
   private isLinkActive(router: Router): (link: RouterLink | RouterLinkWithHref) => boolean {
     return (link: RouterLink | RouterLinkWithHref) =>
-      router.isActive(link.urlTree, this.vtsMatchRouterExact);
+      link.urlTree ? router.isActive(link.urlTree, this.vtsMatchRouterExact) : false;
   }
 
   constructor(
@@ -145,13 +144,6 @@ export class VtsMenuItemDirective implements OnInit, OnChanges, OnDestroy, After
   }
 
   ngOnInit(): void {
-    /** store origin padding in padding */
-    combineLatest([this.vtsMenuService.mode$, this.vtsMenuService.inlineIndent$])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([mode, inlineIndent]) => {
-        this.inlinePaddingLeft = mode === 'inline' ? this.level * inlineIndent : null;
-      });
-
     this.dir = this.directionality.value;
     this.directionality.change?.pipe(takeUntil(this.destroy$)).subscribe((direction: Direction) => {
       this.dir = direction;

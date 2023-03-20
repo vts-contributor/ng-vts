@@ -32,7 +32,7 @@ export class VtsModalRef<T = VtsSafeAny, R = VtsSafeAny> implements VtsModalLega
   afterClose: Subject<R> = new Subject();
   afterOpen: Subject<void> = new Subject();
 
-  private closeTimeout?: number;
+  private closeTimeout?: number | ReturnType<typeof setTimeout>;
 
   constructor(
     private overlayRef: OverlayRef,
@@ -159,10 +159,7 @@ export class VtsModalRef<T = VtsSafeAny, R = VtsSafeAny> implements VtsModalLega
   }
 
   private async trigger(action: VtsTriggerAction): Promise<void> {
-    const trigger = {
-      ok: this.config.vtsOnOk,
-      cancel: this.config.vtsOnCancel
-    }[action];
+    const trigger = { ok: this.config.vtsOnOk, cancel: this.config.vtsOnCancel }[action];
     const loadingKey = { ok: 'vtsOkLoading', cancel: 'vtsCancelLoading' }[action] as
       | 'vtsOkLoading'
       | 'vtsCancelLoading';
@@ -178,7 +175,7 @@ export class VtsModalRef<T = VtsSafeAny, R = VtsSafeAny> implements VtsModalLega
         this.config[loadingKey] = true;
         let doClose: boolean | void | {} = false;
         try {
-          doClose = await result;
+          doClose = (await result) as any;
         } finally {
           this.config[loadingKey] = false;
           this.closeWhitResult(doClose);

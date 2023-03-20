@@ -46,7 +46,7 @@ import { DatePickerService } from './date-picker.service';
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
-import { VtsPickerComponent } from './picker.component';
+import { Placement, VtsPickerComponent } from './picker.component';
 import {
   CompatibleDate,
   DisabledTimeFn,
@@ -60,7 +60,7 @@ const POPUP_STYLE_PATCH = { position: 'relative' }; // Aim to override antd's st
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'datePicker';
 
 export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
-export type VtsPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+export type VtsPlacement = Placement;
 
 /**
  * The base picker for all common APIs
@@ -150,6 +150,7 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
   static ngAcceptInputType_vtsAllowClear: BooleanInput;
   static ngAcceptInputType_vtsAutoFocus: BooleanInput;
+  static ngAcceptInputType_disabled: BooleanInput;
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsBorderless: BooleanInput;
   static ngAcceptInputType_vtsInputReadOnly: BooleanInput;
@@ -185,6 +186,9 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
   // --- Common API
   @Input() @InputBoolean() vtsAllowClear: boolean = true;
   @Input() @InputBoolean() vtsAutoFocus: boolean = false;
+  @Input() @InputBoolean() set disabled(value: boolean) {
+    this.vtsDisabled = value;
+  }
   @Input() @InputBoolean() vtsDisabled: boolean = false;
   @Input() @InputBoolean() vtsBorderless: boolean = false;
   @Input() @InputBoolean() vtsInputReadOnly: boolean = false;

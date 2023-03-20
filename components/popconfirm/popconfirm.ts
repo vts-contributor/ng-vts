@@ -8,8 +8,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -53,16 +53,16 @@ export class VtsPopconfirmDirective extends VtsTooltipBaseDirective {
   static ngAcceptInputType_vtsCondition: BooleanInput;
   static ngAcceptInputType_vtsPopconfirmShowArrow: BooleanInput;
 
-  @Input('vtsPopconfirmTitle') title?: VtsTSType;
-  @Input('vts-popconfirm') directiveTitle?: VtsTSType | null;
-  @Input('vtsPopconfirmTrigger') trigger?: VtsTooltipTrigger = 'click';
-  @Input('vtsPopconfirmPlacement') placement?: string | string[] = 'top';
-  @Input('vtsPopconfirmOrigin') origin?: ElementRef<HTMLElement>;
-  @Input('vtsPopconfirmMouseEnterDelay') mouseEnterDelay?: number;
-  @Input('vtsPopconfirmMouseLeaveDelay') mouseLeaveDelay?: number;
-  @Input('vtsPopconfirmOverlayClassName') overlayClassName?: string;
-  @Input('vtsPopconfirmOverlayStyle') overlayStyle?: NgStyleInterface;
-  @Input('vtsPopconfirmVisible') visible?: boolean;
+  @Input('vtsPopconfirmTitle') override title?: VtsTSType;
+  @Input('vts-popconfirm') override directiveTitle?: VtsTSType | null;
+  @Input('vtsPopconfirmTrigger') override trigger?: VtsTooltipTrigger = 'click';
+  @Input('vtsPopconfirmPlacement') override placement?: string | string[] = 'top';
+  @Input('vtsPopconfirmOrigin') override origin?: ElementRef<HTMLElement>;
+  @Input('vtsPopconfirmMouseEnterDelay') override mouseEnterDelay?: number;
+  @Input('vtsPopconfirmMouseLeaveDelay') override mouseLeaveDelay?: number;
+  @Input('vtsPopconfirmOverlayClassName') override overlayClassName?: string;
+  @Input('vtsPopconfirmOverlayStyle') override overlayStyle?: NgStyleInterface;
+  @Input('vtsPopconfirmVisible') override visible?: boolean;
   @Input() vtsOkText?: string;
   @Input() vtsOkType?: string;
   @Input() vtsCancelText?: string;
@@ -73,14 +73,14 @@ export class VtsPopconfirmDirective extends VtsTooltipBaseDirective {
 
   // tslint:disable-next-line:no-output-rename
   @Output('vtsPopconfirmVisibleChange')
-  readonly visibleChange = new EventEmitter<boolean>();
+  override readonly visibleChange = new EventEmitter<boolean>();
   @Output() readonly vtsOnCancel = new EventEmitter<void>();
   @Output() readonly vtsOnConfirm = new EventEmitter<void>();
 
-  protected readonly componentFactory: ComponentFactory<VtsPopconfirmComponent> =
-    this.resolver.resolveComponentFactory(VtsPopconfirmComponent);
+  protected override readonly componentRef: ComponentRef<VtsPopconfirmComponent> =
+    this.hostView.createComponent(VtsPopconfirmComponent);
 
-  protected getProxyPropertyMap(): PropertyMapping {
+  protected override getProxyPropertyMap(): PropertyMapping {
     return {
       vtsOkText: ['vtsOkText', () => this.vtsOkText],
       vtsOkType: ['vtsOkType', () => this.vtsOkType],
@@ -107,7 +107,7 @@ export class VtsPopconfirmDirective extends VtsTooltipBaseDirective {
   /**
    * @override
    */
-  protected createComponent(): void {
+  protected override createComponent(): void {
     super.createComponent();
 
     (this.component as VtsPopconfirmComponent).vtsOnCancel
@@ -203,19 +203,19 @@ export class VtsPopconfirmComponent extends VtsToolTipComponent implements OnDes
   readonly vtsOnCancel = new Subject<void>();
   readonly vtsOnConfirm = new Subject<void>();
 
-  protected _trigger: VtsTooltipTrigger = 'click';
+  protected override _trigger: VtsTooltipTrigger = 'click';
 
-  _prefix = 'vts-popover';
+  override _prefix = 'vts-popover';
 
   constructor(
     cdr: ChangeDetectorRef,
     @Optional() directionality: Directionality,
-    @Host() @Optional() public noAnimation?: VtsNoAnimationDirective
+    @Host() @Optional() noAnimation?: VtsNoAnimationDirective
   ) {
     super(cdr, directionality, noAnimation);
   }
 
-  ngOnDestroy(): void {
+  override ngOnDestroy(): void {
     super.ngOnDestroy();
 
     this.vtsOnCancel.complete();
@@ -225,7 +225,7 @@ export class VtsPopconfirmComponent extends VtsToolTipComponent implements OnDes
   /**
    * @override
    */
-  show(): void {
+  override show(): void {
     if (!this.vtsCondition) {
       super.show();
     } else {

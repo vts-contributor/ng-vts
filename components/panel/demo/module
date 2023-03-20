@@ -1,0 +1,7 @@
+import { VtsPanelModule } from '@ui-vts/ng-vts/panel';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsGridModule } from '@ui-vts/ng-vts/grid';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+
+export const moduleList = [VtsPanelModule, VtsIconModule, VtsGridModule, VtsDropDownModule, VtsButtonModule];

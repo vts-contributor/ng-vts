@@ -1,16 +1,7 @@
 ---
-order: 9
+order: 3
 title:
-  zh-CN: 支持更多内容配置
-  en-US: Support more content configuration
+  en-US: Card Meta
 ---
 
-## zh-CN
-
-一种支持封面、头像、标题和描述信息的卡片。
-
 ## en-US
-
-A Card that supports `cover`, `avatar`, `title` and `description`.
-
-

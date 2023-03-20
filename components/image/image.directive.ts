@@ -26,23 +26,34 @@ import { VtsImageService } from './image.service';
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'image';
 
 export type ImageStatusType = 'error' | 'loading' | 'normal';
+export type VtsImageShape = 'rounded' | 'circle' | 'square';
 
 @Directive({
   selector: 'img[vts-image]',
   exportAs: 'vtsImage',
   host: {
-    '(click)': 'onPreview()'
+    '(click)': 'onPreview()',
+    '[class.vts-image]': 'true',
+    '[class.vts-image-square]': 'vtsShape === "square"',
+    '[class.vts-image-circle]': 'vtsShape === "circle"',
+    '[class.vts-image-rounded]': 'vtsShape === "rounded"',
+    '[class.vts-image-thumbnail]': 'vtsThumbnail',
+    '[style.objectFit]': 'vtsFit'
   }
 })
 export class VtsImageDirective implements OnInit, OnChanges, OnDestroy {
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
 
-  static ngAcceptInputType_vtsDisablePreview: BooleanInput;
+  static ngAcceptInputType_vtsPreview: BooleanInput;
+  static ngAcceptInputType_vtsThumbnail: BooleanInput;
 
   @Input() vtsSrc = '';
-  @Input() @InputBoolean() @WithConfig() vtsDisablePreview: boolean = false;
+  @Input() @InputBoolean() @WithConfig() vtsPreview: boolean = false;
   @Input() @WithConfig() vtsFallback: string | null = null;
   @Input() @WithConfig() vtsPlaceholder: string | null = null;
+  @Input() vtsShape: VtsImageShape = 'square';
+  @Input() vtsFit: string | null = null;
+  @Input() @InputBoolean() vtsThumbnail: boolean = false;
 
   dir?: Direction;
   backLoadImage!: HTMLImageElement;
@@ -50,12 +61,12 @@ export class VtsImageDirective implements OnInit, OnChanges, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
   get previewable(): boolean {
-    return !this.vtsDisablePreview && this.status !== 'error';
+    return this.vtsPreview && this.status !== 'error';
   }
 
   constructor(
     public vtsConfigService: VtsConfigService,
-    private elementRef: ElementRef,
+    public elementRef: ElementRef,
     private vtsImageService: VtsImageService,
     protected cdr: ChangeDetectorRef,
     @Optional() private parentGroup: VtsImageGroupComponent,

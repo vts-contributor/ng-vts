@@ -38,7 +38,6 @@ import { VtsDropDownDirective } from './dropdown.directive';
     VtsContextMenuServiceModule,
     VtsOutletModule
   ],
-  entryComponents: [VtsDropdownMenuComponent],
   declarations: [
     VtsDropDownDirective,
     VtsDropDownADirective,

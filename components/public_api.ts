@@ -1,1 +1,1 @@
-export * from '@ui-vts/ng-vts/button';
+export default void 0;

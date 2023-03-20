@@ -5,20 +5,18 @@ import { Component } from '@angular/core';
   template: `
     <h4>String</h4>
     <vts-breadcrumb vtsSeparator=">">
-      <vts-breadcrumb-item>Home</vts-breadcrumb-item>
-      <vts-breadcrumb-item>
-        <a>Application List</a>
-      </vts-breadcrumb-item>
-      <vts-breadcrumb-item>An Application</vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Location" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Application Center" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Application List" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="An Application"></vts-breadcrumb-item>
     </vts-breadcrumb>
     <br />
     <h4>TemplateRef</h4>
     <vts-breadcrumb [vtsSeparator]="iconTemplate">
-      <vts-breadcrumb-item>Home</vts-breadcrumb-item>
-      <vts-breadcrumb-item>
-        <a>Application List</a>
-      </vts-breadcrumb-item>
-      <vts-breadcrumb-item>An Application</vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Location" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Application Center" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="Application List" [vtsUrl]="['/']"></vts-breadcrumb-item>
+      <vts-breadcrumb-item vtsLabel="An Application"></vts-breadcrumb-item>
     </vts-breadcrumb>
     <ng-template #iconTemplate>
       <i vts-icon vtsType="ArrowRight"></i>

@@ -74,7 +74,7 @@ export class VtsTreeVirtualScrollViewComponent<T> extends VtsTreeView<T> impleme
 
   nodes: Array<VtsTreeVirtualNodeData<T>> = [];
 
-  renderNodeChanges(data: T[] | ReadonlyArray<T>): void {
+  override renderNodeChanges(data: T[] | ReadonlyArray<T>): void {
     this.nodes = new Array(...data).map((n, i) => this.createNode(n, i));
   }
 

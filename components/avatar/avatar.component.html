@@ -1,0 +1,11 @@
+<i vts-icon *ngIf="vtsIcon && hasIcon" [vtsType]="vtsIcon"></i>
+<img
+  *ngIf="vtsSrc && hasSrc"
+  [src]="vtsSrc"
+  [attr.srcset]="vtsSrcSet"
+  [attr.alt]="vtsAlt"
+  (error)="imgError($event)"
+/>
+<span class="vts-avatar-string" #textEl [ngStyle]="textStyles" *ngIf="vtsText && hasText">
+  {{ vtsText }}
+</span>

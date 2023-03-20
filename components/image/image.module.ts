@@ -28,7 +28,6 @@ import { VtsImageService } from './image.service';
   ],
   exports: [VtsImageDirective, VtsImagePreviewComponent, VtsImageGroupComponent],
   providers: [VtsImageService],
-  entryComponents: [VtsImagePreviewComponent],
   declarations: [VtsImageDirective, VtsImagePreviewComponent, VtsImageGroupComponent]
 })
 export class VtsImageModule {}

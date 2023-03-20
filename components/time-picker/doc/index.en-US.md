@@ -18,7 +18,7 @@ import { VtsTimePickerModule } from '@ui-vts/ng-vts/time-picker';
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| disabled | Disable picker | `boolean` | `false`
+| vtsDisabled | Disable picker | `boolean` | `false`
 | vtsAutoFocus | Set autofocus on mounted | `boolean` | `false`
 | vtsAllowClear | Show clear button | `boolean` | `true`
 | vtsSize | Size of input | One of `xl` `lg` `md` `sm` | `md`

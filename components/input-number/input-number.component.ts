@@ -48,7 +48,7 @@ import { takeUntil } from 'rxjs/operators';
         (mouseleave)="stop()"
         [class.vts-input-number-handler-up-disabled]="disabledUp"
       >
-        <i vts-icon vtsType="ArrowMiniUp" class="vts-input-number-handler-up-inner"></i>
+        <i vts-icon vtsType="ArrowUpOutline" class="vts-input-number-handler-up-inner"></i>
       </span>
       <span
         unselectable="unselectable"
@@ -58,7 +58,7 @@ import { takeUntil } from 'rxjs/operators';
         (mouseleave)="stop()"
         [class.vts-input-number-handler-down-disabled]="disabledDown"
       >
-        <i vts-icon vtsType="ArrowMiniDown" class="vts-input-number-handler-down-inner"></i>
+        <i vts-icon vtsType="ArrowDownOutline" class="vts-input-number-handler-down-inner"></i>
       </span>
     </div>
     <div class="vts-input-number-input-wrap">
@@ -104,7 +104,7 @@ export class VtsInputNumberComponent
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsAutoFocus: BooleanInput;
 
-  private autoStepTimer?: number;
+  private autoStepTimer?: number | ReturnType<typeof setTimeout>;
   private parsedValue?: string | number;
   private value?: number;
   private destroy$ = new Subject<void>();

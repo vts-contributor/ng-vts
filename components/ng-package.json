@@ -3,7 +3,15 @@
   "dest": "../publish",
   "deleteDestPath": true,
   "lib": {
-    "entryFile": "./public_api"
+    "entryFile": "./public_api.ts"
   },
-  "whitelistedNonPeerDependencies": ["@ui-vts/theme", "apexcharts", "tslib", "angular", "date-fns", "@ui-vts/icons-angular"]
+  "allowedNonPeerDependencies": [
+    "tslib", 
+    "angular", 
+    "@ui-vts/theme", 
+    "@ui-vts/icons-angular", 
+    "apexcharts", 
+    "date-fns", 
+    "dom7"
+  ]
 }

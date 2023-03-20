@@ -5,7 +5,6 @@
 
 export * from './menu.directive';
 export * from './menu-group.component';
-export * from './menu-divider.directive';
 export * from './menu-item.directive';
 export * from './submenu.component';
 export * from './submenu-title.component';

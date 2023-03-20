@@ -22,7 +22,6 @@ import { VtsMessageServiceModule } from './message.service.module';
     VtsOutletModule,
     VtsMessageServiceModule
   ],
-  declarations: [VtsMessageContainerComponent, VtsMessageComponent],
-  entryComponents: [VtsMessageContainerComponent]
+  declarations: [VtsMessageContainerComponent, VtsMessageComponent]
 })
 export class VtsMessageModule {}
