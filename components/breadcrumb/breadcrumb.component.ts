@@ -11,7 +11,6 @@ import {
   ElementRef,
   Injector,
   Input,
-  NgZone,
   OnDestroy,
   OnInit,
   Optional,
@@ -19,18 +18,20 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Params, PRIMARY_OUTLET, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, PRIMARY_OUTLET, Router, UrlTree } from '@angular/router';
 import { PREFIX } from '@ui-vts/ng-vts/core/logger';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
 import { filter, startWith, takeUntil } from 'rxjs/operators';
+import { VtsBreadcrumb } from './breadcrumb';
 
-export interface BreadcrumbOption {
-  label: string;
-  params: Params;
-  url: string;
+export interface VtsBreadcrumbItem {
+  label?: string;
+  url?: string | UrlTree | string[];
+  icon?: string;
+  disabled?: boolean;
 }
 
 @Component({
@@ -38,34 +39,43 @@ export interface BreadcrumbOption {
   encapsulation: ViewEncapsulation.None,
   selector: 'vts-breadcrumb',
   exportAs: 'vtsBreadcrumb',
+  providers: [{ provide: VtsBreadcrumb, useExisting: VtsBreadCrumbComponent }],
   preserveWhitespaces: false,
   template: `
-    <ng-content></ng-content>
-    <ng-container *ngIf="vtsAutoGenerate && breadcrumbs.length">
-      <vts-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
-        <a [attr.href]="breadcrumb.url" (click)="navigate(breadcrumb.url, $event)">
-          {{ breadcrumb.label }}
-        </a>
-      </vts-breadcrumb-item>
+    <ng-container
+      *ngIf="
+        (vtsAutoGenerate && vtsBreadcrumbArray.length) || vtsBreadcrumbArray.length;
+        else childContent
+      "
+    >
+      <vts-breadcrumb-item
+        *ngFor="let breadcrumb of vtsBreadcrumbArray"
+        [vtsLabel]="breadcrumb.label"
+        [vtsIcon]="breadcrumb.icon"
+        [vtsUrl]="breadcrumb.url"
+        [vtsDisabled]="breadcrumb.disabled"
+      ></vts-breadcrumb-item>
     </ng-container>
+    <ng-template #childContent>
+      <ng-content></ng-content>
+    </ng-template>
   `
 })
 export class VtsBreadCrumbComponent implements OnInit, OnDestroy {
   static ngAcceptInputType_vtsAutoGenerate: BooleanInput;
 
   @Input() @InputBoolean() vtsAutoGenerate = false;
-  @Input() vtsSeparator: string | TemplateRef<void> | null = '/';
+  @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsRouteLabel: string = 'breadcrumb';
+  @Input() vtsRouteIcon: string = 'breadcrumbIcon';
   @Input() vtsRouteLabelFn: (label: string) => string = label => label;
-
-  breadcrumbs: BreadcrumbOption[] = [];
+  @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   dir: Direction = 'ltr';
 
   private destroy$ = new Subject<void>();
 
   constructor(
     private injector: Injector,
-    private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
     private elementRef: ElementRef,
     private renderer: Renderer2,
@@ -94,12 +104,6 @@ export class VtsBreadCrumbComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  navigate(url: string, e: MouseEvent): void {
-    e.preventDefault();
-
-    this.ngZone.run(() => this.injector.get(Router).navigateByUrl(url).then()).then();
-  }
-
   private registerRouterChange(): void {
     try {
       const router = this.injector.get(Router);
@@ -111,7 +115,7 @@ export class VtsBreadCrumbComponent implements OnInit, OnDestroy {
           startWith(true) // trigger initial render
         )
         .subscribe(() => {
-          this.breadcrumbs = this.getBreadcrumbs(activatedRoute.root);
+          this.vtsBreadcrumbArray = this.getBreadcrumbs(activatedRoute.root);
           this.cdr.markForCheck();
         });
     } catch (e) {
@@ -124,8 +128,8 @@ export class VtsBreadCrumbComponent implements OnInit, OnDestroy {
   private getBreadcrumbs(
     route: ActivatedRoute,
     url: string = '',
-    breadcrumbs: BreadcrumbOption[] = []
-  ): BreadcrumbOption[] {
+    breadcrumbs: VtsBreadcrumbItem[] = []
+  ): VtsBreadcrumbItem[] {
     const children: ActivatedRoute[] = route.children;
 
     // If there's no sub root, then stop the recurse and returns the generated breadcrumbs.
@@ -145,13 +149,15 @@ export class VtsBreadCrumbComponent implements OnInit, OnDestroy {
         // Do not change nextUrl if routeUrl is falsy. This happens when it's a route lazy loading other modules.
         const nextUrl = !!routeUrl ? url + `/${routeUrl}` : url;
         const breadcrumbLabel = this.vtsRouteLabelFn(child.snapshot.data[this.vtsRouteLabel]);
+        const breadcrumbIcon = child.snapshot.data[this.vtsRouteIcon] as string;
 
         // If have data, go to generate a breadcrumb for it.
         if (routeUrl && breadcrumbLabel) {
-          const breadcrumb: BreadcrumbOption = {
+          const breadcrumb: VtsBreadcrumbItem = {
             label: breadcrumbLabel,
-            params: child.snapshot.params,
-            url: nextUrl
+            // params: child.snapshot.params,
+            url: nextUrl,
+            icon: breadcrumbIcon ?? undefined
           };
           breadcrumbs.push(breadcrumb);
         }

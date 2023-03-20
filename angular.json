@@ -41,7 +41,13 @@
             "allowedCommonJsDependencies": [
               "codesandbox",
               "codesandbox-import-utils"
-            ]
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -97,24 +103,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "ng-vts-doc:build",
-            "optimization": false,
-            "sourceMap": true
           },
           "configurations": {
             "production": {
               "browserTarget": "ng-vts-doc:build:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "site/doc/tsconfig.app.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         },
         "serve-ssr": {
@@ -197,17 +190,6 @@
               "browserTarget": "ng-vts-iframe:build:production"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "site/iframe/tsconfig.app.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     },
@@ -224,14 +206,17 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "components/tsconfig.lib.json",
             "project": "components/ng-package.json"
           },
           "configurations": {
             "production": {
               "tsConfig": "components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "components/tsconfig.lib.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -259,7 +244,6 @@
       }
     }
   },
-  "defaultProject": "ng-vts-doc",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

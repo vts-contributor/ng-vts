@@ -8,8 +8,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -45,27 +45,27 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'popover';
 export class VtsPopoverDirective extends VtsTooltipBaseDirective {
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
 
-  @Input('vtsPopoverTitle') title?: VtsTSType;
-  @Input('vtsPopoverContent') content?: VtsTSType;
-  @Input('vts-popover') directiveTitle?: VtsTSType | null;
-  @Input('vtsPopoverTrigger') trigger?: VtsTooltipTrigger = 'hover';
-  @Input('vtsPopoverPlacement') placement?: string | string[] = 'top';
-  @Input('vtsPopoverOrigin') origin?: ElementRef<HTMLElement>;
-  @Input('vtsPopoverVisible') visible?: boolean;
-  @Input('vtsPopoverMouseEnterDelay') mouseEnterDelay?: number;
-  @Input('vtsPopoverMouseLeaveDelay') mouseLeaveDelay?: number;
-  @Input('vtsPopoverOverlayClassName') overlayClassName?: string;
-  @Input('vtsPopoverOverlayStyle') overlayStyle?: NgStyleInterface;
+  @Input('vtsPopoverTitle') override title?: VtsTSType;
+  @Input('vtsPopoverContent') override content?: VtsTSType;
+  @Input('vts-popover') override directiveTitle?: VtsTSType | null;
+  @Input('vtsPopoverTrigger') override trigger?: VtsTooltipTrigger = 'hover';
+  @Input('vtsPopoverPlacement') override placement?: string | string[] = 'top';
+  @Input('vtsPopoverOrigin') override origin?: ElementRef<HTMLElement>;
+  @Input('vtsPopoverVisible') override visible?: boolean;
+  @Input('vtsPopoverMouseEnterDelay') override mouseEnterDelay?: number;
+  @Input('vtsPopoverMouseLeaveDelay') override mouseLeaveDelay?: number;
+  @Input('vtsPopoverOverlayClassName') override overlayClassName?: string;
+  @Input('vtsPopoverOverlayStyle') override overlayStyle?: NgStyleInterface;
   @Input() @WithConfig() vtsPopoverBackdrop?: boolean = false;
 
   // tslint:disable-next-line:no-output-rename
   @Output('vtsPopoverVisibleChange')
-  readonly visibleChange = new EventEmitter<boolean>();
+  override readonly visibleChange = new EventEmitter<boolean>();
 
-  componentFactory: ComponentFactory<VtsPopoverComponent> =
-    this.resolver.resolveComponentFactory(VtsPopoverComponent);
+  override componentRef: ComponentRef<VtsPopoverComponent> =
+    this.hostView.createComponent(VtsPopoverComponent);
 
-  protected getProxyPropertyMap(): PropertyMapping {
+  protected override getProxyPropertyMap(): PropertyMapping {
     return {
       vtsPopoverBackdrop: ['vtsBackdrop', () => this.vtsPopoverBackdrop],
       ...super.getProxyPropertyMap()
@@ -77,7 +77,7 @@ export class VtsPopoverDirective extends VtsTooltipBaseDirective {
     hostView: ViewContainerRef,
     resolver: ComponentFactoryResolver,
     renderer: Renderer2,
-    @Host() @Optional() public noAnimation?: VtsNoAnimationDirective,
+    @Host() @Optional() noAnimation?: VtsNoAnimationDirective,
     vtsConfigService?: VtsConfigService
   ) {
     super(elementRef, hostView, resolver, renderer, noAnimation, vtsConfigService);
@@ -136,12 +136,12 @@ export class VtsPopoverDirective extends VtsTooltipBaseDirective {
   `
 })
 export class VtsPopoverComponent extends VtsToolTipComponent {
-  _prefix = 'vts-popover';
+  override _prefix = 'vts-popover';
 
   constructor(
     cdr: ChangeDetectorRef,
     @Optional() directionality: Directionality,
-    @Host() @Optional() public noAnimation?: VtsNoAnimationDirective
+    @Host() @Optional() noAnimation?: VtsNoAnimationDirective
   ) {
     super(cdr, directionality, noAnimation);
   }
@@ -150,7 +150,7 @@ export class VtsPopoverComponent extends VtsToolTipComponent {
     return this.vtsTrigger === 'click' ? this.vtsBackdrop : false;
   }
 
-  protected isEmpty(): boolean {
+  protected override isEmpty(): boolean {
     return isTooltipEmpty(this.vtsTitle) && isTooltipEmpty(this.vtsContent);
   }
 }

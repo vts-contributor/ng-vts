@@ -91,7 +91,7 @@ export class VtsIconDirective
     this.el = elementRef.nativeElement;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges): void {
     const { vtsType, vtsTwotoneColor, vtsSpin, vtsTheme, vtsRotate } = changes;
 
     if (vtsType || vtsTwotoneColor || vtsSpin || vtsTheme) {

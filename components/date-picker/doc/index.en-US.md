@@ -19,7 +19,7 @@ import { VtsFormModule } from '@ui-vts/ng-vts/form'; // To use in form
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| disabled | Disable picker | `boolean` | `false`
+| vtsDisabled | Disable picker | `boolean` | `false`
 | vtsAutoFocus | Set autofocus on mounted | `boolean` | `false`
 | vtsAllowClear | Show clear button | `boolean` | `true`
 | vtsSize | Size of input | One of `xl` `lg` `md` `sm` | `md`
@@ -65,7 +65,7 @@ import { VtsFormModule } from '@ui-vts/ng-vts/form'; // To use in form
 ### vts-range-picker-single 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| disabled | Disable picker | `boolean` | `false`
+| vtsDisabled | Disable picker | `boolean` | `false`
 | vtsPlaceholder | Placeholder of datepicker | `string` | 
 | vtsSize | Size of input | One of `xl` `lg` `md` `sm` | `md`
 | [(ngModel)] | Angular ngModel | `[Date, Date]` |
@@ -75,7 +75,7 @@ import { VtsFormModule } from '@ui-vts/ng-vts/form'; // To use in form
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | gutter | Specify the width of icon between 2 picker | `number` | `26`
-| disabled | Disable picker | `boolean` | `false`
+| vtsDisabled | Disable picker | `boolean` | `false`
 | vtsPlaceholder | Placeholder of datepickers | `string` or `[string, string]` | 
 | vtsSize | Size of input | One of `xl` `lg` `md` `sm` | `md`
 | [(ngModel)] | Angular ngModel | `[Date, Date]` |

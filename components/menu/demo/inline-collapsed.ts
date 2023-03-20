@@ -5,37 +5,80 @@ import { Component } from '@angular/core';
   template: `
     <div class="wrapper">
       <button vts-button vtsType="primary" (click)="toggleCollapsed()">
-        <i vts-icon [vtsType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></i>
+        <i vts-icon [vtsType]="'NotesDoutone-1'"></i>
       </button>
-      <ul vts-menu vtsMode="inline" vtsTheme="dark" [vtsInlineCollapsed]="isCollapsed">
-        <li
-          vts-menu-item
-          vts-tooltip
-          vtsTooltipPlacement="right"
-          [vtsTooltipTitle]="isCollapsed ? 'Navigation One' : ''"
-          vtsSelected
-        >
-          <i vts-icon vtsType="Mail"></i>
-          <span>Navigation One</span>
-        </li>
-        <li vts-submenu vtsTitle="Navigation Two" vtsIcon="appstore">
-          <ul>
-            <li vts-menu-item>Option 5</li>
-            <li vts-menu-item>Option 6</li>
-            <li vts-submenu vtsTitle="Submenu">
-              <ul>
-                <li vts-menu-item>Option 7</li>
-                <li vts-menu-item>Option 8</li>
-              </ul>
+      <ul vts-menu vtsOpen vtsMode="inline" [vtsInlineCollapsed]="isCollapsed">
+        <ul vts-submenu vtsTitle="Menu 1" vtsIcon="Settings">
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <ul vts-submenu vtsTitle="Options 2" vtsIcon="Time">
+            <li vts-menu-item>
+              <i vts-icon vtsType="Time"></i>
+              Option 1
+            </li>
+            <li vts-menu-item>
+              <i vts-icon vtsType="Time"></i>
+              Option 1
+            </li>
+            <li vts-menu-item>
+              <i vts-icon vtsType="Time"></i>
+              Option 1
+            </li>
+            <li vts-menu-item vtsSelected>
+              <i vts-icon vtsType="Time"></i>
+              Option 1
             </li>
           </ul>
+        </ul>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          <span>Menu 2</span>
         </li>
-        <li vts-submenu vtsTitle="Navigation Three" vtsIcon="setting">
-          <ul>
-            <li vts-menu-item>Option 9</li>
-            <li vts-menu-item>Option 10</li>
-            <li vts-menu-item>Option 11</li>
+        <ul vts-submenu vtsTitle="Menu 3" vtsIcon="Settings">
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <ul vts-submenu vtsTitle="Options 2" vtsIcon="Time">
+            <li vts-menu-item>
+              <i vts-icon vtsType="Time"></i>
+              Option 1
+            </li>
+            <li vts-menu-item>
+              <i vts-icon vtsType="Time"></i>
+              Option 1
+            </li>
           </ul>
+        </ul>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          <span>Menu 4</span>
         </li>
       </ul>
     </div>

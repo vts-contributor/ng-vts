@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
-import { VtsMenuDividerDirective } from './menu-divider.directive';
+
 import { VtsMenuGroupComponent } from './menu-group.component';
 import { VtsMenuItemDirective } from './menu-item.directive';
 import { VtsMenuDirective } from './menu.directive';
@@ -33,18 +33,11 @@ import { VtsSubMenuComponent } from './submenu.component';
     VtsMenuDirective,
     VtsMenuItemDirective,
     VtsSubMenuComponent,
-    VtsMenuDividerDirective,
     VtsMenuGroupComponent,
     VtsSubMenuTitleComponent,
     VtsSubmenuInlineChildComponent,
     VtsSubmenuNoneInlineChildComponent
   ],
-  exports: [
-    VtsMenuDirective,
-    VtsMenuItemDirective,
-    VtsSubMenuComponent,
-    VtsMenuDividerDirective,
-    VtsMenuGroupComponent
-  ]
+  exports: [VtsMenuDirective, VtsMenuItemDirective, VtsSubMenuComponent, VtsMenuGroupComponent]
 })
 export class VtsMenuModule {}

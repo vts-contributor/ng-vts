@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
@@ -30,7 +35,6 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
           ></vts-range-picker-multiple>
         </vts-form-control>
       </vts-form-item>
-
       <vts-form-item>
         <div vts-row [vtsGutter]="iconGutter">
           <vts-form-label vtsFlex="1">From Date</vts-form-label>
@@ -48,26 +52,34 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
           ></vts-range-picker-multiple>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
-        <div vts-row [vtsGutter]="iconGutter">
-          <vts-form-label vtsFlex="1">From Date</vts-form-label>
-          <vts-form-label vtsFlex="1">To Date</vts-form-label>
-        </div>
-        <vts-form-control vtsErrorTip="Error message">
-          <vts-range-picker-multiple
-            [vtsSize]="size"
-            [vtsPlaceHolder]="placeholder"
-            formControlName="inputValue"
-            [gutter]="iconGutter"
-          ></vts-range-picker-multiple>
-        </vts-form-control>
+        <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <div vts-row [vtsGutter]="iconGutter">
+              <vts-form-label vtsFlex="1">From Date</vts-form-label>
+              <vts-form-label vtsFlex="1">To Date</vts-form-label>
+            </div>
+            <vts-form-control vtsErrorTip="Error message">
+              <vts-range-picker-multiple
+                [vtsSize]="size"
+                [vtsPlaceHolder]="placeholder"
+                formControlName="inputValue"
+                [gutter]="iconGutter"
+              ></vts-range-picker-multiple>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `,
-  styles: []
+  styles: [
+    `
+      :host {
+        display: block;
+        overflow: hidden;
+      }
+    `
+  ]
 })
 export class VtsDemoDatePickerRangeMultipleComponent {
   value?: Date[];
@@ -75,8 +87,8 @@ export class VtsDemoDatePickerRangeMultipleComponent {
   iconGutter: number = 26; // default
   placeholder: string[] = ['DD/MM/YYYY', 'DD/MM/YYYY'];
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl(null, {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl(null, {
       validators: [CustomValidator]
     })
   });

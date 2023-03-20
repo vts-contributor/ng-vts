@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-select-multiple',
@@ -55,27 +55,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
           </vts-select>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
-        <vts-form-label>Label Name</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <vts-select
-            vtsMode="multiple"
-            formControlName="inputValue"
-            [vtsPlaceHolder]="placeholder"
-            [vtsSize]="size"
-            vtsShowSearch
-            vtsAllowClear
-          >
-            <vts-option
-              *ngFor="let option of listOfOption"
-              [vtsValue]="option.value"
-              [vtsLabel]="option.label"
-            ></vts-option>
-          </vts-select>
-        </vts-form-control>
+        <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Label Name</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <vts-select
+                vtsMode="multiple"
+                formControlName="inputValue"
+                [vtsPlaceHolder]="placeholder"
+                [vtsSize]="size"
+                vtsShowSearch
+                vtsAllowClear
+              >
+                <vts-option
+                  *ngFor="let option of listOfOption"
+                  [vtsValue]="option.value"
+                  [vtsLabel]="option.label"
+                ></vts-option>
+              </vts-select>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `,
@@ -87,8 +88,8 @@ export class VtsDemoSelectMultipleComponent {
   size: any = 'md';
   listOfOption: Array<{ label: string; value: string }> = [];
 
-  formGroup = new FormGroup({
-    inputValue: new FormControl([], [Validators.minLength(5)])
+  formGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl([], [Validators.minLength(5)])
   });
 
   ngOnInit() {

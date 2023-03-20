@@ -1,7 +1,12 @@
 import { DOWN_ARROW, UP_ARROW } from '@angular/cdk/keycodes';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { createKeyboardEvent, dispatchEvent, dispatchFakeEvent } from '@ui-vts/ng-vts/core/testing';
@@ -519,9 +524,9 @@ export class VtsTestInputNumberBasicComponent {
   `
 })
 export class VtsTestInputNumberFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       inputNumber: [1]
     });

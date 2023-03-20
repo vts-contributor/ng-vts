@@ -194,8 +194,8 @@ export class VtsTabNavBarComponent
   private addButtonWidth = 0;
   private addButtonHeight = 0;
   private selectedIndexChanged = false;
-  private lockAnimationTimeoutId = -1;
-  private cssTransformTimeWaitingId = -1;
+  private lockAnimationTimeoutId: number | ReturnType<typeof setTimeout> = -1;
+  private cssTransformTimeWaitingId: number | ReturnType<typeof setTimeout> = -1;
 
   constructor(
     private cdr: ChangeDetectorRef,

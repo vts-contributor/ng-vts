@@ -1,0 +1,77 @@
+<ng-content select="[slot=container-start]"></ng-content>
+<ng-container *ngIf="vtsNavigation && showPrevNavigation">
+  <div class="vts-carousel-button-prev" #vtsPrevElRef>
+    <svg class="vts-carousel-button-ico" width="17" height="30" viewBox="0 0 17 30" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M15.93 1.485a1.875 1.875 0 0 0-2.655 0L.81 13.95a1.494 1.494 0 0 0 0 2.115L13.275 28.53c.735.735 1.92.735 2.655 0a1.874 1.874 0 0 0 0-2.655L5.07 15 15.945 4.125c.72-.72.72-1.92-.015-2.64Z"
+        fill="currentColor" />
+    </svg>
+  </div>
+</ng-container>
+<ng-container *ngIf="vtsNavigation && showNextNavigation">
+  <div class="vts-carousel-button-next" #vtsNextElRef>
+    <svg class="vts-carousel-button-ico" width="17" height="30" viewBox="0 0 17 30" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M1.07 28.515c.735.735 1.92.735 2.655 0L16.19 16.05a1.495 1.495 0 0 0 0-2.115L3.725 1.47a1.874 1.874 0 0 0-2.655 0 1.874 1.874 0 0 0 0 2.655L11.93 15 1.055 25.875c-.72.72-.72 1.92.015 2.64Z"
+        fill="currentColor" />
+    </svg>
+  </div>
+</ng-container>
+<div *ngIf="vtsScrollbar && showScrollbar" class="vts-carousel-scrollbar" #vtsScrollbarElRef></div>
+<ng-container *ngIf="vtsPagination && showPagination">
+  <ng-container *ngIf="_useCustomPagination; else defaultPagination">
+    <ng-content select="vts-carousel-pagination"></ng-content>
+  </ng-container>
+  <ng-template #defaultPagination>
+    <div class="vts-carousel-pagination" #vtsPaginationElRef></div>
+  </ng-template>
+</ng-container>
+
+<div [ngClass]="vtsWrapperClass" [attr.id]="id">
+  <ng-content select="[slot=wrapper-start]"></ng-content>
+  <ng-template *ngTemplateOutlet="
+        slidesTemplate;
+        context: {
+          loopSlides: prependSlides,
+          key: 'prepend'
+        }
+      "></ng-template>
+  <ng-template *ngTemplateOutlet="
+        slidesTemplate;
+        context: {
+          loopSlides: activeSlides,
+          key: ''
+        }
+      "></ng-template>
+  <ng-template *ngTemplateOutlet="
+        slidesTemplate;
+        context: {
+          loopSlides: appendSlides,
+          key: 'append'
+        }
+      "></ng-template>
+  <ng-content select="[slot=wrapper-end]"></ng-content>
+</div>
+<ng-content select="[slot=container-end]"></ng-content>
+
+<ng-template #slidesTemplate let-loopSlides="loopSlides" let-slideKey="key">
+  <div *ngFor="let slide of loopSlides | async" [ngClass]="
+        (slide.class ? slide.class + ' ' : '') +
+        vtsSlideClass +
+        (slideKey !== '' ? ' ' + vtsSlideDuplicateClass : '')
+      " [attr.data-carousel-slide-index]="slide.virtualIndex ? slide.virtualIndex : slide.slideIndex"
+    [attr.data-carousel-autoplay]="slide.autoplayDelay" [style]="style" [ngSwitch]="slide.zoom">
+    <div *ngSwitchCase="true" [ngClass]="zoomContainerClass">
+      <ng-template [ngTemplateOutlet]="slide.template" [ngTemplateOutletContext]="{
+            $implicit: slide.slideData
+          }"></ng-template>
+    </div>
+    <ng-container *ngSwitchDefault>
+      <ng-template [ngTemplateOutlet]="slide.template" [ngTemplateOutletContext]="{
+            $implicit: slide.slideData
+          }"></ng-template>
+    </ng-container>
+  </div>
+</ng-template>

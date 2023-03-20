@@ -6,15 +6,14 @@
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   CdkConnectedOverlay,
-  CdkOverlayOrigin,
   ConnectedOverlayPositionChange,
   ConnectionPositionPair
 } from '@angular/cdk/overlay';
 import {
   AfterViewInit,
   ChangeDetectorRef,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -43,8 +42,8 @@ import {
   VtsTSType
 } from '@ui-vts/ng-vts/core/types';
 import { isNotNil, toBoolean } from '@ui-vts/ng-vts/core/util';
-import { Subject } from 'rxjs';
-import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { Subject, asapScheduler } from 'rxjs';
+import { distinctUntilChanged, takeUntil, filter, delay } from 'rxjs/operators';
 
 export interface PropertyMapping {
   [key: string]: [string, () => unknown];
@@ -56,6 +55,7 @@ export type VtsTooltipTrigger = 'click' | 'focus' | 'hover' | null;
 
 @Directive()
 export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, AfterViewInit {
+  arrowPointAtCenter?: boolean;
   config?: Required<PopoverConfig | PopConfirmConfig>;
   directiveTitle?: VtsTSType | null;
   directiveContent?: VtsTSType | null;
@@ -75,7 +75,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
   /**
    * For create tooltip dynamically. This should be override for each different component.
    */
-  protected componentFactory!: ComponentFactory<VtsTooltipBaseComponent>;
+  protected componentRef!: ComponentRef<VtsTooltipBaseComponent>;
 
   /**
    * This true title that would be used in other parts on this component.
@@ -134,7 +134,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
   protected readonly destroy$ = new Subject<void>();
   protected readonly triggerDisposables: Array<() => void> = [];
 
-  private delayTimer?: number;
+  private delayTimer?: number | ReturnType<typeof setTimeout>;
 
   constructor(
     public elementRef: ElementRef,
@@ -192,8 +192,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
    * Create a dynamic tooltip component. This method can be override.
    */
   protected createComponent(): void {
-    const componentRef = this.hostView.createComponent(this.componentFactory);
-
+    const componentRef = this.componentRef;
     this.component = componentRef.instance as VtsTooltipBaseComponent;
 
     // Remove the component's DOM because it should be in the overlay container.
@@ -201,17 +200,29 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
       this.renderer.parentNode(this.elementRef.nativeElement),
       componentRef.location.nativeElement
     );
-    this.component.setOverlayOrigin({
-      elementRef: this.origin || this.elementRef
-    });
+    this.component.setOverlayOrigin(this.origin || this.elementRef);
 
     this.initProperties();
 
-    this.component.vtsVisibleChange
-      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
-      .subscribe((visible: boolean) => {
-        this.internalVisible = visible;
-        this.visibleChange.emit(visible);
+    const ngVisibleChange$ = this.component.vtsVisibleChange.pipe(distinctUntilChanged());
+
+    ngVisibleChange$.pipe(takeUntil(this.destroy$)).subscribe((visible: boolean) => {
+      this.internalVisible = visible;
+      this.visibleChange.emit(visible);
+    });
+
+    // In some cases, the rendering takes into account the height at which the `arrow` is in wrong place,
+    // so `cdk` sets the container position incorrectly.
+    // To avoid this, after placing the `arrow` in the correct position, we should `re-calculate` the position of the `overlay`.
+    ngVisibleChange$
+      .pipe(
+        filter((visible: boolean) => visible),
+        delay(0, asapScheduler),
+        filter(() => Boolean(this.component?.overlay?.overlayRef)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        this.component?.updatePosition();
       });
   }
 
@@ -249,8 +260,8 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
         })
       );
     } else if (trigger === 'focus') {
-      this.triggerDisposables.push(this.renderer.listen(el, 'focus', () => this.show()));
-      this.triggerDisposables.push(this.renderer.listen(el, 'blur', () => this.hide()));
+      this.triggerDisposables.push(this.renderer.listen(el, 'focusin', () => this.show()));
+      this.triggerDisposables.push(this.renderer.listen(el, 'focusout', () => this.hide()));
     } else if (trigger === 'click') {
       this.triggerDisposables.push(
         this.renderer.listen(el, 'click', (e: MouseEvent) => {
@@ -281,6 +292,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
       overlayClassName: ['vtsOverlayClassName', () => this._overlayClassName],
       overlayStyle: ['vtsOverlayStyle', () => this._overlayStyle],
       type: ['vtsType', () => this._vtsType],
+      arrowPointAtCenter: ['vtsArrowPointAtCenter', () => this.arrowPointAtCenter],
       ...this.getProxyPropertyMap()
     };
 
@@ -339,11 +351,13 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
 // tslint:disable-next-line:directive-class-suffix
 export abstract class VtsTooltipBaseComponent implements OnDestroy, OnInit {
   static ngAcceptInputType_vtsVisible: BooleanInput;
+  static ngAcceptInputType_vtsArrowPointAtCenter: BooleanInput;
 
   @ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
 
   vtsTitle: VtsTSType | null = null;
   vtsContent: VtsTSType | null = null;
+  vtsArrowPointAtCenter: boolean = false;
   vtsOverlayClassName!: string;
   vtsOverlayStyle: NgStyleInterface = {};
   vtsBackdrop = false;
@@ -384,7 +398,7 @@ export abstract class VtsTooltipBaseComponent implements OnDestroy, OnInit {
 
   preferredPlacement: string = 'top';
 
-  origin!: CdkOverlayOrigin;
+  origin!: ElementRef<VtsSafeAny>;
 
   public dir: Direction = 'ltr';
 
@@ -482,13 +496,13 @@ export abstract class VtsTooltipBaseComponent implements OnDestroy, OnInit {
     };
   }
 
-  setOverlayOrigin(origin: CdkOverlayOrigin): void {
+  setOverlayOrigin(origin: ElementRef<HTMLElement>): void {
     this.origin = origin;
     this.cdr.markForCheck();
   }
 
   onClickOutside(event: MouseEvent): void {
-    if (!this.origin.elementRef.nativeElement.contains(event.target) && this.vtsTrigger !== null) {
+    if (!this.origin.nativeElement.contains(event.target) && this.vtsTrigger !== null) {
       this.hide();
     }
   }

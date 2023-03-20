@@ -1,5 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators
+} from '@angular/forms';
 import { VtsCascaderOption } from '@ui-vts/ng-vts/cascader';
 import { Subscription } from 'rxjs';
 
@@ -64,12 +69,12 @@ const options = [
   ]
 })
 export class VtsDemoCascaderReactiveFormComponent implements OnDestroy {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   vtsOptions: VtsCascaderOption[] = options;
   changeSubscription: Subscription;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.createForm();
-    const control = this.form.get('name') as FormControl;
+    const control = this.form.get('name') as UntypedFormControl;
     this.changeSubscription = control.valueChanges.subscribe(data => {
       this.onChanges(data);
     });

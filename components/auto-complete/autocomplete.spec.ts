@@ -23,9 +23,9 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
@@ -531,7 +531,7 @@ describe('auto-complete', () => {
 
     it('should set disabled work', () => {
       const componentInstance = fixture.componentInstance;
-      const formControl = (componentInstance.form as FormGroup).get('formControl')!;
+      const formControl = (componentInstance.form as UntypedFormGroup).get('formControl')!;
       fixture.detectChanges();
 
       expect(input.disabled).toBe(false);
@@ -544,7 +544,7 @@ describe('auto-complete', () => {
 
     it('should close the panel when the input is disabled', () => {
       const componentInstance = fixture.componentInstance;
-      const formControl = (componentInstance.form as FormGroup).get('formControl')!;
+      const formControl = (componentInstance.form as UntypedFormGroup).get('formControl')!;
       fixture.detectChanges();
 
       componentInstance.trigger.openPanel();
@@ -993,7 +993,7 @@ describe('auto-complete', () => {
 class VtsTestSimpleAutocompleteComponent {
   inputValue!: string;
   filteredOptions: Array<string | number>;
-  inputControl = new FormControl();
+  inputControl = new UntypedFormControl();
   options: Array<string | number> = ['Burns Bay Road', 'Downing Street', 'Wall Street'];
 
   @ViewChild(VtsAutocompleteComponent, { static: false })
@@ -1159,12 +1159,12 @@ class VtsTestAutocompleteGroupComponent {
   `
 })
 class VtsTestAutocompleteWithFormComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   options = ['Burns Bay Road', 'Downing Street', 'Wall Street'];
   @ViewChild(VtsAutocompleteTriggerDirective, { static: false })
   trigger!: VtsAutocompleteTriggerDirective;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.form = this.fb.group({ formControl: 'Burns' });
   }
 }
@@ -1186,7 +1186,7 @@ class VtsTestAutocompleteWithFormComponent {
   `
 })
 class VtsTestAutocompleteDifferentValueWithFormComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   options = [
     { label: 'Lucy', value: 'lucy' },
     { label: 'Jack', value: 'jack' }
@@ -1194,7 +1194,7 @@ class VtsTestAutocompleteDifferentValueWithFormComponent {
   @ViewChild(VtsAutocompleteTriggerDirective)
   trigger!: VtsAutocompleteTriggerDirective;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.form = this.fb.group({ formControl: 'lucy' });
   }
 }
@@ -1216,7 +1216,7 @@ class VtsTestAutocompleteDifferentValueWithFormComponent {
   `
 })
 class VtsTestAutocompleteWithObjectOptionComponent {
-  form: FormGroup;
+  form: UntypedFormGroup;
   options = [
     { label: 'Lucy', value: 'lucy' },
     { label: 'Jack', value: 'jack' }
@@ -1233,7 +1233,7 @@ class VtsTestAutocompleteWithObjectOptionComponent {
     }
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: UntypedFormBuilder) {
     this.form = this.fb.group({
       formControl: { label: 'Lucy', value: 'lucy', age: 20 }
     });

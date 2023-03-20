@@ -6,10 +6,21 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@ui-vts/ng-vts/*": ["./*"]
-    }
+      "@ui-vts/ng-vts/*": ["./*"],
+    },
+    "alwaysStrict": true,
+    "strictFunctionTypes": true
+  },
+  "angularCompilerOptions": {
+    "strictInputAccessModifiers": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true,
+    "fullTemplateTypeCheck": true,
+    "strictTemplates": true,
+    "strictInjectionParameters": true
   },
   "include": [
-    "./**/*.ts"
+    "./**/*.ts" 
   ]
 }

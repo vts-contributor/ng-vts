@@ -32,12 +32,12 @@ import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
 import { getPlacementName, POSITION_MAP } from '@ui-vts/ng-vts/core/overlay';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
-import { combineLatest, merge, Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { map, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { VtsMenuItemDirective } from './menu-item.directive';
 import { MenuService } from './menu.service';
 import { VtsIsMenuInsideDropDownToken } from './menu.token';
-import { VtsMenuModeType, VtsMenuThemeType } from './menu.types';
+import { VtsMenuModeType } from './menu.types';
 import { VtsSubmenuService } from './submenu.service';
 
 const listOfVerticalPositions = [
@@ -67,7 +67,6 @@ const listOfHorizontalPositions = [POSITION_MAP.bottomLeft];
       [mode]="mode"
       [vtsDisabled]="vtsDisabled"
       [isMenuInsideDropDown]="isMenuInsideDropDown"
-      [paddingLeft]="vtsPaddingLeft || inlinePaddingLeft"
       (subMenuMouseState)="setMouseEnterState($event)"
       (toggleSubMenu)="toggleSubMenu()"
     >
@@ -89,14 +88,16 @@ const listOfHorizontalPositions = [POSITION_MAP.bottomLeft];
         (positionChange)="onPositionChange($event)"
         [cdkConnectedOverlayPositions]="overlayPositions"
         [cdkConnectedOverlayOrigin]="origin"
-        [cdkConnectedOverlayWidth]="triggerWidth!"
         [cdkConnectedOverlayOpen]="vtsOpen"
         [cdkConnectedOverlayTransformOriginOn]="'.vts-menu-submenu'"
       >
         <div
           vts-submenu-none-inline-child
-          [theme]="theme"
+          [level]="level"
+          [isFirst]="isFirst$ | async"
+          [isLasted]="isLasted$ | async"
           [mode]="mode"
+          [rootMode]="rootMode$ | async"
           [vtsOpen]="vtsOpen"
           [position]="position"
           [vtsDisabled]="vtsDisabled"
@@ -131,7 +132,8 @@ const listOfHorizontalPositions = [POSITION_MAP.bottomLeft];
     '[class.vts-menu-submenu-horizontal]': `!isMenuInsideDropDown && mode === 'horizontal'`,
     '[class.vts-menu-submenu-inline]': `!isMenuInsideDropDown && mode === 'inline'`,
     '[class.vts-menu-submenu-active]': `!isMenuInsideDropDown && isActive`,
-    '[class.vts-menu-submenu-rtl]': `dir === 'rtl'`
+    '[class.vts-menu-submenu-rtl]': `dir === 'rtl'`,
+    '[attr.level]': 'level'
   }
 })
 export class VtsSubMenuComponent implements OnInit, OnDestroy, AfterContentInit, OnChanges {
@@ -139,7 +141,6 @@ export class VtsSubMenuComponent implements OnInit, OnDestroy, AfterContentInit,
   static ngAcceptInputType_vtsDisabled: BooleanInput;
 
   @Input() vtsMenuClassName: string = '';
-  @Input() vtsPaddingLeft: number | null = null;
   @Input() vtsTitle: string | TemplateRef<void> | null = null;
   @Input() vtsIcon: string | null = null;
   @Input() @InputBoolean() vtsOpen = false;
@@ -151,13 +152,14 @@ export class VtsSubMenuComponent implements OnInit, OnDestroy, AfterContentInit,
   listOfVtsSubMenuComponent: QueryList<VtsSubMenuComponent> | null = null;
   @ContentChildren(VtsMenuItemDirective, { descendants: true })
   listOfVtsMenuItemDirective: QueryList<VtsMenuItemDirective> | null = null;
-  private level = this.vtsSubmenuService.level;
+  level = this.vtsSubmenuService.level;
+  isFirst$ = this.vtsSubmenuService.isFirst$;
+  isLasted$ = this.vtsSubmenuService.isLasted$;
+  rootMode$ = this.vtsSubmenuService.rootMode$;
   private destroy$ = new Subject<void>();
   position = 'right';
   triggerWidth: number | null = null;
-  theme: VtsMenuThemeType = 'light';
   mode: VtsMenuModeType = 'vertical';
-  inlinePaddingLeft: number | null = null;
   overlayPositions = listOfVerticalPositions;
   isSelected = false;
   isActive = false;
@@ -207,13 +209,6 @@ export class VtsSubMenuComponent implements OnInit, OnDestroy, AfterContentInit,
   ) {}
 
   ngOnInit(): void {
-    /** submenu theme update **/
-    // NG-VTS: force only light theme
-    // this.vtsMenuService.theme$.pipe(takeUntil(this.destroy$)).subscribe(theme => {
-    //   this.theme = theme;
-    //   this.cdr.markForCheck();
-    // });
-
     /** submenu mode update **/
     this.vtsSubmenuService.mode$.pipe(takeUntil(this.destroy$)).subscribe(mode => {
       this.mode = mode;
@@ -224,13 +219,6 @@ export class VtsSubMenuComponent implements OnInit, OnDestroy, AfterContentInit,
       }
       this.cdr.markForCheck();
     });
-    /** inlineIndent update **/
-    combineLatest([this.vtsSubmenuService.mode$, this.vtsMenuService.inlineIndent$])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([mode, inlineIndent]) => {
-        this.inlinePaddingLeft = mode === 'inline' ? this.level * inlineIndent : null;
-        this.cdr.markForCheck();
-      });
     /** current submenu open status **/
     this.vtsSubmenuService.isCurrentSubMenuOpen$.pipe(takeUntil(this.destroy$)).subscribe(open => {
       this.isActive = open;

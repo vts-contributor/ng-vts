@@ -4,4 +4,3 @@
  */
 
 export type VtsMenuModeType = 'vertical' | 'horizontal' | 'inline';
-export type VtsMenuThemeType = 'light' | 'dark';

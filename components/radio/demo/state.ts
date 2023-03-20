@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-radio-state',
@@ -31,19 +36,20 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors } from '@angu
           </vts-radio-group>
         </vts-form-control>
       </vts-form-item>
-    </form>
-
-    <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
       <vts-form-item>
-        <vts-form-label>Label</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <vts-radio-group formControlName="inputValue">
-            <vts-space vtsPreset="2" vtsDirection="vertical">
-              <label vts-radio *vtsSpaceItem vtsValue="A">Radio button item</label>
-              <label vts-radio *vtsSpaceItem vtsValue="B">Radio button item</label>
-            </vts-space>
-          </vts-radio-group>
-        </vts-form-control>
+        <form [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Label</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <vts-radio-group formControlName="inputValue">
+                <vts-space vtsPreset="2" vtsDirection="vertical">
+                  <label vts-radio *vtsSpaceItem vtsValue="A">Radio button item</label>
+                  <label vts-radio *vtsSpaceItem vtsValue="B">Radio button item</label>
+                </vts-space>
+              </vts-radio-group>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `
@@ -52,8 +58,8 @@ export class VtsDemoRadioStateComponent {
   radioValue: string = 'A';
   disabled = true;
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl('A', {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('A', {
       validators: [CustomValidator]
     })
   });

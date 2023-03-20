@@ -53,9 +53,10 @@ task('init:site', done => {
 task('serve:site', done => {
   const command = [
     'serve', 
+    '--project=ng-vts-doc',
     ...['--port', port], 
     ...(host ? ['--host', host] : []),
-    ...(path ? ['--base-href', path] : []),
+    // ...(path ? ['--base-href', path] : []),
   ];
 
   detectPort(port).then(() => {
@@ -63,19 +64,19 @@ task('serve:site', done => {
   });
 });
 
-/** Run `ng build --prod --project=ng-vts-doc --configuration es5` */
+/** Run `ng build --configuration=production --project=ng-vts-doc --configuration es5` */
 task('build:site-doc-es5', done => {
   const command = [
     'build', 
     '--project=ng-vts-doc',
-    '--prod',
+    '--configuration=production',
     '--configuration=es5',
     ...(path ? ['--base-href', path] : [])
   ];
   execNodeTask('@angular/cli', 'ng', command)(done);
 }); 
 
-/** Run `ng build --prod --project=ng-vts-doc` */
+/** Run `ng build --configuration=production --project=ng-vts-doc` */
 task('build:site-doc', done => {
   const command = [
     'build', 
@@ -86,13 +87,12 @@ task('build:site-doc', done => {
   execNodeTask('@angular/cli', 'ng', command)(done);
 }); 
 
-/** Run `ng build --prod --base-href ./ --project=ng-vts-iframe` */
+/** Run `ng build --configuration=production --base-href ./ --project=ng-vts-iframe` */
 task('build:site-iframe', done => {
   const command = [
     'build', 
     '--project=ng-vts-iframe',
-    '--configuration=production',
-    ...(path ? ['--base-href', path] : [])
+    '--configuration=production'
   ];
   execNodeTask('@angular/cli', 'ng', command)(done);
 }); 

@@ -4,46 +4,77 @@ import { Component } from '@angular/core';
   selector: 'vts-demo-menu-inline',
   template: `
     <ul vts-menu vtsMode="inline">
-      <li vts-submenu vtsTitle="Navigation One" vtsIcon="mail" vtsOpen>
-        <ul>
-          <li vts-menu-group vtsTitle="Item 1">
-            <ul>
-              <li vts-menu-item vtsSelected>Option 1</li>
-              <li vts-menu-item>Option 2</li>
-            </ul>
+      <ul vts-submenu vtsOpen vtsTitle="Menu 1" vtsIcon="Settings">
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <ul vts-submenu vtsTitle="Options 2" vtsIcon="Time">
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
           </li>
-          <li vts-menu-group vtsTitle="Item 2">
-            <ul>
-              <li vts-menu-item>Option 3</li>
-              <li vts-menu-item>Option 4</li>
-            </ul>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item vtsSelected>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
           </li>
         </ul>
+      </ul>
+      <li vts-menu-item>
+        <i vts-icon vtsType="Time"></i>
+        Menu 2
       </li>
-      <li vts-submenu vtsTitle="Navigation Two" vtsIcon="appstore">
-        <ul>
-          <li vts-menu-item>Option 5</li>
-          <li vts-menu-item>Option 6</li>
-          <li vts-submenu vtsTitle="Submenu">
-            <ul>
-              <li vts-menu-item>Option 7</li>
-              <li vts-menu-item>Option 8</li>
-              <li vts-submenu vtsTitle="Submenu">
-                <ul>
-                  <li vts-menu-item>Option 9</li>
-                  <li vts-menu-item>Option 10</li>
-                </ul>
-              </li>
-            </ul>
+      <ul vts-submenu vtsTitle="Menu 3" vtsIcon="Settings">
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <li vts-menu-item>
+          <i vts-icon vtsType="Time"></i>
+          Option 1
+        </li>
+        <ul vts-submenu vtsTitle="Options 2" vtsIcon="Time">
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
+          </li>
+          <li vts-menu-item>
+            <i vts-icon vtsType="Time"></i>
+            Option 1
           </li>
         </ul>
-      </li>
-      <li vts-submenu vtsTitle="Navigation Three" vtsIcon="setting">
-        <ul>
-          <li vts-menu-item>Option 11</li>
-          <li vts-menu-item>Option 12</li>
-          <li vts-menu-item>Option 13</li>
-        </ul>
+      </ul>
+      <li vts-menu-item>
+        <i vts-icon vtsType="Time"></i>
+        Menu 4
       </li>
     </ul>
   `,

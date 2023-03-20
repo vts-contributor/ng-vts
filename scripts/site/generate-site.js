@@ -35,7 +35,7 @@ function generate(target) {
   const rootDir = fs.readdirSync(rootPath);
   const componentsDocMap = {};
   const componentsMap = {};
-  rootDir.forEach(componentName => {
+  rootDir.filter(i => i !== 'lib').forEach(componentName => {
     if (isSyncSpecific) {
       if (componentName !== target) {
         return;

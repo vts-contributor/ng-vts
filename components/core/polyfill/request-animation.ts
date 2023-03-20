@@ -14,7 +14,7 @@ function requestAnimationFramePolyfill(): typeof requestAnimationFrame {
     const timeToCall = Math.max(0, 16 - (currTime - lastTime));
     const id = setTimeout(() => {
       callback(currTime + timeToCall);
-    }, timeToCall);
+    }, timeToCall) as any as number;
     lastTime = currTime + timeToCall;
     return id;
   };

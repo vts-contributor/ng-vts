@@ -108,11 +108,11 @@ import { ModalOptions } from './modal-types';
   }
 })
 export class VtsModalConfirmContainerComponent extends BaseModalContainerComponent {
-  @ViewChild(CdkPortalOutlet, { static: true }) portalOutlet!: CdkPortalOutlet;
+  @ViewChild(CdkPortalOutlet, { static: true }) override portalOutlet!: CdkPortalOutlet;
   @ViewChild('modalElement', { static: true })
-  modalElementRef!: ElementRef<HTMLDivElement>;
-  @Output() readonly cancelTriggered = new EventEmitter<void>();
-  @Output() readonly okTriggered = new EventEmitter<void>();
+  overridemodalElementRef!: ElementRef<HTMLDivElement>;
+  @Output() override readonly cancelTriggered = new EventEmitter<void>();
+  @Output() override readonly okTriggered = new EventEmitter<void>();
   locale!: VtsModalI18nInterface;
 
   constructor(
@@ -123,7 +123,7 @@ export class VtsModalConfirmContainerComponent extends BaseModalContainerCompone
     render: Renderer2,
     overlayRef: OverlayRef,
     vtsConfigService: VtsConfigService,
-    public config: ModalOptions,
+    public override config: ModalOptions,
     @Optional() @Inject(DOCUMENT) document: VtsSafeAny,
     @Optional() @Inject(ANIMATION_MODULE_TYPE) animationType: string
   ) {
