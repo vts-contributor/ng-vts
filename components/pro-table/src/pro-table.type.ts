@@ -23,7 +23,7 @@ export const defaultColConfig = {
   xxl: 6,
 };
 
-export type PropertyType = {
+export type VtsPropertyType = {
   headerTitle?: string;
   propertyName: string;
   required?: boolean;
@@ -33,7 +33,7 @@ export type PropertyType = {
 }
 export type VtsProTablePaginationPosition = 'top' | 'bottom' | 'both';
 
-export type Request = {
+export type VtsRequest = {
   url: string,
   type: "POST" | "GET" | "PUT" | "DELETE",
   params?: {[key: string]: VtsSafeAny},
@@ -94,7 +94,7 @@ export type TabCondition = {
 
 export type ButtonConfig = {
   buttonText: string,
-  buttonAPI?: Request,
+  buttonAPI?: VtsRequest,
   style: {[key: string]: string},
   classNames?: string,
   onClick?: () => void

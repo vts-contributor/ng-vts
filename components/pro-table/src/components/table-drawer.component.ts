@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
-import { DrawerConfig, PropertyType, Request, StatusConfig, ViewMode } from '../pro-table.type';
+import { DrawerConfig, VtsPropertyType, VtsRequest, StatusConfig, ViewMode } from '../pro-table.type';
 
 @Component({
   selector: 'table-drawer',
@@ -61,8 +61,8 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Input() open: boolean = false;
   @Input() mode: ViewMode = 'view';
   @Input() data: { [key: string]: any } = {};
-  @Input() headers: PropertyType[] = [];
-  @Input() saveRequest: Request | undefined;
+  @Input() headers: VtsPropertyType[] = [];
+  @Input() saveRequest: VtsRequest | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
   @Input() listStatus: StatusConfig[] = [];
 
@@ -75,7 +75,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   formGroup: FormGroup = new FormGroup({});
   selectedStatus: { [key: string]: string | number } = {};
   entity: { [key: string]: any } = {};
-  displayHeaders: PropertyType[] = [];
+  displayHeaders: VtsPropertyType[] = [];
   title: string = "Test drawer";
   datePickerSize: VtsSizeLDSType = 'md';
 
@@ -90,7 +90,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     let { headers, data, drawerConfig, open, mode } = changes;
     if (headers) {
-      this.displayHeaders = [...headers.currentValue.filter((h: PropertyType) => h.headerTitle)];
+      this.displayHeaders = [...headers.currentValue.filter((h: VtsPropertyType) => h.headerTitle)];
     }
     if (mode) {
       if (typeof this.drawerConfig != "undefined" && this.mode != 'create-another') this.setTitle(this.drawerConfig);
@@ -262,7 +262,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
    * @returns new object has every field with type of date having value of Date object
    */
   transformDateDatatype() {
-    let dateTypeProperties: PropertyType[] = this.displayHeaders.filter(head => head.datatype == 'date');
+    let dateTypeProperties: VtsPropertyType[] = this.displayHeaders.filter(head => head.datatype == 'date');
     let output: { [key: string]: Date } = {};
     dateTypeProperties.forEach(pro => {
       output[pro.propertyName] = new Date(this.formGroup.get(pro.propertyName)?.value);

@@ -16,8 +16,8 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 ### requestData
 `requestData` is the most important API of ProTable, `requestData` takes an array data. Each element of array must have defined properties following with `properties`. `requestData` takes over the `loading` settings and re-executes them when query form is queried.
 
-### Request
-`Request` is a format for request defination for getting data or modifying data.
+### VtsRequest
+`VtsRequest` is a format for request defination for getting data or modifying data.
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
@@ -28,8 +28,8 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | `[onSuccess]` | Triggered when the request is successed | `(data: {[key: string]: VtsSafeAny}) => void` |
 | `[onError]` | Triggered when the request is error | `(data: {[key: string]: VtsSafeAny}) => void` |
 
-### PropertyType
-`PropertyType` is a format for table column defination.
+### VtsPropertyType
+`VtsPropertyType` is a format for table column defination.
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
@@ -72,7 +72,7 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | `[buttonText]` | Button title for rendering | `string` |
-| `[buttonAPI]` | Request is assigned for button | `Request` |
+| `[buttonAPI]` | Request is assigned for button | `VtsRequest` |
 | `[style]` | Assign CSS properties for button  | `{[key: string]: string}` |
 | `[classNames]` | Assign HTML class for button | `string` |
 | `[onClick]` | Triggered when click button | `() => void` |
@@ -89,15 +89,15 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | `[modalDeleteConfig]` | The configuration object for deletion modal  | `ModalDeleteConfig` |
 | `[modalUploadConfig]` | The configuration object for uploading modal  | `ModalUploadConfig` |
 | `[loading]` | Render loading template, use for server pagination | `boolean` | `false` |
-| `[properties]` | Property array to be render headers | `PropertyType[]` |
+| `[properties]` | Property array to be render headers | `VtsPropertyType[]` |
 | `[listData]` | Data array to be rendered | `{ [key: string]: VtsSafeAny }[]` |
-| `[requestData]` | The request object for data fetching and auto render data | `Request` |
-| `[getRequest]` | The request object for data fetching and auto render data | `Request` |
-| `[editRequest]` | The request object for data fetching and auto render data | `Request` |
-| `[deleteRequest]` | The request object for data fetching and auto render data | `Request` |
-| `[saveRequest]` | The request object for data fetching and auto render data | `Request` |
-| `[exportRequest]` | The request object for data fetching and auto render data | `Request` |
-| `[configTableRequest]` | The request object for data fetching and auto render data | `Request` |
+| `[requestData]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[getRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[editRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[deleteRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[saveRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[exportRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[configTableRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
 | `[listStatus]` | The status array of data item | `StatusConfig[]` |
 | `[pageSize]` | Bind current pageSize | `number` | `10` |
 | `[onPageSizeChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |

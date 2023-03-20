@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
-import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, Request, StatusConfig, TabGroupConfig } from './pro-table.type';
+import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, VtsPropertyType, VtsRequest, StatusConfig, TabGroupConfig } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
   // ChangeDetectionStrategy,
@@ -103,19 +103,19 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   @Input() tabGroupConfig: TabGroupConfig | undefined;
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() loading: boolean = false;
-  @Input() properties: PropertyType[] = [];
+  @Input() properties: VtsPropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   @Input() pageIndex: number = 1;
   @Input() pageSize: number = 10;
   @Input() onSuccess: VtsSafeAny = () => { };
   @Input() onError: VtsSafeAny = () => { };
-  @Input() requestData: Request | undefined;
-  @Input() getRequest: Request | undefined;
-  @Input() editRequest: Request | undefined;
-  @Input() deleteRequest: Request | undefined;
-  @Input() saveRequest: Request | undefined;
-  @Input() exportRequest: Request | undefined;
-  @Input() configTableRequest: Request | undefined;
+  @Input() requestData: VtsRequest | undefined;
+  @Input() getRequest: VtsRequest | undefined;
+  @Input() editRequest: VtsRequest | undefined;
+  @Input() deleteRequest: VtsRequest | undefined;
+  @Input() saveRequest: VtsRequest | undefined;
+  @Input() exportRequest: VtsRequest | undefined;
+  @Input() configTableRequest: VtsRequest | undefined;
   @Input() drawerConfig: DrawerConfig | undefined;
   @Input() listStatus: StatusConfig[] = [];
   @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
@@ -129,7 +129,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   searchData: Object = {};
   vtsTotal: number = 0;
   buttonSize: VtsButtonSize = 'sm';
-  publicProperties: PropertyType[] = [];
+  publicProperties: VtsPropertyType[] = [];
   actionType: { 'key': string } = { key: '' };
   selectedTabIndex = 0;
   totalDataWithFilter: VtsSafeAny[] = [];
@@ -147,11 +147,11 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
     }
 
     if (changes.properties) {
-      this.publicProperties = changes.properties.currentValue.filter((prop: PropertyType) => prop.headerTitle);
+      this.publicProperties = changes.properties.currentValue.filter((prop: VtsPropertyType) => prop.headerTitle);
     }
   }
 
-  getRenderData(request?: Request) {
+  getRenderData(request?: VtsRequest) {
     if (request && request.url) {
       let { onSuccess, onError } = request;
       this.loading = true;

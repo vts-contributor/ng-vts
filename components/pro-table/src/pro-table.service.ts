@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Request } from './pro-table.type';
+import { VtsRequest } from './pro-table.type';
 import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ProtableService {
   constructor(private http: HttpClient) { }
 
-  getDataById(request: Request): Observable<any> {
+  getDataById(request: VtsRequest): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url);
     } else {
@@ -17,7 +17,7 @@ export class ProtableService {
     }
   }
 
-  deleteItem(request: Request): Observable<any> {
+  deleteItem(request: VtsRequest): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url);
     } else {
@@ -27,7 +27,7 @@ export class ProtableService {
     }
   }
 
-  updateConfigTable(request: Request): Observable<any> {
+  updateConfigTable(request: VtsRequest): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url);
     } else {
@@ -37,14 +37,14 @@ export class ProtableService {
     }
   }
 
-  saveDataById(request: Request | undefined): Observable<any> {
+  saveDataById(request: VtsRequest | undefined): Observable<any> {
     if (request) {
       return this.http.post(request.url, request.body, { observe: 'body' });
     }
     else return of(new Error("Request invalid"));
   }
 
-  getRenderData(request: Request): Observable<any> {
+  getRenderData(request: VtsRequest): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url, {observe: 'response'});
     } else {
@@ -54,7 +54,7 @@ export class ProtableService {
     }
   }
 
-  searchByKeyword(request: Request): Observable<any> {
+  searchByKeyword(request: VtsRequest): Observable<any> {
     if (request.type == 'GET') {
       return this.http.get(request.url, {observe: 'response'});
     } else {
@@ -64,7 +64,7 @@ export class ProtableService {
     }
   }
 
-  exportSelectedDataToFile(request: Request) {
+  exportSelectedDataToFile(request: VtsRequest) {
     if (request) {
       return this.http.post(request.url, request.body, { observe: 'body' });
     }

@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { PropertyType } from '../pro-table.type';
+import { VtsPropertyType } from '../pro-table.type';
 
 @Component({
   selector: 'filter-drawer',
@@ -39,8 +39,8 @@ export class VtsProtableFilterPopupComponent implements OnInit {
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() isVisibleModal: boolean = false;
   @Input() data: { [key: string]: any } = {};
-  @Input() headers: PropertyType[] = [];
-  @Input() properties: PropertyType[] = [];
+  @Input() headers: VtsPropertyType[] = [];
+  @Input() properties: VtsPropertyType[] = [];
   @Input() title: string = "Advanced searching";
 
   @Output() onSearchByFilter: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();

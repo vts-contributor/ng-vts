@@ -19,7 +19,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, Request, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { DrawerConfig, ModalDeleteConfig, ModalUploadConfig, VtsPropertyType, VtsRequest, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 
@@ -52,21 +52,21 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
   @Input() drawerData: { [key: string]: any } = {};
-  @Input() properties: PropertyType[] = [];
+  @Input() properties: VtsPropertyType[] = [];
   @Input() listData: { [key: string]: VtsSafeAny }[] = [];
   @Input() vtsPaginationPosition: VtsProTablePaginationPosition = 'bottom';
   @Input() vtsPageSize: number = 10;
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
-  @Input() requestData: Request | undefined;
-  @Input() getRequest: Request | undefined;
-  @Input() editRequest: Request | undefined;
-  @Input() deleteRequest: Request | undefined;
-  @Input() saveRequest: Request | undefined;
-  @Input() exportRequest: Request | undefined;
-  @Input() searchRequest: Request | undefined;
+  @Input() requestData: VtsRequest | undefined;
+  @Input() getRequest: VtsRequest | undefined;
+  @Input() editRequest: VtsRequest | undefined;
+  @Input() deleteRequest: VtsRequest | undefined;
+  @Input() saveRequest: VtsRequest | undefined;
+  @Input() exportRequest: VtsRequest | undefined;
+  @Input() searchRequest: VtsRequest | undefined;
   @Input() searchData: Object | VtsSafeAny;
-  @Input() configTableRequest: Request | undefined;
+  @Input() configTableRequest: VtsRequest | undefined;
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() pageSize = 10;
   @Input() listStatus: StatusConfig[] = [];
@@ -81,7 +81,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() readonly clearAllCheckedItems = new EventEmitter<boolean>();
   @Output() reloadTable = new EventEmitter<boolean>();
-  @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
+  @Output() onChangeHeaders = new EventEmitter<VtsPropertyType[]>();
   @Output() changePageSize = new EventEmitter<number>();
 
   pageIndex = 1;
@@ -94,7 +94,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   listDisplayedData = [];
   displayedData: { [key: string]: any }[] = [];
-  displayedProperties: PropertyType[] = [];
+  displayedProperties: VtsPropertyType[] = [];
   filteredList = [...this.listData];
 
   allChecked = false;
@@ -453,7 +453,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   sorted = false;
-  sortValue(prop: PropertyType) {
+  sortValue(prop: VtsPropertyType) {
     if (prop.datatype === 'number') {
       const sortData = this.sorted ? this.displayedData.sort((itemX, itemY) => itemY[prop.propertyName] - itemX[prop.propertyName])
         : this.displayedData.sort((itemX, itemY) => itemX[prop.propertyName] - itemY[prop.propertyName]);

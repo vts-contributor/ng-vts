@@ -1,4 +1,4 @@
-import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, PropertyType, TabGroupConfig, Request, StatusConfig } from '@ui-vts/ng-vts/pro-table';
+import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, VtsPropertyType, TabGroupConfig, VtsRequest, StatusConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 @Component({
@@ -103,7 +103,7 @@ export class VtsDemoProTableBasicComponent {
     }
   ];
 
-  properties: PropertyType[] = [
+  properties: VtsPropertyType[] = [
     {
       propertyName: 'id',
       required: true,
@@ -239,7 +239,7 @@ export class VtsDemoProTableBasicComponent {
     },
   ];
 
-  request: Request = {
+  request: VtsRequest = {
     url: "http://localhost:3000/getData/",
     type: "GET",
     onSuccess: (data: any) => {
@@ -247,7 +247,7 @@ export class VtsDemoProTableBasicComponent {
     },
   }
 
-  getRequest: Request = {
+  getRequest: VtsRequest = {
     url: "http://localhost:3000/getData/",
     type: "GET",
     onSuccess: (data) => {
@@ -255,7 +255,7 @@ export class VtsDemoProTableBasicComponent {
     }
   }
 
-  editRequest: Request = {
+  editRequest: VtsRequest = {
     url: "http://localhost:3000/getData/",
     type: "POST",
     onSuccess: (data) => {
@@ -263,7 +263,7 @@ export class VtsDemoProTableBasicComponent {
     },
   };
 
-  deleteRequest: Request = {
+  deleteRequest: VtsRequest = {
     url: "http://localhost:3000/getData/",
     type: "POST",
     onSuccess: (data) => {
@@ -271,7 +271,7 @@ export class VtsDemoProTableBasicComponent {
     },
   }
 
-  saveRequest: Request = {
+  saveRequest: VtsRequest = {
     url: "http://localhost:3000/posts/",
     type: "POST",
     onSuccess: (data) => {
@@ -279,7 +279,7 @@ export class VtsDemoProTableBasicComponent {
     }
   }
 
-  exportRequest: Request = {
+  exportRequest: VtsRequest = {
     url: "http://localhost:3000/posts/",
     type: "POST",
     onSuccess: (data) => {
@@ -287,7 +287,7 @@ export class VtsDemoProTableBasicComponent {
     }
   }
 
-  configTableRequest: Request = {
+  configTableRequest: VtsRequest = {
     url: "http://localhost:3000/getData/",
     type: "GET"
   }

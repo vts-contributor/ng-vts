@@ -1,5 +1,5 @@
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { PropertyType } from './../pro-table.type';
+import { VtsPropertyType } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -248,8 +248,8 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
 
   @Input() vtsIsCollapse = true;
   @Input() data: { [key: string]: any } = {};
-  @Input() headers: PropertyType[] = [];
-  @Input() properties: PropertyType[] = [];
+  @Input() headers: VtsPropertyType[] = [];
+  @Input() properties: VtsPropertyType[] = [];
   @Input() vtsPageSize: number = 10;
   @Input() vtsPageIndex: number = 1;
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
@@ -257,10 +257,10 @@ export class VtsProTableGroupFilterComponent implements OnDestroy, OnInit, OnCha
   @Output() putSearchData: EventEmitter<string> = new EventEmitter<string>();
   @Output() readonly rowHeightChanger = new EventEmitter<string>();
   @Output() reloadTable = new EventEmitter<boolean>();
-  @Output() onChangeHeaders = new EventEmitter<PropertyType[]>();
+  @Output() onChangeHeaders = new EventEmitter<VtsPropertyType[]>();
 
-  displayedProps: PropertyType[] = [];
-  totalProps: PropertyType[] = [];
+  displayedProps: VtsPropertyType[] = [];
+  totalProps: VtsPropertyType[] = [];
   vtsNoDisplayProperties: number = 0;
   vtsTotalProperties: number = 0;
   vtsOffsetButton = 0;
