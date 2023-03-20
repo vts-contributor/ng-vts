@@ -14,7 +14,7 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 ## API
 
 ### requestData
-`requestData` is the most important API of ProTable, `requestData` takes an array data. Each element of array must have defined properties following with `properties`. `requestData` takes over the `loading` settings and re-executes them when query form is queried.
+`vtsRequestData` is the most important API of ProTable, `vtsRequestData` takes an array data. Each element of array must have defined properties following with `vtsProperties`. `vtsRequestData` takes over the `vtsLoading` settings and re-executes them when query form is queried.
 
 ### VtsRequest
 `VtsRequest` is a format for request defination for getting data or modifying data.
@@ -41,7 +41,7 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | `[align]` | Align data in table | `left, center, right` |
 
 ### Drawer Configuration
-`DrawerConfig` is a format for table drawer defination.
+`VtsDrawerConfig` is a format for table drawer defination.
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
@@ -53,21 +53,22 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | `[onSave]` | Triggered when submit drawer   | `(data: {[key: string]: any}) => void` |
 
 ### TabGroup Configuration
+`VtsTabGroup` is a format for table's tabs defination.
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | `[tabProperty]` | Property key for tabs filtering | `string` |
-| `[tabValueConfig]` | Tab configuration | `TabConfig[]` |
+| `[tabValueConfig]` | Tab configuration | `VtsTabConfig[]` |
 
 ### TabConfig Configuration
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
 | `[tabTitle]` | Tab title for rendering | `string` |
 | `[tabValue]` | Tab value for configuration | `string` |
-| `[tabCondition]` | Condition for filtering | `TabCondition` |
+| `[tabCondition]` | Condition for filtering | `VtsTabCondition` |
 | `[total]` | Total data items with filter | `() => void` |
 
 ### ButtonConfig Configuration
-`ButtonConfig` is a format for more actions rendering.
+`VtsButtonConfig` is a format for more actions rendering.
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
@@ -81,26 +82,26 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[tableTitle]` | The title of table | `string` | `undefined` |
-| `[moreActionConfig]` | The configuration object for more actions rendering | `ButtonConfig[]` |
-| `[tabGroupConfig]` | The configuration object for categorys filtering | `TabGroupConfig` |
-| `[filterGroupConfig]` | The configuration object for data filtering  | `{ [key: string]: any }[]` |
-| `[drawerConfig]` | The configuration object for data filtering  | `DrawerConfig` |
-| `[modalDeleteConfig]` | The configuration object for deletion modal  | `ModalDeleteConfig` |
-| `[modalUploadConfig]` | The configuration object for uploading modal  | `ModalUploadConfig` |
-| `[loading]` | Render loading template, use for server pagination | `boolean` | `false` |
-| `[properties]` | Property array to be render headers | `VtsPropertyType[]` |
-| `[listData]` | Data array to be rendered | `{ [key: string]: VtsSafeAny }[]` |
-| `[requestData]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[getRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[editRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[deleteRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[saveRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[exportRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[configTableRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[listStatus]` | The status array of data item | `StatusConfig[]` |
-| `[pageSize]` | Bind current pageSize | `number` | `10` |
-| `[onPageSizeChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
-| `[onPageIndexChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
-| `[onSuccessEvent]`| Triggered when the request is successed | `EventEmitter<number>()` |
-| `[onErrorEvent]`| Triggered when the request is successed | `EventEmitter<number>()` |
+| `[vtsTableTitle]` | The title of table | `string` | `undefined` |
+| `[vtsMoreActionConfig]` | The configuration object for more actions rendering | `VtsButtonConfig[]` |
+| `[vtsTabGroupConfig]` | The configuration object for categorys filtering | `VtsTabGroupConfig` |
+| `[vtsFilterGroupConfig]` | The configuration object for data filtering  | `{ [key: string]: any }[]` |
+| `[vtsDrawerConfig]` | The configuration object for data filtering  | `VtsDrawerConfig` |
+| `[vtsModalDeleteConfig]` | The configuration object for deletion modal  | `VtsModalDeleteConfig` |
+| `[vtsModalUploadConfig]` | The configuration object for uploading modal  | `VtsModalUploadConfig` |
+| `[vtsLoading]` | Render loading template, use for server pagination | `boolean` | `false` |
+| `[vtsProperties]` | Property array to be render headers | `VtsPropertyType[]` |
+| `[vtsListData]` | Data array to be rendered | `{ [key: string]: VtsSafeAny }[]` |
+| `[vtsRequestData]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsGetRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsEditRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsDeleteRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsSaveRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsExportRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsConfigTableRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
+| `[vtsListStatus]` | The status array of data item | `VtsStatusConfig[]` |
+| `[vtsPageSize]` | Bind current pageSize | `number` | `10` |
+| `[vtsOnPageSizeChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
+| `[vtsOnPageIndexChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
+| `[vtsOnSuccessEvent]`| Triggered when the request is successed | `EventEmitter<number>()` |
+| `[vtsOnErrorEvent]`| Triggered when the request is successed | `EventEmitter<number>()` |

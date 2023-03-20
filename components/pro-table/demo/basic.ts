@@ -1,32 +1,32 @@
-import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, VtsPropertyType, TabGroupConfig, VtsRequest, StatusConfig } from '@ui-vts/ng-vts/pro-table';
+import { VtsButtonConfig, VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsTabGroupConfig, VtsRequest, VtsStatusConfig } from '@ui-vts/ng-vts/pro-table';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'vts-demo-pro-table-basic',
   template: `
     <vts-protable-container 
-      [tableTitle]="tableTitle"
-      [moreActionConfig]="moreAction"
-      [tabGroupConfig]="tabGroupConfig"
-      [properties]="properties" 
-      [requestData]="request"
-      [getRequest]="getRequest"
-      [editRequest]="editRequest"
-      [deleteRequest]="deleteRequest"
-      [saveRequest]="saveRequest"
-      [exportRequest]="exportRequest"
-      [configTableRequest]="configTableRequest"
-      [drawerConfig]="drawerConfig"
-      [listStatus]="listStatus"
-      [modalUploadConfig]="uploadConfig"
-      [modalDeleteConfig]="modalDeleteConfig"
-      [filterGroupConfig]="filterGroupConfig"
+      [vtsTableTitle]="tableTitle"
+      [vtsMoreActionConfig]="moreAction"
+      [vtsTabGroupConfig]="tabGroupConfig"
+      [vtsProperties]="properties" 
+      [vtsRequestData]="request"
+      [vtsGetRequest]="getRequest"
+      [vtsEditRequest]="editRequest"
+      [vtsDeleteRequest]="deleteRequest"
+      [vtsSaveRequest]="saveRequest"
+      [vtsExportRequest]="exportRequest"
+      [vtsConfigTableRequest]="configTableRequest"
+      [vtsDrawerConfig]="drawerConfig"
+      [vtsListStatus]="listStatus"
+      [vtsModalUploadConfig]="uploadConfig"
+      [vtsModalDeleteConfig]="modalDeleteConfig"
+      [vtsFilterGroupConfig]="filterGroupConfig"
     ></vts-protable-container>
   `
 })
 export class VtsDemoProTableBasicComponent {
   tableTitle = "Table Title";
-  moreAction: ButtonConfig[] = [
+  moreAction: VtsButtonConfig[] = [
     {
       buttonText: 'Clear selected',
       style: { 'background': 'red' }
@@ -38,7 +38,7 @@ export class VtsDemoProTableBasicComponent {
     }
   ];
 
-  tabGroupConfig: TabGroupConfig = {
+  tabGroupConfig: VtsTabGroupConfig = {
     tabProperty: 'title',
     tabValueConfig: [
       {
@@ -292,7 +292,7 @@ export class VtsDemoProTableBasicComponent {
     type: "GET"
   }
 
-  listStatus: StatusConfig[] = [
+  listStatus: VtsStatusConfig[] = [
     {
       text: "New",
       color: "success",
@@ -320,18 +320,18 @@ export class VtsDemoProTableBasicComponent {
     },
   ]
 
-  uploadConfig: ModalUploadConfig = {
+  uploadConfig: VtsModalUploadConfig = {
     acceptTypes: ".png, .jpg, .jpeg",
     maxFileSizeInKB: 1024000
   };
 
-  modalDeleteConfig: ModalDeleteConfig = {
+  modalDeleteConfig: VtsModalDeleteConfig = {
     title: "Confirm delete",
     content: ""
   }
 
   isDrawerOpened: boolean = false;
-  drawerConfig: DrawerConfig = {
+  drawerConfig: VtsDrawerConfig = {
     openWith: "drawer",
     entityName: "post",
     showTitleBasedOnProp: "id",

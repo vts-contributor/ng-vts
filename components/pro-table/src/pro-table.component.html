@@ -1,8 +1,8 @@
 <link rel="stylesheet" type="text/css"
   href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-<div [ngStyle]="{'display': 'flex', 'flex-direction':'row', 'justify-content':tableTitle?'space-between':'right'}">
-  <ng-container *ngIf="tableTitle">
-    <span class="title-table">{{tableTitle}}</span>
+<div [ngStyle]="{'display': 'flex', 'flex-direction':'row', 'justify-content':vtsTableTitle?'space-between':'right'}">
+  <ng-container *ngIf="vtsTableTitle">
+    <span class="title-table">{{vtsTableTitle}}</span>
   </ng-container>
   <div vts-col class="btn-control-area">
     <button vts-button vtsType="default" [vtsSize]="buttonSize" class="btn-default" (click)="onClickAction('new')">
@@ -20,7 +20,7 @@
       Import
     </button>
 
-    <ng-container *ngIf="moreActionConfig">
+    <ng-container *ngIf="vtsMoreActionConfig">
       <vts-button-group [vtsSize]="buttonSize" vtsType="primary" vts-dropdown vtsTrigger="click"
         [vtsDropdownMenu]="moreAction">
         <button vts-button vtsType="primary" class="btn-table-config btn-more-action btn-more-action-content"
@@ -34,7 +34,7 @@
       </vts-button-group>
       <vts-dropdown-menu #moreAction="vtsDropdownMenu">
         <ul vts-menu style="padding: 0px">
-          <ng-container *ngFor="let action of moreActionConfig">
+          <ng-container *ngFor="let action of vtsMoreActionConfig">
             <li vts-menu-item [ngStyle]="action.style">{{action.buttonText}}</li>
           </ng-container>
         </ul>
@@ -43,9 +43,9 @@
   </div>
 </div>
 
-<ng-container *ngIf="tabGroupConfig; else tableArea">
+<ng-container *ngIf="vtsTabGroupConfig; else tableArea">
   <vts-tabset [(vtsSelectedIndex)]="selectedTabIndex" (vtsSelectedIndexChange)="onChangeTabFilter($event)">
-    <ng-container *ngFor="let tabConfig of tabGroupConfig.tabValueConfig">
+    <ng-container *ngFor="let tabConfig of vtsTabGroupConfig.tabValueConfig">
       <vts-tab vtsTitle="{{tabConfig.tabTitle}} ({{tabConfig.total? tabConfig.total : 0}})">
       </vts-tab>
     </ng-container>
@@ -54,13 +54,14 @@
 </ng-container>
 
 <ng-template #tableArea>
-  <vts-spin [vtsSpinning]="loading">
-    <vts-table-config [listData]="listData" [properties]="properties" [requestData]="requestData"
-      [getRequest]="getRequest" [editRequest]="editRequest" [deleteRequest]="deleteRequest" [saveRequest]="saveRequest"
-      [exportRequest]="exportRequest" [configTableRequest]="configTableRequest" [filterGroupConfig]="filterGroupConfig"
-      [searchData]="searchData" (reloadTable)="reloadTable($event)" [drawerConfig]="drawerConfig"
-      [listStatus]="listStatus" [modalUploadConfig]="modalUploadConfig" [modalDeleteConfig]="modalDeleteConfig"
-      [vtsTotal]="vtsTotal" [action]="actionType" [tabConfig]="tabConfig" [moreActionConfig]="moreActionConfig">
+  <vts-spin [vtsSpinning]="vtsLoading">
+    <vts-table-config [listData]="vtsListData" [properties]="vtsProperties" [requestData]="vtsRequestData"
+      [getRequest]="vtsGetRequest" [editRequest]="vtsEditRequest" [deleteRequest]="vtsDeleteRequest"
+      [saveRequest]="vtsSaveRequest" [exportRequest]="vtsExportRequest" [configTableRequest]="vtsConfigTableRequest"
+      [filterGroupConfig]="vtsFilterGroupConfig" [searchData]="searchData" (reloadTable)="reloadTable($event)"
+      [drawerConfig]="vtsDrawerConfig" [listStatus]="vtsListStatus" [modalUploadConfig]="vtsModalUploadConfig"
+      [modalDeleteConfig]="vtsModalDeleteConfig" [vtsTotal]="vtsTotal" [action]="actionType"
+      [tabConfig]="tabConfig" [moreActionConfig]="vtsMoreActionConfig">
     </vts-table-config>
   </vts-spin>
 </ng-template>

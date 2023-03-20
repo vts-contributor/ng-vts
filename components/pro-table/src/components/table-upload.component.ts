@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
-import { ModalUploadConfig } from '../pro-table.type';
+import { VtsModalUploadConfig } from '../pro-table.type';
 
 @Component({
   selector: 'table-upload',
@@ -10,7 +10,7 @@ export class VtsTableUploadComponent implements OnInit {
   constructor() { }
 
   @Input() isVisibleUpload: boolean = false;
-  @Input() config: ModalUploadConfig | undefined;
+  @Input() config: VtsModalUploadConfig | undefined;
 
   @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() submit: EventEmitter<boolean> = new EventEmitter<boolean>();

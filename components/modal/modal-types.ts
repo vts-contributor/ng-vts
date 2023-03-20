@@ -64,7 +64,7 @@ export class ModalOptions<T = VtsSafeAny, R = VtsSafeAny> {
 
 export interface ModalButtonOptions<T = VtsSafeAny> {
   label: string;
-  type?: VtsButtonType | any;
+  type?: VtsButtonType | VtsSafeAny;
   danger?: boolean;
   shape?: VtsButtonShape;
   ghost?: boolean;

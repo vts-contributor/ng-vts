@@ -1,4 +1,4 @@
-import { ButtonConfig, TabConfig } from './../pro-table.type';
+import { VtsButtonConfig, VtsTabConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -19,7 +19,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { DrawerConfig, ModalDeleteConfig, ModalUploadConfig, VtsPropertyType, VtsRequest, StatusConfig, ViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsRequest, VtsStatusConfig, VtsViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
 
@@ -45,9 +45,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() isVisibleDelete: boolean = false;
   @Input() isOkLoadingDelete = false;
   private itemIdToDelete: string | number = '';
-  @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
-  @Input() modalUploadConfig: ModalUploadConfig | undefined;
-  @Input() drawerConfig: DrawerConfig | undefined;
+  @Input() modalDeleteConfig: VtsModalDeleteConfig | undefined;
+  @Input() modalUploadConfig: VtsModalUploadConfig | undefined;
+  @Input() drawerConfig: VtsDrawerConfig | undefined;
   @Input() isVisibleUpload = false;
   @Input() visibleDrawer = false;
   @Input() placementDrawer: VtsDrawerPlacement = 'right';
@@ -69,12 +69,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() configTableRequest: VtsRequest | undefined;
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() pageSize = 10;
-  @Input() listStatus: StatusConfig[] = [];
+  @Input() listStatus: VtsStatusConfig[] = [];
   @Input() action: { 'key': string } = {
     key: ''
   };
-  @Input() tabConfig: TabConfig | undefined;
-  @Input() moreActionConfig: ButtonConfig[] | undefined;
+  @Input() tabConfig: VtsTabConfig | undefined;
+  @Input() moreActionConfig: VtsButtonConfig[] | undefined;
 
   vtsRowHeight: string = '48px';
   loading: boolean = false;
@@ -90,7 +90,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   setOfCheckedId = new Set<string>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
-  mode: ViewMode = 'view';
+  mode: VtsViewMode = 'view';
 
   listDisplayedData = [];
   displayedData: { [key: string]: any }[] = [];
@@ -497,7 +497,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   getSelectedStatus(value: string) {
-    let selectedObjStatus: StatusConfig = this.listStatus.filter(s => s.value == value)[0];
+    let selectedObjStatus: VtsStatusConfig = this.listStatus.filter(s => s.value == value)[0];
     if (selectedObjStatus) {
       return selectedObjStatus;
     }
@@ -583,7 +583,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     }
   }
 
-  onModeChanger(event: ViewMode) {
+  onModeChanger(event: VtsViewMode) {
     if (event) {
       this.mode = event;
     }

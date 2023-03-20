@@ -1,4 +1,4 @@
-import { ButtonConfig } from './../pro-table.type';
+import { VtsButtonConfig } from './../pro-table.type';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
@@ -87,7 +87,7 @@ export class VtsProTableSelectedLabelConfigComponent implements OnDestroy, OnIni
   controlArray: Array<{ index: number; show: boolean, title: string | undefined, controlKey: string }> = [];
 
   @Input() selectedItemsAmount = 0;
-  @Input() moreActionConfig:  ButtonConfig[] | undefined;
+  @Input() moreActionConfig:  VtsButtonConfig[] | undefined;
 
   @Output() clearAllSelectedItems = new EventEmitter<boolean>();
   @Output() deleteSelectedItems = new EventEmitter<boolean>();

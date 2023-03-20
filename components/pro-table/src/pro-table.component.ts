@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
-import { ButtonConfig, DrawerConfig, ModalDeleteConfig, ModalUploadConfig, VtsPropertyType, VtsRequest, StatusConfig, TabGroupConfig } from './pro-table.type';
+import { VtsButtonConfig, VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsRequest, VtsStatusConfig, VtsTabGroupConfig } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
   // ChangeDetectionStrategy,
@@ -98,33 +98,33 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
     this.elementRef.nativeElement.classList.add('vts-protable-container');
   }
 
-  @Input() tableTitle: string | undefined;
-  @Input() moreActionConfig: ButtonConfig[] | undefined;
-  @Input() tabGroupConfig: TabGroupConfig | undefined;
-  @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
-  @Input() loading: boolean = false;
-  @Input() properties: VtsPropertyType[] = [];
-  @Input() listData: { [key: string]: VtsSafeAny }[] = [];
-  @Input() pageIndex: number = 1;
-  @Input() pageSize: number = 10;
-  @Input() onSuccess: VtsSafeAny = () => { };
-  @Input() onError: VtsSafeAny = () => { };
-  @Input() requestData: VtsRequest | undefined;
-  @Input() getRequest: VtsRequest | undefined;
-  @Input() editRequest: VtsRequest | undefined;
-  @Input() deleteRequest: VtsRequest | undefined;
-  @Input() saveRequest: VtsRequest | undefined;
-  @Input() exportRequest: VtsRequest | undefined;
-  @Input() configTableRequest: VtsRequest | undefined;
-  @Input() drawerConfig: DrawerConfig | undefined;
-  @Input() listStatus: StatusConfig[] = [];
-  @Input() modalDeleteConfig: ModalDeleteConfig | undefined;
-  @Input() modalUploadConfig: ModalUploadConfig | undefined;
+  @Input() vtsTableTitle: string | undefined;
+  @Input() vtsMoreActionConfig: VtsButtonConfig[] | undefined;
+  @Input() vtsTabGroupConfig: VtsTabGroupConfig | undefined;
+  @Input() vtsFilterGroupConfig: { [key: string]: any }[] | undefined;
+  @Input() vtsLoading: boolean = false;
+  @Input() vtsProperties: VtsPropertyType[] = [];
+  @Input() vtsListData: { [key: string]: VtsSafeAny }[] = [];
+  @Input() vtsPageIndex: number = 1;
+  @Input() vtsPageSize: number = 10;
+  @Input() vtsOnSuccess: VtsSafeAny = () => { };
+  @Input() vtsOnError: VtsSafeAny = () => { };
+  @Input() vtsRequestData: VtsRequest | undefined;
+  @Input() vtsGetRequest: VtsRequest | undefined;
+  @Input() vtsEditRequest: VtsRequest | undefined;
+  @Input() vtsDeleteRequest: VtsRequest | undefined;
+  @Input() vtsSaveRequest: VtsRequest | undefined;
+  @Input() vtsExportRequest: VtsRequest | undefined;
+  @Input() vtsConfigTableRequest: VtsRequest | undefined;
+  @Input() vtsDrawerConfig: VtsDrawerConfig | undefined;
+  @Input() vtsListStatus: VtsStatusConfig[] = [];
+  @Input() vtsModalDeleteConfig: VtsModalDeleteConfig | undefined;
+  @Input() vtsModalUploadConfig: VtsModalUploadConfig | undefined;
 
-  @Output() onPageSizeChanger = new EventEmitter<number>();
-  @Output() onPageIndexChanger = new EventEmitter<number>();
-  @Output() onSuccessEvent = new EventEmitter<VtsSafeAny>();
-  @Output() onErrorEvent = new EventEmitter<VtsSafeAny>();
+  @Output() vtsOnPageSizeChanger = new EventEmitter<number>();
+  @Output() vtsOnPageIndexChanger = new EventEmitter<number>();
+  @Output() vtsOnSuccessEvent = new EventEmitter<VtsSafeAny>();
+  @Output() vtsOnErrorEvent = new EventEmitter<VtsSafeAny>();
 
   searchData: Object = {};
   vtsTotal: number = 0;
@@ -138,28 +138,28 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.requestData) {
+    if (changes.vtsRequestData) {
       // this.getRenderData(this.requestData);
     }
 
-    if (changes.tabGroupConfig) {
+    if (changes.vtsTabGroupConfig) {
       this.getTotalDataWithTabConfig();
     }
 
-    if (changes.properties) {
-      this.publicProperties = changes.properties.currentValue.filter((prop: VtsPropertyType) => prop.headerTitle);
+    if (changes.vtsProperties) {
+      this.publicProperties = changes.vtsProperties.currentValue.filter((prop: VtsPropertyType) => prop.headerTitle);
     }
   }
 
   getRenderData(request?: VtsRequest) {
     if (request && request.url) {
       let { onSuccess, onError } = request;
-      this.loading = true;
-      request.url += `?_page=${this.pageIndex}&_limit=${this.pageSize}`
+      this.vtsLoading = true;
+      request.url += `?_page=${this.vtsPageIndex}&_limit=${this.vtsPageSize}`;
       this.service.getRenderData({ ...request }).subscribe(data => {
-        this.listData = [...data.body];
+        this.vtsListData = [...data.body];
         this.vtsTotal = +data.headers.get('X-Total-Count');
-        this.loading = false;
+        this.vtsLoading = false;
         if (onSuccess) {
           onSuccess(data);
         }
@@ -168,20 +168,20 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
         if (onError) {
           onError(error);
         }
-        this.loading = false;
+        this.vtsLoading = false;
       });
     }
   }
 
   searchDataByForm(event: { [key: string]: any }) {
-    if (event && typeof this.requestData !== `undefined`) {
-      let { onSuccess, onError } = this.requestData;
+    if (event && typeof this.vtsRequestData !== `undefined`) {
+      let { onSuccess, onError } = this.vtsRequestData;
       this.searchData = event;
-      this.requestData.body = event;
-      this.service.getRenderData({ ...this.requestData }).subscribe(data => {
-        this.listData = [...data.body];
+      this.vtsRequestData.body = event;
+      this.service.getRenderData({ ...this.vtsRequestData }).subscribe(data => {
+        this.vtsListData = [...data.body];
         this.vtsTotal = +data.headers.get('X-Total-Count');
-        this.loading = false;
+        this.vtsLoading = false;
         if (onSuccess) {
           onSuccess(data);
         }
@@ -195,20 +195,20 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   }
 
   reloadTable(event: boolean) {
-    if (event && this.requestData) {
-      let { onSuccess, onError } = this.requestData;
-      let url = this.requestData.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
+    if (event && this.vtsRequestData) {
+      let { onSuccess, onError } = this.vtsRequestData;
+      let url = this.vtsRequestData.url.split('?')[0] + `?_page=1&_limit=${this.vtsPageSize}`;
 
-      this.service.getRenderData({ ...this.requestData, url }).subscribe(data => {
-        this.listData = [...data.body];
+      this.service.getRenderData({ ...this.vtsRequestData, url }).subscribe(data => {
+        this.vtsListData = [...data.body];
         this.vtsTotal = +data.headers.get('X-Total-Count');
-        this.loading = false;
+        this.vtsLoading = false;
         if (onSuccess) {
           onSuccess(data);
         }
         this.changeDetector.detectChanges();
       }, error => {
-        this.listData = [];
+        this.vtsListData = [];
         if (onError) {
           onError(error);
         }
@@ -225,30 +225,30 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   }
 
   getTotalDataWithTabConfig() {
-    const tabArray = this.tabGroupConfig?.tabValueConfig;
+    const tabArray = this.vtsTabGroupConfig?.tabValueConfig;
     const urlsFork = [];
     if (tabArray) {
-      if (this.requestData) {
+      if (this.vtsRequestData) {
         for (let i = 0; i < tabArray.length; i++) {
-          let url = this.requestData.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
+          let url = this.vtsRequestData.url.split('?')[0] + `?_page=1&_limit=${this.vtsPageSize}`;
           if (tabArray[i].tabCondition) {
-            url += `&${this.tabGroupConfig?.tabProperty}=${tabArray[i].tabCondition?.threshold}`
+            url += `&${this.vtsTabGroupConfig?.tabProperty}=${tabArray[i].tabCondition?.threshold}`
           }
           urlsFork.push(this.httpClient.get(url, { observe: 'response' }));
         }
 
-        let { onSuccess, onError } = this.requestData;
+        let { onSuccess, onError } = this.vtsRequestData;
         forkJoin(urlsFork).subscribe(res => {
           this.totalDataWithFilter = res;
-          if (this.tabGroupConfig) {
-            for (let i = 0; i < this.tabGroupConfig.tabValueConfig.length; i++) {
-              this.tabGroupConfig.tabValueConfig[i].total = +this.totalDataWithFilter[i].headers.get('X-Total-Count');
+          if (this.vtsTabGroupConfig) {
+            for (let i = 0; i < this.vtsTabGroupConfig.tabValueConfig.length; i++) {
+              this.vtsTabGroupConfig.tabValueConfig[i].total = +this.totalDataWithFilter[i].headers.get('X-Total-Count');
             }
           }
-          this.listData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
+          this.vtsListData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
           this.vtsTotal = +this.totalDataWithFilter[this.selectedTabIndex].headers.get('X-Total-Count');
           if (onSuccess) {
-            this.onSuccess(res);
+            onSuccess(res);
           }
         }, error => {
           if (onError) {
@@ -260,10 +260,10 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   }
 
   onChangeTabFilter(event: number) {
-    this.pageIndex = 1;
+    this.vtsPageIndex = 1;
     this.selectedTabIndex = event;
-    this.tabConfig = this.tabGroupConfig?.tabValueConfig[event];
-    this.listData = [...this.totalDataWithFilter[event].body];
+    this.tabConfig = this.vtsTabGroupConfig?.tabValueConfig[event];
+    this.vtsListData = [...this.totalDataWithFilter[event].body];
     this.vtsTotal = +this.totalDataWithFilter[event].headers.get('X-Total-Count');
   }
 }

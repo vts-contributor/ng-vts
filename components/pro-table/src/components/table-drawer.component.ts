@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitte
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 import { ProtableService } from '../pro-table.service';
-import { DrawerConfig, VtsPropertyType, VtsRequest, StatusConfig, ViewMode } from '../pro-table.type';
+import { VtsDrawerConfig, VtsPropertyType, VtsRequest, VtsStatusConfig, VtsViewMode } from '../pro-table.type';
 
 @Component({
   selector: 'table-drawer',
@@ -59,12 +59,12 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
    * decide component is open or not
    */
   @Input() open: boolean = false;
-  @Input() mode: ViewMode = 'view';
+  @Input() mode: VtsViewMode = 'view';
   @Input() data: { [key: string]: any } = {};
   @Input() headers: VtsPropertyType[] = [];
   @Input() saveRequest: VtsRequest | undefined;
-  @Input() drawerConfig: DrawerConfig | undefined;
-  @Input() listStatus: StatusConfig[] = [];
+  @Input() drawerConfig: VtsDrawerConfig | undefined;
+  @Input() listStatus: VtsStatusConfig[] = [];
 
   /**
    * decide drawer or modal component is open, depends on [open]
@@ -80,7 +80,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   datePickerSize: VtsSizeLDSType = 'md';
 
   @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() modeChanger: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
+  @Output() modeChanger: EventEmitter<VtsViewMode> = new EventEmitter<VtsViewMode>();
   @Output() createAnotherData: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() changeItemStatus: EventEmitter<string | number> = new EventEmitter<string | number>();
   @Output() deleteItem: EventEmitter<string | number> = new EventEmitter<string | number>();
@@ -172,7 +172,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       this.selectedStatus = { ...selectedStatus };
   }
 
-  setTitle(config: DrawerConfig) {
+  setTitle(config: VtsDrawerConfig) {
     let modeTitle: string = "";
     let entityDetailOnTitle: string = "";
     switch (this.mode) {
@@ -250,7 +250,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   }
 
   getSelectedStatus(value: string) {
-    let selectedObjStatus: StatusConfig = this.listStatus.filter(s => s.value == value)[0];
+    let selectedObjStatus: VtsStatusConfig = this.listStatus.filter(s => s.value == value)[0];
     if (selectedObjStatus) {
       return selectedObjStatus;
     }

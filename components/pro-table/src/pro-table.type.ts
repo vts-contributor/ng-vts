@@ -1,27 +1,4 @@
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-export type SortOrder = 'descend' | 'ascend' | null;
-
-export type Breakpoint = 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
-
-export type BorderedType = 'search' | 'table';
-
-export type Bordered =
-  | boolean
-  | {
-    search?: boolean;
-    table?: boolean;
-  };
-
-export type SizeType = 'small' | 'middle' | 'large' | undefined;
-
-export const defaultColConfig = {
-  xs: 24,
-  sm: 24,
-  md: 12,
-  lg: 12,
-  xl: 8,
-  xxl: 6,
-};
 
 export type VtsPropertyType = {
   headerTitle?: string;
@@ -42,9 +19,9 @@ export type VtsRequest = {
   onError?: (data: {[key: string]: VtsSafeAny}) => void
 }
 
-export type ViewMode = "view" | "edit" | "create" | "create-another";
+export type VtsViewMode = "view" | "edit" | "create" | "create-another";
 
-export type DrawerConfig = {
+export type VtsDrawerConfig = {
   openWith: "drawer" | "modal",
   entityName: string,
   showTitleBasedOnProp?: string,
@@ -53,46 +30,46 @@ export type DrawerConfig = {
   onSave?: (data: {[key: string]: any}) => void,
 }
 
-export type StatusConfig = {
+export type VtsStatusConfig = {
   text: string,
   color: string,
   value: string | number
 }
 
-export type ModalConfig = {
+export type VtsModalConfig = {
   title?: string,
   content?: string
 }
 
-export type ModalDeleteConfig = ModalConfig & {
+export type VtsModalDeleteConfig = VtsModalConfig & {
   entityName?: string,
   showNameBasedOnProp?: string,
   type?: string
 }
 
-export type ModalUploadConfig = ModalConfig & {
+export type VtsModalUploadConfig = VtsModalConfig & {
   acceptTypes?: string,
   maxFileSizeInKB?: number
 }
 
-export type TabGroupConfig = {
+export type VtsTabGroupConfig = {
   tabProperty: string,
-  tabValueConfig: TabConfig[]
+  tabValueConfig: VtsTabConfig[]
 }
 
-export type TabConfig = {
+export type VtsTabConfig = {
   tabTitle: string,
   tabValue: string,
-  tabCondition?: TabCondition,
+  tabCondition?: VtsTabCondition,
   total?: number
 };
 
-export type TabCondition = {
+export type VtsTabCondition = {
   operation: string[],
   threshold: any[]
 };
 
-export type ButtonConfig = {
+export type VtsButtonConfig = {
   buttonText: string,
   buttonAPI?: VtsRequest,
   style: {[key: string]: string},
@@ -128,3 +105,9 @@ export type VtsTableSortFn = (
 ) => number;
 export type VtsTableFilterValue = VtsSafeAny[] | VtsSafeAny;
 export type VtsTableFilterFn = (value: VtsTableFilterValue, data: VtsTableData) => boolean;
+export interface VtsTableQueryParams {
+  pageIndex: number;
+  pageSize: number;
+  sort: Array<{ key: string; value: VtsTableSortOrder }>;
+  filter: Array<{ key: string; value: VtsTableFilterValue }>;
+}
