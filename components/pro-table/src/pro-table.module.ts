@@ -77,7 +77,7 @@ import { VtsFilterTriggerComponent } from './components/filter-trigger.component
     VtsProTableSearchFormComponent,
     VtsProTableGroupFilterComponent,
     VtsProTableConfigComponent,
-    VtsProTableSelectedLabelConfigComponent
+    VtsProTableSelectedLabelConfigComponent,
   ],
   imports: [
     BidiModule,

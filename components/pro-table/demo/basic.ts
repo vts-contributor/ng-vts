@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { VtsButtonConfig, VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsTabGroupConfig, VtsRequest, VtsStatusConfig } from '@ui-vts/ng-vts/pro-table';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 
 @Component({
   selector: 'vts-demo-pro-table-basic',
@@ -8,23 +11,29 @@ import { Component } from '@angular/core';
       [vtsTableTitle]="tableTitle"
       [vtsMoreActionConfig]="moreAction"
       [vtsTabGroupConfig]="tabGroupConfig"
-      [vtsProperties]="properties" 
-      [vtsRequestData]="request"
-      [vtsGetRequest]="getRequest"
-      [vtsEditRequest]="editRequest"
-      [vtsDeleteRequest]="deleteRequest"
-      [vtsSaveRequest]="saveRequest"
-      [vtsExportRequest]="exportRequest"
-      [vtsConfigTableRequest]="configTableRequest"
+      [vtsListData]="listData"
+      [vtsProperties]="properties"
       [vtsDrawerConfig]="drawerConfig"
       [vtsListStatus]="listStatus"
       [vtsModalUploadConfig]="uploadConfig"
       [vtsModalDeleteConfig]="modalDeleteConfig"
       [vtsFilterGroupConfig]="filterGroupConfig"
+      [vtsTotal]="total"
+      (vtsOnActionChanger)="onActionChanger($event)"
+      (vtsOnTabFilterChanger)="onChangeTabFilter($event)"
+      (vtsOnSearchingByKey)="onSearchingByKey($event)"
     ></vts-protable-container>
   `
 })
-export class VtsDemoProTableBasicComponent {
+export class VtsDemoProTableBasicComponent implements OnInit {
+  constructor(
+    private httpClient: HttpClient
+  ) { }
+
+  ngOnInit(): void {
+    this.getTotalDataWithTabConfig();
+  }
+
   tableTitle = "Table Title";
   moreAction: VtsButtonConfig[] = [
     {
@@ -72,35 +81,103 @@ export class VtsDemoProTableBasicComponent {
     ]
   }
 
-  listData = [
-    {
-      "id": 1,
-      "title": "success",
-      "author": "typicode",
-      "num": 10
-    },
-    {
-      "id": 2,
-      "title": "warning",
-      "author": "typicode1"
-    },
-    {
-      "id": 3,
-      "title": "default",
-      "author": "typicode1",
-      "num": 100000
-    },
-    {
-      "id": 4,
-      "title": "processing",
-      "author": "typicode1"
-    },
-    {
-      "id": 5,
-      "title": "error",
-      "author": "typicode1",
-      "num": 100000
-    }
+  listData: { [key: string]: VtsSafeAny }[] = [
+    // {
+    //   "id": 1,
+    //   "content": "content",
+    //   "title": "success",
+    //   "author": "typicode1",
+    //   "num": 10000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 2,
+    //   "content": "content",
+    //   "title": "error",
+    //   "author": "typicode2",
+    //   "num": 20000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 3,
+    //   "content": "content",
+    //   "title": "processing",
+    //   "author": "typicode3",
+    //   "num": 30000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 4,
+    //   "content": "content",
+    //   "title": "warning",
+    //   "author": "typicode4",
+    //   "num": 40000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 5,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode5",
+    //   "num": 50000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 6,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode6",
+    //   "num": 60000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 7,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode7",
+    //   "num": 70000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 8,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode8",
+    //   "num": 80000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 9,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode9",
+    //   "num": 90000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 10,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode10",
+    //   "num": 100000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 11,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode11",
+    //   "num": 110000,
+    //   "birth": "2023/03/08 00:00:00"
+    // },
+    // {
+    //   "id": 12,
+    //   "content": "content",
+    //   "title": "json-server",
+    //   "author": "typicode12",
+    //   "num": 120000,
+    //   "birth": "2023/03/08 00:00:00"
+    // }
   ];
 
   properties: VtsPropertyType[] = [
@@ -356,4 +433,74 @@ export class VtsDemoProTableBasicComponent {
   setOfCheckedId = new Set<string>();
   noCheckedItems = 0;
   searchTerms: any = {};
+  totalDataWithFilter: VtsSafeAny[] = [];
+  selectedTabIndex: number = 0;
+  total: number = 0;
+
+  onActionChanger(event: string) {
+    switch(event) {
+      case 'reload': {
+        this.getTotalDataWithTabConfig();
+        break;
+      }
+      default: {
+        alert(event);
+        break;
+      }
+    }
+  }
+
+  getTotalDataWithTabConfig() {
+    if (this.tabGroupConfig && typeof this.tabGroupConfig.tabValueConfig != 'undefined') {
+      const tabArray = this.tabGroupConfig.tabValueConfig;
+      const urlsFork = [];
+      if (tabArray) {
+        if (this.request) {
+          for (let i = 0; i < tabArray.length; i++) {
+            let url = this.request.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
+            if (tabArray[i].tabCondition) {
+              url += `&${this.tabGroupConfig?.tabProperty}=${tabArray[i].tabCondition?.threshold}`
+            }
+            urlsFork.push(this.httpClient.get(url, { observe: 'response' }));
+          }
+  
+          let { onSuccess, onError } = this.request;
+          forkJoin(urlsFork).subscribe(res => {
+            this.totalDataWithFilter = res;
+            if (typeof this.tabGroupConfig != 'undefined' && typeof this.tabGroupConfig.tabValueConfig != 'undefined') {
+              for (let i = 0; i < this.tabGroupConfig.tabValueConfig.length; i++) {
+                this.tabGroupConfig.tabValueConfig[i].total = +this.totalDataWithFilter[i].headers.get('X-Total-Count');
+              }
+            }
+            this.listData = [...this.totalDataWithFilter[this.selectedTabIndex].body];
+            this.total = +this.totalDataWithFilter[this.selectedTabIndex].headers.get('X-Total-Count');
+            if (onSuccess) {
+              onSuccess(res);
+            }
+          }, error => {
+            if (onError) {
+              onError(error);
+            }
+          })
+        }
+      }
+    } else {
+      let url = this.request.url.split('?')[0] + `?_page=1&_limit=${this.pageSize}`;
+      this.httpClient.get(url, { observe: 'response' }).subscribe(res => {
+        const data = res.body as VtsSafeAny;
+        this.listData = [...data];
+        this.total = +res.headers.get('X-Total-Count')!;
+      })
+    }
+  }
+
+  onChangeTabFilter(event: number) {
+    this.selectedTabIndex = event;
+    this.listData = [...this.totalDataWithFilter[event].body];
+    this.total = +this.totalDataWithFilter[event].headers.get('X-Total-Count');
+  }
+
+  onSearchingByKey(event: VtsSafeAny) {
+    console.log(event);
+  }
 }

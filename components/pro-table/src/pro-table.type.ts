@@ -53,8 +53,8 @@ export type VtsModalUploadConfig = VtsModalConfig & {
 }
 
 export type VtsTabGroupConfig = {
-  tabProperty: string,
-  tabValueConfig: VtsTabConfig[]
+  tabProperty?: string,
+  tabValueConfig?: VtsTabConfig[]
 }
 
 export type VtsTabConfig = {
@@ -111,3 +111,5 @@ export interface VtsTableQueryParams {
   sort: Array<{ key: string; value: VtsTableSortOrder }>;
   filter: Array<{ key: string; value: VtsTableFilterValue }>;
 }
+
+export type VtsActionType = 'create' | 'create-another' | 'edit' | 'delete' | 'import' | 'export' | 'view' | 'more' | 'reload';

@@ -109,10 +109,10 @@
   (cancel)="handleCancelUpload()" (change)="handleChangeUpload($event)"></table-upload>
 
 <!-- Create, view, edit -->
-<table-drawer [saveRequest]="saveRequest" [headers]="properties" [open]="visibleDrawer" [drawerConfig]="drawerConfig"
-  [listStatus]="listStatus" [mode]="mode" [data]="drawerData" (close)="closeDrawer()"
-  (modeChanger)="onModeChanger($event)" (createAnotherData)="onCreateAnotherData($event)"
-  (changeItemStatus)="onChangeItemStatus($event)" (deleteItem)="onDeleteItem($event)"></table-drawer>
+<table-drawer [headers]="properties" [open]="visibleDrawer" [drawerConfig]="drawerConfig" [listStatus]="listStatus"
+  [mode]="mode" [data]="drawerData" (close)="closeDrawer()" (modeChanger)="onModeChanger($event)"
+  (createAnotherData)="onCreateAnotherData($event)" (changeItemStatus)="onChangeItemStatus($event)"
+  (deleteItem)="onDeleteItem($event)"></table-drawer>
 
 <!-- Modal download -->
 <vts-drawer [vtsVisible]="visibleExport" [vtsPlacement]="'bottom'" [vtsMask]="false" vtsHeight="80px">

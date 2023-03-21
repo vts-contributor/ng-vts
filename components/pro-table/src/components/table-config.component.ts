@@ -19,9 +19,8 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import _ from 'lodash';
-import { VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsRequest, VtsStatusConfig, VtsViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
+import { VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsStatusConfig, VtsViewMode, VtsProTablePaginationPosition } from '../pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { ProtableService } from '../pro-table.service';
 
 @Component({
   selector: 'vts-table-config',
@@ -58,15 +57,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Input() vtsPageSize: number = 10;
   @Input() vtsPageIndex: number = 1;
   @Input() vtsTotal: number = 0;
-  @Input() requestData: VtsRequest | undefined;
-  @Input() getRequest: VtsRequest | undefined;
-  @Input() editRequest: VtsRequest | undefined;
-  @Input() deleteRequest: VtsRequest | undefined;
-  @Input() saveRequest: VtsRequest | undefined;
-  @Input() exportRequest: VtsRequest | undefined;
-  @Input() searchRequest: VtsRequest | undefined;
   @Input() searchData: Object | VtsSafeAny;
-  @Input() configTableRequest: VtsRequest | undefined;
   @Input() filterGroupConfig: { [key: string]: any }[] | undefined;
   @Input() pageSize = 10;
   @Input() listStatus: VtsStatusConfig[] = [];
@@ -83,6 +74,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() reloadTable = new EventEmitter<boolean>();
   @Output() onChangeHeaders = new EventEmitter<VtsPropertyType[]>();
   @Output() changePageSize = new EventEmitter<number>();
+  @Output() searchingByKey = new EventEmitter<string>();
 
   pageIndex = 1;
   checked = false;
@@ -104,7 +96,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   constructor(
     private elementRef: ElementRef,
     @Optional() private directionality: Directionality,
-    private service: ProtableService,
     private changeDetector: ChangeDetectorRef
   ) {
     this.elementRef.nativeElement.classList.add('vts-table-config');
@@ -170,44 +161,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         this.onAllChecked(false);
         break;
       case 'delete-multiple':
-        if (this.deleteRequest) {
-          let url = this.deleteRequest.url;
-          this.deleteRequest.body = this.setOfCheckedId;
-          url += 'multiple-delete';
-          let { onSuccess, onError } = this.deleteRequest;
-
-          this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
-            if (onSuccess) {
-              onSuccess(data);
-            }
-            this.visibleDrawer = true;
-            this.changeDetector.detectChanges();
-          }, error => {
-            if (onError) {
-              onError(error);
-            }
-          });
+        if (this) {
+          console.log(this.setOfCheckedId);
         }
         break;
       default:
         if (this.itemIdToDelete) {
-          if (this.deleteRequest) {
-            let url = this.deleteRequest.url;
-            url += this.itemIdToDelete;
-            let { onSuccess, onError } = this.deleteRequest;
-
-            this.service.deleteItem({ ...this.deleteRequest, url }).subscribe(data => {
-              if (onSuccess) {
-                onSuccess(data);
-              }
-              this.visibleDrawer = true;
-              this.changeDetector.detectChanges();
-            }, error => {
-              if (onError) {
-                onError(error);
-              }
-            });
-          }
+          console.log(this.itemIdToDelete);
         }
         break;
     }
@@ -323,20 +283,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onEditDataItem(itemId?: number | string) {
     this.mode = 'edit';
-    if (this.getRequest) {
-      let url = this.getRequest.url;
-      url += itemId;
-      let { onSuccess, onError } = this.getRequest;
-
-      this.service.getDataById({ ...this.getRequest, url }).subscribe(data => {
-        if (onSuccess) onSuccess(data);
-        this.drawerData = { ...data };
-        this.visibleDrawer = true;
-        this.changeDetector.detectChanges();
-      }, error => {
-        if (onError) onError(error);
-      });
-    }
+    console.log(itemId);
     // callback when open drawer
     if (typeof this.drawerConfig != "undefined") {
       let { onOpen } = this.drawerConfig;
@@ -348,19 +295,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onViewDataItem(itemId?: number | string) {
     this.mode = 'view';
-    if (this.getRequest) {
-      let url = this.getRequest.url + itemId;
-      let { onSuccess, onError } = this.getRequest;
-
-      this.service.getDataById({ ...this.getRequest, url }).subscribe(data => {
-        if (onSuccess) onSuccess(data);
-        this.drawerData = { ...data };
-        this.visibleDrawer = true;
-        this.changeDetector.detectChanges();
-      }, error => {
-        if (onError) onError(error);
-      });
-    }
+    console.log(itemId);
     // callback when open drawer
     if (typeof this.drawerConfig != 'undefined') {
       let { onOpen } = this.drawerConfig;
@@ -371,25 +306,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   onChangePageIndex(event: number) {
-    if (event && this.requestData) {
+    if (event) {
       this.vtsPageIndex = event;
-      this.requestData.body = {
-        'pageSize': this.vtsPageSize,
-        'pageIndex': this.vtsPageIndex
-      };
-
-      // only for json-server
-      let url = this.requestData.url.split('?')[0] + `?_page=${event}&_limit=${this.vtsPageSize}`;
-      let { onSuccess, onError } = this.requestData;
-
-      this.service.getRenderData({ ...this.requestData, url }).subscribe(res => {
-        if (onSuccess) onSuccess(res);
-        this.displayedData = [...res.body];
-        this.vtsTotal = +res.headers.get('X-Total-Count');
-        this.changeDetector.detectChanges();
-      }, error => {
-        if (onError) onError(error)
-      })
     }
   }
 
@@ -399,18 +317,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   exportDataToFile(mode?: string) {
+    console.log(mode);
     this.visibleExport = true;
-    if (this.exportRequest) {
-      let { onSuccess, onError } = this.exportRequest;
-      this.exportRequest.body = mode == 'all' ? this.listData : this.setOfCheckedId;
-      let url = this.exportRequest.url;
-      this.service.exportSelectedDataToFile({ ...this.exportRequest, url }).subscribe(res => {
-        if (onSuccess) onSuccess(res);
-        this.visibleExport = false;
-      }, error => {
-        if (onError) onError(error);
-      });
-    }
   }
 
   formatNumber(value: number): string {
@@ -432,22 +340,6 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   }
 
   changeStatusItem(itemId?: string | number) {
-    if (this.editRequest) {
-      let url = this.editRequest.url;
-      url += itemId;
-      let { onSuccess, onError } = this.editRequest;
-
-      this.service.getDataById({ ...this.editRequest, url }).subscribe(data => {
-        if (onSuccess) onSuccess(data);
-        if (data) {
-          data.disabled = !data.disabled;
-        };
-        this.changeDetector.detectChanges();
-      }, error => {
-        if (onError) onError(error);
-      });
-    }
-
     let itemData = this.listData.find(item => item.id === itemId);
     if (itemData) itemData.disabled = !itemData.disabled;
   }
@@ -506,7 +398,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onClickActionButtons(actionType: string) {
     switch (actionType) {
-      case 'new':
+      case 'create':
         this.openDrawer();
         break;
       case 'import':
@@ -555,31 +447,9 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     }
   }
 
-  onSearchingByKey(event: string | any) {
-    if (this.getRequest) {
-      if (typeof event =='string') {
-        this.getRequest.body = {
-          ...this.getRequest.body,
-          'keyword': event
-        };
-
-        let url = this.getRequest.url;
-        if (event) {
-          url = this.getRequest.url + '?keyword=' + event;
-        }
-        let { onSuccess, onError } = this.getRequest;
-  
-        this.service.searchByKeyword({ ...this.getRequest, url }).subscribe(res => {
-          if (onSuccess) onSuccess(res);
-          this.displayedData = [...res.body];
-          this.vtsTotal = +res.headers.get('X-Total-Count');
-          this.changeDetector.detectChanges();
-        }, error => {
-          if (onError) onError(error);
-        });
-      } else {
-        console.log(2, [event]);
-      }
+  onSearchingByKey(event: string) {
+    if (event) {
+      this.searchingByKey.emit(event);
     }
   }
 
