@@ -166,4 +166,10 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
       this.vtsOnTabFilterChanger.emit(event);
     }
   }
+
+  changePageIndex(event: number) {
+    if (event) {
+      this.vtsOnPageIndexChanger.emit(event);
+    }
+  }
 }

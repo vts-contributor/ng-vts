@@ -22,6 +22,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
       (vtsOnActionChanger)="onActionChanger($event)"
       (vtsOnTabFilterChanger)="onChangeTabFilter($event)"
       (vtsOnSearchingByKey)="onSearchingByKey($event)"
+      (vtsOnPageIndexChanger)="onChangePageIndex($event)"
     ></vts-protable-container>
   `
 })
@@ -502,5 +503,16 @@ export class VtsDemoProTableBasicComponent implements OnInit {
 
   onSearchingByKey(event: VtsSafeAny) {
     console.log(event);
+  }
+
+  onChangePageIndex(event: number) {
+    if (event) {
+      let url = this.request.url.split('?')[0] + `?_page=${event}&_limit=${this.pageSize}`;
+      this.httpClient.get(url, { observe: 'response' }).subscribe(res => {
+        const data = res.body as VtsSafeAny;
+        this.listData = [...data];
+        this.total = +res.headers.get('X-Total-Count')!;
+      });
+    }
   }
 }

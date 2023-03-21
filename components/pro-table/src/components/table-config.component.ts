@@ -74,6 +74,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() reloadTable = new EventEmitter<boolean>();
   @Output() onChangeHeaders = new EventEmitter<VtsPropertyType[]>();
   @Output() changePageSize = new EventEmitter<number>();
+  @Output() changePageIndex = new EventEmitter<number>();
   @Output() searchingByKey = new EventEmitter<string>();
 
   pageIndex = 1;
@@ -307,7 +308,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onChangePageIndex(event: number) {
     if (event) {
-      this.vtsPageIndex = event;
+      this.changePageIndex.emit(event);
     }
   }
 
