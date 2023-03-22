@@ -67,7 +67,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
   useDarkMode:  boolean = false;
 
   @Input() isFixedHeader: boolean = false;
-  @Input() isFixedSider: boolean = false;
+  @Input() isFixedSider: boolean = true;
   @Input() isShowHeader: boolean = true;
   @Input() isShowSider: boolean = true;
   @Input() isShowFooter: boolean = true;
