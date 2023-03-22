@@ -176,6 +176,14 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
           }
         });
     }
+
+    // on change ix fixed
+    this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+      this.isFixedSider = isFixed;
+    });
+    this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+      this.isFixedHeader = isFixed;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

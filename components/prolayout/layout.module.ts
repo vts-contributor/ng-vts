@@ -22,7 +22,7 @@ import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsTagModule } from '@ui-vts/ng-vts/tag';
 import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
-import { VtsHeaderComponent } from './header.component';
+import { VtsHeaderComponent } from './pro-header.component';
 import { VtsProLayoutComponent } from './layout.component';
 import { VtsProlayoutMenuItemHorizontalComponent } from './menu-item-horizontal.component';
 import { VtsProlayoutMenuItemComponent } from './menu-item.component';
@@ -34,14 +34,14 @@ import { VtsProlayoutBreadCrumbComponent } from './breadcrumb.component';
 import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
 
 @NgModule({
-  declarations: [
+  declarations: [    
+    VtsProLayoutContainerComponent,
     VtsHeaderComponent,
     VtsContentComponent,
     VtsFooterComponent,
     VtsSiderComponent,
     VtsSiderTriggerComponent,
     VtsProLayoutComponent,
-    VtsProLayoutContainerComponent,
     VtsProlayoutMenuItemComponent,
     VtsProlayoutMenuItemHorizontalComponent,
     VtsSettingDrawerComponent,

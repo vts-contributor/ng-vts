@@ -11,7 +11,7 @@ import { VtsIconTestModule } from '@ui-vts/ng-vts/icon/testing';
 
 import { VtsContentComponent } from './content.component';
 import { VtsFooterComponent } from './footer.component';
-import { VtsHeaderComponent } from './header.component';
+import { VtsHeaderComponent } from './pro-header.component';
 import { VtsProLayoutComponent } from './pro-layout.component';
 import { VtsProLayoutModule } from './layout.module';
 import { VtsSiderComponent } from './sider.component';

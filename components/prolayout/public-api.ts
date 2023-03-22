@@ -5,7 +5,7 @@
 
 export * from './content.component';
 export * from './footer.component';
-export * from './header.component';
+export * from './pro-header.component';
 export * from './pro-layout.component';
 export * from './sider.component';
 export { VtsSiderTriggerComponent as ɵVtsSiderTriggerComponent } from './sider-trigger.component';

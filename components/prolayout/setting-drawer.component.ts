@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input } from '@angular/core';
+import { ProlayoutService } from './pro-layout.service';
 import { ThemeColorType } from './pro-layout.types';
 
 @Component({
@@ -10,7 +11,7 @@ import { ThemeColorType } from './pro-layout.types';
 
 export class VtsSettingDrawerComponent implements OnInit {
 
-    constructor(private elementRef: ElementRef) {
+    constructor(private elementRef: ElementRef, private prolayoutService: ProlayoutService) {
         this.elementRef.nativeElement.classList.add('vts-setting-drawer');
     }
 
@@ -66,23 +67,25 @@ export class VtsSettingDrawerComponent implements OnInit {
     }
 
     onChangeFixedSider(value: boolean) {
-        this.setFixedSider.emit(value);
+        // this.setFixedSider.emit(value);
+        this.prolayoutService.onChangeFixedSider(value);
     }
 
     onChangeFixedHeader(value: boolean) {
-        this.setFixedHeader.emit(value);
+        // this.setFixedHeader.emit(value);
+        this.prolayoutService.onChangeFixedHeader(value);
     }
 
     onChangeVisiblityHeader(value: boolean) {
-        this.setVisiblityHeader.emit(value);
+        this.prolayoutService.onChangeVisibilityHeader(value);
     }
 
     onChangeVisiblitySider(value: boolean) {
-        this.setVisiblitySider.emit(value);
+        this.prolayoutService.onChangeVisibilitySider(value);
     }
 
     onChangeVisiblityFooter(value: boolean) {
-        this.setVisiblityFooter.emit(value);
+        this.prolayoutService.onChangeVisibilityFooter(value);
     }
 
     onChangeThemeColor(value: string){
