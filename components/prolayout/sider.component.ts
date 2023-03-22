@@ -28,7 +28,10 @@ import {
 } from '@ui-vts/ng-vts/core/services';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { inNextTick, InputBoolean, toCssPixel } from '@ui-vts/ng-vts/core/util';
-import { VtsMenuDirective, VtsMenuThemeType } from '@ui-vts/ng-vts/menu';
+import { 
+  VtsMenuDirective, 
+  // VtsMenuThemeType 
+} from '@ui-vts/ng-vts/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MenuItemProLayout } from './pro-layout.types';
@@ -43,7 +46,7 @@ import { renderMenuProLayout } from './utils';
   template: `
     <div class="vts-prolayout-sider-children">
       <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider"></div> 
-      <ul vts-menu vtsMode="inline" class="sider-menu" [vtsTheme]="vtsTheme">
+      <ul vts-menu vtsMode="inline" class="sider-menu">
         <ng-container *ngFor="let item of menuData">
           <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
         </ng-container>
@@ -94,7 +97,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   vtsMenuDirective: VtsMenuDirective | null = null;
   @Output() readonly vtsCollapsedChange = new EventEmitter();
   @Input() vtsWidth: string | number = 200;
-  @Input() vtsTheme: VtsMenuThemeType = 'light';
+  @Input() vtsTheme: string = 'light';
   @Input() vtsCollapsedWidth = 70;
   @Input() vtsBreakpoint: VtsBreakpointKey | null = null;
   @Input() vtsZeroTrigger: TemplateRef<void> | null = null;
