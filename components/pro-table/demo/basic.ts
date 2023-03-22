@@ -23,6 +23,8 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
       (vtsOnTabFilterChanger)="onChangeTabFilter($event)"
       (vtsOnSearchingByKey)="onSearchingByKey($event)"
       (vtsOnPageIndexChanger)="onChangePageIndex($event)"
+      (vtsOnDeleteData)="onDeleteData($event)"
+      (vtsOnSaveData)="onSaveData($event)"
     ></vts-protable-container>
   `
 })
@@ -83,102 +85,86 @@ export class VtsDemoProTableBasicComponent implements OnInit {
   }
 
   listData: { [key: string]: VtsSafeAny }[] = [
-    // {
-    //   "id": 1,
-    //   "content": "content",
-    //   "title": "success",
-    //   "author": "typicode1",
-    //   "num": 10000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 2,
-    //   "content": "content",
-    //   "title": "error",
-    //   "author": "typicode2",
-    //   "num": 20000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 3,
-    //   "content": "content",
-    //   "title": "processing",
-    //   "author": "typicode3",
-    //   "num": 30000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 4,
-    //   "content": "content",
-    //   "title": "warning",
-    //   "author": "typicode4",
-    //   "num": 40000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 5,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode5",
-    //   "num": 50000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 6,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode6",
-    //   "num": 60000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 7,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode7",
-    //   "num": 70000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 8,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode8",
-    //   "num": 80000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 9,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode9",
-    //   "num": 90000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 10,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode10",
-    //   "num": 100000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 11,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode11",
-    //   "num": 110000,
-    //   "birth": "2023/03/08 00:00:00"
-    // },
-    // {
-    //   "id": 12,
-    //   "content": "content",
-    //   "title": "json-server",
-    //   "author": "typicode12",
-    //   "num": 120000,
-    //   "birth": "2023/03/08 00:00:00"
-    // }
+    {
+      "id": 1,
+      "content": "content",
+      "title": "success",
+      "author": "typicode1",
+      "num": 10000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 2,
+      "content": "content",
+      "title": "error",
+      "author": "typicode2",
+      "num": 20000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 3,
+      "content": "content",
+      "title": "processing",
+      "author": "typicode3",
+      "num": 30000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 4,
+      "content": "content",
+      "title": "warning",
+      "author": "typicode4",
+      "num": 40000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 5,
+      "content": "content",
+      "title": "json-server",
+      "author": "typicode5",
+      "num": 50000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 6,
+      "content": "content",
+      "title": "json-server",
+      "author": "typicode6",
+      "num": 60000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 7,
+      "content": "content",
+      "title": "json-server",
+      "author": "typicode7",
+      "num": 70000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 8,
+      "content": "content",
+      "title": "json-server",
+      "author": "typicode8",
+      "num": 80000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 9,
+      "content": "content",
+      "title": "json-server",
+      "author": "typicode9",
+      "num": 90000,
+      "birth": "2023/03/08 00:00:00"
+    },
+    {
+      "id": 10,
+      "content": "content",
+      "title": "json-server",
+      "author": "typicode10",
+      "num": 100000,
+      "birth": "2023/03/08 00:00:00"
+    }
   ];
 
   properties: VtsPropertyType[] = [
@@ -418,12 +404,10 @@ export class VtsDemoProTableBasicComponent implements OnInit {
       console.log('drawer open');
     },
     onClose: () => {
-      this.isDrawerOpened = false;
       console.log('drawer close');
     },
     onSave: (data) => {
       console.log(data);
-      this.isDrawerOpened = false;
     }
   }
 
@@ -445,7 +429,6 @@ export class VtsDemoProTableBasicComponent implements OnInit {
         break;
       }
       default: {
-        alert(event);
         break;
       }
     }
@@ -496,8 +479,10 @@ export class VtsDemoProTableBasicComponent implements OnInit {
   }
 
   onChangeTabFilter(event: number) {
+    this.getTotalDataWithTabConfig();
     this.selectedTabIndex = event;
     this.listData = [...this.totalDataWithFilter[event].body];
+    console.log(this.listData);
     this.total = +this.totalDataWithFilter[event].headers.get('X-Total-Count');
   }
 
@@ -513,6 +498,18 @@ export class VtsDemoProTableBasicComponent implements OnInit {
         this.listData = [...data];
         this.total = +res.headers.get('X-Total-Count')!;
       });
+    }
+  }
+
+  onSaveData(event: VtsSafeAny) {
+    if (event) {
+      console.log(event);
+    }
+  }
+
+  onDeleteData(event: Set<string|number>) {
+    if (event) {
+      console.log(event);
     }
   }
 }

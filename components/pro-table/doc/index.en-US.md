@@ -92,16 +92,14 @@ import { VtsProTableModule } from '@ui-vts/ng-vts/pro-table';
 | `[vtsLoading]` | Render loading template, use for server pagination | `boolean` | `false` |
 | `[vtsProperties]` | Property array to be render headers | `VtsPropertyType[]` |
 | `[vtsListData]` | Data array to be rendered | `{ [key: string]: VtsSafeAny }[]` |
-| `[vtsRequestData]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[vtsGetRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[vtsEditRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[vtsDeleteRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[vtsSaveRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[vtsExportRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
-| `[vtsConfigTableRequest]` | The request object for data fetching and auto render data | `VtsRequest` |
 | `[vtsListStatus]` | The status array of data item | `VtsStatusConfig[]` |
 | `[vtsPageSize]` | Bind current pageSize | `number` | `10` |
-| `[vtsOnPageSizeChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
-| `[vtsOnPageIndexChanger]` | Triggered when the request is successed | `EventEmitter<number>()` |
-| `[vtsOnSuccessEvent]`| Triggered when the request is successed | `EventEmitter<number>()` |
-| `[vtsOnErrorEvent]`| Triggered when the request is successed | `EventEmitter<number>()` |
+| `[vtsOnPageSizeChanger]` | Triggered when the page size is changed | `EventEmitter<number>()` |
+| `[vtsOnPageIndexChanger]` | Triggered when the page index is changed | `EventEmitter<number>()` |
+| `[vtsOnSuccessEvent]`| Triggered when the request is successed | `EventEmitter<VtsSafeAny>()` |
+| `[vtsOnErrorEvent]`| Triggered when the request is failed | `EventEmitter<VtsSafeAny>()` |
+| `[vtsOnActionChanger]`| Triggered when the action is submitted | `EventEmitter<VtsActionType>()` |
+| `[vtsOnTabFilterChanger]`| Triggered when the tab index is changed | `EventEmitter<number>()` |
+| `[vtsOnSearchingByKey]`| Triggered when the search key is submitted | `EventEmitter<string>()` |
+| `[vtsOnDeleteData]`| Triggered when the deleting action is submitted | `EventEmitter<Set<string | number>>()` |
+| `[vtsOnSaveData]`| Triggered when the saving action is submitted | `EventEmitter<VtsSafeAny>()` |

@@ -1,4 +1,4 @@
-<div class='vts-protable-configuration'>
+<div class='vts-protable-config'>
   <!-- filters config -->
   <vts-group-filter [filterGroupConfig]="filterGroupConfig" [properties]="properties" [headers]="displayedProperties"
     (rowHeightChanger)="handleChangeRowHeight($event)" (reloadTable)="onReloadTable($event)"
@@ -111,7 +111,7 @@
 <!-- Create, view, edit -->
 <table-drawer [headers]="properties" [open]="visibleDrawer" [drawerConfig]="drawerConfig" [listStatus]="listStatus"
   [mode]="mode" [data]="drawerData" (close)="closeDrawer()" (modeChanger)="onModeChanger($event)"
-  (createAnotherData)="onCreateAnotherData($event)" (changeItemStatus)="onChangeItemStatus($event)"
+  (createAnotherData)="onCreateAnotherData($event)" (changeItemStatus)="onChangeItemStatus($event)" (editDataChanger)="onEditDataChanger($event)"
   (deleteItem)="onDeleteItem($event)"></table-drawer>
 
 <!-- Modal download -->

@@ -1,18 +1,12 @@
 import { VtsButtonConfig, VtsDrawerConfig, VtsModalDeleteConfig, VtsModalUploadConfig, VtsPropertyType, VtsStatusConfig, VtsTabGroupConfig, VtsActionType } from './pro-table.type';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import {
-  // ChangeDetectionStrategy,
   Component,
-  // ContentChildren,
   SimpleChanges,
   ElementRef,
-  // ChangeDetectorRef,
-  // OnDestroy,
   OnInit,
   Input,
-  // Optional,
   OnChanges,
-  // QueryList,
   ViewEncapsulation,
   EventEmitter,
   Output
@@ -26,63 +20,6 @@ import { VtsButtonSize } from '@ui-vts/ng-vts/button';
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
   templateUrl: './pro-table.component.html',
-  styles: [
-    `
-      .title-table {
-        font-family: 'Sarabun';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 30px;
-        color: #000000;
-      }
-
-      .btn-default {
-        border: 1px solid #737373;
-        border-radius: 6px;
-        background: #FFFFFF;
-        color: #737373;
-        margin-right: 8px;
-        width: 106px;
-        display: flex;
-        align-items: end;
-        justify-content: center;
-      }
-
-      .btn-more-action {
-        border-radius: 6px !important;
-        color: #FFFFFF !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .btn-more-action-content {
-        width: 106px;
-        border-top-right-radius: 0px !important;
-        border-bottom-right-radius: 0px !important;
-      }
-
-      .btn-more-action-arrow {
-        margin-left: 1px !important; 
-        border-top-left-radius: 0px !important;
-        border-bottom-left-radius: 0px !important;
-      }
-
-      .vts-tabs-tab-btn {
-        padding: 0 12px;
-      }
-
-      .vts-tabs-tab {
-        font-family: 'Sarabun';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        color: #73777A;
-      }
-    `
-  ]
 })
 export class VtsProTableContainerComponent implements OnInit, OnChanges {
   constructor(
@@ -115,6 +52,8 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   @Output() vtsOnActionChanger = new EventEmitter<VtsActionType>();
   @Output() vtsOnTabFilterChanger = new EventEmitter<number>();
   @Output() vtsOnSearchingByKey = new EventEmitter<string>();
+  @Output() vtsOnDeleteData = new EventEmitter<Set<string | number>>();
+  @Output() vtsOnSaveData = new EventEmitter<VtsSafeAny>();
 
   searchData: Object = {};
   buttonSize: VtsButtonSize = 'sm';
@@ -149,7 +88,7 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
       this.onClickAction('reload');
     }
   }
-  
+
   onClickAction(key: VtsActionType) {
     let actionType = { 'key': key };
     this.actionType = {
@@ -170,6 +109,18 @@ export class VtsProTableContainerComponent implements OnInit, OnChanges {
   changePageIndex(event: number) {
     if (event) {
       this.vtsOnPageIndexChanger.emit(event);
+    }
+  }
+
+  onDeleteData(event: Set<string | number>) {
+    if (event) {
+      this.vtsOnDeleteData.emit(event);
+    }
+  }
+
+  onEditData(event: VtsSafeAny) {
+    if (event) {
+      this.vtsOnSaveData.emit(event);
     }
   }
 }

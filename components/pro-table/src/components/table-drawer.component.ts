@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
-import { ProtableService } from '../pro-table.service';
+import { VtsSizeLDSType, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { VtsDrawerConfig, VtsPropertyType, VtsRequest, VtsStatusConfig, VtsViewMode } from '../pro-table.type';
 
 @Component({
@@ -51,9 +50,6 @@ import { VtsDrawerConfig, VtsPropertyType, VtsRequest, VtsStatusConfig, VtsViewM
   ]
 })
 export class ProtableDrawerComponent implements OnInit, OnChanges {
-  constructor(
-    private service: ProtableService
-  ) { }
 
   /**
    * decide component is open or not
@@ -84,6 +80,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   @Output() createAnotherData: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() changeItemStatus: EventEmitter<string | number> = new EventEmitter<string | number>();
   @Output() deleteItem: EventEmitter<string | number> = new EventEmitter<string | number>();
+  @Output() editDataChanger: EventEmitter<VtsSafeAny> = new EventEmitter<VtsSafeAny>();
 
   ngOnInit() { }
 
@@ -141,7 +138,10 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
     }
     else if (mode) {
       if (typeof this.drawerConfig != "undefined" && this.mode != 'create-another') this.setTitle(this.drawerConfig);
-      if (this.mode == 'create-another') this.initForm();
+      if (this.mode == 'create-another') {
+        this.initForm();
+        this.data = {};
+      }
     }
     else {
       this.visibleDrawer = false;
@@ -226,27 +226,8 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
       ...this.formGroup.value,
       ...newDateObj
     }
-
-    if (typeof this.saveRequest != "undefined") {
-      let { onSuccess, onError } = this.saveRequest;
-      this.service.saveDataById(this.saveRequest)
-        .subscribe(data => {
-          if (onSuccess) {
-            onSuccess(data);
-          }
-          if (typeof this.drawerConfig != "undefined") {
-            let { onSave } = this.drawerConfig;
-            if (onSave) {
-              onSave(data);
-            }
-          }
-          if (this.mode == 'create') this.closeDrawer();
-        }, error => {
-          if (onError) {
-            onError(error);
-          }
-        });
-    }
+    this.editDataChanger.emit(this.entity);
+    if (this.mode !== 'create-another') this.closeDrawer();
   }
 
   getSelectedStatus(value: string) {
@@ -278,6 +259,7 @@ export class ProtableDrawerComponent implements OnInit, OnChanges {
   onCreateAnother() {
     this.mode = 'create-another';
     this.onSave();
+    this.initForm();
     this.modeChanger.emit(this.mode);
   }
 

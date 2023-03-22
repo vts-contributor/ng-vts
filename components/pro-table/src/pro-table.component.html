@@ -59,7 +59,8 @@
       [searchData]="searchData" [listStatus]="vtsListStatus" [tabConfig]="tabConfig" [drawerConfig]="vtsDrawerConfig"
       [filterGroupConfig]="vtsFilterGroupConfig" [modalUploadConfig]="vtsModalUploadConfig"
       [modalDeleteConfig]="vtsModalDeleteConfig" [moreActionConfig]="vtsMoreActionConfig"
-      (reloadTable)="reloadTable($event)" (searchingByKey)="onSearchingByKey($event)" (onChangePageIndex)="changePageIndex($event)">
+      (reloadTable)="reloadTable($event)" (searchingByKey)="onSearchingByKey($event)"
+      (changePageIndex)="changePageIndex($event)" (deleteData)="onDeleteData($event)" (modifiedData)="onEditData($event)">
     </vts-table-config>
   </vts-spin>
 </ng-template>

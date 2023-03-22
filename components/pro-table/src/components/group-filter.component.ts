@@ -133,7 +133,6 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
       (submit)="handleOkModal($event)"
       (cancel)="handleCancelModal()"
     ></filter-drawer>
-    
   `,
   styles: [`
       .flex-s {

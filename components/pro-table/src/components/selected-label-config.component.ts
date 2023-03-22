@@ -3,7 +3,6 @@ import { Direction, Directionality } from '@angular/cdk/bidi';
 import {
   ChangeDetectionStrategy,
   Component,
-  // ContentChildren,
   ElementRef,
   EventEmitter,
   Input,
@@ -13,9 +12,6 @@ import {
   Optional,
   Output,
   SimpleChanges,
-  // Output,
-  // SimpleChanges,
-  // QueryList,
   ViewEncapsulation
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';

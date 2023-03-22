@@ -29,7 +29,6 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   templateUrl: './table-config.component.html',
-  styleUrls: ['./table-config.component.css'],
   host: {
     '[class.vts-protable-config-rtl]': `dir === 'rtl'`
   }
@@ -76,11 +75,13 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
   @Output() changePageSize = new EventEmitter<number>();
   @Output() changePageIndex = new EventEmitter<number>();
   @Output() searchingByKey = new EventEmitter<string>();
+  @Output() deleteData = new EventEmitter<Set<number | string>>();
+  @Output() modifiedData = new EventEmitter<VtsSafeAny>();
 
   pageIndex = 1;
   checked = false;
   indeterminate = false;
-  setOfCheckedId = new Set<string>();
+  setOfCheckedId = new Set<string | number>();
   searchTerms: any = {};
   vtsIsCollapse: boolean = true;
   mode: VtsViewMode = 'view';
@@ -99,7 +100,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     @Optional() private directionality: Directionality,
     private changeDetector: ChangeDetectorRef
   ) {
-    this.elementRef.nativeElement.classList.add('vts-table-config');
+    this.elementRef.nativeElement.classList.add('vts-protable-config');
   }
 
   ngOnInit(): void {
@@ -116,7 +117,7 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
     }
 
     if (changes.listData) {
-      this.loading = true;      
+      this.loading = true;
       this.displayedData = [...this.listData];
       this.filteredList = [...this.listData]
       this.loading = false;
@@ -163,17 +164,20 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
         break;
       case 'delete-multiple':
         if (this) {
-          console.log(this.setOfCheckedId);
+          this.deleteData.emit(this.setOfCheckedId);
         }
         break;
       default:
         if (this.itemIdToDelete) {
-          console.log(this.itemIdToDelete);
+          const data = new Set<number | string>();
+          data.add(this.itemIdToDelete);
+          this.deleteData.emit(data);
         }
         break;
     }
     this.isOkLoadingDelete = false;
     this.isVisibleDelete = false;
+    if (this.mode == 'view') this.visibleDrawer = false;
   }
 
   handleCancelDelete(): void {
@@ -284,7 +288,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onEditDataItem(itemId?: number | string) {
     this.mode = 'edit';
-    console.log(itemId);
+    this.drawerData = this.listData.filter(item => item.id === itemId)[0];
+    this.visibleDrawer = true;
     // callback when open drawer
     if (typeof this.drawerConfig != "undefined") {
       let { onOpen } = this.drawerConfig;
@@ -296,7 +301,8 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
 
   onViewDataItem(itemId?: number | string) {
     this.mode = 'view';
-    console.log(itemId);
+    this.drawerData = this.listData.filter(item => item.id === itemId)[0];
+    this.visibleDrawer = true;
     // callback when open drawer
     if (typeof this.drawerConfig != 'undefined') {
       let { onOpen } = this.drawerConfig;
@@ -477,6 +483,12 @@ export class VtsProTableConfigComponent implements OnDestroy, OnInit {
       this.modalDeleteConfig.content = `Do you want to delete item ${event}?`;
       this.modalDeleteConfig.type = 'delete';
       this.isVisibleDelete = true;
+    }
+  }
+
+  onEditDataChanger(event: VtsSafeAny) {
+    if (event) {
+      this.modifiedData.emit(event);
     }
   }
 }
