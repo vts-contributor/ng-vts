@@ -15,7 +15,7 @@ import {
   SimpleChange,
   TemplateRef
 } from '@angular/core';
-import { VtsMenuThemeType } from '@ui-vts/ng-vts/menu';
+// import { VtsMenuThemeType } from '@ui-vts/ng-vts/menu';
 import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
@@ -69,7 +69,7 @@ export class VtsHeaderComponent implements OnChanges {
   @Input() isFixedHeader: boolean = false;
   @Input() isFixedSider: boolean = false;
   @Input() menuData: MenuItemProLayout[] = [];
-  @Input() vtsTheme: VtsMenuThemeType = 'light';
+  // @Input() vtsTheme: VtsMenuThemeType = 'light';
   @Input() useSplitMenu: boolean = false;
   @Input() title: string | TemplateRef<void> | null = null;
 
