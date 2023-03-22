@@ -19,6 +19,7 @@ import {
   ViewEncapsulation,
   TemplateRef
 } from '@angular/core';
+import { ProlayoutService } from './pro-layout.service';
 // import { Subject } from 'rxjs';
 // import { takeUntil } from 'rxjs/operators';
 import { MenuItemProLayout } from './pro-layout.types';
@@ -53,11 +54,13 @@ import { MenuItemProLayout } from './pro-layout.types';
         text-align: center;
       }
     `
-  ]
+  ],
+  providers: [ProlayoutService]
 })
 export class VtsProLayoutContainerComponent implements OnInit {
   constructor(
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private prolayoutService: ProlayoutService
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
@@ -148,5 +151,29 @@ export class VtsProLayoutContainerComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    // on change ix fixed
+    this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+      this.onChangeFixedSider(isFixed);
+    });
+    this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+      this.onChangeFixedHeader(isFixed);
+    });
+
+    // onchange visibility
+    this.prolayoutService.visibilityHeaderChange$.subscribe((isShow: boolean) => {
+      this.onChangeVisiblityHeader(isShow);
+    });
+    this.prolayoutService.visibilitySiderChange$.subscribe((isShow: boolean) => {
+      this.onChangeVisiblitySider(isShow);
+    });
+    this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
+      this.onChangeVisiblityFooter(isShow);
+    });
+
+    // onchange use split menu
+    this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+      this.onChangeSplitMenu(isMenuSplitted);
+    });
+  }
 }

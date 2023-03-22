@@ -14,17 +14,7 @@
     "frontend"
   ],
   "dependencies": {
-    "@angular/cdk": "^14.1.0",
-    "@ui-vts/icons-angular": "1.0.0",
-    "apexcharts": "^3.27.3",
-    "@ui-vts/theme": "file:../ui-vts-theme"
   },
   "peerDependencies": {
-    "@angular/animations": ">=14",
-    "@angular/common": ">=14",
-    "@angular/forms": ">=14",
-    "@angular/core": ">=14",
-    "@angular/platform-browser": ">=14",
-    "@angular/router": ">=14"
   }
 }
