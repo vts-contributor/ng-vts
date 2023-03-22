@@ -42,19 +42,15 @@ import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
     `
       .logo-header {
         width: 120px;
-        height: 63px;
-        margin: 16px 28px 0 24px;
+        height: 46px;
+        margin: 10px 28px 0 24px;
         float: left;
         background-repeat: no-repeat;
         background-size: contain;
       }
     `,
     `
-      .header-menu {
-        line-height: 63px;
-      }
-
-      .title-container {
+     .title-container {
         display: flex;
         padding-left: 24px;
       }
