@@ -32,11 +32,7 @@ import { MenuItemProLayout } from './pro-layout.types';
   templateUrl: 'pro-layout.component.html',
   styles: [
     `
-      .header-menu {
-        line-height: 63px;
-      }
-
-      .vts-breadcrumb {
+     .vts-breadcrumb {
         margin-bottom: 24px;
       }
 
