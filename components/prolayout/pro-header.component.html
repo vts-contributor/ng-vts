@@ -14,7 +14,7 @@
         <div vts-col>
             <i vts-icon vtsType="Search" class="cursor-pointer" vtsSize="lg"></i>
         </div>
-        <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" (click)="onOpenMenuAvatar()">
+        <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
             <vts-avatar vts-col vtsSize="lg" vtsIcon="user"></vts-avatar>
             <div vts-col>
                 <div class="username">
@@ -26,9 +26,9 @@
             </div>
         </div>
     </div>
-    <ng-container #menuAvatar>
-        <vts-select class="listmenu-avatar">
-            <vts-option *ngFor="let item of avatar.menu" [vtsValue]="item.url" [vtsLabel]="item.label"></vts-option>
-        </vts-select>
-    </ng-container>
+    <vts-dropdown-menu #menuAvatar="vtsDropdownMenu">
+        <ul vts-menu vtsSelectable>
+            <li vts-menu-item *ngFor="let item of avatar.menu">{{ item.label }}</li>
+        </ul>
+    </vts-dropdown-menu>
 </div>

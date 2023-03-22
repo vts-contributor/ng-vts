@@ -31,6 +31,7 @@ import { VtsSettingDrawerComponent } from './setting-drawer.component';
 import { VtsSiderTriggerComponent } from './sider-trigger.component';
 import { VtsSiderComponent } from './sider.component';
 import { VtsProlayoutBreadCrumbComponent } from './breadcrumb.component';
+import { VtsDropDownModule } from '../dropdown';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { VtsProlayoutBreadCrumbComponent } from './breadcrumb.component';
     VtsDividerModule,
     VtsTagModule,
     VtsGridModule,
-    VtsSelectModule
+    VtsSelectModule,
+    VtsDropDownModule
   ]
 })
 export class VtsProLayoutModule {}
