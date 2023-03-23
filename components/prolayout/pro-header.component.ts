@@ -13,6 +13,7 @@ import {
   OnChanges,
   SimpleChanges,
   // SimpleChange,
+  ChangeDetectorRef,
   OnInit,
   TemplateRef
 } from '@angular/core';
@@ -63,14 +64,15 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
   constructor(
     public elementRef: ElementRef,
     private renderer: Renderer2,
-    private prolayoutService: ProlayoutService
+    private prolayoutService: ProlayoutService,
+    private cdf: ChangeDetectorRef
   ) {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
   }
 
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
-  @Input() menuData: MenuItemProLayout[] = [];
+  menuData: MenuItemProLayout[] = [];
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
   @Input() title: string | TemplateRef<void> | null = null;
@@ -94,6 +96,19 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
   showMenu: boolean = false;
 
   ngOnInit(): void {
+    // receive menus from container
+    this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
+      this.menuData = data;
+      let newMenuData: MenuItemProLayout[] = [
+        {
+          icon: 'toc',
+          title: '',
+          children: [...data]
+        }
+      ];
+      this.menuData = [...newMenuData];
+    });
+
     // on change ix fixed
     this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
       this.isFixedSider = isFixed;
@@ -107,20 +122,20 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
     // onchange use split menu
     this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
       this.useSplitMenu = isMenuSplitted;
+      this.cdf.detectChanges();
     });
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { menuData, title } = changes;
-    // this.handleChangeFixedStatus(isFixedHeader, isFixedSider);
-    if (menuData) {
+    const { title } = changes;
+    if(!this.useSplitMenu){
       if (this.title || (title && title.currentValue)) {
         // add a wrapper item to create a menu button
         let newMenuData: MenuItemProLayout[] = [
           {
             icon: 'toc',
             title: '',
-            children: [...menuData.currentValue]
+            children: [...this.menuData]
           }
         ];
         this.menuData = [...newMenuData];
@@ -154,34 +169,6 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
       }
     }
   }
-
-  // handleChangeFixedStatus(isFixedHeader: SimpleChange, isFixedSider: SimpleChange) {
-  //   if (isFixedHeader && isFixedSider) {
-  //     if (isFixedHeader.currentValue && !isFixedSider.currentValue) {
-  //       this.showLogo = true;
-  //     } else if (!isFixedHeader.currentValue && !isFixedSider.currentValue) {
-  //       this.showLogo = true;
-  //     } else if (!isFixedHeader.currentValue && isFixedSider.currentValue) {
-  //       this.showLogo = false;
-  //     }
-  //   } else if (isFixedHeader && !isFixedSider) {
-  //     if (isFixedHeader.currentValue && !this.isFixedSider) {
-  //       this.showLogo = true;
-  //     } else if (!isFixedHeader.currentValue && !this.isFixedSider) {
-  //       this.showLogo = true;
-  //     } else if (!isFixedHeader.currentValue && this.isFixedSider) {
-  //       this.showLogo = false;
-  //     }
-  //   } else if (!isFixedHeader && isFixedSider) {
-  //     if (this.isFixedHeader && !isFixedSider.currentValue) {
-  //       this.showLogo = true;
-  //     } else if (!this.isFixedHeader && !isFixedSider.currentValue) {
-  //       this.showLogo = true;
-  //     } else if (!this.isFixedHeader && isFixedSider.currentValue) {
-  //       this.showLogo = false;
-  //     }
-  //   }
-  // }
 
   onOpenMenuAvatar() {
     this.showMenu = !this.showMenu;
