@@ -2,10 +2,10 @@
     <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'"
         *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
 
-    <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [title]="headerTitle"></vts-prolayout-header>
+    <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu"></vts-prolayout-header>
 
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
-        <vts-prolayout-header *ngIf="isShowHeader" [title]="headerTitle"></vts-prolayout-header>
+        <vts-prolayout-header *ngIf="isShowHeader" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu"></vts-prolayout-header>
         <vts-prolayout-content class="outer-content">
             <prolayout-breadcrumb></prolayout-breadcrumb>
             <vts-prolayout class="inner-layout">

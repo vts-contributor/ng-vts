@@ -12,7 +12,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-import { MenuItemProLayout } from './pro-layout.types';
+import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
   selector: 'vts-prolayout-container',
@@ -65,6 +65,12 @@ export class VtsProLayoutContainerComponent implements OnInit {
   @Input() menuHeader: MenuItemProLayout[] = [];
   @Input() menuSider: MenuItemProLayout[] = [];  
   @Input() headerTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
+  @Input() avatar: AvatarUser = {
+    size: 'md',
+    name: 'Shiba inu',
+    subname: 'Viettel Solution'
+  };
+  @Input() avatarMenu: AvatarMenu[] = [];
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;

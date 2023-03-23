@@ -17,7 +17,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
+import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -63,22 +63,13 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
   @Input() title: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
-  avatar: AvatarUser = {
+  @Input() avatar: AvatarUser = {
     size: 'md',
     name: 'Shiba inu',
-    subname: 'Viettel Solution',
-    menu: [
-      {
-        label: 'Quản lý tài khoản',
-        url: '/'
-      },
-      {
-        label: 'Logout',
-        url: ''
-      }
-    ]
+    subname: 'Viettel Solution'
   };
   showMenu: boolean = false;
+  @Input() avatarMenu: AvatarMenu[] = [];
 
   ngOnInit(): void {
     // receive menus from container
