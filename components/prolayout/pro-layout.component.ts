@@ -73,7 +73,6 @@ export class VtsProLayoutContainerComponent implements OnInit {
   @Input() isShowHeader: boolean = true;
   @Input() isShowSider: boolean = true;
   @Input() isShowFooter: boolean = true;
-  @Input() isMenuSplitted: boolean = false;
   @Input() menuHeader: MenuItemProLayout[] = [];
   @Input() menuSider: MenuItemProLayout[] = [];  
   @Input() headerTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
@@ -124,6 +123,10 @@ export class VtsProLayoutContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // emit changes when receiving menu
+    this.prolayoutService.onChangeMenuHeader(this.menuHeader);
+    this.prolayoutService.onChangeMenuSider(this.menuSider);
+
     // on change ix fixed
     this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
       this.isFixedSider = isFixed;

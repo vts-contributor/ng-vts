@@ -105,14 +105,15 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() vtsTrigger: TemplateRef<void> | undefined | null = undefined;
   @Input() @InputBoolean() vtsReverseArrow = false;
   @Input() @InputBoolean() vtsCollapsible = false;
-  @Input() @InputBoolean() vtsCollapsed = false;
-  @Input() menuData: MenuItemProLayout[] = [];
+  @Input() @InputBoolean() vtsCollapsed = false;  
   @Input() useDarkMode: boolean = false;
-  @Input() menuHeader: MenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
+
+  menuHeader: MenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
+  menuSider: MenuItemProLayout[] = [];
+  menuData: MenuItemProLayout[] = []; // use for displaying
   useSplitMenu: boolean = false;
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
-
   matchBreakPoint = false;
   flexSetting: string | null = null;
   widthSetting: string | null = null;
@@ -154,7 +155,8 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     private cdr: ChangeDetectorRef,
     private breakpointService: VtsBreakpointService,
     private elementRef: ElementRef,
-    private prolayoutService: ProlayoutService
+    private prolayoutService: ProlayoutService,
+    private cdf: ChangeDetectorRef
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-sider');
@@ -187,16 +189,34 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       this.isFixedHeader = isFixed;
     });
 
+    // receive menus from container
+    this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
+      this.menuHeader = data;
+      this.handleChangesMenuLogic(this.useSplitMenu, data, this.menuSider);
+    });
+    this.prolayoutService.menuSiderChange$.subscribe((data: MenuItemProLayout[]) => {
+      this.menuSider = data;
+      this.handleChangesMenuLogic(this.useSplitMenu, this.menuHeader, data);
+    })
+
     // onchange use split menu
     this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
       this.useSplitMenu = isMenuSplitted;
-      if(isMenuSplitted){
-        this.menuData = [
-          ...this.menuData,
-          ...this.menuHeader
-        ]
-      }
+      this.handleChangesMenuLogic(isMenuSplitted, this.menuHeader, this.menuSider);
     });
+  }
+
+  handleChangesMenuLogic(isSplitted: boolean, menuHeader: MenuItemProLayout[], menuSider: MenuItemProLayout[]): void {
+    if(isSplitted){
+      this.menuData = [
+        ...menuHeader,
+        ...menuSider
+      ];
+    }
+    else {
+      this.menuData = [...menuSider];
+    }
+    this.cdf.detectChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -4,11 +4,13 @@
         <ng-container *ngIf="title">
             {{ title }}
         </ng-container>
-        <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu" *ngIf="!useSplitMenu">
-            <ng-container *ngFor="let item of menuData">
-                <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
-            </ng-container>
-        </ul>
+        <ng-container *ngIf="!useSplitMenu">
+            <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
+                <ng-container *ngFor="let item of menuData">
+                    <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
+                </ng-container>
+            </ul>
+        </ng-container>
     </div>
     <div vts-col vts-row class="avatar-container" [vtsGutter]="20">
         <div vts-col>
