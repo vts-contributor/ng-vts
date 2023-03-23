@@ -18,5 +18,8 @@
 </ng-container>
 
 <ng-template #menuChild>
-    <li vts-menu-item [vtsMatchRouterExact]="true">{{menuItem.title}}</li>
+    <li vts-menu-item [vtsMatchRouterExact]="true" (click)="onClickAvatarMenuItem(menuItem)">
+        <i vts-icon [vtsType]="menuItem.icon" *ngIf="menuItem.icon"></i>
+        {{menuItem.title}}
+    </li>
 </ng-template>

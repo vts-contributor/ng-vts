@@ -17,6 +17,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
+import { Router } from "@angular/router";
 import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
@@ -50,7 +51,8 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
     public elementRef: ElementRef,
     private renderer: Renderer2,
     private prolayoutService: ProlayoutService,
-    private cdf: ChangeDetectorRef
+    private cdf: ChangeDetectorRef,
+    private router: Router
   ) {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
   }
@@ -146,7 +148,8 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
     }
   }
 
-  onOpenMenuAvatar() {
-    this.showMenu = !this.showMenu;
+  onClickAvatarMenuItem(item: AvatarMenu): void {
+    this.router.navigateByUrl(item.url);
   }
+
 }

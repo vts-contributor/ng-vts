@@ -45,7 +45,7 @@
     </div>
     <vts-dropdown-menu #menuAvatar="vtsDropdownMenu">
         <ul vts-menu vtsSelectable>
-            <li vts-menu-item *ngFor="let item of avatarMenu">{{ item.label }}</li>
+            <li vts-menu-item *ngFor="let item of avatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
         </ul>
     </vts-dropdown-menu>
 </div>
