@@ -68,8 +68,8 @@ export class VtsProLayoutContainerComponent implements OnInit {
   themeColor: string = '#EE0033';
   useDarkMode:  boolean = false;
 
-  @Input() isFixedHeader: boolean = false;
-  @Input() isFixedSider: boolean = true;
+  isFixedHeader: boolean = false;
+  isFixedSider: boolean = true;
   @Input() isShowHeader: boolean = true;
   @Input() isShowSider: boolean = true;
   @Input() isShowFooter: boolean = true;
@@ -77,26 +77,6 @@ export class VtsProLayoutContainerComponent implements OnInit {
   @Input() menuHeader: MenuItemProLayout[] = [];
   @Input() menuSider: MenuItemProLayout[] = [];  
   @Input() headerTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
-
-  onChangeFixedSider(isFixed: boolean) {
-    this.isFixedSider = isFixed;
-    if (isFixed && this.isFixedHeader) {
-      this.isFixedHeader = false;
-    }
-    if(!this.isShowSider){
-      this.isShowSider = true;
-    }
-  }
-
-  onChangeFixedHeader(isFixed: boolean) {
-    this.isFixedHeader = isFixed;
-    if (isFixed && this.isFixedSider) {
-      this.isFixedSider = false;
-    }
-    if(!this.isShowHeader){
-      this.isShowHeader = true;
-    }
-  }
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;
@@ -124,13 +104,6 @@ export class VtsProLayoutContainerComponent implements OnInit {
     this.useDarkMode = useDarkMode;
   }
 
-  onChangeSplitMenu(useSplitMenu: boolean){
-    this.isMenuSplitted = useSplitMenu;
-    this.menuSider = [
-      ...this.menuSider
-    ]
-  }
-
   onSelectMenuSiderItem(selected: MenuItemProLayout){
     let menuSider = [
       ...this.menuSider
@@ -150,15 +123,13 @@ export class VtsProLayoutContainerComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void { 
-    this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
-    this.prolayoutService.fixedHeaderChange$.next(this.isFixedHeader);
+  ngOnInit(): void {
     // on change ix fixed
     this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
-      this.onChangeFixedSider(isFixed);
+      this.isFixedSider = isFixed;
     });
     this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
-      this.onChangeFixedHeader(isFixed);
+      this.isFixedHeader = isFixed;
     });
 
     // onchange visibility
@@ -170,11 +141,6 @@ export class VtsProLayoutContainerComponent implements OnInit {
     });
     this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
       this.onChangeVisiblityFooter(isShow);
-    });
-
-    // onchange use split menu
-    this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
-      this.onChangeSplitMenu(isMenuSplitted);
     });
   }
 }

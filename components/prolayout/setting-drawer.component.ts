@@ -40,7 +40,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     ]
 
     isFixedHeader: boolean = false;
-    isFixedSider: boolean = false;
+    isFixedSider: boolean = true;
     isShowHeader: boolean = true;
     isShowSider: boolean = true;
     isShowFooter: boolean = true;
@@ -51,29 +51,8 @@ export class VtsSettingDrawerComponent implements OnInit {
     @Output() setPageStyle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() {
-      // on change ix fixed
-      this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
-        this.onChangeFixedSider(isFixed);
-      });
-      this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
-        this.onChangeFixedHeader(isFixed);
-      });
-
-      // onchange visibility
-      this.prolayoutService.visibilityHeaderChange$.subscribe((isShow: boolean) => {
-        this.onChangeVisiblityHeader(isShow);
-      });
-      this.prolayoutService.visibilitySiderChange$.subscribe((isShow: boolean) => {
-        this.onChangeVisiblitySider(isShow);
-      });
-      this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
-        this.onChangeVisiblityFooter(isShow);
-      });
-
-      // onchange use split menu
-      this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
-        this.onChangeSplitMenu(isMenuSplitted);
-      });
+        this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
+        this.prolayoutService.fixedHeaderChange$.next(this.isFixedHeader);
     }
 
     closeDrawer() {
@@ -87,21 +66,45 @@ export class VtsSettingDrawerComponent implements OnInit {
     onChangeFixedSider(value: boolean) {
         this.isFixedSider = value;
         this.prolayoutService.onChangeFixedSider(value);
+        if (value && this.isFixedHeader) {
+          this.isFixedHeader = false;
+          this.prolayoutService.onChangeFixedHeader(false);
+        }
+        if (!this.isShowSider) {
+          this.isShowSider = true;
+          this.prolayoutService.onChangeVisibilitySider(true);
+        }
     }
 
     onChangeFixedHeader(value: boolean) {
         this.isFixedHeader = value;
         this.prolayoutService.onChangeFixedHeader(value);
+        if (value && this.isFixedSider) {
+          this.isFixedSider = false;
+          this.prolayoutService.onChangeFixedSider(false);
+        }
+        if (!this.isShowHeader) {
+          this.isShowHeader = true;
+          this.prolayoutService.onChangeVisibilityHeader(true);
+        }
     }
 
     onChangeVisiblityHeader(value: boolean) {
         this.isShowHeader = value;
         this.prolayoutService.onChangeVisibilityHeader(value);
+        if (!value && this.isFixedHeader) {
+          this.isFixedHeader = false;
+          this.prolayoutService.onChangeFixedHeader(false);
+        }
     }
 
     onChangeVisiblitySider(value: boolean) {
-        this.isShowSider
+        this.isShowSider = value;
         this.prolayoutService.onChangeVisibilitySider(value);
+        if (!value && this.isFixedSider) {
+          this.isFixedSider = false;
+          this.prolayoutService.onChangeFixedSider(false);
+        }
     }
 
     onChangeVisiblityFooter(value: boolean) {

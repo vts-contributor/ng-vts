@@ -106,12 +106,12 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() @InputBoolean() vtsReverseArrow = false;
   @Input() @InputBoolean() vtsCollapsible = false;
   @Input() @InputBoolean() vtsCollapsed = false;
-  isFixedHeader: boolean = false;
-  isFixedSider: boolean = false;
   @Input() menuData: MenuItemProLayout[] = [];
   @Input() useDarkMode: boolean = false;
   @Input() menuHeader: MenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
   useSplitMenu: boolean = false;
+  isFixedHeader: boolean = false;
+  isFixedSider: boolean = false;
 
   matchBreakPoint = false;
   flexSetting: string | null = null;
@@ -210,14 +210,6 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     if(vtsTheme){
       console.log('theme changed: ', vtsTheme);
     }
-    // if(useSplitMenu){
-    //   if(useSplitMenu.currentValue){
-    //     this.menuData = [
-    //       ...this.menuData,
-    //       ...this.menuHeader
-    //     ]
-    //   }
-    // }
   }
 
   ngAfterContentInit(): void {
