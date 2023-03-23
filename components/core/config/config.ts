@@ -7,7 +7,6 @@ import { Direction } from '@angular/cdk/bidi';
 import { InjectionToken, TemplateRef, Type } from '@angular/core';
 
 import { SafeUrl } from '@angular/platform-browser';
-import { ThemeType } from '@ui-vts/icons-angular';
 import { VtsBreakpointEnum } from '@ui-vts/ng-vts/core/services';
 import {
   VtsSafeAny,
@@ -183,7 +182,7 @@ export interface EmptyConfig {
 export interface FormConfig {
   vtsNoColon?: boolean;
   vtsAutoTips?: Record<string, Record<string, string>>;
-  vtsTooltipIcon?: string | { type: string; theme: ThemeType };
+  vtsTooltipIcon?: string;
 }
 
 export interface IconConfig {

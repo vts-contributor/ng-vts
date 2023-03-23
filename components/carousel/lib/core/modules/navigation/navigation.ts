@@ -75,7 +75,6 @@ export default function Navigation({ carousel, extendParams, on, emit }) {
       $prevEl.addClass(`${pfx}-${params.position}`);
     }
 
-    console.log(carousel.isBeginning, carousel.isEnd);
     toggleEl($prevEl, carousel.isBeginning && !carousel.params.rewind);
     toggleEl($nextEl, carousel.isEnd && !carousel.params.rewind);
   }

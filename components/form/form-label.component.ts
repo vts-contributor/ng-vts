@@ -15,7 +15,6 @@ import {
   SkipSelf,
   ViewEncapsulation
 } from '@angular/core';
-import { ThemeType } from '@ui-vts/icons-angular';
 import { BooleanInput, VtsTSType } from '@ui-vts/ng-vts/core/types';
 
 import { InputBoolean, toBoolean } from '@ui-vts/ng-vts/core/util';
@@ -23,14 +22,8 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DefaultTooltipIcon, VtsFormDirective } from './form.directive';
 
-export interface VtsFormTooltipIcon {
-  type: VtsTSType;
-  theme: ThemeType;
-}
-
-function toTooltipIcon(value: string | VtsFormTooltipIcon): Required<VtsFormTooltipIcon> {
-  const icon = typeof value === 'string' ? { type: value } : value;
-  return { ...DefaultTooltipIcon, ...icon };
+function toTooltipIcon(value: string): string {
+  return value || DefaultTooltipIcon;
 }
 
 @Component({
@@ -52,7 +45,7 @@ function toTooltipIcon(value: string | VtsFormTooltipIcon): Required<VtsFormTool
         vts-tooltip
         [vtsTooltipTitle]="vtsTooltipTitle"
       >
-        <ng-container *vtsStringTemplateOutlet="tooltipIcon.type; let tooltipIconType">
+        <ng-container *vtsStringTemplateOutlet="tooltipIcon; let tooltipIconType">
           <i vts-icon [vtsType]="tooltipIconType"></i>
         </ng-container>
       </span>
@@ -77,16 +70,14 @@ export class VtsFormLabelComponent implements OnDestroy {
 
   @Input() vtsTooltipTitle?: VtsTSType;
   @Input()
-  set vtsTooltipIcon(value: string | VtsFormTooltipIcon) {
+  set vtsTooltipIcon(value: string) {
     this._tooltipIcon = toTooltipIcon(value);
   }
   // due to 'get' and 'set' accessor must have the same type, so it was renamed to `tooltipIcon`
-  get tooltipIcon(): VtsFormTooltipIcon {
-    return this._tooltipIcon !== 'default'
-      ? this._tooltipIcon
-      : toTooltipIcon(this.vtsFormDirective?.vtsTooltipIcon || DefaultTooltipIcon);
+  get tooltipIcon(): string {
+    return this._tooltipIcon;
   }
-  private _tooltipIcon: VtsFormTooltipIcon | 'default' = 'default';
+  private _tooltipIcon: string = '';
 
   private destroy$ = new Subject();
 
