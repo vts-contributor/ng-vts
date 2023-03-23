@@ -6,8 +6,6 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { IconDefinition } from '@ui-vts/icons-angular';
-import { ChevronLeft, ChevronRight, PencilOutline } from '@ui-vts/icons-angular/icons';
 import { VtsAffixModule } from '@ui-vts/ng-vts/affix';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
@@ -34,8 +32,11 @@ import { SideModule } from './side/side.module';
 import { VtsContributorsListModule } from './share/contributors-list/contributors-list.module';
 import { VtsNavBottomModule } from './share/nav-bottom/nav-bottom.module';
 // import { VtsResizeObserverFactory } from '@ui-vts/ng-vts/cdk/resize-observer';
+import * as allIconTypes from '@ui-vts/icons-angular/icons';
 
-const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
+const icons = Object.values(allIconTypes)
+  .map(i => Object.values(i))
+  .flatMap(i => i);
 
 @NgModule({
   declarations: [AppComponent, DEMOComponent],
@@ -47,7 +48,7 @@ const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
     HttpClientModule,
     VtsNavBottomModule,
     ColorSketchModule,
-    VtsIconModule.forRoot(icons),
+    VtsIconModule.forChild(icons),
     VtsGridModule,
     VtsAffixModule,
     VtsMenuModule,
@@ -86,7 +87,7 @@ const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
     Title,
     {
       provide: VTS_CONFIG,
-      useValue: { icon: { vtsTwotoneColor: '#1890ff' }, global: { vtsDirection: 'ltr' } }
+      useValue: { global: { vtsDirection: 'ltr' } }
     }
     // {
     //   provide: VtsResizeObserverFactory,

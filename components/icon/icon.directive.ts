@@ -14,7 +14,7 @@ import {
   Renderer2,
   SimpleChanges
 } from '@angular/core';
-import { IconDirective } from '@ui-vts/icons-angular';
+import { hasType, IconDirective } from '@ui-vts/icons-angular';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
@@ -44,31 +44,10 @@ export class VtsIconDirective
 
   @Input()
   set vtsType(value: string) {
-    this.type = value;
+    if (!value) this.iconName = value;
+    if (hasType(value)) this.iconName = value;
+    else this.iconName = `${value}:vts`;
   }
-
-  // Use only 1 theme
-  // @Input()
-  // set vtsTheme(value: any) {
-  //   if (this.theme == 'all')
-  //     return
-  //   else {
-  //     this.theme = 'all'
-  //     return
-  //   }
-
-  //   this.theme = value;
-  // }
-
-  // @Input()
-  // set vtsTwotoneColor(value: string) {
-  //   this.twoToneColor = value;
-  // }
-
-  // @Input()
-  // set vtsIconfont(value: string) {
-  //   this.iconfont = value;
-  // }
 
   hostClass?: string;
 
@@ -111,10 +90,10 @@ export class VtsIconDirective
    * If custom content is provided, try to normalize SVG elements.
    */
   ngAfterContentChecked(): void {
-    if (!this.type) {
+    if (!this.iconName) {
       const children = this.el.children;
       let length = children.length;
-      if (!this.type && children.length) {
+      if (!this.iconName && children.length) {
         while (length--) {
           const child = children[length];
           if (child.tagName.toLowerCase() === 'svg') {
@@ -140,7 +119,7 @@ export class VtsIconDirective
   }
 
   private handleSpin(svg: SVGElement): void {
-    if (this.spin || this.type === 'loading') {
+    if (this.spin || this.iconName === 'loading') {
       this.renderer.addClass(svg, 'vtsicon-spin');
     } else {
       this.renderer.removeClass(svg, 'vtsicon-spin');
@@ -159,12 +138,12 @@ export class VtsIconDirective
     if (this.cacheClassName) {
       this.renderer.removeClass(this.el, this.cacheClassName);
     }
-    this.cacheClassName = `vtsicon-${this.type}`;
+    this.cacheClassName = `vtsicon-${this.iconName}`;
     this.renderer.addClass(this.el, this.cacheClassName);
   }
 
   private setSVGData(svg: SVGElement): void {
-    this.renderer.setAttribute(svg, 'data-icon', this.type as string);
+    this.renderer.setAttribute(svg, 'data-icon', this.iconName as string);
     this.renderer.setAttribute(svg, 'aria-hidden', 'true');
   }
 }

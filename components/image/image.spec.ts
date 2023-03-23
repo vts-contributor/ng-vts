@@ -123,13 +123,7 @@ describe('Preview', () => {
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [VtsImageModule, TestImageModule, NoopAnimationsModule, VtsIconModule],
-      providers: [
-        { provide: Overlay, useClass: Overlay },
-        {
-          provide: VTS_ICONS,
-          useValue: []
-        }
-      ]
+      providers: [{ provide: Overlay, useClass: Overlay }]
     });
     TestBed.compileComponents();
   }));

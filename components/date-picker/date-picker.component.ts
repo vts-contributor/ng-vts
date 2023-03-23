@@ -231,7 +231,7 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
   @Input() vtsRanges?: PresetRanges;
   @Input() vtsDefaultPickerValue: CompatibleDate | null = null;
   @Input() @WithConfig() vtsSeparator?: string = undefined;
-  @Input() @WithConfig() vtsSuffixIcon: string | TemplateRef<VtsSafeAny> = 'vts-picker:suffix';
+  @Input() @WithConfig() vtsSuffixIcon: string | TemplateRef<VtsSafeAny> = 'suffix:vts-picker';
   @Input() @WithConfig() vtsBackdrop = false;
   @Input() vtsId: string | null = null;
   @Input() vtsPlacement: VtsPlacement = 'bottomLeft';

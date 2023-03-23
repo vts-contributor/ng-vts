@@ -4,31 +4,13 @@
  */
 
 import { NgModule } from '@angular/core';
-import { IconDefinition } from '@ui-vts/icons-angular';
-import * as AllIcons from '@ui-vts/icons-angular/icons';
-
-import { VtsIconModule, VTS_ICONS } from '@ui-vts/ng-vts/icon';
-
-const antDesignIcons = AllIcons as {
-  [key: string]: IconDefinition;
-};
-
-const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => {
-  const i = antDesignIcons[key];
-  return i;
-});
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 
 /**
  * Include this module in every testing spec, except `icon.spec.ts`.
  */
 // @dynamic
 @NgModule({
-  exports: [VtsIconModule],
-  providers: [
-    {
-      provide: VTS_ICONS,
-      useValue: icons
-    }
-  ]
+  exports: [VtsIconModule]
 })
 export class VtsIconTestModule {}
