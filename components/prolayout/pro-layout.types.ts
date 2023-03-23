@@ -10,7 +10,8 @@ export type MenuItemProLayout = {
     isOpen?: boolean,
     isSelected?: boolean,
     icon?: string,
-    id?: string | number
+    id?: string | number,
+    url?: string
 }
 
 export type ThemeColorType = {
