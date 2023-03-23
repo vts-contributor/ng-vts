@@ -34,6 +34,7 @@ import {
 } from '@ui-vts/ng-vts/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ProlayoutService } from './pro-layout.service';
 import { MenuItemProLayout } from './pro-layout.types';
 import { renderMenuProLayout } from './utils';
 
@@ -105,12 +106,12 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() @InputBoolean() vtsReverseArrow = false;
   @Input() @InputBoolean() vtsCollapsible = false;
   @Input() @InputBoolean() vtsCollapsed = false;
-  @Input() isFixedHeader: boolean = false;
-  @Input() isFixedSider: boolean = false;
+  isFixedHeader: boolean = false;
+  isFixedSider: boolean = false;
   @Input() menuData: MenuItemProLayout[] = [];
   @Input() useDarkMode: boolean = false;
   @Input() menuHeader: MenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
-  @Input() useSplitMenu: boolean = false;
+  useSplitMenu: boolean = false;
 
   matchBreakPoint = false;
   flexSetting: string | null = null;
@@ -152,7 +153,8 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     private platform: Platform,
     private cdr: ChangeDetectorRef,
     private breakpointService: VtsBreakpointService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private prolayoutService: ProlayoutService
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-sider');
@@ -184,10 +186,20 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
       this.isFixedHeader = isFixed;
     });
+
+    // onchange use split menu
+    this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+      if(isMenuSplitted){
+        this.menuData = [
+          ...this.menuData,
+          ...this.menuHeader
+        ]
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth, vtsTheme, useSplitMenu } = changes;
+    const { vtsCollapsed, vtsCollapsedWidth, vtsWidth, vtsTheme } = changes;
     if (vtsCollapsed || vtsCollapsedWidth || vtsWidth) {
       this.updateStyleMap();
     }
@@ -197,14 +209,14 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     if(vtsTheme){
       console.log('theme changed: ', vtsTheme);
     }
-    if(useSplitMenu){
-      if(useSplitMenu.currentValue){
-        this.menuData = [
-          ...this.menuData,
-          ...this.menuHeader
-        ]
-      }
-    }
+    // if(useSplitMenu){
+    //   if(useSplitMenu.currentValue){
+    //     this.menuData = [
+    //       ...this.menuData,
+    //       ...this.menuHeader
+    //     ]
+    //   }
+    // }
   }
 
   ngAfterContentInit(): void {

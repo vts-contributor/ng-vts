@@ -54,8 +54,7 @@ import { MenuItemProLayout } from './pro-layout.types';
         text-align: center;
       }
     `
-  ],
-  providers: [ProlayoutService]
+  ]
 })
 export class VtsProLayoutContainerComponent implements OnInit {
   constructor(
