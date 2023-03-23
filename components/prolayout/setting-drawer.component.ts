@@ -50,7 +50,31 @@ export class VtsSettingDrawerComponent implements OnInit {
     @Output() setThemeColor: EventEmitter<string> = new EventEmitter<string>();
     @Output() setPageStyle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    ngOnInit() { }
+    ngOnInit() {
+      // on change ix fixed
+      this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+        this.onChangeFixedSider(isFixed);
+      });
+      this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+        this.onChangeFixedHeader(isFixed);
+      });
+
+      // onchange visibility
+      this.prolayoutService.visibilityHeaderChange$.subscribe((isShow: boolean) => {
+        this.onChangeVisiblityHeader(isShow);
+      });
+      this.prolayoutService.visibilitySiderChange$.subscribe((isShow: boolean) => {
+        this.onChangeVisiblitySider(isShow);
+      });
+      this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
+        this.onChangeVisiblityFooter(isShow);
+      });
+
+      // onchange use split menu
+      this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+        this.onChangeSplitMenu(isMenuSplitted);
+      });
+    }
 
     closeDrawer() {
         this.open = false;
