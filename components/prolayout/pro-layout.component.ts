@@ -4,26 +4,15 @@
  */
 
 import {
-  // ChangeDetectionStrategy,
   Component,
-  // ContentChildren,
-  // SimpleChanges,
   ElementRef,
-  // ChangeDetectorRef,
-  // OnDestroy,
   OnInit,
   Input,
-  // Optional,
-  // OnChanges,
-  // QueryList,
   ViewEncapsulation,
   TemplateRef
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-// import { Subject } from 'rxjs';
-// import { takeUntil } from 'rxjs/operators';
 import { MenuItemProLayout } from './pro-layout.types';
-// import { VtsSiderComponent } from './sider.component';
 
 @Component({
   selector: 'vts-prolayout-container',

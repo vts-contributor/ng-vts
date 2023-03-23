@@ -1,9 +1,7 @@
 import { 
     Component, 
-    Input, 
-    // OnChanges, 
-    OnInit, 
-    // SimpleChanges 
+    Input,
+    OnInit
 } from '@angular/core';
 import { MenuItemProLayout } from './pro-layout.types';
 
