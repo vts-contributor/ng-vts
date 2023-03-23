@@ -25,7 +25,7 @@ import { VtsFormModule } from '@ui-vts/ng-vts/form'; // To use in form
 | vtsShowSearch | Allow to search option | `boolean` | `false`
 | vtsPlaceholder | Placeholder of datepicker | `string` | 
 | vtsSize | Size of input | One of `xl` `lg` `md` `sm` | `md`
-| vtsSuffixIcon | Customize suffix icon | `string`(icon name) or `TemplateRef` | `vts-picker:suffix`
+| vtsSuffixIcon | Customize suffix icon | `string`(icon name) or `TemplateRef` | `suffix:vts-picker`
 | vtsNoResult | Custom template for empty data search | `Template` or `string` |
 | vtsCustomCompareFn | Custom compare function used to determine selected value, useful when ngModel and `vts-option` are `object` | `(object1: any, object2: any) => boolean` | `(object1: any, object2: any) => object1===object2`
 | vtsCustomFilterFn | Custom compare function used for searching | `(input?: string, option?: VtsSelectItemInterface) => boolean` |

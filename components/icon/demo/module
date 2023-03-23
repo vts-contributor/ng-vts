@@ -2,5 +2,6 @@ import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { ColorTwitterModule } from 'ngx-color/twitter';
 
-export const moduleList = [ VtsIconModule, VtsRadioModule, VtsInputModule, VtsBadgeModule ];
+export const moduleList = [ VtsIconModule, VtsRadioModule, VtsInputModule, VtsBadgeModule, ColorTwitterModule ];

@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "@angular/cdk": "^14.1.0",
-    "@ui-vts/icons-angular": "1.0.0",
+    "@ui-vts/icons-angular": "^1.0.2",
     "@ui-vts/theme": "file:../../ui-vts-theme-github",
     "apexcharts": "^3.27.3",
     "date-fns": "^2.10.0",

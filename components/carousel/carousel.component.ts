@@ -224,21 +224,52 @@ export class VtsCarouselComponent implements OnInit {
   showNextNavigation: boolean = true;
   showPrevNavigation: boolean = true;
 
+  // #region "Pagination"
+
+  _paginationElRef!: ElementRef;
+  _useCustomPagination: boolean = false;
+
+  // Default pagination
+  @ViewChild('vtsPaginationElRef', { static: false, read: ElementRef })
+  set paginationElRef(el: ElementRef) {
+    this._paginationElRef = el;
+    this._setElement(el, this.vtsPagination, 'vtsPagination');
+  }
+
+  // Custom pagination
+  @ContentChild(VtsCarouselPaginationComponent, { static: false })
+  set customPaginationRef(custom: VtsCarouselPaginationComponent) {
+    if (custom) {
+      this._useCustomPagination = true;
+      this._paginationElRef = custom.elementRef;
+      this._setElement(custom.elementRef, this.vtsPagination, 'vtsPagination');
+    }
+  }
+
   @Input()
   set vtsPagination(val) {
     const current = this._paginationElRef;
     this._vtsPagination = setProperty(val, {
       enabled: true,
-      el: current || null,
-      type: this._useCustomPagination ? 'custom' : 'bullets'
+      el: current || null
     });
-    this.showPagination = isShowEl(val, this._vtsPagination, this._paginationElRef);
+    if (typeof this._vtsPagination === 'object') {
+      this._vtsPagination.type = this._useCustomPagination ? 'custom' : 'bullets';
+    }
+    this.showPagination = !(
+      coerceBooleanProperty(this._vtsPagination) !== true ||
+      (typeof this._vtsPagination === 'object' && this._vtsPagination.enabled === false)
+    );
+    if (current) {
+      this._setElement(current, this.vtsPagination, 'vtsPagination');
+    }
   }
   get vtsPagination() {
     return this._vtsPagination;
   }
   private _vtsPagination: VtsCarouselPaginationOptions | boolean | '';
   showPagination: boolean = true;
+  //#endregion
 
   @Input()
   set vtsScrollbar(val) {
@@ -469,32 +500,6 @@ export class VtsCarouselComponent implements OnInit {
     this._setElement(el, this.vtsScrollbar, 'vtsScrollbar');
   }
   _vtsScrollbarElRef!: ElementRef;
-
-  // #region "Pagination"
-
-  _paginationElRef!: ElementRef;
-  _useCustomPagination: boolean = false;
-
-  // Default pagination
-  @ViewChild('vtsPaginationElRef', { static: false, read: ElementRef })
-  set paginationElRef(el: ElementRef) {
-    if (!this._paginationElRef) {
-      this._paginationElRef = el;
-      this._setElement(el, this.vtsPagination, 'vtsPagination');
-    }
-  }
-
-  // Custom pagination
-  @ContentChild(VtsCarouselPaginationComponent, { static: false })
-  set customPaginationRef(custom: VtsCarouselPaginationComponent) {
-    if (custom) {
-      this._useCustomPagination = true;
-      this._paginationElRef = custom.elementRef;
-      this._setElement(custom.elementRef, this.vtsPagination, 'vtsPagination');
-    }
-  }
-
-  //#endregion
 
   @ContentChildren(VtsCarouselSlideDirective, { descendants: false, emitDistinctChangesOnly: true })
   slidesEl!: QueryList<VtsCarouselSlideDirective>;
@@ -908,7 +913,14 @@ export class VtsCarouselComponent implements OnInit {
   }
 }
 
-type OmitPaginationOptions = Omit<VtsCarouselPaginationOptions, 'el' | 'renderCustom'>;
+type OmitPaginationOptions = Omit<VtsCarouselPaginationOptions, 'el' | 'renderCustom' | 'type'> & {
+  /**
+   * String with type of pagination. Can be `'bullets'`, `'fraction'`, `'progressbar'`
+   *
+   * @default 'bullets'
+   */
+  type?: 'bullets' | 'fraction' | 'progressbar';
+};
 type VtsCarouselBreakpointOptions = {
   [width: number]: VtsCarouselOptions;
   [ratio: string]: VtsCarouselOptions;

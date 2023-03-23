@@ -26,7 +26,8 @@
   "dependencies": {
     "@ui-vts/ng-vts": "file:components",
     "ngx-hover-preload": "0.0.3",
-    "@ui-vts/theme": "file:../ui-vts/ui-vts-theme-git"
+    "@ui-vts/theme": "file:../ui-vts/ui-vts-theme-git",
+    "@ui-vts/icons-angular": "^1.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.2.10",
