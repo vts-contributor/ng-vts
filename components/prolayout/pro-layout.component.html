@@ -1,13 +1,12 @@
 <vts-prolayout> 
-    <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'" *ngIf="isShowSider && isFixedSider" [useSplitMenu]="isMenuSplitted"
-        [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [menuData]="menuSider" [menuHeader]="menuHeader"></vts-prolayout-sider> 
+    <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'" *ngIf="isShowSider && isFixedSider" [menuData]="menuSider" [menuHeader]="menuHeader"></vts-prolayout-sider> 
 
-    <vts-prolayout-header [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [menuData]="menuHeader"
-        *ngIf="isShowHeader && !isFixedSider" [useSplitMenu]="isMenuSplitted" [title]="headerTitle"></vts-prolayout-header>
+    <vts-prolayout-header [menuData]="menuHeader"
+        *ngIf="isShowHeader && !isFixedSider" [title]="headerTitle"></vts-prolayout-header>
 
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
-        <vts-prolayout-header [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" *ngIf="isShowHeader"
-            [menuData]="menuHeader" [useSplitMenu]="isMenuSplitted" [title]="headerTitle"></vts-prolayout-header>
+        <vts-prolayout-header *ngIf="isShowHeader"
+            [menuData]="menuHeader" [title]="headerTitle"></vts-prolayout-header>
         <vts-prolayout-content class="outer-content">
             <prolayout-breadcrumb></prolayout-breadcrumb>
             <vts-prolayout class="inner-layout">
@@ -24,8 +23,8 @@
         <vts-prolayout-content class="outer-content">
             <prolayout-breadcrumb></prolayout-breadcrumb>
             <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
-                <vts-prolayout-sider vtsWidth="200px" [isFixedHeader]="isFixedHeader" [useSplitMenu]="isMenuSplitted"
-                    *ngIf="isShowSider" [isFixedSider]="isFixedSider" [menuData]="menuSider" [menuHeader]="menuHeader"></vts-prolayout-sider>
+                <vts-prolayout-sider vtsWidth="200px"
+                    *ngIf="isShowSider" [menuData]="menuSider" [menuHeader]="menuHeader"></vts-prolayout-sider>
                 <vts-prolayout-content class="inner-content">
                     <ng-container *ngTemplateOutlet="compContent"></ng-container>
                 </vts-prolayout-content>
@@ -41,15 +40,10 @@
         <vts-prolayout-footer *ngIf="isShowFooter">Copyright by Viettel Solution - Government Solution Center Platform</vts-prolayout-footer>
     </ng-template>
 
-    <vts-setting-drawer [isFixedHeader]="isFixedHeader" [isFixedSider]="isFixedSider" [isShowHeader]="isShowHeader"
-        [isShowSider]="isShowSider" [isShowFooter]="isShowFooter" (setFixedHeader)="onChangeFixedHeader($event)"
-        (setFixedSider)="onChangeFixedSider($event)" (setVisiblityHeader)="onChangeVisiblityHeader($event)"
-        (setVisiblitySider)="onChangeVisiblitySider($event)"
+    <vts-setting-drawer
         [useDarkMode]="useDarkMode"
         (setPageStyle)="onChangePageStyle($event)"
-        (setThemeColor)="onChangeThemeColor($event)"
-        (setSplitMenu)="onChangeSplitMenu($event)"
-        (setVisiblityFooter)="onChangeVisiblityFooter($event)"></vts-setting-drawer>
+        (setThemeColor)="onChangeThemeColor($event)"></vts-setting-drawer>
 </vts-prolayout>
 
 <ng-template #compContent>

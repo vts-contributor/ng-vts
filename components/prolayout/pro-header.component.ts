@@ -12,7 +12,7 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  SimpleChange,
+  // SimpleChange,
   OnInit,
   TemplateRef
 } from '@angular/core';
@@ -68,11 +68,11 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
   }
 
-  @Input() isFixedHeader: boolean = false;
-  @Input() isFixedSider: boolean = false;
+  isFixedHeader: boolean = false;
+  isFixedSider: boolean = false;
   @Input() menuData: MenuItemProLayout[] = [];
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
-  @Input() useSplitMenu: boolean = false;
+  useSplitMenu: boolean = false;
   @Input() title: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
@@ -100,6 +100,11 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
     });
     this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
       this.handleChangeFixedStatus(isFixed, this.isFixedSider);
+    });
+
+    // onchange use split menu
+    this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+      this.useSplitMenu = isMenuSplitted;
     });
   }
 

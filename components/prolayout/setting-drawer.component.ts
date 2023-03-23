@@ -39,22 +39,16 @@ export class VtsSettingDrawerComponent implements OnInit {
         },        
     ]
 
-    @Input() isFixedHeader: boolean = false;
-    @Input() isFixedSider: boolean = false;
-    @Input() isShowHeader: boolean = true;
-    @Input() isShowSider: boolean = true;
-    @Input() isShowFooter: boolean = true;
+    isFixedHeader: boolean = false;
+    isFixedSider: boolean = false;
+    isShowHeader: boolean = true;
+    isShowSider: boolean = true;
+    isShowFooter: boolean = true;
     @Input() useDarkMode: boolean = false;
-    @Input() useSplitMenu: boolean = false;
+    useSplitMenu: boolean = false;
 
-    @Output() setFixedHeader: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() setFixedSider: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() setVisiblityHeader: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() setVisiblitySider: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() setVisiblityFooter: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() setThemeColor: EventEmitter<string> = new EventEmitter<string>();
     @Output() setPageStyle: EventEmitter<boolean> = new EventEmitter<boolean>();
-    @Output() setSplitMenu: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() { }
 
@@ -67,24 +61,27 @@ export class VtsSettingDrawerComponent implements OnInit {
     }
 
     onChangeFixedSider(value: boolean) {
-        // this.setFixedSider.emit(value);
+        this.isFixedSider = value;
         this.prolayoutService.onChangeFixedSider(value);
     }
 
     onChangeFixedHeader(value: boolean) {
-        // this.setFixedHeader.emit(value);
+        this.isFixedHeader = value;
         this.prolayoutService.onChangeFixedHeader(value);
     }
 
     onChangeVisiblityHeader(value: boolean) {
+        this.isShowHeader = value;
         this.prolayoutService.onChangeVisibilityHeader(value);
     }
 
     onChangeVisiblitySider(value: boolean) {
+        this.isShowSider
         this.prolayoutService.onChangeVisibilitySider(value);
     }
 
     onChangeVisiblityFooter(value: boolean) {
+        this.isShowFooter = value;
         this.prolayoutService.onChangeVisibilityFooter(value);
     }
 
@@ -101,6 +98,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     }
 
     onChangeSplitMenu(value: boolean){
-        this.setSplitMenu.emit(value);
+        this.useSplitMenu = value;
+        this.prolayoutService.onChangeUseSplitMenu(value);
     }
 }
