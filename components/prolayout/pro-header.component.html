@@ -16,7 +16,8 @@
         <div vts-col>
             <i vts-icon vtsType="Search" class="cursor-pointer" vtsSize="lg"></i>
         </div>
-        <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
+        <!-- avatar with menu dropdown -->
+        <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="avatarMenu.length > 0; else withoutDropdown">
             <vts-avatar vts-col vtsSize="sm" vtsIcon="user"></vts-avatar>
             <div vts-col>
                 <div class="username">
@@ -27,10 +28,24 @@
                 </div>
             </div>
         </div>
+        <!-- avatar without menu dropdown -->
+        <ng-template #withoutDropdown>
+            <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
+                <vts-avatar vts-col vtsSize="sm" vtsIcon="user"></vts-avatar>
+                <div vts-col>
+                    <div class="username">
+                        {{ avatar.name }}
+                    </div>
+                    <div class="subname">
+                        {{ avatar.subname }}
+                    </div>
+                </div>
+            </div>
+        </ng-template>
     </div>
     <vts-dropdown-menu #menuAvatar="vtsDropdownMenu">
         <ul vts-menu vtsSelectable>
-            <li vts-menu-item *ngFor="let item of avatar.menu">{{ item.label }}</li>
+            <li vts-menu-item *ngFor="let item of avatarMenu">{{ item.label }}</li>
         </ul>
     </vts-dropdown-menu>
 </div>

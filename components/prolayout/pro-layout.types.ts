@@ -22,8 +22,7 @@ export type AvatarUser = {
     name?: string,
     subname?: string,
     imgUrl?: string,
-    size: VtsSizeLDSType,
-    menu: AvatarMenu[]
+    size: VtsSizeLDSType
 }
 
 export type AvatarMenu = {
