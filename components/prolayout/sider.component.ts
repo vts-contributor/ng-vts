@@ -29,8 +29,7 @@ import {
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { inNextTick, InputBoolean, toCssPixel } from '@ui-vts/ng-vts/core/util';
 import { 
-  VtsMenuDirective, 
-  // VtsMenuThemeType 
+  VtsMenuDirective,
 } from '@ui-vts/ng-vts/menu';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

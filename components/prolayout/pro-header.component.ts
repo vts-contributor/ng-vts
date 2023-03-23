@@ -12,13 +12,11 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
-  // SimpleChange,
   ChangeDetectorRef,
   OnInit,
   TemplateRef
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-// import { VtsMenuThemeType } from '@ui-vts/ng-vts/menu';
 import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
 
 @Component({
@@ -27,19 +25,6 @@ import { AvatarUser, MenuItemProLayout } from './pro-layout.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
-  // template: `
-  //   <div class="logo-header vts-logo" *ngIf="showLogo"></div>
-  //   <div class="title-container">
-  //     <ng-container *ngIf="title">
-  //       {{ title }}
-  //     </ng-container>
-  //     <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu" [vtsTheme]="vtsTheme" *ngIf="!useSplitMenu">
-  //       <ng-container *ngFor="let item of menuData">
-  //         <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
-  //       </ng-container>
-  //     </ul>
-  //   </div>
-  // `,
   templateUrl: 'pro-header.component.html',
   styles: [
     `
