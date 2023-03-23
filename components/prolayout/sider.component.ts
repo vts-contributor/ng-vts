@@ -189,6 +189,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
 
     // onchange use split menu
     this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+      this.useSplitMenu = isMenuSplitted;
       if(isMenuSplitted){
         this.menuData = [
           ...this.menuData,

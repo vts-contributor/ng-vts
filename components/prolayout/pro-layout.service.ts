@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProlayoutService {
     
-    fixedSiderChange$: Subject<boolean> = new Subject<boolean>();
-    fixedHeaderChange$: Subject<boolean> = new Subject<boolean>();
-    visibilitySiderChange$: Subject<boolean> = new Subject<boolean>();
-    visibilityHeaderChange$: Subject<boolean> = new Subject<boolean>();
-    visibilityFooterChange$: Subject<boolean> = new Subject<boolean>();
-    useSplitMenuChange$: Subject<boolean> = new Subject<boolean>();
+    fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    visibilitySiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    visibilityHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    visibilityFooterChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    useSplitMenuChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
     onChangeFixedSider(isFixed: boolean): void {
         this.fixedSiderChange$.next(isFixed);

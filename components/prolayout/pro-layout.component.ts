@@ -151,6 +151,8 @@ export class VtsProLayoutContainerComponent implements OnInit {
   }
 
   ngOnInit(): void { 
+    this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
+    this.prolayoutService.fixedHeaderChange$.next(this.isFixedHeader);
     // on change ix fixed
     this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
       this.onChangeFixedSider(isFixed);

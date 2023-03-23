@@ -96,9 +96,11 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     // on change ix fixed
     this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+      this.isFixedSider = isFixed;
       this.handleChangeFixedStatus(this.isFixedHeader, isFixed);
     });
     this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+      this.isFixedHeader = isFixed;
       this.handleChangeFixedStatus(isFixed, this.isFixedSider);
     });
 
