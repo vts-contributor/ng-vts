@@ -5,15 +5,14 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { IconDefinition } from '@ui-vts/icons-angular';
-import { ChevronLeft, ChevronRight } from '@ui-vts/icons-angular/icons';
-import { VTS_ICON_DEFAULT_TWOTONE_COLOR, VTS_ICONS } from '@ui-vts/ng-vts/icon';
+import { VTS_ICONS } from '@ui-vts/ng-vts/icon';
 
 import { AppComponent } from './app.component';
 import { routes } from './app.routing.module';
 import { SiteNgZorroAntdModule } from './ng-vts.module';
 {{importPart}}
 
-const icons: IconDefinition[] = [ ChevronLeft, ChevronRight ];
+const icons: IconDefinition[] = [];
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ const icons: IconDefinition[] = [ ChevronLeft, ChevronRight ];
   providers   : [
     Title,
     { provide: VTS_ICONS, useValue: icons },
-    { provide: VTS_ICON_DEFAULT_TWOTONE_COLOR, useValue: '#1890ff' }
   ],
   bootstrap   : [ AppComponent ]
 })

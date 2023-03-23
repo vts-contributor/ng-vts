@@ -75,7 +75,7 @@ export interface PaginationOptions {
    *
    * @default 'bullets'
    */
-  type?: 'bullets' | 'fraction' | 'progressbar';
+  type?: 'bullets' | 'fraction' | 'progressbar' | 'custom';
 
   /**
    * Defines which HTML tag will be used to represent single pagination bullet. Only for `'bullets'` pagination type.
