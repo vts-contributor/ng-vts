@@ -45,7 +45,7 @@ import { renderMenuProLayout } from './utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="vts-prolayout-sider-children">
-      <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider"></div> 
+      <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider" [style.backgroundImage]="'url(' + logoUrl + ')'"></div> 
       <ul vts-menu vtsMode="inline" class="sider-menu">
         <ng-container *ngFor="let item of menuData">
           <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
@@ -106,6 +106,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() @InputBoolean() vtsCollapsible = false;
   @Input() @InputBoolean() vtsCollapsed = false;  
   @Input() useDarkMode: boolean = false;
+  @Input() logoUrl: string = "";
 
   menuHeader: MenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
   menuSider: MenuItemProLayout[] = [];

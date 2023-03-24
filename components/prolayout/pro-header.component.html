@@ -1,4 +1,4 @@
-<div class="logo-header vts-logo" *ngIf="showLogo"></div>
+<div class="logo-header vts-logo" *ngIf="showLogo" [style.backgroundImage]="'url(' + logoUrl + ')'"></div>
 <div vts-row class="header-main">
     <div vts-col class="title-container" vtsFlex="auto">
         <ng-container *ngIf="title">
@@ -18,7 +18,7 @@
         </div>
         <!-- avatar with menu dropdown -->
         <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="avatarMenu.length > 0; else withoutDropdown">
-            <vts-avatar vts-col vtsSize="sm" vtsIcon="user"></vts-avatar>
+            <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="avatar.imgUrl"></vts-avatar>
             <div vts-col>
                 <div class="username">
                     {{ avatar.name }}
@@ -31,7 +31,7 @@
         <!-- avatar without menu dropdown -->
         <ng-template #withoutDropdown>
             <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
-                <vts-avatar vts-col vtsSize="sm" vtsIcon="user"></vts-avatar>
+                <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="avatar.imgUrl"></vts-avatar>
                 <div vts-col>
                     <div class="username">
                         {{ avatar.name }}

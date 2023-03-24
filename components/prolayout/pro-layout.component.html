@@ -1,11 +1,11 @@
 <vts-prolayout>
-    <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'"
+    <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'" [logoUrl]="logoUrl"
         *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
 
-    <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu"></vts-prolayout-header>
+    <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl"></vts-prolayout-header>
 
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
-        <vts-prolayout-header *ngIf="isShowHeader" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu"></vts-prolayout-header>
+        <vts-prolayout-header *ngIf="isShowHeader" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl"></vts-prolayout-header>
         <vts-prolayout-content class="outer-content">
             <prolayout-breadcrumb></prolayout-breadcrumb>
             <vts-prolayout class="inner-layout">
@@ -23,7 +23,7 @@
         <vts-prolayout-content class="outer-content">
             <prolayout-breadcrumb></prolayout-breadcrumb>
             <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
-                <vts-prolayout-sider vtsWidth="200px" *ngIf="isShowSider"></vts-prolayout-sider>
+                <vts-prolayout-sider vtsWidth="200px" [logoUrl]="logoUrl" *ngIf="isShowSider"></vts-prolayout-sider>
                 <vts-prolayout-content class="inner-content">
                     <ng-container *ngTemplateOutlet="compContent"></ng-container>
                 </vts-prolayout-content>

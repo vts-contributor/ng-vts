@@ -71,6 +71,7 @@ export class VtsProLayoutContainerComponent implements OnInit {
     subname: 'Viettel Solution'
   };
   @Input() avatarMenu: AvatarMenu[] = [];
+  @Input() logoUrl: string = "";
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;

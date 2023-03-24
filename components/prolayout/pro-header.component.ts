@@ -72,6 +72,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
   };
   showMenu: boolean = false;
   @Input() avatarMenu: AvatarMenu[] = [];
+  @Input() logoUrl: string = "";
 
   ngOnInit(): void {
     // receive menus from container
