@@ -110,6 +110,8 @@ import { VtsCarouselOptions, VtsCarouselPaginationOptions } from '@ui-vts/ng-vts
         z-index: 100;
         padding: 4px 8px;
         color: white;
+        bottom: unset;
+        width: unset;
       }
     `
   ]

@@ -40,7 +40,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'spin';
         </span>
       -->
       <div style="display:flex; height: 100%; align-items: flex-end; justify-content:center;">
-        <i style="font-size: 75px;" vts-icon vtsType="vts-spin:icon"></i>
+        <i style="font-size: 75px;" vts-icon vtsType="icon:vts-spin"></i>
       </div>
     </ng-template>
     <div *ngIf="isLoading">
