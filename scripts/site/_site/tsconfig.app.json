@@ -6,6 +6,7 @@
     "module": "esnext",
     "types": [],
     "paths": {
+      "@angular/*": ["../node_modules/@angular/*"],
       "@ui-vts/ng-vts": [ "../components/ng-vts.module.ts" ],
       "@ui-vts/ng-vts/*": [ "../components/*" ],
       "ngx-color/sketch": [ "../node_modules/ngx-color/sketch" ]
