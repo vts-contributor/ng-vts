@@ -15,7 +15,6 @@ import {
   SimpleChange,
   SimpleChanges
 } from '@angular/core';
-import { ThemeType } from '@ui-vts/icons-angular';
 
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { BooleanInput, InputObservable, VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
@@ -27,10 +26,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'form';
 
 export type VtsFormLayoutType = 'horizontal' | 'vertical' | 'inline';
 
-export const DefaultTooltipIcon = {
-  type: 'QuestionAnswerOutline',
-  theme: 'all'
-} as const;
+export const DefaultTooltipIcon = 'QuestionAnswerOutline';
 
 @Directive({
   selector: '[vts-form]',
@@ -56,8 +52,7 @@ export class VtsFormDirective implements OnChanges, OnDestroy, InputObservable {
   @Input() @WithConfig() @InputBoolean() vtsNoColon: boolean = false;
   @Input() @WithConfig() vtsAutoTips: Record<string, Record<string, string>> = {};
   @Input() @InputBoolean() vtsDisableAutoTips = false;
-  @Input() @WithConfig() vtsTooltipIcon: string | { type: string; theme: ThemeType } =
-    DefaultTooltipIcon;
+  @Input() @WithConfig() vtsTooltipIcon: string = DefaultTooltipIcon;
 
   dir: Direction = 'ltr';
   destroy$ = new Subject();

@@ -26,7 +26,7 @@
               "site/doc/robots.txt",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@ui-vts/icons-angular/icons/svg/",
+                "input": "./node_modules/@ui-vts/icons-svg/svg/",
                 "output": "/assets/"
               },
               {
@@ -36,7 +36,16 @@
               }
             ],
             "styles": [
-              "site/doc/styles.less"
+              {
+                "input": "site/doc/default.less",
+                "bundleName": "default",
+                "inject": false
+              },
+              {
+                "input": "site/doc/dark.less",
+                "bundleName": "dark",
+                "inject": false
+              }
             ],
             "allowedCommonJsDependencies": [
               "codesandbox",

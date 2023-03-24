@@ -5,7 +5,6 @@
 import { PlatformModule } from '@angular/cdk/platform';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { IconDefinition } from '@ui-vts/icons-angular';
-
 import { VtsIconDirective } from './icon.directive';
 import { VtsIconPatchService, VTS_ICONS, VTS_ICONS_PATCH } from './icon.service';
 
