@@ -1,6 +1,5 @@
 <div id="ng-content">
   <div class="page-wrapper" [class.page-wrapper-rtl]="direction === 'rtl'" [dir]="direction">
-
     <vts-layout>
       <vts-sider 
         [vtsWidth]="286" 
@@ -66,11 +65,8 @@
           </div>
         </div>
       </div>
-
       </vts-layout>
-
     </vts-layout>
-
   </div>
 </div>
 
@@ -83,3 +79,12 @@
       [onItemClick]="onNavigateClick.bind(this)">
   </app-side>
 </ng-template>
+
+<div id="themeToggle" vts-dropdown [vtsDropdownMenu]="themeMenu" vtsPlacement="topRight" *ngIf="allThemes.length">
+  <i vts-icon vtsType="ColorizeDoutone:vts"></i>
+</div>
+<vts-dropdown-menu #themeMenu="vtsDropdownMenu">
+  <ul vts-menu nzSelectable>
+    <li vts-menu-item *ngFor="let item of allThemes" [vtsSelected]="currentTheme === item.theme" (click)="onThemeChange(item)">{{ item.theme | titlecase }}</li>
+  </ul>
+</vts-dropdown-menu>

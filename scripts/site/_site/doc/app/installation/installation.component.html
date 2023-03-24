@@ -7,19 +7,101 @@
 <span class="token comment" spellcheck="true">//or</span>
 yarn install @ui-vts/ng-vts
 </code></pre>
+
+<h3>Theme:</h3>
+<b>Single theme usage:</b>
 <p>Import theme stylesheet (support LESS and CSS, use one):</p>
-<pre
-  class="language-typescript"
-><code><span spellcheck="true" class="token comment">//Using CSS</span>
-@import "@ui-vts/theme/ui-vts.css";
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Import one of themes provided:</span>
+<span class="token comment">// Using CSS</span>
+@<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/ui-vts.css"</span><span class="token punctuation">;</span>       <span class="token comment">// Default theme</span>
+@<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/theme-dark.css"</span><span class="token punctuation">;</span>   <span class="token comment">// Import other theme by format 'theme-&lt;name&gt;.css'</span>
 
-<span spellcheck="true" class="token comment">//Using LESS</span>
-@import "@ui-vts/theme/ui-vts.less";</code></pre>
-        <p style="margin-bottom: 0;">Import Sarabun and BeauSan Pro fonts (recommend):</p>
-        <p style="margin-top: 0;margin-bottom: 0;">Note : Typography component is using Sarabun and BeauSan Pro fonts, other fonts may caught problem styling</p>
-        <a style="padding-left: 1px" class="vts-btn vts-btn-link vts-btn-md" id="downloadFont" download="fonts.rar" href="./assets/download/fonts.rar">Download fonts</a>
+<span class="token comment">// Using LESS</span>
+@<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/ui-vts.less"</span><span class="token punctuation">;</span>      <span class="token comment">// Default theme</span>
+@<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/theme-dark.less"</span><span class="token punctuation">;</span>  <span class="token comment">// Import other theme by format 'theme-&lt;name&gt;.less'</span></code></pre>
 
-        <p>Import BrowserAnimationsModule or NoopAnimationsModule for some components which require transition animation:</p>
+<b>Multiple theme usage:</b>
+<p>Provide prebuilt themes of @ui-vts/theme or provide built stylesheets inside angular.json</p>
+<p>To provide themes of @ui-vts/theme</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Provide prebuilt CSS inside assets</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token string-property property">"glob"</span><span class="token operator">:</span> <span class="token string">"**/*.css"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"input"</span><span class="token operator">:</span> <span class="token string">"./node_modules/@ui-vts/theme/"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"output"</span><span class="token operator">:</span> <span class="token string">"/assets/themes/"</span>
+<span class="token punctuation">&#125;</span></code></pre>
+<p>To provide built stylesheets:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// styles/default.less</span>
+@<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/ui-vts.less"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// styles/dark.less</span>
+@<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/theme-dark.less"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// angular.json: projects &gt; architect &gt; build &gt; options &gt; styles</span>
+<span class="token string-property property">"styles"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token string-property property">"input"</span><span class="token operator">:</span> <span class="token string">"styles/default.less"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"bundleName"</span><span class="token operator">:</span> <span class="token string">"default"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"inject"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token string-property property">"input"</span><span class="token operator">:</span> <span class="token string">"styles/dark.less"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"bundleName"</span><span class="token operator">:</span> <span class="token string">"dark"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"inject"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">]</span></code></pre>
+<p>Provide theme service inside App Module</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> VtsThemeModule<span class="token punctuation">,</span> VtsTheme <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@ui-vts/theme/services'</span>
+
+<span class="token decorator"><span class="token at operator">@</span><span class="token function">NgModule</span></span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+    declarations<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    imports<span class="token operator">:</span> <span class="token punctuation">[</span>
+        VtsThemeModule<span class="token punctuation">.</span><span class="token function">forRoot</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+            themes<span class="token operator">:</span> <span class="token punctuation">[</span>
+                <span class="token punctuation">&#123;</span>
+                    theme<span class="token operator">:</span> <span class="token string">'dark'</span><span class="token punctuation">,</span>         <span class="token comment">// VtsTheme</span>
+                    url<span class="token operator">:</span> <span class="token string">'/assets/themes/theme-dark.css'</span>
+                    <span class="token comment">// url: '/dark.css'    // If using built stylesheets</span>
+
+                <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+                <span class="token punctuation">&#123;</span>
+                    theme<span class="token operator">:</span> <span class="token string">'default'</span><span class="token punctuation">,</span>      <span class="token comment">// VtsTheme</span>
+                    url<span class="token operator">:</span> <span class="token string">'/assets/themes/theme-default.css'</span>
+                    <span class="token comment">// url: '/default.css' // If using built stylesheets</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            defaultTheme<span class="token operator">:</span> <span class="token string">'default'</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token operator">...</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
+<p>Using service to fetch available themes and switching theme:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> VtsTheme<span class="token punctuation">,</span> VtsThemeItem<span class="token punctuation">,</span> VtsThemeService <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@ui-vts/theme/services'</span><span class="token punctuation">;</span>
+
+<span class="token comment">// .ts</span>
+allThemes<span class="token operator">:</span> VtsThemeItem<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+currentTheme<span class="token operator">:</span> VtsTheme <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+
+<span class="token function">constructor</span><span class="token punctuation">(</span>
+    <span class="token keyword">private</span> themeService<span class="token operator">:</span> VtsThemeService
+<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>themeService<span class="token punctuation">.</span>allTheme$<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>d <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>allThemes <span class="token operator">=</span> d<span class="token punctuation">)</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>themeService<span class="token punctuation">.</span>theme$<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span>d <span class="token operator">=&gt;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>currentTheme <span class="token operator">=</span> d<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">onThemeChange</span><span class="token punctuation">(</span>e<span class="token operator">:</span> VtsThemeItem<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>themeService<span class="token punctuation">.</span><span class="token function">setTheme</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>theme<span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// .html</span>
+<span class="token operator">&lt;</span>ul<span class="token operator">&gt;</span>
+    <span class="token operator">&lt;</span>li 
+        <span class="token operator">*</span>ngFor<span class="token operator">=</span><span class="token string">"let item of allThemes"</span> 
+        <span class="token punctuation">[</span><span class="token keyword">class</span><span class="token punctuation">.</span>selected<span class="token punctuation">]</span><span class="token operator">=</span><span class="token string">"currentTheme === item.theme"</span> 
+        <span class="token punctuation">(</span>click<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"onThemeChange(item)"</span>
+    <span class="token operator">&gt;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> item<span class="token punctuation">.</span>theme <span class="token operator">|</span> titlecase <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>ul<span class="token operator">&gt;</span></code></pre>
+<h3>Animation:</h3>
+<p>Import BrowserAnimationsModule or NoopAnimationsModule for some components which require transition animation:</p>
         <pre class="language-typescript">
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> BrowserAnimationsModule, NoopAnimationsModule <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/platform-browser/animations'</span><span class="token punctuation">;</span>
 
@@ -33,6 +115,7 @@ yarn install @ui-vts/ng-vts
     <span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
 
+<h3>Usage & Detail:</h3>
         <p>Importing module relatively in project&#39;s feature modules and using components (Check component&#39;s
             document for more detail):</p>
         <pre class="language-typescript"><code>@<span class="token function">NgModule</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
