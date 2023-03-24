@@ -24,8 +24,9 @@ yarn install @ui-vts/ng-vts
 <p>Provide prebuilt themes of @ui-vts/theme or provide built stylesheets inside angular.json</p>
 <p>To provide themes of @ui-vts/theme</p>
 <pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Provide prebuilt CSS inside assets</span>
+<span class="token comment">// angular.json: projects &gt; architect &gt; (build | serve) &gt; options &gt; assets (Add an entry inside assets list) </span>
 <span class="token punctuation">&#123;</span>
-    <span class="token string-property property">"glob"</span><span class="token operator">:</span> <span class="token string">"**/*.css"</span><span class="token punctuation">,</span>
+    <span class="token string-property property">"glob"</span><span class="token operator">:</span> <span class="token string">"**/(*.css|*.woff|*.woff2)"</span><span class="token punctuation">,</span>
     <span class="token string-property property">"input"</span><span class="token operator">:</span> <span class="token string">"./node_modules/@ui-vts/theme/"</span><span class="token punctuation">,</span>
     <span class="token string-property property">"output"</span><span class="token operator">:</span> <span class="token string">"/assets/themes/"</span>
 <span class="token punctuation">&#125;</span></code></pre>
