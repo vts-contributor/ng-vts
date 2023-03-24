@@ -43,7 +43,7 @@ export class VtsDemoProlayoutBasicComponent {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution',
-    imgUrl: "http://localhost:4200/avatar_design.svg"
+    imgUrl: "http://localhost/avatar_design.svg"
   };
   avatarMenu: AvatarMenu[] = [
     {

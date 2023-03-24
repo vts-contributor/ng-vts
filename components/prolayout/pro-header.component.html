@@ -17,9 +17,9 @@
             <i vts-icon vtsType="Search" class="cursor-pointer" vtsSize="lg"></i>
         </div>
         <!-- avatar with menu dropdown -->
-        <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="avatarMenu.length > 0; else withoutDropdown">
+        <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="avatarMenu.length > 0; else withoutDropdown">
             <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="avatar.imgUrl"></vts-avatar>
-            <div vts-col>
+            <div vts-col style="margin-left: 5px;">
                 <div class="username">
                     {{ avatar.name }}
                 </div>
@@ -30,9 +30,9 @@
         </div>
         <!-- avatar without menu dropdown -->
         <ng-template #withoutDropdown>
-            <div vts-row vtsAlign="middle" [vtsGutter]="10" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
+            <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
                 <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="avatar.imgUrl"></vts-avatar>
-                <div vts-col>
+                <div vts-col style="margin-left: 5px;">
                     <div class="username">
                         {{ avatar.name }}
                     </div>
