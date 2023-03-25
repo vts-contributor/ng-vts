@@ -1,6 +1,5 @@
 /**
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ * This is code from @ui-vts/ng-vts/tooltip customized to use for sider only
  */
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
@@ -44,6 +43,7 @@ import {
 import { isNotNil, toBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject, asapScheduler } from 'rxjs';
 import { distinctUntilChanged, takeUntil, filter, delay } from 'rxjs/operators';
+import { MenuItemProLayout } from './pro-layout.types';
 
 export interface PropertyMapping {
   [key: string]: [string, () => unknown];
@@ -54,7 +54,7 @@ export type VtsTooltipType = 'sentence' | 'paragraph';
 export type VtsTooltipTrigger = 'click' | 'focus' | 'hover' | null;
 
 @Directive()
-export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, AfterViewInit {
+export abstract class SiderTooltipBaseDirective implements OnChanges, OnDestroy, AfterViewInit {
   arrowPointAtCenter?: boolean;
   config?: Required<PopoverConfig | PopConfirmConfig>;
   directiveTitle?: VtsTSType | null;
@@ -75,7 +75,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
   /**
    * For create tooltip dynamically. This should be override for each different component.
    */
-  protected componentRef!: ComponentRef<VtsTooltipBaseComponent>;
+  protected componentRef!: ComponentRef<SiderTooltipBaseComponent>;
 
   /**
    * This true title that would be used in other parts on this component.
@@ -129,12 +129,14 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
     };
   }
 
-  component?: VtsTooltipBaseComponent;
+  component?: SiderTooltipBaseComponent;
 
   protected readonly destroy$ = new Subject<void>();
   protected readonly triggerDisposables: Array<() => void> = [];
 
   private delayTimer?: number | ReturnType<typeof setTimeout>;
+
+  protected menuItem?: MenuItemProLayout | null;
 
   constructor(
     public elementRef: ElementRef,
@@ -193,7 +195,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
    */
   protected createComponent(): void {
     const componentRef = this.componentRef;
-    this.component = componentRef.instance as VtsTooltipBaseComponent;
+    this.component = componentRef.instance as SiderTooltipBaseComponent;
 
     // Remove the component's DOM because it should be in the overlay container.
     this.renderer.removeChild(
@@ -350,7 +352,7 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class VtsTooltipBaseComponent implements OnDestroy, OnInit {
+export abstract class SiderTooltipBaseComponent implements OnDestroy, OnInit {
   static ngAcceptInputType_vtsVisible: BooleanInput;
   static ngAcceptInputType_vtsArrowPointAtCenter: BooleanInput;
 
@@ -405,7 +407,7 @@ export abstract class VtsTooltipBaseComponent implements OnDestroy, OnInit {
 
   _classMap: NgClassInterface = {};
 
-  _prefix = 'vts-tooltip';
+  _prefix = 'sider-tooltip';
 
   _positions: ConnectionPositionPair[] = [...DEFAULT_TOOLTIP_POSITIONS];
 
