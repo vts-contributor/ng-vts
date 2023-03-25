@@ -80,7 +80,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
       this.menuData = data;
       let newMenuData: MenuItemProLayout[] = [
         {
-          icon: 'toc',
+          icon: 'Toc:vts',
           title: '',
           children: [...data]
         }
@@ -112,7 +112,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
         // add a wrapper item to create a menu button
         let newMenuData: MenuItemProLayout[] = [
           {
-            icon: 'toc',
+            icon: 'Toc:vts',
             title: '',
             children: [...this.menuData]
           }
