@@ -1,5 +1,5 @@
 <ng-container *ngIf="menuItem.children && menuItem.children.length > 0; else menuChild">
-    <li vts-submenu vtsOpen [vtsTitle]="menuItem.title" *ngIf="menuItem.isOpen; else closedMenu">
+    <li vts-submenu vtsOpen [vtsTitle]="menuItem.title" *ngIf="menuItem.isOpen; else closedMenu" sider-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="menuItem.title">
         <ul>
             <ng-container *ngFor="let item of menuItem.children">
                 <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
@@ -7,7 +7,7 @@
         </ul>
     </li>
     <ng-template #closedMenu>
-        <li vts-submenu [vtsTitle]="menuItem.title">
+        <li vts-submenu [vtsTitle]="menuItem.title" sider-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="menuItem.title">
             <ul>
                 <ng-container *ngFor="let item of menuItem.children">
                     <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
@@ -18,7 +18,7 @@
 </ng-container>
 
 <ng-template #menuChild>
-    <li vts-menu-item [vtsMatchRouterExact]="true" (click)="onClickAvatarMenuItem(menuItem)">
+    <li vts-menu-item [vtsMatchRouterExact]="true" (click)="onClickAvatarMenuItem(menuItem)" sider-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="menuItem.title">
         <i vts-icon [vtsType]="menuItem.icon" *ngIf="menuItem.icon"></i>
         {{menuItem.title}}
     </li>

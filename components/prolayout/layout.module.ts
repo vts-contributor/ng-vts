@@ -32,6 +32,10 @@ import { VtsSiderTriggerComponent } from './sider-trigger.component';
 import { VtsSiderComponent } from './sider.component';
 import { VtsProlayoutBreadCrumbComponent } from './breadcrumb.component';
 import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import { SiderToolTipComponent, SiderTooltipDirective } from './tooltip';
+import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
+import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [    
@@ -45,7 +49,9 @@ import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
     VtsProlayoutMenuItemComponent,
     VtsProlayoutMenuItemHorizontalComponent,
     VtsSettingDrawerComponent,
-    VtsProlayoutBreadCrumbComponent
+    VtsProlayoutBreadCrumbComponent,
+    SiderToolTipComponent,
+    SiderTooltipDirective
   ],
   exports: [
     VtsProLayoutContainerComponent
@@ -53,6 +59,7 @@ import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
   imports: [
     BidiModule,
     CommonModule,
+    OverlayModule,
     VtsIconModule,
     LayoutModule,
     PlatformModule,
@@ -67,7 +74,9 @@ import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
     VtsTagModule,
     VtsGridModule,
     VtsSelectModule,
-    VtsDropDownModule
+    VtsDropDownModule,
+    VtsNoAnimationModule,
+    VtsOutletModule
   ]
 })
 export class VtsProLayoutModule {}
