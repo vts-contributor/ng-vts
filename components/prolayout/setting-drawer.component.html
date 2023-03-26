@@ -103,8 +103,8 @@
 <ng-template #pageStyle>
   <h4 vts-typography vtsType="h4">Page style setting</h4>
   <vts-switch
-    [(ngModel)]="useDarkMode"
-    (ngModelChange)="onChangePageStyle($event)"
+    [(ngModel)]="isDarkMode"
+    (ngModelChange)="onThemeChange()"
     [vtsUnCheckedChildren]="'Light'"
     [vtsCheckedChildren]="'Dark'"
   ></vts-switch>

@@ -55,13 +55,12 @@ export class VtsProLayoutContainerComponent implements OnInit {
   }
 
   themeColor: string = '#EE0033';
-  useDarkMode:  boolean = false;
 
   isFixedHeader: boolean = false;
   isFixedSider: boolean = true;
-  @Input() isShowHeader: boolean = true;
-  @Input() isShowSider: boolean = true;
-  @Input() isShowFooter: boolean = true;
+  isShowHeader: boolean = true;
+  isShowSider: boolean = true;
+  isShowFooter: boolean = true;
   @Input() menuHeader: MenuItemProLayout[] = [];
   @Input() menuSider: MenuItemProLayout[] = [];  
   @Input() headerTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
@@ -93,10 +92,6 @@ export class VtsProLayoutContainerComponent implements OnInit {
 
   onChangeThemeColor(color: string){
     this.themeColor = color;
-  }
-
-  onChangePageStyle(useDarkMode: boolean){
-    this.useDarkMode = useDarkMode;
   }
 
   onSelectMenuSiderItem(selected: MenuItemProLayout){

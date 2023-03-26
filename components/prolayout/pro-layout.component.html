@@ -1,5 +1,5 @@
 <vts-prolayout>
-    <vts-prolayout-sider vtsWidth="200px" [vtsTheme]="useDarkMode ? 'dark': 'light'" [logoUrl]="logoUrl"
+    <vts-prolayout-sider vtsWidth="250px" [logoUrl]="logoUrl"
         *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
 
     <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [title]="headerTitle" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl"></vts-prolayout-header>
@@ -40,7 +40,7 @@
             Platform</vts-prolayout-footer>
     </ng-template>
 
-    <vts-setting-drawer [useDarkMode]="useDarkMode" (setPageStyle)="onChangePageStyle($event)"
+    <vts-setting-drawer
         (setThemeColor)="onChangeThemeColor($event)"></vts-setting-drawer>
 </vts-prolayout>
 

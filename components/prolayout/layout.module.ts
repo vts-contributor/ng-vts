@@ -36,7 +36,8 @@ import { SiderToolTipComponent, SiderTooltipDirective } from './tooltip';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { VtsToolTipModule } from '../tooltip';
+import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
+import { VtsThemeModule } from '@ui-vts/theme/services'
 
 @NgModule({
   declarations: [    
@@ -78,7 +79,20 @@ import { VtsToolTipModule } from '../tooltip';
     VtsDropDownModule,
     VtsNoAnimationModule,
     VtsOutletModule,
-    VtsToolTipModule
+    VtsToolTipModule,
+    VtsThemeModule.forRoot({
+      themes: [
+        {
+          theme: 'dark',
+          url: '/dark.css'
+        },
+        {
+          theme: 'default',
+          url: '/default.css'
+        },
+      ],
+      defaultTheme: 'default'
+    })
   ]
 })
 export class VtsProLayoutModule {}
