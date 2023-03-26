@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 
 import { VtsMenuGroupComponent } from './menu-group.component';
 import { VtsMenuItemDirective } from './menu-item.directive';
@@ -27,7 +28,8 @@ import { VtsSubMenuComponent } from './submenu.component';
     OverlayModule,
     VtsIconModule,
     VtsNoAnimationModule,
-    VtsOutletModule
+    VtsOutletModule,
+    VtsToolTipModule
   ],
   declarations: [
     VtsMenuDirective,
