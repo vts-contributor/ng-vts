@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
 import { ThemeColorType } from './pro-layout.types';
+import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
 
 @Component({
     selector: 'vts-setting-drawer',
@@ -11,10 +12,22 @@ import { ThemeColorType } from './pro-layout.types';
 
 export class VtsSettingDrawerComponent implements OnInit {
 
-    constructor(private elementRef: ElementRef, private prolayoutService: ProlayoutService) {
+    constructor(
+        private elementRef: ElementRef, 
+        private prolayoutService: ProlayoutService,
+        private themeService: VtsThemeService
+    ) {
         this.elementRef.nativeElement.classList.add('vts-setting-drawer');
+        this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => this.allThemes = d);
+        this.themeService.theme$.subscribe((d: VtsTheme | null) => {
+            this.currentTheme = d;
+            this.isDarkMode = d === 'dark';
+        });
     }
 
+    allThemes: VtsThemeItem[] = [];
+    currentTheme: VtsTheme | null = null;
+    isDarkMode: boolean = false;
     open: boolean = false;
     listColors: ThemeColorType[] = [
         {
@@ -44,11 +57,9 @@ export class VtsSettingDrawerComponent implements OnInit {
     isShowHeader: boolean = true;
     isShowSider: boolean = true;
     isShowFooter: boolean = true;
-    @Input() useDarkMode: boolean = false;
     useSplitMenu: boolean = false;
 
     @Output() setThemeColor: EventEmitter<string> = new EventEmitter<string>();
-    @Output() setPageStyle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     ngOnInit() {
         this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
@@ -120,12 +131,12 @@ export class VtsSettingDrawerComponent implements OnInit {
         this.setThemeColor.emit(value);
     }
 
-    onChangePageStyle(value: boolean){
-        this.setPageStyle.emit(value);
-    }
-
     onChangeSplitMenu(value: boolean){
         this.useSplitMenu = value;
         this.prolayoutService.onChangeUseSplitMenu(value);
+    }
+
+    onThemeChange() {
+        this.themeService.setTheme(this.currentTheme === 'default' ? 'dark': 'default');
     }
 }

@@ -97,7 +97,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   vtsMenuDirective: VtsMenuDirective | null = null;
   @Output() readonly vtsCollapsedChange = new EventEmitter();
   @Input() vtsWidth: string | number = 200;
-  @Input() vtsTheme: string = 'light';
+  vtsTheme: string = 'light';
   @Input() vtsCollapsedWidth = 70;
   @Input() vtsBreakpoint: VtsBreakpointKey | null = null;
   @Input() vtsZeroTrigger: TemplateRef<void> | null = null;
