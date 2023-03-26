@@ -36,6 +36,7 @@ import { SiderToolTipComponent, SiderTooltipDirective } from './tooltip';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { VtsToolTipModule } from '../tooltip';
 
 @NgModule({
   declarations: [    
@@ -76,7 +77,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     VtsSelectModule,
     VtsDropDownModule,
     VtsNoAnimationModule,
-    VtsOutletModule
+    VtsOutletModule,
+    VtsToolTipModule
   ]
 })
 export class VtsProLayoutModule {}
