@@ -238,7 +238,6 @@ export abstract class VtsTooltipBaseDirective implements OnChanges, OnDestroy, A
       let overlayElement: HTMLElement;
       this.triggerDisposables.push(
         this.renderer.listen(el, 'mouseenter', () => {
-          console.log(el);
           this.delayEnterLeave(true, true, this._mouseEnterDelay);
         })
       );

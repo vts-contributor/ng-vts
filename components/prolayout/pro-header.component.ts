@@ -20,6 +20,7 @@ import {
 import { ProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
 import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -64,6 +65,12 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
   menuData: MenuItemProLayout[] = [];
+
+  private fixedHeaderSubscription = Subscription.EMPTY;
+  private fixedSiderSubscription = Subscription.EMPTY;
+  private splitMenuSubscription = Subscription.EMPTY;
+  private menuHeaderSubscription = Subscription.EMPTY;
+
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
   @Input() title: string | TemplateRef<void> | null = null;
@@ -80,7 +87,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     // receive menus from container
-    this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
+    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
       this.menuData = data;
       let newMenuData: MenuItemProLayout[] = [
         {
@@ -93,17 +100,17 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     });
 
     // on change ix fixed
-    this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
       this.isFixedSider = isFixed;
       this.handleChangeFixedStatus(this.isFixedHeader, isFixed);
     });
-    this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
       this.isFixedHeader = isFixed;
       this.handleChangeFixedStatus(isFixed, this.isFixedSider);
     });
 
     // onchange use split menu
-    this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+    this.splitMenuSubscription = this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
       this.useSplitMenu = isMenuSplitted;
       this.cdf.detectChanges();
     });
@@ -113,10 +120,10 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
  * destroy all subscription of prolayout service   
  */
   destroySubscriptions(){
-    this.prolayoutService.fixedSiderChange$.unsubscribe();
-    this.prolayoutService.fixedHeaderChange$.unsubscribe();
-    this.prolayoutService.menuHeaderChange$.unsubscribe();
-    this.prolayoutService.useSplitMenuChange$.unsubscribe();
+    this.menuHeaderSubscription.unsubscribe();
+    this.fixedSiderSubscription.unsubscribe();
+    this.fixedHeaderSubscription.unsubscribe();
+    this.splitMenuSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {

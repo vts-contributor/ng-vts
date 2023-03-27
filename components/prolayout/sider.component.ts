@@ -31,7 +31,7 @@ import { inNextTick, InputBoolean, toCssPixel } from '@ui-vts/ng-vts/core/util';
 import { 
   VtsMenuDirective,
 } from '@ui-vts/ng-vts/menu';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProlayoutService } from './pro-layout.service';
 import { MenuItemProLayout } from './pro-layout.types';
@@ -117,6 +117,12 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   flexSetting: string | null = null;
   widthSetting: string | null = null;
 
+  private fixedHeaderSubscription = Subscription.EMPTY;
+  private fixedSiderSubscription = Subscription.EMPTY;
+  private splitMenuSubscription = Subscription.EMPTY;
+  private menuHeaderSubscription = Subscription.EMPTY;
+  private menuSiderSubscription = Subscription.EMPTY;
+
   updateStyleMap(): void {
     this.widthSetting = this.vtsCollapsed
       ? `${this.vtsCollapsedWidth}px`
@@ -177,25 +183,25 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     }
 
     // on change ix fixed
-    this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
       this.isFixedSider = isFixed;
     });
-    this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
       this.isFixedHeader = isFixed;
     });
 
     // receive menus from container
-    this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
+    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
       this.menuHeader = data;
       this.handleChangesMenuLogic(this.useSplitMenu, data, this.menuSider);
     });
-    this.prolayoutService.menuSiderChange$.subscribe((data: MenuItemProLayout[]) => {
+    this.menuSiderSubscription = this.prolayoutService.menuSiderChange$.subscribe((data: MenuItemProLayout[]) => {
       this.menuSider = data;
       this.handleChangesMenuLogic(this.useSplitMenu, this.menuHeader, data);
     })
 
     // onchange use split menu
-    this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
+    this.splitMenuSubscription = this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
       this.useSplitMenu = isMenuSplitted;
       this.handleChangesMenuLogic(isMenuSplitted, this.menuHeader, this.menuSider);
     });
@@ -218,11 +224,11 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
    * destroy all subscription of prolayout service   
    */
   destroySubscriptions(){
-    this.prolayoutService.fixedSiderChange$.unsubscribe();
-    this.prolayoutService.fixedHeaderChange$.unsubscribe();
-    this.prolayoutService.menuHeaderChange$.unsubscribe();
-    this.prolayoutService.menuSiderChange$.unsubscribe();
-    this.prolayoutService.useSplitMenuChange$.unsubscribe();
+    this.fixedSiderSubscription.unsubscribe();
+    this.fixedHeaderSubscription.unsubscribe();
+    this.menuHeaderSubscription.unsubscribe();
+    this.menuSiderSubscription.unsubscribe();
+    this.splitMenuSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

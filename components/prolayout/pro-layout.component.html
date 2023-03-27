@@ -19,23 +19,20 @@
             Platform</vts-prolayout-footer>
     </vts-prolayout>
 
-    <ng-template #notFixedSider>
-        <vts-prolayout-content class="outer-content">
-            <prolayout-breadcrumb></prolayout-breadcrumb>
-            <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
-                <vts-prolayout-sider vtsWidth="200px" [logoUrl]="logoUrl" *ngIf="isShowSider"></vts-prolayout-sider>
-                <vts-prolayout-content class="inner-content">
-                    <ng-container *ngTemplateOutlet="compContent"></ng-container>
-                </vts-prolayout-content>
-            </vts-prolayout>
+    <ng-template #notFixedSider>        
+        <prolayout-breadcrumb></prolayout-breadcrumb>
+        <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
+            <vts-prolayout-sider vtsWidth="200px" [logoUrl]="logoUrl" *ngIf="isShowSider"></vts-prolayout-sider>
+            <vts-prolayout-content class="inner-content">
+                <ng-container *ngTemplateOutlet="compContent"></ng-container>
+            </vts-prolayout-content>
+        </vts-prolayout>
 
-            <ng-template #fixedHeader>
-                <vts-prolayout-content class="inner-content">
-                    <ng-container *ngTemplateOutlet="compContent"></ng-container>
-                </vts-prolayout-content>
-            </ng-template>
-        </vts-prolayout-content>
-
+        <ng-template #fixedHeader>
+            <vts-prolayout-content class="inner-content">
+                <ng-container *ngTemplateOutlet="compContent"></ng-container>
+            </vts-prolayout-content>
+        </ng-template>
         <vts-prolayout-footer *ngIf="isShowFooter">Copyright by Viettel Solution - Government Solution Center
             Platform</vts-prolayout-footer>
     </ng-template>

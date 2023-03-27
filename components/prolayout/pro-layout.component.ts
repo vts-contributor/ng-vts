@@ -15,6 +15,7 @@ import {
 import { ProlayoutService } from './pro-layout.service';
 import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'vts-prolayout-container',
@@ -79,6 +80,12 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   @Input() breadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
 
+  private fixedHeaderSubscription = Subscription.EMPTY;
+  private fixedSiderSubscription = Subscription.EMPTY;
+  private visibleHeaderSubscription = Subscription.EMPTY;
+  private visisbleSiderSubscription = Subscription.EMPTY;
+  private visibleFooterSubscription = Subscription.EMPTY;
+
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;
     if(!value && this.isFixedHeader){
@@ -126,21 +133,21 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     this.prolayoutService.onChangeMenuSider(this.menuSider);
 
     // on change ix fixed
-    this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
+    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
       this.isFixedSider = isFixed;
     });
-    this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
+    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
       this.isFixedHeader = isFixed;
     });
 
     // onchange visibility
-    this.prolayoutService.visibilityHeaderChange$.subscribe((isShow: boolean) => {
+    this.visibleHeaderSubscription = this.prolayoutService.visibilityHeaderChange$.subscribe((isShow: boolean) => {
       this.onChangeVisiblityHeader(isShow);
     });
-    this.prolayoutService.visibilitySiderChange$.subscribe((isShow: boolean) => {
+    this.visisbleSiderSubscription = this.prolayoutService.visibilitySiderChange$.subscribe((isShow: boolean) => {
       this.onChangeVisiblitySider(isShow);
     });
-    this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
+    this.visibleFooterSubscription = this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
       this.onChangeVisiblityFooter(isShow);
     });
   }
@@ -149,10 +156,10 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   * destroy all subscription of prolayout service   
   */
   destroySubscriptions(){
-    this.prolayoutService.fixedSiderChange$.unsubscribe();
-    this.prolayoutService.fixedHeaderChange$.unsubscribe();
-    this.prolayoutService.menuHeaderChange$.unsubscribe();
-    this.prolayoutService.menuSiderChange$.unsubscribe();
-    this.prolayoutService.useSplitMenuChange$.unsubscribe();
+    this.fixedHeaderSubscription.unsubscribe();
+    this.fixedSiderSubscription.unsubscribe();
+    this.visibleFooterSubscription.unsubscribe();
+    this.visibleHeaderSubscription.unsubscribe();
+    this.visisbleSiderSubscription.unsubscribe();
   }
 }
