@@ -1,8 +1,5 @@
 <ng-container *ngIf="menuItem.children && menuItem.children.length > 0; else menuChild">
     <li vts-submenu vtsOpen [vtsTitle]="menuItem.title" *ngIf="menuItem.isOpen; else closedMenu" style="position: relative;" [vtsTooltip]="menuItem.title">
-        <!-- <span class="tooltip-submenu" sider-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="menuItem.title" style="position: absolute; top: -40px; right: 0; width: 30px; height: 30px;">
-            
-        </span> -->
         <ul>
             <ng-container *ngFor="let item of menuItem.children">
                 <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
