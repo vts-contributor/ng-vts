@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { AvatarMenu, AvatarUser, MenuItemProLayout } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [menuHeader]="menuData" [menuSider]="menuData" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl">
+    <vts-prolayout-container [menuHeader]="menuData" [menuSider]="menuData" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl" [breadcrumbArray]="arrayMenuItem">
       Content
     </vts-prolayout-container>
   `
@@ -56,4 +57,11 @@ export class VtsDemoProlayoutBasicComponent {
     }
   ];
   logoUrl: string = "http://localhost:4200/logo.svg";
+
+  arrayMenuItem: VtsBreadcrumbItem[] = [
+    { label: 'Home', url: '', icon: 'HomeOutline' },
+    { label: 'Content', url: '', icon: 'LayerOutline', disabled: true },
+    { label: 'An Application', url: ['/components', 'button', 'en'], icon: 'ViewWeekOutline' },
+    { label: 'Application 1' }
+  ];
 }

@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
 import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
+import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 
 @Component({
   selector: 'vts-prolayout-container',
@@ -75,6 +76,8 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   };
   @Input() avatarMenu: AvatarMenu[] = [];
   @Input() logoUrl: string = "";
+  @Input() breadcrumbArray: VtsBreadcrumbItem[] = [];
+  @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;
