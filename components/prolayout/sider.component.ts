@@ -9,7 +9,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ContentChild,
+  ViewChild,
   ElementRef,
   EventEmitter,
   Input,
@@ -44,7 +44,8 @@ import { MenuItemProLayout } from './pro-layout.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="vts-prolayout-sider-children">
-      <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider" [style.backgroundImage]="'url(' + logoUrl + ')'"></div> 
+      <div class="logo-sider vts-logo" *ngIf="!isFixedHeader && isFixedSider" [style.backgroundImage]="'url(' + logoUrl + ')'">
+      </div> 
       <ul vts-menu vtsMode="inline" class="sider-menu">
         <ng-container *ngFor="let item of menuData">
           <vts-prolayout-menu-item [menuItem]="item"></vts-prolayout-menu-item>
@@ -92,7 +93,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   static ngAcceptInputType_vtsCollapsed: BooleanInput;
 
   private destroy$ = new Subject();
-  @ContentChild(VtsMenuDirective)
+  @ViewChild(VtsMenuDirective)
   vtsMenuDirective: VtsMenuDirective | null = null;
   @Output() readonly vtsCollapsedChange = new EventEmitter();
   @Input() vtsWidth: string | number = 200;
@@ -103,7 +104,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() vtsTrigger: TemplateRef<void> | undefined | null = undefined;
   @Input() @InputBoolean() vtsReverseArrow = false;
   @Input() @InputBoolean() vtsCollapsible = false;
-  @Input() @InputBoolean() vtsCollapsed = false;  
+  vtsCollapsed = false;  
   @Input() useDarkMode: boolean = false;
   @Input() logoUrl: string = "";
 
@@ -122,6 +123,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   private splitMenuSubscription = Subscription.EMPTY;
   private menuHeaderSubscription = Subscription.EMPTY;
   private menuSiderSubscription = Subscription.EMPTY;
+  private collapsedSiderSubscription = Subscription.EMPTY;
 
   updateStyleMap(): void {
     this.widthSetting = this.vtsCollapsed
@@ -205,6 +207,13 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       this.useSplitMenu = isMenuSplitted;
       this.handleChangesMenuLogic(isMenuSplitted, this.menuHeader, this.menuSider);
     });
+
+    // on change collapsed sider
+    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
+      this.vtsCollapsed = isCollapsed;
+      this.updateMenuInlineCollapsed();
+      this.updateStyleMap();
+    })
   }
 
   handleChangesMenuLogic(isSplitted: boolean, menuHeader: MenuItemProLayout[], menuSider: MenuItemProLayout[]): void {
@@ -229,6 +238,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     this.menuHeaderSubscription.unsubscribe();
     this.menuSiderSubscription.unsubscribe();
     this.splitMenuSubscription.unsubscribe();
+    this.collapsedSiderSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

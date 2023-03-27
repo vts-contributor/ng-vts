@@ -65,11 +65,13 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
   menuData: MenuItemProLayout[] = [];
+  isCollapsedSider: boolean = false;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
   private splitMenuSubscription = Subscription.EMPTY;
   private menuHeaderSubscription = Subscription.EMPTY;
+  private collapsedSiderSubscription = Subscription.EMPTY;
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
@@ -114,6 +116,11 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
       this.useSplitMenu = isMenuSplitted;
       this.cdf.detectChanges();
     });
+
+    // on change collapsed sider
+    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
+      this.isCollapsedSider = isCollapsed;
+    })
   }
 
   /**
@@ -124,6 +131,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.fixedSiderSubscription.unsubscribe();
     this.fixedHeaderSubscription.unsubscribe();
     this.splitMenuSubscription.unsubscribe();
+    this.collapsedSiderSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -172,6 +180,10 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   onClickAvatarMenuItem(item: AvatarMenu): void {
     this.router.navigateByUrl(item.url);
+  }
+
+  toggleSider(){
+    this.prolayoutService.onChangeCollapedSider(!this.isCollapsedSider);
   }
 
 }
