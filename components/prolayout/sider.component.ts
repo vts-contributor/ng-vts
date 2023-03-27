@@ -139,6 +139,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       this.vtsMenuDirective.vtsMode === 'inline' &&
       this.vtsCollapsedWidth !== 0
     ) {
+      this.closeAllSubmenuWhenCollapsed();
       this.vtsMenuDirective.setInlineCollapsed(this.vtsCollapsed);
     }
   }
@@ -190,6 +191,12 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     });
     this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
       this.isFixedHeader = isFixed;
+      if(this.vtsCollapsed){
+        this.vtsCollapsed = false;
+        this.updateMenuInlineCollapsed();
+        this.updateStyleMap();
+        
+      }
     });
 
     // receive menus from container
@@ -210,9 +217,11 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
 
     // on change collapsed sider
     this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
-      this.vtsCollapsed = isCollapsed;
-      this.updateMenuInlineCollapsed();
-      this.updateStyleMap();
+      if(!this.isFixedSider){
+        this.vtsCollapsed = isCollapsed;
+        this.updateMenuInlineCollapsed();
+        this.updateStyleMap();
+      }
     })
   }
 
@@ -227,6 +236,24 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       this.menuData = [...menuSider];
     }
     this.cdf.detectChanges();
+  }
+
+  closeSubmenu(submenu: MenuItemProLayout){
+    submenu.isOpen = false;
+    if(submenu.children && submenu.children.length > 0){
+      submenu.children.forEach(m => {
+        this.closeSubmenu(m);
+      })
+    }
+  }
+
+  closeAllSubmenuWhenCollapsed(): void{
+    const newMeudata: MenuItemProLayout[] = JSON.parse(JSON.stringify(this.menuData));
+    newMeudata.forEach(menu => {
+      this.closeSubmenu(menu);
+    });
+
+    this.menuData = [...newMeudata];
   }
 
   /**
