@@ -34,7 +34,7 @@ import { Subscription } from 'rxjs';
       .logo-header {
         width: 120px;
         height: 46px;
-        margin: 10px 28px 0 24px;
+        margin: 5px 28px 0 24px;
         float: left;
         background-repeat: no-repeat;
         background-size: contain;
