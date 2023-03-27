@@ -32,7 +32,6 @@ import { VtsSiderTriggerComponent } from './sider-trigger.component';
 import { VtsSiderComponent } from './sider.component';
 import { VtsProlayoutBreadCrumbComponent } from './breadcrumb.component';
 import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
-import { SiderToolTipComponent, SiderTooltipDirective } from './tooltip';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -51,9 +50,7 @@ import { VtsThemeModule } from '@ui-vts/theme/services'
     VtsProlayoutMenuItemComponent,
     VtsProlayoutMenuItemHorizontalComponent,
     VtsSettingDrawerComponent,
-    VtsProlayoutBreadCrumbComponent,
-    SiderToolTipComponent,
-    SiderTooltipDirective
+    VtsProlayoutBreadCrumbComponent
   ],
   exports: [
     VtsProLayoutContainerComponent
