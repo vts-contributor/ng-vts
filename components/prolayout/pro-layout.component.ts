@@ -9,7 +9,8 @@ import {
   OnInit,
   Input,
   ViewEncapsulation,
-  TemplateRef
+  TemplateRef,
+  OnDestroy
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
 import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
@@ -45,13 +46,16 @@ import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit {
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   constructor(
     private elementRef: ElementRef,
     private prolayoutService: ProlayoutService
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
+  }
+  ngOnDestroy(): void {
+    this.destroySubscriptions();
   }
 
   themeColor: string = '#EE0033';
@@ -136,5 +140,16 @@ export class VtsProLayoutContainerComponent implements OnInit {
     this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
       this.onChangeVisiblityFooter(isShow);
     });
+  }
+
+  /**
+  * destroy all subscription of prolayout service   
+  */
+  destroySubscriptions(){
+    this.prolayoutService.fixedSiderChange$.unsubscribe();
+    this.prolayoutService.fixedHeaderChange$.unsubscribe();
+    this.prolayoutService.menuHeaderChange$.unsubscribe();
+    this.prolayoutService.menuSiderChange$.unsubscribe();
+    this.prolayoutService.useSplitMenuChange$.unsubscribe();
   }
 }

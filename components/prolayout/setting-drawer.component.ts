@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, OnDestroy } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
 import { ThemeColorType } from './pro-layout.types';
 import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
@@ -10,7 +10,7 @@ import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services'
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class VtsSettingDrawerComponent implements OnInit {
+export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
 
     constructor(
         private elementRef: ElementRef, 
@@ -23,6 +23,9 @@ export class VtsSettingDrawerComponent implements OnInit {
             this.currentTheme = d;
             this.isDarkMode = d === 'dark';
         });
+    }
+    ngOnDestroy(): void {
+        this.destroySubscriptions();
     }
 
     allThemes: VtsThemeItem[] = [];
@@ -138,5 +141,16 @@ export class VtsSettingDrawerComponent implements OnInit {
 
     onThemeChange() {
         this.themeService.setTheme(this.currentTheme === 'default' ? 'dark': 'default');
+    }
+
+    /**
+     * destroy all subscription of prolayout service   
+     */
+    destroySubscriptions(){
+        this.prolayoutService.fixedSiderChange$.unsubscribe();
+        this.prolayoutService.fixedHeaderChange$.unsubscribe();
+        this.prolayoutService.menuHeaderChange$.unsubscribe();
+        this.prolayoutService.menuSiderChange$.unsubscribe();
+        this.prolayoutService.useSplitMenuChange$.unsubscribe();
     }
 }
