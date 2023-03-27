@@ -15,6 +15,7 @@ export class ProlayoutService {
     useSplitMenuChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     menuHeaderChange$: ReplaySubject<MenuItemProLayout[]> = new ReplaySubject<MenuItemProLayout[]>(1);
     menuSiderChange$: ReplaySubject<MenuItemProLayout[]> = new ReplaySubject<MenuItemProLayout[]>(1);
+    collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
     onChangeFixedSider(isFixed: boolean): void {
         this.fixedSiderChange$.next(isFixed);
@@ -46,5 +47,9 @@ export class ProlayoutService {
     
     onChangeMenuSider(data: MenuItemProLayout[]): void {
         this.menuSiderChange$.next(data);
+    }
+
+    onChangeCollapedSider(isCollapsed: boolean): void {
+        this.collapSiderChange$.next(isCollapsed);
     }
 }

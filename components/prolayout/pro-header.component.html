@@ -1,5 +1,10 @@
 <div class="logo-header vts-logo" *ngIf="showLogo" [style.backgroundImage]="'url(' + logoUrl + ')'"></div>
 <div vts-row class="header-main">
+    <div vts-col vts-row [vtsAlign]="'middle'" *ngIf="showLogo">
+        <button vts-button vtsType="primary" class="trigger" (click)="toggleSider()">
+            <i vts-icon [vtsType]="'NotesDoutone-1'"></i>
+        </button>
+    </div>
     <div vts-col class="title-container" vtsFlex="auto">
         <ng-container *ngIf="title">
             {{ title }}
