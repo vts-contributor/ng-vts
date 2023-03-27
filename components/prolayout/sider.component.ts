@@ -35,7 +35,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProlayoutService } from './pro-layout.service';
 import { MenuItemProLayout } from './pro-layout.types';
-import { renderMenuProLayout } from './utils';
 
 @Component({
   selector: 'vts-prolayout-sider',
@@ -144,10 +143,6 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
       this.updateStyleMap();
       this.cdr.markForCheck();
     }
-  }
-
-  renderMenuSider() {
-    return renderMenuProLayout(this.menuData);
   }
 
   constructor(
