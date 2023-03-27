@@ -5,7 +5,7 @@ import { AvatarMenu, AvatarUser, MenuItemProLayout } from '@ui-vts/ng-vts/prolay
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [menuHeader]="menuData" [menuSider]="menuData" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl" [breadcrumbArray]="arrayMenuItem" [vtsCollapsed]="isCollapsed">
+    <vts-prolayout-container [menuHeader]="menuData" [menuSider]="menuData" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl" [breadcrumbArray]="arrayMenuItem">
       Content
     </vts-prolayout-container>
   `
@@ -22,7 +22,7 @@ export class VtsDemoProlayoutBasicComponent {
         },
         { title: 'Child 1.2' }
       ],
-      isOpen: true
+      // isOpen: true
     },
     {
       title: 'Parent 2',
