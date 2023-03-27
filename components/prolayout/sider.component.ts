@@ -219,6 +219,17 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     this.cdf.detectChanges();
   }
 
+  /**
+   * destroy all subscription of prolayout service   
+   */
+  destroySubscriptions(){
+    this.prolayoutService.fixedSiderChange$.unsubscribe();
+    this.prolayoutService.fixedHeaderChange$.unsubscribe();
+    this.prolayoutService.menuHeaderChange$.unsubscribe();
+    this.prolayoutService.menuSiderChange$.unsubscribe();
+    this.prolayoutService.useSplitMenuChange$.unsubscribe();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     const { vtsCollapsed, vtsCollapsedWidth, vtsWidth, vtsTheme } = changes;
     if (vtsCollapsed || vtsCollapsedWidth || vtsWidth) {
@@ -239,5 +250,6 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.destroySubscriptions();
   }
 }

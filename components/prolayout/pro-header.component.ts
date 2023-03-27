@@ -14,7 +14,8 @@ import {
   SimpleChanges,
   ChangeDetectorRef,
   OnInit,
-  TemplateRef
+  TemplateRef,
+  OnDestroy
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
@@ -46,7 +47,7 @@ import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
     `
   ]
 })
-export class VtsHeaderComponent implements OnChanges, OnInit {
+export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     public elementRef: ElementRef,
     private renderer: Renderer2,
@@ -55,6 +56,9 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
     private router: Router
   ) {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
+  }
+  ngOnDestroy(): void {
+    this.destroySubscriptions();
   }
 
   isFixedHeader: boolean = false;
@@ -103,6 +107,16 @@ export class VtsHeaderComponent implements OnChanges, OnInit {
       this.useSplitMenu = isMenuSplitted;
       this.cdf.detectChanges();
     });
+  }
+
+  /**
+ * destroy all subscription of prolayout service   
+ */
+  destroySubscriptions(){
+    this.prolayoutService.fixedSiderChange$.unsubscribe();
+    this.prolayoutService.fixedHeaderChange$.unsubscribe();
+    this.prolayoutService.menuHeaderChange$.unsubscribe();
+    this.prolayoutService.useSplitMenuChange$.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
