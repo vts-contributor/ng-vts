@@ -12,6 +12,7 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
     children: [],
     isSelected: false
   };
+  defaultIcon: string = "AddDoutone:vts";
 
   constructor(private router: Router) {}
 
