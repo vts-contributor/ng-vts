@@ -53,7 +53,8 @@ import { VtsThemeModule } from '@ui-vts/theme/services'
     VtsProlayoutBreadCrumbComponent
   ],
   exports: [
-    VtsProLayoutContainerComponent
+    VtsProLayoutContainerComponent,
+    VtsFooterComponent
   ],
   imports: [
     BidiModule,
