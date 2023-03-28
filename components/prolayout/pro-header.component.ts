@@ -75,17 +75,17 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
-  @Input() title: string | TemplateRef<void> | null = null;
+  @Input() vtsTitle: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
-  @Input() avatar: AvatarUser = {
+  @Input() vtsAvatar: AvatarUser = {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution'
   };
   showMenu: boolean = false;
-  @Input() avatarMenu: AvatarMenu[] = [];
-  @Input() logoUrl: string = "";
+  @Input() vtsAvatarMenu: AvatarMenu[] = [];
+  @Input() vtsLogoUrl: string = "";
 
   ngOnInit(): void {
     // receive menus from container
@@ -137,7 +137,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     const { title } = changes;
     if(!this.useSplitMenu){
-      if (this.title || (title && title.currentValue)) {
+      if (this.vtsTitle || (title && title.currentValue)) {
         // add a wrapper item to create a menu button
         let newMenuData: MenuItemProLayout[] = [
           {

@@ -14,7 +14,7 @@ import { MenuItemProLayout } from './pro-layout.types';
 
 export class VtsProlayoutMenuItemHorizontalComponent implements OnInit {
 
-    @Input() menuItem: MenuItemProLayout = {
+    @Input() vtsMenuItem: MenuItemProLayout = {
         title: '',
         children: [],
         isSelected: false

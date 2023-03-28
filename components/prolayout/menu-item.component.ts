@@ -7,7 +7,7 @@ import { MenuItemProLayout } from './pro-layout.types';
   templateUrl: 'menu-item.component.html'
 })
 export class VtsProlayoutMenuItemComponent implements OnInit {
-  @Input() menuItem: MenuItemProLayout = {
+  @Input() vtsMenuItem: MenuItemProLayout = {
     title: '',
     children: [],
     isSelected: false

@@ -10,7 +10,7 @@ export class VtsProlayoutBreadCrumbComponent implements OnInit {
     constructor(
     ) { }
 
-    @Input() breadcrumbArray: VtsBreadcrumbItem[] = [];
+    @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
     @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
 
     ngOnInit() { 
