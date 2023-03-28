@@ -67,17 +67,17 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   isShowHeader: boolean = true;
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
-  @Input() menuHeader: MenuItemProLayout[] = [];
-  @Input() menuSider: MenuItemProLayout[] = [];  
-  @Input() headerTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
-  @Input() avatar: AvatarUser = {
+  @Input() vtsMenuHeader: MenuItemProLayout[] = [];
+  @Input() vtsMenuSider: MenuItemProLayout[] = [];  
+  @Input() vtsHeaderTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
+  @Input() vtsAvatar: AvatarUser = {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution'
   };
-  @Input() avatarMenu: AvatarMenu[] = [];
-  @Input() logoUrl: string = "";
-  @Input() breadcrumbArray: VtsBreadcrumbItem[] = [];
+  @Input() vtsAvatarMenu: AvatarMenu[] = [];
+  @Input() vtsLogoUrl: string = "";
+  @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
 
   private fixedHeaderSubscription = Subscription.EMPTY;
@@ -110,7 +110,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
 
   onSelectMenuSiderItem(selected: MenuItemProLayout){
     let menuSider = [
-      ...this.menuSider
+      ...this.vtsMenuSider
     ];
     menuSider.forEach(item => {
       if(item.isSelected){
@@ -122,15 +122,15 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
         item.isSelected = true;
       }
     })
-    this.menuSider = [
+    this.vtsMenuSider = [
       ...menuSider
     ];
   }
 
   ngOnInit(): void {
     // emit changes when receiving menu
-    this.prolayoutService.onChangeMenuHeader(this.menuHeader);
-    this.prolayoutService.onChangeMenuSider(this.menuSider);
+    this.prolayoutService.onChangeMenuHeader(this.vtsMenuHeader);
+    this.prolayoutService.onChangeMenuSider(this.vtsMenuSider);
 
     // on change ix fixed
     this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {

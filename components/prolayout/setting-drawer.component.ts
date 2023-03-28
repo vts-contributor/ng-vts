@@ -59,7 +59,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     isShowFooter: boolean = true;
     useSplitMenu: boolean = false;
 
-    @Output() setThemeColor: EventEmitter<string> = new EventEmitter<string>();
+    @Output() vtsSetThemeColor: EventEmitter<string> = new EventEmitter<string>();
 
     ngOnInit() {
         this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
@@ -128,7 +128,7 @@ export class VtsSettingDrawerComponent implements OnInit {
         cloneColors.filter(c => c.isChecked)[0].isChecked = false;
         cloneColors.filter(c => c.value == value)[0].isChecked = true;
         this.listColors = [...cloneColors];
-        this.setThemeColor.emit(value);
+        this.vtsSetThemeColor.emit(value);
     }
 
     onChangeSplitMenu(value: boolean){

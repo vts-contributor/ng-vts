@@ -5,7 +5,7 @@ import { AvatarMenu, AvatarUser, MenuItemProLayout } from '@ui-vts/ng-vts/prolay
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [menuHeader]="menuData" [menuSider]="menuData" [avatar]="avatar" [avatarMenu]="avatarMenu" [logoUrl]="logoUrl" [breadcrumbArray]="arrayMenuItem">
+    <vts-prolayout-container [vtsMenuHeader]="menuData" [vtsMenuSider]="menuData" [vtsAvatar]="avatar" [vtsAvatarMenu]="avatarMenu" [vtsLogoUrl]="logoUrl" [vtsBreadcrumbArray]="arrayMenuItem">
       Content
     </vts-prolayout-container>
   `

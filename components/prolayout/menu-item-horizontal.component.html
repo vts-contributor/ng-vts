@@ -1,17 +1,17 @@
-<ng-container *ngIf="menuItem.children && menuItem.children.length > 0; else menuChild">
-    <li vts-submenu [vtsTitle]="menuItem.title" *ngIf="menuItem.icon; else noIconSubmenu" [vtsIcon]="menuItem.icon">
+<ng-container *ngIf="vtsMenuItem.children && vtsMenuItem.children.length > 0; else menuChild">
+    <li vts-submenu [vtsTitle]="vtsMenuItem.title" *ngIf="vtsMenuItem.icon; else noIconSubmenu" [vtsIcon]="vtsMenuItem.icon">
         <ul>
-            <ng-container *ngFor="let item of menuItem.children">
-                <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
+            <ng-container *ngFor="let item of vtsMenuItem.children">
+                <vts-prolayout-menu-item-horizontal [vtsMenuItem]="item"></vts-prolayout-menu-item-horizontal>
             </ng-container>
         </ul>
     </li>
 
     <ng-template #noIconSubmenu>
-        <li vts-submenu [vtsTitle]="menuItem.title">
+        <li vts-submenu [vtsTitle]="vtsMenuItem.title">
             <ul>
-                <ng-container *ngFor="let item of menuItem.children">
-                    <vts-prolayout-menu-item-horizontal [menuItem]="item"></vts-prolayout-menu-item-horizontal>
+                <ng-container *ngFor="let item of vtsMenuItem.children">
+                    <vts-prolayout-menu-item-horizontal [vtsMenuItem]="item"></vts-prolayout-menu-item-horizontal>
                 </ng-container>
             </ul>
         </li>
@@ -20,9 +20,9 @@
 
 <ng-template #menuChild>
     <li vts-menu-item>
-        <ng-container *ngIf="menuItem.icon">
-            <i vts-icon [vtsType]="menuItem.icon"></i>
+        <ng-container *ngIf="vtsMenuItem.icon">
+            <i vts-icon [vtsType]="vtsMenuItem.icon"></i>
         </ng-container>        
-        {{menuItem.title}}
+        {{vtsMenuItem.title}}
     </li>
 </ng-template>
