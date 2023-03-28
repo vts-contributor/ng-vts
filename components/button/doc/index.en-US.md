@@ -4,7 +4,7 @@ type: Components
 title: Button
 cols: 1
 order: 0
-cover: https://gw.alipayobjects.com/zos/alicdn/fNUKzY1sk/Button.svg
+cover: ''
 ---
 
 ```ts

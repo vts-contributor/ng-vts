@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'vts-demo-pagination-total',
   template: `
-    <p>Default:</p>
     <vts-pagination
       [vtsPageIndex]="1"
       [vtsTotal]="85"
@@ -11,7 +10,6 @@ import { Component } from '@angular/core';
       [vtsShowTotal]="totalTemplate"
     ></vts-pagination>
     <br />
-    <p>Custom:</p>
     <vts-pagination
       [vtsPageIndex]="1"
       [vtsTotal]="85"

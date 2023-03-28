@@ -34,6 +34,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { PaginationItemRenderContext } from './pagination.types';
 
+export type VtsPaginationSize = 'md' | 'sm'
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'pagination';
 
 @Component({
@@ -60,13 +61,13 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'pagination';
     ></vts-pagination-simple>
     <vts-pagination-default
       #defaultPagination
-      [vtsSize]="size"
       [itemRender]="vtsItemRender"
       [showTotal]="vtsShowTotal"
       [disabled]="vtsDisabled"
       [locale]="locale"
       [showSizeChanger]="vtsShowSizeChanger"
       [showQuickJumper]="vtsShowQuickJumper"
+      [showShortJump]="vtsShowShortJump"
       [total]="vtsTotal"
       [pageIndex]="vtsPageIndex"
       [pageSize]="vtsPageSize"
@@ -76,6 +77,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'pagination';
     ></vts-pagination-default>
   `,
   host: {
+    '[class.vts-pagination-outline]': 'vtsOutline',
+    '[class.vts-pagination-rounded]': 'vtsRounded',
     '[class.vts-pagination-simple]': 'vtsSimple',
     '[class.vts-pagination-disabled]': 'vtsDisabled',
     '[class.mini]': `!vtsSimple && size === 'sm'`,
@@ -89,11 +92,14 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   static ngAcceptInputType_vtsShowSizeChanger: BooleanInput;
   static ngAcceptInputType_vtsHidePaginationOnSinglePage: BooleanInput;
   static ngAcceptInputType_vtsShowQuickJumper: BooleanInput;
+  static ngAcceptInputType_vtsShowShortJumper: BooleanInput;
   static ngAcceptInputType_vtsSimple: BooleanInput;
   static ngAcceptInputType_vtsResponsive: BooleanInput;
   static ngAcceptInputType_vtsTotal: NumberInput;
   static ngAcceptInputType_vtsPageIndex: NumberInput;
   static ngAcceptInputType_vtsPageSize: NumberInput;
+  static ngAcceptInputType_vtsRounded: BooleanInput;
+  static ngAcceptInputType_vtsOutline: BooleanInput;
 
   @Output()
   readonly vtsPageSizeChange: EventEmitter<number> = new EventEmitter();
@@ -105,7 +111,7 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   }> | null = null;
   @Input()
   vtsItemRender: TemplateRef<PaginationItemRenderContext> | null = null;
-  @Input() @WithConfig() vtsSize: 'md' | 'sm' = 'md';
+  @Input() @WithConfig() vtsSize: VtsPaginationSize = 'md';
   @Input() @WithConfig() vtsPageSizeOptions: number[] = [10, 20, 30, 40];
   @Input() @WithConfig() @InputBoolean() vtsShowSizeChanger = false;
   @Input() @WithConfig() @InputBoolean() vtsShowQuickJumper = false;
@@ -116,6 +122,9 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() vtsTotal = 0;
   @Input() @InputNumber() vtsPageIndex = 1;
   @Input() @InputNumber() vtsPageSize = 10;
+  @Input() @InputBoolean() vtsRounded = false;
+  @Input() @InputBoolean() vtsOutline = false;
+  @Input() @InputBoolean() vtsShowShortJump = false;
 
   showPagination = true;
   locale!: VtsPaginationI18nInterface;
@@ -162,6 +171,14 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
 
   getLastIndex(total: number, pageSize: number): number {
     return Math.ceil(total / pageSize);
+  }
+
+  get index() {
+    return this.vtsPageIndex
+  }
+
+  get lastIndex() {
+    return this.getLastIndex(this.vtsTotal, this.vtsPageSize)
   }
 
   constructor(
