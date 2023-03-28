@@ -15,8 +15,14 @@
             </vts-prolayout>
         </vts-prolayout-content>
 
-        <vts-prolayout-footer *ngIf="isShowFooter">Copyright by Viettel Solution - Government Solution Center
-            Platform</vts-prolayout-footer>
+        <vts-prolayout-footer *ngIf="isShowFooter">
+            <ng-container *ngIf="!vtsFooterTemplate; else footerTemplate">
+                Copyright by Viettel Solution - Government Solution Center Platform
+            </ng-container>
+            <ng-template #footerTemplate>
+                <ng-template [ngTemplateOutlet]="vtsFooterTemplate" [ngOutletContext]="context"></ng-template>
+            </ng-template>
+        </vts-prolayout-footer>
     </vts-prolayout>
 
     <ng-template #notFixedSider>        
@@ -33,8 +39,14 @@
                 <ng-container *ngTemplateOutlet="compContent"></ng-container>
             </vts-prolayout-content>
         </ng-template>
-        <vts-prolayout-footer *ngIf="isShowFooter">Copyright by Viettel Solution - Government Solution Center
-            Platform</vts-prolayout-footer>
+        <vts-prolayout-footer *ngIf="isShowFooter">
+            <ng-container *ngIf="!vtsFooterTemplate; else footerTemplate">
+                Copyright by Viettel Solution - Government Solution Center Platform
+            </ng-container>
+            <ng-template #footerTemplate>
+                <ng-template [ngTemplateOutlet]="vtsFooterTemplate" [ngOutletContext]="context"></ng-template>
+            </ng-template>
+        </vts-prolayout-footer>
     </ng-template>
 
     <vts-setting-drawer

@@ -79,6 +79,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   @Input() vtsLogoUrl: string = "";
   @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
+  @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
