@@ -5,7 +5,6 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { VtsFormTooltipIcon } from '@ui-vts/ng-vts/form';
 
 @Component({
   selector: 'vts-demo-form-register',
@@ -97,7 +96,7 @@ import { VtsFormTooltipIcon } from '@ui-vts/ng-vts/form';
           vtsFor="captcha"
           vtsRequired
           vtsTooltipTitle="Please click 'Get captcha'"
-          [vtsTooltipIcon]="captchaTooltipIcon"
+          [vtsTooltipIcon]="'Accessibility'"
         >
           Captcha
         </vts-form-label>
@@ -153,10 +152,6 @@ import { VtsFormTooltipIcon } from '@ui-vts/ng-vts/form';
 })
 export class VtsDemoFormRegisterComponent implements OnInit {
   validateForm!: UntypedFormGroup;
-  captchaTooltipIcon: VtsFormTooltipIcon = {
-    type: 'InfoOutline',
-    theme: 'all'
-  };
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {

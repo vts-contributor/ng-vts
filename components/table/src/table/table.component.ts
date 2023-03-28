@@ -73,8 +73,9 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'table';
         [class.vts-table-has-fix-right]="hasFixRight"
         [class.vts-table-bordered]="vtsBordered"
         [class.vts-table-out-bordered]="vtsOuterBordered && !vtsBordered"
-        [class.vts-table-middle]="vtsSize === 'middle'"
-        [class.vts-table-small]="vtsSize === 'small'"
+        [class.vts-table-lg]="vtsSize === 'lg'"
+        [class.vts-table-sm]="vtsSize === 'sm'"
+        [class.vts-table-stripe]="vtsStripe"
       >
         <vts-table-title-footer [title]="vtsTitle" *ngIf="vtsTitle"></vts-table-title-footer>
         <vts-table-inner-scroll
@@ -120,7 +121,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'table';
         [vtsShowQuickJumper]="vtsShowQuickJumper"
         [vtsHidePaginationOnSinglePage]="vtsHidePaginationOnSinglePage"
         [vtsShowTotal]="vtsShowTotal"
-        [vtsSize]="vtsPaginationType === 'small' ? 'sm' : vtsSize === 'default' ? 'md' : 'sm'"
+        [vtsSize]="vtsPaginationType === 'small' ? 'sm' : vtsSize === 'md' ? 'md' : 'sm'"
         [vtsPageSize]="vtsPageSize"
         [vtsTotal]="vtsTotal"
         [vtsSimple]="vtsSimple"
@@ -152,6 +153,7 @@ export class VtsTableComponent<T = VtsSafeAny>
   static ngAcceptInputType_vtsHidePaginationOnSinglePage: BooleanInput;
   static ngAcceptInputType_vtsShowQuickJumper: BooleanInput;
   static ngAcceptInputType_vtsSimple: BooleanInput;
+  static ngAcceptInputType_vtsStripe: BooleanInput;
 
   @Input() vtsTableLayout: VtsTableLayout = 'auto';
   @Input() vtsShowTotal: TemplateRef<{
@@ -189,11 +191,12 @@ export class VtsTableComponent<T = VtsSafeAny>
   // @WithConfig()
   vtsLoadingIndicator: TemplateRef<VtsSafeAny> | null = null;
   @Input() @WithConfig() @InputBoolean() vtsBordered: boolean = true;
-  @Input() @WithConfig() vtsSize: VtsTableSize = 'default';
+  @Input() @WithConfig() vtsSize: VtsTableSize = 'md';
   @Input() @WithConfig() @InputBoolean() vtsShowSizeChanger: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsHidePaginationOnSinglePage: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsShowQuickJumper: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsSimple: boolean = false;
+  @Input() @InputBoolean() vtsStripe: boolean = true;
   @Output() readonly vtsPageSizeChange = new EventEmitter<number>();
   @Output() readonly vtsPageIndexChange = new EventEmitter<number>();
   @Output() readonly vtsQueryParams = new EventEmitter<VtsTableQueryParams>();

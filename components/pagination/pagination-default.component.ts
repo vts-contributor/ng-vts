@@ -53,7 +53,7 @@ import { PaginationItemRenderContext } from './pagination.types';
         [index]="page.index"
         [disabled]="!!page.disabled"
         [itemRender]="itemRender"
-        [active]="pageIndex === page.index"
+        [active]="page.type ==='page' && pageIndex === page.index"
         (gotoIndex)="jumpPage($event)"
         (diffIndex)="jumpDiff($event)"
         [direction]="dir"
@@ -64,7 +64,6 @@ import { PaginationItemRenderContext } from './pagination.types';
         [total]="total"
         [locale]="locale"
         [disabled]="disabled"
-        [vtsSize]="vtsSize"
         [showSizeChanger]="showSizeChanger"
         [showQuickJumper]="showQuickJumper"
         [pageIndex]="pageIndex"
@@ -79,7 +78,6 @@ import { PaginationItemRenderContext } from './pagination.types';
 export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnInit {
   @ViewChild('containerTemplate', { static: true })
   template!: TemplateRef<VtsSafeAny>;
-  @Input() vtsSize: 'md' | 'sm' = 'md';
   @Input() itemRender: TemplateRef<PaginationItemRenderContext> | null = null;
   @Input() showTotal: TemplateRef<{
     $implicit: number;
@@ -89,6 +87,7 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
   @Input() locale!: VtsPaginationI18nInterface;
   @Input() showSizeChanger = false;
   @Input() showQuickJumper = false;
+  @Input() showShortJump = false
   @Input() total = 0;
   @Input() pageIndex = 1;
   @Input() pageSize = 10;
@@ -159,6 +158,8 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
   buildIndexes(): void {
     const lastIndex = this.getLastIndex(this.total, this.pageSize);
     this.listOfPageItem = this.getListOfPageItem(this.pageIndex, lastIndex);
+    if (!this.showShortJump)
+      this.listOfPageItem = this.listOfPageItem.filter(i => !(i.type === 'prev_5' || i.type === 'next_5'))
   }
 
   getListOfPageItem(
@@ -169,7 +170,7 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
       const beginItem = {
         type: 'begin',
         disabled: pageIndex === 1,
-        index: '1'
+        index: 1,
       };
       const prevItem = {
         type: 'prev',
@@ -220,6 +221,7 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
           listOfRange = [prevFiveItem, ...generatePage(last - 4, last - 1)];
         }
         return [...firstPageItem, ...listOfRange, ...lastPageItem];
+        // return [...firstPageItem, ...listOfRange, ...lastPageItem];
       };
       return concatWithPrevNext(generateRangeItem(pageIndex, lastIndex));
     }

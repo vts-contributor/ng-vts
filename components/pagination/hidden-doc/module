@@ -1,0 +1,3 @@
+import { VtsPaginationModule } from '@ui-vts/ng-vts/pagination';
+
+export const moduleList = [ VtsPaginationModule ];
