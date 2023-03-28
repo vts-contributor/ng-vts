@@ -6,8 +6,9 @@ import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services'
 @Component({
     selector: 'vts-setting-drawer',
     templateUrl: './setting-drawer.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    preserveWhitespaces: false,
 })
 
 export class VtsSettingDrawerComponent implements OnInit {
