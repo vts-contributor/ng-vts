@@ -1,10 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { VtsMenuItemProLayout } from './pro-layout.types';
 
 @Component({
   selector: 'vts-prolayout-menu-item',
-  templateUrl: 'menu-item.component.html'
+  templateUrl: 'menu-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
+  preserveWhitespaces: false,
 })
 export class VtsProlayoutMenuItemComponent implements OnInit {
   @Input() vtsMenuItem: VtsMenuItemProLayout = {
