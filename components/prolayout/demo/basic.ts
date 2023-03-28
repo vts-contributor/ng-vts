@@ -5,9 +5,14 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from '@ui-vts/ng-v
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [vtsMenuHeader]="menuData" [vtsMenuSider]="menuData" [vtsAvatar]="avatar" [vtsAvatarMenu]="avatarMenu" [vtsLogoUrl]="logoUrl" [vtsBreadcrumbArray]="arrayMenuItem">
-      Content
+    <vts-prolayout-container [vtsMenuHeader]="menuData" [vtsMenuSider]="menuData" [vtsAvatar]="avatar" [vtsAvatarMenu]="avatarMenu" [vtsLogoUrl]="logoUrl" [vtsBreadcrumbArray]="arrayMenuItem" [vtsFooterTemplate]="footerTemplate">
+      
     </vts-prolayout-container>
+    <ng-template #footerTemplate>
+      <div>
+        Copyright by Viettel Solution - Government Solution Center Platform
+      </div>
+    </ng-template>
   `
 })
 export class VtsDemoProlayoutBasicComponent {
