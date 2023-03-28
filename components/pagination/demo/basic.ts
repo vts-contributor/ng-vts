@@ -1,17 +1,9 @@
 import { Component } from '@angular/core';
-import { VtsPaginationSize } from '@ui-vts/ng-vts/pagination';
 
 @Component({
   selector: 'vts-demo-pagination-basic',
   template: `
     <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
-      <span *vtsSpaceItem>
-        Size: &nbsp;
-        <vts-radio-group [(ngModel)]="size">
-          <label vts-radio-button vtsValue="md">MD</label>
-          <label vts-radio-button vtsValue="sm">SM</label>
-        </vts-radio-group>
-      </span>
       <span *vtsSpaceItem>
         Disabled: &nbsp;
         <vts-switch [(ngModel)]="disabled"></vts-switch>
@@ -25,6 +17,10 @@ import { VtsPaginationSize } from '@ui-vts/ng-vts/pagination';
         <vts-switch [(ngModel)]="outline"></vts-switch>
       </span>
       <span *vtsSpaceItem>
+        Mini Mode: &nbsp;
+        <vts-switch [(ngModel)]="mini"></vts-switch>
+      </span>
+      <span *vtsSpaceItem>
         Simple Mode: &nbsp;
         <vts-switch [(ngModel)]="simple"></vts-switch>
       </span>
@@ -36,11 +32,15 @@ import { VtsPaginationSize } from '@ui-vts/ng-vts/pagination';
         Show quick jumper: &nbsp;
         <vts-switch [(ngModel)]="showQuickJumper"></vts-switch>
       </span>
+      <span *vtsSpaceItem>
+        Number of items: &nbsp;
+        <vts-input-number [vtsMin]="1" [vtsStep]="1" [(ngModel)]="limit"></vts-input-number>
+      </span>
     </vts-space>
     <br />
     <br />
     <vts-pagination 
-      [vtsSize]="size" 
+      [vtsMini]="mini" 
       [vtsDisabled]="disabled"  
       [vtsRounded]="rounded"  
       [vtsOutline]="outline"  
@@ -49,16 +49,18 @@ import { VtsPaginationSize } from '@ui-vts/ng-vts/pagination';
       [vtsShowSizeChanger]="showSizeChanger"
       [vtsShowQuickJumper]="showQuickJumper"
       [vtsSimple]="simple"
+      [vtsItemLimit]="limit"
     >
     </vts-pagination>
   `
 })
 export class VtsDemoPaginationBasicComponent {
-  size: VtsPaginationSize = 'md';
   disabled: boolean = false;
   rounded: boolean = false;
   outline: boolean = false;
+  mini: boolean = false;
   simple: boolean = false;
   showSizeChanger: boolean = false;
   showQuickJumper: boolean = false;
+  limit: number = 5
 }

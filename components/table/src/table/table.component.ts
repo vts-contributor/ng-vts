@@ -38,7 +38,6 @@ import {
   VtsTableData,
   VtsTableLayout,
   VtsTablePaginationPosition,
-  VtsTablePaginationType,
   VtsTableQueryParams,
   VtsTableSize
 } from '../table.types';
@@ -121,10 +120,13 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'table';
         [vtsShowQuickJumper]="vtsShowQuickJumper"
         [vtsHidePaginationOnSinglePage]="vtsHidePaginationOnSinglePage"
         [vtsShowTotal]="vtsShowTotal"
-        [vtsSize]="vtsPaginationType === 'small' ? 'sm' : vtsSize === 'md' ? 'md' : 'sm'"
         [vtsPageSize]="vtsPageSize"
         [vtsTotal]="vtsTotal"
         [vtsSimple]="vtsSimple"
+        [vtsMini]="vtsMini"
+        [vtsResponsive]="vtsResponsive"
+        [vtsRounded]="vtsRounded"
+        [vtsOutline]="vtsOutline"
         [vtsPageIndex]="vtsPageIndex"
         (vtsPageSizeChange)="onPageSizeChange($event)"
         (vtsPageIndexChange)="onPageIndexChange($event)"
@@ -153,6 +155,10 @@ export class VtsTableComponent<T = VtsSafeAny>
   static ngAcceptInputType_vtsHidePaginationOnSinglePage: BooleanInput;
   static ngAcceptInputType_vtsShowQuickJumper: BooleanInput;
   static ngAcceptInputType_vtsSimple: BooleanInput;
+  static ngAcceptInputType_vtsMini: BooleanInput;
+  static ngAcceptInputType_vtsOutline: BooleanInput;
+  static ngAcceptInputType_vtsRounded: BooleanInput;
+  static ngAcceptInputType_vtsResponsive: BooleanInput;
   static ngAcceptInputType_vtsStripe: BooleanInput;
 
   @Input() vtsTableLayout: VtsTableLayout = 'auto';
@@ -165,7 +171,7 @@ export class VtsTableComponent<T = VtsSafeAny>
   @Input() vtsTitle: string | TemplateRef<VtsSafeAny> | null = null;
   @Input() vtsFooter: string | TemplateRef<VtsSafeAny> | null = null;
   @Input() vtsNoResult: string | TemplateRef<VtsSafeAny> | undefined = undefined;
-  @Input() vtsPageSizeOptions = [10, 20, 30, 40, 50];
+  @Input() vtsPageSizeOptions = [10, 20, 30, 40];
   @Input() vtsVirtualItemSize = 0;
   @Input() vtsVirtualMaxBufferPx = 200;
   @Input() vtsVirtualMinBufferPx = 100;
@@ -181,7 +187,6 @@ export class VtsTableComponent<T = VtsSafeAny>
     x: null,
     y: null
   };
-  @Input() vtsPaginationType: VtsTablePaginationType = 'default';
   @Input() @InputBoolean() vtsClientPagination = true;
   @Input() @InputBoolean() vtsTemplateMode = false;
   @Input() @InputBoolean() vtsShowPagination = false;
@@ -191,11 +196,15 @@ export class VtsTableComponent<T = VtsSafeAny>
   // @WithConfig()
   vtsLoadingIndicator: TemplateRef<VtsSafeAny> | null = null;
   @Input() @WithConfig() @InputBoolean() vtsBordered: boolean = true;
-  @Input() @WithConfig() vtsSize: VtsTableSize = 'md';
+  @Input() @WithConfig() vtsSize: VtsTableSize = 'sm';
   @Input() @WithConfig() @InputBoolean() vtsShowSizeChanger: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsHidePaginationOnSinglePage: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsShowQuickJumper: boolean = false;
   @Input() @WithConfig() @InputBoolean() vtsSimple: boolean = false;
+  @Input() @InputBoolean() vtsMini: boolean = false;
+  @Input() @InputBoolean() vtsResponsive: boolean = false;
+  @Input() @InputBoolean() vtsRounded: boolean = false;
+  @Input() @InputBoolean() vtsOutline: boolean = false;
   @Input() @InputBoolean() vtsStripe: boolean = true;
   @Output() readonly vtsPageSizeChange = new EventEmitter<number>();
   @Output() readonly vtsPageIndexChange = new EventEmitter<number>();

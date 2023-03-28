@@ -21,7 +21,6 @@ interface Setting {
   bordered: boolean;
   loading: boolean;
   pagination: boolean;
-  sizeChanger: boolean;
   title: boolean;
   header: boolean;
   footer: boolean;
@@ -30,13 +29,19 @@ interface Setting {
   fixHeader: boolean;
   noResult: boolean;
   ellipsis: boolean;
-  simple: boolean;
   size: VtsTableSize;
   tableScroll: string;
   tableLayout: VtsTableLayout;
   position: VtsTablePaginationPosition;
   paginationType: VtsTablePaginationType;
   stripe: boolean;
+
+  rounded: boolean,
+  outline: boolean,
+  mini: boolean,
+  simple: boolean,
+  sizeChanger: boolean,
+  quickJumper: boolean
 }
 
 @Component({
@@ -44,13 +49,8 @@ interface Setting {
   template: `
     <div class="components-table-demo-control-bar">
       <form vts-form vtsLayout="inline" [formGroup]="settingForm!">
-        <vts-form-item *ngFor="let switch of listOfSwitch">
-          <vts-form-label>{{ switch.name }}</vts-form-label>
-          <vts-form-control>
-            <vts-switch [formControlName]="switch.formControlName"></vts-switch>
-          </vts-form-control>
-        </vts-form-item>
-        <vts-form-item *ngFor="let radio of listOfRadio">
+        <p class="section-title">Table Property:</p>
+        <vts-form-item *ngFor="let radio of listOfTableRadio">
           <vts-form-label>{{ radio.name }}</vts-form-label>
           <vts-form-control>
             <vts-radio-group [formControlName]="radio.formControlName">
@@ -60,19 +60,32 @@ interface Setting {
             </vts-radio-group>
           </vts-form-control>
         </vts-form-item>
+        <p class="divided"></p>
+        <vts-form-item *ngFor="let switch of listOfTableSwitch">
+          <vts-form-label>{{ switch.name }}</vts-form-label>
+          <vts-form-control>
+            <vts-switch [formControlName]="switch.formControlName"></vts-switch>
+          </vts-form-control>
+        </vts-form-item>
+        
+        <p class="section-title">Pagination Property:</p>
+        <vts-form-item *ngFor="let switch of listOfPaginationSwitch">
+          <vts-form-label>{{ switch.name }}</vts-form-label>
+          <vts-form-control>
+            <vts-switch [formControlName]="switch.formControlName"></vts-switch>
+          </vts-form-control>
+        </vts-form-item>
       </form>
     </div>
+
     <vts-table
       #dynamicTable
       [vtsScroll]="{ x: scrollX, y: scrollY }"
       [vtsData]="listOfData"
       [vtsTableLayout]="settingValue.tableLayout"
       [vtsBordered]="settingValue.bordered"
-      [vtsSimple]="settingValue.simple"
       [vtsLoading]="settingValue.loading"
-      [vtsPaginationType]="settingValue.paginationType"
       [vtsPaginationPosition]="settingValue.position"
-      [vtsShowSizeChanger]="settingValue.sizeChanger"
       [vtsClientPagination]="settingValue.pagination"
       [vtsShowPagination]="settingValue.pagination"
       [vtsFooter]="settingValue.footer ? 'Here is Footer' : null"
@@ -80,6 +93,14 @@ interface Setting {
       [vtsSize]="settingValue.size"
       [vtsStripe]="settingValue.stripe"
       (vtsCurrentPageDataChange)="currentPageDataChange($event)"
+
+      [vtsRounded]="settingValue.rounded"
+      [vtsOutline]="settingValue.outline"
+      [vtsMini]="settingValue.mini"
+      [vtsMini]="settingValue.mini"
+      [vtsSimple]="settingValue.simple"
+      [vtsShowSizeChanger]="settingValue.sizeChanger"
+      [vtsShowQuickJumper]="settingValue.quickJumper"
     >
       <thead>
         <tr *ngIf="settingValue.header">
@@ -134,6 +155,12 @@ interface Setting {
         margin-right: 16px;
         margin-bottom: 8px;
       }
+
+      .section-title {
+        width: 100%;
+        margin-bottom: 8px;
+        margin-top: 16px;
+      }
     `
   ]
 })
@@ -147,11 +174,10 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
   scrollX: string | null = null;
   scrollY: string | null = null;
   settingValue!: Setting;
-  listOfSwitch = [
+  listOfTableSwitch = [
     { name: 'Bordered', formControlName: 'bordered' },
     { name: 'Loading', formControlName: 'loading' },
-    { name: 'Pagination', formControlName: 'pagination' },
-    { name: 'PageSizeChanger', formControlName: 'sizeChanger' },
+    { name: 'Show Pagination', formControlName: 'pagination' },
     { name: 'Title', formControlName: 'title' },
     { name: 'Column Header', formControlName: 'header' },
     { name: 'Footer', formControlName: 'footer' },
@@ -160,10 +186,19 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
     { name: 'Fixed Header', formControlName: 'fixHeader' },
     { name: 'No Result', formControlName: 'noResult' },
     { name: 'Ellipsis', formControlName: 'ellipsis' },
-    { name: 'Simple Pagination', formControlName: 'simple' },
     { name: 'Stripe', formControlName: 'stripe' },
   ];
-  listOfRadio = [
+
+  listOfPaginationSwitch = [
+    { name: 'Rounded', formControlName: 'rounded' },
+    { name: 'Outline', formControlName: 'outline' },
+    { name: 'Mini Mode', formControlName: 'mini' },
+    { name: 'Simple Mode', formControlName: 'simple' },
+    { name: 'Show size changer', formControlName: 'sizeChanger' },
+    { name: 'Show quick jumper', formControlName: 'quickJumper' },
+  ];
+
+  listOfTableRadio = [
     {
       name: 'Size',
       formControlName: 'size',
@@ -197,14 +232,6 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
         { value: 'top', label: 'Top' },
         { value: 'bottom', label: 'Bottom' },
         { value: 'both', label: 'Both' }
-      ]
-    },
-    {
-      name: 'Pagination Type',
-      formControlName: 'paginationType',
-      listOfOption: [
-        { value: 'default', label: 'Default' },
-        { value: 'small', label: 'Small' }
       ]
     }
   ];
@@ -253,22 +280,26 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
       bordered: false,
       loading: false,
       pagination: true,
-      sizeChanger: false,
-      title: true,
+      title: false,
       header: true,
-      footer: true,
+      footer: false,
       expandable: true,
       checkbox: true,
       fixHeader: false,
       noResult: false,
       ellipsis: false,
-      simple: false,
-      size: 'md',
-      paginationType: 'default',
+      size: 'sm',
       tableScroll: 'unset',
       tableLayout: 'auto',
       position: 'bottom',
-      stripe: false
+      stripe: false,
+
+      rounded: false,
+      outline: false,
+      mini: false,
+      simple: false,
+      sizeChanger: false,
+      quickJumper: false
     });
     this.settingValue = this.settingForm.value;
     this.settingForm.valueChanges.subscribe(value => (this.settingValue = value));

@@ -23,7 +23,6 @@ import {
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import {
   gridResponsiveMap,
-  VtsBreakpointEnum,
   VtsBreakpointService
 } from '@ui-vts/ng-vts/core/services';
 import { BooleanInput, NumberInput } from '@ui-vts/ng-vts/core/types';
@@ -34,7 +33,6 @@ import { takeUntil } from 'rxjs/operators';
 
 import { PaginationItemRenderContext } from './pagination.types';
 
-export type VtsPaginationSize = 'md' | 'sm'
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'pagination';
 
 @Component({
@@ -72,6 +70,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'pagination';
       [pageIndex]="vtsPageIndex"
       [pageSize]="vtsPageSize"
       [pageSizeOptions]="vtsPageSizeOptions"
+      [itemLimit]="vtsItemLimit"
       (pageIndexChange)="onPageIndexChange($event)"
       (pageSizeChange)="onPageSizeChange($event)"
     ></vts-pagination-default>
@@ -81,7 +80,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'pagination';
     '[class.vts-pagination-rounded]': 'vtsRounded',
     '[class.vts-pagination-simple]': 'vtsSimple',
     '[class.vts-pagination-disabled]': 'vtsDisabled',
-    '[class.mini]': `!vtsSimple && size === 'sm'`,
+    '[class.mini]': `!vtsSimple && (miniByBp || vtsMini)`,
     '[class.vts-pagination-rtl]': `dir === 'rtl'`
   }
 })
@@ -93,6 +92,7 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   static ngAcceptInputType_vtsHidePaginationOnSinglePage: BooleanInput;
   static ngAcceptInputType_vtsShowQuickJumper: BooleanInput;
   static ngAcceptInputType_vtsShowShortJumper: BooleanInput;
+  static ngAcceptInputType_vtsMini: BooleanInput;
   static ngAcceptInputType_vtsSimple: BooleanInput;
   static ngAcceptInputType_vtsResponsive: BooleanInput;
   static ngAcceptInputType_vtsTotal: NumberInput;
@@ -111,11 +111,11 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   }> | null = null;
   @Input()
   vtsItemRender: TemplateRef<PaginationItemRenderContext> | null = null;
-  @Input() @WithConfig() vtsSize: VtsPaginationSize = 'md';
   @Input() @WithConfig() vtsPageSizeOptions: number[] = [10, 20, 30, 40];
   @Input() @WithConfig() @InputBoolean() vtsShowSizeChanger = false;
   @Input() @WithConfig() @InputBoolean() vtsShowQuickJumper = false;
   @Input() @WithConfig() @InputBoolean() vtsSimple = false;
+  @Input() @InputBoolean() vtsMini = false;
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() @InputBoolean() vtsResponsive = false;
   @Input() @InputBoolean() vtsHidePaginationOnSinglePage = false;
@@ -124,12 +124,13 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() vtsPageSize = 10;
   @Input() @InputBoolean() vtsRounded = false;
   @Input() @InputBoolean() vtsOutline = false;
-  @Input() @InputBoolean() vtsShowShortJump = false;
+  vtsShowShortJump = false;
+  @Input() vtsItemLimit: number = 5
 
   showPagination = true;
   locale!: VtsPaginationI18nInterface;
-  size: 'md' | 'sm' = 'md';
   dir: Direction = 'ltr';
+  miniByBp = false
 
   private destroy$ = new Subject<void>();
   private total$ = new ReplaySubject<number>(1);
@@ -181,6 +182,17 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
     return this.getLastIndex(this.vtsTotal, this.vtsPageSize)
   }
 
+  get range() {
+    return [
+      (this.vtsPageIndex - 1) * this.vtsPageSize + 1,
+      Math.min(this.vtsPageIndex * this.vtsPageSize, this.vtsTotal)
+    ]
+  }
+
+  get total() {
+    return this.vtsTotal
+  }
+
   constructor(
     private i18n: VtsI18nService,
     private cdr: ChangeDetectorRef,
@@ -204,11 +216,11 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     this.breakpointService
-      .subscribe(gridResponsiveMap)
+      .subscribe(gridResponsiveMap, true)
       .pipe(takeUntil(this.destroy$))
       .subscribe(bp => {
         if (this.vtsResponsive) {
-          this.size = bp === VtsBreakpointEnum.xs ? 'sm' : 'md';
+          this.miniByBp = !bp.sm
           this.cdr.markForCheck();
         }
       });
@@ -227,7 +239,7 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { vtsHidePaginationOnSinglePage, vtsTotal, vtsPageSize, vtsSize } = changes;
+    const { vtsHidePaginationOnSinglePage, vtsTotal, vtsPageSize } = changes;
     if (vtsTotal) {
       this.total$.next(this.vtsTotal);
     }
@@ -235,10 +247,6 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
       this.showPagination =
         (this.vtsHidePaginationOnSinglePage && this.vtsTotal > this.vtsPageSize) ||
         (this.vtsTotal > 0 && !this.vtsHidePaginationOnSinglePage);
-    }
-
-    if (vtsSize) {
-      this.size = vtsSize.currentValue;
     }
   }
 }
