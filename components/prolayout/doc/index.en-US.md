@@ -70,3 +70,4 @@ The pro-layout.
 | vtsLogoUrl | logo link, or base64 string | `string` |  |
 | vtsBreadcrumbArray | array of breadcrumb items | `VtsBreadcrumbItem`[] | `[]` |
 | vtsSeparator | separator between breadcrumb items | `string \| TemplateRef<void> \| null` | `>` |
+| vtsFooterTemplate | footer template | `TemplateRef<void> | null` | Copyright by Viettel Solution - Government Solution Center Platform |
