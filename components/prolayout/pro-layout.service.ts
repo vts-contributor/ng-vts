@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { MenuItemProLayout } from './pro-layout.types';
+import { VtsMenuItemProLayout } from './pro-layout.types';
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +13,8 @@ export class ProlayoutService {
     visibilityHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     visibilityFooterChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     useSplitMenuChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-    menuHeaderChange$: ReplaySubject<MenuItemProLayout[]> = new ReplaySubject<MenuItemProLayout[]>(1);
-    menuSiderChange$: ReplaySubject<MenuItemProLayout[]> = new ReplaySubject<MenuItemProLayout[]>(1);
+    menuHeaderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
+    menuSiderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
     collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
     onChangeFixedSider(isFixed: boolean): void {
@@ -41,11 +41,11 @@ export class ProlayoutService {
         this.useSplitMenuChange$.next(isMenuSplitted);
     }
 
-    onChangeMenuHeader(data: MenuItemProLayout[]): void {
+    onChangeMenuHeader(data: VtsMenuItemProLayout[]): void {
         this.menuHeaderChange$.next(data);
     }
     
-    onChangeMenuSider(data: MenuItemProLayout[]): void {
+    onChangeMenuSider(data: VtsMenuItemProLayout[]): void {
         this.menuSiderChange$.next(data);
     }
 

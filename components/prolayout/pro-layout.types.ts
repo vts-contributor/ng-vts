@@ -4,9 +4,9 @@
 
 import { VtsSizeLDSType } from "@ui-vts/ng-vts/core/types"
 
-export type MenuItemProLayout = {
+export type VtsMenuItemProLayout = {
     title: string,
-    children?: MenuItemProLayout[],
+    children?: VtsMenuItemProLayout[],
     isOpen?: boolean,
     isSelected?: boolean,
     icon?: string,
@@ -14,25 +14,19 @@ export type MenuItemProLayout = {
     url?: string
 }
 
-export type ThemeColorType = {
+export type VtsThemeColorType = {
     value: string,
     isChecked: boolean
 }
 
-export type AvatarUser = {
+export type VtsAvatarUser = {
     name?: string,
     subname?: string,
     imgUrl?: string,
     size: VtsSizeLDSType
 }
 
-export type AvatarMenu = {
+export type VtsAvatarMenu = {
     url: string,
     label: string
-}
-
-export type BreadCrumb = {
-    label: string,
-    url: string,
-    status: 'active' | 'inactive'
 }

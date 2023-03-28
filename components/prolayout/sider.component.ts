@@ -34,7 +34,7 @@ import {
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProlayoutService } from './pro-layout.service';
-import { MenuItemProLayout } from './pro-layout.types';
+import { VtsMenuItemProLayout } from './pro-layout.types';
 
 @Component({
   selector: 'vts-prolayout-sider',
@@ -108,9 +108,9 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   @Input() vtsUseDarkMode: boolean = false;
   @Input() vtsLogoUrl: string = "";
 
-  menuHeader: MenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
-  menuSider: MenuItemProLayout[] = [];
-  menuData: MenuItemProLayout[] = []; // use for displaying
+  menuHeader: VtsMenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
+  menuSider: VtsMenuItemProLayout[] = [];
+  menuData: VtsMenuItemProLayout[] = []; // use for displaying
   useSplitMenu: boolean = false;
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
@@ -200,11 +200,11 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     });
 
     // receive menus from container
-    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
+    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: VtsMenuItemProLayout[]) => {
       this.menuHeader = data;
       this.handleChangesMenuLogic(this.useSplitMenu, data, this.menuSider);
     });
-    this.menuSiderSubscription = this.prolayoutService.menuSiderChange$.subscribe((data: MenuItemProLayout[]) => {
+    this.menuSiderSubscription = this.prolayoutService.menuSiderChange$.subscribe((data: VtsMenuItemProLayout[]) => {
       this.menuSider = data;
       this.handleChangesMenuLogic(this.useSplitMenu, this.menuHeader, data);
     })
@@ -225,7 +225,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     })
   }
 
-  handleChangesMenuLogic(isSplitted: boolean, menuHeader: MenuItemProLayout[], menuSider: MenuItemProLayout[]): void {
+  handleChangesMenuLogic(isSplitted: boolean, menuHeader: VtsMenuItemProLayout[], menuSider: VtsMenuItemProLayout[]): void {
     if(isSplitted){
       this.menuData = [
         ...menuHeader,
@@ -238,7 +238,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     this.cdf.detectChanges();
   }
 
-  closeSubmenu(submenu: MenuItemProLayout){
+  closeSubmenu(submenu: VtsMenuItemProLayout){
     submenu.isOpen = false;
     if(submenu.children && submenu.children.length > 0){
       submenu.children.forEach(m => {
@@ -248,7 +248,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   }
 
   closeAllSubmenuWhenCollapsed(): void{
-    const newMeudata: MenuItemProLayout[] = JSON.parse(JSON.stringify(this.menuData));
+    const newMeudata: VtsMenuItemProLayout[] = JSON.parse(JSON.stringify(this.menuData));
     newMeudata.forEach(menu => {
       this.closeSubmenu(menu);
     });

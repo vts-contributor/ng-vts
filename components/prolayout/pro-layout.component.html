@@ -7,7 +7,7 @@
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
         <vts-prolayout-header *ngIf="isShowHeader" [vtsTitle]="vtsHeaderTitle" [vtsAvatar]="vtsAvatar" [vtsAvatarMenu]="vtsAvatarMenu" [vtsLogoUrl]="vtsLogoUrl"></vts-prolayout-header>
         <vts-prolayout-content class="outer-content">
-            <prolayout-breadcrumb [vtsSeparator]="vtsSeparator" [vtsBreadcrumbArray]="vtsBreadcrumbArray"></prolayout-breadcrumb>
+            <vts-prolayout-breadcrumb [vtsSeparator]="vtsSeparator" [vtsBreadcrumbArray]="vtsBreadcrumbArray"></vts-prolayout-breadcrumb>
             <vts-prolayout class="inner-layout">
                 <vts-prolayout-content class="inner-content">
                     <ng-container *ngTemplateOutlet="compContent"></ng-container>
@@ -20,7 +20,7 @@
     </vts-prolayout>
 
     <ng-template #notFixedSider>        
-        <prolayout-breadcrumb></prolayout-breadcrumb>
+        <vts-prolayout-breadcrumb></vts-prolayout-breadcrumb>
         <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
             <vts-prolayout-sider vtsWidth="200px" [vtsLogoUrl]="vtsLogoUrl" *ngIf="isShowSider"></vts-prolayout-sider>
             <vts-prolayout-content class="inner-content">

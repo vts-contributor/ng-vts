@@ -62,8 +62,8 @@ The pro-layout.
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[menuHeader]` | array of MenuItemProLayout displayed on the header | MenuItemProLayout[] | [] |
-| `[menuSider]` | array of MenuItemProLayout displayed on the sider | MenuItemProLayout[] | [] |
+| `[menuHeader]` | array of VtsMenuItemProLayout displayed on the header | VtsMenuItemProLayout[] | [] |
+| `[menuSider]` | array of VtsMenuItemProLayout displayed on the sider | VtsMenuItemProLayout[] | [] |
 | `[isFixedHeader]` | whether header is fixed | `boolean` | `false` |
 | `[isFixedSider]` | whether sider is fixed | `boolean` | `false` |
 | `[isShowHeader]` | whether header is shown | `boolean` | `true` |
