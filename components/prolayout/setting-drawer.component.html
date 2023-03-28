@@ -105,7 +105,11 @@
   <vts-switch
     [(ngModel)]="isDarkMode"
     (ngModelChange)="onThemeChange()"
-    [vtsUnCheckedChildren]="'Light'"
-    [vtsCheckedChildren]="'Dark'"
+    [vtsUnCheckedChildren]="unCheckedTemplate"
+    [vtsCheckedChildren]="checkedTemplate"
   ></vts-switch>
+  <ng-template #checkedTemplate><i vts-icon vtsType="Frown:antd"></i></ng-template>
+  <ng-template #unCheckedTemplate>
+    <i vts-icon vtsType="Smile:antd"></i>
+  </ng-template>
 </ng-template>
