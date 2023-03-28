@@ -2,7 +2,7 @@ import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 
 @Component({
-    selector: 'prolayout-breadcrumb',
+    selector: 'vts-prolayout-breadcrumb',
     templateUrl: 'breadcrumb.component.html'
 })
 

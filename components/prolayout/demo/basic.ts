@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { AvatarMenu, AvatarUser, MenuItemProLayout } from '@ui-vts/ng-vts/prolayout';
+import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-basic',
@@ -11,7 +11,7 @@ import { AvatarMenu, AvatarUser, MenuItemProLayout } from '@ui-vts/ng-vts/prolay
   `
 })
 export class VtsDemoProlayoutBasicComponent {
-  menuData: MenuItemProLayout[] = [
+  menuData: VtsMenuItemProLayout[] = [
     {
       title: 'Parent 1',
       children: [
@@ -40,13 +40,13 @@ export class VtsDemoProlayoutBasicComponent {
     }
   ];
 
-  avatar: AvatarUser = {
+  avatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution',
     imgUrl: "http://localhost/avatar_design.svg"
   };
-  avatarMenu: AvatarMenu[] = [
+  avatarMenu: VtsAvatarMenu[] = [
     {
       label: 'Quản lý tài khoản',
       url: '/'

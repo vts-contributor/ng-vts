@@ -13,7 +13,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
+import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
 
@@ -67,15 +67,15 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   isShowHeader: boolean = true;
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
-  @Input() vtsMenuHeader: MenuItemProLayout[] = [];
-  @Input() vtsMenuSider: MenuItemProLayout[] = [];  
+  @Input() vtsMenuHeader: VtsMenuItemProLayout[] = [];
+  @Input() vtsMenuSider: VtsMenuItemProLayout[] = [];  
   @Input() vtsHeaderTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
-  @Input() vtsAvatar: AvatarUser = {
+  @Input() vtsAvatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution'
   };
-  @Input() vtsAvatarMenu: AvatarMenu[] = [];
+  @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
   @Input() vtsLogoUrl: string = "";
   @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
@@ -108,7 +108,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     this.themeColor = color;
   }
 
-  onSelectMenuSiderItem(selected: MenuItemProLayout){
+  onSelectMenuSiderItem(selected: VtsMenuItemProLayout){
     let menuSider = [
       ...this.vtsMenuSider
     ];

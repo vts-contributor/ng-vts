@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-import { ThemeColorType } from './pro-layout.types';
+import { VtsThemeColorType } from './pro-layout.types';
 import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
 
 @Component({
@@ -29,7 +29,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     currentTheme: VtsTheme | null = null;
     isDarkMode: boolean = false;
     open: boolean = false;
-    listColors: ThemeColorType[] = [
+    listColors: VtsThemeColorType[] = [
         {
             isChecked: true,
             value: '#EE0033'
@@ -124,7 +124,7 @@ export class VtsSettingDrawerComponent implements OnInit {
     }
 
     onChangeThemeColor(value: string){
-        let cloneColors: ThemeColorType[] = [...this.listColors];
+        let cloneColors: VtsThemeColorType[] = [...this.listColors];
         cloneColors.filter(c => c.isChecked)[0].isChecked = false;
         cloneColors.filter(c => c.value == value)[0].isChecked = true;
         this.listColors = [...cloneColors];

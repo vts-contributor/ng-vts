@@ -5,7 +5,7 @@ import {
     OnInit, 
     // SimpleChanges 
 } from '@angular/core';
-import { MenuItemProLayout } from './pro-layout.types';
+import { VtsMenuItemProLayout } from './pro-layout.types';
 
 @Component({
     selector: 'vts-prolayout-menu-item-horizontal',
@@ -14,7 +14,7 @@ import { MenuItemProLayout } from './pro-layout.types';
 
 export class VtsProlayoutMenuItemHorizontalComponent implements OnInit {
 
-    @Input() vtsMenuItem: MenuItemProLayout = {
+    @Input() vtsMenuItem: VtsMenuItemProLayout = {
         title: '',
         children: [],
         isSelected: false

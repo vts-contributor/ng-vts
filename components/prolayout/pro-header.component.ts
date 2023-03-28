@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
-import { AvatarMenu, AvatarUser, MenuItemProLayout } from './pro-layout.types';
+import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -64,7 +64,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
-  menuData: MenuItemProLayout[] = [];
+  menuData: VtsMenuItemProLayout[] = [];
   isCollapsedSider: boolean = false;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
@@ -78,20 +78,20 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   @Input() vtsTitle: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
-  @Input() vtsAvatar: AvatarUser = {
+  @Input() vtsAvatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution'
   };
   showMenu: boolean = false;
-  @Input() vtsAvatarMenu: AvatarMenu[] = [];
+  @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
   @Input() vtsLogoUrl: string = "";
 
   ngOnInit(): void {
     // receive menus from container
-    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: MenuItemProLayout[]) => {
+    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: VtsMenuItemProLayout[]) => {
       this.menuData = data;
-      let newMenuData: MenuItemProLayout[] = [
+      let newMenuData: VtsMenuItemProLayout[] = [
         {
           icon: 'Toc:vts',
           title: '',
@@ -139,7 +139,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     if(!this.useSplitMenu){
       if (this.vtsTitle || (title && title.currentValue)) {
         // add a wrapper item to create a menu button
-        let newMenuData: MenuItemProLayout[] = [
+        let newMenuData: VtsMenuItemProLayout[] = [
           {
             icon: 'Toc:vts',
             title: '',
@@ -178,7 +178,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  onClickAvatarMenuItem(item: AvatarMenu): void {
+  onClickAvatarMenuItem(item: VtsAvatarMenu): void {
     this.router.navigateByUrl(item.url);
   }
 
