@@ -73,14 +73,16 @@ export class VtsTbodyComponent implements OnDestroy, AfterContentInit, AfterView
 
   ngAfterViewInit() {
     if (this.listOfVtsTrDirective.length) {
-      this.listOfVtsTrDirective.toArray().forEach((r, i) => r.isOdd = i % 2 == 1)
+      this.listOfVtsTrDirective.toArray().forEach((r, i) => (r.isOdd = i % 2 == 1));
     }
   }
 
   ngAfterContentInit(): void {
-    this.listOfVtsTrDirective.changes.pipe(takeUntil(this.destroy$)).subscribe((rows: QueryList<VtsTrDirective>) => {
-      rows.toArray().forEach((r, i) => r.isOdd = i % 2 == 1)
-    })
+    this.listOfVtsTrDirective.changes
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((rows: QueryList<VtsTrDirective>) => {
+        rows.toArray().forEach((r, i) => (r.isOdd = i % 2 == 1));
+      });
   }
 
   ngOnDestroy(): void {

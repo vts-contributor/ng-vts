@@ -39,19 +39,18 @@ import { Component } from '@angular/core';
     </vts-space>
     <br />
     <br />
-    <vts-pagination 
-      [vtsMini]="mini" 
-      [vtsDisabled]="disabled"  
-      [vtsRounded]="rounded"  
-      [vtsOutline]="outline"  
-      [vtsPageIndex]="1" 
+    <vts-pagination
+      [vtsMini]="mini"
+      [vtsDisabled]="disabled"
+      [vtsRounded]="rounded"
+      [vtsOutline]="outline"
+      [vtsPageIndex]="1"
       [vtsTotal]="500"
       [vtsShowSizeChanger]="showSizeChanger"
       [vtsShowQuickJumper]="showQuickJumper"
       [vtsSimple]="simple"
       [vtsItemLimit]="limit"
-    >
-    </vts-pagination>
+    ></vts-pagination>
   `
 })
 export class VtsDemoPaginationBasicComponent {
@@ -62,5 +61,5 @@ export class VtsDemoPaginationBasicComponent {
   simple: boolean = false;
   showSizeChanger: boolean = false;
   showQuickJumper: boolean = false;
-  limit: number = 5
+  limit: number = 5;
 }

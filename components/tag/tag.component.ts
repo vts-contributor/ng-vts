@@ -26,11 +26,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 export type VtsTagCustomColor = {
-  background?: string,
-  color?: string,
-  checkedColor?: string,
-  checkedBackground?: string
-}
+  background?: string;
+  color?: string;
+  checkedColor?: string;
+  checkedBackground?: string;
+};
 
 @Component({
   selector: 'vts-tag',
@@ -90,15 +90,13 @@ export class VtsTagComponent implements OnChanges, OnDestroy, OnInit {
   }
 
   get bg() {
-    if (!this.vtsColor)
-      return null
-    return this.vtsChecked ? this.vtsColor?.checkedBackground : this.vtsColor?.background
+    if (!this.vtsColor) return null;
+    return this.vtsChecked ? this.vtsColor?.checkedBackground : this.vtsColor?.background;
   }
 
   get color() {
-    if (!this.vtsColor)
-      return null
-    return this.vtsChecked ? this.vtsColor?.checkedColor :  this.vtsColor?.color
+    if (!this.vtsColor) return null;
+    return this.vtsChecked ? this.vtsColor?.checkedColor : this.vtsColor?.color;
   }
 
   constructor(
@@ -120,8 +118,7 @@ export class VtsTagComponent implements OnChanges, OnDestroy, OnInit {
     this.dir = this.directionality.value;
   }
 
-  ngOnChanges(_changes: SimpleChanges): void {
-  }
+  ngOnChanges(_changes: SimpleChanges): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next();

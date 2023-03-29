@@ -147,10 +147,10 @@ export class VtsPaginationSimpleComponent implements OnChanges, OnDestroy, OnIni
     this.onPageIndexChange(this.pageIndex + 1);
   }
   begin(): void {
-    this.onPageIndexChange(1)
+    this.onPageIndexChange(1);
   }
   last(): void {
-    this.onPageIndexChange(this.lastIndex)
+    this.onPageIndexChange(this.lastIndex);
   }
 
   onPageIndexChange(index: number): void {

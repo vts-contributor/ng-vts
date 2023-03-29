@@ -12,16 +12,29 @@ import { Component } from '@angular/core';
     <ng-template #renderItemTemplate let-type let-page="page">
       <ng-container [ngSwitch]="type">
         <a *ngSwitchCase="'page'">{{ page }}</a>
-        <a class="link" [attr.disabled]="p.index === 1 ? true : null" *ngSwitchCase="'begin'">Begin</a>
-        <a class="link" [attr.disabled]="p.index === 1 ? true : null" *ngSwitchCase="'prev'">Previous</a>
-        <a class="link" [attr.disabled]="p.index === p.lastIndex ? true : null" *ngSwitchCase="'next'">Next</a>
-        <a class="link" [attr.disabled]="p.index === p.lastIndex ? true : null" *ngSwitchCase="'last'">Last</a>
+        <a class="link" [attr.disabled]="p.index === 1 ? true : null" *ngSwitchCase="'begin'">
+          Begin
+        </a>
+        <a class="link" [attr.disabled]="p.index === 1 ? true : null" *ngSwitchCase="'prev'">
+          Previous
+        </a>
+        <a
+          class="link"
+          [attr.disabled]="p.index === p.lastIndex ? true : null"
+          *ngSwitchCase="'next'"
+        >
+          Next
+        </a>
+        <a
+          class="link"
+          [attr.disabled]="p.index === p.lastIndex ? true : null"
+          *ngSwitchCase="'last'"
+        >
+          Last
+        </a>
       </ng-container>
     </ng-template>
   `,
-  styles: [
-    `
-    `
-  ]
+  styles: [``]
 })
 export class VtsDemoPaginationItemRenderComponent {}

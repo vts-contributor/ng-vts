@@ -36,12 +36,12 @@ interface Setting {
   paginationType: VtsTablePaginationType;
   stripe: boolean;
 
-  rounded: boolean,
-  outline: boolean,
-  mini: boolean,
-  simple: boolean,
-  sizeChanger: boolean,
-  quickJumper: boolean
+  rounded: boolean;
+  outline: boolean;
+  mini: boolean;
+  simple: boolean;
+  sizeChanger: boolean;
+  quickJumper: boolean;
 }
 
 @Component({
@@ -67,7 +67,7 @@ interface Setting {
             <vts-switch [formControlName]="switch.formControlName"></vts-switch>
           </vts-form-control>
         </vts-form-item>
-        
+
         <p class="section-title">Pagination Property:</p>
         <vts-form-item *ngFor="let switch of listOfPaginationSwitch">
           <vts-form-label>{{ switch.name }}</vts-form-label>
@@ -93,7 +93,6 @@ interface Setting {
       [vtsSize]="settingValue.size"
       [vtsStripe]="settingValue.stripe"
       (vtsCurrentPageDataChange)="currentPageDataChange($event)"
-
       [vtsRounded]="settingValue.rounded"
       [vtsOutline]="settingValue.outline"
       [vtsMini]="settingValue.mini"
@@ -186,7 +185,7 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
     { name: 'Fixed Header', formControlName: 'fixHeader' },
     { name: 'No Result', formControlName: 'noResult' },
     { name: 'Ellipsis', formControlName: 'ellipsis' },
-    { name: 'Stripe', formControlName: 'stripe' },
+    { name: 'Stripe', formControlName: 'stripe' }
   ];
 
   listOfPaginationSwitch = [
@@ -195,7 +194,7 @@ export class VtsDemoTableDynamicSettingsComponent implements OnInit {
     { name: 'Mini Mode', formControlName: 'mini' },
     { name: 'Simple Mode', formControlName: 'simple' },
     { name: 'Show size changer', formControlName: 'sizeChanger' },
-    { name: 'Show quick jumper', formControlName: 'quickJumper' },
+    { name: 'Show quick jumper', formControlName: 'quickJumper' }
   ];
 
   listOfTableRadio = [

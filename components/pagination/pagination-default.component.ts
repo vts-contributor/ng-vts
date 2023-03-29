@@ -53,7 +53,7 @@ import { PaginationItemRenderContext } from './pagination.types';
         [index]="page.index"
         [disabled]="!!page.disabled"
         [itemRender]="itemRender"
-        [active]="page.type ==='page' && pageIndex === page.index"
+        [active]="page.type === 'page' && pageIndex === page.index"
         (gotoIndex)="jumpPage($event)"
         (diffIndex)="jumpDiff($event)"
         [direction]="dir"
@@ -87,7 +87,7 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
   @Input() locale!: VtsPaginationI18nInterface;
   @Input() showSizeChanger = false;
   @Input() showQuickJumper = false;
-  @Input() showShortJump = false
+  @Input() showShortJump = false;
   @Input() total = 0;
   @Input() pageIndex = 1;
   @Input() pageSize = 10;
@@ -160,7 +160,9 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
     const lastIndex = this.getLastIndex(this.total, this.pageSize);
     this.listOfPageItem = this.getListOfPageItem(this.pageIndex, lastIndex, this.itemLimit);
     if (!this.showShortJump)
-      this.listOfPageItem = this.listOfPageItem.filter(i => !(i.type === 'prev_5' || i.type === 'next_5'))
+      this.listOfPageItem = this.listOfPageItem.filter(
+        i => !(i.type === 'prev_5' || i.type === 'next_5')
+      );
   }
 
   getListOfPageItem(
@@ -172,7 +174,7 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
       const beginItem = {
         type: 'begin',
         disabled: pageIndex === 1,
-        index: 1,
+        index: 1
       };
       const prevItem = {
         type: 'prev',
@@ -226,17 +228,17 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
       //   return [...firstPageItem, ...listOfRange, ...lastPageItem];
       // };
       // return concatWithPrevNext(generateRangeItem(pageIndex, lastIndex));
-      
-      const halfBefore = Math.ceil(limit / 2)
-      let begin = 1
-      let end = 1
+
+      const halfBefore = Math.ceil(limit / 2);
+      let begin = 1;
+      let end = 1;
       if (pageIndex - halfBefore >= 0) {
-        begin = pageIndex - halfBefore + 1
+        begin = pageIndex - halfBefore + 1;
       }
-      const leftAfter = limit - (pageIndex - begin + 1)
-      end = pageIndex + leftAfter > lastIndex ? lastIndex : pageIndex + leftAfter
-      const addBefore = leftAfter - (end - pageIndex)
-      begin = begin - addBefore >= 1 ? begin - addBefore : 1
+      const leftAfter = limit - (pageIndex - begin + 1);
+      end = pageIndex + leftAfter > lastIndex ? lastIndex : pageIndex + leftAfter;
+      const addBefore = leftAfter - (end - pageIndex);
+      begin = begin - addBefore >= 1 ? begin - addBefore : 1;
 
       const listOfRange = [...generatePage(begin, end)];
       return concatWithPrevNext(listOfRange);

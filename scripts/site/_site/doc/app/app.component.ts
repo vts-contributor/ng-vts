@@ -22,15 +22,9 @@ interface DocPageMeta {
   description: string;
 }
 
-const defaultKeywords = [
-  "ng",
-  "vts",
-  "ng-vts",
-  "angular",
-  "ui",
-  "framework",
-  "frontend"
-].join(', ')
+const defaultKeywords = ['ng', 'vts', 'ng-vts', 'angular', 'ui', 'framework', 'frontend'].join(
+  ', '
+);
 
 @Component({
   selector: 'app-root',
@@ -62,8 +56,8 @@ export class AppComponent implements OnInit {
   language: 'zh' | 'en' = 'en';
   direction: 'ltr' | 'rtl' = 'ltr';
   currentVersion = VERSION.full;
-  allThemes: VtsThemeItem[] = []
-  currentTheme: VtsTheme | null = null
+  allThemes: VtsThemeItem[] = [];
+  currentTheme: VtsTheme | null = null;
 
   onNavigateClick(_e: any) {
     if (this.drawerVisible) {
@@ -101,12 +95,12 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) private document: any,
     private themeService: VtsThemeService
   ) {
-    this.themeService.allTheme$.subscribe(d => this.allThemes = d)
-    this.themeService.theme$.subscribe(d => this.currentTheme = d)
+    this.themeService.allTheme$.subscribe(d => (this.allThemes = d));
+    this.themeService.theme$.subscribe(d => (this.currentTheme = d));
   }
 
   onThemeChange(e: VtsThemeItem) {
-    this.themeService.setTheme(e.theme)
+    this.themeService.setTheme(e.theme);
   }
 
   navigateToPage(url: string): void {
@@ -427,6 +421,5 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private detectLanguage(): void {
-  }
+  private detectLanguage(): void {}
 }

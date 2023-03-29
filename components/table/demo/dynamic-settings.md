@@ -1,7 +1,5 @@
 ---
-order: 30
+order: 2
 title:
   en-US: Dynamic Settings
 ---
-
-## en-US
