@@ -5,13 +5,17 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from '@ui-vts/ng-v
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [vtsMenuHeader]="menuData" [vtsMenuSider]="menuData" [vtsAvatar]="avatar" [vtsAvatarMenu]="avatarMenu" [vtsLogoUrl]="logoUrl" [vtsBreadcrumbArray]="arrayMenuItem" [vtsFooterTemplate]="footerTemplate">
-      
-    </vts-prolayout-container>
+    <vts-prolayout-container
+      [vtsMenuHeader]="menuData"
+      [vtsMenuSider]="menuData"
+      [vtsAvatar]="avatar"
+      [vtsAvatarMenu]="avatarMenu"
+      [vtsLogoUrl]="logoUrl"
+      [vtsBreadcrumbArray]="arrayMenuItem"
+      [vtsFooterTemplate]="footerTemplate"
+    ></vts-prolayout-container>
     <ng-template #footerTemplate>
-      <div>
-        Copyright by Viettel Solution - Government Solution Center Platform
-      </div>
+      <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
   `
 })
@@ -22,11 +26,14 @@ export class VtsDemoProlayoutBasicComponent {
       children: [
         {
           title: 'Child 1.1',
-          children: [{ title: 'Child 1.1.1' }, { title: 'Child 1.1.2', isSelected: true, url: "/" }],
+          children: [
+            { title: 'Child 1.1.1' },
+            { title: 'Child 1.1.2', isSelected: true, url: '/' }
+          ],
           isOpen: true
         },
         { title: 'Child 1.2' }
-      ],
+      ]
       // isOpen: true
     },
     {
@@ -49,7 +56,7 @@ export class VtsDemoProlayoutBasicComponent {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution',
-    imgUrl: "http://localhost/avatar_design.svg"
+    imgUrl: 'http://localhost/avatar_design.svg'
   };
   avatarMenu: VtsAvatarMenu[] = [
     {
@@ -61,7 +68,7 @@ export class VtsDemoProlayoutBasicComponent {
       url: ''
     }
   ];
-  logoUrl: string = "http://localhost:4200/logo.svg";
+  logoUrl: string = 'http://localhost:4200/logo.svg';
 
   arrayMenuItem: VtsBreadcrumbItem[] = [
     { label: 'Home', url: '', icon: 'HomeOutline' },
