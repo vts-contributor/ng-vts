@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
       <label>
         Gap:
         <vts-input-number
+          style="width: 90px"
           [vtsMin]="0"
           [vtsMax]="16"
           [vtsStep]="1"
