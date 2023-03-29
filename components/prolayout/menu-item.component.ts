@@ -22,7 +22,7 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
   ngOnInit() {}
 
   onClickAvatarMenuItem(item: VtsMenuItemProLayout): void {
-    if(typeof item.url !== 'undefined'){
+    if(typeof item.url === 'string'){
       this.router.navigateByUrl(item.url);
     }
   }
