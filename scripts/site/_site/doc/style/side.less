@@ -1,4 +1,4 @@
-.vts-layout-sider {
+.vts-layout-sider, .vts-prolayout-sider {
   margin-right: -1px;
   transition: all 0.3s cubic-bezier(0.2, 0, 0, 1) 0s !important;
 }
@@ -284,6 +284,17 @@
 }
 
 .vts-layout-sider-collapsed #logo {
+  justify-content: center;
+  padding-left: 0;
+  width: @menu-collapsed-width;
+
+  img {
+    width: 42px;
+    height: auto;
+  }
+}
+
+.vts-prolayout-sider-collapsed #logo {
   justify-content: center;
   padding-left: 0;
   width: @menu-collapsed-width;

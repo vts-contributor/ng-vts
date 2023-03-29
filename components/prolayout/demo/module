@@ -1,0 +1,19 @@
+import { VtsProLayoutModule } from '@ui-vts/ng-vts/prolayout';
+import { VtsMenuModule } from '@ui-vts/ng-vts/menu';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
+import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
+import { VtsButtonModule } from '@ui-vts/ng-vts/button';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
+import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
+import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+
+export const moduleList = [
+    VtsProLayoutModule, 
+    VtsMenuModule, 
+    VtsIconModule, 
+    VtsBreadCrumbModule, 
+    VtsButtonModule, 
+    VtsSwitchModule,
+    VtsDividerModule,
+    VtsTagModule
+];
