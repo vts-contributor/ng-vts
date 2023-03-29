@@ -35,9 +35,9 @@ function generateNav(componentsDocMap) {
   let routes = '';
 
   const filters = [
-    // 'table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'menu',
-    //                 'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result', 
-                    'prolayout', 'layout'
+    'table', 'button', 'icon', 'input', 'textarea', 'date-picker', 'time-picker', 'drawer', 'alert', 'switch', 'tag', 'menu',
+                    'select', 'radio', 'checkbox', 'tooltip', 'slider', 'upload', 'chart', 'typography', 'space', 'grid', 'result', 
+                    'prolayout', 'layout', 'tree-view', 'tree-select', 'modal'
                   ]
   console.log(filters)
   for (const key in componentsDocMap) {

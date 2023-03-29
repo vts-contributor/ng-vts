@@ -81,12 +81,12 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
     </ng-template>
 
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource" vtsNoAnimation>
-      <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node">
         <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
         <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
         <vts-tree-node-toggle>
           <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
         </vts-tree-node-toggle>

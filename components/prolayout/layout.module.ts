@@ -37,6 +37,7 @@ import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 import { VtsThemeModule } from '@ui-vts/theme/services'
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [    
@@ -58,6 +59,7 @@ import { VtsThemeModule } from '@ui-vts/theme/services'
   ],
   imports: [
     BidiModule,
+    RouterModule,
     CommonModule,
     OverlayModule,
     VtsIconModule,

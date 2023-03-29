@@ -38,7 +38,7 @@ interface FlatNode {
   selector: 'vts-demo-tree-view-basic',
   template: `
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource">
-      <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node">
         <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
         <vts-tree-node-option
           [vtsDisabled]="node.disabled"
@@ -49,7 +49,7 @@ interface FlatNode {
         </vts-tree-node-option>
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
         <vts-tree-node-toggle>
           <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
         </vts-tree-node-toggle>
