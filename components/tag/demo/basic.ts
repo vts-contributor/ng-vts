@@ -10,7 +10,9 @@ import { VtsTagCustomColor } from '@ui-vts/ng-vts/tag';
       <a href="https://github.com">Link</a>
     </vts-tag>
     <vts-tag vtsMode="closeable" (vtsOnClose)="onClose()">Closable</vts-tag>
-    <vts-tag vtsMode="checkable" [vtsChecked]="true" (vtsCheckedChange)="checkChange($event)">Checkable</vts-tag>
+    <vts-tag vtsMode="checkable" [vtsChecked]="true" (vtsCheckedChange)="checkChange($event)">
+      Checkable
+    </vts-tag>
     <br />
     <br />
     <p>Preset:</p>
@@ -52,14 +54,14 @@ import { VtsTagCustomColor } from '@ui-vts/ng-vts/tag';
 })
 export class VtsDemoTagBasicComponent {
   customColor: VtsTagCustomColor = {
-    color: "#722ED1",
-    background: "#cdbae791",
+    color: '#722ED1',
+    background: '#cdbae791',
     checkedBackground: '#722ED1'
-  }
+  };
 
   customColor2: VtsTagCustomColor = {
     checkedBackground: '#722ED1'
-  }
+  };
 
   onClose(): void {
     console.log('closed');

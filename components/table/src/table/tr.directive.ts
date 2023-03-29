@@ -28,7 +28,7 @@ import { VtsTableStyleService } from '../table-style.service';
   }
 })
 export class VtsTrDirective implements AfterContentInit, OnDestroy {
-  @Input() isOdd: boolean = true
+  @Input() isOdd: boolean = true;
   @ContentChildren(VtsThMeasureDirective)
   listOfVtsThDirective!: QueryList<VtsThMeasureDirective>;
   @ContentChildren(VtsCellFixedDirective)

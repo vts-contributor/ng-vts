@@ -16,9 +16,14 @@ import { VtsPaginationItemComponent } from './pagination-item.component';
 import { VtsPaginationOptionsComponent } from './pagination-options.component';
 import { VtsPaginationSimpleComponent } from './pagination-simple.component';
 import { VtsPaginationComponent } from './pagination.component';
-import { ChevronLeft, ChevronRight, DoubleArrowLeft, DoubleArrowRight } from '@ui-vts/icons-angular/icons/radix'
+import {
+  ChevronLeft,
+  ChevronRight,
+  DoubleArrowLeft,
+  DoubleArrowRight
+} from '@ui-vts/icons-angular/icons/radix';
 
-const icons = [ChevronLeft, ChevronRight, DoubleArrowLeft, DoubleArrowRight]
+const icons = [ChevronLeft, ChevronRight, DoubleArrowLeft, DoubleArrowRight];
 @NgModule({
   declarations: [
     VtsPaginationComponent,
@@ -28,6 +33,13 @@ const icons = [ChevronLeft, ChevronRight, DoubleArrowLeft, DoubleArrowRight]
     VtsPaginationDefaultComponent
   ],
   exports: [VtsPaginationComponent],
-  imports: [BidiModule, CommonModule, FormsModule, VtsSelectModule, VtsI18nModule, VtsIconModule.forChild(icons)]
+  imports: [
+    BidiModule,
+    CommonModule,
+    FormsModule,
+    VtsSelectModule,
+    VtsI18nModule,
+    VtsIconModule.forChild(icons)
+  ]
 })
 export class VtsPaginationModule {}

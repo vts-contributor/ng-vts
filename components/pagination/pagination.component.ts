@@ -21,10 +21,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
-import {
-  gridResponsiveMap,
-  VtsBreakpointService
-} from '@ui-vts/ng-vts/core/services';
+import { gridResponsiveMap, VtsBreakpointService } from '@ui-vts/ng-vts/core/services';
 import { BooleanInput, NumberInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
 import { VtsI18nService, VtsPaginationI18nInterface } from '@ui-vts/ng-vts/i18n';
@@ -125,12 +122,12 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputBoolean() vtsRounded = false;
   @Input() @InputBoolean() vtsOutline = false;
   vtsShowShortJump = false;
-  @Input() vtsItemLimit: number = 5
+  @Input() vtsItemLimit: number = 5;
 
   showPagination = true;
   locale!: VtsPaginationI18nInterface;
   dir: Direction = 'ltr';
-  miniByBp = false
+  miniByBp = false;
 
   private destroy$ = new Subject<void>();
   private total$ = new ReplaySubject<number>(1);
@@ -175,22 +172,22 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   get index() {
-    return this.vtsPageIndex
+    return this.vtsPageIndex;
   }
 
   get lastIndex() {
-    return this.getLastIndex(this.vtsTotal, this.vtsPageSize)
+    return this.getLastIndex(this.vtsTotal, this.vtsPageSize);
   }
 
   get range() {
     return [
       (this.vtsPageIndex - 1) * this.vtsPageSize + 1,
       Math.min(this.vtsPageIndex * this.vtsPageSize, this.vtsTotal)
-    ]
+    ];
   }
 
   get total() {
-    return this.vtsTotal
+    return this.vtsTotal;
   }
 
   constructor(
@@ -220,7 +217,7 @@ export class VtsPaginationComponent implements OnInit, OnDestroy, OnChanges {
       .pipe(takeUntil(this.destroy$))
       .subscribe(bp => {
         if (this.vtsResponsive) {
-          this.miniByBp = !bp.sm
+          this.miniByBp = !bp.sm;
           this.cdr.markForCheck();
         }
       });

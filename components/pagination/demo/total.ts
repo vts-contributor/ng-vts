@@ -33,9 +33,11 @@ import { Component } from '@angular/core';
       #c="vtsPagination"
     ></vts-pagination>
     <div style="margin-top: 8px; font-size: 14px">
-      Total {{ c.total }} (Page {{ c.index }}/{{ c.lastIndex }}) (Showing {{ c.range[0] }}-{{ c.range[1] }} of {{ c.total }} items)
+      Total {{ c.total }} (Page {{ c.index }}/{{ c.lastIndex }}) (Showing {{ c.range[0] }}-{{
+        c.range[1]
+      }}
+      of {{ c.total }} items)
     </div>
-
   `
 })
 export class VtsDemoPaginationTotalComponent {}

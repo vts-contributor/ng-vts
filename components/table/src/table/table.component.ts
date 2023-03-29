@@ -29,7 +29,7 @@ import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/
 import { VtsResizeObserver } from '@ui-vts/ng-vts/cdk/resize-observer';
 import { BooleanInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, measureScrollbar } from '@ui-vts/ng-vts/core/util';
-import { PaginationItemRenderContext } from '@ui-vts/ng-vts/pagination';
+import { PaginationItemRenderContext, VtsPaginationComponent } from '@ui-vts/ng-vts/pagination';
 import { BehaviorSubject, combineLatest, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { VtsTableDataService } from '../table-data.service';
@@ -167,6 +167,7 @@ export class VtsTableComponent<T = VtsSafeAny>
     range: [number, number];
   }> | null = null;
   @Input()
+  @Input()
   vtsItemRender: TemplateRef<PaginationItemRenderContext> | null = null;
   @Input() vtsTitle: string | TemplateRef<VtsSafeAny> | null = null;
   @Input() vtsFooter: string | TemplateRef<VtsSafeAny> | null = null;
@@ -192,9 +193,7 @@ export class VtsTableComponent<T = VtsSafeAny>
   @Input() @InputBoolean() vtsShowPagination = false;
   @Input() @InputBoolean() vtsLoading = false;
   @Input() @InputBoolean() vtsOuterBordered = false;
-  @Input()
-  // @WithConfig()
-  vtsLoadingIndicator: TemplateRef<VtsSafeAny> | null = null;
+  @Input() vtsLoadingIndicator: TemplateRef<VtsSafeAny> | null = null;
   @Input() @WithConfig() @InputBoolean() vtsBordered: boolean = true;
   @Input() @WithConfig() vtsSize: VtsTableSize = 'sm';
   @Input() @WithConfig() @InputBoolean() vtsShowSizeChanger: boolean = false;
@@ -210,6 +209,8 @@ export class VtsTableComponent<T = VtsSafeAny>
   @Output() readonly vtsPageIndexChange = new EventEmitter<number>();
   @Output() readonly vtsQueryParams = new EventEmitter<VtsTableQueryParams>();
   @Output() readonly vtsCurrentPageDataChange = new EventEmitter<ReadonlyArray<VtsTableData>>();
+
+  @ViewChild(VtsPaginationComponent) pagination?: VtsPaginationComponent;
 
   /** public data for ngFor tr */
   public data: ReadonlyArray<T> = [];

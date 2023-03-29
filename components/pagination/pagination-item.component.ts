@@ -157,7 +157,7 @@ export class VtsPaginationItemComponent implements OnChanges {
           prev_5: this.locale?.prev_5,
           next_5: this.locale?.next_5,
           begin: this.locale?.begin,
-          last: this.locale?.last,
+          last: this.locale?.last
         } as VtsSafeAny
       )[this.type!];
     }
