@@ -1,3 +1,4 @@
+//@ts-nocheck
 /**
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
@@ -8,6 +9,7 @@ import {
   Component,
   Injector,
   Input,
+  Optional,
   ViewEncapsulation
 } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
@@ -16,7 +18,7 @@ import { VtsDropdownMenuComponent } from '@ui-vts/ng-vts/dropdown';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
-import { VtsBreadCrumbComponent } from './breadcrumb.component';
+import { VtsBreadcrumb } from './breadcrumb';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,7 +72,7 @@ export class VtsBreadCrumbItemComponent {
   @Input() vtsUrl?: string | UrlTree | string[];
   @Input() @InputBoolean() vtsDisabled?: boolean;
 
-  constructor(public vtsBreadCrumbComponent: VtsBreadCrumbComponent, private injector: Injector) {}
+  constructor(public vtsBreadCrumbComponent: VtsBreadcrumb, private injector: Injector) {}
 
   navigate(e: MouseEvent): void {
     e.preventDefault();

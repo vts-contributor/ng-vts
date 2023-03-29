@@ -4,7 +4,7 @@ type: Components
 title: Slider
 cols: 1
 order: 9
-cover: https://gw.alipayobjects.com/zos/alicdn/HZ3meFc6W/Silder.svg
+cover: ''
 ---
 
 ```ts

@@ -20,3 +20,4 @@ import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 | vtsTooltipType | Type of tooltip | One of `sentence` `paragraph` | `sentence`
 | vtsTooltipTitle | Content of tooltip | `string` |
 | vtsTooltipPlacement | Placement of tooltip | `string` or `string[]` of `topLeft` `top` `topRight` `leftTop` `left` `leftBottom` `rightTop` `right` `rightBottom` `bottomLeft` `bottom` `bottomRight` |  `top`
+| vtsTooltipOrigin | Origin of the tooltip	 | `ElementRef` |

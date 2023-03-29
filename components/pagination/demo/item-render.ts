@@ -7,16 +7,34 @@ import { Component } from '@angular/core';
       [vtsPageIndex]="1"
       [vtsTotal]="500"
       [vtsItemRender]="renderItemTemplate"
+      #p="vtsPagination"
     ></vts-pagination>
     <ng-template #renderItemTemplate let-type let-page="page">
       <ng-container [ngSwitch]="type">
         <a *ngSwitchCase="'page'">{{ page }}</a>
-        <a *ngSwitchCase="'prev'">Previous</a>
-        <a *ngSwitchCase="'next'">Next</a>
-        <a *ngSwitchCase="'prev_5'"><<</a>
-        <a *ngSwitchCase="'next_5'">>></a>
+        <a class="link" [attr.disabled]="p.index === 1 ? true : null" *ngSwitchCase="'begin'">
+          Begin
+        </a>
+        <a class="link" [attr.disabled]="p.index === 1 ? true : null" *ngSwitchCase="'prev'">
+          Previous
+        </a>
+        <a
+          class="link"
+          [attr.disabled]="p.index === p.lastIndex ? true : null"
+          *ngSwitchCase="'next'"
+        >
+          Next
+        </a>
+        <a
+          class="link"
+          [attr.disabled]="p.index === p.lastIndex ? true : null"
+          *ngSwitchCase="'last'"
+        >
+          Last
+        </a>
       </ng-container>
     </ng-template>
-  `
+  `,
+  styles: [``]
 })
 export class VtsDemoPaginationItemRenderComponent {}

@@ -17,7 +17,6 @@ import { VtsPopoverComponent, VtsPopoverDirective } from './popover';
 
 @NgModule({
   exports: [VtsPopoverDirective, VtsPopoverComponent],
-  entryComponents: [VtsPopoverComponent],
   declarations: [VtsPopoverDirective, VtsPopoverComponent],
   imports: [
     BidiModule,

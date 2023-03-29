@@ -16,7 +16,7 @@ import { VtsMessageData, VtsMessageDataOptions, VtsMessageRef } from './typings'
   providedIn: VtsMessageServiceModule
 })
 export class VtsMessageService extends VtsMNService {
-  protected container?: VtsMessageContainerComponent;
+  protected override container?: VtsMessageContainerComponent;
   protected componentPrefix = 'message-';
 
   constructor(vtsSingletonService: VtsSingletonService, overlay: Overlay, injector: Injector) {

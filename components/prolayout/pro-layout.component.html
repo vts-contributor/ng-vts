@@ -1,0 +1,58 @@
+<vts-prolayout>
+    <vts-prolayout-sider vtsWidth="250px" [vtsLogoUrl]="vtsLogoUrl"
+        *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
+
+    <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [vtsTitle]="vtsHeaderTitle" [vtsAvatar]="vtsAvatar" [vtsAvatarMenu]="vtsAvatarMenu" [vtsLogoUrl]="vtsLogoUrl"></vts-prolayout-header>
+
+    <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
+        <vts-prolayout-header *ngIf="isShowHeader" [vtsTitle]="vtsHeaderTitle" [vtsAvatar]="vtsAvatar" [vtsAvatarMenu]="vtsAvatarMenu" [vtsLogoUrl]="vtsLogoUrl"></vts-prolayout-header>
+        <vts-prolayout-content class="outer-content">
+            <vts-prolayout-breadcrumb [vtsSeparator]="vtsSeparator" [vtsBreadcrumbArray]="vtsBreadcrumbArray"></vts-prolayout-breadcrumb>
+            <vts-prolayout class="inner-layout">
+                <vts-prolayout-content class="inner-content">
+                    <ng-container *ngTemplateOutlet="compContent"></ng-container>
+                </vts-prolayout-content>
+            </vts-prolayout>
+        </vts-prolayout-content>
+
+        <vts-prolayout-footer *ngIf="isShowFooter">
+            <ng-container *ngIf="!vtsFooterTemplate; else footerTemplate">
+                Copyright by Viettel Solution - Government Solution Center Platform
+            </ng-container>
+            <ng-template #footerTemplate>
+                <ng-template [ngTemplateOutlet]="vtsFooterTemplate" [ngOutletContext]="context"></ng-template>
+            </ng-template>
+        </vts-prolayout-footer>
+    </vts-prolayout>
+
+    <ng-template #notFixedSider>        
+        <vts-prolayout-breadcrumb></vts-prolayout-breadcrumb>
+        <vts-prolayout class="inner-layout" *ngIf="!isFixedHeader; else fixedHeader">
+            <vts-prolayout-sider vtsWidth="200px" [vtsLogoUrl]="vtsLogoUrl" *ngIf="isShowSider"></vts-prolayout-sider>
+            <vts-prolayout-content class="inner-content">
+                <ng-container *ngTemplateOutlet="compContent"></ng-container>
+            </vts-prolayout-content>
+        </vts-prolayout>
+
+        <ng-template #fixedHeader>
+            <vts-prolayout-content class="inner-content">
+                <ng-container *ngTemplateOutlet="compContent"></ng-container>
+            </vts-prolayout-content>
+        </ng-template>
+        <vts-prolayout-footer *ngIf="isShowFooter">
+            <ng-container *ngIf="!vtsFooterTemplate; else footerTemplate">
+                Copyright by Viettel Solution - Government Solution Center Platform
+            </ng-container>
+            <ng-template #footerTemplate>
+                <ng-template [ngTemplateOutlet]="vtsFooterTemplate" [ngOutletContext]="context"></ng-template>
+            </ng-template>
+        </vts-prolayout-footer>
+    </ng-template>
+
+    <vts-setting-drawer
+        (vtsSetThemeColor)="onChangeThemeColor($event)"></vts-setting-drawer>
+</vts-prolayout>
+
+<ng-template #compContent>
+    <ng-content></ng-content>
+</ng-template>

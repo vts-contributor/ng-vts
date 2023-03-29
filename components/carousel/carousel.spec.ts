@@ -6,33 +6,33 @@ import { By } from '@angular/platform-browser';
 
 import { dispatchKeyboardEvent, dispatchMouseEvent } from '@ui-vts/ng-vts/core/testing';
 
-import { VtsCarouselContentDirective } from './carousel-content.directive';
-import { VtsCarouselComponent } from './carousel.component';
+import { VtscarouselContentDirective } from './carousel-content.directive';
+import { VtscarouselComponent } from './carousel.component';
 import { VtsCarouselModule } from './carousel.module';
-import { VtsCarouselOpacityStrategy } from './strategies/opacity-strategy';
-import { VTS_CAROUSEL_CUSTOM_STRATEGIES } from './typings';
+import { VtscarouselOpacityStrategy } from './strategies/opacity-strategy';
+import { VTS_carousel_CUSTOM_STRATEGIES } from './typings';
 
-describe('carousel', () => {
+describe('vts-carousel', () => {
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [BidiModule, VtsCarouselModule],
-      declarations: [VtsTestCarouselBasicComponent, VtsTestCarouselRtlComponent]
+      declarations: [VtsTestcarouselBasicComponent, VtsTestcarouselRtlComponent]
     });
     TestBed.compileComponents();
   }));
 
-  describe('carousel basic', () => {
-    let fixture: ComponentFixture<VtsTestCarouselBasicComponent>;
-    let testComponent: VtsTestCarouselBasicComponent;
+  describe('vts-carousel basic', () => {
+    let fixture: ComponentFixture<VtsTestcarouselBasicComponent>;
+    let testComponent: VtsTestcarouselBasicComponent;
     let carouselWrapper: DebugElement;
     let carouselContents: DebugElement[];
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(VtsTestCarouselBasicComponent);
+      fixture = TestBed.createComponent(VtsTestcarouselBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
-      carouselWrapper = fixture.debugElement.query(By.directive(VtsCarouselComponent));
-      carouselContents = fixture.debugElement.queryAll(By.directive(VtsCarouselContentDirective));
+      carouselWrapper = fixture.debugElement.query(By.directive(VtscarouselComponent));
+      carouselContents = fixture.debugElement.queryAll(By.directive(VtscarouselContentDirective));
     });
 
     it('should className correct', () => {
@@ -53,7 +53,7 @@ describe('carousel', () => {
       fixture.detectChanges();
       tick(3000);
       fixture.detectChanges();
-      carouselContents = fixture.debugElement.queryAll(By.directive(VtsCarouselContentDirective));
+      carouselContents = fixture.debugElement.queryAll(By.directive(VtscarouselContentDirective));
       expect(carouselContents.length).toBe(0);
     }));
 
@@ -184,19 +184,19 @@ describe('carousel', () => {
     it('should func work', fakeAsync(() => {
       fixture.detectChanges();
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
-      testComponent.vtsCarouselComponent.next();
+      testComponent.vtscarouselComponent.next();
       tickMilliseconds(fixture, 700);
       expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
-      testComponent.vtsCarouselComponent.pre();
+      testComponent.vtscarouselComponent.pre();
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
-      testComponent.vtsCarouselComponent.goTo(2);
+      testComponent.vtscarouselComponent.goTo(2);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[2].nativeElement.classList).toContain('slick-active');
     }));
 
     it('should resize content after window resized', fakeAsync(() => {
-      const resizeSpy = spyOn(testComponent.vtsCarouselComponent.strategy!, 'withCarouselContents');
+      const resizeSpy = spyOn(testComponent.vtscarouselComponent.strategy!, 'withcarouselContents');
       window.dispatchEvent(new Event('resize'));
       tick(16);
       expect(resizeSpy).toHaveBeenCalledTimes(1);
@@ -204,73 +204,73 @@ describe('carousel', () => {
 
     // TODO(wendellhu95): no idea why this stops working with auditTime
     it('should support swiping to switch', fakeAsync(() => {
-      swipe(testComponent.vtsCarouselComponent, 500);
+      swipe(testComponent.vtscarouselComponent, 500);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).not.toContain('slick-active');
       expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
 
-      swipe(testComponent.vtsCarouselComponent, -500);
+      swipe(testComponent.vtscarouselComponent, -500);
       tickMilliseconds(fixture, 700);
-      swipe(testComponent.vtsCarouselComponent, -500);
+      swipe(testComponent.vtscarouselComponent, -500);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).not.toContain('slick-active');
       expect(carouselContents[3].nativeElement.classList).toContain('slick-active');
     }));
 
     it('should prevent swipes that are not long enough', fakeAsync(() => {
-      swipe(testComponent.vtsCarouselComponent, 57);
+      swipe(testComponent.vtscarouselComponent, 57);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[0].nativeElement.classList).toContain('slick-active');
     }));
 
     it('should disable dragging during transitioning', fakeAsync(() => {
       tickMilliseconds(fixture, 700);
-      testComponent.vtsCarouselComponent.goTo(1);
-      swipe(testComponent.vtsCarouselComponent, 500);
+      testComponent.vtscarouselComponent.goTo(1);
+      swipe(testComponent.vtscarouselComponent, 500);
       tickMilliseconds(fixture, 700);
       expect(carouselContents[1].nativeElement.classList).toContain('slick-active');
     }));
   });
 
   describe('strategies', () => {
-    let fixture: ComponentFixture<VtsTestCarouselBasicComponent>;
-    let testComponent: VtsTestCarouselBasicComponent;
+    let fixture: ComponentFixture<VtsTestcarouselBasicComponent>;
+    let testComponent: VtsTestcarouselBasicComponent;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(VtsTestCarouselBasicComponent);
+      fixture = TestBed.createComponent(VtsTestcarouselBasicComponent);
       fixture.detectChanges();
       testComponent = fixture.debugElement.componentInstance;
     });
 
     describe('transform strategy', () => {
       it('horizontal transform', fakeAsync(() => {
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
-        testComponent.vtsCarouselComponent.next();
+        testComponent.vtscarouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).not.toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).not.toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
-        testComponent.vtsCarouselComponent.pre();
+        testComponent.vtscarouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
         // From first to last.
-        testComponent.vtsCarouselComponent.pre();
+        testComponent.vtscarouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).not.toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).not.toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
         // From last to first.
-        testComponent.vtsCarouselComponent.next();
+        testComponent.vtscarouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).toBe(
           `translate3d(0px, 0px, 0px)`
         );
       }));
@@ -279,33 +279,33 @@ describe('carousel', () => {
         testComponent.dotPosition = 'left';
         fixture.detectChanges();
 
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
-        testComponent.vtsCarouselComponent.next();
+        testComponent.vtscarouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.el.style.transform).not.toBe(
+        expect(testComponent.vtscarouselComponent.el.style.transform).not.toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
-        testComponent.vtsCarouselComponent.pre();
+        testComponent.vtscarouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
         // From first to last.
-        testComponent.vtsCarouselComponent.pre();
+        testComponent.vtscarouselComponent.pre();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).not.toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).not.toBe(
           `translate3d(0px, 0px, 0px)`
         );
 
         // From last to first.
-        testComponent.vtsCarouselComponent.next();
+        testComponent.vtscarouselComponent.next();
         tickMilliseconds(fixture, 700);
-        expect(testComponent.vtsCarouselComponent.slickTrackEl.style.transform).toBe(
+        expect(testComponent.vtscarouselComponent.slickTrackEl.style.transform).toBe(
           `translate3d(0px, 0px, 0px)`
         );
       }));
@@ -316,23 +316,23 @@ describe('carousel', () => {
   });
 });
 
-describe('carousel custom strategies', () => {
-  let fixture: ComponentFixture<VtsTestCarouselBasicComponent>;
-  let testComponent: VtsTestCarouselBasicComponent;
+describe('vts-carousel custom strategies', () => {
+  let fixture: ComponentFixture<VtsTestcarouselBasicComponent>;
+  let testComponent: VtsTestcarouselBasicComponent;
   let carouselWrapper: DebugElement;
   let carouselContents: DebugElement[];
 
   beforeEach(fakeAsync(() => {
     TestBed.configureTestingModule({
       imports: [VtsCarouselModule],
-      declarations: [VtsTestCarouselBasicComponent],
+      declarations: [VtsTestcarouselBasicComponent],
       providers: [
         {
-          provide: VTS_CAROUSEL_CUSTOM_STRATEGIES,
+          provide: VTS_carousel_CUSTOM_STRATEGIES,
           useValue: [
             {
               name: 'fade',
-              strategy: VtsCarouselOpacityStrategy
+              strategy: VtscarouselOpacityStrategy
             }
           ]
         }
@@ -341,11 +341,11 @@ describe('carousel custom strategies', () => {
   }));
 
   it('could use custom strategies', fakeAsync(() => {
-    fixture = TestBed.createComponent(VtsTestCarouselBasicComponent);
+    fixture = TestBed.createComponent(VtsTestcarouselBasicComponent);
     fixture.detectChanges();
     testComponent = fixture.debugElement.componentInstance;
-    carouselWrapper = fixture.debugElement.query(By.directive(VtsCarouselComponent));
-    carouselContents = fixture.debugElement.queryAll(By.directive(VtsCarouselContentDirective));
+    carouselWrapper = fixture.debugElement.query(By.directive(VtscarouselComponent));
+    carouselContents = fixture.debugElement.queryAll(By.directive(VtscarouselContentDirective));
 
     // The custom provided strategy should also do the work.
     testComponent.effect = 'fade';
@@ -366,10 +366,10 @@ function tickMilliseconds<T>(fixture: ComponentFixture<T>, seconds: number = 1):
 /*
  * Swipe a carousel.
  *
- * @param carousel: Carousel component.
+ * @param carousel: carousel component.
  * @param Distance: Positive to right. Negative to left.
  */
-function swipe(carousel: VtsCarouselComponent, distance: number): void {
+function swipe(carousel: VtscarouselComponent, distance: number): void {
   carousel.pointerDown(
     new MouseEvent('mousedown', {
       clientX: 500,
@@ -404,9 +404,9 @@ function swipe(carousel: VtsCarouselComponent, distance: number): void {
     </vts-carousel>
   `
 })
-export class VtsTestCarouselBasicComponent {
-  @ViewChild(VtsCarouselComponent, { static: false })
-  vtsCarouselComponent!: VtsCarouselComponent;
+export class VtsTestcarouselBasicComponent {
+  @ViewChild(VtscarouselComponent, { static: false })
+  vtscarouselComponent!: VtscarouselComponent;
   dots = true;
   dotPosition = 'bottom';
   effect = 'scrollx';
@@ -424,7 +424,7 @@ export class VtsTestCarouselBasicComponent {
     </div>
   `
 })
-export class VtsTestCarouselRtlComponent {
+export class VtsTestcarouselRtlComponent {
   @ViewChild(Dir) dir!: Dir;
   direction = 'rtl';
 }

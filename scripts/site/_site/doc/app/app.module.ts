@@ -6,8 +6,6 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { IconDefinition } from '@ui-vts/icons-angular';
-import { ChevronLeft, ChevronRight, PencilOutline } from '@ui-vts/icons-angular/icons';
 import { VtsAffixModule } from '@ui-vts/ng-vts/affix';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
@@ -21,6 +19,8 @@ import { VtsMessageModule } from '@ui-vts/ng-vts/message';
 import { VtsPopoverModule } from '@ui-vts/ng-vts/popover';
 import { VtsSelectModule } from '@ui-vts/ng-vts/select';
 import { VtsLayoutModule } from '@ui-vts/ng-vts/layout';
+import { VtsProLayoutModule } from '@ui-vts/ng-vts/prolayout';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsDrawerModule } from '@ui-vts/ng-vts/drawer';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { HoverPreloadModule, HoverPreloadStrategy } from 'ngx-hover-preload';
@@ -34,8 +34,13 @@ import { SideModule } from './side/side.module';
 import { VtsContributorsListModule } from './share/contributors-list/contributors-list.module';
 import { VtsNavBottomModule } from './share/nav-bottom/nav-bottom.module';
 // import { VtsResizeObserverFactory } from '@ui-vts/ng-vts/cdk/resize-observer';
+import { VtsThemeModule } from '@ui-vts/theme/services';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import * as allIconTypes from '@ui-vts/icons-angular/icons';
 
-const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
+const icons = Object.values(allIconTypes)
+  .map(i => Object.values(i))
+  .flatMap(i => i);
 
 @NgModule({
   declarations: [AppComponent, DEMOComponent],
@@ -46,6 +51,19 @@ const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
     FormsModule,
     HttpClientModule,
     VtsNavBottomModule,
+    VtsThemeModule.forRoot({
+      themes: [
+        {
+          theme: 'dark',
+          url: '/dark.css'
+        },
+        {
+          theme: 'default',
+          url: '/default.css'
+        }
+      ],
+      defaultTheme: 'default'
+    }),
     ColorSketchModule,
     VtsIconModule.forRoot(icons),
     VtsGridModule,
@@ -59,8 +77,11 @@ const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
     VtsInputModule,
     VtsBadgeModule,
     VtsLayoutModule,
+    VtsProLayoutModule,
+    VtsSwitchModule,
     VtsDrawerModule,
     VtsPopoverModule,
+    VtsDropDownModule,
     HttpClientJsonpModule,
     HeaderModule,
     SideModule,
@@ -86,7 +107,7 @@ const icons: IconDefinition[] = [ChevronLeft, ChevronRight, PencilOutline];
     Title,
     {
       provide: VTS_CONFIG,
-      useValue: { icon: { vtsTwotoneColor: '#1890ff' }, global: { vtsDirection: 'ltr' } }
+      useValue: { global: { vtsDirection: 'ltr' } }
     }
     // {
     //   provide: VtsResizeObserverFactory,

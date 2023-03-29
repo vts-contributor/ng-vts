@@ -10,12 +10,17 @@ import {
   OnDestroy,
   Optional,
   TemplateRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ContentChildren,
+  QueryList,
+  AfterContentInit,
+  AfterViewInit
 } from '@angular/core';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { VtsTableStyleService } from '../table-style.service';
+import { VtsTrDirective } from './tr.directive';
 
 @Component({
   selector: 'tbody',
@@ -43,7 +48,9 @@ import { VtsTableStyleService } from '../table-style.service';
     '[class.vts-table-tbody]': 'isInsideTable'
   }
 })
-export class VtsTbodyComponent implements OnDestroy {
+export class VtsTbodyComponent implements OnDestroy, AfterContentInit, AfterViewInit {
+  @ContentChildren(VtsTrDirective, { descendants: true })
+  listOfVtsTrDirective!: QueryList<VtsTrDirective>;
   isInsideTable = false;
   showEmpty$ = new BehaviorSubject<boolean>(false);
   noResult$ = new BehaviorSubject<string | TemplateRef<VtsSafeAny> | undefined>(undefined);
@@ -62,6 +69,20 @@ export class VtsTbodyComponent implements OnDestroy {
 
   onListOfAutoWidthChange(listOfAutoWidth: number[]): void {
     this.vtsTableStyleService.setListOfAutoWidth(listOfAutoWidth);
+  }
+
+  ngAfterViewInit() {
+    if (this.listOfVtsTrDirective.length) {
+      this.listOfVtsTrDirective.toArray().forEach((r, i) => (r.isOdd = i % 2 == 1));
+    }
+  }
+
+  ngAfterContentInit(): void {
+    this.listOfVtsTrDirective.changes
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((rows: QueryList<VtsTrDirective>) => {
+        rows.toArray().forEach((r, i) => (r.isOdd = i % 2 == 1));
+      });
   }
 
   ngOnDestroy(): void {

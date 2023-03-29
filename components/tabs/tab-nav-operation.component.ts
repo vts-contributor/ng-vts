@@ -80,7 +80,7 @@ export class VtsTabNavOperationComponent implements OnDestroy {
 
   @Output() readonly addClicked = new EventEmitter<void>();
   @Output() readonly selected = new EventEmitter<VtsTabNavItemDirective>();
-  closeAnimationWaitTimeoutId = -1;
+  closeAnimationWaitTimeoutId: number | ReturnType<typeof setTimeout> = -1;
   menuOpened = false;
 
   private readonly element: HTMLElement;

@@ -7,8 +7,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
+  ComponentRef,
   Directive,
   ElementRef,
   EventEmitter,
@@ -23,7 +23,7 @@ import {
 import { zoomBigMotion } from '@ui-vts/ng-vts/core/animation';
 import { isPresetColor, VtsPresetColor } from '@ui-vts/ng-vts/core/color';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
-import { NgStyleInterface, VtsTSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, NgStyleInterface, VtsTSType } from '@ui-vts/ng-vts/core/types';
 import { Directionality } from '@angular/cdk/bidi';
 import {
   isTooltipEmpty,
@@ -33,6 +33,7 @@ import {
   PropertyMapping,
   VtsTooltipType
 } from './base';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
 @Directive({
   selector: '[vts-tooltip]',
@@ -42,25 +43,28 @@ import {
   }
 })
 export class VtsTooltipDirective extends VtsTooltipBaseDirective {
-  @Input('vtsTooltipTitle') title?: VtsTSType | null;
-  @Input('vts-tooltip') directiveTitle?: VtsTSType | null;
-  @Input('vtsTooltipTrigger') trigger?: VtsTooltipTrigger = 'hover';
-  @Input('vtsTooltipPlacement') placement?: string | string[] = 'top';
-  @Input('vtsTooltipOrigin') origin?: ElementRef<HTMLElement>;
-  @Input('vtsTooltipVisible') visible?: boolean;
-  @Input('vtsTooltipMouseEnterDelay') mouseEnterDelay?: number;
-  @Input('vtsTooltipMouseLeaveDelay') mouseLeaveDelay?: number;
-  @Input('vtsTooltipOverlayClassName') overlayClassName?: string;
-  @Input('vtsTooltipOverlayStyle') overlayStyle?: NgStyleInterface;
-  @Input('vtsTooltipType') vtsType?: VtsTooltipType;
+  static ngAcceptInputType_arrowPointAtCenter: BooleanInput;
+
+  @Input('vtsTooltipTitle') override title?: VtsTSType | null;
+  @Input('vts-tooltip') override directiveTitle?: VtsTSType | null;
+  @Input('vtsTooltipTrigger') override trigger?: VtsTooltipTrigger = 'hover';
+  @Input('vtsTooltipPlacement') override placement?: string | string[] = 'top';
+  @Input('vtsTooltipOrigin') override origin?: ElementRef<HTMLElement>;
+  @Input('vtsTooltipVisible') override visible?: boolean;
+  @Input('vtsTooltipMouseEnterDelay') override mouseEnterDelay?: number;
+  @Input('vtsTooltipMouseLeaveDelay') override mouseLeaveDelay?: number;
+  @Input('vtsTooltipOverlayClassName') override overlayClassName?: string;
+  @Input('vtsTooltipOverlayStyle') override overlayStyle?: NgStyleInterface;
+  @Input('vtsTooltipType') override vtsType?: VtsTooltipType;
+  @Input('vtsTooltipArrowPointAtCenter') @InputBoolean() override arrowPointAtCenter?: boolean;
   @Input() vtsTooltipColor?: string;
 
   // tslint:disable-next-line:no-output-rename
   @Output('vtsTooltipVisibleChange')
-  readonly visibleChange = new EventEmitter<boolean>();
+  override readonly visibleChange = new EventEmitter<boolean>();
 
-  componentFactory: ComponentFactory<VtsToolTipComponent> =
-    this.resolver.resolveComponentFactory(VtsToolTipComponent);
+  override componentRef: ComponentRef<VtsToolTipComponent> =
+    this.hostView.createComponent(VtsToolTipComponent);
 
   constructor(
     elementRef: ElementRef,
@@ -72,8 +76,9 @@ export class VtsTooltipDirective extends VtsTooltipBaseDirective {
     super(elementRef, hostView, resolver, renderer, noAnimation);
   }
 
-  protected getProxyPropertyMap(): PropertyMapping {
+  protected override getProxyPropertyMap(): PropertyMapping {
     return {
+      ...super.getProxyPropertyMap(),
       vtsTooltipColor: ['vtsColor', () => this.vtsTooltipColor]
     };
   }
@@ -94,6 +99,7 @@ export class VtsTooltipDirective extends VtsTooltipBaseDirective {
       [cdkConnectedOverlayOpen]="_visible"
       [cdkConnectedOverlayPositions]="_positions"
       [cdkConnectedOverlayPush]="true"
+      [vtsArrowPointAtCenter]="vtsArrowPointAtCenter"
       (overlayOutsideClick)="onClickOutside($event)"
       (detach)="hide()"
       (positionChange)="onPositionChange($event)"
@@ -125,7 +131,7 @@ export class VtsTooltipDirective extends VtsTooltipBaseDirective {
   preserveWhitespaces: false
 })
 export class VtsToolTipComponent extends VtsTooltipBaseComponent {
-  vtsTitle: VtsTSType | null = null;
+  override vtsTitle: VtsTSType | null = null;
 
   vtsColor?: string | VtsPresetColor;
 
@@ -134,7 +140,7 @@ export class VtsToolTipComponent extends VtsTooltipBaseComponent {
   constructor(
     cdr: ChangeDetectorRef,
     @Optional() directionality: Directionality,
-    @Host() @Optional() public noAnimation?: VtsNoAnimationDirective
+    @Host() @Optional() noAnimation?: VtsNoAnimationDirective
   ) {
     super(cdr, directionality, noAnimation);
   }
@@ -143,7 +149,7 @@ export class VtsToolTipComponent extends VtsTooltipBaseComponent {
     return isTooltipEmpty(this.vtsTitle);
   }
 
-  updateStyles(): void {
+  override updateStyles(): void {
     const isColorPreset = this.vtsColor && isPresetColor(this.vtsColor);
 
     this._classMap = {

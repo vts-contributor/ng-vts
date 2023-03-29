@@ -64,6 +64,9 @@ const listOfHorizontalPositions = [POSITION_MAP.bottomLeft];
       #origin="cdkOverlayOrigin"
       [vtsIcon]="vtsIcon"
       [vtsTitle]="vtsTitle"
+      vts-tooltip
+      [vtsTooltipTitle]="vtsTooltip"
+      [vtsTooltipPlacement]="'topRight'"
       [mode]="mode"
       [vtsDisabled]="vtsDisabled"
       [isMenuInsideDropDown]="isMenuInsideDropDown"
@@ -142,6 +145,7 @@ export class VtsSubMenuComponent implements OnInit, OnDestroy, AfterContentInit,
 
   @Input() vtsMenuClassName: string = '';
   @Input() vtsTitle: string | TemplateRef<void> | null = null;
+  @Input() vtsTooltip: string | null = null;
   @Input() vtsIcon: string | null = null;
   @Input() @InputBoolean() vtsOpen = false;
   @Input() @InputBoolean() vtsDisabled = false;

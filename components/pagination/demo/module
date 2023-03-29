@@ -1,3 +1,7 @@
 import { VtsPaginationModule } from '@ui-vts/ng-vts/pagination';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsInputNumberModule } from '@ui-vts/ng-vts/input-number';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 
-export const moduleList = [ VtsPaginationModule ];
+export const moduleList = [ VtsPaginationModule, VtsFormModule, VtsSpaceModule, VtsInputNumberModule, VtsSwitchModule ];

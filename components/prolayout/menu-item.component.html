@@ -1,0 +1,25 @@
+<ng-container *ngIf="vtsMenuItem.children && vtsMenuItem.children.length > 0; else menuChild">
+    <li vts-submenu vtsOpen [vtsTitle]="vtsMenuItem.title" *ngIf="vtsMenuItem.isOpen; else closedMenu" style="position: relative;" [vtsTooltip]="vtsMenuItem.title" [vtsIcon]="vtsMenuItem.icon ? vtsMenuItem.icon : defaultIcon">
+        <ul>
+            <ng-container *ngFor="let item of vtsMenuItem.children">
+                <vts-prolayout-menu-item [vtsMenuItem]="item"></vts-prolayout-menu-item>
+            </ng-container>
+        </ul>
+    </li>
+    <ng-template #closedMenu>
+        <li vts-submenu [vtsTitle]="vtsMenuItem.title" [vtsTooltip]="vtsMenuItem.title" [vtsIcon]="vtsMenuItem.icon ? vtsMenuItem.icon : defaultIcon">
+            <ul>
+                <ng-container *ngFor="let item of vtsMenuItem.children">
+                    <vts-prolayout-menu-item [vtsMenuItem]="item"></vts-prolayout-menu-item>
+                </ng-container>
+            </ul>
+        </li>
+    </ng-template>
+</ng-container>
+
+<ng-template #menuChild>
+    <li vts-menu-item [vtsMatchRouterExact]="true" (click)="onClickAvatarMenuItem(vtsMenuItem)" vts-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="vtsMenuItem.title">
+        <i vts-icon [vtsType]="vtsMenuItem.icon" *ngIf="vtsMenuItem.icon"></i>
+        {{vtsMenuItem.title}}
+    </li>
+</ng-template>
