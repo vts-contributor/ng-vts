@@ -18,7 +18,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { ProlayoutService } from './pro-layout.service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { Subscription } from 'rxjs';
 
@@ -85,48 +85,58 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   };
   showMenu: boolean = false;
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
-  @Input() vtsLogoUrl: string = "";
+  @Input() vtsLogoUrl: string = '';
 
   ngOnInit(): void {
     // receive menus from container
-    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe((data: VtsMenuItemProLayout[]) => {
-      this.menuData = data;
-      let newMenuData: VtsMenuItemProLayout[] = [
-        {
-          icon: 'Toc:vts',
-          title: '',
-          children: [...data]
-        }
-      ];
-      this.menuData = [...newMenuData];
-    });
+    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe(
+      (data: VtsMenuItemProLayout[]) => {
+        this.menuData = data;
+        let newMenuData: VtsMenuItemProLayout[] = [
+          {
+            icon: 'Toc:vts',
+            title: '',
+            children: [...data]
+          }
+        ];
+        this.menuData = [...newMenuData];
+      }
+    );
 
     // on change ix fixed
-    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
-      this.isFixedSider = isFixed;
-      this.handleChangeFixedStatus(this.isFixedHeader, isFixed);
-    });
-    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
-      this.isFixedHeader = isFixed;
-      this.handleChangeFixedStatus(isFixed, this.isFixedSider);
-    });
+    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe(
+      (isFixed: boolean) => {
+        this.isFixedSider = isFixed;
+        this.handleChangeFixedStatus(this.isFixedHeader, isFixed);
+      }
+    );
+    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe(
+      (isFixed: boolean) => {
+        this.isFixedHeader = isFixed;
+        this.handleChangeFixedStatus(isFixed, this.isFixedSider);
+      }
+    );
 
     // onchange use split menu
-    this.splitMenuSubscription = this.prolayoutService.useSplitMenuChange$.subscribe((isMenuSplitted: boolean) => {
-      this.useSplitMenu = isMenuSplitted;
-      this.cdf.detectChanges();
-    });
+    this.splitMenuSubscription = this.prolayoutService.useSplitMenuChange$.subscribe(
+      (isMenuSplitted: boolean) => {
+        this.useSplitMenu = isMenuSplitted;
+        this.cdf.detectChanges();
+      }
+    );
 
     // on change collapsed sider
-    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
-      this.isCollapsedSider = isCollapsed;
-    })
+    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe(
+      (isCollapsed: boolean) => {
+        this.isCollapsedSider = isCollapsed;
+      }
+    );
   }
 
   /**
- * destroy all subscription of prolayout service   
- */
-  destroySubscriptions(){
+   * destroy all subscription of prolayout service
+   */
+  destroySubscriptions() {
     this.menuHeaderSubscription.unsubscribe();
     this.fixedSiderSubscription.unsubscribe();
     this.fixedHeaderSubscription.unsubscribe();
@@ -136,7 +146,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     const { title } = changes;
-    if(!this.useSplitMenu){
+    if (!this.useSplitMenu) {
       if (this.vtsTitle || (title && title.currentValue)) {
         // add a wrapper item to create a menu button
         let newMenuData: VtsMenuItemProLayout[] = [
@@ -182,8 +192,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.router.navigateByUrl(item.url);
   }
 
-  toggleSider(){
+  toggleSider() {
     this.prolayoutService.onChangeCollapedSider(!this.isCollapsedSider);
   }
-
 }

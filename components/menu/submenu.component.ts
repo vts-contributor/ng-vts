@@ -65,7 +65,8 @@ const listOfHorizontalPositions = [POSITION_MAP.bottomLeft];
       [vtsIcon]="vtsIcon"
       [vtsTitle]="vtsTitle"
       vts-tooltip
-      [vtsTooltipTitle]="vtsTooltip" [vtsTooltipPlacement]="'topRight'"
+      [vtsTooltipTitle]="vtsTooltip"
+      [vtsTooltipPlacement]="'topRight'"
       [mode]="mode"
       [vtsDisabled]="vtsDisabled"
       [isMenuInsideDropDown]="isMenuInsideDropDown"

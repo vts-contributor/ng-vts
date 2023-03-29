@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { VtsMenuItemProLayout } from './pro-layout.types';
 
@@ -7,7 +13,7 @@ import { VtsMenuItemProLayout } from './pro-layout.types';
   templateUrl: 'menu-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  preserveWhitespaces: false,
+  preserveWhitespaces: false
 })
 export class VtsProlayoutMenuItemComponent implements OnInit {
   @Input() vtsMenuItem: VtsMenuItemProLayout = {
@@ -15,14 +21,14 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
     children: [],
     isSelected: false
   };
-  defaultIcon: string = "AddDoutone:vts";
+  defaultIcon: string = 'AddDoutone:vts';
 
   constructor(private router: Router) {}
 
   ngOnInit() {}
 
   onClickAvatarMenuItem(item: VtsMenuItemProLayout): void {
-    if(typeof item.url !== 'undefined'){
+    if (typeof item.url !== 'undefined') {
       this.router.navigateByUrl(item.url);
     }
   }

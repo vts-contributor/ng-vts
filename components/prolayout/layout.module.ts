@@ -36,10 +36,10 @@ import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
-import { VtsThemeModule } from '@ui-vts/theme/services'
+import { VtsThemeModule } from '@ui-vts/theme/services';
 
 @NgModule({
-  declarations: [    
+  declarations: [
     VtsProLayoutContainerComponent,
     VtsHeaderComponent,
     VtsContentComponent,
@@ -52,10 +52,7 @@ import { VtsThemeModule } from '@ui-vts/theme/services'
     VtsSettingDrawerComponent,
     VtsProlayoutBreadCrumbComponent
   ],
-  exports: [
-    VtsProLayoutContainerComponent,
-    VtsFooterComponent
-  ],
+  exports: [VtsProLayoutContainerComponent, VtsFooterComponent],
   imports: [
     BidiModule,
     CommonModule,
@@ -87,7 +84,7 @@ import { VtsThemeModule } from '@ui-vts/theme/services'
         {
           theme: 'default',
           url: '/default.css'
-        },
+        }
       ],
       defaultTheme: 'default'
     })

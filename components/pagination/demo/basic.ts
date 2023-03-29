@@ -34,7 +34,13 @@ import { Component } from '@angular/core';
       </span>
       <span *vtsSpaceItem>
         Number of items: &nbsp;
-        <vts-input-number style="width: 90px" style="width: 90px" [vtsMin]="1" [vtsStep]="1" [(ngModel)]="limit"></vts-input-number>
+        <vts-input-number
+          style="width: 90px"
+          style="width: 90px"
+          [vtsMin]="1"
+          [vtsStep]="1"
+          [(ngModel)]="limit"
+        ></vts-input-number>
       </span>
     </vts-space>
     <br />
