@@ -85,7 +85,7 @@
 <ng-template #themeColor>
   <h4 vts-typography vtsType="h4">Theme color</h4>
   <ng-container *ngFor="let color of listColors">
-    <vts-tag [vtsColor]="color.value" (click)="onChangeThemeColor(color.value)">
+    <vts-tag [vtsColor]="{background: color.value, color: '#fff'}" (click)="onChangeThemeColor(color.value)">
       <ng-container *ngIf="color.isChecked; else block">
         <i vts-icon vtsType="CheckCircle"></i>
       </ng-container>
