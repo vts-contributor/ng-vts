@@ -95,8 +95,8 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) private document: any,
     private themeService: VtsThemeService
   ) {
-    this.themeService.allTheme$.subscribe(d => (this.allThemes = d));
-    this.themeService.theme$.subscribe(d => (this.currentTheme = d));
+    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => this.allThemes = d)
+    this.themeService.theme$.subscribe((d: VtsTheme | null) => this.currentTheme = d)
   }
 
   onThemeChange(e: VtsThemeItem) {
