@@ -1,0 +1,56 @@
+<div class="logo-header vts-logo" *ngIf="showLogo" [style.backgroundImage]="'url(' + vtsLogoUrl + ')'"></div>
+<div vts-row class="header-main">
+    <div vts-col vts-row [vtsAlign]="'middle'" *ngIf="showLogo && !isFixedHeader">
+        <button vts-button vtsType="primary" class="trigger" (click)="toggleSider()">
+            <i vts-icon [vtsType]="'NotesDoutone-1'"></i>
+        </button>
+    </div>
+    <div vts-col class="title-container" vtsFlex="auto">
+        <ng-container *ngIf="vtsTitle">
+            {{ vtsTitle }}
+        </ng-container>
+        <ng-container *ngIf="!useSplitMenu">
+            <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
+                <ng-container *ngFor="let item of menuData">
+                    <vts-prolayout-menu-item-horizontal [vtsMenuItem]="item"></vts-prolayout-menu-item-horizontal>
+                </ng-container>
+            </ul>
+        </ng-container>
+    </div>
+    <div vts-col vts-row class="avatar-container" [vtsGutter]="20">
+        <div vts-col>
+            <i vts-icon vtsType="Search" class="cursor-pointer" vtsSize="lg"></i>
+        </div>
+        <!-- avatar with menu dropdown -->
+        <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length > 0; else withoutDropdown">
+            <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
+            <div vts-col style="margin-left: 5px;">
+                <div class="username">
+                    {{ vtsAvatar.name }}
+                </div>
+                <div class="subname">
+                    {{ vtsAvatar.subname }}
+                </div>
+            </div>
+        </div>
+        <!-- avatar without menu dropdown -->
+        <ng-template #withoutDropdown>
+            <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
+                <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
+                <div vts-col style="margin-left: 5px;">
+                    <div class="username">
+                        {{ vtsAvatar.name }}
+                    </div>
+                    <div class="subname">
+                        {{ vtsAvatar.subname }}
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <vts-dropdown-menu #menuAvatar="vtsDropdownMenu">
+        <ul vts-menu vtsSelectable>
+            <li vts-menu-item *ngFor="let item of vtsAvatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
+        </ul>
+    </vts-dropdown-menu>
+</div>

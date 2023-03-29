@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { VtsFormTooltipIcon } from '@ui-vts/ng-vts/form';
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators
+} from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-form-register',
@@ -92,7 +96,7 @@ import { VtsFormTooltipIcon } from '@ui-vts/ng-vts/form';
           vtsFor="captcha"
           vtsRequired
           vtsTooltipTitle="Please click 'Get captcha'"
-          [vtsTooltipIcon]="captchaTooltipIcon"
+          [vtsTooltipIcon]="'Accessibility'"
         >
           Captcha
         </vts-form-label>
@@ -147,11 +151,7 @@ import { VtsFormTooltipIcon } from '@ui-vts/ng-vts/form';
   ]
 })
 export class VtsDemoFormRegisterComponent implements OnInit {
-  validateForm!: FormGroup;
-  captchaTooltipIcon: VtsFormTooltipIcon = {
-    type: 'InfoOutline',
-    theme: 'all'
-  };
+  validateForm!: UntypedFormGroup;
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
@@ -165,7 +165,7 @@ export class VtsDemoFormRegisterComponent implements OnInit {
     Promise.resolve().then(() => this.validateForm.controls.checkPassword.updateValueAndValidity());
   }
 
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
+  confirmationValidator = (control: UntypedFormControl): { [s: string]: boolean } => {
     if (!control.value) {
       return { required: true };
     } else if (control.value !== this.validateForm.controls.password.value) {
@@ -178,7 +178,7 @@ export class VtsDemoFormRegisterComponent implements OnInit {
     e.preventDefault();
   }
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

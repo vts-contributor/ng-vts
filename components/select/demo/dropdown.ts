@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'vts-demo-select-dropdown',
@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     </vts-radio-group>
     <br />
     <br />
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form>
       <vts-form-item>
         <vts-form-label>Label Name</vts-form-label>
         <vts-form-control>
@@ -49,20 +49,24 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
         </vts-form-control>
       </vts-form-item>
       <vts-form-item>
-        <vts-form-label>Label Name</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <vts-select
-            formControlName="inputValue"
-            [vtsPlaceHolder]="placeholder"
-            [vtsSize]="size"
-            vtsShowSearch
-            vtsAllowClear
-          >
-            <vts-option vtsValue="A" vtsLabel="State: normal"></vts-option>
-            <vts-option vtsValue="B" vtsLabel="State: hover"></vts-option>
-            <vts-option vtsValue="C" vtsLabel="State: selected"></vts-option>
-          </vts-select>
-        </vts-form-control>
+        <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Label Name</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <vts-select
+                formControlName="inputValue"
+                [vtsPlaceHolder]="placeholder"
+                [vtsSize]="size"
+                vtsShowSearch
+                vtsAllowClear
+              >
+                <vts-option vtsValue="A" vtsLabel="State: normal"></vts-option>
+                <vts-option vtsValue="B" vtsLabel="State: hover"></vts-option>
+                <vts-option vtsValue="C" vtsLabel="State: selected"></vts-option>
+              </vts-select>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
   `,
@@ -73,8 +77,8 @@ export class VtsDemoSelectDropdownComponent {
   placeholder = '';
   size: any = 'md';
 
-  formGroup = new FormGroup({
-    inputValue: new FormControl('A', [Validators.minLength(5)])
+  formGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('A', [Validators.minLength(5)])
   });
 
   ngOnInit() {

@@ -1,0 +1,115 @@
+<div>
+  <ng-template *ngIf="open; else closed">
+    <button vts-button>
+      <i vts-icon vtsType="Close"></i>
+    </button>
+  </ng-template>
+  <ng-template #closed>
+    <button vts-button (click)="openDrawer()">
+      <i vts-icon vtsType="Settings"></i>
+    </button>
+  </ng-template>
+</div>
+<vts-drawer
+  [vtsClosable]="true"
+  [vtsVisible]="open"
+  vtsPlacement="right"
+  vtsTitle="Theme style setting"
+  (vtsOnClose)="closeDrawer()"
+>
+  <ng-container *vtsDrawerContent>
+    <ng-container *ngTemplateOutlet="pageStyle"></ng-container>
+    <ng-container *ngTemplateOutlet="themeColor"></ng-container>
+    <vts-divider></vts-divider>
+    <h4 vts-typography vtsType="h4">Navigation mode</h4>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Fixed Header:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="isFixedHeader"
+          (ngModelChange)="onChangeFixedHeader($event)"
+        ></vts-switch>
+      </div>
+    </div>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Fixed Sider:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="isFixedSider"
+          (ngModelChange)="onChangeFixedSider($event)"
+        ></vts-switch>
+      </div>
+    </div>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Split menu:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="useSplitMenu"
+          (ngModelChange)="onChangeSplitMenu($event)"
+        ></vts-switch>
+      </div>
+    </div>
+    <vts-divider></vts-divider>
+    <h4 vts-typography vtsType="h4">Regional settings</h4>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Header:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="isShowHeader"
+          (ngModelChange)="onChangeVisiblityHeader($event)"
+        ></vts-switch>
+      </div>
+    </div>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Sider:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="isShowSider"
+          (ngModelChange)="onChangeVisiblitySider($event)"
+        ></vts-switch>
+      </div>
+    </div>
+    <div vts-row>
+      <div vts-col vtsFlex="auto">Footer:</div>
+      <div vts-col vts-row vtsJustify="end" vtsFlex="auto">
+        <vts-switch
+          [(ngModel)]="isShowFooter"
+          (ngModelChange)="onChangeVisiblityFooter($event)"
+        ></vts-switch>
+      </div>
+    </div>
+  </ng-container>
+</vts-drawer>
+
+<!-- Theme color -->
+<ng-template #themeColor>
+  <h4 vts-typography vtsType="h4">Theme color</h4>
+  <ng-container *ngFor="let color of listColors">
+    <vts-tag [vtsColor]="{background: color.value, color: '#fff'}" (click)="onChangeThemeColor(color.value)">
+      <ng-container *ngIf="color.isChecked; else block">
+        <i vts-icon vtsType="CheckCircle"></i>
+      </ng-container>
+      <ng-template #block>
+        <span
+          class="block"
+          style="width: 16px; height: 16px; display: inline-block; cursor: pointer"
+        ></span>
+      </ng-template>
+    </vts-tag>
+  </ng-container>
+</ng-template>
+
+<!-- Page style -->
+<ng-template #pageStyle>
+  <h4 vts-typography vtsType="h4">Page style setting</h4>
+  <vts-switch
+    [(ngModel)]="isDarkMode"
+    (ngModelChange)="onThemeChange()"
+    [vtsUnCheckedChildren]="unCheckedTemplate"
+    [vtsCheckedChildren]="checkedTemplate"
+  ></vts-switch>
+  <ng-template #checkedTemplate><i vts-icon vtsType="Frown:antd"></i></ng-template>
+  <ng-template #unCheckedTemplate>
+    <i vts-icon vtsType="Smile:antd"></i>
+  </ng-template>
+</ng-template>

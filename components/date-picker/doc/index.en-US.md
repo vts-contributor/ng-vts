@@ -29,7 +29,7 @@ import { VtsFormModule } from '@ui-vts/ng-vts/form'; // To use in form
 | vtsMode | Picker mode | One of `year` `month` `week` `date`<br> Note that ngModelChange always return `Date`, use `date-fns` to parse data for external uses | `date`
 | vtsPlaceholder | Placeholder of datepicker | `string` | 
 | vtsPlacement | Placement of datepicker | `topLeft` `topRight` `bottomLeft` `bottomRight` | `bottomLeft` 
-| vtsSuffixIcon | Customize suffix icon | `string`(icon name) or `TemplateRef` | `vts-picker:suffix`
+| vtsSuffixIcon | Customize suffix icon | `string`(icon name) or `TemplateRef` | `suffix:vts-picker`
 | vtsRenderExtraFooter | Append custom footer below picker | `TemplateRef` or `string` or `(() => TemplateRef \| string)` |
 | [(ngModel)] | Angular ngModel | `Date` |
 | [(vtsOpen)] | Bind open/close state | `EventEmitter<boolean>` |

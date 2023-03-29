@@ -1,7 +1,12 @@
 import { BidiModule, Dir } from '@angular/cdk/bidi';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { VtsCheckboxGroupComponent } from './checkbox-group.component';
@@ -426,9 +431,9 @@ export class VtsTestCheckboxWrapperComponent {
   `
 })
 export class VtsTestCheckboxFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       checkbox: [false]
     });
@@ -447,9 +452,9 @@ export class VtsTestCheckboxFormComponent {
   `
 })
 export class VtsTestCheckboxGroupFormComponent {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: UntypedFormBuilder) {
     this.formGroup = this.formBuilder.group({
       checkboxGroup: [
         [

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
@@ -13,7 +13,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
     </vts-radio-group>
     <br />
     <br />
-    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+    <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form>
       <vts-form-item>
         <vts-form-label>Input Label</vts-form-label>
         <vts-form-control vtsErrorTip="Error message">
@@ -35,12 +35,16 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
         </vts-input-group>
       </vts-form-item>
       <vts-form-item>
-        <vts-form-label>Input Label</vts-form-label>
-        <vts-form-control vtsErrorTip="Error message">
-          <vts-input-group [vtsSize]="size" [vtsSuffix]="suffixIcon">
-            <input vts-input [placeholder]="value" formControlName="inputValue" />
-          </vts-input-group>
-        </vts-form-control>
+        <form [vtsSize]="size" [vtsLayout]="'vertical'" vts-form [formGroup]="formGroup">
+          <vts-form-item>
+            <vts-form-label>Input Label</vts-form-label>
+            <vts-form-control vtsErrorTip="Error message">
+              <vts-input-group [vtsSize]="size" [vtsSuffix]="suffixIcon">
+                <input vts-input [placeholder]="value" formControlName="inputValue" />
+              </vts-input-group>
+            </vts-form-control>
+          </vts-form-item>
+        </form>
       </vts-form-item>
     </form>
 
@@ -53,8 +57,8 @@ export class VtsDemoInputWithiconComponent implements OnInit {
   value?: string;
   size: VtsSizeLDSType = 'md';
 
-  formGroup: FormGroup = new FormGroup({
-    inputValue: new FormControl('', {
+  formGroup: UntypedFormGroup = new UntypedFormGroup({
+    inputValue: new UntypedFormControl('', {
       validators: [Validators.minLength(16)]
     })
   });

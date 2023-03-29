@@ -97,8 +97,8 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
   dir: Direction = 'ltr';
   bottom?: string | null;
   top?: string | null;
-  config!: Required<ToastConfig>; // initialized by parent class constructor
-  instances: Array<Required<VtsToastData>> = [];
+  override config!: Required<ToastConfig>; // initialized by parent class constructor
+  override instances: Array<Required<VtsToastData>> = [];
   topLeftInstances: Array<Required<VtsToastData>> = [];
   topRightInstances: Array<Required<VtsToastData>> = [];
   bottomLeftInstances: Array<Required<VtsToastData>> = [];
@@ -110,7 +110,7 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
     this.dir = config?.vtsDirection || 'ltr';
   }
 
-  create(toast: VtsToastData): Required<VtsToastData> {
+  override create(toast: VtsToastData): Required<VtsToastData> {
     const tost = this.onCreate(toast);
     const key = tost.options.vtsKey;
     const toastWithSameKey = this.instances.find(
@@ -130,7 +130,7 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
     return tost;
   }
 
-  protected onCreate(instance: VtsToastData): Required<VtsToastData> {
+  protected override onCreate(instance: VtsToastData): Required<VtsToastData> {
     instance.options = this.mergeOptions(instance.options);
     instance.onClose = new Subject<boolean>();
     instance.onClick = new Subject<MouseEvent>();
@@ -172,7 +172,7 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
     old.options = _new.options;
   }
 
-  protected readyInstances(): void {
+  protected override readyInstances(): void {
     this.topLeftInstances = this.instances.filter(m => m.options.vtsPlacement === 'topLeft');
     this.topRightInstances = this.instances.filter(
       m => m.options.vtsPlacement === 'topRight' || !m.options.vtsPlacement
@@ -185,7 +185,7 @@ export class VtsToastContainerComponent extends VtsMNContainerComponent {
     this.cdr.detectChanges();
   }
 
-  protected mergeOptions(options?: VtsToastDataOptions): VtsToastDataOptions {
+  protected override mergeOptions(options?: VtsToastDataOptions): VtsToastDataOptions {
     const { vtsDuration, vtsAnimate, vtsPauseOnHover, vtsPlacement } = this.config;
     return {
       vtsDuration,

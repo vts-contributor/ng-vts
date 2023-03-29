@@ -31,16 +31,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'spin';
   encapsulation: ViewEncapsulation.None,
   template: `
     <ng-template #defaultTemplate>
-      <!--
-        <span class="vts-spin-dot vts-spin-dot-spin">
-          <i class="vts-spin-dot-item"></i>
-          <i class="vts-spin-dot-item"></i>
-          <i class="vts-spin-dot-item"></i>
-          <i class="vts-spin-dot-item"></i>
-        </span>
-      -->
-      <div style="display:flex; height: 100%; align-items: flex-end; justify-content:center;">
-        <i style="font-size: 75px;" vts-icon vtsType="vts-spin:icon"></i>
+      <div style="display:flex; height: 100%; align-items: center; justify-content:center;">
+        <i style="font-size: 75px;" vts-icon vtsType="icon:vts-spin"></i>
       </div>
     </ng-template>
     <div *ngIf="isLoading">

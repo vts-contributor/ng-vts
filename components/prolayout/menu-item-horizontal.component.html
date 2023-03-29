@@ -1,0 +1,28 @@
+<ng-container *ngIf="vtsMenuItem.children && vtsMenuItem.children.length > 0; else menuChild">
+    <li vts-submenu [vtsTitle]="vtsMenuItem.title" *ngIf="vtsMenuItem.icon; else noIconSubmenu" [vtsIcon]="vtsMenuItem.icon">
+        <ul>
+            <ng-container *ngFor="let item of vtsMenuItem.children">
+                <vts-prolayout-menu-item-horizontal [vtsMenuItem]="item"></vts-prolayout-menu-item-horizontal>
+            </ng-container>
+        </ul>
+    </li>
+
+    <ng-template #noIconSubmenu>
+        <li vts-submenu [vtsTitle]="vtsMenuItem.title">
+            <ul>
+                <ng-container *ngFor="let item of vtsMenuItem.children">
+                    <vts-prolayout-menu-item-horizontal [vtsMenuItem]="item"></vts-prolayout-menu-item-horizontal>
+                </ng-container>
+            </ul>
+        </li>
+    </ng-template>
+</ng-container>
+
+<ng-template #menuChild>
+    <li vts-menu-item>
+        <ng-container *ngIf="vtsMenuItem.icon">
+            <i vts-icon [vtsType]="vtsMenuItem.icon"></i>
+        </ng-container>        
+        {{vtsMenuItem.title}}
+    </li>
+</ng-template>

@@ -46,7 +46,7 @@ import { DatePickerService } from './date-picker.service';
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
-import { VtsPickerComponent } from './picker.component';
+import { Placement, VtsPickerComponent } from './picker.component';
 import {
   CompatibleDate,
   DisabledTimeFn,
@@ -60,7 +60,7 @@ const POPUP_STYLE_PATCH = { position: 'relative' }; // Aim to override antd's st
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'datePicker';
 
 export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
-export type VtsPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+export type VtsPlacement = Placement;
 
 /**
  * The base picker for all common APIs
@@ -231,7 +231,7 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
   @Input() vtsRanges?: PresetRanges;
   @Input() vtsDefaultPickerValue: CompatibleDate | null = null;
   @Input() @WithConfig() vtsSeparator?: string = undefined;
-  @Input() @WithConfig() vtsSuffixIcon: string | TemplateRef<VtsSafeAny> = 'vts-picker:suffix';
+  @Input() @WithConfig() vtsSuffixIcon: string | TemplateRef<VtsSafeAny> = 'suffix:vts-picker';
   @Input() @WithConfig() vtsBackdrop = false;
   @Input() vtsId: string | null = null;
   @Input() vtsPlacement: VtsPlacement = 'bottomLeft';

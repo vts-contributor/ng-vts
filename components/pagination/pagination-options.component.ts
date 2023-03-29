@@ -28,7 +28,6 @@ import { VtsPaginationI18nInterface } from '@ui-vts/ng-vts/i18n';
       *ngIf="showSizeChanger"
       [vtsAllowClear]="false"
       [vtsDisabled]="disabled"
-      [vtsSize]="vtsSize"
       [ngModel]="pageSize"
       (ngModelChange)="onPageSizeChange($event)"
     >
@@ -46,7 +45,6 @@ import { VtsPaginationI18nInterface } from '@ui-vts/ng-vts/i18n';
   `
 })
 export class VtsPaginationOptionsComponent implements OnChanges {
-  @Input() vtsSize: 'md' | 'sm' = 'md';
   @Input() disabled = false;
   @Input() showSizeChanger = false;
   @Input() showQuickJumper = false;
@@ -58,6 +56,7 @@ export class VtsPaginationOptionsComponent implements OnChanges {
   @Output() readonly pageIndexChange = new EventEmitter<number>();
   @Output() readonly pageSizeChange = new EventEmitter<number>();
   listOfPageSizeOption: Array<{ value: number; label: string }> = [];
+  vtsSize = 'md';
 
   constructor(private elementRef: ElementRef) {
     // TODO: move to host after View Engine deprecation

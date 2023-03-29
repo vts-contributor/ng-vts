@@ -3,9 +3,10 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { en_US, VtsI18nService, zh_CN } from '@ui-vts/ng-vts/i18n';
-import { VtsMessageRef, VtsMessageService } from '@ui-vts/ng-vts/message';
+import { en_US, VtsI18nService } from '@ui-vts/ng-vts/i18n';
+import { VtsMessageService } from '@ui-vts/ng-vts/message';
 import { VERSION } from '@ui-vts/ng-vts/version';
+import { VtsTheme, VtsThemeItem, VtsThemeService } from '@ui-vts/theme/services';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { environment } from '../environments/environment';
@@ -21,9 +22,9 @@ interface DocPageMeta {
   description: string;
 }
 
-type SiteTheme = 'default';
-const defaultKeywords =
-  'angular, ant design, ant, angular ant design, web, ui, components, ng, zorro, responsive, typescript, css, mobile web, open source, 组件库, 组件, UI 框架';
+const defaultKeywords = ['ng', 'vts', 'ng-vts', 'angular', 'ui', 'framework', 'frontend'].join(
+  ', '
+);
 
 @Component({
   selector: 'app-root',
@@ -52,11 +53,11 @@ export class AppComponent implements OnInit {
   drawerVisible = false;
   displayBacktop = false;
 
-  theme: SiteTheme = 'default';
-
   language: 'zh' | 'en' = 'en';
   direction: 'ltr' | 'rtl' = 'ltr';
   currentVersion = VERSION.full;
+  allThemes: VtsThemeItem[] = [];
+  currentTheme: VtsTheme | null = null;
 
   onNavigateClick(_e: any) {
     if (this.drawerVisible) {
@@ -80,63 +81,6 @@ export class AppComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  initTheme(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    const theme = (localStorage.getItem('site-theme') as SiteTheme) || 'default';
-    this.onThemeChange(theme, false);
-  }
-
-  onThemeChange(theme: string, notification: boolean = true): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    let loading: VtsMessageRef | null = null;
-    if (notification) {
-      loading = this.vtsMessageService.loading(
-        this.language === 'en' ? `Switching theme...` : `切换主题中...`,
-        { vtsDuration: 0 }
-      );
-    }
-    this.renderer.addClass(this.document.activeElement, 'preload');
-    const successLoaded = () => {
-      this.theme = theme as SiteTheme;
-      this.appService.theme$.next(theme);
-      this.renderer.setAttribute(document.body, 'data-theme', theme);
-      localStorage.removeItem('site-theme');
-      localStorage.setItem('site-theme', theme);
-      ['dark', 'compact', 'aliyun']
-        .filter(item => item !== theme)
-        .forEach(item => {
-          const dom = document.getElementById(`site-theme-${item}`);
-          if (dom) {
-            dom.remove();
-          }
-        });
-      setTimeout(() => this.renderer.removeClass(this.document.activeElement, 'preload'));
-      if (notification) {
-        this.vtsMessageService.remove(loading?.messageId);
-        this.vtsMessageService.success(
-          this.language === 'en' ? `Switching theme successfully` : `切换主题成功`
-        );
-      }
-    };
-    if (theme !== 'default') {
-      const style = document.createElement('link');
-      style.type = 'text/css';
-      style.rel = 'stylesheet';
-      style.id = `site-theme-${theme}`;
-      style.href = `assets/${theme}.css`;
-      style.onload = () => {
-        successLoaded();
-      };
-      document.body.append(style);
-    } else {
-      successLoaded();
-    }
-  }
-
   constructor(
     private appService: AppService,
     private router: Router,
@@ -148,8 +92,16 @@ export class AppComponent implements OnInit {
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
     // tslint:disable-next-line:no-any
-    @Inject(DOCUMENT) private document: any
-  ) {}
+    @Inject(DOCUMENT) private document: any,
+    private themeService: VtsThemeService
+  ) {
+    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => (this.allThemes = d));
+    this.themeService.theme$.subscribe((d: VtsTheme | null) => (this.currentTheme = d));
+  }
+
+  onThemeChange(e: VtsThemeItem) {
+    this.themeService.setTheme(e.theme);
+  }
 
   navigateToPage(url: string): void {
     if (url) {
@@ -291,7 +243,6 @@ export class AppComponent implements OnInit {
     });
 
     // this.initColor();
-    this.initTheme();
     this.detectLanguage();
   }
 
@@ -470,16 +421,5 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private detectLanguage(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    const language = navigator.language.toLowerCase();
-    const pathname = location.pathname;
-    const hasLanguage = pathname.match(/(en|zh)(\/?)$/);
-    if (language === 'zh-cn' && !hasLanguage) {
-      this.vtsI18nService.setLocale(zh_CN);
-      this.router.navigate(['docs', 'introduce', 'zh']);
-    }
-  }
+  private detectLanguage(): void {}
 }

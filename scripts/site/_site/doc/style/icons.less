@@ -1,3 +1,24 @@
+.icon-container {
+  .manifest-item {
+    height: 36px;
+    color: @primary-1;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-left: 4px solid;
+    border-color: #000;
+    color: #000;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover, &.active {
+      border-color: @primary-1;
+      color: @primary-1;
+      font-weight: 700;
+    }
+  }
+}
+
 ul.vtsicons-list {
   margin: 10px 0;
   overflow: hidden;
@@ -5,7 +26,7 @@ ul.vtsicons-list {
   li {
     position: relative;
     float: left;
-    width: 16.66%;
+    width: 20%;
     height: 100px;
     margin: 3px 0;
     padding: 10px 0 0;
@@ -17,11 +38,13 @@ ul.vtsicons-list {
     border-radius: 4px;
     cursor: pointer;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
     .vtsicon {
       margin: 12px 0 8px;
       font-size: 36px;
       transition: transform 0.3s ease-in-out;
       will-change: transform;
+      font-size: 24px;
     }
 
     .vtsicon-class {
@@ -32,11 +55,14 @@ ul.vtsicons-list {
       transform: scale(0.83);
       .vts-badge {
         transition: color 0.3s ease-in-out;
+        font-size: 14px;
       }
     }
 
     &:hover {
-      color: #fff;
+      > i, > span {
+        color: #fff !important;
+      }
       background-color: @primary-color;
       .vtsicon {
         transform: scale(1.4);
@@ -44,10 +70,6 @@ ul.vtsicons-list {
       .vts-badge {
         color: #fff;
       }
-    }
-
-    &.TwoTone:hover {
-      background-color: #8ecafe;
     }
 
     &.copied:hover {
