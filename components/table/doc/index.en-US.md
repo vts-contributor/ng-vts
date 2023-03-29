@@ -50,7 +50,7 @@ All property of [vts-pagination](./components/pagination/en)
 | vtsMini | Whether to use mini mode | `boolean` | `false` |
 | vtsSimple | Whether to use simple mode | `boolean` | `false` |
 | vtsResponsive | Whether to toggle `vtsMini` on screen size below `sm` | `boolean` | `false` |
-| vtsItemRender | Custom template for item rendering | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next'\| 'prev_5'\| 'next_5', page: number }>` | |
+| vtsItemRender | Custom template for item rendering | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next'\| 'begin'\| 'last'\| 'prev_5'\| 'next_5', page: number }>` | |
 | vtsShowTotal | Custom template for total number and range | `TemplateRef<{ $implicit: number, range: [ number, number ] }>` | |
 | vtsHidePaginationOnSinglePage | Whether to hide pagination on single page | `boolean` | `false` |
 
