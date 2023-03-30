@@ -19,13 +19,13 @@
     </div>
     <div vts-col vts-row class="avatar-container" [vtsGutter]="20">
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
-            <i vts-icon vtsType="Search" class="cursor-pointer" style="color: white;"></i>
+            <i vts-icon vtsType="Search" class="cursor-pointer" style="color: white;" (mouseenter)="openNotificationPane($event)"></i>
         </div>
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
             <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" *ngIf="notificationCount === 0; else hasNotification"></i>
             <ng-template #hasNotification>
                 <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationOverflowCount">
-                    <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;"></i>
+                    <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" (mouseenter)="openNotificationPane($event)"></i>
                 </vts-badge>
             </ng-template>
         </div>
