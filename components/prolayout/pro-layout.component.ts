@@ -13,7 +13,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
 
@@ -81,6 +81,12 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
   @Input() vtsNotificationOverflowCount: number = 99;
+  @Input() vtsNotificationConfig: VtsNotificationConfig = {
+    type: "menuContext",
+    menuConfig: null
+  }
+
+  @Input() vtsVisibleNotifyPane: boolean = false;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;

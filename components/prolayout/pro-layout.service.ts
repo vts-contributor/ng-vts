@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsDrawerOptions, VtsDrawerRef, VtsDrawerService } from '@ui-vts/ng-vts/drawer';
+import { VtsMenuItemProLayout, VtsNotiPaneType } from './pro-layout.types';
+import { VtsContextMenuService, VtsDropdownMenuComponent } from '@ui-vts/ng-vts/dropdown';
 
 @Injectable({
     providedIn: 'root'
 })
 export class VtsProlayoutService {
+
+    constructor(private drawerService: VtsDrawerService, private contextMenuService: VtsContextMenuService){}
     
     fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
@@ -16,7 +20,11 @@ export class VtsProlayoutService {
     menuHeaderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
     menuSiderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
     collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-    notificationChange$: ReplaySubject<number> = new ReplaySubject<number>();
+    notificationChange$: ReplaySubject<number> = new ReplaySubject<number>(1);
+    // notification pane visibility
+    visiblePaneChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+
+    drawerNotifyRef: VtsDrawerRef | null = null;
 
     onChangeFixedSider(isFixed: boolean): void {
         this.fixedSiderChange$.next(isFixed);
@@ -56,5 +64,33 @@ export class VtsProlayoutService {
 
     onChangeNotification(count: number): void {
         this.notificationChange$.next(count);
+    }
+
+    // open notification pane in a drawer
+    createDrawerNotificationPane(options: VtsDrawerOptions): void {
+        this.drawerNotifyRef = this.drawerService.create(options);
+    }
+
+    getDrawerNotifyRef(): VtsDrawerRef | null {
+        return this.drawerNotifyRef;
+    }
+
+    // open notification pane in a context menu
+    private createContextMenuNotificationPane($event: MouseEvent | {x: number, y: number}, menu: VtsDropdownMenuComponent): void {
+        this.contextMenuService.create($event, menu);
+    }
+
+    // close notification pane context menu
+    clsoeNotificationPaneContextMenu(): void {
+        this.contextMenuService.close();
+    }
+
+    openNotificationPane(paneType: VtsNotiPaneType, evt: MouseEvent | {x: number, y: number}, menu: VtsDropdownMenuComponent | null): void {
+        if(paneType === "drawer"){
+            this.visiblePaneChange$.next(true);
+        }
+        else if(paneType === "menuContext" && evt && menu){
+            this.createContextMenuNotificationPane(evt, menu);
+        }
     }
 }
