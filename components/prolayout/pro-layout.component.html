@@ -3,8 +3,7 @@
         *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
 
     <vts-prolayout-header 
-        *ngIf="isShowHeader && !isFixedSider" 
-        [vtsVisibleNotifyPane]="vtsVisibleNotifyPane"
+        *ngIf="isShowHeader && !isFixedSider"         
         [vtsTitle]="vtsHeaderTitle" 
         [vtsAvatar]="vtsAvatar" 
         [vtsAvatarMenu]="vtsAvatarMenu" 
@@ -15,8 +14,7 @@
 
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
         <vts-prolayout-header 
-            *ngIf="isShowHeader" 
-            [vtsVisibleNotifyPane]="vtsVisibleNotifyPane"
+            *ngIf="isShowHeader"             
             [vtsTitle]="vtsHeaderTitle" 
             [vtsAvatar]="vtsAvatar" 
             [vtsAvatarMenu]="vtsAvatarMenu" 

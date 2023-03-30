@@ -103,7 +103,6 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     type: "menuContext",
     menuConfig: null
   }
-  @Input() vtsVisibleNotifyPane: boolean = false;
 
   ngOnInit(): void {
     // receive menus from container
@@ -211,20 +210,6 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   openNotificationPane(evt: MouseEvent){
-    // switch(this.vtsNotificationConfig.type){
-    //   case "drawer": {
-    //     if(this.vtsNotificationConfig.drawerConfig){
-    //       this.prolayoutService.createDrawerNotificationPane(this.vtsNotificationConfig.drawerConfig);
-    //     }
-    //     break;
-    //   }
-    //   default: {
-    //     if(this.vtsNotificationConfig.menuConfig instanceof VtsDropdownMenuComponent){          
-    //       this.prolayoutService.createContextMenuNotificationPane(event, this.vtsNotificationConfig.menuConfig);
-    //     }
-    //     break;
-    //   }
-    // }
     this.prolayoutService.openNotificationPane(this.vtsNotificationConfig.type, {x: evt.clientX, y: evt.clientY}, this.vtsNotificationConfig.menuConfig);
   }
 

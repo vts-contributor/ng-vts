@@ -86,8 +86,6 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     menuConfig: null
   }
 
-  @Input() vtsVisibleNotifyPane: boolean = false;
-
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
   private visibleHeaderSubscription = Subscription.EMPTY;
