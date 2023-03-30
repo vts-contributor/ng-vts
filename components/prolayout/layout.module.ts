@@ -38,6 +38,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 import { VtsThemeModule } from '@ui-vts/theme/services'
 import { RouterModule } from '@angular/router';
+import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 
 @NgModule({
   declarations: [    
@@ -80,6 +81,7 @@ import { RouterModule } from '@angular/router';
     VtsNoAnimationModule,
     VtsOutletModule,
     VtsToolTipModule,
+    VtsBadgeModule,
     VtsThemeModule.forRoot({
       themes: [
         {

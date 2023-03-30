@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from '@ui-vts/ng-vts/prolayout';
+import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-basic',
@@ -16,6 +16,11 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from '@ui-vts/ng-v
   `
 })
 export class VtsDemoProlayoutBasicComponent {
+
+  constructor(private service: VtsProlayoutService){
+    this.service.onChangeNotification(10);
+  }
+
   menuData: VtsMenuItemProLayout[] = [
     {
       title: 'Parent 1',

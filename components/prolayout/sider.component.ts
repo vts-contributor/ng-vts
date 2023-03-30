@@ -33,7 +33,7 @@ import {
 } from '@ui-vts/ng-vts/menu';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ProlayoutService } from './pro-layout.service';
+import { VtsProlayoutService } from './pro-layout.service';
 import { VtsMenuItemProLayout } from './pro-layout.types';
 
 @Component({
@@ -159,7 +159,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
     private cdr: ChangeDetectorRef,
     private breakpointService: VtsBreakpointService,
     private elementRef: ElementRef,
-    private prolayoutService: ProlayoutService,
+    private prolayoutService: VtsProlayoutService,
     private cdf: ChangeDetectorRef
   ) {
     // TODO: move to host after View Engine deprecation

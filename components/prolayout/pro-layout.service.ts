@@ -5,7 +5,7 @@ import { VtsMenuItemProLayout } from './pro-layout.types';
 @Injectable({
     providedIn: 'root'
 })
-export class ProlayoutService {
+export class VtsProlayoutService {
     
     fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
@@ -16,6 +16,7 @@ export class ProlayoutService {
     menuHeaderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
     menuSiderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
     collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    notificationChange$: ReplaySubject<number> = new ReplaySubject<number>();
 
     onChangeFixedSider(isFixed: boolean): void {
         this.fixedSiderChange$.next(isFixed);
@@ -51,5 +52,9 @@ export class ProlayoutService {
 
     onChangeCollapedSider(isCollapsed: boolean): void {
         this.collapSiderChange$.next(isCollapsed);
+    }
+
+    onChangeNotification(count: number): void {
+        this.notificationChange$.next(count);
     }
 }
