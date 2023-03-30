@@ -17,7 +17,7 @@ import {
   TemplateRef,
   OnDestroy
 } from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
+import { VtsProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { Subscription } from 'rxjs';
@@ -45,6 +45,15 @@ import { Subscription } from 'rxjs';
         display: flex;
         padding-left: 24px;
       }
+
+      .icons-utils {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      i {
+        font-size: x-large;
+      }
     `
   ]
 })
@@ -52,7 +61,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     public elementRef: ElementRef,
     private renderer: Renderer2,
-    private prolayoutService: ProlayoutService,
+    private prolayoutService: VtsProlayoutService,
     private cdf: ChangeDetectorRef,
     private router: Router
   ) {
@@ -66,12 +75,14 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   isFixedSider: boolean = false;
   menuData: VtsMenuItemProLayout[] = [];
   isCollapsedSider: boolean = false;
+  notificationCount: number = 0;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
   private splitMenuSubscription = Subscription.EMPTY;
   private menuHeaderSubscription = Subscription.EMPTY;
   private collapsedSiderSubscription = Subscription.EMPTY;
+  private notificationCountSubscription = Subscription.EMPTY;
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
@@ -86,6 +97,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   showMenu: boolean = false;
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
   @Input() vtsLogoUrl: string = "";
+  @Input() vtsNotificationOverflowCount: number = 99;
 
   ngOnInit(): void {
     // receive menus from container
@@ -120,7 +132,12 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     // on change collapsed sider
     this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
       this.isCollapsedSider = isCollapsed;
-    })
+    });
+
+    // on change notification count
+    this.notificationCountSubscription = this.prolayoutService.notificationChange$.subscribe((count: number) => {
+      this.notificationCount = count;
+    });
   }
 
   /**
@@ -132,6 +149,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.fixedHeaderSubscription.unsubscribe();
     this.splitMenuSubscription.unsubscribe();
     this.collapsedSiderSubscription.unsubscribe();
+    this.notificationCountSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {

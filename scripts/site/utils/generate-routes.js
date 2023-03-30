@@ -62,7 +62,8 @@ function generateNav(componentsDocMap) {
     // 'layout', 
     // 'tree-view', 
     // 'tree-select', 
-    // 'modal'
+    // 'modal',
+    'badge'
   ]
   console.log(filters)
   for (const key in componentsDocMap) {

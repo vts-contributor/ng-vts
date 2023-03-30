@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef } from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
+import { VtsProlayoutService } from './pro-layout.service';
 import { VtsThemeColorType } from './pro-layout.types';
 import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
 
@@ -15,7 +15,7 @@ export class VtsSettingDrawerComponent implements OnInit {
 
     constructor(
         private elementRef: ElementRef, 
-        private prolayoutService: ProlayoutService,
+        private prolayoutService: VtsProlayoutService,
         private themeService: VtsThemeService
     ) {
         this.elementRef.nativeElement.classList.add('vts-setting-drawer');
