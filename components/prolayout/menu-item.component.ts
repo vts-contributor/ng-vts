@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { VtsMenuItemProLayout } from './pro-layout.types';
 
 @Component({
@@ -18,8 +18,15 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
   defaultIcon: string = "AddDoutone:vts";
   currentUrl: string = "";
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cdf: ChangeDetectorRef) {
     this.currentUrl = this.router.url;
+    this.router.events.subscribe(evt => {
+      if(evt instanceof NavigationEnd){
+        // console.log(evt.url);
+        this.currentUrl = evt.url;
+        this.cdf.detectChanges();
+      }
+    });
   }
 
   ngOnInit() {}
