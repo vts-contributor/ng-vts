@@ -82,7 +82,7 @@ export class VtsContextMenuService {
     );
   }
 
-  // create a context menu that will be closed only when it's item is clicked
+  // create a context menu that will be closed only when it's item or prolayout content is clicked
   createHard(
     $event: MouseEvent | { x: number; y: number },
     vtsDropdownMenuComponent: VtsDropdownMenuComponent
@@ -105,7 +105,7 @@ export class VtsContextMenuService {
     });
     this.closeSubscription = merge(
       vtsDropdownMenuComponent.descendantMenuItemClick$,
-      fromEvent<MouseEvent>(document.getElementsByClassName('vts-avatar'), 'click').pipe(
+      fromEvent<MouseEvent>(document.getElementsByClassName('vts-prolayout-content'), 'click').pipe(
         filter(
           event =>
             !!this.overlayRef &&
