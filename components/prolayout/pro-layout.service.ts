@@ -77,7 +77,7 @@ export class VtsProlayoutService {
 
     // open notification pane in a context menu
     private createContextMenuNotificationPane($event: MouseEvent | {x: number, y: number}, menu: VtsDropdownMenuComponent): void {
-        this.contextMenuService.create($event, menu);
+        this.contextMenuService.createHard($event, menu);
     }
 
     // close notification pane context menu
