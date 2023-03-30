@@ -80,11 +80,6 @@ export class VtsProlayoutService {
         this.contextMenuService.createHard($event, menu);
     }
 
-    // close notification pane context menu
-    clsoeNotificationPaneContextMenu(): void {
-        this.contextMenuService.close();
-    }
-
     openNotificationPane(paneType: VtsNotiPaneType, evt: MouseEvent | {x: number, y: number}, menu: VtsDropdownMenuComponent | null): void {
         if(paneType === "drawer"){
             this.visiblePaneChange$.next(true);
