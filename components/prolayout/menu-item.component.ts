@@ -16,14 +16,11 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
     isSelected: false
   };
   defaultIcon: string = "AddDoutone:vts";
+  currentUrl: string = "";
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.currentUrl = this.router.url;
+  }
 
   ngOnInit() {}
-
-  onClickAvatarMenuItem(item: VtsMenuItemProLayout): void {
-    if(typeof item.url === 'string'){
-      this.router.navigateByUrl(item.url);
-    }
-  }
 }

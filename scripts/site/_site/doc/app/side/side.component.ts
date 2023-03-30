@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterList } from '../router';
 
 @Component({
@@ -46,7 +46,7 @@ import { RouterList } from '../router';
     </ng-container>
   `
 })
-export class SideComponent implements OnChanges {
+export class SideComponent {
   @Input() page: 'docs' | 'components' | 'experimental' | string = 'docs';
   @Input() routerList: RouterList = {} as RouterList;
   @Input() language: 'zh' | 'en' = 'en';
@@ -54,9 +54,4 @@ export class SideComponent implements OnChanges {
 
   @Input() onItemClick = (_e?: any) => {};
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes.routerList){
-      console.log(changes.routerList.currentValue.components)
-    }
-  }
 }
