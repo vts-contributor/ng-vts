@@ -11,7 +11,7 @@ export type VtsMenuItemProLayout = {
     isSelected?: boolean,
     icon?: string,
     id?: string | number,
-    url?: string | string[]
+    url?: string
 }
 
 export type VtsThemeColorType = {

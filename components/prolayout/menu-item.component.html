@@ -18,7 +18,7 @@
 </ng-container>
 
 <ng-template #menuChild>
-    <li vts-menu-item vtsMatchRouter vtsMatchRouterExact vts-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="vtsMenuItem.title" routerLink="{{ vtsMenuItem.url }}">
+    <li vts-menu-item [vtsSelected]="currentUrl == vtsMenuItem.url" vts-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="vtsMenuItem.title" routerLink="{{ vtsMenuItem.url }}">
         <i vts-icon [vtsType]="vtsMenuItem.icon" *ngIf="vtsMenuItem.icon"></i>
 		{{vtsMenuItem.title}}
     </li>
