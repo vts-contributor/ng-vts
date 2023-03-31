@@ -4,7 +4,7 @@
 
     <vts-prolayout-header 
         *ngIf="isShowHeader && !isFixedSider"     
-        [menuTemplate]="menuTemplate"    
+        [vtsMenuTemplate]="vtsMenuTemplate"    
         [vtsTitle]="vtsHeaderTitle" 
         [vtsAvatar]="vtsAvatar" 
         [vtsAvatarMenu]="vtsAvatarMenu" 
@@ -16,7 +16,7 @@
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
         <vts-prolayout-header 
             *ngIf="isShowHeader"             
-            [menuTemplate]="menuTemplate"
+            [vtsMenuTemplate]="vtsMenuTemplate"
             [vtsTitle]="vtsHeaderTitle" 
             [vtsAvatar]="vtsAvatar" 
             [vtsAvatarMenu]="vtsAvatarMenu" 

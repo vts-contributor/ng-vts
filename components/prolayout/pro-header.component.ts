@@ -97,7 +97,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   showMenu: boolean = false;
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
   @Input() vtsLogoUrl: string = "";
-  @Input() menuTemplate: TemplateRef<void> | null = null;
+  @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
   @Input() vtsNotificationConfig: VtsNotificationConfig = {
     type: "menuContext",
     overflowCount: 99
@@ -158,10 +158,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { title, menuTemplate } = changes;
-    if(menuTemplate.currentValue){
-      console.log(menuTemplate.currentValue);
-    }
+    const { title } = changes;
     if(!this.useSplitMenu){
       if (this.vtsTitle || (title && title.currentValue)) {
         // add a wrapper item to create a menu button

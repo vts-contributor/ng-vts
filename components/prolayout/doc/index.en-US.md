@@ -73,4 +73,4 @@ The pro-layout.
 | vtsFooterTemplate | footer template | `TemplateRef<void> \| null` | Copyright by Viettel Solution - Government Solution Center Platform |
 | vtsVisibleNotifyPane | use to show (hide) a drawer notification pane, required when `vtsNotificationConfig.type` is `drawer` | `boolean` | `false` |
 | vtsNotificationConfig | config for notification pane | `VtsNotificationConfig` | `{ type: 'menuContext', overflowCount: 99 }` |
-| menuTemplate | notification pane content, requried when `vtsNotificationConfig.type` is `menuContext` | `TemplateRef` | `null` |
+| vtsMenuTemplate | notification pane content, requried when `vtsNotificationConfig.type` is `menuContext` | `TemplateRef` | `null` |

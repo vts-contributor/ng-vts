@@ -32,12 +32,12 @@
                         </vts-badge>
                     </ng-container>
                     <ng-container *ngSwitchDefault>
-                        <!-- if has menuTemplate -->
-                        <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationConfig.overflowCount" *ngIf="menuTemplate">
+                        <!-- if has vtsMenuTemplate -->
+                        <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationConfig.overflowCount" *ngIf="vtsMenuTemplate">
                             <i vts-icon vtsType="Notifications:vts" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="defaultMenu" class="cursor-pointer" style="color: white;"></i>
                             <vts-dropdown-menu #defaultMenu="vtsDropdownMenu">
-                                <ng-container *ngTemplateOutlet="menuTemplate">       
-                                    {{menuTemplate}}     
+                                <ng-container *ngTemplateOutlet="vtsMenuTemplate">       
+                                    {{vtsMenuTemplate}}     
                                 </ng-container>
                             </vts-dropdown-menu>
                         </vts-badge>
