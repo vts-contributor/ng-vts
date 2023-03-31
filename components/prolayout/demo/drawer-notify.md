@@ -1,11 +1,11 @@
 ---
-order: 1
+order: 2
 # iframe:
 #   height: 500
 #   source: ./iframe/#/prolayout-basic
 title:
   zh-CN: 基本结构
-  en-US: Basic Structure
+  en-US: Notification pane with drawer
 ---
 
 ## zh-CN
