@@ -3,7 +3,7 @@ import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
-  selector: 'vts-demo-prolayout-basic',
+  selector: 'vts-demo-prolayout-drawer-notify',
   template: `
     <vts-prolayout-container     
       [vtsMenuHeader]="menuData" 
@@ -13,28 +13,23 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
       [vtsLogoUrl]="logoUrl" 
       [vtsBreadcrumbArray]="arrayMenuItem" 
       [vtsFooterTemplate]="footerTemplate" 
-      [vtsNotificationConfig]="vtsNotificationConfig"
-      [menuTemplate]="menuTemplate">
-        <ng-template #menuTemplate>          
-            <ul vts-menu>
-                <li vts-menu-item>1st menu item</li>
-                <li vts-menu-item>2nd menu item</li>
-                <li vts-menu-item vtsDisabled>disabled menu item</li>
-                <li vts-submenu vtsTitle="sub menu">
-                <ul>
-                    <li vts-menu-item>3rd menu item</li>
-                    <li vts-menu-item>4th menu item</li>
-                </ul>
-                </li>
-                <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
-                <ul>
-                    <li vts-menu-item>3rd menu item</li>
-                    <li vts-menu-item>4th menu item</li>
-                </ul>
-                </li>
-            </ul>             
-        </ng-template>
+      [vtsVisibleNotifyPane]="vtsVisibleNotifyPane" 
+      [vtsNotificationConfig]="vtsNotificationConfig">
     </vts-prolayout-container>
+
+    <vts-drawer      
+    [vtsClosable]="false"
+      [vtsVisible]="vtsVisibleNotifyPane"
+      vtsPlacement="right"
+      vtsTitle="Basic Drawer"
+      (vtsOnClose)="close()"
+    >
+      <ng-container *vtsDrawerContent>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </ng-container>
+    </vts-drawer>
     <ng-template #footerTemplate>
       <div>
         Copyright by Viettel Solution - Government Solution Center Platform
@@ -42,7 +37,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
     </ng-template>
   `
 })
-export class VtsDemoProlayoutBasicComponent {
+export class VtsDemoProlayoutDrawerNotifyComponent {
 
   constructor(private service: VtsProlayoutService){
     this.service.onChangeNotification(10);
@@ -112,7 +107,7 @@ export class VtsDemoProlayoutBasicComponent {
 
   vtsVisibleNotifyPane: boolean = false;
   vtsNotificationConfig: VtsNotificationConfig = {
-    type: "menuContext",
+    type: "drawer",
     overflowCount: 99
   }
 
