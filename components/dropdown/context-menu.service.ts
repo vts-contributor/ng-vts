@@ -82,50 +82,6 @@ export class VtsContextMenuService {
     );
   }
 
-  // create a context menu that will be closed only when it's item or prolayout content is clicked
-  createHard(
-    $event: MouseEvent | { x: number; y: number },
-    vtsDropdownMenuComponent: VtsDropdownMenuComponent
-  ): void {
-    this.close(true);
-    const { x, y } = $event;
-    if ($event instanceof MouseEvent) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
-    const positionStrategy = this.overlay
-      .position()
-      .flexibleConnectedTo({ x, y })
-      .withPositions(listOfPositions)
-      .withTransformOriginOn('.vts-dropdown');
-    this.overlayRef = this.overlay.create({
-      positionStrategy,
-      disposeOnNavigation: true,
-      scrollStrategy: this.overlay.scrollStrategies.close()
-    });
-    this.closeSubscription = merge(
-      vtsDropdownMenuComponent.descendantMenuItemClick$,
-      fromEvent<MouseEvent>(document.getElementsByClassName('vts-prolayout-content'), 'click').pipe(
-        filter(
-          event =>
-            !!this.overlayRef &&
-            !this.overlayRef.overlayElement.contains(event.target as HTMLElement)
-        ),
-        /** handle firefox contextmenu event **/
-        filter(event => event.button !== 2),
-        take(1)
-      )
-    ).subscribe(() => {
-      this.close();
-    });
-    this.overlayRef.attach(
-      new TemplatePortal(
-        vtsDropdownMenuComponent.templateRef,
-        vtsDropdownMenuComponent.viewContainerRef
-      )
-    );
-  }
-
   close(clear: boolean = false): void {
     if (this.overlayRef) {
       this.overlayRef.detach();
