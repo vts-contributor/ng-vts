@@ -62,7 +62,7 @@ function generateNav(componentsDocMap) {
     // 'layout', 
     // 'tree-view', 
     // 'tree-select', 
-    // 'modal',
+    'modal',
     'badge',
     'dropdown'
   ]

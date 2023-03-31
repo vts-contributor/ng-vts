@@ -1,0 +1,22 @@
+<div>Screen is currently locked</div>
+<vts-modal
+  [(vtsVisible)]="isVisible"
+  vtsTitle="The first Modal"
+  (vtsOnCancel)="handleCancel()"
+  (vtsOnOk)="handleOk()"
+>
+  <form [vtsLayout]="'vertical'" vts-form [formGroup]="form" (ngSubmit)="submit()">
+    <vts-form-item>
+      <vts-form-label vtsRequired>Nhập mật khẩu khóa màn hình:</vts-form-label>
+      <vts-form-control>
+        <input
+          vts-input
+          formControlName="password"
+          [placeholder]="'Mật khẩu'"
+          [autofocus]="true"
+          type="password"
+        />
+      </vts-form-control>
+    </vts-form-item>
+  </form>
+</vts-modal>

@@ -7,8 +7,6 @@ import { VtsMenuItemProLayout, VtsNotiPaneType } from './pro-layout.types';
   providedIn: 'root'
 })
 export class VtsProlayoutService {
-
-    constructor(){}
     
     fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
