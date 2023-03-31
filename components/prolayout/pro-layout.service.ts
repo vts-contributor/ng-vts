@@ -1,58 +1,77 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsDrawerRef } from '@ui-vts/ng-vts/drawer';
+import { VtsMenuItemProLayout, VtsNotiPaneType } from './pro-layout.types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProlayoutService {
-  fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-  fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-  visibilitySiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-  visibilityHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-  visibilityFooterChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-  useSplitMenuChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-  menuHeaderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<
-    VtsMenuItemProLayout[]
-  >(1);
-  menuSiderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<
-    VtsMenuItemProLayout[]
-  >(1);
-  collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+export class VtsProlayoutService {
 
-  onChangeFixedSider(isFixed: boolean): void {
-    this.fixedSiderChange$.next(isFixed);
-  }
+    constructor(){}
+    
+    fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    visibilitySiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    visibilityHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    visibilityFooterChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    useSplitMenuChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    menuHeaderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
+    menuSiderChange$: ReplaySubject<VtsMenuItemProLayout[]> = new ReplaySubject<VtsMenuItemProLayout[]>(1);
+    collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    notificationChange$: ReplaySubject<number> = new ReplaySubject<number>(1);
+    // notification pane visibility
+    visiblePaneChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
-  onChangeFixedHeader(isFixed: boolean): void {
-    this.fixedHeaderChange$.next(isFixed);
-  }
+    drawerNotifyRef: VtsDrawerRef | null = null;
 
-  onChangeVisibilitySider(isShow: boolean): void {
-    this.visibilitySiderChange$.next(isShow);
-  }
+    onChangeFixedSider(isFixed: boolean): void {
+        this.fixedSiderChange$.next(isFixed);
+    }
 
-  onChangeVisibilityHeader(isShow: boolean): void {
-    this.visibilityHeaderChange$.next(isShow);
-  }
+    onChangeFixedHeader(isFixed: boolean): void {
+        this.fixedHeaderChange$.next(isFixed);
+    }
 
-  onChangeVisibilityFooter(isShow: boolean): void {
-    this.visibilityFooterChange$.next(isShow);
-  }
+    onChangeVisibilitySider(isShow: boolean): void {
+        this.visibilitySiderChange$.next(isShow);
+    }
 
-  onChangeUseSplitMenu(isMenuSplitted: boolean): void {
-    this.useSplitMenuChange$.next(isMenuSplitted);
-  }
+    onChangeVisibilityHeader(isShow: boolean): void {
+        this.visibilityHeaderChange$.next(isShow);
+    }
 
-  onChangeMenuHeader(data: VtsMenuItemProLayout[]): void {
-    this.menuHeaderChange$.next(data);
-  }
+    onChangeVisibilityFooter(isShow: boolean): void {
+        this.visibilityFooterChange$.next(isShow);
+    }
 
-  onChangeMenuSider(data: VtsMenuItemProLayout[]): void {
-    this.menuSiderChange$.next(data);
-  }
+    onChangeUseSplitMenu(isMenuSplitted: boolean): void {
+        this.useSplitMenuChange$.next(isMenuSplitted);
+    }
 
-  onChangeCollapedSider(isCollapsed: boolean): void {
-    this.collapSiderChange$.next(isCollapsed);
-  }
+    onChangeMenuHeader(data: VtsMenuItemProLayout[]): void {
+        this.menuHeaderChange$.next(data);
+    }
+    
+    onChangeMenuSider(data: VtsMenuItemProLayout[]): void {
+        this.menuSiderChange$.next(data);
+    }
+
+    onChangeCollapedSider(isCollapsed: boolean): void {
+        this.collapSiderChange$.next(isCollapsed);
+    }
+
+    onChangeNotification(count: number): void {
+        this.notificationChange$.next(count);
+    }
+
+    getDrawerNotifyRef(): VtsDrawerRef | null {
+        return this.drawerNotifyRef;
+    }
+
+    openNotificationPane(paneType: VtsNotiPaneType): void {
+        if(paneType === "drawer"){
+            this.visiblePaneChange$.next(true);
+        }
+    }
 }

@@ -42,7 +42,7 @@ function generateNav(componentsDocMap) {
     // 'textarea', 
     // 'date-picker', 
     // 'time-picker', 
-    // 'drawer', 
+    'drawer', 
     // 'alert', 
     // 'switch', 
     // 'tag', 
@@ -62,7 +62,9 @@ function generateNav(componentsDocMap) {
     // 'layout', 
     // 'tree-view', 
     // 'tree-select', 
-    // 'modal'
+    // 'modal',
+    'badge',
+    'dropdown'
   ]
   console.log(filters)
   for (const key in componentsDocMap) {

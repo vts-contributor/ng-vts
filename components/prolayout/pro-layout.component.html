@@ -2,10 +2,28 @@
     <vts-prolayout-sider vtsWidth="250px" [vtsLogoUrl]="vtsLogoUrl"
         *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
 
-    <vts-prolayout-header *ngIf="isShowHeader && !isFixedSider" [vtsTitle]="vtsHeaderTitle" [vtsAvatar]="vtsAvatar" [vtsAvatarMenu]="vtsAvatarMenu" [vtsLogoUrl]="vtsLogoUrl"></vts-prolayout-header>
+    <vts-prolayout-header 
+        *ngIf="isShowHeader && !isFixedSider"     
+        [vtsMenuTemplate]="vtsMenuTemplate"    
+        [vtsTitle]="vtsHeaderTitle" 
+        [vtsAvatar]="vtsAvatar" 
+        [vtsAvatarMenu]="vtsAvatarMenu" 
+        [vtsLogoUrl]="vtsLogoUrl"        
+        [vtsVisibleNotifyPane]="vtsVisibleNotifyPane" 
+        [vtsNotificationConfig]="vtsNotificationConfig">
+    </vts-prolayout-header>
 
     <vts-prolayout *ngIf="isFixedSider; else notFixedSider">
-        <vts-prolayout-header *ngIf="isShowHeader" [vtsTitle]="vtsHeaderTitle" [vtsAvatar]="vtsAvatar" [vtsAvatarMenu]="vtsAvatarMenu" [vtsLogoUrl]="vtsLogoUrl"></vts-prolayout-header>
+        <vts-prolayout-header 
+            *ngIf="isShowHeader"             
+            [vtsMenuTemplate]="vtsMenuTemplate"
+            [vtsTitle]="vtsHeaderTitle" 
+            [vtsAvatar]="vtsAvatar" 
+            [vtsAvatarMenu]="vtsAvatarMenu" 
+            [vtsLogoUrl]="vtsLogoUrl"           
+            [vtsVisibleNotifyPane]="vtsVisibleNotifyPane"  
+            [vtsNotificationConfig]="vtsNotificationConfig">
+        </vts-prolayout-header>
         <vts-prolayout-content class="outer-content">
             <vts-prolayout-breadcrumb [vtsSeparator]="vtsSeparator" [vtsBreadcrumbArray]="vtsBreadcrumbArray"></vts-prolayout-breadcrumb>
             <vts-prolayout class="inner-layout">

@@ -27,6 +27,13 @@ export type VtsAvatarUser = {
 };
 
 export type VtsAvatarMenu = {
-  url: string;
-  label: string;
-};
+    url: string,
+    label: string
+}
+
+export type VtsNotificationConfig = {
+    type: VtsNotiPaneType,
+    overflowCount: number
+}
+
+export type VtsNotiPaneType = "drawer" | "menuContext";

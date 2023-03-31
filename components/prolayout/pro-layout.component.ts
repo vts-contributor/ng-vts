@@ -12,8 +12,8 @@ import {
   TemplateRef,
   OnDestroy
 } from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsProlayoutService } from './pro-layout.service';
+import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
 
@@ -48,8 +48,11 @@ import { Subscription } from 'rxjs';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
-  constructor(private elementRef: ElementRef, private prolayoutService: ProlayoutService) {
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
+  constructor(
+    private elementRef: ElementRef,
+    private prolayoutService: VtsProlayoutService
+  ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
   }
@@ -78,6 +81,12 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
   @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
+  @Input() vtsNotificationConfig: VtsNotificationConfig = {
+    type: "menuContext",
+    overflowCount: 99
+  }
+  @Input() vtsVisibleNotifyPane: boolean = false;
+  @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;

@@ -71,3 +71,6 @@ The pro-layout.
 | vtsBreadcrumbArray | array of breadcrumb items | `VtsBreadcrumbItem`[] | `[]` |
 | vtsSeparator | separator between breadcrumb items | `string \| TemplateRef<void> \| null` | `>` |
 | vtsFooterTemplate | footer template | `TemplateRef<void> \| null` | Copyright by Viettel Solution - Government Solution Center Platform |
+| vtsVisibleNotifyPane | use to show (hide) a drawer notification pane, required when `vtsNotificationConfig.type` is `drawer` | `boolean` | `false` |
+| vtsNotificationConfig | config for notification pane | `VtsNotificationConfig` | `{ type: 'menuContext', overflowCount: 99 }` |
+| vtsMenuTemplate | notification pane content, requried when `vtsNotificationConfig.type` is `menuContext` | `TemplateRef` | `null` |
