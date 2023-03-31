@@ -1,8 +1,22 @@
-<div style="position: fixed; height: 100%; width: 100%; justify-content: center; background-color: white; font-size: xx-large; top: 0; left: 0; z-index: 10000; display: flex; align-items: center;" *ngIf="isLockOrUnlock">Screen is currently locked</div>
-<vts-modal
-  [(vtsVisible)]="isShowInput"
-  vtsTitle="The first Modal"
+<div
+  style="
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    background-color: white;
+    font-size: xx-large;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+  "
+  *ngIf="isLockOrUnlock"
+  (click)="showInput()"
 >
+  Screen is currently locked
+</div>
+<vts-modal [(vtsVisible)]="isShowInput" vtsTitle="The first Modal">
   <form [vtsLayout]="'vertical'" vts-form [formGroup]="form">
     <vts-form-item>
       <vts-form-label vtsRequired>Nhập mật khẩu khóa màn hình:</vts-form-label>
