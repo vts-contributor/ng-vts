@@ -120,7 +120,6 @@ export class VtsMenuItemDirective implements OnInit, OnChanges, OnDestroy, After
 
   private isLinkActive(router: Router): (link: RouterLink | RouterLinkWithHref) => boolean {    
     return (link: RouterLink | RouterLinkWithHref) => {
-      console.log(link.urlTree);
       return link.urlTree ? router.isActive(link.urlTree, this.vtsMatchRouterExact) : false;
     }
   }

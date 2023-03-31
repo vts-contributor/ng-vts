@@ -80,11 +80,12 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
-  @Input() vtsNotificationOverflowCount: number = 99;
   @Input() vtsNotificationConfig: VtsNotificationConfig = {
     type: "menuContext",
-    menuConfig: null
+    overflowCount: 99
   }
+  @Input() vtsVisibleNotifyPane: boolean = false;
+  @Input() menuTemplate: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
