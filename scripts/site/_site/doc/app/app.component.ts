@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { en_US, VtsI18nService, zh_CN } from '@ui-vts/ng-vts/i18n';
+import { en_US, VtsI18nService } from '@ui-vts/ng-vts/i18n';
 import { VtsMessageService } from '@ui-vts/ng-vts/message';
 import { VERSION } from '@ui-vts/ng-vts/version';
 import { VtsTheme, VtsThemeItem, VtsThemeService } from '@ui-vts/theme/services';
@@ -22,8 +22,9 @@ interface DocPageMeta {
   description: string;
 }
 
-const defaultKeywords =
-  'angular, ant design, ant, angular ant design, web, ui, components, ng, zorro, responsive, typescript, css, mobile web, open source, 组件库, 组件, UI 框架';
+const defaultKeywords = ['ng', 'vts', 'ng-vts', 'angular', 'ui', 'framework', 'frontend'].join(
+  ', '
+);
 
 @Component({
   selector: 'app-root',
@@ -55,8 +56,8 @@ export class AppComponent implements OnInit {
   language: 'zh' | 'en' = 'en';
   direction: 'ltr' | 'rtl' = 'ltr';
   currentVersion = VERSION.full;
-  allThemes: VtsThemeItem[] = []
-  currentTheme: VtsTheme | null = null
+  allThemes: VtsThemeItem[] = [];
+  currentTheme: VtsTheme | null = null;
 
   onNavigateClick(_e: any) {
     if (this.drawerVisible) {
@@ -94,12 +95,12 @@ export class AppComponent implements OnInit {
     @Inject(DOCUMENT) private document: any,
     private themeService: VtsThemeService
   ) {
-    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => this.allThemes = d)
-    this.themeService.theme$.subscribe((d: VtsTheme | null) => this.currentTheme = d)
+    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => (this.allThemes = d));
+    this.themeService.theme$.subscribe((d: VtsTheme | null) => (this.currentTheme = d));
   }
 
   onThemeChange(e: VtsThemeItem) {
-    this.themeService.setTheme(e.theme)
+    this.themeService.setTheme(e.theme);
   }
 
   navigateToPage(url: string): void {
@@ -420,16 +421,5 @@ export class AppComponent implements OnInit {
       });
   }
 
-  private detectLanguage(): void {
-    if (!this.platform.isBrowser) {
-      return;
-    }
-    const language = navigator.language.toLowerCase();
-    const pathname = location.pathname;
-    const hasLanguage = pathname.match(/(en|zh)(\/?)$/);
-    if (language === 'zh-cn' && !hasLanguage) {
-      this.vtsI18nService.setLocale(zh_CN);
-      this.router.navigate(['docs', 'introduce', 'zh']);
-    }
-  }
+  private detectLanguage(): void {}
 }

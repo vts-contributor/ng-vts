@@ -29,26 +29,26 @@ import { PaginationItemRenderContext, PaginationItemType } from './pagination.ty
         <a *ngSwitchCase="'page'">{{ page }}</a>
         <button [disabled]="disabled" class="vts-pagination-item-link" *ngSwitchCase="'begin'">
           <ng-container [ngSwitch]="direction">
-            <i *ngSwitchCase="'rtl'" vts-icon vtsType="ArrowLeft"></i>
-            <i *ngSwitchDefault vts-icon vtsType="ArrowLeft"></i>
+            <i *ngSwitchCase="'rtl'" vts-icon vtsType="DoubleArrowLeft:radix"></i>
+            <i *ngSwitchDefault vts-icon vtsType="DoubleArrowLeft:radix"></i>
           </ng-container>
         </button>
         <button [disabled]="disabled" class="vts-pagination-item-link" *ngSwitchCase="'prev'">
           <ng-container [ngSwitch]="direction">
-            <i *ngSwitchCase="'rtl'" vts-icon vtsType="ArrowBack"></i>
-            <i *ngSwitchDefault vts-icon vtsType="ArrowBack"></i>
+            <i *ngSwitchCase="'rtl'" vts-icon vtsType="ChevronLeft:radix"></i>
+            <i *ngSwitchDefault vts-icon vtsType="ChevronLeft:radix"></i>
           </ng-container>
         </button>
         <button [disabled]="disabled" class="vts-pagination-item-link" *ngSwitchCase="'next'">
           <ng-container [ngSwitch]="direction">
-            <i *ngSwitchCase="'rtl'" vts-icon vtsType="ArrowForward"></i>
-            <i *ngSwitchDefault vts-icon vtsType="ArrowForward"></i>
+            <i *ngSwitchCase="'rtl'" vts-icon vtsType="ChevronRight:radix"></i>
+            <i *ngSwitchDefault vts-icon vtsType="ChevronRight:radix"></i>
           </ng-container>
         </button>
         <button [disabled]="disabled" class="vts-pagination-item-link" *ngSwitchCase="'last'">
           <ng-container [ngSwitch]="direction">
-            <i *ngSwitchCase="'rtl'" vts-icon vtsType="ArrowRight"></i>
-            <i *ngSwitchDefault vts-icon vtsType="ArrowRight"></i>
+            <i *ngSwitchCase="'rtl'" vts-icon vtsType="DoubleArrowRight:radix"></i>
+            <i *ngSwitchDefault vts-icon vtsType="DoubleArrowRight:radix"></i>
           </ng-container>
         </button>
         <ng-container *ngSwitchDefault>
@@ -59,13 +59,13 @@ import { PaginationItemRenderContext, PaginationItemType } from './pagination.ty
                   <i
                     *ngSwitchCase="'rtl'"
                     vts-icon
-                    vtsType="ArrowRight"
+                    vtsType="DoubleArrowRight:radix"
                     class="vts-pagination-item-link-icon"
                   ></i>
                   <i
                     *ngSwitchDefault
                     vts-icon
-                    vtsType="double-left"
+                    vtsType="DoubleArrowLeft:radix"
                     class="vts-pagination-item-link-icon"
                   ></i>
                 </ng-container>
@@ -73,13 +73,13 @@ import { PaginationItemRenderContext, PaginationItemType } from './pagination.ty
                   <i
                     *ngSwitchCase="'rtl'"
                     vts-icon
-                    vtsType="double-left"
+                    vtsType="DoubleArrowLeft:radix"
                     class="vts-pagination-item-link-icon"
                   ></i>
                   <i
                     *ngSwitchDefault
                     vts-icon
-                    vtsType="ArrowRight"
+                    vtsType="DoubleArrowRight:radix"
                     class="vts-pagination-item-link-icon"
                   ></i>
                 </ng-container>
@@ -155,7 +155,9 @@ export class VtsPaginationItemComponent implements OnChanges {
           next: this.locale?.next_page,
           prev: this.locale?.prev_page,
           prev_5: this.locale?.prev_5,
-          next_5: this.locale?.next_5
+          next_5: this.locale?.next_5,
+          begin: this.locale?.begin,
+          last: this.locale?.last
         } as VtsSafeAny
       )[this.type!];
     }

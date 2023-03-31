@@ -20,11 +20,17 @@ import {
   SimpleChanges,
   ViewEncapsulation
 } from '@angular/core';
-import { isPresetColor, VtsPresetColor } from '@ui-vts/ng-vts/core/color';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+export type VtsTagCustomColor = {
+  background?: string;
+  color?: string;
+  checkedColor?: string;
+  checkedBackground?: string;
+};
 
 @Component({
   selector: 'vts-tag',
@@ -44,12 +50,13 @@ import { takeUntil } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    '[style.background-color]': `isPresetColor ? '' : vtsColor`,
-    '[class]': `isPresetColor ? ('vts-tag-' + vtsColor) : ''`,
-    '[class.vts-tag-has-color]': `vtsColor && !isPresetColor`,
+    '[class]': `vtsPreset ? ('vts-tag-' + vtsPreset) : ''`,
     '[class.vts-tag-checkable]': `vtsMode === 'checkable'`,
     '[class.vts-tag-checkable-checked]': `vtsChecked`,
     '[class.vts-tag-rtl]': `dir === 'rtl'`,
+    '[style.background-color]': `bg`,
+    '[style.color]': `color`,
+    '[style.borderColor]': `color`,
     '(click)': 'updateCheckedStatus()'
   }
 })
@@ -57,7 +64,8 @@ export class VtsTagComponent implements OnChanges, OnDestroy, OnInit {
   static ngAcceptInputType_vtsChecked: BooleanInput;
   isPresetColor = false;
   @Input() vtsMode: 'default' | 'closeable' | 'checkable' = 'default';
-  @Input() vtsColor?: string | VtsPresetColor;
+  @Input() vtsColor?: VtsTagCustomColor;
+  @Input() vtsPreset?: 'success' | 'info' | 'warning' | 'error';
   @Input() @InputBoolean() vtsChecked = false;
   @Output() readonly vtsOnClose = new EventEmitter<MouseEvent>();
   @Output() readonly vtsCheckedChange = new EventEmitter<boolean>();
@@ -81,6 +89,16 @@ export class VtsTagComponent implements OnChanges, OnDestroy, OnInit {
     }
   }
 
+  get bg() {
+    if (!this.vtsColor) return null;
+    return this.vtsChecked ? this.vtsColor?.checkedBackground : this.vtsColor?.background;
+  }
+
+  get color() {
+    if (!this.vtsColor) return null;
+    return this.vtsChecked ? this.vtsColor?.checkedColor : this.vtsColor?.color;
+  }
+
   constructor(
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
@@ -100,18 +118,7 @@ export class VtsTagComponent implements OnChanges, OnDestroy, OnInit {
     this.dir = this.directionality.value;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const { vtsColor } = changes;
-    if (vtsColor) {
-      if (!this.vtsColor) {
-        this.isPresetColor = false;
-      } else {
-        this.isPresetColor =
-          isPresetColor(this.vtsColor) ||
-          /^(success|processing|error|default|warning)$/.test(this.vtsColor);
-      }
-    }
-  }
+  ngOnChanges(_changes: SimpleChanges): void {}
 
   ngOnDestroy(): void {
     this.destroy$.next();

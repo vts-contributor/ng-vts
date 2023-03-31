@@ -38,6 +38,15 @@ import { PaginationItemRenderContext } from './pagination.types';
     <ng-template #containerTemplate>
       <li
         vts-pagination-item
+        [attr.title]="locale.begin"
+        [disabled]="isFirstIndex"
+        [direction]="dir"
+        (click)="begin()"
+        type="begin"
+        [itemRender]="itemRender"
+      ></li>
+      <li
+        vts-pagination-item
         [attr.title]="locale.prev_page"
         [disabled]="isFirstIndex"
         [direction]="dir"
@@ -62,6 +71,15 @@ import { PaginationItemRenderContext } from './pagination.types';
         [direction]="dir"
         (click)="nextPage()"
         type="next"
+        [itemRender]="itemRender"
+      ></li>
+      <li
+        vts-pagination-item
+        [attr.title]="locale?.last"
+        [disabled]="isLastIndex"
+        [direction]="dir"
+        (click)="last()"
+        type="last"
         [itemRender]="itemRender"
       ></li>
     </ng-template>
@@ -127,6 +145,12 @@ export class VtsPaginationSimpleComponent implements OnChanges, OnDestroy, OnIni
   }
   nextPage(): void {
     this.onPageIndexChange(this.pageIndex + 1);
+  }
+  begin(): void {
+    this.onPageIndexChange(1);
+  }
+  last(): void {
+    this.onPageIndexChange(this.lastIndex);
   }
 
   onPageIndexChange(index: number): void {

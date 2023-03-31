@@ -34,7 +34,7 @@ import { SideModule } from './side/side.module';
 import { VtsContributorsListModule } from './share/contributors-list/contributors-list.module';
 import { VtsNavBottomModule } from './share/nav-bottom/nav-bottom.module';
 // import { VtsResizeObserverFactory } from '@ui-vts/ng-vts/cdk/resize-observer';
-import { VtsThemeModule } from '@ui-vts/theme/services'
+import { VtsThemeModule } from '@ui-vts/theme/services';
 import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
 import * as allIconTypes from '@ui-vts/icons-angular/icons';
 
@@ -60,12 +60,12 @@ const icons = Object.values(allIconTypes)
         {
           theme: 'default',
           url: '/default.css'
-        },
+        }
       ],
       defaultTheme: 'default'
     }),
     ColorSketchModule,
-    VtsIconModule.forChild(icons),
+    VtsIconModule.forRoot(icons),
     VtsGridModule,
     VtsAffixModule,
     VtsMenuModule,

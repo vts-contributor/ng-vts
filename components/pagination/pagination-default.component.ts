@@ -53,7 +53,7 @@ import { PaginationItemRenderContext } from './pagination.types';
         [index]="page.index"
         [disabled]="!!page.disabled"
         [itemRender]="itemRender"
-        [active]="pageIndex === page.index"
+        [active]="page.type === 'page' && pageIndex === page.index"
         (gotoIndex)="jumpPage($event)"
         (diffIndex)="jumpDiff($event)"
         [direction]="dir"
@@ -64,7 +64,6 @@ import { PaginationItemRenderContext } from './pagination.types';
         [total]="total"
         [locale]="locale"
         [disabled]="disabled"
-        [vtsSize]="vtsSize"
         [showSizeChanger]="showSizeChanger"
         [showQuickJumper]="showQuickJumper"
         [pageIndex]="pageIndex"
@@ -79,7 +78,6 @@ import { PaginationItemRenderContext } from './pagination.types';
 export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnInit {
   @ViewChild('containerTemplate', { static: true })
   template!: TemplateRef<VtsSafeAny>;
-  @Input() vtsSize: 'md' | 'sm' = 'md';
   @Input() itemRender: TemplateRef<PaginationItemRenderContext> | null = null;
   @Input() showTotal: TemplateRef<{
     $implicit: number;
@@ -89,10 +87,12 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
   @Input() locale!: VtsPaginationI18nInterface;
   @Input() showSizeChanger = false;
   @Input() showQuickJumper = false;
+  @Input() showShortJump = false;
   @Input() total = 0;
   @Input() pageIndex = 1;
   @Input() pageSize = 10;
   @Input() pageSizeOptions: number[] = [10, 20, 30, 40];
+  @Input() itemLimit: number = 5;
   @Output() readonly pageIndexChange = new EventEmitter<number>();
   @Output() readonly pageSizeChange = new EventEmitter<number>();
   ranges = [0, 0];
@@ -158,18 +158,23 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
 
   buildIndexes(): void {
     const lastIndex = this.getLastIndex(this.total, this.pageSize);
-    this.listOfPageItem = this.getListOfPageItem(this.pageIndex, lastIndex);
+    this.listOfPageItem = this.getListOfPageItem(this.pageIndex, lastIndex, this.itemLimit);
+    if (!this.showShortJump)
+      this.listOfPageItem = this.listOfPageItem.filter(
+        i => !(i.type === 'prev_5' || i.type === 'next_5')
+      );
   }
 
   getListOfPageItem(
     pageIndex: number,
-    lastIndex: number
+    lastIndex: number,
+    limit: number
   ): Array<Partial<VtsPaginationItemComponent>> {
     const concatWithPrevNext = (listOfPage: Array<Partial<VtsPaginationItemComponent>>) => {
       const beginItem = {
         type: 'begin',
         disabled: pageIndex === 1,
-        index: '1'
+        index: 1
       };
       const prevItem = {
         type: 'prev',
@@ -199,35 +204,50 @@ export class VtsPaginationDefaultComponent implements OnChanges, OnDestroy, OnIn
       }
       return list;
     };
-    if (lastIndex <= 9) {
+    if (lastIndex <= limit) {
       return concatWithPrevNext(generatePage(1, lastIndex));
     } else {
-      const generateRangeItem = (selected: number, last: number) => {
-        let listOfRange = [];
-        const prevFiveItem = {
-          type: 'prev_5'
-        };
-        const nextFiveItem = {
-          type: 'next_5'
-        };
-        const firstPageItem = generatePage(1, 1);
-        const lastPageItem = generatePage(lastIndex, lastIndex);
-        if (selected < 4) {
-          listOfRange = [...generatePage(2, 5), nextFiveItem];
-        } else if (selected < last - 3) {
-          listOfRange = [prevFiveItem, ...generatePage(selected - 2, selected + 2), nextFiveItem];
-        } else {
-          listOfRange = [prevFiveItem, ...generatePage(last - 4, last - 1)];
-        }
-        return [...firstPageItem, ...listOfRange, ...lastPageItem];
-      };
-      return concatWithPrevNext(generateRangeItem(pageIndex, lastIndex));
+      // const generateRangeItem = (selected: number, last: number) => {
+      //   let listOfRange = [];
+      //   const prevFiveItem = {
+      //     type: 'prev_5'
+      //   };
+      //   const nextFiveItem = {
+      //     type: 'next_5'
+      //   };
+
+      //   const firstPageItem = generatePage(1, 1);
+      //   const lastPageItem = generatePage(lastIndex, lastIndex);
+      //   if (selected < 4) {
+      //     listOfRange = [...generatePage(2, 5), nextFiveItem];
+      //   } else if (selected < last - 3) {
+      //     listOfRange = [prevFiveItem, ...generatePage(selected - 2, selected + 2), nextFiveItem];
+      //   } else {
+      //     listOfRange = [prevFiveItem, ...generatePage(last - 4, last - 1)];
+      //   }
+      //   return [...firstPageItem, ...listOfRange, ...lastPageItem];
+      // };
+      // return concatWithPrevNext(generateRangeItem(pageIndex, lastIndex));
+
+      const halfBefore = Math.ceil(limit / 2);
+      let begin = 1;
+      let end = 1;
+      if (pageIndex - halfBefore >= 0) {
+        begin = pageIndex - halfBefore + 1;
+      }
+      const leftAfter = limit - (pageIndex - begin + 1);
+      end = pageIndex + leftAfter > lastIndex ? lastIndex : pageIndex + leftAfter;
+      const addBefore = leftAfter - (end - pageIndex);
+      begin = begin - addBefore >= 1 ? begin - addBefore : 1;
+
+      const listOfRange = [...generatePage(begin, end)];
+      return concatWithPrevNext(listOfRange);
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { pageIndex, pageSize, total } = changes;
-    if (pageIndex || pageSize || total) {
+    const { pageIndex, pageSize, total, itemLimit } = changes;
+    if (pageIndex || pageSize || total || itemLimit) {
       this.ranges = [
         (this.pageIndex - 1) * this.pageSize + 1,
         Math.min(this.pageIndex * this.pageSize, this.total)

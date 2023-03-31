@@ -43,16 +43,40 @@ interface Item {
           <td></td>
           <td></td>
           <td>
-            <input name="filter1" ngModel (ngModelChange)="filter($event, 'content1')" vts-input />
+            <input
+              name="filter1"
+              ngModel
+              (ngModelChange)="filter($event, 'content1')"
+              vts-input
+              vtsSize="sm"
+            />
           </td>
           <td>
-            <input name="filter2" ngModel (ngModelChange)="filter($event, 'content2')" vts-input />
+            <input
+              name="filter2"
+              ngModel
+              (ngModelChange)="filter($event, 'content2')"
+              vts-input
+              vtsSize="sm"
+            />
           </td>
           <td>
-            <input name="filter3" ngModel (ngModelChange)="filter($event, 'content3')" vts-input />
+            <input
+              name="filter3"
+              ngModel
+              (ngModelChange)="filter($event, 'content3')"
+              vts-input
+              vtsSize="sm"
+            />
           </td>
           <td>
-            <input name="filter4" ngModel (ngModelChange)="filter($event, 'content4')" vts-input />
+            <input
+              name="filter4"
+              ngModel
+              (ngModelChange)="filter($event, 'content4')"
+              vts-input
+              vtsSize="sm"
+            />
           </td>
           <td></td>
         </tr>

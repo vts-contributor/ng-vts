@@ -21,7 +21,7 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
 @Component({
   selector:
-    'td[vtsChecked], td[vtsDisabled], td[vtsIndeterminate], td[vtsIndentSize], td[vtsExpand], td[vtsShowExpand], td[vtsShowCheckbox]',
+    'td[vtsChecked], td[vtsDisabled], td[vtsIndeterminate], td[vtsIndentSize], td[vtsExpand], td[vtsShowExpand], td[vtsShowCheckbox], td[vtsNoWrap]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
@@ -48,13 +48,15 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
   `,
   host: {
     '[class.vts-table-cell-with-append]': `vtsShowExpand || vtsIndentSize > 0`,
-    '[class.vts-table-selection-column]': `vtsShowCheckbox`
+    '[class.vts-table-selection-column]': `vtsShowCheckbox`,
+    '[class.vts-table-cell-nowrap]': `vtsNoWrap`
   }
 })
 export class VtsTdAddOnComponent implements OnChanges {
   static ngAcceptInputType_vtsShowExpand: BooleanInput;
   static ngAcceptInputType_vtsShowCheckbox: BooleanInput;
   static ngAcceptInputType_vtsExpand: BooleanInput;
+  static ngAcceptInputType_vtsNoWrap: BooleanInput;
 
   @Input() vtsChecked = false;
   @Input() vtsDisabled = false;
@@ -63,6 +65,7 @@ export class VtsTdAddOnComponent implements OnChanges {
   @Input() @InputBoolean() vtsShowExpand = false;
   @Input() @InputBoolean() vtsShowCheckbox = false;
   @Input() @InputBoolean() vtsExpand = false;
+  @Input() @InputBoolean() vtsNoWrap = false;
   @Input() vtsExpandTemplate: TemplateRef<{
     $implicit: boolean;
   }> | null = null;

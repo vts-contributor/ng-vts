@@ -2,16 +2,10 @@
 category: Components
 type: Data Display
 title: Tag
-cover: https://gw.alipayobjects.com/zos/alicdn/cH1BOLfxC/Tag.svg
+cols: 1
+order: 100
+cover: ''
 ---
-
-Tag for categorizing or markup.
-
-## When To Use
-
-- It can be used to tag by dimension or property.
-
-- When categorizing.
 
 ```ts
 import { VtsTagModule } from '@ui-vts/ng-vts/tag';
@@ -23,8 +17,15 @@ import { VtsTagModule } from '@ui-vts/ng-vts/tag';
 
 | Property | Description | Type | Default |
 | -------- | ----------- | ---- | ------- |
-| `[vtsMode]` | Mode of tag | `'closeable' \| 'default' \| 'checkable'` | `'default'` |
-| `[vtsChecked]` | Checked status of Tag, double binding, only works when `vtsMode="checkable"` | `boolean` | `false` |
-| `[vtsColor]` | Color of the Tag | `string` | - |
-| `(vtsOnClose)` | Callback executed when tag is closed, only works when `vtsMode="closable"`| `EventEmitter<MouseEvent>` | - |
-| `(vtsCheckedChange)` | Checked status change call back, only works when `vtsMode="checkable"` | `EventEmitter<boolean>` | - |
+| vtsMode | Mode of tag | `'closeable' \| 'default' \| 'checkable'` | `'default'` |
+| [(vtsChecked)] | Checked status of Tag, only works when `vtsMode="checkable"` | `boolean` | `false` |
+| (vtsOnClose) | Emit on tag closing, only works when `vtsMode="closable"`| `EventEmitter<MouseEvent>` | |
+| vtsColor | Custom colors of the Tag | `VtsTagCustomColor` | |
+
+### VtsTagCustomColor
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| background | Background of tag | `string` | |
+| color | Color of tag | `string` | |
+| checkedBackground | Background of tag on checked, only works when `vtsMode="checkable"` | `string` | |
+| checkedColor | Color of tag on checked, only works when `vtsMode="checkable"` | `string` | |
