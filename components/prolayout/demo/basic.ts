@@ -14,7 +14,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
       [vtsBreadcrumbArray]="arrayMenuItem" 
       [vtsFooterTemplate]="footerTemplate" 
       [vtsNotificationConfig]="vtsNotificationConfig"
-      [menuTemplate]="menuTemplate">
+      [vtsMenuTemplate]="menuTemplate">
         <ng-template #menuTemplate>          
             <ul vts-menu>
                 <li vts-menu-item>1st menu item</li>

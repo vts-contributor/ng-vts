@@ -85,7 +85,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     overflowCount: 99
   }
   @Input() vtsVisibleNotifyPane: boolean = false;
-  @Input() menuTemplate: TemplateRef<void> | null = null;
+  @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
