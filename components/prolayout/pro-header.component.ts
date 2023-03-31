@@ -21,7 +21,6 @@ import { VtsProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig } from './pro-layout.types';
 import { Subscription } from 'rxjs';
-// import { VtsDropdownMenuComponent } from '@ui-vts/ng-vts/dropdown';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -98,11 +97,12 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   showMenu: boolean = false;
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
   @Input() vtsLogoUrl: string = "";
-  @Input() vtsNotificationOverflowCount: number = 99;
+  @Input() menuTemplate: TemplateRef<void> | null = null;
   @Input() vtsNotificationConfig: VtsNotificationConfig = {
     type: "menuContext",
-    menuConfig: null
+    overflowCount: 99
   }
+  @Input() vtsVisibleNotifyPane: boolean = false;
 
   ngOnInit(): void {
     // receive menus from container
@@ -158,7 +158,10 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const { title } = changes;
+    const { title, menuTemplate } = changes;
+    if(menuTemplate.currentValue){
+      console.log(menuTemplate.currentValue);
+    }
     if(!this.useSplitMenu){
       if (this.vtsTitle || (title && title.currentValue)) {
         // add a wrapper item to create a menu button
@@ -209,8 +212,8 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.prolayoutService.onChangeCollapedSider(!this.isCollapsedSider);
   }
 
-  openNotificationPane(evt: MouseEvent){
-    this.prolayoutService.openNotificationPane(this.vtsNotificationConfig.type, {x: evt.clientX, y: evt.clientY}, this.vtsNotificationConfig.menuConfig);
+  openNotificationPane(){
+    this.prolayoutService.openNotificationPane(this.vtsNotificationConfig.type);
   }
 
 }

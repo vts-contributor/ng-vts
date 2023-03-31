@@ -3,8 +3,6 @@
  */
 
 import { VtsSizeLDSType } from "@ui-vts/ng-vts/core/types"
-import { VtsDropdownMenuComponent } from "@ui-vts/ng-vts/dropdown"
-import { VtsDrawerOptions } from "@ui-vts/ng-vts/drawer"
 
 export type VtsMenuItemProLayout = {
     title: string,
@@ -35,8 +33,7 @@ export type VtsAvatarMenu = {
 
 export type VtsNotificationConfig = {
     type: VtsNotiPaneType,
-    drawerConfig?: VtsDrawerOptions,
-    menuConfig: VtsDropdownMenuComponent | null
+    overflowCount: number
 }
 
 export type VtsNotiPaneType = "drawer" | "menuContext";

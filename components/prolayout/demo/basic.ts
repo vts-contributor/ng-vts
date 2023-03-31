@@ -1,35 +1,44 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { VtsDropdownMenuComponent } from '@ui-vts/ng-vts/dropdown';
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container [vtsMenuHeader]="menuData" [vtsMenuSider]="menuData" [vtsAvatar]="avatar" [vtsAvatarMenu]="avatarMenu" [vtsLogoUrl]="logoUrl" [vtsBreadcrumbArray]="arrayMenuItem" [vtsFooterTemplate]="footerTemplate"F [vtsNotificationConfig]="vtsNotificationConfig">
+    <vts-prolayout-container     
+      [vtsMenuHeader]="menuData" 
+      [vtsMenuSider]="menuData" 
+      [vtsAvatar]="avatar" 
+      [vtsAvatarMenu]="avatarMenu" 
+      [vtsLogoUrl]="logoUrl" 
+      [vtsBreadcrumbArray]="arrayMenuItem" 
+      [vtsFooterTemplate]="footerTemplate" 
+      [vtsVisibleNotifyPane]="vtsVisibleNotifyPane" 
+      [vtsNotificationConfig]="vtsNotificationConfig"
+      [menuTemplate]="menuTemplate">
+        <ng-template #menuTemplate>          
+            <ul vts-menu>
+                <li vts-menu-item>1st menu item</li>
+                <li vts-menu-item>2nd menu item</li>
+                <li vts-menu-item vtsDisabled>disabled menu item</li>
+                <li vts-submenu vtsTitle="sub menu">
+                <ul>
+                    <li vts-menu-item>3rd menu item</li>
+                    <li vts-menu-item>4th menu item</li>
+                </ul>
+                </li>
+                <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
+                <ul>
+                    <li vts-menu-item>3rd menu item</li>
+                    <li vts-menu-item>4th menu item</li>
+                </ul>
+                </li>
+            </ul>             
+        </ng-template>
     </vts-prolayout-container>
 
-    <vts-dropdown-menu #defaultMenu="vtsDropdownMenu">
-        <ul vts-menu>
-            <li vts-menu-item>1st menu item</li>
-            <li vts-menu-item>2nd menu item</li>
-            <li vts-menu-item vtsDisabled>disabled menu item</li>
-            <li vts-submenu vtsTitle="sub menu">
-            <ul>
-                <li vts-menu-item>3rd menu item</li>
-                <li vts-menu-item>4th menu item</li>
-            </ul>
-            </li>
-            <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
-            <ul>
-                <li vts-menu-item>3rd menu item</li>
-                <li vts-menu-item>4th menu item</li>
-            </ul>
-            </li>
-        </ul>   
-    </vts-dropdown-menu>
-    <vts-drawer
-      [vtsClosable]="false"
+    <vts-drawer      
+    [vtsClosable]="false"
       [vtsVisible]="vtsVisibleNotifyPane"
       vtsPlacement="right"
       vtsTitle="Basic Drawer"
@@ -48,7 +57,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
     </ng-template>
   `
 })
-export class VtsDemoProlayoutBasicComponent implements AfterViewInit {
+export class VtsDemoProlayoutBasicComponent {
 
   constructor(private service: VtsProlayoutService){
     this.service.onChangeNotification(10);
@@ -111,25 +120,15 @@ export class VtsDemoProlayoutBasicComponent implements AfterViewInit {
     { label: 'Application 1' }
   ];
   isCollapsed = false;
-  @ViewChild('defaultMenu') defaultConfigNotiPane: VtsDropdownMenuComponent | null = null;
-
-  vtsNotificationConfig: VtsNotificationConfig = {
-    type: "menuContext",
-    menuConfig: this.defaultConfigNotiPane
-  }
 
   toggleCollapsed() {
     this.isCollapsed = !this.isCollapsed;
   }
 
   vtsVisibleNotifyPane: boolean = false;
-
-  ngAfterViewInit(): void {
-      let defaultConfig: VtsNotificationConfig = JSON.parse(JSON.stringify(this.vtsNotificationConfig));
-      defaultConfig.menuConfig = this.defaultConfigNotiPane;
-      this.vtsNotificationConfig = {
-        ...defaultConfig
-      }
+  vtsNotificationConfig: VtsNotificationConfig = {
+    type: "drawer",
+    overflowCount: 99
   }
 
   close(){
