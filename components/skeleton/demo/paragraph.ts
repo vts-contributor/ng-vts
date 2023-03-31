@@ -14,7 +14,12 @@ import { Component } from '@angular/core';
       </span>
       <span *vtsSpaceItem>
         Number of rows: &nbsp;
-        <vts-input-number [vtsMin]="1" [vtsStep]="1" [(ngModel)]="rows"></vts-input-number>
+        <vts-input-number
+          style="width: 90px"
+          [vtsMin]="1"
+          [vtsStep]="1"
+          [(ngModel)]="rows"
+        ></vts-input-number>
       </span>
     </vts-space>
     <br />

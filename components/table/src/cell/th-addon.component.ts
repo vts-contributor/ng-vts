@@ -31,7 +31,7 @@ import {
 
 @Component({
   selector:
-    'th[vtsColumnKey], th[vtsSortFn], th[vtsSortOrder], th[vtsFilters], th[vtsShowSort], th[vtsShowFilter], th[vtsCustomFilter]',
+    'th[vtsColumnKey], th[vtsSortFn], th[vtsSortOrder], th[vtsFilters], th[vtsShowSort], th[vtsShowFilter], th[vtsCustomFilter], th[vtsNoWrap]',
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,6 +66,7 @@ import {
   host: {
     '[class.vts-table-column-has-sorters]': 'vtsShowSort',
     '[class.vts-table-column-sort]': `sortOrder === 'descend' || sortOrder === 'ascend'`,
+    '[class.vts-table-cell-nowrap]': `vtsNoWrap`,
     '(click)': 'emitNextSortValue()'
   }
 })
@@ -73,6 +74,7 @@ export class VtsThAddOnComponent implements OnChanges, OnInit, OnDestroy {
   static ngAcceptInputType_vtsShowSort: BooleanInput;
   static ngAcceptInputType_vtsShowFilter: BooleanInput;
   static ngAcceptInputType_vtsCustomFilter: BooleanInput;
+  static ngAcceptInputType_vtsNoWrap: BooleanInput;
 
   manualClickOrder$ = new Subject<VtsThAddOnComponent>();
   calcOperatorChange$ = new Subject();
@@ -94,6 +96,7 @@ export class VtsThAddOnComponent implements OnChanges, OnInit, OnDestroy {
   @Input() @InputBoolean() vtsShowSort = false;
   @Input() @InputBoolean() vtsShowFilter = false;
   @Input() @InputBoolean() vtsCustomFilter = false;
+  @Input() @InputBoolean() vtsNoWrap = false;
   @Output() readonly vtsCheckedChange = new EventEmitter<boolean>();
   @Output() readonly vtsSortOrderChange = new EventEmitter<string | null>();
   @Output() readonly vtsFilterChange = new EventEmitter<VtsTableFilterValue>();

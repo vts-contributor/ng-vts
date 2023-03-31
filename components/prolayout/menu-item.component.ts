@@ -7,7 +7,7 @@ import { VtsMenuItemProLayout } from './pro-layout.types';
   templateUrl: 'menu-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  preserveWhitespaces: false,
+  preserveWhitespaces: false
 })
 export class VtsProlayoutMenuItemComponent implements OnInit {
   @Input() vtsMenuItem: VtsMenuItemProLayout = {
@@ -15,7 +15,7 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
     children: [],
     isSelected: false
   };
-  defaultIcon: string = "AddDoutone:vts";
+  defaultIcon: string = 'AddDoutone:vts';
   currentUrl: string = "";
 
   constructor(private router: Router, private cdf: ChangeDetectorRef) {

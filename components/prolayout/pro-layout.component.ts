@@ -25,7 +25,7 @@ import { Subscription } from 'rxjs';
   templateUrl: 'pro-layout.component.html',
   styles: [
     `
-     .vts-breadcrumb {
+      .vts-breadcrumb {
         margin-bottom: 24px;
       }
 
@@ -48,11 +48,8 @@ import { Subscription } from 'rxjs';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
-  constructor(
-    private elementRef: ElementRef,
-    private prolayoutService: ProlayoutService
-  ) {
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
+  constructor(private elementRef: ElementRef, private prolayoutService: ProlayoutService) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
   }
@@ -68,15 +65,16 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
   @Input() vtsMenuHeader: VtsMenuItemProLayout[] = [];
-  @Input() vtsMenuSider: VtsMenuItemProLayout[] = [];  
-  @Input() vtsHeaderTitle: string | TemplateRef<void> | null = "GOVERNMENT SOLUTION CENTER PLATFORM";
+  @Input() vtsMenuSider: VtsMenuItemProLayout[] = [];
+  @Input() vtsHeaderTitle: string | TemplateRef<void> | null =
+    'GOVERNMENT SOLUTION CENTER PLATFORM';
   @Input() vtsAvatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution'
   };
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
-  @Input() vtsLogoUrl: string = "";
+  @Input() vtsLogoUrl: string = '';
   @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
@@ -89,14 +87,14 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;
-    if(!value && this.isFixedHeader){
+    if (!value && this.isFixedHeader) {
       this.isFixedHeader = false;
     }
   }
 
   onChangeVisiblitySider(value: boolean) {
     this.isShowSider = value;
-    if(!value && this.isFixedSider){
+    if (!value && this.isFixedSider) {
       this.isFixedSider = false;
     }
   }
@@ -105,27 +103,23 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     this.isShowFooter = value;
   }
 
-  onChangeThemeColor(color: string){
+  onChangeThemeColor(color: string) {
     this.themeColor = color;
   }
 
-  onSelectMenuSiderItem(selected: VtsMenuItemProLayout){
-    let menuSider = [
-      ...this.vtsMenuSider
-    ];
+  onSelectMenuSiderItem(selected: VtsMenuItemProLayout) {
+    let menuSider = [...this.vtsMenuSider];
     menuSider.forEach(item => {
-      if(item.isSelected){
+      if (item.isSelected) {
         item.isSelected = false;
       }
-    })
+    });
     menuSider.forEach(item => {
-      if(item.id == selected.id){
+      if (item.id == selected.id) {
         item.isSelected = true;
       }
-    })
-    this.vtsMenuSider = [
-      ...menuSider
-    ];
+    });
+    this.vtsMenuSider = [...menuSider];
   }
 
   ngOnInit(): void {
@@ -134,29 +128,39 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     this.prolayoutService.onChangeMenuSider(this.vtsMenuSider);
 
     // on change ix fixed
-    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe((isFixed: boolean) => {
-      this.isFixedSider = isFixed;
-    });
-    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe((isFixed: boolean) => {
-      this.isFixedHeader = isFixed;
-    });
+    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe(
+      (isFixed: boolean) => {
+        this.isFixedSider = isFixed;
+      }
+    );
+    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe(
+      (isFixed: boolean) => {
+        this.isFixedHeader = isFixed;
+      }
+    );
 
     // onchange visibility
-    this.visibleHeaderSubscription = this.prolayoutService.visibilityHeaderChange$.subscribe((isShow: boolean) => {
-      this.onChangeVisiblityHeader(isShow);
-    });
-    this.visisbleSiderSubscription = this.prolayoutService.visibilitySiderChange$.subscribe((isShow: boolean) => {
-      this.onChangeVisiblitySider(isShow);
-    });
-    this.visibleFooterSubscription = this.prolayoutService.visibilityFooterChange$.subscribe((isShow: boolean) => {
-      this.onChangeVisiblityFooter(isShow);
-    });
+    this.visibleHeaderSubscription = this.prolayoutService.visibilityHeaderChange$.subscribe(
+      (isShow: boolean) => {
+        this.onChangeVisiblityHeader(isShow);
+      }
+    );
+    this.visisbleSiderSubscription = this.prolayoutService.visibilitySiderChange$.subscribe(
+      (isShow: boolean) => {
+        this.onChangeVisiblitySider(isShow);
+      }
+    );
+    this.visibleFooterSubscription = this.prolayoutService.visibilityFooterChange$.subscribe(
+      (isShow: boolean) => {
+        this.onChangeVisiblityFooter(isShow);
+      }
+    );
   }
 
   /**
-  * destroy all subscription of prolayout service   
-  */
-  destroySubscriptions(){
+   * destroy all subscription of prolayout service
+   */
+  destroySubscriptions() {
     this.fixedHeaderSubscription.unsubscribe();
     this.fixedSiderSubscription.unsubscribe();
     this.visibleFooterSubscription.unsubscribe();

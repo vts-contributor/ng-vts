@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2 } from '@angular/core';
-import { isNotNil } from '@ui-vts/ng-vts/core/util';
-import { NgClassInterface } from '@ui-vts/ng-vts/core/types';
+import { InputBoolean, isNotNil } from '@ui-vts/ng-vts/core/util';
+import { BooleanInput, NgClassInterface } from '@ui-vts/ng-vts/core/types';
 
 export type VtsTypographyType =
   | 'h1'
@@ -49,6 +49,8 @@ interface EmbeddedProperty {
   exportAs: 'vtsTypography'
 })
 export class VtsTypographyDirective implements OnInit, OnChanges {
+  static ngAcceptInputType_vtsNoWrap: BooleanInput;
+  static ngAcceptInputType_vtsTruncate: BooleanInput;
   private classMap: { [key: string]: boolean } = {};
   @Input() vtsType: VtsTypographyType | null = null;
   @Input() vtsColor: VtsTypographyColor | null = null;
@@ -62,6 +64,8 @@ export class VtsTypographyDirective implements OnInit, OnChanges {
   @Input() vtsMd: EmbeddedProperty | null = null;
   @Input() vtsLg: EmbeddedProperty | null = null;
   @Input() vtsXl: EmbeddedProperty | null = null;
+  @Input() @InputBoolean() vtsNoWrap: boolean = false;
+  @Input() @InputBoolean() vtsTruncate: boolean = false;
 
   setHostClass() {
     const hostClassMap = {
@@ -71,6 +75,7 @@ export class VtsTypographyDirective implements OnInit, OnChanges {
       [`vts-typo-align-${this.vtsAlign}`]: isNotNil(this.vtsAlign),
       [`vts-typo-transform-${this.vtsTransform}`]: isNotNil(this.vtsTransform),
       [`vts-typo-weight-${this.vtsWeight}`]: isNotNil(this.vtsWeight),
+      [`vts-typo-nowrap`]: this.vtsNoWrap,
       ...this.generateClass()
     };
 

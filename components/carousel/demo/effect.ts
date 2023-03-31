@@ -14,7 +14,12 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
       </span>
       <span *vtsSpaceItem>
         Transition speed: &nbsp;
-        <vts-input-number [vtsMin]="500" [vtsStep]="500" [(ngModel)]="speed"></vts-input-number>
+        <vts-input-number
+          style="width: 90px"
+          [vtsMin]="500"
+          [vtsStep]="500"
+          [(ngModel)]="speed"
+        ></vts-input-number>
       </span>
     </vts-space>
     <p>Slide</p>

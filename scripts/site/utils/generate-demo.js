@@ -124,6 +124,7 @@ function wrapperAPI(content) {
                        .replace(/<td>/g, '<td class="vts-table-cell">')
                        .replace(/<th>/g, '<th class="vts-table-cell">')
                        .replace(/<tr>/g, '<tr class="vts-table-row">')
+                       .replace(/<table>/g, '<table class="vts-table vts-table-sm">')
   return `<section class="markdown api-container" ngNonBindable>
     <div class="vts-table vts-table-bordered">
       <div class="vts-table-container" style="border:none !important;">

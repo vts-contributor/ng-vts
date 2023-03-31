@@ -17,11 +17,21 @@ import { VtsCarouselOptions } from '@ui-vts/ng-vts/carousel';
     <vts-space vtsPreset="3" vtsWrap vtsAlign="center">
       <span *vtsSpaceItem>
         Item per view: &nbsp;
-        <vts-input-number [vtsMin]="1" [vtsStep]="1" [(ngModel)]="slidesPerView"></vts-input-number>
+        <vts-input-number
+          style="width: 90px"
+          [vtsMin]="1"
+          [vtsStep]="1"
+          [(ngModel)]="slidesPerView"
+        ></vts-input-number>
       </span>
       <span *vtsSpaceItem>
         Space between: &nbsp;
-        <vts-input-number [vtsMin]="0" [vtsStep]="4" [(ngModel)]="spaceBetween"></vts-input-number>
+        <vts-input-number
+          style="width: 90px"
+          [vtsMin]="0"
+          [vtsStep]="4"
+          [(ngModel)]="spaceBetween"
+        ></vts-input-number>
       </span>
     </vts-space>
     <p></p>

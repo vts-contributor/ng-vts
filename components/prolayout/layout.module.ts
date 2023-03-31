@@ -40,7 +40,7 @@ import { VtsThemeModule } from '@ui-vts/theme/services'
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [    
+  declarations: [
     VtsProLayoutContainerComponent,
     VtsHeaderComponent,
     VtsContentComponent,
@@ -53,10 +53,7 @@ import { RouterModule } from '@angular/router';
     VtsSettingDrawerComponent,
     VtsProlayoutBreadCrumbComponent
   ],
-  exports: [
-    VtsProLayoutContainerComponent,
-    VtsFooterComponent
-  ],
+  exports: [VtsProLayoutContainerComponent, VtsFooterComponent],
   imports: [
     BidiModule,
     RouterModule,
@@ -89,7 +86,7 @@ import { RouterModule } from '@angular/router';
         {
           theme: 'default',
           url: '/default.css'
-        },
+        }
       ],
       defaultTheme: 'default'
     })

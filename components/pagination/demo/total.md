@@ -1,15 +1,7 @@
 ---
-order: 9
+order: 1
 title:
-  zh-CN: 总数
   en-US: Total number
 ---
 
-## zh-CN
-
-通过设置 `vtsShowTotal` 展示总共有多少数据。
-
 ## en-US
-
-You can show the total number of data by setting `vtsShowTotal`.
-

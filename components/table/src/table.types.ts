@@ -13,7 +13,7 @@ export type VtsTableData =
 export type VtsTableLayout = 'fixed' | 'auto';
 export type VtsTablePaginationPosition = 'top' | 'bottom' | 'both';
 export type VtsTablePaginationType = 'default' | 'small';
-export type VtsTableSize = 'middle' | 'default' | 'small';
+export type VtsTableSize = 'sm' | 'md' | 'lg';
 export type VtsTableFilterList = Array<{
   text: string;
   value: VtsSafeAny;

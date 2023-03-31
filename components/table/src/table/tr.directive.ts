@@ -9,7 +9,8 @@ import {
   Directive,
   OnDestroy,
   Optional,
-  QueryList
+  QueryList,
+  Input
 } from '@angular/core';
 import { combineLatest, merge, Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -21,10 +22,13 @@ import { VtsTableStyleService } from '../table-style.service';
   selector:
     'tr:not([mat-row]):not([mat-header-row]):not([vts-table-measure-row]):not([vtsExpand]):not([vts-table-fixed-row])',
   host: {
-    '[class.vts-table-row]': 'isInsideTable'
+    '[class.vts-table-row]': 'isInsideTable',
+    '[class.vts-table-row-odd]': 'isOdd',
+    '[class.vts-table-row-even]': '!isOdd'
   }
 })
 export class VtsTrDirective implements AfterContentInit, OnDestroy {
+  @Input() isOdd: boolean = true;
   @ContentChildren(VtsThMeasureDirective)
   listOfVtsThDirective!: QueryList<VtsThMeasureDirective>;
   @ContentChildren(VtsCellFixedDirective)

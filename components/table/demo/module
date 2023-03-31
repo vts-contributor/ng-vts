@@ -4,11 +4,13 @@ import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
 import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsFormModule } from '@ui-vts/ng-vts/form';
 import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
-import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsPopconfirmModule } from '@ui-vts/ng-vts/popconfirm';
+import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsTypographyModule } from '@ui-vts/ng-vts/typography';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
 
 export const moduleList = [
   VtsTableModule,
@@ -17,9 +19,11 @@ export const moduleList = [
   VtsSwitchModule,
   VtsFormModule,
   VtsRadioModule,
-  VtsBadgeModule,
   VtsButtonModule,
   VtsInputModule,
   VtsIconModule,
-  VtsPopconfirmModule
+  VtsPopconfirmModule,
+  VtsTagModule,
+  VtsTypographyModule,
+  VtsSpaceModule
 ];
