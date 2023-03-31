@@ -13,3 +13,4 @@ export * from './layout.module';
 export * from './setting-drawer.component';
 export * from './pro-layout.types';
 export * from './pro-layout.service';
+export * from './block-ui.service';
