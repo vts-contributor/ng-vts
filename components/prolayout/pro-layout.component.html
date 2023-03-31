@@ -1,4 +1,4 @@
-<vts-prolayout>
+<vts-prolayout *ngIf="!isScreenLocked">
     <vts-prolayout-sider vtsWidth="250px" [vtsLogoUrl]="vtsLogoUrl"
         *ngIf="isShowSider && isFixedSider"></vts-prolayout-sider>
 
@@ -74,3 +74,5 @@
 <ng-template #compContent>
     <ng-content></ng-content>
 </ng-template>
+
+<block-ui></block-ui>

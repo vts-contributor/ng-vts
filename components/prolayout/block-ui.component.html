@@ -1,11 +1,9 @@
-<div>Screen is currently locked</div>
+<div style="position: fixed; height: 100%; width: 100%; justify-content: center; background-color: white; font-size: xx-large; top: 0; left: 0; z-index: 10000; display: flex; align-items: center;" *ngIf="isLockOrUnlock">Screen is currently locked</div>
 <vts-modal
-  [(vtsVisible)]="isVisible"
+  [(vtsVisible)]="isShowInput"
   vtsTitle="The first Modal"
-  (vtsOnCancel)="handleCancel()"
-  (vtsOnOk)="handleOk()"
 >
-  <form [vtsLayout]="'vertical'" vts-form [formGroup]="form" (ngSubmit)="submit()">
+  <form [vtsLayout]="'vertical'" vts-form [formGroup]="form">
     <vts-form-item>
       <vts-form-label vtsRequired>Nhập mật khẩu khóa màn hình:</vts-form-label>
       <vts-form-control>
@@ -18,5 +16,23 @@
         />
       </vts-form-control>
     </vts-form-item>
+    <vts-form-item *ngIf="isLockOrUnlock; else isCurrentlyUnlock">
+      <vts-form-control>
+        <button vtsSize="sm" vts-button (click)="submit()">
+          <i vts-icon vtsType="AddCircle"></i>
+          Unlock
+        </button>
+      </vts-form-control>
+    </vts-form-item>
+    <ng-template #isCurrentlyUnlock>
+      <vts-form-item>
+        <vts-form-control>
+          <button vtsSize="sm" vts-button (click)="submit()">
+            <i vts-icon vtsType="AddCircle"></i>
+            Lock
+          </button>
+        </vts-form-control>
+      </vts-form-item>
+    </ng-template>
   </form>
 </vts-modal>

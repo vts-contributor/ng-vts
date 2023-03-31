@@ -13,6 +13,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
+import { VtsBlockUIService } from './block-ui.service';
 import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
@@ -51,7 +52,8 @@ import { Subscription } from 'rxjs';
 export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   constructor(
     private elementRef: ElementRef,
-    private prolayoutService: VtsProlayoutService
+    private prolayoutService: VtsProlayoutService,
+    private lockUiService: VtsBlockUIService
   ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
@@ -93,6 +95,8 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   private visibleHeaderSubscription = Subscription.EMPTY;
   private visisbleSiderSubscription = Subscription.EMPTY;
   private visibleFooterSubscription = Subscription.EMPTY;
+  private lockStateSubscription = Subscription.EMPTY;
+  isScreenLocked: boolean = false;
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;
@@ -164,6 +168,11 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
         this.onChangeVisiblityFooter(isShow);
       }
     );
+
+    // show/hide lock screen
+      this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe((isShow: boolean) => {
+        this.isScreenLocked = isShow;
+      });
   }
 
   /**
@@ -175,5 +184,6 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     this.visibleFooterSubscription.unsubscribe();
     this.visibleHeaderSubscription.unsubscribe();
     this.visisbleSiderSubscription.unsubscribe();
+    this.lockStateSubscription.unsubscribe();
   }
 }

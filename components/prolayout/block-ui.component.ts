@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { VtsBlockUIService } from '@ui-vts/ng-vts/block-ui.service';
+import { VtsBlockUIService } from './block-ui.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -8,36 +8,53 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
     templateUrl: 'block-ui.component.html'
 })
 
-export class BlockUIComponent implements OnInit, OnDestroy {
+export class VtsBlockUIComponent implements OnInit, OnDestroy {
     constructor(
         private blockUIService: VtsBlockUIService
     ) { }
 
-    // reset to locked UI if true, otherwise show an input for user to type
-    setBlockUI: boolean = false;
+    isShowInput: boolean = false;
+    /**
+     *  true -> input to lock, false -> input to unlock
+     * */ 
+    isLockOrUnlock: boolean = false;
     form: FormGroup = new FormGroup({
         password: new FormControl("", Validators.required)
     });
 
     private lockStateSubscription = Subscription.EMPTY;
+    private visibleInputPassSubscription = Subscription.EMPTY;
 
     ngOnDestroy(): void {
         this.lockStateSubscription.unsubscribe();
+        this.visibleInputPassSubscription.unsubscribe();
     }
 
     ngOnInit() { 
         this.lockStateSubscription = this.blockUIService.lockUIStateChange$.subscribe((isLocked: boolean) => {
             if(isLocked){
-                this.setBlockUI = true;
+                this.isShowInput = false;
+                this.isLockOrUnlock = true;
             }
+            else {
+                this.isShowInput = false;
+                this.isLockOrUnlock = false;
+            }
+        })
+        this.visibleInputPassSubscription = this.blockUIService.showInputChange$.subscribe((isShow: boolean) => {
+            this.isShowInput = isShow;
         })
     }
 
     showInput(){
-        this.setBlockUI = false;
+        this.isShowInput = true;
+        this.isLockOrUnlock = this.blockUIService.getLockState();
     }
 
     submit(){
-        this.blockUIService.unlockScreen(this.form.get('password')?.value);
+        if(this.isLockOrUnlock){
+            this.blockUIService.unlockScreen(this.form.get('password')?.value);
+        }
+        else this.blockUIService.lockScreen(this.form.get('password')?.value);
     }
 }

@@ -8,7 +8,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
 import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
@@ -39,6 +39,10 @@ import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
 import { VtsThemeModule } from '@ui-vts/theme/services'
 import { RouterModule } from '@angular/router';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { VtsBlockUIComponent } from './block-ui.component';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsModalModule } from '../modal';
 
 @NgModule({
   declarations: [
@@ -52,13 +56,15 @@ import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
     VtsProlayoutMenuItemComponent,
     VtsProlayoutMenuItemHorizontalComponent,
     VtsSettingDrawerComponent,
-    VtsProlayoutBreadCrumbComponent
+    VtsProlayoutBreadCrumbComponent,
+    VtsBlockUIComponent
   ],
   exports: [VtsProLayoutContainerComponent, VtsFooterComponent],
   imports: [
     BidiModule,
     RouterModule,
     CommonModule,
+    ReactiveFormsModule,
     OverlayModule,
     VtsIconModule,
     LayoutModule,
@@ -69,6 +75,8 @@ import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
     FormsModule,
     VtsMenuModule,
     VtsBreadCrumbModule,
+    VtsFormModule,
+    VtsInputModule,
     VtsAvatarModule,
     VtsDividerModule,
     VtsTagModule,
@@ -76,6 +84,7 @@ import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
     VtsSelectModule,
     VtsDropDownModule,
     VtsNoAnimationModule,
+    VtsModalModule,
     VtsOutletModule,
     VtsToolTipModule,
     VtsBadgeModule,

@@ -23,6 +23,7 @@ import { Router } from "@angular/router";
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig } from './pro-layout.types';
 import { Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { VtsBlockUIService } from './block-ui.service';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -64,6 +65,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     public elementRef: ElementRef,
     private renderer: Renderer2,
     private prolayoutService: VtsProlayoutService,
+    private lockUiService: VtsBlockUIService,
     private cdf: ChangeDetectorRef,
     private router: Router,
     @Inject(DOCUMENT) private document: Document
@@ -233,6 +235,10 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
       this.document.documentElement.requestFullscreen();
     }
     this.isFullScreen = !this.isFullScreen;
+  }
+
+  lockScreen(){
+    this.lockUiService.showInputPassword();
   }
 
 }
