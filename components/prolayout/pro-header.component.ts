@@ -15,12 +15,14 @@ import {
   ChangeDetectorRef,
   OnInit,
   TemplateRef,
-  OnDestroy
+  OnDestroy,
+  Inject
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig } from './pro-layout.types';
 import { Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -63,7 +65,8 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     private renderer: Renderer2,
     private prolayoutService: VtsProlayoutService,
     private cdf: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
   }
@@ -76,6 +79,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   menuData: VtsMenuItemProLayout[] = [];
   isCollapsedSider: boolean = false;
   notificationCount: number = 0;
+  isFullScreen: boolean = false;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
@@ -219,6 +223,16 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   openNotificationPane(){
     this.prolayoutService.openNotificationPane(this.vtsNotificationConfig.type);
+  }
+
+  toggleFullScreen(){    
+    if(this.isFullScreen){
+      this.document.exitFullscreen();
+    }
+    else {
+      this.document.documentElement.requestFullscreen();
+    }
+    this.isFullScreen = !this.isFullScreen;
   }
 
 }

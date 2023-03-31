@@ -22,6 +22,9 @@
             <i vts-icon vtsType="Search" class="cursor-pointer" style="color: white;"></i>
         </div>
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+            <i vts-icon vtsType="FullScreen:vts" class="cursor-pointer" style="color: white;" (click)="toggleFullScreen()"></i>
+        </div>
+        <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
             <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" *ngIf="notificationCount === 0; else hasNotification"></i>
             <ng-template #hasNotification>
                 <!-- render notification pane based on type, default to be a menu context -->
