@@ -34,12 +34,16 @@
             formControlName="password"
             [placeholder]="'Mật khẩu'"
             [autofocus]="true"
-            type="password"
+            [type]="inputType"
             autocomplete="new-password"          
           />
         </vts-input-group>
         <ng-template #suffixIcon>
-          <i vts-icon vtsType="Eye:vts"></i>
+          <!-- show or hide password string -->
+          <i vts-icon vtsType="Eye:vts" class="cursor-pointer" *ngIf="inputType === 'password'; else typeText" (click)="onChangeInputType()"></i>
+          <ng-template #typeText>
+            <i vts-icon vtsType="EyeOff" class="cursor-pointer" (click)="onChangeInputType()"></i>
+          </ng-template>
         </ng-template>
       </vts-form-control>
     </vts-form-item>
