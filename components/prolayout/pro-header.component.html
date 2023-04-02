@@ -5,9 +5,15 @@
             <i vts-icon [vtsType]="'NotesDoutone-1'"></i>
         </button>
     </div>
+    <!-- Title with menu -->
     <div vts-col class="title-container" vtsFlex="auto">
         <ng-container *ngIf="vtsTitle">
-            {{ vtsTitle }}
+            <ng-container *ngIf="windowSize == 'large'; else shortTitle">
+                {{ vtsTitle }}
+            </ng-container>            
+            <ng-template #shortTitle>
+                GSCP
+            </ng-template>
         </ng-container>
         <ng-container *ngIf="!useSplitMenu">
             <ul vts-menu vtsTheme="dark" vtsMode="horizontal" class="header-menu">
@@ -18,15 +24,19 @@
         </ng-container>
     </div>
     <div vts-col vts-row class="avatar-container" [vtsGutter]="20">
+        <!-- Search -->
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
             <i vts-icon vtsType="Search" class="cursor-pointer" style="color: white;"></i>
         </div>
+        <!-- Full screen -->
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
             <i vts-icon vtsType="FullScreen:vts" class="cursor-pointer" style="color: white;" (click)="toggleFullScreen()"></i>
         </div>
+        <!-- Block UI -->
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
             <i vts-icon vtsType="Lock:vts" class="cursor-pointer" style="color: white;" (click)="lockScreen()"></i>
         </div>
+        <!-- Notification -->
         <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
             <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" *ngIf="notificationCount === 0; else hasNotification"></i>
             <ng-template #hasNotification>
@@ -54,7 +64,7 @@
         <!-- avatar with menu dropdown -->
         <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length > 0; else withoutDropdown">
             <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
-            <div vts-col style="margin-left: 5px;">
+            <div vts-col style="margin-left: 5px;" *ngIf="windowSize == 'large'">
                 <div class="username">
                     {{ vtsAvatar.name }}
                 </div>
@@ -67,7 +77,7 @@
         <ng-template #withoutDropdown>
             <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar">
                 <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
-                <div vts-col style="margin-left: 5px;">
+                <div vts-col style="margin-left: 5px;" *ngIf="windowSize == 'large'">
                     <div class="username">
                         {{ vtsAvatar.name }}
                     </div>
