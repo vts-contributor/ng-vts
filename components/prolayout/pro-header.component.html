@@ -8,11 +8,12 @@
     <!-- Title with menu -->
     <div vts-col class="title-container" vtsFlex="auto">
         <ng-container *ngIf="vtsTitle">
-            <ng-container *ngIf="windowSize == 'large'; else shortTitle">
+            <ng-container *ngIf="windowSize == 'medium'; else shortTitle">
                 {{ vtsTitle }}
             </ng-container>            
             <ng-template #shortTitle>
-                GSCP
+                <!-- a short title can be here, not decided -->
+                {{ vtsTitle }}
             </ng-template>
         </ng-container>
         <ng-container *ngIf="!useSplitMenu">
