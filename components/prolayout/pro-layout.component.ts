@@ -170,9 +170,10 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     );
 
     // show/hide lock screen
-      this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe((isShow: boolean) => {
-        this.isScreenLocked = isShow;
-      });
+    this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe((isShow: boolean) => {
+      this.isScreenLocked = isShow;
+    });
+    this.lockUiService.getLockState();
   }
 
   /**
