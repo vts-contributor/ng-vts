@@ -61,6 +61,7 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
                 let submitText = this.isLockOrUnlock ? this.vtsBlockUIConfig.unlockText : this.vtsBlockUIConfig.locktext;
                 this.modalTitle = modalTitle ? modalTitle : "";
                 this.submitText = submitText ? submitText : "";
+                this.form.reset();
             }
         })
     }

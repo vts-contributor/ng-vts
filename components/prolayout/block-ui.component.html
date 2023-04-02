@@ -28,13 +28,19 @@
     <vts-form-item>
       <vts-form-label vtsRequired>Nhập mật khẩu khóa màn hình:</vts-form-label>
       <vts-form-control>
-        <input
-          vts-input
-          formControlName="password"
-          [placeholder]="'Mật khẩu'"
-          [autofocus]="true"
-          type="password"
-        />
+        <vts-input-group [vtsSuffix]="suffixIcon">
+          <input
+            vts-input
+            formControlName="password"
+            [placeholder]="'Mật khẩu'"
+            [autofocus]="true"
+            type="password"
+            autocomplete="new-password"          
+          />
+        </vts-input-group>
+        <ng-template #suffixIcon>
+          <i vts-icon vtsType="Eye:vts"></i>
+        </ng-template>
       </vts-form-control>
     </vts-form-item>
   </form>
