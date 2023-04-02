@@ -2,23 +2,30 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
-export class VtsBlockUIService {
+export class VtsBlockUIService  {
     
     // scrren lock state change
     lockUIStateChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
-    // show input password 
+    // show input password change
     showInputChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     // UI lock password
-    private lockPassword: string = "";
+    private lockPassword: string | null = '';
+    private storage = localStorage;
 
     // lock screen 
     lockScreen(pass: string): void {
         this.lockPassword = pass;
+        this.storage.setItem('lockUI', this.lockPassword);
         this.lockUIStateChange$.next(true);
     }
 
     // unlock screen with a password
     unlockScreen(pass: string): void {
+        let storedPass: string | null = this.storage.getItem('lockUI');
+        // reload page will clear lockPassword
+        if(!this.lockPassword && storedPass){
+            this.lockPassword = storedPass;
+        }
         if(pass === this.lockPassword){
             this.lockUIStateChange$.next(false);
         }
@@ -38,8 +45,14 @@ export class VtsBlockUIService {
     }
 
     // get current lock state
+    // fire lock stream if needed because reloading page clears lockPassword
     getLockState(){
-        return this.lockPassword ? true: false;
+        if(!this.lockPassword && this.storage.getItem('lockUI')){
+            this.lockPassword = this.storage.getItem('lockUI');
+            this.lockUIStateChange$.next(true);
+            return true;
+        }
+        return false;
     }
     
 }

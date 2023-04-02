@@ -15,7 +15,7 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
 
     isShowInput: boolean = false;
     /**
-     *  true -> input to lock, false -> input to unlock
+     *  currently locked if true, otherwise not locked
      * */ 
     isLockOrUnlock: boolean = false;
     form: FormGroup = new FormGroup({
@@ -48,7 +48,6 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
 
     showInput(){
         this.isShowInput = true;
-        this.isLockOrUnlock = this.blockUIService.getLockState();
     }
 
     submit(){
