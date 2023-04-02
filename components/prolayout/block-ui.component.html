@@ -16,7 +16,14 @@
 >
   Screen is currently locked
 </div>
-<vts-modal [(vtsVisible)]="isShowInput" vtsTitle="The first Modal">
+<vts-modal 
+  [(vtsVisible)]="isShowInput" 
+  [vtsTitle]="modalTitle" 
+  [vtsOkText]="submitText" 
+  [vtsCancelText]="vtsBlockUIConfig.cancelText"
+  (vtsOnOk)="submit()"
+  (vtsOnCancel)="hideInput()"
+  >
   <form [vtsLayout]="'vertical'" vts-form [formGroup]="form">
     <vts-form-item>
       <vts-form-label vtsRequired>Nhập mật khẩu khóa màn hình:</vts-form-label>
@@ -30,23 +37,5 @@
         />
       </vts-form-control>
     </vts-form-item>
-    <vts-form-item *ngIf="isLockOrUnlock; else isCurrentlyUnlock">
-      <vts-form-control>
-        <button vtsSize="sm" vts-button (click)="submit()">
-          <i vts-icon vtsType="AddCircle"></i>
-          Unlock
-        </button>
-      </vts-form-control>
-    </vts-form-item>
-    <ng-template #isCurrentlyUnlock>
-      <vts-form-item>
-        <vts-form-control>
-          <button vtsSize="sm" vts-button (click)="submit()">
-            <i vts-icon vtsType="AddCircle"></i>
-            Lock
-          </button>
-        </vts-form-control>
-      </vts-form-item>
-    </ng-template>
   </form>
 </vts-modal>

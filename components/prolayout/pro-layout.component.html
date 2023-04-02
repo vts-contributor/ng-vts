@@ -75,4 +75,4 @@
     <ng-content></ng-content>
 </ng-template>
 
-<block-ui></block-ui>
+<block-ui *ngIf="vtsBlockUIConfig.isEnabled" [vtsBlockUIConfig]="vtsBlockUIConfig"></block-ui>

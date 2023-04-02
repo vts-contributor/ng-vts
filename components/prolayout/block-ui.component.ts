@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { VtsBlockUIService } from './block-ui.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { VtsBlockUIConfig } from './pro-layout.types';
 
 @Component({
     selector: 'block-ui',
@@ -21,6 +22,18 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
     form: FormGroup = new FormGroup({
         password: new FormControl("", Validators.required)
     });
+    modalTitle: string = "";
+    submitText: string = "";
+
+    
+    @Input() vtsBlockUIConfig: VtsBlockUIConfig = {
+        isEnabled: true,
+        modalLockTitle: "Khóa màn hình",
+        modalUnlockTitle: "Mở khóa màn hình",
+        cancelText: "Hủy",
+        locktext: "Khóa",
+        unlockText: "Mở khóa"
+    }
 
     private lockStateSubscription = Subscription.EMPTY;
     private visibleInputPassSubscription = Subscription.EMPTY;
@@ -43,11 +56,17 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
         })
         this.visibleInputPassSubscription = this.blockUIService.showInputChange$.subscribe((isShow: boolean) => {
             this.isShowInput = isShow;
+            if(isShow){
+                let modalTitle = this.isLockOrUnlock ? this.vtsBlockUIConfig.modalUnlockTitle : this.vtsBlockUIConfig.modalLockTitle;
+                let submitText = this.isLockOrUnlock ? this.vtsBlockUIConfig.unlockText : this.vtsBlockUIConfig.locktext;
+                this.modalTitle = modalTitle ? modalTitle : "";
+                this.submitText = submitText ? submitText : "";
+            }
         })
     }
 
     showInput(){
-        this.isShowInput = true;
+        this.blockUIService.showInputPassword();
     }
 
     submit(){
@@ -55,5 +74,9 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
             this.blockUIService.unlockScreen(this.form.get('password')?.value);
         }
         else this.blockUIService.lockScreen(this.form.get('password')?.value);
+    }
+
+    hideInput(){
+        this.blockUIService.hideInputPassword();
     }
 }

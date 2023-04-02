@@ -2,6 +2,7 @@
  * Export types using for pro-layout
  */
 
+import { TemplateRef } from '@angular/core';
 import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 
 export type VtsMenuItemProLayout = {
@@ -37,3 +38,16 @@ export type VtsNotificationConfig = {
 }
 
 export type VtsNotiPaneType = "drawer" | "menuContext";
+
+export type VtsBlockUIConfig = {
+  /**
+   * decide if this feature is enabled or disabled
+   */
+  isEnabled: boolean,
+  modalRef?: TemplateRef<void> | null,
+  modalLockTitle?: string,
+  modalUnlockTitle?: string,
+  cancelText?: string,
+  locktext?: string,
+  unlockText?: string
+}

@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { VtsBlockUIService } from './block-ui.service';
-import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsBlockUIConfig } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
 
@@ -89,6 +89,14 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   }
   @Input() vtsVisibleNotifyPane: boolean = false;
   @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
+  @Input() vtsBlockUIConfig: VtsBlockUIConfig = {
+    isEnabled: true,
+    modalLockTitle: "Khóa màn hình",
+    modalUnlockTitle: "Mở khóa màn hình",
+    cancelText: "Hủy",
+    locktext: "Khóa",
+    unlockText: "Mở khóa"
+  }
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
