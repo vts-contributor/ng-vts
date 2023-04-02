@@ -24,6 +24,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
 import { Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { VtsBlockUIService } from './block-ui.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -47,6 +48,7 @@ import { VtsBlockUIService } from './block-ui.service';
       .title-container {
         display: flex;
         padding-left: 24px;
+        
       }
 
       .icons-utils {
@@ -68,6 +70,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     private lockUiService: VtsBlockUIService,
     private cdf: ChangeDetectorRef,
     private router: Router,
+    private breakpointService: BreakpointObserver,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
@@ -82,6 +85,10 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   isCollapsedSider: boolean = false;
   notificationCount: number = 0;
   isFullScreen: boolean = false;
+  /**
+   * check window size
+   */
+  windowSize: 'small' | 'medium' | 'large' = 'large';
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
@@ -89,6 +96,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   private menuHeaderSubscription = Subscription.EMPTY;
   private collapsedSiderSubscription = Subscription.EMPTY;
   private notificationCountSubscription = Subscription.EMPTY;
+  private windowSizeSubscription = Subscription.EMPTY;
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
@@ -157,6 +165,23 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.notificationCountSubscription = this.prolayoutService.notificationChange$.subscribe((count: number) => {
       this.notificationCount = count;
     });
+
+    // listen for changes in size of current window
+    this.windowSizeSubscription = this.breakpointService.observe(
+        [Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge]
+      ).subscribe((result) => {
+      const breakpoints = result.breakpoints;
+      if(breakpoints[Breakpoints.Small]){
+        this.windowSize = 'small';
+      }
+      else if(breakpoints[Breakpoints.Medium]){
+        this.windowSize = 'medium';
+      }
+      else if(breakpoints[Breakpoints.Large] || breakpoints[Breakpoints.XLarge]){
+        this.windowSize = 'large';
+      }
+      this.cdf.detectChanges();
+    })
   }
 
   /**
@@ -169,6 +194,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.splitMenuSubscription.unsubscribe();
     this.collapsedSiderSubscription.unsubscribe();
     this.notificationCountSubscription.unsubscribe();
+    this.windowSizeSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
