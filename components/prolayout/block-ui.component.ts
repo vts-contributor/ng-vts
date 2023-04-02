@@ -24,6 +24,7 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
     });
     modalTitle: string = "";
     submitText: string = "";
+    inputType: "password" | "text" = "password";
 
     
     @Input() vtsBlockUIConfig: VtsBlockUIConfig = {
@@ -79,5 +80,14 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
 
     hideInput(){
         this.blockUIService.hideInputPassword();
+    }
+
+    onChangeInputType(){
+        if(this.inputType == "password"){
+            this.inputType = "text";
+        }
+        else {
+            this.inputType = "password";
+        }
     }
 }
