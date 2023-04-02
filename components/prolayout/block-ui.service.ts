@@ -28,6 +28,7 @@ export class VtsBlockUIService  {
         }
         if(pass === this.lockPassword){
             this.lockUIStateChange$.next(false);
+            this.storage.removeItem('lockUI');
         }
         else {
             this.lockUIStateChange$.next(true);
