@@ -6,7 +6,33 @@ import { VtsBlockUIConfig } from './pro-layout.types';
 
 @Component({
     selector: 'block-ui',
-    templateUrl: 'block-ui.component.html'
+    templateUrl: 'block-ui.component.html',
+    styles: [
+        `
+            .block-ui-container {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                justify-content: center;
+                background-color: white;
+                font-size: xx-large;
+                top: 0;
+                left: 0;
+                display: flex;
+                align-items: center;
+                background: #1F2F3E;        
+                min-height: 500px;        
+            }
+
+            .w-100 {
+                width: 100%;
+            }
+
+            .h-100 {
+                height: 100%;
+            }
+        `
+    ]
 })
 
 export class VtsBlockUIComponent implements OnInit, OnDestroy {
