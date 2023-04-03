@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ElementRef, Renderer2 } from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 import { VtsBlockUIService } from './block-ui.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -9,27 +9,8 @@ import { VtsBlockUIConfig } from './pro-layout.types';
     templateUrl: 'block-ui.component.html',
     styles: [
         `
-            .block-ui-container {
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                justify-content: center;
-                background-color: white;
-                font-size: xx-large;
-                top: 0;
-                left: 0;
-                display: flex;
-                align-items: center;
-                background: #1F2F3E;        
-                min-height: 500px;        
-            }
-
-            .w-100 {
-                width: 100%;
-            }
-
-            .h-100 {
-                height: 100%;
+            .main-row {
+                overflow-x: hidden;    
             }
         `
     ]
@@ -37,8 +18,12 @@ import { VtsBlockUIConfig } from './pro-layout.types';
 
 export class VtsBlockUIComponent implements OnInit, OnDestroy {
     constructor(
-        private blockUIService: VtsBlockUIService
-    ) { }
+        public elementRef: ElementRef, 
+        private blockUIService: VtsBlockUIService,
+        private renderer: Renderer2
+    ) { 
+        this.renderer.addClass(this.elementRef.nativeElement, 'vts-block-ui');
+    }
 
     isShowInput: boolean = false;
     /**
