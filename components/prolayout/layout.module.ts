@@ -42,7 +42,7 @@ import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsBlockUIComponent } from './block-ui.component';
 import { VtsFormModule } from '@ui-vts/ng-vts/form';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
-import { VtsModalModule } from '../modal';
+import { VtsModalModule } from '@ui-vts/ng-vts/modal';
 
 @NgModule({
   declarations: [
