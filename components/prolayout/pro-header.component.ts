@@ -117,6 +117,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     overflowCount: 99
   }
   @Input() vtsVisibleNotifyPane: boolean = false;
+  @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
 
   ngOnInit(): void {
     // receive menus from container
