@@ -41,7 +41,9 @@
 <ng-template #blockUIContent>
   <div vts-row [vtsAlign]="'middle'" class="w-100 h-100" style="color: white;">
     <div vts-row class="w-100" [vtsAlign]="'middle'" style="overflow-x: hidden;">
-      <div vts-col class="hour-circle" style="width: 500px; height: 700px; background: #26394A; border-radius: 0 500px 500px 0; text-align: center; margin-left: -106px; font-size: 120px; align-items: center; display: grid; ">09</div>
+      <div vts-col class="hour-circle" style="width: 500px; height: 700px; background: #26394A; border-radius: 0 500px 500px 0; text-align: center; margin-left: -106px; font-size: 120px; align-items: center; display: grid; ">
+        {{ hour }}
+      </div>
       <div vts-col [vtsFlex]="'auto'" class="lock-wrapper">
         <div vts-row [vtsJustify]="'center'">
           <i vts-icon vtsType="Lock:vts"></i>
@@ -50,7 +52,9 @@
           Click to unlock
         </div>
       </div>
-      <div class="minute-circle" style="width: 500px; height: 700px; background: #26394A; border-radius: 500px 0 0 500px; text-align: center; margin-right: -106px; font-size: 120px; align-items: center; display: grid;">15</div>
+      <div class="minute-circle" style="width: 500px; height: 700px; background: #26394A; border-radius: 500px 0 0 500px; text-align: center; margin-right: -106px; font-size: 120px; align-items: center; display: grid;">
+        {{ minute }}
+      </div>
     </div>
   </div>
 </ng-template>

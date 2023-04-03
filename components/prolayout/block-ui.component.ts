@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { VtsBlockUIService } from './block-ui.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VtsBlockUIConfig } from './pro-layout.types';
@@ -64,10 +64,17 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
 
     private lockStateSubscription = Subscription.EMPTY;
     private visibleInputPassSubscription = Subscription.EMPTY;
+    private timerSubscription = Subscription.EMPTY;
+    /**
+     * current hour, minute shown when ui is locked
+     */
+    hour: string = '0';
+    minute: string = '0';
 
     ngOnDestroy(): void {
         this.lockStateSubscription.unsubscribe();
         this.visibleInputPassSubscription.unsubscribe();
+        this.timerSubscription.unsubscribe();
     }
 
     ngOnInit() { 
@@ -75,6 +82,7 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
             if(isLocked){
                 this.isShowInput = false;
                 this.isLockOrUnlock = true;
+                this.setCurrentTime();
             }
             else {
                 this.isShowInput = false;
@@ -90,7 +98,18 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
                 this.submitText = submitText ? submitText : "";
                 this.form.reset();
             }
-        })
+        });
+        // update time each minute
+        this.timerSubscription = timer(1000, 60000).subscribe(() => {
+            if(this.isLockOrUnlock){
+                let minute = parseInt(this.minute) + 1;
+                if(minute >= 60){
+                    this.minute = this.numberToString(minute - 60);
+                    this.hour = this.numberToString(parseInt(this.hour)+1);
+                }
+                else this.minute = this.numberToString(minute);
+            }
+        });
     }
 
     showInput(){
@@ -114,6 +133,26 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
         }
         else {
             this.inputType = "password";
+        }
+    }
+
+    /**
+     * set hour and minute to current time
+     */
+    setCurrentTime(){
+        this.hour = this.numberToString((new Date()).getHours());
+        this.minute = this.numberToString((new Date()).getMinutes());
+    }
+
+    /**
+     * turn number into displaying time string
+     */
+    private numberToString(num: number): string {
+        if(num >= 0 && num < 10){
+            return `0${num}`;
+        }
+        else {
+            return num.toString();
         }
     }
 }
