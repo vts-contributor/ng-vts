@@ -97,6 +97,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     locktext: "Khóa",
     unlockText: "Mở khóa"
   }
+  @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
