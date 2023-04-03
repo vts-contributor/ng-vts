@@ -12,6 +12,10 @@ import { VtsBlockUIConfig } from './pro-layout.types';
             .main-row {
                 overflow-x: hidden;    
             }
+
+            ::ng-deep .code-box {
+                height: 800px;
+            }
         `
     ]
 })
