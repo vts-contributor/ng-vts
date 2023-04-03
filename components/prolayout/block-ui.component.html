@@ -1,4 +1,4 @@
-<div class="block-ui-container"
+<div class="vts-block-ui-container"
   *ngIf="isLockOrUnlock"
   (click)="showInput()"
 >
@@ -39,9 +39,9 @@
 </vts-modal>
 <!-- Content inside block ui container -->
 <ng-template #blockUIContent>
-  <div vts-row [vtsAlign]="'middle'" class="w-100 h-100" style="color: white;">
-    <div vts-row class="w-100" [vtsAlign]="'middle'" style="overflow-x: hidden;">
-      <div vts-col class="hour-circle" style="width: 500px; height: 700px; background: #26394A; border-radius: 0 500px 500px 0; text-align: center; margin-left: -106px; font-size: 120px; align-items: center; display: grid; ">
+  <div vts-row [vtsAlign]="'middle'" class="w-100">
+    <div vts-row class="w-100 main-row" [vtsAlign]="'middle'">
+      <div vts-col class="hour-circle">
         {{ hour }}
       </div>
       <div vts-col [vtsFlex]="'auto'" class="lock-wrapper">
@@ -52,7 +52,7 @@
           Click to unlock
         </div>
       </div>
-      <div class="minute-circle" style="width: 500px; height: 700px; background: #26394A; border-radius: 500px 0 0 500px; text-align: center; margin-right: -106px; font-size: 120px; align-items: center; display: grid;">
+      <div class="minute-circle">
         {{ minute }}
       </div>
     </div>
