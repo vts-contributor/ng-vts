@@ -74,3 +74,4 @@ The pro-layout.
 | vtsVisibleNotifyPane | use to show (hide) a drawer notification pane, required when `vtsNotificationConfig.type` is `drawer` | `boolean` | `false` |
 | vtsNotificationConfig | config for notification pane | `VtsNotificationConfig` | `{ type: 'menuContext', overflowCount: 99 }` |
 | vtsMenuTemplate | notification pane content, requried when `vtsNotificationConfig.type` is `menuContext` | `TemplateRef` | `null` |
+| VtsBlockUIConfig | config for UI block feature | `VtsBlockUIConfig` | `{ isEnabled: true, modalLockTitle: "Khóa màn hình", modalUnlockTitle: "Mở khóa màn hình", cancelText: "Hủy", locktext: "Khóa", unlockText: "Mở khóa" }` |
