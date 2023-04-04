@@ -4,7 +4,7 @@ import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
-  selector: 'vts-demo-custom-menu-avatar',
+  selector: 'vts-demo-prolayout-custom-menu-avatar',
   template: `
     <vts-prolayout-container     
       [vtsMenuHeader]="menuData" 
@@ -42,12 +42,12 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
     </ng-template>
     <ng-template #menuAvatar>
         <ul vts-menu vtsSelectable>
-            <li vts-menu-item *ngFor="let item of vtsAvatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
+            <li vts-menu-item *ngFor="let item of avatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
         </ul>
     </ng-template>
   `
 })
-export class VtsProlayoutCustomMenuAvatarComponent {
+export class VtsDemoProlayoutCustomMenuAvatarComponent {
 
   constructor(private service: VtsProlayoutService, private router: Router){
     this.service.onChangeNotification(10);
