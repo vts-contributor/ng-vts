@@ -52,8 +52,7 @@ export class VtsDemoProlayoutDrawerNotifyComponent {
       children: [
         {
           title: 'Child 1.1',
-          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', isSelected: true, url: "" }],
-          isOpen: true
+          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', url: "" }]
         },
         { title: 'Child 1.2' }
       ],
