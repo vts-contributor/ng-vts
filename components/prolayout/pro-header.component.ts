@@ -56,7 +56,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
         padding-right: 15px;
       }
 
-      i {
+      :host i {
         font-size: x-large;
       }
     `
