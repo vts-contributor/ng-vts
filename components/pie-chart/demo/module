@@ -1,0 +1,5 @@
+import { VtsPieChartModule } from "../pie-chart.module";
+
+export const moduleList = [
+    VtsPieChartModule
+];

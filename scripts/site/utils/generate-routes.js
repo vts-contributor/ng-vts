@@ -56,6 +56,7 @@ function generateNav(componentsDocMap) {
     "menu",
     "panel",
     "pagination",
+    "pie-chart",
     "prolayout",
     "radio",
     "result",
