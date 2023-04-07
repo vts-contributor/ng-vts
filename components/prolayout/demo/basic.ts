@@ -38,7 +38,18 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
     <ng-template #footerTemplate>
       <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
-  `
+  `,
+  styles: [
+      `
+          .main-row {
+              overflow-x: hidden;    
+          }
+
+          ::ng-deep .code-box {
+              height: 800px;
+          }
+      `
+  ]
 })
 export class VtsDemoProlayoutBasicComponent {
 

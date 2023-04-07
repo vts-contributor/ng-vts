@@ -35,7 +35,18 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
         Copyright by Viettel Solution - Government Solution Center Platform
       </div>
     </ng-template>
-  `
+  `,
+  styles: [
+      `
+          .main-row {
+              overflow-x: hidden;    
+          }
+
+          ::ng-deep .code-box {
+              height: 800px;
+          }
+      `
+  ]
 })
 export class VtsDemoProlayoutDrawerNotifyComponent {
 
@@ -107,7 +118,7 @@ export class VtsDemoProlayoutDrawerNotifyComponent {
   vtsVisibleNotifyPane: boolean = false;
   vtsNotificationConfig: VtsNotificationConfig = {
     type: "drawer",
-    overflowCount: 99
+    overflowCount: 9
   }
 
   close(){

@@ -1,13 +1,16 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsDestroyService } from '@ui-vts/ng-vts/core/services';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'vts-prolayout-menu-item',
   templateUrl: 'menu-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  preserveWhitespaces: false
+  preserveWhitespaces: false,
+  providers: [VtsDestroyService]
 })
 export class VtsProlayoutMenuItemComponent implements OnInit {
   @Input() vtsMenuItem: VtsMenuItemProLayout = {
@@ -18,11 +21,10 @@ export class VtsProlayoutMenuItemComponent implements OnInit {
   defaultIcon: string = 'AddDoutone:vts';
   currentUrl: string = "";
 
-  constructor(private router: Router, private cdf: ChangeDetectorRef) {
+  constructor(private router: Router, private cdf: ChangeDetectorRef ,private vtsDestroyService: VtsDestroyService) {
     this.currentUrl = this.router.url;
-    this.router.events.subscribe(evt => {
+    this.router.events.pipe(takeUntil(this.vtsDestroyService)).subscribe(evt => {
       if(evt instanceof NavigationEnd){
-        // console.log(evt.url);
         this.currentUrl = evt.url;
         this.cdf.detectChanges();
       }

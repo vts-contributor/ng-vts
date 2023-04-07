@@ -45,7 +45,18 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
             <li vts-menu-item *ngFor="let item of avatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
         </ul>
     </ng-template>
-  `
+  `,
+  styles: [
+      `
+          .main-row {
+              overflow-x: hidden;    
+          }
+
+          ::ng-deep .code-box {
+              height: 800px;
+          }
+      `
+  ]
 })
 export class VtsDemoProlayoutCustomMenuAvatarComponent {
 
