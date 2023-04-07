@@ -47,6 +47,7 @@ export class VtsContextMenuService {
     const { x, y } = $event;
     if ($event instanceof MouseEvent) {
       $event.preventDefault();
+      $event.stopPropagation();
     }
     const positionStrategy = this.overlay
       .position()

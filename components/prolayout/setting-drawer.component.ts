@@ -1,13 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewEncapsulation,
-  ChangeDetectionStrategy,
-  ElementRef
-} from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
+import { Component, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ElementRef } from '@angular/core';
+import { VtsProlayoutService } from './pro-layout.service';
 import { VtsThemeColorType } from './pro-layout.types';
 import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
 
@@ -19,45 +11,46 @@ import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services'
   preserveWhitespaces: false
 })
 export class VtsSettingDrawerComponent implements OnInit {
-  constructor(
-    private elementRef: ElementRef,
-    private prolayoutService: ProlayoutService,
-    private themeService: VtsThemeService
-  ) {
-    this.elementRef.nativeElement.classList.add('vts-setting-drawer');
-    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => (this.allThemes = d));
-    this.themeService.theme$.subscribe((d: VtsTheme | null) => {
-      this.currentTheme = d;
-      this.isDarkMode = d === 'dark';
-    });
-  }
 
-  allThemes: VtsThemeItem[] = [];
-  currentTheme: VtsTheme | null = null;
-  isDarkMode: boolean = false;
-  open: boolean = false;
-  listColors: VtsThemeColorType[] = [
-    {
-      isChecked: true,
-      value: '#EE0033'
-    },
-    {
-      isChecked: false,
-      value: '#f50'
-    },
-    {
-      isChecked: false,
-      value: '#2db7f5'
-    },
-    {
-      isChecked: false,
-      value: '#87d068'
-    },
-    {
-      isChecked: false,
-      value: '#108ee9'
+    constructor(
+        private elementRef: ElementRef, 
+        private prolayoutService: VtsProlayoutService,
+        private themeService: VtsThemeService
+    ) {
+        this.elementRef.nativeElement.classList.add('vts-setting-drawer');
+        this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => this.allThemes = d);
+        this.themeService.theme$.subscribe((d: VtsTheme | null) => {
+            this.currentTheme = d;
+            this.isDarkMode = d === 'dark';
+        });
     }
-  ];
+
+    allThemes: VtsThemeItem[] = [];
+    currentTheme: VtsTheme | null = null;
+    isDarkMode: boolean = false;
+    open: boolean = false;
+    listColors: VtsThemeColorType[] = [
+        {
+            isChecked: true,
+            value: '#EE0033'
+        },
+        {
+            isChecked: false,
+            value: '#f50'
+        },
+        {
+            isChecked: false,
+            value: '#2db7f5'
+        },
+        {
+            isChecked: false,
+            value: '#87d068'
+        },
+        {
+            isChecked: false,
+            value: '#108ee9'
+        },        
+    ]
 
   isFixedHeader: boolean = false;
   isFixedSider: boolean = true;
