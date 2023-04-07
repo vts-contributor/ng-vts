@@ -7,17 +7,6 @@ import { VtsBlockUIConfig } from './pro-layout.types';
 @Component({
     selector: 'block-ui',
     templateUrl: 'block-ui.component.html',
-    styles: [
-        `
-            .main-row {
-                overflow-x: hidden;    
-            }
-
-            ::ng-deep .code-box {
-                height: 800px;
-            }
-        `
-    ]
 })
 
 export class VtsBlockUIComponent implements OnInit, OnDestroy {

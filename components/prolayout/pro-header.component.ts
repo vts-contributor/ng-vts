@@ -32,35 +32,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
-  templateUrl: 'pro-header.component.html',
-  styles: [
-    `
-      .logo-header {
-        width: 120px;
-        height: 46px;
-        margin: 5px 28px 0 24px;
-        float: left;
-        background-repeat: no-repeat;
-        background-size: contain;
-      }
-    `,
-    `
-      .title-container {
-        display: flex;
-        padding-left: 24px;
-        
-      }
-
-      .icons-utils {
-        padding-left: 15px;
-        padding-right: 15px;
-      }
-
-      :host i {
-        font-size: x-large;
-      }
-    `
-  ]
+  templateUrl: 'pro-header.component.html'
 })
 export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   constructor(

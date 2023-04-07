@@ -31,14 +31,7 @@ import { VtsSiderComponent } from './sider.component';
   host: {
     '[class.vts-prolayout-rtl]': `dir === 'rtl'`,
     '[class.vts-prolayout-has-sider]': 'listOfVtsSiderComponent.length > 0'
-  },
-  styles: [
-    `
-      .vts-prolayout {
-        min-width: 900px;
-      }
-    `
-  ]
+  }
 })
 export class VtsProLayoutComponent implements OnDestroy, OnInit {
   @ContentChildren(VtsSiderComponent)
