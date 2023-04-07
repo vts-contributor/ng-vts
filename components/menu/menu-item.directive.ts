@@ -118,9 +118,10 @@ export class VtsMenuItemDirective implements OnInit, OnChanges, OnDestroy, After
     );
   }
 
-  private isLinkActive(router: Router): (link: RouterLink | RouterLinkWithHref) => boolean {
-    return (link: RouterLink | RouterLinkWithHref) =>
-      link.urlTree ? router.isActive(link.urlTree, this.vtsMatchRouterExact) : false;
+  private isLinkActive(router: Router): (link: RouterLink | RouterLinkWithHref) => boolean {    
+    return (link: RouterLink | RouterLinkWithHref) => {
+      return link.urlTree ? router.isActive(link.urlTree, this.vtsMatchRouterExact) : false;
+    }
   }
 
   constructor(

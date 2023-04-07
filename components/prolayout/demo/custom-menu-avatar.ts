@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
-  selector: 'vts-demo-prolayout-basic',
+  selector: 'vts-demo-prolayout-custom-menu-avatar',
   template: `
     <vts-prolayout-container     
       [vtsMenuHeader]="menuData" 
@@ -14,6 +15,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
       [vtsBreadcrumbArray]="arrayMenuItem" 
       [vtsFooterTemplate]="footerTemplate" 
       [vtsNotificationConfig]="vtsNotificationConfig"
+      [vtsMenuAvatarTemplateRef]="menuAvatar"
       [vtsMenuTemplate]="menuTemplate">
         <ng-template #menuTemplate>          
             <ul vts-menu>
@@ -38,6 +40,11 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
     <ng-template #footerTemplate>
       <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
+    <ng-template #menuAvatar>
+        <ul vts-menu vtsSelectable>
+            <li vts-menu-item *ngFor="let item of avatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
+        </ul>
+    </ng-template>
   `,
   styles: [
       `
@@ -51,9 +58,9 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
       `
   ]
 })
-export class VtsDemoProlayoutBasicComponent {
+export class VtsDemoProlayoutCustomMenuAvatarComponent {
 
-  constructor(private service: VtsProlayoutService){
+  constructor(private service: VtsProlayoutService, private router: Router){
     this.service.onChangeNotification(10);
     this.service.visiblePaneChange$.subscribe(visible => {
       this.vtsVisibleNotifyPane = visible;
@@ -66,10 +73,11 @@ export class VtsDemoProlayoutBasicComponent {
       children: [
         {
           title: 'Child 1.1',
-          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', url: "" }]
+          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', url: "" }],
         },
         { title: 'Child 1.2' }
       ]
+      // isOpen: true
     },
     {
       title: 'Parent 2',
@@ -125,5 +133,9 @@ export class VtsDemoProlayoutBasicComponent {
 
   close(){
     this.vtsVisibleNotifyPane = false;
+  }
+
+  onClickAvatarMenuItem(item: VtsAvatarMenu): void {
+    this.router.navigateByUrl(item.url);
   }
 }

@@ -15,12 +15,16 @@ import {
   ChangeDetectorRef,
   OnInit,
   TemplateRef,
-  OnDestroy
+  OnDestroy,
+  Inject
 } from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
-import { Router } from '@angular/router';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsProlayoutService } from './pro-layout.service';
+import { Router } from "@angular/router";
+import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig } from './pro-layout.types';
 import { Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { VtsBlockUIService } from './block-ui.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -28,33 +32,18 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
-  templateUrl: 'pro-header.component.html',
-  styles: [
-    `
-      .logo-header {
-        width: 120px;
-        height: 46px;
-        margin: 5px 28px 0 24px;
-        float: left;
-        background-repeat: no-repeat;
-        background-size: contain;
-      }
-    `,
-    `
-      .title-container {
-        display: flex;
-        padding-left: 24px;
-      }
-    `
-  ]
+  templateUrl: 'pro-header.component.html'
 })
 export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     public elementRef: ElementRef,
     private renderer: Renderer2,
-    private prolayoutService: ProlayoutService,
+    private prolayoutService: VtsProlayoutService,
+    private lockUiService: VtsBlockUIService,
     private cdf: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private breakpointService: BreakpointObserver,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.renderer.addClass(this.elementRef.nativeElement, 'vts-prolayout-header');
   }
@@ -66,12 +55,20 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   isFixedSider: boolean = false;
   menuData: VtsMenuItemProLayout[] = [];
   isCollapsedSider: boolean = false;
+  notificationCount: number = 0;
+  isFullScreen: boolean = false;
+  /**
+   * check window size
+   */
+  windowSize: 'small' | 'medium' | 'large' = 'large';
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
   private splitMenuSubscription = Subscription.EMPTY;
   private menuHeaderSubscription = Subscription.EMPTY;
   private collapsedSiderSubscription = Subscription.EMPTY;
+  private notificationCountSubscription = Subscription.EMPTY;
+  private windowSizeSubscription = Subscription.EMPTY;
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
@@ -85,7 +82,14 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   };
   showMenu: boolean = false;
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
-  @Input() vtsLogoUrl: string = '';
+  @Input() vtsLogoUrl: string = "";
+  @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
+  @Input() vtsNotificationConfig: VtsNotificationConfig = {
+    type: "menuContext",
+    overflowCount: 99
+  }
+  @Input() vtsVisibleNotifyPane: boolean = false;
+  @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
 
   ngOnInit(): void {
     // receive menus from container
@@ -126,11 +130,31 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     );
 
     // on change collapsed sider
-    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe(
-      (isCollapsed: boolean) => {
-        this.isCollapsedSider = isCollapsed;
+    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
+      this.isCollapsedSider = isCollapsed;
+    });
+
+    // on change notification count
+    this.notificationCountSubscription = this.prolayoutService.notificationChange$.subscribe((count: number) => {
+      this.notificationCount = count;
+    });
+
+    // listen for changes in size of current window
+    this.windowSizeSubscription = this.breakpointService.observe(
+        [Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge]
+      ).subscribe((result) => {
+      const breakpoints = result.breakpoints;
+      if(breakpoints[Breakpoints.Small]){
+        this.windowSize = 'small';
       }
-    );
+      else if(breakpoints[Breakpoints.Medium]){
+        this.windowSize = 'medium';
+      }
+      else if(breakpoints[Breakpoints.Large] || breakpoints[Breakpoints.XLarge]){
+        this.windowSize = 'large';
+      }
+      this.cdf.detectChanges();
+    })
   }
 
   /**
@@ -142,6 +166,8 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.fixedHeaderSubscription.unsubscribe();
     this.splitMenuSubscription.unsubscribe();
     this.collapsedSiderSubscription.unsubscribe();
+    this.notificationCountSubscription.unsubscribe();
+    this.windowSizeSubscription.unsubscribe();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -195,4 +221,23 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   toggleSider() {
     this.prolayoutService.onChangeCollapedSider(!this.isCollapsedSider);
   }
+
+  openNotificationPane(){
+    this.prolayoutService.openNotificationPane(this.vtsNotificationConfig.type);
+  }
+
+  toggleFullScreen(){    
+    if(this.isFullScreen){
+      this.document.exitFullscreen();
+    }
+    else {
+      this.document.documentElement.requestFullscreen();
+    }
+    this.isFullScreen = !this.isFullScreen;
+  }
+
+  lockScreen(){
+    this.lockUiService.showInputPassword();
+  }
+
 }

@@ -12,8 +12,9 @@ import {
   TemplateRef,
   OnDestroy
 } from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsProlayoutService } from './pro-layout.service';
+import { VtsBlockUIService } from './block-ui.service';
+import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsBlockUIConfig } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
 
@@ -48,8 +49,12 @@ import { Subscription } from 'rxjs';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
-  constructor(private elementRef: ElementRef, private prolayoutService: ProlayoutService) {
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
+  constructor(
+    private elementRef: ElementRef,
+    private prolayoutService: VtsProlayoutService,
+    private lockUiService: VtsBlockUIService
+  ) {
     // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-prolayout-container');
   }
@@ -78,12 +83,29 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
   @Input() vtsBreadcrumbArray: VtsBreadcrumbItem[] = [];
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
+  @Input() vtsNotificationConfig: VtsNotificationConfig = {
+    type: "menuContext",
+    overflowCount: 99
+  }
+  @Input() vtsVisibleNotifyPane: boolean = false;
+  @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
+  @Input() vtsBlockUIConfig: VtsBlockUIConfig = {
+    isEnabled: true,
+    modalLockTitle: "Khóa màn hình",
+    modalUnlockTitle: "Mở khóa màn hình",
+    cancelText: "Hủy",
+    locktext: "Khóa",
+    unlockText: "Mở khóa"
+  }
+  @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
   private fixedSiderSubscription = Subscription.EMPTY;
   private visibleHeaderSubscription = Subscription.EMPTY;
   private visisbleSiderSubscription = Subscription.EMPTY;
   private visibleFooterSubscription = Subscription.EMPTY;
+  private lockStateSubscription = Subscription.EMPTY;
+  isScreenLocked: boolean = false;
 
   onChangeVisiblityHeader(value: boolean) {
     this.isShowHeader = value;
@@ -155,6 +177,12 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
         this.onChangeVisiblityFooter(isShow);
       }
     );
+
+    // show/hide lock screen
+    this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe((isShow: boolean) => {
+      this.isScreenLocked = isShow;
+    });
+    this.lockUiService.getLockState();
   }
 
   /**
@@ -166,5 +194,6 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
     this.visibleFooterSubscription.unsubscribe();
     this.visibleHeaderSubscription.unsubscribe();
     this.visisbleSiderSubscription.unsubscribe();
+    this.lockStateSubscription.unsubscribe();
   }
 }

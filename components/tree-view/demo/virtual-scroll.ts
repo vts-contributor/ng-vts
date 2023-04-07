@@ -42,12 +42,12 @@ interface ExampleFlatNode {
       [vtsTreeControl]="treeControl"
       [vtsDataSource]="dataSource"
     >
-      <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node">
         <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
         {{ node.name }}
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
         <vts-tree-node-toggle>
           <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
         </vts-tree-node-toggle>

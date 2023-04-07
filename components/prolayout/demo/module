@@ -6,6 +6,8 @@ import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 import { VtsDividerModule } from '@ui-vts/ng-vts/divider';
 import { VtsTagModule } from '@ui-vts/ng-vts/tag';
+import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
+import { VtsDrawerModule } from '@ui-vts/ng-vts/drawer';
 
 export const moduleList = [
     VtsProLayoutModule, 
@@ -15,5 +17,7 @@ export const moduleList = [
     VtsButtonModule, 
     VtsSwitchModule,
     VtsDividerModule,
-    VtsTagModule
+    VtsTagModule,
+    VtsDropDownModule,
+    VtsDrawerModule,
 ];

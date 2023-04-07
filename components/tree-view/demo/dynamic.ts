@@ -128,11 +128,11 @@ class DynamicDatasource implements DataSource<FlatNode> {
   selector: 'vts-demo-tree-view-dynamic',
   template: `
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource">
-      <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node">
         {{ node.label }}
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodePadding>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
         <vts-tree-node-toggle *ngIf="!node.loading">
           <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
         </vts-tree-node-toggle>

@@ -8,7 +8,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { PlatformModule } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsAvatarModule } from '@ui-vts/ng-vts/avatar';
 import { VtsBreadCrumbModule } from '@ui-vts/ng-vts/breadcrumb';
@@ -36,7 +36,13 @@ import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
-import { VtsThemeModule } from '@ui-vts/theme/services';
+import { VtsThemeModule } from '@ui-vts/theme/services'
+import { RouterModule } from '@angular/router';
+import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
+import { VtsBlockUIComponent } from './block-ui.component';
+import { VtsFormModule } from '@ui-vts/ng-vts/form';
+import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsModalModule } from '@ui-vts/ng-vts/modal';
 
 @NgModule({
   declarations: [
@@ -50,12 +56,15 @@ import { VtsThemeModule } from '@ui-vts/theme/services';
     VtsProlayoutMenuItemComponent,
     VtsProlayoutMenuItemHorizontalComponent,
     VtsSettingDrawerComponent,
-    VtsProlayoutBreadCrumbComponent
+    VtsProlayoutBreadCrumbComponent,
+    VtsBlockUIComponent
   ],
   exports: [VtsProLayoutContainerComponent, VtsFooterComponent],
   imports: [
     BidiModule,
+    RouterModule,
     CommonModule,
+    ReactiveFormsModule,
     OverlayModule,
     VtsIconModule,
     LayoutModule,
@@ -66,6 +75,8 @@ import { VtsThemeModule } from '@ui-vts/theme/services';
     FormsModule,
     VtsMenuModule,
     VtsBreadCrumbModule,
+    VtsFormModule,
+    VtsInputModule,
     VtsAvatarModule,
     VtsDividerModule,
     VtsTagModule,
@@ -73,8 +84,10 @@ import { VtsThemeModule } from '@ui-vts/theme/services';
     VtsSelectModule,
     VtsDropDownModule,
     VtsNoAnimationModule,
+    VtsModalModule,
     VtsOutletModule,
     VtsToolTipModule,
+    VtsBadgeModule,
     VtsThemeModule.forRoot({
       themes: [
         {
