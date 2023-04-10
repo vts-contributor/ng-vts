@@ -159,7 +159,7 @@ export class VtsDrawerComponent<T = VtsSafeAny, R = VtsSafeAny, D = VtsSafeAny>
   static ngAcceptInputType_vtsCloseOnNavigation: BooleanInput;
 
   @Input() vtsContent!: TemplateRef<{ $implicit: D; drawerRef: VtsDrawerRef<R> }> | Type<T>;
-  @Input() vtsCloseIcon: string | TemplateRef<void> = 'close';
+  @Input() vtsCloseIcon: string | TemplateRef<void> = 'Close:vts';
   @Input() @InputBoolean() vtsClosable: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsMaskClosable: boolean = true;
   @Input() @WithConfig() @InputBoolean() vtsMask: boolean = true;
