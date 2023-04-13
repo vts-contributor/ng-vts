@@ -1,19 +1,20 @@
-import { ScaleType } from './scale-type.enum';
+import { VtsChartColorScaleType } from './scale-type.enum';
 
-export interface LegendOptions {
+export interface VtsChartLegendOptions {
   colors: any;
   domain: any[];
-  position: LegendPosition;
-  title: string;
-  scaleType: ScaleType;
+  position: VtsChartLegendPosition;
+  title: string | null;
+  scaleType: VtsChartColorScaleType;
+  columns?: number
 }
 
-export enum LegendPosition {
+export enum VtsChartLegendPosition {
   Right = 'right',
   Below = 'below'
 }
 
-export enum LegendType {
+export enum VtsChartLegendType {
   ScaleLegend = 'scaleLegend',
   Legend = 'legend'
 }

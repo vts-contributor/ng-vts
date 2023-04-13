@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
-import { VtsPieChartItem } from '../types';
+import { VtsPieChartItem, VtsPieChartLegendPosition } from '@ui-vts/ng-vts/pie-chart';
 
 @Component({
   selector: 'vts-demo-pie-chart-basic',
   template: `
-    <ngx-charts-pie-chart
-      [view]="view"
-      [scheme]="colorScheme"
-      [results]="single"
-      [gradient]="gradient"
-      [legend]="showLegend"
-      [legendPosition]="legendPosition"
-      [labels]="showLabels"
-      [doughnut]="isDoughnut"
-      (select)="onSelect($event)"
-      (activate)="onActivate($event)"
-      (deactivate)="onDeactivate($event)"
+    <vts-charts-pie-chart
+      [vtsView]="view"
+      [vtsScheme]="colorScheme"
+      [vtsData]="single"
+      [vtsGradient]="gradient"
+      [vtsLegend]="showLegend"
+      [vtsLegendPosition]="legendPosition"
+      [vtsLabels]="showLabels"
+      [vtsDoughnut]="isDoughnut"
+      (vtsSelect)="onSelect($event)"
+      (vtsActivate)="onActivate($event)"
+      (vtsDeactivate)="onDeactivate($event)"
       >
-    </ngx-charts-pie-chart>
+    </vts-charts-pie-chart>
   `
 })
 export class VtsDemoPieChartBasicComponent {
@@ -39,14 +39,14 @@ export class VtsDemoPieChartBasicComponent {
       "value": 6200000
     }
   ]
-  view: any[] = [700, 400];
+  view: [number, number] = [700, 400];
 
   // options
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-  legendPosition: string = 'below';
+  legendPosition = VtsPieChartLegendPosition.Below;
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -55,15 +55,15 @@ export class VtsDemoPieChartBasicComponent {
   constructor() {
   }
 
-  onSelect(data: VtsPieChartItem): void {
+  onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  onActivate(data: VtsPieChartItem): void {
+  onActivate(data: any): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data: VtsPieChartItem): void {
+  onDeactivate(data: any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 }

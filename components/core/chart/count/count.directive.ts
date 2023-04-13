@@ -11,7 +11,7 @@ import { count, decimalChecker } from './count.helper';
  * @export
  */
 @Component({
-  selector: '[ngx-charts-count-up]',
+  selector: '[vts-charts-count-up]',
   template: ` {{ value }} `
 })
 export class CountUpDirective implements OnDestroy {

@@ -2,19 +2,25 @@ import { BidiModule } from '@angular/cdk/bidi';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ChartCommonModule } from '@ui-vts/ng-vts/core/chart';
-import { PieArcComponent } from './pie-arc.component';
-import { PieChartComponent } from './pie-chart.component';
-import { PieLabelComponent } from './pie-label.component';
-import { PieSeriesComponent } from './pie-series.component';
+import { VtsPieArcComponent } from './pie-arc.component';
+import { VtsPieChartComponent } from './pie-chart.component';
+import { VtsPieLabelInnerComponent } from './pie-label-inner.component';
+import { VtsPieLabelOutterComponent } from './pie-label-outter.component';
+import { VtsPieSeriesComponent } from './pie-series.component';
 
 @NgModule({
-  imports: [BidiModule, CommonModule, ChartCommonModule],
-  exports: [PieChartComponent],
+  imports: [
+    BidiModule, 
+    CommonModule, 
+    ChartCommonModule
+  ],
+  exports: [VtsPieChartComponent],
   declarations: [
-    PieArcComponent,
-    PieLabelComponent,
-    PieSeriesComponent,
-    PieChartComponent
+    VtsPieArcComponent,
+    VtsPieLabelOutterComponent,
+    VtsPieLabelInnerComponent,
+    VtsPieSeriesComponent,
+    VtsPieChartComponent
   ]
 })
 export class VtsPieChartModule {}

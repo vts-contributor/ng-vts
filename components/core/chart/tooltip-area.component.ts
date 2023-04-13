@@ -17,7 +17,7 @@ import { ColorHelper } from './color.helper';
 import { PlacementTypes } from './tooltip/position';
 import { StyleTypes } from './tooltip/style.type';
 import { ViewDimensions } from './types/view-dimension.interface';
-import { ScaleType } from './types/scale-type.enum';
+import { VtsChartColorScaleType } from './types/scale-type.enum';
 
 export interface Tooltip {
   color: string;
@@ -31,7 +31,7 @@ export interface Tooltip {
 }
 
 @Component({
-  selector: 'g[ngx-charts-tooltip-area]',
+  selector: 'g[vts-charts-tooltip-area]',
   template: `
     <svg:g>
       <svg:rect
@@ -62,7 +62,7 @@ export interface Tooltip {
         [attr.height]="dims.height"
         [style.opacity]="anchorOpacity"
         [style.pointer-events]="'none'"
-        ngx-tooltip
+        vts-charts-tooltip
         [tooltipDisabled]="tooltipDisabled"
         [tooltipPlacement]="placementTypes.Right"
         [tooltipType]="styleTypes.tooltip"
@@ -133,7 +133,7 @@ export class TooltipArea {
           val = (item.d1 - item.d0).toFixed(2) + '%';
         }
         let color;
-        if (this.colors.scaleType === ScaleType.Linear) {
+        if (this.colors.scheme.scaleType === VtsChartColorScaleType.Linear) {
           let v = val;
           if (item.d1) {
             v = item.d1;

@@ -20,7 +20,7 @@ import { StyleTypes } from './style.type';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  selector: 'ngx-tooltip-content',
+  selector: 'vts-charts-tooltip-content',
   template: `
     <div>
       <span #caretElm [hidden]="!showCaret" class="tooltip-caret position-{{ this.placement }}"> </span>
@@ -32,8 +32,7 @@ import { isPlatformBrowser } from '@angular/common';
       </div>
     </div>
   `,
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./tooltip.component.scss']
+  encapsulation: ViewEncapsulation.None
 })
 export class TooltipContentComponent implements AfterViewInit {
   @Input() host!: ElementRef;
@@ -51,7 +50,7 @@ export class TooltipContentComponent implements AfterViewInit {
 
   @HostBinding('class')
   get cssClasses(): string {
-    let clz = 'ngx-charts-tooltip-content';
+    let clz = 'vts-charts-tooltip-content';
     clz += ` position-${this.placement}`;
     clz += ` type-${this.type}`;
     clz += ` ${this.cssClass}`;

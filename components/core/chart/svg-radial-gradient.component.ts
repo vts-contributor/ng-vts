@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, ChangeDetectionStrategy, SimpleChanges } f
 import { Gradient } from './types/gradient.interface';
 
 @Component({
-  selector: 'g[ngx-charts-svg-radial-gradient]',
+  selector: 'g[vts-charts-svg-radial-gradient]',
   template: `
     <svg:radialGradient [id]="name" [attr.cx]="cx" [attr.cy]="cy" [attr.r]="r" gradientUnits="userSpaceOnUse">
       <svg:stop
@@ -34,12 +34,13 @@ export class SvgRadialGradientComponent implements OnChanges {
 
   r: string = '';
 
-  private stopsInput: Gradient[] = [];
+  private stopsInput?: Gradient[];
   private stopsDefault: Gradient[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     this.r = '30%';
-    if ('color' in changes || 'startOpacity' in changes || 'endOpacity' in changes) {
+    const {color, startOpacity, endOpacity} = changes
+    if (color || startOpacity || endOpacity) {
       this.stopsDefault = [
         {
           offset: 0,

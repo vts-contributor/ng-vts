@@ -9,99 +9,92 @@ import {
   scaleQuantile
 } from 'd3-scale';
 
-import { Color, colorSets } from './utils/color-sets';
+import { VtsChartColorPreset, colorSets, VtsChartColor } from './utils/color-sets';
 import { StringOrNumberOrDate } from './models/chart-data.model';
-import { ScaleType } from './types/scale-type.enum';
+import { VtsChartColorScaleType } from './types/scale-type.enum';
 import { Gradient } from './types/gradient.interface';
+import { VtsChartCustomColorArr, VtsChartCustomColorFunc, VtsChartCustomColors } from './types';
 
 export class ColorHelper {
-  scale: any;
-  scaleType: ScaleType;
-  colorDomain: string[];
+  scheme!: VtsChartColor
   domain: number[] | string[];
-  customColors: any;
+  customColors?: VtsChartCustomColors;
+  scale: ScaleQuantile<number> | ScaleOrdinal<string, unknown> | ScaleLinear<number, number>;
 
-  constructor(scheme: string | Color, type: ScaleType, domain: number[] | string[], customColors?: any) {
-    if (typeof scheme === 'string') {
-      scheme = colorSets.find(cs => {
-        return cs.name === scheme;
-      }) as Color;
-    }
-    this.colorDomain = scheme.domain;
-    this.scaleType = type;
+  constructor(scheme: VtsChartColorPreset | VtsChartColor, overrideScaleType: VtsChartColorScaleType | null = null, domain: number[] | string[], customColors?: VtsChartCustomColors) {
+    if (typeof scheme !== 'object') {
+      const k = Object.keys(colorSets).find(k => {
+        return k === scheme;
+      })
+      if (k)
+        this.scheme = colorSets[k as VtsChartColorPreset]
+      else
+        this.scheme = { colors: [] }
+    } else
+      this.scheme = {
+        ...scheme,
+        scaleType: scheme.scaleType || VtsChartColorScaleType.Ordinal
+      }
+    if (overrideScaleType)
+      this.scheme.scaleType = overrideScaleType
     this.domain = domain;
     this.customColors = customColors;
-
-    this.scale = this.generateColorScheme(scheme, type, this.domain);
+    this.scale = this.generateColorScheme();
   }
 
-  generateColorScheme(scheme: string | Color, type: ScaleType, domain: number[] | string[]): any {
-    if (typeof scheme === 'string') {
-      scheme = colorSets.find(cs => {
-        return cs.name === scheme;
-      }) as Color;
-    }
-
-    let colorScale!: ScaleQuantile<number> | ScaleOrdinal<string, unknown> | ScaleLinear<number, number>;
-    switch (type) {
-      case ScaleType.Quantile:
-        colorScale = scaleQuantile()
-          .range(scheme.domain as any)
-          .domain(domain as number[]);
-        break;
-      case ScaleType.Ordinal:
-        colorScale = scaleOrdinal()
-          .range(scheme.domain)
-          .domain(domain as string[]);
-        break;
-      case ScaleType.Linear:
-        {
-          const colorDomain = [...scheme.domain];
-          if (colorDomain.length === 1) {
-            colorDomain.push(colorDomain[0]);
-            this.colorDomain = colorDomain;
-          }
-
-          const points = range(0, 1, 1.0 / colorDomain.length);
-          colorScale = scaleLinear()
-            .range(colorDomain as any)
-            .domain(points);
+  private generateColorScheme(): typeof this.scale {
+    switch (this.scheme.scaleType) {
+      case VtsChartColorScaleType.Quantile:
+        return scaleQuantile()
+          .range(this.scheme.colors as any)
+          .domain(this.domain as number[]);
+      case VtsChartColorScaleType.Linear:
+        const colors = [...this.scheme.colors];
+        if (colors.length === 1) {
+          colors.push(colors[0]);
         }
-        break;
+        const points = range(0, 1, 1.0 / colors.length);
+        return scaleLinear()
+          .range(colors as any)
+          .domain(points);
+      // Default using Ordinal Scaling
       default:
-        break;
+        return scaleOrdinal()
+          .range(this.scheme.colors)
+          .domain(this.domain as string[]);
     }
-
-    return colorScale;
   }
 
   getColor(value: StringOrNumberOrDate): string {
     if (value === undefined || value === null) {
       throw new Error('Value can not be null');
     }
-    if (this.scaleType === ScaleType.Linear) {
+    if (this.scheme.scaleType === VtsChartColorScaleType.Linear) {
       const valueScale = scaleLinear()
         .domain(this.domain as number[])
         .range([0, 1]);
 
-      return this.scale(valueScale(value as number));
+      //@ts-ignore
+      return this.scale(valueScale(value));
     } else {
       if (typeof this.customColors === 'function') {
-        return this.customColors(value);
+        const fn = this.customColors as VtsChartCustomColorFunc
+        return fn(value);
       }
 
       const formattedValue = value.toString();
-      let found: any; // todo type customColors
+      let found: VtsChartCustomColorArr[0] | undefined
       if (this.customColors && this.customColors.length > 0) {
-        found = this.customColors.find((mapping: any) => {
-          return mapping.name.toLowerCase() === formattedValue.toLowerCase();
+        found = this.customColors.find((item) => {
+          return item.name.toLowerCase() === formattedValue.toLowerCase();
         });
       }
 
       if (found) {
         return found.value;
       } else {
-        return this.scale(value);
+        //@ts-ignore
+        return this.scale(value)
       }
     }
   }
@@ -114,7 +107,7 @@ export class ColorHelper {
       .domain(this.domain as number[])
       .range([0, 1]);
 
-    const colorValueScale = scaleBand().domain(this.colorDomain).range([0, 1]);
+    const colorValueScale = scaleBand().domain(this.scheme.colors).range([0, 1]);
 
     const endColor = this.getColor(value);
 
@@ -134,8 +127,8 @@ export class ColorHelper {
       opacity: 1
     });
 
-    while (currentVal < endVal && i < this.colorDomain.length) {
-      const color = this.colorDomain[i];
+    while (currentVal < endVal && i < this.scheme.colors.length) {
+      const color = this.scheme.colors[i];
       const offset = colorValueScale(color) || 0;
       if (offset <= startVal) {
         i++;

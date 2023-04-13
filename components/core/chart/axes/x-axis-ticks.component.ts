@@ -19,7 +19,7 @@ import { Orientation } from '../types/orientation.enum';
 import { TextAnchor } from '../types/text-anchor.enum';
 
 @Component({
-  selector: 'g[ngx-charts-x-axis-ticks]',
+  selector: 'g[vts-charts-x-axis-ticks]',
   template: `
     <svg:g #ticksel>
       <svg:g *ngFor="let tick of ticks" class="tick" [attr.transform]="tickTransform(tick)">

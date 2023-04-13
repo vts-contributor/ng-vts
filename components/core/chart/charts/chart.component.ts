@@ -8,31 +8,37 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { TooltipService } from '../tooltip/tooltip.service';
-import { LegendOptions, LegendType, LegendPosition } from '../types/legend.model';
-import { ScaleType } from '../types/scale-type.enum';
+import { VtsChartLegendOptions, VtsChartLegendType, VtsChartLegendPosition } from '../types/legend.model';
+import { VtsChartColorScaleType } from '../types/scale-type.enum';
 
 @Component({
   providers: [TooltipService],
-  selector: 'ngx-charts-chart',
+  selector: 'vts-charts-chart',
   template: `
-    <div class="ngx-charts-outer" [style.width.px]="view[0]" [style.height.px]="view[1]">
-      <svg class="ngx-charts" [attr.width]="chartWidth" [attr.height]="view[1]">
+    <div class="vts-charts-outer"
+      [style.width.px]="view[0]"
+      [style.height.px]="!isHorizontal ? view[1] : null"
+    >
+      <svg class="vts-charts" 
+        [attr.width]="chartWidth" 
+        [attr.height]="view[1]"
+      >
         <ng-content></ng-content>
       </svg>
-      <ngx-charts-scale-legend
+      <vts-charts-scale-legend
         *ngIf="showLegend && legendType === LegendType.ScaleLegend"
-        class="chart-legend"
-        [horizontal]="legendOptions && legendOptions.position === LegendPosition.Below"
+        class="vts-charts-legend"
+        [horizontal]="isHorizontal"
         [valueRange]="legendOptions.domain"
         [colors]="legendOptions.colors"
         [height]="view[1]"
         [width]="legendWidth"
       >
-      </ngx-charts-scale-legend>
-      <ngx-charts-legend
+      </vts-charts-scale-legend>
+      <vts-charts-legend
         *ngIf="showLegend && legendType === LegendType.Legend"
-        class="chart-legend"
-        [horizontal]="legendOptions && legendOptions.position === LegendPosition.Below"
+        class="vts-charts-legend"
+        [horizontal]="isHorizontal"
         [data]="legendOptions.domain"
         [title]="legendOptions.title"
         [colors]="legendOptions.colors"
@@ -43,7 +49,7 @@ import { ScaleType } from '../types/scale-type.enum';
         (labelActivate)="legendLabelActivate.emit($event)"
         (labelDeactivate)="legendLabelDeactivate.emit($event)"
       >
-      </ngx-charts-legend>
+      </vts-charts-legend>
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -51,21 +57,21 @@ import { ScaleType } from '../types/scale-type.enum';
 export class ChartComponent implements OnChanges {
   @Input() view!: [number, number];
   @Input() showLegend: boolean = false;
-  @Input() legendOptions!: LegendOptions;
-  @Input() legendType!: LegendType;
+  @Input() legendOptions!: VtsChartLegendOptions;
+  @Input() legendType!: VtsChartLegendType;
   @Input() activeEntries: any[] = [];
   @Input() animations: boolean = true;
 
   @Output() legendLabelClick = new EventEmitter<string>();
-  @Output() legendLabelActivate = new EventEmitter<{ name: string }>();
-  @Output() legendLabelDeactivate = new EventEmitter<{ name: string }>();
+  @Output() legendLabelActivate = new EventEmitter<{name: string}>();
+  @Output() legendLabelDeactivate = new EventEmitter<{name: string}>();
 
   chartWidth: number = 0;
   title: string = '';
   legendWidth: number = 0;
 
-  readonly LegendPosition = LegendPosition;
-  readonly LegendType = LegendType;
+  readonly LegendPosition = VtsChartLegendPosition;
+  readonly LegendType = VtsChartLegendType;
 
   ngOnChanges(_changes: SimpleChanges): void {
     this.update();
@@ -76,8 +82,10 @@ export class ChartComponent implements OnChanges {
     if (this.showLegend) {
       this.legendType = this.getLegendType();
 
-      if (!this.legendOptions || this.legendOptions.position === LegendPosition.Right) {
-        if (this.legendType === LegendType.ScaleLegend) {
+      if (!this.legendOptions || this.legendOptions.position === VtsChartLegendPosition.Right) {
+        if (this.legendOptions.columns)
+          legendColumns = this.legendOptions.columns
+        else if (this.legendType === VtsChartLegendType.ScaleLegend) {
           legendColumns = 1;
         } else {
           legendColumns = 2;
@@ -89,12 +97,16 @@ export class ChartComponent implements OnChanges {
 
     this.chartWidth = Math.floor((this.view[0] * chartColumns) / 12.0);
     this.legendWidth =
-      !this.legendOptions || this.legendOptions.position === LegendPosition.Right
+      !this.legendOptions || this.legendOptions.position === VtsChartLegendPosition.Right
         ? Math.floor((this.view[0] * legendColumns) / 12.0)
         : this.chartWidth;
   }
 
-  getLegendType(): LegendType {
-    return this.legendOptions.scaleType === ScaleType.Linear ? LegendType.ScaleLegend : LegendType.Legend;
+  getLegendType(): VtsChartLegendType {
+    return this.legendOptions.scaleType === VtsChartColorScaleType.Linear ? VtsChartLegendType.ScaleLegend : VtsChartLegendType.Legend;
+  }
+
+  get isHorizontal() {
+    return this.legendOptions && this.legendOptions.position === this.LegendPosition.Below
   }
 }

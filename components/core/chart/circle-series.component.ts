@@ -19,7 +19,7 @@ import { PlacementTypes } from './tooltip/position';
 import { StyleTypes } from './tooltip/style.type';
 import { BarOrientation } from './types/bar-orientation.enum';
 import { Gradient } from './types/gradient.interface';
-import { ScaleType } from './types/scale-type.enum';
+import { VtsChartColorScaleType } from './types/scale-type.enum';
 import { isPlatformServer } from '@angular/common';
 
 export enum SeriesType {
@@ -46,12 +46,12 @@ export interface Circle {
 }
 
 @Component({
-  selector: 'g[ngx-charts-circle-series]',
+  selector: 'g[vts-charts-circle-series]',
   template: `
     <svg:g *ngIf="circle">
       <defs>
         <svg:g
-          ngx-charts-svg-linear-gradient
+          vts-charts-svg-linear-gradient
           [orientation]="barOrientation.Vertical"
           [name]="gradientId"
           [stops]="circle.gradientStops"
@@ -77,7 +77,7 @@ export interface Circle {
         class="tooltip-bar"
       />
       <svg:g
-        ngx-charts-circle
+        vts-charts-circle
         class="circle"
         [cx]="circle.cx"
         [cy]="circle.cy"
@@ -90,7 +90,7 @@ export interface Circle {
         (select)="onClick(circle.data)"
         (activate)="activateCircle()"
         (deactivate)="deactivateCircle()"
-        ngx-tooltip
+        vts-charts-tooltip
         [tooltipDisabled]="tooltipDisabled"
         [tooltipPlacement]="placementTypes.Top"
         [tooltipType]="styleTypes.tooltip"
@@ -118,7 +118,7 @@ export class CircleSeriesComponent implements OnChanges, OnInit {
   @Input() xScale: any;
   @Input() yScale: any;
   @Input() colors!: ColorHelper;
-  @Input() scaleType!: ScaleType;
+  @Input() scaleType!: VtsChartColorScaleType;
   @Input() visibleValue: boolean = false;
   @Input() activeEntries: any[] = [];
   @Input() tooltipDisabled: boolean = false;
@@ -181,9 +181,9 @@ export class CircleSeriesComponent implements OnChanges, OnInit {
     const tooltipLabel = formatLabel(label);
 
     let cx;
-    if (this.scaleType === ScaleType.Time) {
+    if (this.scaleType === VtsChartColorScaleType.Time) {
       cx = this.xScale(label);
-    } else if (this.scaleType === ScaleType.Linear) {
+    } else if (this.scaleType === VtsChartColorScaleType.Linear) {
       cx = this.xScale(Number(label));
     } else {
       cx = this.xScale(label);
@@ -195,7 +195,7 @@ export class CircleSeriesComponent implements OnChanges, OnInit {
     const opacity = 1;
 
     let color;
-    if (this.colors.scaleType === ScaleType.Linear) {
+    if (this.colors.scheme.scaleType === VtsChartColorScaleType.Linear) {
       if (this.type === SeriesType.Standard) {
         color = this.colors.getColor(value);
       } else {

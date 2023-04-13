@@ -14,13 +14,13 @@ import { brushX } from 'd3-brush';
 import { scaleLinear, scaleTime, scalePoint } from 'd3-scale';
 import { select } from 'd3-selection';
 import { id } from '../utils/id';
-import { ScaleType } from '../types/scale-type.enum';
+import { VtsChartColorScaleType } from '../types/scale-type.enum';
 import { ViewDimensions } from '../types/view-dimension.interface';
 
 @Component({
-  selector: 'g[ngx-charts-timeline]',
+  selector: 'g[vts-charts-timeline]',
   template: `
-    <svg:g class="timeline" [attr.transform]="transform">
+    <svg:g class="vts-charts-timeline" [attr.transform]="transform">
       <svg:filter [attr.id]="filterId">
         <svg:feColorMatrix
           in="SourceGraphic"
@@ -35,7 +35,6 @@ import { ViewDimensions } from '../types/view-dimension.interface';
       <svg:g class="brush"></svg:g>
     </svg:g>
   `,
-  styleUrls: ['./timeline.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -46,7 +45,7 @@ export class Timeline implements OnChanges {
   @Input() customColors: any; // type this
   @Input() legend: boolean = false;
   @Input() autoScale: boolean = false;
-  @Input() scaleType!: ScaleType;
+  @Input() scaleType!: VtsChartColorScaleType;
   @Input() height: number = 50;
 
   @Output() select = new EventEmitter();
@@ -107,11 +106,11 @@ export class Timeline implements OnChanges {
     }
 
     let domain = [];
-    if (this.scaleType === ScaleType.Time) {
+    if (this.scaleType === VtsChartColorScaleType.Time) {
       const min = Math.min(...values);
       const max = Math.max(...values);
       domain = [min, max];
-    } else if (this.scaleType === ScaleType.Linear) {
+    } else if (this.scaleType === VtsChartColorScaleType.Linear) {
       values = values.map(v => Number(v));
       const min = Math.min(...values);
       const max = Math.max(...values);
@@ -126,11 +125,11 @@ export class Timeline implements OnChanges {
   getXScale() {
     let scale;
 
-    if (this.scaleType === ScaleType.Time) {
+    if (this.scaleType === VtsChartColorScaleType.Time) {
       scale = scaleTime().range([0, this.dims.width]).domain(this.xDomain);
-    } else if (this.scaleType === ScaleType.Linear) {
+    } else if (this.scaleType === VtsChartColorScaleType.Linear) {
       scale = scaleLinear().range([0, this.dims.width]).domain(this.xDomain);
-    } else if (this.scaleType === ScaleType.Ordinal) {
+    } else if (this.scaleType === VtsChartColorScaleType.Ordinal) {
       scale = scalePoint().range([0, this.dims.width]).padding(0.1).domain(this.xDomain);
     }
 

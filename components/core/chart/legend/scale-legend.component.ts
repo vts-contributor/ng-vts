@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, ChangeDetectionStrategy, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'ngx-charts-scale-legend',
+  selector: 'vts-charts-scale-legend',
   template: `
     <div
-      class="scale-legend"
+      class="vts-charts-scale-legend"
       [class.horizontal-legend]="horizontal"
       [style.height.px]="horizontal ? undefined : height"
       [style.width.px]="width"
@@ -18,7 +18,6 @@ import { Component, Input, OnChanges, ChangeDetectionStrategy, SimpleChanges, Vi
       </div>
     </div>
   `,
-  styleUrls: ['./scale-legend.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

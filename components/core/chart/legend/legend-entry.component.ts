@@ -1,7 +1,7 @@
 import { Component, Input, Output, ChangeDetectionStrategy, HostListener, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'ngx-charts-legend-entry',
+  selector: 'vts-charts-legend-entry',
   template: `
     <span [title]="formattedLabel" tabindex="-1" [class.active]="isActive" (click)="select.emit(formattedLabel)">
       <span class="legend-label-color" [style.background-color]="color" (click)="toggle.emit(formattedLabel)"> </span>

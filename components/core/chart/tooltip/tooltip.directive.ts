@@ -17,7 +17,7 @@ import { ShowTypes } from './show.type';
 
 import { TooltipService } from './tooltip.service';
 
-@Directive({ selector: '[ngx-tooltip]' })
+@Directive({ selector: '[vts-charts-tooltip]' })
 export class TooltipDirective implements OnDestroy {
   @Input() tooltipCssClass: string = '';
   @Input() tooltipTitle?: string;
@@ -32,7 +32,7 @@ export class TooltipDirective implements OnDestroy {
   @Input() tooltipCloseOnMouseLeave: boolean = true;
   @Input() tooltipHideTimeout: number = 300;
   @Input() tooltipShowTimeout: number = 100;
-  @Input() tooltipTemplate!: TemplateRef<any>;
+  @Input() tooltipTemplate?: TemplateRef<any>;
   @Input() tooltipShowEvent: ShowTypes = ShowTypes.all;
   @Input() tooltipContext: any;
   @Input() tooltipImmediateExit: boolean = false;

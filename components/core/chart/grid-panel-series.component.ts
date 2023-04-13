@@ -17,10 +17,10 @@ enum ClassEnum {
 }
 
 @Component({
-  selector: 'g[ngx-charts-grid-panel-series]',
+  selector: 'g[vts-charts-grid-panel-series]',
   template: `
     <svg:g
-      ngx-charts-grid-panel
+      vts-charts-grid-panel
       *ngFor="let gridPanel of gridPanels"
       [height]="gridPanel.height"
       [width]="gridPanel.width"

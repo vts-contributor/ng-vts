@@ -1,4 +1,4 @@
-import { VtsPieChartModule } from "../pie-chart.module";
+import { VtsPieChartModule } from "@ui-vts/ng-vts/pie-chart";
 
 export const moduleList = [
     VtsPieChartModule

@@ -14,11 +14,11 @@ import { Orientation } from '../types/orientation.enum';
 import { ViewDimensions } from '../types/view-dimension.interface';
 
 @Component({
-  selector: 'g[ngx-charts-x-axis]',
+  selector: 'g[vts-charts-x-axis]',
   template: `
     <svg:g [attr.class]="xAxisClassName" [attr.transform]="transform">
       <svg:g
-        ngx-charts-x-axis-ticks
+        vts-charts-x-axis-ticks
         *ngIf="xScale"
         [trimTicks]="trimTicks"
         [rotateTicks]="rotateTicks"
@@ -35,7 +35,7 @@ import { ViewDimensions } from '../types/view-dimension.interface';
         (dimensionsChanged)="emitTicksHeight($event)"
       />
       <svg:g
-        ngx-charts-axis-label
+        vts-charts-axis-label
         *ngIf="showLabel"
         [label]="labelText"
         [offset]="labelOffset"

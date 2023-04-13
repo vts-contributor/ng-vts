@@ -5,8 +5,6 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
   OnDestroy,
   OnChanges,
@@ -20,23 +18,18 @@ import { fromEvent as observableFromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { VisibilityObserver } from './utils/visibility-observer';
 import { isDate } from './utils/types';
-import { Color } from './utils/color-sets';
-import { ScaleType } from './types/scale-type.enum';
 import { ViewDimensions } from './types/view-dimension.interface';
+import { VtsChartCustomColors } from './types';
 
 @Component({
   selector: 'base-chart',
   template: ` <div></div> `
 })
 export class BaseChartComponent implements OnChanges, AfterViewInit, OnDestroy, OnInit {
-  @Input() results: any[] = [];
-  @Input() view!: [number, number];
-  @Input() scheme: string | Color = 'cool';
-  @Input() schemeType: ScaleType = ScaleType.Ordinal;
-  @Input() customColors: any;
-  @Input() animations: boolean = true;
-
-  @Output() select = new EventEmitter();
+  @Input() vtsData: any[] = [];
+  @Input() vtsView: [number | null, number | null] = [null, null]
+  @Input() vtsCustomColors?: VtsChartCustomColors
+  @Input() vtsAnimations: boolean = true;
 
   width: number = 0;
   height: number = 0;
@@ -52,7 +45,7 @@ export class BaseChartComponent implements OnChanges, AfterViewInit, OnDestroy, 
 
   ngOnInit() {
     if (isPlatformServer(this.platformId)) {
-      this.animations = false;
+      this.vtsAnimations = false;
     }
   }
 
@@ -77,22 +70,16 @@ export class BaseChartComponent implements OnChanges, AfterViewInit, OnDestroy, 
   }
 
   update(): void {
-    if (this.results) {
-      this.results = this.cloneData(this.results);
+    if (this.vtsData) {
+      this.vtsData = this.cloneData(this.vtsData);
     } else {
-      this.results = [];
+      this.vtsData = [];
     }
 
-    if (this.view) {
-      this.width = this.view[0];
-      this.height = this.view[1];
-    } else {
-      const dims = this.getContainerDims();
-      if (dims) {
-        this.width = dims.width;
-        this.height = dims.height;
-      }
-    }
+    const dims = this.getContainerDims();
+    const [w, h] = this.vtsView
+    this.width = w || dims?.width || 0
+    this.height = h || dims?.height || 0
 
     // default values if width or height are 0 or undefined
     if (!this.width) {
@@ -135,11 +122,11 @@ export class BaseChartComponent implements OnChanges, AfterViewInit, OnDestroy, 
    * into formatted date strings
    */
   formatDates(): void {
-    for (let i = 0; i < this.results.length; i++) {
-      const g = this.results[i];
-      const label = g.name;
-      if (isDate(label)) {
-        g.label = (label as Date).toLocaleDateString();
+    for (let i = 0; i < this.vtsData.length; i++) {
+      const g = this.vtsData[i];
+      g.label = g.name;
+      if (isDate(g.label)) {
+        g.label = (g.label as Date).toLocaleDateString();
       }
 
       if (g.series) {

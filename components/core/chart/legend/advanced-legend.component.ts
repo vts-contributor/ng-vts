@@ -25,13 +25,13 @@ export interface AdvancedLegendItem {
 }
 
 @Component({
-  selector: 'ngx-charts-advanced-legend',
+  selector: 'vts-charts-advanced-legend',
   template: `
-    <div class="advanced-pie-legend" [style.width.px]="width">
+    <div class="vts-advanced-legend" [style.width.px]="width">
       <div
         *ngIf="animations"
         class="total-value"
-        ngx-charts-count-up
+        vts-charts-count-up
         [countTo]="roundedTotal"
         [valueFormatting]="valueFormatting"
       ></div>
@@ -55,7 +55,7 @@ export interface AdvancedLegendItem {
             <div
               *ngIf="animations"
               class="item-value"
-              ngx-charts-count-up
+              vts-charts-count-up
               [countTo]="legendItem._value"
               [valueFormatting]="valueFormatting"
             ></div>
@@ -66,7 +66,7 @@ export interface AdvancedLegendItem {
             <div
               *ngIf="animations"
               class="item-percent"
-              ngx-charts-count-up
+              vts-charts-count-up
               [countTo]="legendItem.percentage"
               [countSuffix]="'%'"
             ></div>
@@ -76,7 +76,6 @@ export interface AdvancedLegendItem {
       </div>
     </div>
   `,
-  styleUrls: ['./advanced-legend.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

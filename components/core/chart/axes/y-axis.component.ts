@@ -13,11 +13,11 @@ import { Orientation } from '../types/orientation.enum';
 import { ViewDimensions } from '../types/view-dimension.interface';
 
 @Component({
-  selector: 'g[ngx-charts-y-axis]',
+  selector: 'g[vts-charts-y-axis]',
   template: `
     <svg:g [attr.class]="yAxisClassName" [attr.transform]="transform">
       <svg:g
-        ngx-charts-y-axis-ticks
+        vts-charts-y-axis-ticks
         *ngIf="yScale"
         [trimTicks]="trimTicks"
         [maxTickLength]="maxTickLength"
@@ -37,7 +37,7 @@ import { ViewDimensions } from '../types/view-dimension.interface';
       />
 
       <svg:g
-        ngx-charts-axis-label
+        vts-charts-axis-label
         *ngIf="showLabel"
         [label]="labelText"
         [offset]="labelOffset"

@@ -12,7 +12,7 @@ class TestComponent {
   barData: any;
 }
 
-describe('<ngx-charts-chart>', () => {
+describe('<vts-charts-chart>', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
@@ -26,11 +26,11 @@ describe('<ngx-charts-chart>', () => {
       TestBed.overrideComponent(TestComponent, {
         set: {
           template: `
-                    <ngx-charts-chart
+                    <vts-charts-chart
                       [animations]="false"
                       [view]="[400,800]">
-                      <p>ngx-charts is cool!</p>
-                    </ngx-charts-chart>
+                      <p>vts-charts is cool!</p>
+                    </vts-charts-chart>
                 `
         }
       }).compileComponents();
@@ -52,7 +52,7 @@ describe('<ngx-charts-chart>', () => {
 
       const textNode = fixture.debugElement.nativeElement.querySelector('svg p');
 
-      expect(textNode.textContent).toEqual('ngx-charts is cool!');
+      expect(textNode.textContent).toEqual('vts-charts is cool!');
     });
   });
 });

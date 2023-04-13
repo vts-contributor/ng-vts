@@ -1,5 +1,5 @@
-import { LegendPosition } from './types/legend.model';
-import { ScaleType } from './types/scale-type.enum';
+import { VtsChartLegendPosition } from './types/legend.model';
+import { VtsChartColorScaleType } from './types/scale-type.enum';
 import { ViewDimensions } from './types/view-dimension.interface';
 
 export function calculateViewDimensions({
@@ -13,16 +13,16 @@ export function calculateViewDimensions({
   showXLabel = false,
   showYLabel = false,
   showLegend = false,
-  legendType = ScaleType.Ordinal,
-  legendPosition = LegendPosition.Right,
+  legendType = VtsChartColorScaleType.Ordinal,
+  legendPosition = VtsChartLegendPosition.Right,
   columns = 12
 }): ViewDimensions {
   let xOffset: number = margins[3];
   let chartWidth = width;
   let chartHeight = height - margins[0] - margins[2];
 
-  if (showLegend && legendPosition === LegendPosition.Right) {
-    if (legendType === ScaleType.Ordinal) {
+  if (showLegend && legendPosition === VtsChartLegendPosition.Right) {
+    if (legendType === VtsChartColorScaleType.Ordinal) {
       columns -= 2;
     } else {
       columns -= 1;

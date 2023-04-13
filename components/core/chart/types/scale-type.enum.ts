@@ -1,4 +1,4 @@
-export enum ScaleType {
+export enum VtsChartColorScaleType {
   Time = 'time',
   Linear = 'linear',
   Ordinal = 'ordinal',

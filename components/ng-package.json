@@ -12,6 +12,7 @@
     "@ui-vts/icons-angular", 
     "apexcharts", 
     "date-fns", 
-    "dom7"
+    "dom7",
+    "d3"
   ]
 }

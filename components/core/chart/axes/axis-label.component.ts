@@ -2,7 +2,7 @@ import { Component, Input, ElementRef, OnChanges, SimpleChanges, ChangeDetection
 import { Orientation } from '../types/orientation.enum';
 
 @Component({
-  selector: 'g[ngx-charts-axis-label]',
+  selector: 'g[vts-charts-axis-label]',
   template: `
     <svg:text
       [attr.stroke-width]="strokeWidth"

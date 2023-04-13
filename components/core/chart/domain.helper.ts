@@ -1,4 +1,4 @@
-import { ScaleType } from './types/scale-type.enum';
+import { VtsChartColorScaleType } from './types/scale-type.enum';
 import { StringOrNumberOrDate } from './models/chart-data.model';
 /**
  * Based on the data, return an array with unique values.
@@ -20,20 +20,20 @@ export function getUniqueXDomainValues(results: any[]): any[] {
  * Get the scaleType of enumerable of values.
  * @returns  'time', 'linear' or 'ordinal'
  */
-export function getScaleType(values: any[], checkDateType: boolean = true): ScaleType {
+export function getVtsChartColorScaleType(values: any[], checkDateType: boolean = true): VtsChartColorScaleType {
   if (checkDateType) {
     const allDates = values.every(value => value instanceof Date);
     if (allDates) {
-      return ScaleType.Time;
+      return VtsChartColorScaleType.Time;
     }
   }
 
   const allNumbers = values.every(value => typeof value === 'number');
   if (allNumbers) {
-    return ScaleType.Linear;
+    return VtsChartColorScaleType.Linear;
   }
 
-  return ScaleType.Ordinal;
+  return VtsChartColorScaleType.Ordinal;
 }
 
 export function getXDomainArray(
@@ -41,23 +41,23 @@ export function getXDomainArray(
   xScaleMin?: number,
   xScaleMax?: number
 ): { domain: any[]; xSet: any[]; scaleType: string } {
-  const scaleType = getScaleType(values);
+  const scaleType = getVtsChartColorScaleType(values);
   let xSet: StringOrNumberOrDate[] = [];
   let domain: StringOrNumberOrDate[] = [];
 
-  if (scaleType === ScaleType.Linear) {
+  if (scaleType === VtsChartColorScaleType.Linear) {
     values = values.map(v => Number(v));
   }
 
   let min: number = 0;
   let max: number = 0;
-  if (scaleType === ScaleType.Time || scaleType === ScaleType.Linear) {
+  if (scaleType === VtsChartColorScaleType.Time || scaleType === VtsChartColorScaleType.Linear) {
     const mappedValues = values.map(v => Number(v));
     min = xScaleMin ? xScaleMin : Math.min(...mappedValues);
     max = xScaleMax ? xScaleMax : Math.max(...mappedValues);
   }
 
-  if (scaleType === ScaleType.Time) {
+  if (scaleType === VtsChartColorScaleType.Time) {
     domain = [new Date(min), new Date(max)];
     //@ts-ignore
     xSet = [...values].sort((a: Date, b: Date) => {
@@ -67,7 +67,7 @@ export function getXDomainArray(
       if (bDate > aDate) return -1;
       return 0;
     });
-  } else if (scaleType === ScaleType.Linear) {
+  } else if (scaleType === VtsChartColorScaleType.Linear) {
     domain = [min, max];
     // Use compare function to sort numbers numerically
     //@ts-ignore

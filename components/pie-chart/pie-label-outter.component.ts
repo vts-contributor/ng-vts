@@ -9,19 +9,15 @@ import {
   Inject
 } from '@angular/core';
 import { arc } from 'd3-shape';
-
 import { TextAnchor, trimLabel } from '@ui-vts/ng-vts/core/chart';
 import { VtsPieChartData } from './types';
 
-
-
 @Component({
-  selector: 'g[ngx-charts-pie-label]',
+  selector: 'g[vts-charts-pie-label-outter]',
   template: `
-    <title>{{ label }}</title>
     <svg:g [attr.transform]="attrTransform" [style.transform]="styleTransform" [style.transition]="textTransition">
       <svg:text
-        class="pie-label"
+        class="pie-label-outter"
         [class.animation]="animations"
         dy=".35em"
         [style.textAnchor]="textAnchor()"
@@ -31,24 +27,24 @@ import { VtsPieChartData } from './types';
       </svg:text>
     </svg:g>
     <svg:path
+      class="pie-label-outter-line"
       [attr.d]="line"
       [attr.stroke]="color"
       fill="none"
-      class="pie-label-line line"
       [class.animation]="animations"
     ></svg:path>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PieLabelComponent implements OnChanges {
+export class VtsPieLabelOutterComponent implements OnChanges {
   @Input() data!: VtsPieChartData;
   @Input() radius: number = 0;
-  @Input() label: string = '';
   @Input() color: string = '';
   @Input() max: number = 0;
   @Input() value: number = 0;
   @Input() explodeSlices: boolean = false;
   @Input() animations: boolean = true;
+  @Input() label: string = '';
   @Input() labelTrim: boolean = true;
   @Input() labelTrimSize: number = 10;
 

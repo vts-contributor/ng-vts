@@ -10,15 +10,16 @@ import {
 } from '@angular/core';
 import { max } from 'd3-array';
 import { arc, pie } from 'd3-shape';
-import { ViewDimensions, StyleTypes, PlacementTypes, ColorHelper, formatLabel, escapeLabel } from '@ui-vts/ng-vts/core/chart';
+import { ViewDimensions, StyleTypes, PlacementTypes, ColorHelper, formatLabel, escapeLabel, StringOrNumberOrDate } from '@ui-vts/ng-vts/core/chart';
 import { VtsPieChartData, VtsPieChartItem } from './types';
 
 @Component({
-  selector: 'g[ngx-charts-pie-series]',
+  selector: 'g[vts-charts-pie-series]',
   template: `
     <svg:g *ngFor="let arc of data; trackBy: trackBy">
+      <!--
       <svg:g
-        ngx-charts-pie-label
+        vts-charts-pie-label-outter
         *ngIf="labelVisible(arc)"
         [data]="arc"
         [radius]="outerRadius"
@@ -31,8 +32,9 @@ import { VtsPieChartData, VtsPieChartItem } from './types';
         [explodeSlices]="explodeSlices"
         [animations]="animations"
       ></svg:g>
+      -->
       <svg:g
-        ngx-charts-pie-arc
+        vts-charts-pie-arc
         [startAngle]="arc.startAngle"
         [endAngle]="arc.endAngle"
         [innerRadius]="innerRadius"
@@ -49,7 +51,7 @@ import { VtsPieChartData, VtsPieChartItem } from './types';
         (activate)="activate.emit($event)"
         (deactivate)="deactivate.emit($event)"
         (dblclick)="dblclick.emit($event)"
-        ngx-tooltip
+        vts-charts-tooltip
         [tooltipDisabled]="tooltipDisabled"
         [tooltipPlacement]="placementTypes.Top"
         [tooltipType]="styleTypes.tooltip"
@@ -57,11 +59,25 @@ import { VtsPieChartData, VtsPieChartItem } from './types';
         [tooltipTemplate]="tooltipTemplate"
         [tooltipContext]="arc.data"
       ></svg:g>
+      <svg:g
+        vts-charts-pie-label-inner
+        *ngIf="labelVisible(arc)"
+        [data]="arc"
+        [radius]="outerRadius"
+        [color]="color(arc)"
+        [label]="labelText(arc)"
+        [labelTrim]="trimLabels"
+        [labelTrimSize]="maxLabelLength"
+        [max]="max"
+        [value]="arc.value"
+        [explodeSlices]="explodeSlices"
+        [animations]="animations"
+      ></svg:g>
     </svg:g>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PieSeriesComponent implements OnChanges {
+export class VtsPieSeriesComponent implements OnChanges {
   @Input() colors!: ColorHelper;
   @Input() series: VtsPieChartItem[] = [];
   @Input() dims!: ViewDimensions;
@@ -70,11 +86,11 @@ export class PieSeriesComponent implements OnChanges {
   @Input() explodeSlices!: boolean;
   @Input() showLabels!: boolean;
   @Input() gradient!: boolean;
-  @Input() activeEntries!: any[];
-  @Input() labelFormatting: any;
+  @Input() activeEntries!: VtsPieChartItem[];
+  @Input() labelFormatting?: (name: StringOrNumberOrDate) => string;;
   @Input() trimLabels: boolean = true;
   @Input() maxLabelLength: number = 10;
-  @Input() tooltipText?: (o: VtsPieChartData) => any;
+  @Input() tooltipText?: (o: VtsPieChartData) => string;
   @Input() tooltipDisabled: boolean = false;
   @Input() tooltipTemplate?: TemplateRef<any>;
   @Input() animations: boolean = true;
@@ -186,7 +202,7 @@ export class PieSeriesComponent implements OnChanges {
     `;
   }
 
-  color(myArc: VtsPieChartData): any {
+  color(myArc: VtsPieChartData): string {
     return this.colors.getColor(this.label(myArc));
   }
 

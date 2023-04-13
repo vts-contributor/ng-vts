@@ -8,18 +8,16 @@ import {
   OnChanges,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { interpolate } from 'd3-interpolate';
-import { select } from 'd3-selection';
-import { arc } from 'd3-shape';
-import { id, BarOrientation } from '@ui-vts/ng-vts/core/chart';
+import { id, BarOrientation } from '@ui-vts/ng-vts/core/chart'; 
 import { VtsPieChartItem } from './types';
+import * as d3 from 'd3'
 
 @Component({
-  selector: 'g[ngx-charts-pie-arc]',
+  selector: 'g[vts-charts-pie-arc]',
   template: `
     <svg:g class="arc-group">
       <svg:defs *ngIf="gradient">
-        <svg:g ngx-charts-svg-radial-gradient [color]="fill" [name]="radialGradientId" [startOpacity]="startOpacity" />
+        <svg:g vts-charts-svg-radial-gradient [color]="fill" [name]="radialGradientId" [startOpacity]="startOpacity" />
       </svg:defs>
       <svg:path
         [attr.d]="path"
@@ -36,7 +34,7 @@ import { VtsPieChartItem } from './types';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PieArcComponent implements OnChanges {
+export class VtsPieArcComponent implements OnChanges {
   @Input() fill: string = '';
   @Input() startAngle: number = 0;
   @Input() endAngle: number = Math.PI * 2;
@@ -108,11 +106,11 @@ export class PieArcComponent implements OnChanges {
       outerRadius = (this.outerRadius * this.value) / this.max;
     }
 
-    return arc().innerRadius(this.innerRadius).outerRadius(outerRadius).cornerRadius(this.cornerRadius);
+    return d3.arc().innerRadius(this.innerRadius).outerRadius(outerRadius).cornerRadius(this.cornerRadius);
   }
 
   loadAnimation(): void {
-    const node = select(this.element)
+    const node = d3.select(this.element)
       .selectAll('.arc')
       .data([{ startAngle: this.startAngle, endAngle: this.endAngle }]);
 
@@ -121,11 +119,13 @@ export class PieArcComponent implements OnChanges {
     node
       .transition()
       .attrTween('d', function (d) {
-        (<any>this)._current = (<any>this)._current || d;
+        //@ts-ignore
+        this._current = this._current || d;
         const copyOfD = Object.assign({}, d);
         copyOfD.endAngle = copyOfD.startAngle;
-        const interpolater = interpolate(copyOfD, copyOfD);
-        (<any>this)._current = interpolater(0);
+        const interpolater = d3.interpolate(copyOfD, copyOfD);
+        //@ts-ignore
+        this._current = interpolater(0);
         return function (t) {
           return calc(interpolater(t));
         };
@@ -133,9 +133,12 @@ export class PieArcComponent implements OnChanges {
       .transition()
       .duration(750)
       .attrTween('d', function (d) {
-        (<any>this)._current = (<any>this)._current || d;
-        const interpolater = interpolate((<any>this)._current, d);
-        (<any>this)._current = interpolater(0);
+        //@ts-ignore
+        this._current = this._current || d;
+        //@ts-ignore
+        const interpolater = d3.interpolate(this._current, d);
+        //@ts-ignore
+        this._current = interpolater(0);
         return function (t) {
           return calc(interpolater(t));
         };
@@ -143,7 +146,7 @@ export class PieArcComponent implements OnChanges {
   }
 
   updateAnimation(): void {
-    const node = select(this.element)
+    const node = d3.select(this.element)
       .selectAll('.arc')
       .data([{ startAngle: this.startAngle, endAngle: this.endAngle }]);
 
@@ -153,13 +156,16 @@ export class PieArcComponent implements OnChanges {
       .transition()
       .duration(750)
       .attrTween('d', function (d) {
-        (<any>this)._current = (<any>this)._current || d;
-        const interpolater = interpolate((<any>this)._current, d);
-        (<any>this)._current = interpolater(0);
+        //@ts-ignore
+        this._current = this._current || d;
+        //@ts-ignore
+        const interpolater = d3.interpolate(this._current, d);
+        //@ts-ignore
+        this._current = interpolater(0);
         return function (t) {
           return calc(interpolater(t));
         };
-      });
+      })
   }
 
   onClick(): void {
