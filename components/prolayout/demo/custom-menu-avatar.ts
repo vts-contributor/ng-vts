@@ -10,7 +10,6 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
       [vtsMenuHeader]="menuData" 
       [vtsMenuSider]="menuData" 
       [vtsAvatar]="avatar" 
-      [vtsAvatarMenu]="avatarMenu" 
       [vtsLogoUrl]="logoUrl" 
       [vtsBreadcrumbArray]="arrayMenuItem" 
       [vtsFooterTemplate]="footerTemplate" 
