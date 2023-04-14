@@ -63,7 +63,7 @@
             </ng-template>
         </div>
         <!-- avatar with menu dropdown -->
-        <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length > 0; else withoutDropdown">
+        <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length >= 0; else withoutDropdown">
             <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
             <div vts-col style="margin-left: 5px;" *ngIf="windowSize == 'large'">
                 <div class="username">
@@ -90,7 +90,7 @@
         </ng-template>
     </div>
     <vts-dropdown-menu #menuAvatar="vtsDropdownMenu">
-        <ng-container *ngIf="vtsMenuAvatarTemplateRef == null; else withTemplate">
+        <ng-container *ngIf="!vtsMenuAvatarTemplateRef; else withTemplate">
             <ul vts-menu vtsSelectable>
                 <li vts-menu-item *ngFor="let item of vtsAvatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
             </ul>
