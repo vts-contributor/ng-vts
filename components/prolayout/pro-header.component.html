@@ -24,43 +24,45 @@
             </ul>
         </ng-container>
     </div>
-    <div vts-col vts-row class="avatar-container" [vtsGutter]="20">
-        <!-- Search -->
-        <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
-            <i vts-icon vtsType="Search" class="cursor-pointer" style="color: white;"></i>
-        </div>
-        <!-- Full screen -->
-        <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
-            <i vts-icon vtsType="FullScreen:vts" class="cursor-pointer" style="color: white;" (click)="toggleFullScreen()"></i>
-        </div>
-        <!-- Block UI -->
-        <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
-            <i vts-icon vtsType="Lock:vts" class="cursor-pointer" style="color: white;" (click)="lockScreen()"></i>
-        </div>
-        <!-- Notification -->
-        <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
-            <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" *ngIf="notificationCount === 0; else hasNotification"></i>
-            <ng-template #hasNotification>
-                <!-- render notification pane based on type, default to be a menu context -->
-                <ng-container [ngSwitch]="vtsNotificationConfig.type">
-                    <ng-container *ngSwitchCase="'drawer'">
-                        <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationConfig.overflowCount">
-                            <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" (click)="openNotificationPane()"></i>
-                        </vts-badge>
+    <div vts-col vts-row class="avatar-container">
+        <div class="icon-utils-container" vts-col vts-row>
+            <!-- Search -->
+            <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+                <i vts-icon vtsType="Search" class="cursor-pointer" style="color: white;"></i>
+            </div>
+            <!-- Full screen -->
+            <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+                <i vts-icon vtsType="FullScreen:vts" class="cursor-pointer" style="color: white;" (click)="toggleFullScreen()"></i>
+            </div>
+            <!-- Block UI -->
+            <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+                <i vts-icon vtsType="Lock:vts" class="cursor-pointer" style="color: white;" (click)="lockScreen()"></i>
+            </div>
+            <!-- Notification -->
+            <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils notification-icon">
+                <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" *ngIf="notificationCount === 0; else hasNotification"></i>
+                <ng-template #hasNotification>
+                    <!-- render notification pane based on type, default to be a menu context -->
+                    <ng-container [ngSwitch]="vtsNotificationConfig.type">
+                        <ng-container *ngSwitchCase="'drawer'">
+                            <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationConfig.overflowCount">
+                                <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" style="color: white;" (click)="openNotificationPane()"></i>
+                            </vts-badge>
+                        </ng-container>
+                        <ng-container *ngSwitchDefault>
+                            <!-- if has vtsMenuTemplate -->
+                            <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationConfig.overflowCount" *ngIf="vtsMenuTemplate">
+                                <i vts-icon vtsType="Notifications:vts" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="defaultMenu" class="cursor-pointer" style="color: white;"></i>
+                                <vts-dropdown-menu #defaultMenu="vtsDropdownMenu">
+                                    <ng-container *ngTemplateOutlet="vtsMenuTemplate">       
+                                        {{vtsMenuTemplate}}     
+                                    </ng-container>
+                                </vts-dropdown-menu>
+                            </vts-badge>
+                        </ng-container>
                     </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        <!-- if has vtsMenuTemplate -->
-                        <vts-badge [vtsCount]="notificationCount" [vtsOverflowCount]="vtsNotificationConfig.overflowCount" *ngIf="vtsMenuTemplate">
-                            <i vts-icon vtsType="Notifications:vts" vts-dropdown vtsTrigger="click" [vtsDropdownMenu]="defaultMenu" class="cursor-pointer" style="color: white;"></i>
-                            <vts-dropdown-menu #defaultMenu="vtsDropdownMenu">
-                                <ng-container *ngTemplateOutlet="vtsMenuTemplate">       
-                                    {{vtsMenuTemplate}}     
-                                </ng-container>
-                            </vts-dropdown-menu>
-                        </vts-badge>
-                    </ng-container>
-                </ng-container>
-            </ng-template>
+                </ng-template>
+            </div>
         </div>
         <!-- avatar with menu dropdown -->
         <div vts-row vtsAlign="middle" vts-col class="cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length >= 0; else withoutDropdown">

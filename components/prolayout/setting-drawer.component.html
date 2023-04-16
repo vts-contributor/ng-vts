@@ -14,7 +14,8 @@
   [vtsClosable]="true"
   [vtsVisible]="open"
   vtsPlacement="right"
-  vtsTitle="Theme style setting"
+  [vtsWrapClassName]="'vts-setting-drawer-content'"
+  [vtsWidth]="600"
   (vtsOnClose)="closeDrawer()"
 >
   <ng-container *vtsDrawerContent>
@@ -101,13 +102,27 @@
 
 <!-- Page style -->
 <ng-template #pageStyle>
-  <h4 vts-typography vtsType="h4">Page style setting</h4>
-  <vts-switch
-    [(ngModel)]="isDarkMode"
-    (ngModelChange)="onThemeChange()"
-    [vtsUnCheckedChildren]="unCheckedTemplate"
-    [vtsCheckedChildren]="checkedTemplate"
-  ></vts-switch>
+  <div vts-row>
+    <div vts-col vtsFlex="1 1 auto" vts-row vtsAlign="middle" vtsJustify="start">
+      <h4 vts-typography vtsType="h4">Page style setting</h4>
+    </div>
+    <div vts-row vts-col vtsAlign="middle" vtsJustify="center">
+      <i vts-icon vtsType="Close:vts" (click)="closeDrawer()"></i>
+    </div>
+  </div>
+  <div vts-row>
+    <div vts-col vtsFlex="1 1 auto" vts-row vtsAlign="middle" vtsJustify="start">
+      <h4 vts-typography vtsType="h4">Dark mode</h4>
+    </div>
+    <div vts-row vts-col vtsAlign="middle" vtsJustify="center">
+      <vts-switch
+        [(ngModel)]="isDarkMode"
+        (ngModelChange)="onThemeChange()"
+        [vtsUnCheckedChildren]="unCheckedTemplate"
+        [vtsCheckedChildren]="checkedTemplate"
+      ></vts-switch>
+    </div>
+  </div>
   <ng-template #checkedTemplate><i vts-icon vtsType="Frown:antd"></i></ng-template>
   <ng-template #unCheckedTemplate>
     <i vts-icon vtsType="Smile:antd"></i>
