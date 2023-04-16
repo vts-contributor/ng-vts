@@ -37,11 +37,11 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
         </ng-template>
     </vts-prolayout-container>
     <ng-template #footerTemplate>
-      <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
+      <div (click)="openSettingDrawer()">Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
     <ng-template #menuAvatar>
-        <ul vts-menu vtsSelectable>
-            <li vts-menu-item *ngFor="let item of avatarMenu" (click)="onClickAvatarMenuItem(item)">{{ item.label }}</li>
+        <ul vts-menu vtsSelectable>            
+            <li vts-menu-item [vtsSelected]="isOpenSettingDrawer" (click)="openSettingDrawer()">Open setting</li>
         </ul>
     </ng-template>
   `,
@@ -63,6 +63,9 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     this.service.onChangeNotification(10);
     this.service.visiblePaneChange$.subscribe(visible => {
       this.vtsVisibleNotifyPane = visible;
+    })
+    this.service.settingDrawerStateChange$.subscribe(visible => {
+      this.isOpenSettingDrawer = visible;
     })
   }
 
@@ -119,6 +122,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     { label: 'Application 1' }
   ];
   isCollapsed = false;
+  isOpenSettingDrawer: boolean = false;
 
   toggleCollapsed() {
     this.isCollapsed = !this.isCollapsed;
@@ -136,5 +140,9 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
 
   onClickAvatarMenuItem(item: VtsAvatarMenu): void {
     this.router.navigateByUrl(item.url);
+  }
+
+  openSettingDrawer(){
+    this.service.onChangeSettingDrawerState(true);
   }
 }

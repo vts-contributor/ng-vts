@@ -20,6 +20,7 @@ export class VtsProlayoutService {
     notificationChange$: ReplaySubject<number> = new ReplaySubject<number>(1);
     // notification pane visibility
     visiblePaneChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+    settingDrawerStateChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
     drawerNotifyRef: VtsDrawerRef | null = null;
 
@@ -71,5 +72,9 @@ export class VtsProlayoutService {
         if(paneType === "drawer"){
             this.visiblePaneChange$.next(true);
         }
+    }
+
+    onChangeSettingDrawerState(visible: boolean){
+        this.settingDrawerStateChange$.next(visible);
     }
 }
