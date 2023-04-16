@@ -54,6 +54,10 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
           ::ng-deep .code-box {
               height: 800px;
           }
+
+          ::ng-deep .vts-setting-drawer-content .vts-drawer-body {
+            padding: 30px 64px;
+          }
       `
   ]
 })
