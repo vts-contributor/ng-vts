@@ -73,9 +73,6 @@ export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
           if(visible){
             this.openDrawer();
           }
-          else {
-            this.closeDrawer();
-          }
           this.cdr.detectChanges();
         })
   }
