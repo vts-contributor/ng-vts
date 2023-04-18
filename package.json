@@ -27,8 +27,7 @@
     "@angular/cdk": "^14.2.7",
     "@ui-vts/icons-angular": "^1.0.2",
     "@ui-vts/ng-vts": "file:components",
-    "@ui-vts/theme": "^1.1.5-rc.1",
-    "@ui-vts/theme-workspace": "file:../../ui-vts-theme",
+    "@ui-vts/theme": "^1.1.5-rc.2",
     "apexcharts": "^3.37.2",
     "ngx-hover-preload": "0.0.3"
   },
