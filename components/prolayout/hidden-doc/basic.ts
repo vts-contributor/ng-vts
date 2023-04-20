@@ -5,8 +5,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container     
-      [vtsMenuHeader]="menuData" 
+    <vts-prolayout-container   
       [vtsMenuSider]="menuData" 
       [vtsAvatar]="avatar" 
       [vtsAvatarMenu]="avatarMenu" 
