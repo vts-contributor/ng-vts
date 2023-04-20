@@ -57,7 +57,7 @@ export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
       ]
       
       isFixedHeader: boolean = false;
-      isFixedSider: boolean = true;
+      isFixedSider: boolean = false;
       isShowHeader: boolean = true;
       isShowSider: boolean = true;
       isShowFooter: boolean = true;
