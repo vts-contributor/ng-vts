@@ -42,7 +42,7 @@ function generateNav(componentsDocMap) {
     // 'textarea', 
     // 'date-picker', 
     // 'time-picker', 
-    'drawer', 
+    // 'drawer', 
     // 'alert', 
     // 'switch', 
     // 'tag', 

@@ -39,7 +39,6 @@ import { Subscription } from 'rxjs';
       }
 
       .inner-content {
-        padding: 0 24px;
         min-height: 280px;
       }
 
@@ -65,14 +64,14 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   themeColor: string = '#EE0033';
 
   isFixedHeader: boolean = false;
-  isFixedSider: boolean = true;
+  isFixedSider: boolean = false;
   isShowHeader: boolean = true;
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
   @Input() vtsMenuHeader: VtsMenuItemProLayout[] = [];
   @Input() vtsMenuSider: VtsMenuItemProLayout[] = [];
   @Input() vtsHeaderTitle: string | TemplateRef<void> | null =
-    'GOVERNMENT SOLUTION CENTER PLATFORM';
+    '';
   @Input() vtsAvatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
