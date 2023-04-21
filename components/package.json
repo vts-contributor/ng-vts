@@ -17,7 +17,7 @@
     "@angular/cdk": "^14.1.0",
     "@ui-vts/icons-angular": "^1.0.2",
     "@ui-vts/theme": "^1.1.5-rc.1",
-    "@ui-vts/theme-workspace": "file:../../../ui-vts-theme",
+    "@ui-vts/theme-workspace": "file:../../ui-vts-theme",
     "apexcharts": "^3.27.3",
     "date-fns": "^2.10.0",
     "dom7": "^4.0.4"
