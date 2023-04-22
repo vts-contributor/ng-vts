@@ -71,7 +71,7 @@
                 </div>
             </div>
             <!-- avatar with menu dropdown -->
-            <div vts-row vtsAlign="middle" vts-col class="avatar-main cursor-pointer" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length >= 0; else withoutDropdown">
+            <div vts-row vtsAlign="middle" vts-col class="avatar-main cursor-pointer" vtsTrigger="click" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length >= 0; else withoutDropdown">
                 <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
                 <div vts-col style="margin-left: 5px;" *ngIf="windowSize == 'large'">
                     <div class="username">
