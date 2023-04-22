@@ -1,7 +1,9 @@
 <div vts-row class="vts-prolayout-header-wrapper">
-    <div vts-row vts-col [ngClass]="{'logo-fixed-header': !isFixedHeader}" *ngIf="showLogo">
+    <!-- class 'logo-fixed-header' is added when sider is visible -->
+    <div vts-row vts-col [ngClass]="{'logo-fixed-header': !isFixedHeader && isShowSider}" *ngIf="showLogo">
         <div vts-col class="logo-header vts-logo" *ngIf="!isCollapsedSider" [style.backgroundImage]="'url(' + vtsLogoUrl + ')'"></div>
-        <div vts-col vts-row [vtsAlign]="'middle'" class="btn-toggle-sider" *ngIf="!isFixedHeader">
+        <!-- this button will be visible when the sider is -->
+        <div vts-col vts-row [vtsAlign]="'middle'" class="btn-toggle-sider" *ngIf="!isFixedHeader && isShowSider">
             <button vts-button vtsType="text" class="trigger" (click)="toggleSider()">
                 <i vts-icon vtsType="AlignJustify:vts"></i>
             </button>

@@ -21,10 +21,11 @@ import {
 import { VtsProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
 import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig } from './pro-layout.types';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { VtsBlockUIService } from './block-ui.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'vts-prolayout-header',
@@ -57,18 +58,13 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   isCollapsedSider: boolean = false;
   notificationCount: number = 0;
   isFullScreen: boolean = false;
+  isShowSider: boolean = true;
   /**
    * check window size
    */
   windowSize: 'small' | 'medium' | 'large' = 'large';
 
-  private fixedHeaderSubscription = Subscription.EMPTY;
-  private fixedSiderSubscription = Subscription.EMPTY;
-  private splitMenuSubscription = Subscription.EMPTY;
-  private menuHeaderSubscription = Subscription.EMPTY;
-  private collapsedSiderSubscription = Subscription.EMPTY;
-  private notificationCountSubscription = Subscription.EMPTY;
-  private windowSizeSubscription = Subscription.EMPTY;
+  private onDestroy$ = new Subject();
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
   useSplitMenu: boolean = false;
@@ -93,7 +89,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     // receive menus from container
-    this.menuHeaderSubscription = this.prolayoutService.menuHeaderChange$.subscribe(
+    this.prolayoutService.menuHeaderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
       (data: VtsMenuItemProLayout[]) => {
         this.menuData = data;
         let newMenuData: VtsMenuItemProLayout[] = [
@@ -108,21 +104,22 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     );
 
     // on change ix fixed
-    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe(
+    this.prolayoutService.fixedSiderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
       (isFixed: boolean) => {
         this.isFixedSider = isFixed;
         this.handleChangeFixedStatus(this.isFixedHeader, isFixed);
       }
     );
-    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe(
+    this.prolayoutService.fixedHeaderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
       (isFixed: boolean) => {
         this.isFixedHeader = isFixed;
         this.handleChangeFixedStatus(isFixed, this.isFixedSider);
+        this.cdf.detectChanges();
       }
     );
 
     // onchange use split menu
-    this.splitMenuSubscription = this.prolayoutService.useSplitMenuChange$.subscribe(
+    this.prolayoutService.useSplitMenuChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
       (isMenuSplitted: boolean) => {
         this.useSplitMenu = isMenuSplitted;
         this.cdf.detectChanges();
@@ -130,19 +127,27 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     );
 
     // on change collapsed sider
-    this.collapsedSiderSubscription = this.prolayoutService.collapSiderChange$.subscribe((isCollapsed: boolean) => {
+    this.prolayoutService.collapSiderChange$.pipe(takeUntil(this.onDestroy$)).subscribe((isCollapsed: boolean) => {
       this.isCollapsedSider = isCollapsed;
     });
 
     // on change notification count
-    this.notificationCountSubscription = this.prolayoutService.notificationChange$.subscribe((count: number) => {
+    this.prolayoutService.notificationChange$.pipe(takeUntil(this.onDestroy$)).subscribe((count: number) => {
       this.notificationCount = count;
     });
 
+    // on change show sider
+    this.prolayoutService.visibilitySiderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
+      (isShow: boolean) => {
+        this.isShowSider = isShow;
+        this.cdf.detectChanges();
+      }
+    );
+
     // listen for changes in size of current window
-    this.windowSizeSubscription = this.breakpointService.observe(
+    this.breakpointService.observe(
         [Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge]
-      ).subscribe((result) => {
+      ).pipe(takeUntil(this.onDestroy$)).subscribe((result) => {
       const breakpoints = result.breakpoints;
       if(breakpoints[Breakpoints.Small]){
         this.windowSize = 'small';
@@ -161,13 +166,8 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
    * destroy all subscription of prolayout service
    */
   destroySubscriptions() {
-    this.menuHeaderSubscription.unsubscribe();
-    this.fixedSiderSubscription.unsubscribe();
-    this.fixedHeaderSubscription.unsubscribe();
-    this.splitMenuSubscription.unsubscribe();
-    this.collapsedSiderSubscription.unsubscribe();
-    this.notificationCountSubscription.unsubscribe();
-    this.windowSizeSubscription.unsubscribe();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   ngOnChanges(changes: SimpleChanges) {
