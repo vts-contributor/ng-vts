@@ -151,13 +151,17 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
       const breakpoints = result.breakpoints;
       if(breakpoints[Breakpoints.Small]){
         this.windowSize = 'small';
+        this.isCollapsedSider = true;
       }
       else if(breakpoints[Breakpoints.Medium]){
         this.windowSize = 'medium';
+        this.isCollapsedSider = true;
       }
       else if(breakpoints[Breakpoints.Large] || breakpoints[Breakpoints.XLarge]){
         this.windowSize = 'large';
+        this.isCollapsedSider = false;
       }
+      this.prolayoutService.onChangeCollapedSider(this.isCollapsedSider);
       this.cdf.detectChanges();
     })
   }

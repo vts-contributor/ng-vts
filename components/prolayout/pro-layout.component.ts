@@ -72,7 +72,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   @Input() vtsMenuHeader: VtsMenuItemProLayout[] = [];
   @Input() vtsMenuSider: VtsMenuItemProLayout[] = [];
   @Input() vtsHeaderTitle: string | TemplateRef<void> | null =
-    '';
+    'GOVERMENT SOLUTION CENTER PLATFORM';
   @Input() vtsAvatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
@@ -95,7 +95,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     modalUnlockTitle: "Mở khóa màn hình",
     cancelText: "Hủy",
     locktext: "Khóa",
-    unlockText: "Mở khóa"
+    unlockText: "Mở khóa" 
   }
   @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
 

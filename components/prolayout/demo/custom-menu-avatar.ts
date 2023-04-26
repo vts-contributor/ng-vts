@@ -76,6 +76,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
   menuData: VtsMenuItemProLayout[] = [
     {
       title: 'Parent 1',
+      icon: 'Home:vts',
       children: [
         {
           title: 'Child 1.1',
@@ -87,6 +88,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     },
     {
       title: 'Parent 2',
+      icon: 'LayerOutline:vts',
       children: [
         { title: 'Child 2.1', children: [{ title: 'Child 2.1.1' }, { title: 'Child 2.1.2' }] },
         { title: 'Child 2.2' }
@@ -94,6 +96,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     },
     {
       title: 'Parent 3',
+      icon: 'ViewWeekOutline:vts',
       children: [
         { title: 'Child 3.1', children: [{ title: 'Child 3.1.1' }, { title: 'Child 3.1.2' }] },
         { title: 'Child 3.2' }
@@ -105,7 +108,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution',
-    imgUrl: 'http://localhost/avatar_design.svg'
+    // imgUrl: 'http://localhost/avatar_design.svg'
   };
   avatarMenu: VtsAvatarMenu[] = [
     {
