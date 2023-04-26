@@ -54,7 +54,6 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
-  menuData: VtsMenuItemProLayout[] = [];
   isCollapsedSider: boolean = false;
   notificationCount: number = 0;
   isFullScreen: boolean = false;
@@ -67,7 +66,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   private onDestroy$ = new Subject();
 
   // @Input() vtsTheme: VtsMenuThemeType = 'light';
-  useSplitMenu: boolean = false;
+  useSplitMenu: boolean = true;
   @Input() vtsTitle: string | TemplateRef<void> | null = null;
 
   showLogo: boolean = true;
@@ -86,12 +85,17 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   }
   @Input() vtsVisibleNotifyPane: boolean = false;
   @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
+  /**
+   * input from parent; actual data will be wrapped by one item with Toc:vts icon
+   */
+  @Input() vtsMenuData: VtsMenuItemProLayout[] = [];
+  displayMenuData: VtsMenuItemProLayout[] = [];
 
   ngOnInit(): void {
     // receive menus from container
     this.prolayoutService.menuHeaderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
       (data: VtsMenuItemProLayout[]) => {
-        this.menuData = data;
+        this.vtsMenuData = data;
         let newMenuData: VtsMenuItemProLayout[] = [
           {
             icon: 'Toc:vts',
@@ -99,7 +103,7 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
             children: [...data]
           }
         ];
-        this.menuData = [...newMenuData];
+        this.displayMenuData = [...newMenuData];
       }
     );
 
@@ -122,6 +126,19 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.prolayoutService.useSplitMenuChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
       (isMenuSplitted: boolean) => {
         this.useSplitMenu = isMenuSplitted;
+        if(!isMenuSplitted){
+          if (this.vtsTitle) {
+            // add a wrapper item to create a menu button
+            let newMenuData: VtsMenuItemProLayout[] = [
+              {
+                icon: 'Toc:vts',
+                title: '',
+                children: [...this.vtsMenuData]
+              }
+            ];
+            this.displayMenuData = [...newMenuData];
+          }
+        }
         this.cdf.detectChanges();
       }
     );
@@ -183,10 +200,10 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
           {
             icon: 'Toc:vts',
             title: '',
-            children: [...this.menuData]
+            children: [...this.vtsMenuData]
           }
         ];
-        this.menuData = [...newMenuData];
+        this.displayMenuData = [...newMenuData];
       }
     }
   }

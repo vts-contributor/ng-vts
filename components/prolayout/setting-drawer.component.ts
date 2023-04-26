@@ -62,7 +62,7 @@ export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
       isShowHeader: boolean = true;
       isShowSider: boolean = true;
       isShowFooter: boolean = true;
-      useSplitMenu: boolean = false;
+      useSplitMenu: boolean = true;
       onDestroy$ = new Subject();
       
       @Output() vtsSetThemeColor: EventEmitter<string> = new EventEmitter<string>();

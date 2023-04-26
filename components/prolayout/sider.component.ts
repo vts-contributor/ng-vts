@@ -112,7 +112,7 @@ export class VtsSiderComponent implements OnInit, OnDestroy, OnChanges, AfterCon
   menuHeader: VtsMenuItemProLayout[] = []; // if splitmenu = true -> merge both and display in sider
   menuSider: VtsMenuItemProLayout[] = [];
   menuData: VtsMenuItemProLayout[] = []; // use for displaying
-  useSplitMenu: boolean = false;
+  useSplitMenu: boolean = true;
   isFixedHeader: boolean = false;
   isFixedSider: boolean = false;
   matchBreakPoint = false;
