@@ -10,7 +10,9 @@ import {
   Input,
   ViewEncapsulation,
   TemplateRef,
-  OnDestroy
+  OnDestroy,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { VtsBlockUIService } from './block-ui.service';
@@ -49,7 +51,7 @@ import { takeUntil } from 'rxjs/operators';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private elementRef: ElementRef,
     private prolayoutService: VtsProlayoutService,
@@ -137,6 +139,16 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
       }
     });
     this.vtsMenuSider = [...menuSider];
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const {vtsMenuHeader, vtsMenuSider} = changes;
+    if(vtsMenuHeader){
+      this.prolayoutService.onChangeMenuHeader(this.vtsMenuHeader);    
+    }
+    if(vtsMenuSider){
+      this.prolayoutService.onChangeMenuSider(this.vtsMenuSider);    
+    }
   }
 
   ngOnInit(): void {
