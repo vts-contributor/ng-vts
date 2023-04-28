@@ -74,7 +74,7 @@
             <!-- avatar with menu dropdown -->
             <div vts-row vtsAlign="middle" vts-col class="avatar-main cursor-pointer" vtsTrigger="click" vts-dropdown [vtsDropdownMenu]="menuAvatar" *ngIf="vtsAvatarMenu.length >= 0; else withoutDropdown">
                 <ng-container *ngIf="vtsAvatar.imgUrl; else noImgAvatar">
-                    <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
+                    <vts-avatar vts-col class="avatar-user" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
                 </ng-container>
                 <ng-template #noImgAvatar>
                     <i vts-icon vtsType="AccountCircle:vts" class="no-avatar"></i>
@@ -92,7 +92,7 @@
             <!-- avatar without menu dropdown -->
             <ng-template #withoutDropdown>
                 <div vts-row vtsAlign="middle" vts-col class="cursor-pointer">
-                    <vts-avatar vts-col vtsSize="sm" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
+                    <vts-avatar vts-col class="avatar-user" vtsIcon="user" [vtsSrc]="vtsAvatar.imgUrl"></vts-avatar>
                     <div vts-col style="margin-left: 5px;" *ngIf="windowSize == 'large'">
                         <div class="username">
                             {{ vtsAvatar.name }}

@@ -58,6 +58,7 @@
 
         <ng-template #fixedHeader>
             <vts-prolayout-content class="inner-content">
+                <vts-prolayout-breadcrumb [vtsSeparator]="vtsSeparator" [vtsBreadcrumbArray]="vtsBreadcrumbArray"></vts-prolayout-breadcrumb>
                 <ng-container *ngTemplateOutlet="compContent"></ng-container>
             </vts-prolayout-content>
         </ng-template>
