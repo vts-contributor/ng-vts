@@ -28,15 +28,13 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
       <span
         *ngIf="icon && showIcon"
         [class.vts-tree-icon__open]="isSwitcherOpen"
-        [class.vts-tree-icon__close]="isSwitcherClose"
+        [class.vts-tree-icon__close]="isSwitcherClose"  
         [class.vts-tree-icon_loading]="isLoading"
-        [class.vts-select-tree-iconEle]="selectMode"
-        [class.vts-tree-iconEle]="!selectMode"
+        [class.vts-select-tree-custom-icon]="selectMode"
+        [class.vts-tree-custom-icon]="!selectMode"
       >
         <span
-          [class.vts-select-tree-iconEle]="selectMode"
           [class.vts-select-tree-icon__customize]="selectMode"
-          [class.vts-tree-iconEle]="!selectMode"
           [class.vts-tree-icon__customize]="!selectMode"
         >
           <i vts-icon *ngIf="icon" [vtsType]="icon"></i>
@@ -56,10 +54,6 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   host: {
-    '[attr.title]': 'title',
-    '[attr.draggable]': 'canDraggable',
-    '[attr.aria-grabbed]': 'canDraggable',
-    '[class.draggable]': 'canDraggable',
     '[class.vts-select-tree-node-content-wrapper]': `selectMode`,
     '[class.vts-select-tree-node-content-wrapper-open]': `selectMode && isSwitcherOpen`,
     '[class.vts-select-tree-node-content-wrapper-close]': `selectMode && isSwitcherClose`,
@@ -76,7 +70,6 @@ export class VtsTreeNodeTitleComponent implements OnChanges {
     $implicit: VtsTreeNode;
     origin: VtsTreeNodeOptions;
   }> | null = null;
-  @Input() draggable!: boolean;
   @Input() showIcon!: boolean;
   @Input() selectMode = false;
   @Input() context!: VtsTreeNode;
@@ -92,10 +85,6 @@ export class VtsTreeNodeTitleComponent implements OnChanges {
   @Input() showIndicator = true;
   @Input() dragPosition?: number;
 
-  get canDraggable(): boolean | null {
-    return this.draggable && !this.isDisabled ? true : null;
-  }
-
   get matchedValue(): string {
     return this.isMatched ? this.searchValue : '';
   }
@@ -108,7 +97,7 @@ export class VtsTreeNodeTitleComponent implements OnChanges {
     return !this.isExpanded && !this.isLeaf;
   }
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     const { showIndicator, dragPosition } = changes;

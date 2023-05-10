@@ -2,12 +2,10 @@
 category: Components
 type: Data Display
 title: Tree
-cover: https://gw.alipayobjects.com/zos/alicdn/Xh-oWqg9k/Tree.svg
+cols: 1
+order: 100
+cover: ''
 ---
-
-## When To Use
-
-Almost anything can be represented in a tree structure. Examples include directories, organization hierarchies, biological classifications, countries, etc. The `Tree` component is a way of representing the hierarchical relationship between these things. You can also  expand, collapse, and select a treeNode within a `Tree`.
 
 ```ts
 import { VtsTreeModule } from '@ui-vts/ng-vts/tree';
@@ -16,8 +14,6 @@ import { VtsTreeModule } from '@ui-vts/ng-vts/tree';
 ## API
 
 ### vts-tree
-
-> Tips: According to the current data structure design, you need to ensure that `vtsData` is set first, otherwise other attributes will not take effect. After the asynchronous operation returns data, re-assign other attributes to trigger rendering(including `vtsExpandAll` `vtsExpandedKeys` `vtsCheckedKeys` `vtsSelectedKeys` `vtsSearchValue`). Please refer to [#5152](https://github.com/NG-ZORRO/ng-zorro-antd/issues/5152) to track the optimization progress.
 
 | Property | Description | Type | Default | Global Config |
 | -------- | ----------- | ---- | ------- | ------------- |

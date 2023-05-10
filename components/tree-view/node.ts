@@ -39,13 +39,7 @@ export interface VtsTreeVirtualNodeData<T> {
   template: `
     <vts-tree-node-indents [indents]="indents" *ngIf="indents.length"></vts-tree-node-indents>
     <ng-content select="vts-tree-node-toggle, [vts-tree-node-toggle]"></ng-content>
-    <vts-tree-node-toggle
-      class="vts-tree-leaf-line-icon"
-      *ngIf="indents.length && isLeaf"
-      vtsTreeNodeNoopToggle
-    >
-      <span class="vts-tree-switcher-leaf-line"></span>
-    </vts-tree-node-toggle>
+
     <ng-content select="vts-tree-node-checkbox"></ng-content>
     <ng-content select="vts-tree-node-option"></ng-content>
     <ng-content></ng-content>
@@ -132,7 +126,7 @@ export class VtsTreeVirtualScrollNodeOutletDirective<T> implements OnChanges {
   private _viewRef: EmbeddedViewRef<VtsSafeAny> | null = null;
   @Input() data!: VtsTreeVirtualNodeData<T>;
 
-  constructor(private _viewContainerRef: ViewContainerRef) {}
+  constructor(private _viewContainerRef: ViewContainerRef) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     const recreateView = this.shouldRecreateView(changes);

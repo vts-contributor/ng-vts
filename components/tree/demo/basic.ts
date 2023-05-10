@@ -1,12 +1,20 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { VtsFormatEmitEvent, VtsTreeComponent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
+import { VtsFormatEmitEvent, VtsTreeComponent, VtsTreeNodeOptions, VtsTreeSize } from '@ui-vts/ng-vts/tree';
 
 @Component({
   selector: 'vts-demo-tree-basic',
   template: `
+    <vts-radio-group [(ngModel)]="size">
+      <label vts-radio-button vtsValue="lg">LG</label>
+      <label vts-radio-button vtsValue="md">MD</label>
+      <label vts-radio-button vtsValue="sm">SM</label>
+    </vts-radio-group>
+    <br />
+    <br />
     <vts-tree
       #vtsTreeComponent
       [vtsData]="nodes"
+      [vtsSize]="size"
       vtsCheckable
       [vtsCheckedKeys]="defaultCheckedKeys"
       [vtsExpandedKeys]="defaultExpandedKeys"
@@ -15,10 +23,14 @@ import { VtsFormatEmitEvent, VtsTreeComponent, VtsTreeNodeOptions } from '@ui-vt
       (vtsContextMenu)="vtsClick($event)"
       (vtsCheckBoxChange)="vtsCheck($event)"
       (vtsExpandChange)="vtsCheck($event)"
+      [vtsShowIcon]
     ></vts-tree>
   `
 })
 export class VtsDemoTreeBasicComponent implements AfterViewInit {
+  size: VtsTreeSize = 'md';
+
+
   @ViewChild('vtsTreeComponent', { static: false })
   vtsTreeComponent!: VtsTreeComponent;
   defaultCheckedKeys = ['10020'];
@@ -29,6 +41,7 @@ export class VtsDemoTreeBasicComponent implements AfterViewInit {
     {
       title: 'parent 1',
       key: '100',
+      icon: 'AccessAlarmFill:mat',
       children: [
         {
           title: 'parent 1-0',

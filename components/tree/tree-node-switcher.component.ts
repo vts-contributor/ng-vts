@@ -19,7 +19,7 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
         >
           <i
             vts-icon
-            vtsType="caret-down"
+            vtsType="CaretDownFill:bootstrap"
             [class.vts-select-tree-switcher-icon]="vtsSelectMode"
             [class.vts-tree-switcher-icon]="!vtsSelectMode"
           ></i>
@@ -37,13 +37,13 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
           <i
             *ngIf="isShowLineIcon"
             vts-icon
-            [vtsType]="isSwitcherOpen ? 'minus-square' : 'plus-square'"
+            [vtsType]="isSwitcherOpen ? 'MinusSquareOutline:antd' : 'PlusSquareOutline:antd'"
             class="vts-tree-switcher-line-icon"
           ></i>
           <i
             *ngIf="!isShowLineIcon"
             vts-icon
-            vtsType="DescriptionOutline"
+            vtsType="FileOutline:antd"
             class="vts-tree-switcher-line-icon"
           ></i>
         </ng-container>

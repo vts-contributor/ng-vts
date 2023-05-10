@@ -5,5 +5,5 @@
 
 // TODO(@wendellhu95): replace other size with this type.
 export type VtsSizeLDSType = 'xl' | 'lg' | 'md' | 'sm';
-export type VtsSizeMDSType = 'middle' | 'default' | 'small';
+export type VtsSizeMDSType = 'sm' | 'md' | 'lg';
 export type VtsSizeDSType = 'md' | 'sm';

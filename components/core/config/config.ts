@@ -264,11 +264,11 @@ export interface TableConfig {
 
 export interface TabsConfig {
   vtsAnimated?:
-    | boolean
-    | {
-        inkBar: boolean;
-        tabPane: boolean;
-      };
+  | boolean
+  | {
+    inkBar: boolean;
+    tabPane: boolean;
+  };
   vtsSize?: VtsSizeLDSType;
   vtsType?: 'line' | 'card';
   vtsTabBarGutter?: number;
@@ -291,7 +291,6 @@ export interface TimePickerConfig {
 }
 
 export interface TreeConfig {
-  vtsBlockNode?: boolean;
   vtsShowIcon?: boolean;
   vtsHideUnMatched?: boolean;
 }

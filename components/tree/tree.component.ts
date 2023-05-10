@@ -44,6 +44,7 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { VtsTreeService } from './tree.service';
+import { VtsTreeSize } from './tree.type';
 
 export function VtsTreeServiceFactory(
   higherOrderService: VtsTreeBaseService,
@@ -167,18 +168,20 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
     '[class.vts-tree-show-line]': `!vtsSelectMode && vtsShowLine`,
     '[class.vts-tree-icon-hide]': `!vtsSelectMode && !vtsShowIcon`,
     '[class.vts-tree-block-node]': `!vtsSelectMode && vtsBlockNode`,
-    '[class.draggable-tree]': `vtsDraggable`
+    '[class.draggable-tree]': `vtsDraggable`,
+    '[class.vts-tree-sm]': 'vtsSize === "sm"',
+    '[class.vts-tree-md]': 'vtsSize === "md"',
+    '[class.vts-tree-lg]': 'vtsSize === "lg"',
   }
 })
 export class VtsTreeComponent
   extends VtsTreeBase
-  implements OnInit, OnDestroy, ControlValueAccessor, OnChanges, AfterViewInit
-{
+  implements OnInit, OnDestroy, ControlValueAccessor, OnChanges, AfterViewInit {
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
 
   static ngAcceptInputType_vtsShowIcon: BooleanInput;
   static ngAcceptInputType_vtsHideUnMatched: BooleanInput;
-  static ngAcceptInputType_vtsBlockNode: BooleanInput;
+  // static ngAcceptInputType_vtsBlockNode: BooleanInput;
   static ngAcceptInputType_vtsExpandAll: BooleanInput;
   static ngAcceptInputType_vtsSelectMode: BooleanInput;
   static ngAcceptInputType_vtsCheckStrictly: BooleanInput;
@@ -191,7 +194,7 @@ export class VtsTreeComponent
 
   @Input() @InputBoolean() @WithConfig() vtsShowIcon: boolean = false;
   @Input() @InputBoolean() @WithConfig() vtsHideUnMatched: boolean = false;
-  @Input() @InputBoolean() @WithConfig() vtsBlockNode: boolean = false;
+  // @Input() @InputBoolean() @WithConfig() vtsBlockNode: boolean = false;
   @Input() @InputBoolean() vtsExpandAll = false;
   @Input() @InputBoolean() vtsSelectMode = false;
   @Input() @InputBoolean() vtsCheckStrictly = false;
@@ -201,6 +204,7 @@ export class VtsTreeComponent
   @Input() @InputBoolean() vtsAsyncData = false;
   @Input() @InputBoolean() vtsDraggable: boolean = false;
   @Input() @InputBoolean() vtsMultiple = false;
+  @Input() @WithConfig() vtsSize: VtsTreeSize = 'md';
   @Input() vtsExpandedIcon?: TemplateRef<{
     $implicit: VtsTreeNode;
     origin: VtsTreeNodeOptions;

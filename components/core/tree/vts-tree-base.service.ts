@@ -164,9 +164,18 @@ export class VtsTreeBaseService {
         break;
       case 'check':
         resultNodesList = this.checkedNodeList;
-        const isIgnore = (node: VtsTreeNode): boolean => {
+        const isIgnore = (node: VtsTreeNode, forwardAscend = false): boolean => {
+          if (isCheckDisabled(node))
+            if (!forwardAscend)
+              return true
           const parentNode = node.getParentNode();
           if (parentNode) {
+            if (isCheckDisabled(parentNode)) {
+              if (parentNode.isChecked)
+                return isIgnore(parentNode, true)
+              else
+                return false
+            }
             if (this.checkedNodeList.findIndex(n => n.key === parentNode.key) > -1) {
               return true;
             } else {
@@ -243,22 +252,22 @@ export class VtsTreeBaseService {
   conductUp(node: VtsTreeNode): void {
     const parentNode = node.getParentNode();
     if (parentNode) {
-      if (!isCheckDisabled(parentNode)) {
-        if (
-          parentNode.children.every(
-            child => isCheckDisabled(child) || (!child.isHalfChecked && child.isChecked)
-          )
-        ) {
-          parentNode.isChecked = true;
-          parentNode.isHalfChecked = false;
-        } else if (parentNode.children.some(child => child.isHalfChecked || child.isChecked)) {
-          parentNode.isChecked = false;
-          parentNode.isHalfChecked = true;
-        } else {
-          parentNode.isChecked = false;
-          parentNode.isHalfChecked = false;
-        }
+      // if (!isCheckDisabled(parentNode)) {
+      if (
+        parentNode.children.every(
+          child => (isCheckDisabled(child) && child.isLeaf) || (!child.isHalfChecked && child.isChecked)
+        )
+      ) {
+        parentNode.isChecked = true;
+        parentNode.isHalfChecked = false;
+      } else if (parentNode.children.some(child => child.isHalfChecked || child.isChecked)) {
+        parentNode.isChecked = false;
+        parentNode.isHalfChecked = true;
+      } else {
+        parentNode.isChecked = false;
+        parentNode.isHalfChecked = false;
       }
+      // }
       this.setCheckedNodeList(parentNode);
       this.setHalfCheckedNodeList(parentNode);
       this.conductUp(parentNode);
@@ -274,6 +283,10 @@ export class VtsTreeBaseService {
       node.isHalfChecked = false;
       this.setCheckedNodeList(node);
       this.setHalfCheckedNodeList(node);
+      node.children.forEach(n => {
+        this.conductDown(n, value);
+      });
+    } else {
       node.children.forEach(n => {
         this.conductDown(n, value);
       });
