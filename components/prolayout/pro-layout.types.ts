@@ -51,3 +51,10 @@ export type VtsBlockUIConfig = {
   locktext?: string,
   unlockText?: string
 }
+
+export type VtsVisibilityConfig = {
+  searchIcon: boolean,
+  fullScreen: boolean,
+  lockScreen: boolean,
+  notifyIcon: boolean,
+}

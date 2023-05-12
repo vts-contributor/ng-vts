@@ -34,19 +34,19 @@
         <div vts-col vts-row class="avatar-container">
             <div class="icon-utils-container" vts-col vts-row>
                 <!-- Search -->
-                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils" *ngIf="vtsVisibilityConfig.searchIcon">
                     <i vts-icon vtsType="Search" class="cursor-pointer"></i>
                 </div>
                 <!-- Full screen -->
-                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils" *ngIf="vtsVisibilityConfig.fullScreen">
                     <i vts-icon vtsType="FullScreen:vts" class="cursor-pointer" (click)="toggleFullScreen()"></i>
                 </div>
                 <!-- Block UI -->
-                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils">
+                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils" *ngIf="vtsVisibilityConfig.lockScreen">
                     <i vts-icon vtsType="Lock:vts" class="cursor-pointer" (click)="lockScreen()"></i>
                 </div>
                 <!-- Notification -->
-                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils" [ngClass]="{'notification-icon': notificationCount > 0}">
+                <div vts-col vts-row [vtsAlign]="'middle'" class="icons-utils" [ngClass]="{'notification-icon': notificationCount > 0}" *ngIf="vtsVisibilityConfig.notifyIcon">
                     <i vts-icon vtsType="Notifications:vts" class="cursor-pointer" *ngIf="notificationCount === 0; else hasNotification"></i>
                     <ng-template #hasNotification>
                         <!-- render notification pane based on type, default to be a menu context -->
