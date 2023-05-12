@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { VtsBlockUIService } from './block-ui.service';
-import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsBlockUIConfig } from './pro-layout.types';
+import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsBlockUIConfig, VtsVisibilityConfig } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -100,6 +100,12 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy, OnChan
     unlockText: "Mở khóa" 
   }
   @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
+  @Input() vtsVisibilityConfig: VtsVisibilityConfig = {
+    searchIcon: false,
+    fullScreen: true,
+    lockScreen: false,
+    notifyIcon: true
+  };
 
   private onDestroy$ = new Subject();
   isScreenLocked: boolean = false;

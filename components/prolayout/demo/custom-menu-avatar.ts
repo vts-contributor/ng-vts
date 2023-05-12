@@ -7,7 +7,7 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
   selector: 'vts-demo-prolayout-custom-menu-avatar',
   template: `
     <vts-prolayout-container     
-      [vtsMenuHeader]="menuData" 
+      [vtsMenuHeader]="[]" 
       [vtsMenuSider]="menuData" 
       [vtsAvatar]="avatar" 
       [vtsLogoUrl]="logoUrl" 

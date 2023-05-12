@@ -20,7 +20,7 @@ import {
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { Router } from "@angular/router";
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig } from './pro-layout.types';
+import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsVisibilityConfig } from './pro-layout.types';
 import { Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { VtsBlockUIService } from './block-ui.service';
@@ -89,6 +89,12 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
    * input from parent; actual data will be wrapped by one item with Toc:vts icon
    */
   @Input() vtsMenuData: VtsMenuItemProLayout[] = [];
+  @Input() vtsVisibilityConfig: VtsVisibilityConfig = {
+    searchIcon: true,
+    fullScreen: true,
+    lockScreen: true,
+    notifyIcon: true
+  };
   displayMenuData: VtsMenuItemProLayout[] = [];
 
   ngOnInit(): void {
