@@ -28,7 +28,7 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
       <span
         *ngIf="icon && showIcon"
         [class.vts-tree-icon__open]="isSwitcherOpen"
-        [class.vts-tree-icon__close]="isSwitcherClose"  
+        [class.vts-tree-icon__close]="isSwitcherClose"
         [class.vts-tree-icon_loading]="isLoading"
         [class.vts-select-tree-custom-icon]="selectMode"
         [class.vts-tree-custom-icon]="!selectMode"
@@ -97,7 +97,7 @@ export class VtsTreeNodeTitleComponent implements OnChanges {
     return !this.isExpanded && !this.isLeaf;
   }
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const { showIndicator, dragPosition } = changes;

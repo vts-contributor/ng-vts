@@ -7,6 +7,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
+import { VtsTreeNodeComponent } from './node';
 
 @Component({
   selector: 'vts-tree-node-checkbox:not([builtin])',
@@ -23,16 +24,22 @@ import { InputBoolean } from '@ui-vts/ng-vts/core/util';
     '(click)': 'onClick($event)'
   }
 })
-export class VtsTreeNodeCheckboxComponent {
+export class VtsTreeNodeCheckboxComponent<T, F> {
   static ngAcceptInputType_vtsDisabled: BooleanInput;
 
   @Input() vtsChecked?: boolean;
   @Input() vtsIndeterminate?: boolean;
-  @Input() @InputBoolean() vtsDisabled?: boolean;
+  @Input() @InputBoolean() vtsDisabled: boolean = false;
   @Output() readonly vtsClick = new EventEmitter<MouseEvent>();
 
+  constructor(private treeNode: VtsTreeNodeComponent<T, F>) {}
+
+  get disabled() {
+    return this.vtsDisabled || this.treeNode.vtsDisabled;
+  }
+
   onClick(e: MouseEvent): void {
-    if (!this.vtsDisabled) {
+    if (!this.disabled) {
       this.vtsClick.emit(e);
     }
   }

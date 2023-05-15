@@ -9,7 +9,7 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
 @Component({
   selector: 'vts-tree-node-switcher',
   template: `
-    <ng-container *ngIf="isShowSwitchIcon">
+    <ng-container *ngIf="!isLeaf">
       <ng-container *ngIf="!isLoading; else loadingTemplate">
         <ng-container
           *vtsStringTemplateOutlet="
@@ -26,31 +26,8 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
         </ng-container>
       </ng-container>
     </ng-container>
-    <ng-container *ngIf="vtsShowLine">
-      <ng-container *ngIf="!isLoading; else loadingTemplate">
-        <ng-container
-          *vtsStringTemplateOutlet="
-            vtsExpandedIcon;
-            context: { $implicit: context, origin: context.origin }
-          "
-        >
-          <i
-            *ngIf="isShowLineIcon"
-            vts-icon
-            [vtsType]="isSwitcherOpen ? 'MinusSquareOutline:antd' : 'PlusSquareOutline:antd'"
-            class="vts-tree-switcher-line-icon"
-          ></i>
-          <i
-            *ngIf="!isShowLineIcon"
-            vts-icon
-            vtsType="FileOutline:antd"
-            class="vts-tree-switcher-line-icon"
-          ></i>
-        </ng-container>
-      </ng-container>
-    </ng-container>
     <ng-template #loadingTemplate>
-      <i vts-icon vtsType="Sync" [vtsSpin]="true" class="vts-tree-switcher-loading-icon"></i>
+      <i vts-icon vtsType="BxLoaderAlt:boxIcon" vtsSpin class="vts-tree-switcher-loading-icon"></i>
     </ng-template>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,10 +37,12 @@ import { VtsTreeNode, VtsTreeNodeOptions } from '@ui-vts/ng-vts/core/tree';
     '[class.vts-select-tree-switcher-noop]': 'vtsSelectMode && isLeaf',
     '[class.vts-select-tree-switcher_open]': 'vtsSelectMode && isSwitcherOpen',
     '[class.vts-select-tree-switcher_close]': 'vtsSelectMode && isSwitcherClose',
+    '[class.vts-select-tree-switcher-disabled]': `vtsSelectMode && (isDisabled || isDisableExpand)`,
     '[class.vts-tree-switcher]': '!vtsSelectMode',
     '[class.vts-tree-switcher-noop]': '!vtsSelectMode && isLeaf',
     '[class.vts-tree-switcher_open]': '!vtsSelectMode && isSwitcherOpen',
-    '[class.vts-tree-switcher_close]': '!vtsSelectMode && isSwitcherClose'
+    '[class.vts-tree-switcher_close]': '!vtsSelectMode && isSwitcherClose',
+    '[class.vts-tree-switcher-disabled]': `!vtsSelectMode && (isDisabled || isDisableExpand)`
   }
 })
 export class VtsTreeNodeSwitcherComponent {
@@ -78,14 +57,8 @@ export class VtsTreeNodeSwitcherComponent {
   @Input() isLeaf?: boolean;
   @Input() isLoading?: boolean;
   @Input() isExpanded?: boolean;
-
-  get isShowLineIcon(): boolean {
-    return !this.isLeaf && !!this.vtsShowLine;
-  }
-
-  get isShowSwitchIcon(): boolean {
-    return !this.isLeaf && !this.vtsShowLine;
-  }
+  @Input() isDisabled?: boolean;
+  @Input() isDisableExpand?: boolean;
 
   get isSwitcherOpen(): boolean {
     return !!this.isExpanded && !this.isLeaf;

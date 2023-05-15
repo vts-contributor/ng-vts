@@ -4,7 +4,6 @@
  */
 
 import { Direction, Directionality } from '@angular/cdk/bidi';
-import { DataSource } from '@angular/cdk/collections';
 import { CdkTree, TreeControl } from '@angular/cdk/tree';
 import {
   ChangeDetectorRef,
@@ -13,38 +12,43 @@ import {
   Input,
   IterableDiffer,
   IterableDiffers,
+  OnChanges,
   OnDestroy,
   OnInit,
   Optional,
+  SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
-
-import { Observable, Subject } from 'rxjs';
-
-import { BooleanInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { InputBoolean } from '@ui-vts/ng-vts/core/util';
+import { Subject } from 'rxjs';
+import { BooleanInput, NumberInput, VtsSafeAny, VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
+import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
 import { takeUntil } from 'rxjs/operators';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({ template: '' })
-// tslint:disable-next-line: component-class-suffix
-export class VtsTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
-  static ngAcceptInputType_vtsDirectoryTree: BooleanInput;
-  static ngAcceptInputType_vtsBlockNode: BooleanInput;
+//@ts-ignore
+export class VtsTreeView<T, F> extends CdkTree<T> implements OnInit, OnDestroy, OnChanges {
+  static ngAcceptInputType_vtsShowLine: BooleanInput;
+  static ngAcceptInputType_vtsIndent: NumberInput;
+  static ngAcceptInputType_vtsInitialIndent: NumberInput;
 
   private destroy$ = new Subject();
   dir: Direction = 'ltr';
   _dataSourceChanged = new Subject<void>();
+  _reRenderNodes = new Subject<void>();
   @Input('vtsTreeControl') override treeControl!: TreeControl<T, VtsSafeAny>;
   @Input('vtsDataSource')
-  override get dataSource(): DataSource<T> | Observable<T[]> | T[] {
-    return super.dataSource;
+  override get dataSource(): DataSource<T> {
+    return super.dataSource as DataSource<T>;
   }
-  override set dataSource(dataSource: DataSource<T> | Observable<T[]> | T[]) {
+  override set dataSource(dataSource: DataSource<T>) {
     super.dataSource = dataSource;
   }
-  @Input() @InputBoolean() vtsDirectoryTree = false;
-  @Input() @InputBoolean() vtsBlockNode = false;
+  @Input() @InputNumber() vtsIndent: number = 24;
+  @Input() @InputNumber() vtsInitialIndent: number = 8;
+  @Input() @InputBoolean() vtsShowLine = false;
+  @Input() vtsSize: VtsSizeLMSType = 'md';
 
   constructor(
     protected differs: IterableDiffers,
@@ -66,6 +70,13 @@ export class VtsTreeView<T> extends CdkTree<T> implements OnInit, OnDestroy {
           this.dir = direction;
           this.changeDetectorRef.detectChanges();
         });
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { vtsShowLine } = changes;
+    if (vtsShowLine) {
+      this._reRenderNodes.next();
     }
   }
 

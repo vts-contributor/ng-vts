@@ -14,7 +14,13 @@ import {
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { VtsBlockUIService } from './block-ui.service';
-import { VtsNotificationConfig, VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsBlockUIConfig } from './pro-layout.types';
+import {
+  VtsNotificationConfig,
+  VtsAvatarMenu,
+  VtsAvatarUser,
+  VtsMenuItemProLayout,
+  VtsBlockUIConfig
+} from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import { Subscription } from 'rxjs';
 
@@ -49,7 +55,7 @@ import { Subscription } from 'rxjs';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
   constructor(
     private elementRef: ElementRef,
     private prolayoutService: VtsProlayoutService,
@@ -84,19 +90,19 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
   @Input() vtsSeparator: string | TemplateRef<void> | null = '❯';
   @Input() vtsFooterTemplate: TemplateRef<void> | null = null;
   @Input() vtsNotificationConfig: VtsNotificationConfig = {
-    type: "menuContext",
+    type: 'menuContext',
     overflowCount: 99
-  }
+  };
   @Input() vtsVisibleNotifyPane: boolean = false;
   @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
   @Input() vtsBlockUIConfig: VtsBlockUIConfig = {
     isEnabled: true,
-    modalLockTitle: "Khóa màn hình",
-    modalUnlockTitle: "Mở khóa màn hình",
-    cancelText: "Hủy",
-    locktext: "Khóa",
-    unlockText: "Mở khóa"
-  }
+    modalLockTitle: 'Khóa màn hình',
+    modalUnlockTitle: 'Mở khóa màn hình',
+    cancelText: 'Hủy',
+    locktext: 'Khóa',
+    unlockText: 'Mở khóa'
+  };
   @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
 
   private fixedHeaderSubscription = Subscription.EMPTY;
@@ -179,9 +185,11 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy{
     );
 
     // show/hide lock screen
-    this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe((isShow: boolean) => {
-      this.isScreenLocked = isShow;
-    });
+    this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe(
+      (isShow: boolean) => {
+        this.isScreenLocked = isShow;
+      }
+    );
     this.lockUiService.getLockState();
   }
 

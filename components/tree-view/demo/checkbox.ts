@@ -6,26 +6,51 @@ import { VtsTreeFlatDataSource, VtsTreeFlattener } from '@ui-vts/ng-vts/tree-vie
 
 interface TreeNode {
   name: string;
+  icon: string;
   disabled?: boolean;
   children?: TreeNode[];
 }
 
 const TREE_DATA: TreeNode[] = [
   {
-    name: '0-0',
-    disabled: true,
-    children: [{ name: '0-0-0' }, { name: '0-0-1' }, { name: '0-0-2' }]
-  },
-  {
-    name: '0-1',
+    name: 'Tree view item',
+    icon: 'FolderOpenDoutone:antd',
     children: [
       {
-        name: '0-1-0',
-        children: [{ name: '0-1-0-0' }, { name: '0-1-0-1' }]
+        name: 'Tree view item',
+        icon: 'FolderOpenDoutone:antd',
+        disabled: false,
+        children: [
+          {
+            name: 'Tree view item',
+            icon: 'FolderOpenDoutone:antd',
+            children: [
+              {
+                name: 'Tree view item',
+                icon: 'FileText:antd'
+              },
+              {
+                name: 'Tree view item',
+                icon: 'FileText:antd'
+              }
+            ]
+          },
+          {
+            name: 'Tree view item',
+            icon: 'FileText:antd'
+          }
+        ]
       },
       {
-        name: '0-1-1',
-        children: [{ name: '0-1-1-0' }, { name: '0-1-1-1' }]
+        name: 'Tree view item',
+        icon: 'FolderOpenDoutone:antd',
+        disabled: true,
+        children: [
+          {
+            name: 'Tree view item',
+            icon: 'FileText:antd'
+          }
+        ]
       }
     ]
   }
@@ -34,6 +59,7 @@ const TREE_DATA: TreeNode[] = [
 interface FlatNode {
   expandable: boolean;
   name: string;
+  icon: string;
   level: number;
   disabled: boolean;
 }
@@ -43,31 +69,26 @@ interface FlatNode {
   template: `
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource">
       <vts-tree-node *vtsTreeNodeDef="let node">
-        <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
+        <vts-tree-node-toggle vtsNoop></vts-tree-node-toggle>
         <vts-tree-node-checkbox
-          [vtsDisabled]="node.disabled"
           [vtsChecked]="checklistSelection.isSelected(node)"
           (vtsClick)="leafItemSelectionToggle(node)"
         ></vts-tree-node-checkbox>
-        <vts-tree-node-option
-          [vtsDisabled]="node.disabled"
-          (vtsClick)="leafItemSelectionToggle(node)"
-        >
+        <vts-tree-node-option>
+          <span vts-icon [vtsType]="node.icon"></span>
           {{ node.name }}
         </vts-tree-node-option>
       </vts-tree-node>
 
       <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
-        <vts-tree-node-toggle>
-          <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
-        </vts-tree-node-toggle>
+        <vts-tree-node-toggle vtsCaret vtsRecursive></vts-tree-node-toggle>
         <vts-tree-node-checkbox
-          [vtsDisabled]="node.disabled"
           [vtsChecked]="descendantsAllSelected(node)"
           [vtsIndeterminate]="descendantsPartiallySelected(node)"
           (vtsClick)="itemSelectionToggle(node)"
         ></vts-tree-node-checkbox>
-        <vts-tree-node-option [vtsDisabled]="node.disabled" (vtsClick)="itemSelectionToggle(node)">
+        <vts-tree-node-option>
+          <span vts-icon [vtsType]="node.icon"></span>
           {{ node.name }}
         </vts-tree-node-option>
       </vts-tree-node>
@@ -83,6 +104,7 @@ export class VtsDemoTreeViewCheckboxComponent implements AfterViewInit {
         : {
             expandable: !!node.children && node.children.length > 0,
             name: node.name,
+            icon: node.icon,
             level: level,
             disabled: !!node.disabled
           };
@@ -114,7 +136,9 @@ export class VtsDemoTreeViewCheckboxComponent implements AfterViewInit {
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.treeControl.expandAll();
+  }
 
   descendantsAllSelected(node: FlatNode): boolean {
     const descendants = this.treeControl.getDescendants(node);

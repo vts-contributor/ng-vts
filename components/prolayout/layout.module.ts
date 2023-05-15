@@ -36,7 +36,7 @@ import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 import { VtsOutletModule } from '@ui-vts/ng-vts/core/outlet';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { VtsToolTipModule } from '@ui-vts/ng-vts/tooltip';
-import { VtsThemeModule } from '@ui-vts/theme/services'
+import { VtsThemeModule } from '@ui-vts/theme/services';
 import { RouterModule } from '@angular/router';
 import { VtsBadgeModule } from '@ui-vts/ng-vts/badge';
 import { VtsBlockUIComponent } from './block-ui.component';

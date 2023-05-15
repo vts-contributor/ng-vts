@@ -23,8 +23,8 @@ import {
       [class.vts-tree-indent-unit-start]="!vtsSelectMode && first"
       [class.vts-select-tree-indent-unit-end]="vtsSelectMode && last"
       [class.vts-tree-indent-unit-end]="!vtsSelectMode && last"
-      [class.vts-select-tree-indent-unit-end-of-expand-elimate]="vtsSelectMode && !last && vtsIsEnd[i + 1]"
-      [class.vts-tree-indent-unit-end-of-expand-eliminated]="!vtsSelectMode && !last && vtsIsEnd[i + 1]"
+      [class.vts-select-tree-indent-unit-elimated]="vtsSelectMode && !last && vtsIsEnd[i + 1]"
+      [class.vts-tree-indent-unit-eliminated]="!vtsSelectMode && !last && vtsIsEnd[i + 1]"
       *ngFor="let _ of listOfUnit; let i = index; let last = last; let first = first"
     ></span>
   `,
@@ -44,7 +44,7 @@ export class VtsTreeIndentComponent implements OnInit, OnChanges {
 
   listOfUnit: number[] = [];
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const { vtsTreeLevel } = changes;

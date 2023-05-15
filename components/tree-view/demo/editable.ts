@@ -48,34 +48,46 @@ interface FlatNode {
   selector: 'vts-demo-tree-view-editable',
   template: `
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource" [trackBy]="trackBy">
-      <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodeIndentLine>
-        <vts-tree-node-option
-          [vtsDisabled]="node.disabled"
-          [vtsSelected]="selectListSelection.isSelected(node)"
-          (vtsClick)="selectListSelection.toggle(node)"
-        >
+      <vts-tree-node
+        *vtsTreeNodeDef="let node"
+        [vtsSelected]="selectListSelection.isSelected(node)"
+        (vtsClick)="selectListSelection.toggle(node)"
+      >
+        <vts-tree-node-option>
           {{ node.name }}
         </vts-tree-node-option>
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasNoContent" vtsTreeNodeIndentLine>
-        <input vts-input placeholder="Input node name" vtsSize="sm" #inputElement />
-        &nbsp;
-        <button vts-button vtsSize="sm" (click)="saveNode(node, inputElement.value)">Add</button>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasNoContent">
+        <input
+          vts-input
+          placeholder="Input node name"
+          vtsSize="sm"
+          #inputElement
+          class="input"
+          (keydown.enter)="saveNode(node, inputElement.value)"
+        />
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodeIndentLine>
-        <vts-tree-node-toggle>
-          <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
-        </vts-tree-node-toggle>
-        {{ node.name }}
-        <button vts-button vtsType="text" vtsSize="sm" (click)="addNewNode(node)">
-          <i vts-icon vtsType="plus"></i>
-        </button>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
+        <vts-tree-node-toggle vtsCaret></vts-tree-node-toggle>
+        <vts-tree-node-option>
+          {{ node.name }}
+          &nbsp;
+          <a href="javascript:void(0)">
+            <i vts-icon vtsType="AddOutline:vts" (click)="addNewNode(node)"></i>
+          </a>
+        </vts-tree-node-option>
       </vts-tree-node>
     </vts-tree-view>
   `,
-  styles: [``]
+  styles: [
+    `
+      .input {
+        margin: auto 0;
+      }
+    `
+  ]
 })
 export class VtsDemoTreeViewEditableComponent {
   private transformer = (node: TreeNode, level: number) => {

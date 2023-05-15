@@ -17,4 +17,3 @@ export {
   VtsFormatBeforeDropEvent,
   VtsTreeNode
 } from '@ui-vts/ng-vts/core/tree';
-export * from './tree.type';

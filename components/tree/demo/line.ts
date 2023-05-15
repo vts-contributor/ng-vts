@@ -1,47 +1,89 @@
 import { Component } from '@angular/core';
-import { VtsFormatEmitEvent } from '@ui-vts/ng-vts/tree';
+import { VtsFormatEmitEvent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
 
 @Component({
   selector: 'vts-demo-tree-line',
   template: `
-    <vts-tree [vtsData]="nodes" vtsShowLine (vtsClick)="vtsEvent($event)"></vts-tree>
+    Show Line:
+    <vts-switch [(ngModel)]="showLine"></vts-switch>
+
+    <vts-tree
+      [vtsData]="nodes"
+      [vtsShowLine]="showLine"
+      [vtsExpandedIcon]="customIcon"
+      (vtsClick)="onEvent($event)"
+    ></vts-tree>
+
+    <ng-template #customIcon let-node>
+      <i
+        vts-icon
+        [vtsType]="node.isExpanded ? 'MinusSquareOutline:antd' : 'PlusSquareOutline:antd'"
+      ></i>
+    </ng-template>
   `
 })
 export class VtsDemoTreeLineComponent {
-  nodes = [
+  showLine = true;
+  nodes: VtsTreeNodeOptions[] = [
     {
-      title: 'parent 1',
-      key: '100',
+      title: 'Tree view item',
+      key: '1',
+      icon: 'Boxes:bootstrap',
       expanded: true,
       children: [
         {
-          title: 'parent 1-0',
-          key: '1001',
+          title: 'Tree view item',
+          key: '1-1',
+          icon: 'Boxes:bootstrap',
           expanded: true,
           children: [
-            { title: 'leaf', key: '10010', isLeaf: true },
-            { title: 'leaf', key: '10011', isLeaf: true },
-            { title: 'leaf', key: '10012', isLeaf: true }
+            {
+              title: 'Tree view item',
+              key: '1-1-1',
+              icon: 'Boxes:bootstrap',
+              expanded: true,
+              children: [
+                {
+                  title: 'Tree view item',
+                  key: '1-1-1-1',
+                  icon: 'Boxes:bootstrap',
+                  isLeaf: true
+                },
+                {
+                  title: 'Tree view item',
+                  key: '1-1-1-2',
+                  icon: 'Boxes:bootstrap',
+                  isLeaf: true
+                }
+              ]
+            },
+            {
+              title: 'Tree view item',
+              key: '1-1-2',
+              icon: 'Boxes:bootstrap',
+              isLeaf: true
+            }
           ]
         },
         {
-          title: 'parent 1-1',
-          key: '1002',
-          children: [{ title: 'leaf', key: '10020', isLeaf: true }]
-        },
-        {
-          title: 'parent 1-2',
-          key: '1003',
+          title: 'Tree view item',
+          key: '1-2',
+          icon: 'Boxes:bootstrap',
+          expanded: true,
           children: [
-            { title: 'leaf', key: '10030', isLeaf: true },
-            { title: 'leaf', key: '10031', isLeaf: true }
+            {
+              title: 'Tree view item',
+              key: '1-2-1',
+              icon: 'Boxes:bootstrap',
+              isLeaf: true
+            }
           ]
         }
       ]
     }
   ];
 
-  vtsEvent(event: VtsFormatEmitEvent): void {
+  onEvent(event: VtsFormatEmitEvent): void {
     console.log(event);
   }
 }

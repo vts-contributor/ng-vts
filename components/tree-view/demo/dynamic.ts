@@ -129,17 +129,17 @@ class DynamicDatasource implements DataSource<FlatNode> {
   template: `
     <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource">
       <vts-tree-node *vtsTreeNodeDef="let node">
-        {{ node.label }}
+        <vts-tree-node-toggle vtsNoop></vts-tree-node-toggle>
+        <vts-tree-node-option>
+          {{ node.label }}
+        </vts-tree-node-option>
       </vts-tree-node>
-
       <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
-        <vts-tree-node-toggle *ngIf="!node.loading">
-          <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
-        </vts-tree-node-toggle>
-        <vts-tree-node-toggle *ngIf="node.loading" vtsTreeNodeNoopToggle>
-          <i vts-icon vtsType="Sync" vtsTreeNodeToggleActiveIcon></i>
-        </vts-tree-node-toggle>
-        {{ node.label }}
+        <vts-tree-node-toggle *ngIf="!node.loading" vtsCaret vtsRecursive></vts-tree-node-toggle>
+        <vts-tree-node-toggle *ngIf="node.loading" vtsLoading></vts-tree-node-toggle>
+        <vts-tree-node-option>
+          {{ node.label }}
+        </vts-tree-node-option>
       </vts-tree-node>
     </vts-tree-view>
   `

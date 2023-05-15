@@ -165,16 +165,12 @@ export class VtsTreeBaseService {
       case 'check':
         resultNodesList = this.checkedNodeList;
         const isIgnore = (node: VtsTreeNode, forwardAscend = false): boolean => {
-          if (isCheckDisabled(node))
-            if (!forwardAscend)
-              return true
+          if (isCheckDisabled(node)) if (!forwardAscend) return true;
           const parentNode = node.getParentNode();
           if (parentNode) {
             if (isCheckDisabled(parentNode)) {
-              if (parentNode.isChecked)
-                return isIgnore(parentNode, true)
-              else
-                return false
+              if (parentNode.isChecked) return isIgnore(parentNode, true);
+              else return false;
             }
             if (this.checkedNodeList.findIndex(n => n.key === parentNode.key) > -1) {
               return true;
@@ -255,7 +251,8 @@ export class VtsTreeBaseService {
       // if (!isCheckDisabled(parentNode)) {
       if (
         parentNode.children.every(
-          child => (isCheckDisabled(child) && child.isLeaf) || (!child.isHalfChecked && child.isChecked)
+          child =>
+            (isCheckDisabled(child) && child.isLeaf) || (!child.isHalfChecked && child.isChecked)
         )
       ) {
         parentNode.isChecked = true;
@@ -278,19 +275,19 @@ export class VtsTreeBaseService {
    * reset child check state
    */
   conductDown(node: VtsTreeNode, value: boolean): void {
-    if (!isCheckDisabled(node)) {
-      node.isChecked = value;
-      node.isHalfChecked = false;
-      this.setCheckedNodeList(node);
-      this.setHalfCheckedNodeList(node);
-      node.children.forEach(n => {
-        this.conductDown(n, value);
-      });
-    } else {
-      node.children.forEach(n => {
-        this.conductDown(n, value);
-      });
-    }
+    // if (!isCheckDisabled(node)) {
+    node.isChecked = value;
+    node.isHalfChecked = false;
+    this.setCheckedNodeList(node);
+    this.setHalfCheckedNodeList(node);
+    node.children.forEach(n => {
+      this.conductDown(n, value);
+    });
+    // } else {
+    //   node.children.forEach(n => {
+    //     this.conductDown(n, value);
+    //   });
+    // }
   }
 
   /**

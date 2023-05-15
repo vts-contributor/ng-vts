@@ -53,5 +53,4 @@ export class SideComponent {
   @Input() sideCollapsed: boolean = false;
 
   @Input() onItemClick = (_e?: any) => {};
-
 }

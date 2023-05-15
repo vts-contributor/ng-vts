@@ -12,8 +12,8 @@ import {
   VtsSafeAny,
   VtsShapeSCType,
   VtsSizeDSType,
-  VtsSizeLDSType,
-  VtsSizeMDSType,
+  VtsSizeXLMSType,
+  VtsSizeLMSType,
   VtsTSType
 } from '@ui-vts/ng-vts/core/types';
 
@@ -78,7 +78,7 @@ export interface AlertConfig {
 
 export interface AvatarConfig {
   vtsShape?: VtsShapeSCType;
-  vtsSize?: VtsSizeLDSType | number;
+  vtsSize?: VtsSizeXLMSType | number;
   vtsGap?: number;
 }
 
@@ -254,7 +254,7 @@ export interface SwitchConfig {
 
 export interface TableConfig {
   vtsBordered?: boolean;
-  vtsSize?: VtsSizeMDSType;
+  vtsSize?: VtsSizeLMSType;
   vtsShowQuickJumper?: boolean;
   vtsLoadingIndicator?: TemplateRef<VtsSafeAny>;
   vtsShowSizeChanger?: boolean;
@@ -264,12 +264,12 @@ export interface TableConfig {
 
 export interface TabsConfig {
   vtsAnimated?:
-  | boolean
-  | {
-    inkBar: boolean;
-    tabPane: boolean;
-  };
-  vtsSize?: VtsSizeLDSType;
+    | boolean
+    | {
+        inkBar: boolean;
+        tabPane: boolean;
+      };
+  vtsSize?: VtsSizeXLMSType;
   vtsType?: 'line' | 'card';
   vtsTabBarGutter?: number;
   vtsShowPagination?: boolean;

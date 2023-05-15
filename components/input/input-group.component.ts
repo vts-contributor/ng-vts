@@ -22,7 +22,7 @@ import {
   TemplateRef,
   ViewEncapsulation
 } from '@angular/core';
-import { BooleanInput, VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { merge, Subject } from 'rxjs';
 import { map, mergeMap, startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -139,7 +139,7 @@ export class VtsInputGroupComponent implements AfterContentInit, OnChanges, OnIn
   @Input() vtsAddOnAfter?: string | TemplateRef<void>;
   @Input() vtsPrefix?: string | TemplateRef<void>;
   @Input() vtsSuffix?: string | TemplateRef<void>;
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() @InputBoolean() vtsSearch = false;
   @Input() @InputBoolean() vtsCompact = false;
   isAffix = false;

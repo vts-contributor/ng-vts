@@ -21,7 +21,7 @@ export const presetColors = [
   'lime'
 ] as const;
 
-export type VtsPresetColor = typeof presetColors[number];
+export type VtsPresetColor = (typeof presetColors)[number];
 
 export function isPresetColor(color: string): color is VtsPresetColor {
   return presetColors.indexOf(color as VtsSafeAny) !== -1;

@@ -55,6 +55,8 @@ import { takeUntil } from 'rxjs/operators';
       [isLeaf]="isLeaf"
       [isExpanded]="isExpanded"
       [isLoading]="isLoading"
+      [isDisabled]="isDisabled"
+      [isDisableExpand]="isDisableExpand"
       (click)="clickExpand($event)"
     ></vts-tree-node-switcher>
     <vts-tree-node-checkbox
@@ -145,6 +147,7 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
   @Input() isChecked?: boolean;
   @Input() isHalfChecked?: boolean;
   @Input() isDisableCheckbox?: boolean;
+  @Input() isDisableExpand?: boolean;
   @Input() isSelectable?: boolean;
   @Input() canHide?: boolean;
   @Input() isStart: boolean[] = [];
@@ -153,6 +156,7 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
   @Input() @InputBoolean() vtsShowLine?: boolean;
   @Input() @InputBoolean() vtsShowExpand?: boolean;
   @Input() @InputBoolean() vtsCheckable?: boolean;
+  @Input() @InputBoolean() vtsSelectable?: boolean;
   @Input() @InputBoolean() vtsAsyncData?: boolean;
   @Input() @InputBoolean() vtsHideUnMatched = false;
   @Input() @InputBoolean() vtsNoAnimation = false;
@@ -228,11 +232,10 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
   clickExpand(event: MouseEvent): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.isDisabled)
-      return
+    if (this.isDisabled || this.isDisableExpand) return;
     if (this.isLeaf) {
-      this.clickSelect(event)
-      return
+      this.clickSelect(event);
+      return;
     }
     if (!this.isLoading && !this.isLeaf) {
       // set async state
@@ -251,19 +254,17 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
    */
   clickSelect(event: MouseEvent): void {
     event.preventDefault();
-    if (this.isSelectable && !this.isDisabled) {
+    if (this.vtsSelectable && this.isSelectable && !this.isDisabled) {
       this.vtsTreeNode.isSelected = !this.vtsTreeNode.isSelected;
+      this.vtsTreeService.setSelectedNodeList(this.vtsTreeNode);
     }
-    this.vtsTreeService.setSelectedNodeList(this.vtsTreeNode);
     const eventNext = this.vtsTreeService.formatEvent('click', this.vtsTreeNode, event);
     this.vtsClick.emit(eventNext);
   }
 
   dblClick(event: MouseEvent): void {
-    console.log(event)
     event.preventDefault();
-    if (!this.isLeaf)
-      this.clickExpand(event)
+    if (!this.isLeaf) this.clickExpand(event);
     const eventNext = this.vtsTreeService.formatEvent('dblclick', this.vtsTreeNode, event);
     this.vtsDblClick.emit(eventNext);
   }
@@ -293,8 +294,8 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
   }
 
   dblClickCheckBox(event: MouseEvent): void {
-    event.preventDefault()
-    event.stopPropagation()
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   clearDragClass(): void {
@@ -313,7 +314,7 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
       // ie throw error
       // firefox-need-it
       e.dataTransfer!.setData('text/plain', this.vtsTreeNode.key!);
-      e.dataTransfer!.setDragImage(new Image(), 0, 0)
+      e.dataTransfer!.setDragImage(new Image(), 0, 0);
     } catch (error) {
       // empty
     }
@@ -448,7 +449,7 @@ export class VtsTreeNodeBuiltinComponent implements OnInit, OnChanges, OnDestroy
     private elementRef: ElementRef,
     private cdr: ChangeDetectorRef,
     @Host() @Optional() public noAnimation?: VtsNoAnimationDirective
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.vtsTreeNode.component = this;

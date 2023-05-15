@@ -27,7 +27,6 @@ function dig(path: string = '0', level: number = 3): FoodNode[] {
 
 const TREE_DATA: FoodNode[] = dig();
 
-/** Flat node with expandable and level information */
 interface ExampleFlatNode {
   expandable: boolean;
   name: string;
@@ -41,17 +40,19 @@ interface ExampleFlatNode {
       class="virtual-scroll-tree"
       [vtsTreeControl]="treeControl"
       [vtsDataSource]="dataSource"
+      vtsShowLine
     >
       <vts-tree-node *vtsTreeNodeDef="let node">
-        <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
-        {{ node.name }}
+        <vts-tree-node-option>
+          {{ node.name }}
+        </vts-tree-node-option>
       </vts-tree-node>
 
       <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
-        <vts-tree-node-toggle>
-          <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
-        </vts-tree-node-toggle>
-        {{ node.name }}
+        <vts-tree-node-toggle vtsCaret></vts-tree-node-toggle>
+        <vts-tree-node-option>
+          {{ node.name }}
+        </vts-tree-node-option>
       </vts-tree-node>
     </vts-tree-virtual-scroll-view>
   `,

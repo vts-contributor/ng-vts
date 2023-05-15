@@ -30,7 +30,7 @@ export class VtsTreeDropIndicatorComponent implements OnChanges {
   @Input() direction: string = 'ltr';
   style: NgStyleInterface = {};
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(_changes: SimpleChanges): void {
     this.renderIndicator(this.dropPosition!, this.direction);

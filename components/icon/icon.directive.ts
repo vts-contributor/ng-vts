@@ -29,7 +29,8 @@ import { VtsIconPatchService, VtsIconService } from './icon.service';
 })
 export class VtsIconDirective
   extends IconDirective
-  implements OnInit, OnChanges, AfterContentChecked {
+  implements OnInit, OnChanges, AfterContentChecked
+{
   static ngAcceptInputType_vtsSpin: BooleanInput;
 
   cacheClassName: string | null = null;
@@ -142,9 +143,8 @@ export class VtsIconDirective
     this.renderer.addClass(this.el, this.cacheClassName);
     const cls = this.el.classList;
     cls.forEach(cl => {
-      if (cl.startsWith('vts-icon-type-'))
-        this.renderer.removeClass(this.el, cl)
-    })
+      if (cl.startsWith('vts-icon-type-')) this.renderer.removeClass(this.el, cl);
+    });
   }
 
   private setSVGData(svg: SVGElement): void {
@@ -153,7 +153,7 @@ export class VtsIconDirective
   }
 
   private setType(): void {
-    const [_, type] = getNameAndType(this.iconName as string)
+    const [_, type] = getNameAndType(this.iconName as string);
     this.renderer.addClass(this.el, `vts-icon-type-${type}`);
   }
 }

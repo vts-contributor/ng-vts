@@ -22,7 +22,7 @@ import { VtsEmptyI18nInterface, VtsI18nService } from '@ui-vts/ng-vts/i18n';
 
 const VtsEmptyDefaultImages = ['default', 'simple'] as const;
 type VtsEmptyNotFoundImageType =
-  | typeof VtsEmptyDefaultImages[number]
+  | (typeof VtsEmptyDefaultImages)[number]
   | null
   | string
   | TemplateRef<void>;

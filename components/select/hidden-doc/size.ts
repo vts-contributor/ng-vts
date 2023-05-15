@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VtsSelectSizeType } from '@ui-vts/ng-vts/select';
+import { VtsSelectSize } from '@ui-vts/ng-vts/select';
 
 @Component({
   selector: 'vts-demo-select-size',
@@ -66,7 +66,7 @@ import { VtsSelectSizeType } from '@ui-vts/ng-vts/select';
 })
 export class VtsDemoSelectSizeComponent implements OnInit {
   listOfOption: Array<{ label: string; value: string }> = [];
-  size: VtsSelectSizeType = 'md';
+  size: VtsSelectSize = 'md';
   singleValue = 'a10';
   multipleValue = ['a10', 'c12'];
   tagValue = ['a10', 'c12', 'tag'];

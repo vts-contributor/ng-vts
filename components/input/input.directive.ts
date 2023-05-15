@@ -18,7 +18,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { BooleanInput, VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -42,7 +42,7 @@ export class VtsInputDirective implements OnChanges, OnInit, OnDestroy {
   static ngAcceptInputType_disabled: BooleanInput;
   static ngAcceptInputType_vtsBorderless: BooleanInput;
   @Input() @InputBoolean() vtsBorderless = false;
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input()
   get disabled(): boolean {
     if (this.ngControl && this.ngControl.disabled !== null) {

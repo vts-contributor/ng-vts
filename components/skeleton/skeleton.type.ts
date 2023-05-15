@@ -5,11 +5,11 @@
 
 import { VtsAvatarShape, VtsAvatarSize } from '@ui-vts/ng-vts/avatar';
 import { VtsButtonShape, VtsButtonSize } from '@ui-vts/ng-vts/button';
-import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 
 export type VtsSkeletonParagraphWidth = number | string | Array<number | string>;
 
-export type VtsSkeletonInputSize = VtsSizeLDSType;
+export type VtsSkeletonInputSize = VtsSizeXLMSType;
 
 export type VtsSkeletonButtonSize = VtsButtonSize;
 export type VtsSkeletonButtonShape = VtsButtonShape;
