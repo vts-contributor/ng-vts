@@ -9,7 +9,6 @@
     "tslib", 
     "angular", 
     "@ui-vts/theme",
-    "@ui-vts/theme-workspace", 
     "@ui-vts/icons-angular", 
     "apexcharts", 
     "date-fns", 
