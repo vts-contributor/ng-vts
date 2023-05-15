@@ -12,19 +12,34 @@ interface TreeNode {
 
 const TREE_DATA: TreeNode[] = [
   {
-    name: '0-0',
-    children: [{ name: '0-0-0' }, { name: '0-0-1' }, { name: '0-0-2' }]
-  },
-  {
-    name: '0-1',
+    name: 'Folder 1',
     children: [
       {
-        name: '0-1-0',
-        children: [{ name: '0-1-0-0' }, { name: '0-1-0-1' }]
+        name: 'Folder 1-1',
+        children: [
+          {
+            name: 'Folder 1-1-1',
+            children: [
+              {
+                name: 'File 1'
+              },
+              {
+                name: 'File 2'
+              }
+            ]
+          },
+          {
+            name: 'File 3'
+          }
+        ]
       },
       {
-        name: '0-1-1',
-        children: [{ name: '0-1-1-0' }, { name: '0-1-1-1' }]
+        name: 'Folder 1-2',
+        children: [
+          {
+            name: 'File 4'
+          }
+        ]
       }
     ]
   }
@@ -40,9 +55,6 @@ class FilteredTreeResult {
   constructor(public treeData: TreeNode[], public needsToExpanded: TreeNode[] = []) {}
 }
 
-/**
- * From https://stackoverflow.com/a/45290208/6851836
- */
 function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
   const needsToExpanded = new Set<TreeNode>();
   const _filter = (node: TreeNode, result: TreeNode[]) => {
@@ -80,17 +92,19 @@ function filterTreeData(data: TreeNode[], value: string): FilteredTreeResult {
       <i vts-icon vtsType="Search"></i>
     </ng-template>
 
-    <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource" vtsNoAnimation>
+    <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource">
       <vts-tree-node *vtsTreeNodeDef="let node">
-        <vts-tree-node-toggle vtsTreeNodeNoopToggle></vts-tree-node-toggle>
-        <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
+        <vts-tree-node-toggle vtsNoop></vts-tree-node-toggle>
+        <vts-tree-node-option>
+          <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
+        </vts-tree-node-option>
       </vts-tree-node>
 
       <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
-        <vts-tree-node-toggle>
-          <i vts-icon vtsType="ArrowMiniDown" vtsTreeNodeToggleRotateIcon></i>
-        </vts-tree-node-toggle>
-        <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
+        <vts-tree-node-toggle vtsCaret></vts-tree-node-toggle>
+        <vts-tree-node-option>
+          <span [innerHTML]="node.name | vtsHighlight : searchValue : 'i' : 'highlight'"></span>
+        </vts-tree-node-option>
       </vts-tree-node>
     </vts-tree-view>
   `,
@@ -174,6 +188,7 @@ export class VtsDemoTreeViewSearchComponent {
           this.expandedNodes = [];
         }
       }
+      this.treeControl.expandAll();
     });
   }
 

@@ -15,13 +15,11 @@ import { VtsFormatEmitEvent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
 export class VtsDemoTreeDynamicComponent {
   nodes = [
     { title: 'Expand to load', key: '0' },
-    { title: 'Expand to load', key: '1' },
-    { title: 'Tree Node', key: '2', isLeaf: true }
+    { title: 'Expand to load', key: '1' }
   ];
 
   vtsEvent(event: VtsFormatEmitEvent): void {
     console.log(event);
-    // load child async
     if (event.eventName === 'expand') {
       const node = event.node;
       if (node?.getChildren().length === 0 && node?.isExpanded) {

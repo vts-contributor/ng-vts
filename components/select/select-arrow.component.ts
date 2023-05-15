@@ -21,7 +21,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
     <i vts-icon vtsType="Sync" *ngIf="loading; else defaultArrow"></i>
     <ng-template #defaultArrow>
       <ng-container *ngIf="!suffixIcon; else suffixTemplate">
-        <i vts-icon vtsType="suffix:vts-select"></i>
+        <i vts-icon vtsType="ChevronDown:octIcon"></i>
       </ng-container>
       <ng-template #suffixTemplate>
         <ng-container *vtsStringTemplateOutlet="suffixIcon; let suffixIcon">

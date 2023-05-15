@@ -10,28 +10,36 @@ interface TreeNode {
 
 const TREE_DATA: TreeNode[] = [
   {
-    name: 'parent 1',
+    name: 'Tree view item',
     children: [
       {
-        name: 'parent 1-0',
-        children: [{ name: 'leaf' }, { name: 'leaf' }]
+        name: 'Tree view item',
+        children: [
+          {
+            name: 'Tree view item',
+            children: [
+              {
+                name: 'Tree view item'
+              },
+              {
+                name: 'Tree view item'
+              }
+            ]
+          },
+          {
+            name: 'Tree view item'
+          }
+        ]
       },
       {
-        name: 'parent 1-1',
+        name: 'Tree view item',
         children: [
-          { name: 'leaf' },
           {
-            name: 'parent 1-1-0',
-            children: [{ name: 'leaf' }, { name: 'leaf' }]
-          },
-          { name: 'leaf' }
+            name: 'Tree view item'
+          }
         ]
       }
     ]
-  },
-  {
-    name: 'parent 2',
-    children: [{ name: 'leaf' }, { name: 'leaf' }]
   }
 ];
 
@@ -44,24 +52,32 @@ interface FlatNode {
 @Component({
   selector: 'vts-demo-tree-view-line',
   template: `
-    Show Leaf Icon:
-    <vts-switch [(ngModel)]="showLeafIcon"></vts-switch>
+    Show Line:
+    <vts-switch [(ngModel)]="showLine"></vts-switch>
 
-    <vts-tree-view [vtsTreeControl]="treeControl" [vtsDataSource]="dataSource">
-      <vts-tree-node *vtsTreeNodeDef="let node" vtsTreeNodeIndentLine>
-        <vts-tree-node-toggle vtsTreeNodeNoopToggle *ngIf="showLeafIcon">
-          <i vts-icon vtsType="DescriptionOutline"></i>
-        </vts-tree-node-toggle>
+    <vts-tree-view
+      [vtsTreeControl]="treeControl"
+      [vtsDataSource]="dataSource"
+      [vtsShowLine]="showLine"
+    >
+      <vts-tree-node *vtsTreeNodeDef="let node">
         <vts-tree-node-option>
+          <span vts-icon vtsType="Boxes:bootstrap"></span>
           {{ node.name }}
         </vts-tree-node-option>
       </vts-tree-node>
 
-      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild" vtsTreeNodeIndentLine>
+      <vts-tree-node *vtsTreeNodeDef="let node; when: hasChild">
         <vts-tree-node-toggle>
-          <i vts-icon [vtsType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'"></i>
+          <i
+            vts-icon
+            [vtsType]="
+              treeControl.isExpanded(node) ? 'MinusSquareOutline:antd' : 'PlusSquareOutline:antd'
+            "
+          ></i>
         </vts-tree-node-toggle>
         <vts-tree-node-option>
+          <span vts-icon vtsType="Boxes:bootstrap"></span>
           {{ node.name }}
         </vts-tree-node-option>
       </vts-tree-node>
@@ -69,6 +85,8 @@ interface FlatNode {
   `
 })
 export class VtsDemoTreeViewLineComponent implements AfterViewInit {
+  showLine = true;
+
   private transformer = (node: TreeNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
@@ -91,7 +109,6 @@ export class VtsDemoTreeViewLineComponent implements AfterViewInit {
 
   dataSource = new VtsTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  showLeafIcon = false;
   constructor() {
     this.dataSource.setData(TREE_DATA);
   }

@@ -5,7 +5,7 @@ import {
   UntypedFormGroup,
   ValidationErrors
 } from '@angular/forms';
-import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
   selector: 'vts-demo-date-picker-range-single',
@@ -64,7 +64,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 })
 export class VtsDemoDatePickerRangeSingleComponent {
   value?: Date[];
-  size: VtsSizeLDSType = 'md';
+  size: VtsSizeXLMSType = 'md';
   placeholder: string = 'DD/MM/YYYY - DD/MM/YYYY';
 
   formGroup: UntypedFormGroup = new UntypedFormGroup({

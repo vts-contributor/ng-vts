@@ -32,7 +32,7 @@ import { delay, filter, first, startWith, takeUntil } from 'rxjs/operators';
 
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { PREFIX } from '@ui-vts/ng-vts/core/logger';
-import { BooleanInput, NumberInput, VtsSafeAny, VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, NumberInput, VtsSafeAny, VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, wrapIntoObservable } from '@ui-vts/ng-vts/core/util';
 
 import {
@@ -176,7 +176,7 @@ export class VtsTabSetComponent
   @Input() vtsAddIcon: string | TemplateRef<VtsSafeAny> = 'plus';
   @Input() vtsTabBarStyle: { [key: string]: string } | null = null;
   @Input() @WithConfig() vtsType: VtsTabType = 'line';
-  @Input() @WithConfig() vtsSize: VtsSizeLDSType = 'md';
+  @Input() @WithConfig() vtsSize: VtsSizeXLMSType = 'md';
   @Input() @WithConfig() vtsAnimated: VtsAnimatedInterface | boolean = true;
   @Input() @WithConfig() vtsTabBarGutter?: number = undefined;
   @Input() @InputBoolean() vtsHideAdd: boolean = false;

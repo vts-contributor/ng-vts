@@ -1,83 +1,96 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
 import { VtsFormatEmitEvent, VtsTreeComponent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
 
 @Component({
   selector: 'vts-demo-tree-basic',
   template: `
+    <vts-radio-group [(ngModel)]="size">
+      <label vts-radio-button vtsValue="lg">LG</label>
+      <label vts-radio-button vtsValue="md">MD</label>
+      <label vts-radio-button vtsValue="sm">SM</label>
+    </vts-radio-group>
+    <br />
+    <br />
     <vts-tree
       #vtsTreeComponent
       [vtsData]="nodes"
-      vtsCheckable
-      [vtsCheckedKeys]="defaultCheckedKeys"
-      [vtsExpandedKeys]="defaultExpandedKeys"
+      [vtsSize]="size"
+      vtsShowIcon
+      vtsExpandAll
+      vtsSelectable
       [vtsSelectedKeys]="defaultSelectedKeys"
-      (vtsClick)="vtsClick($event)"
-      (vtsContextMenu)="vtsClick($event)"
-      (vtsCheckBoxChange)="vtsCheck($event)"
-      (vtsExpandChange)="vtsCheck($event)"
+      (vtsClick)="onEvent($event)"
+      (vtsContextMenu)="onEvent($event)"
+      (vtsExpandChange)="onEvent($event)"
     ></vts-tree>
   `
 })
-export class VtsDemoTreeBasicComponent implements AfterViewInit {
-  @ViewChild('vtsTreeComponent', { static: false })
-  vtsTreeComponent!: VtsTreeComponent;
-  defaultCheckedKeys = ['10020'];
-  defaultSelectedKeys = ['10010'];
-  defaultExpandedKeys = ['100', '1001'];
+export class VtsDemoTreeBasicComponent {
+  size: VtsSizeLMSType = 'md';
+
+  @ViewChild('vtsTreeComponent', { static: false }) vtsTreeComponent!: VtsTreeComponent;
+  defaultSelectedKeys = ['1-2-1'];
 
   nodes: VtsTreeNodeOptions[] = [
     {
-      title: 'parent 1',
-      key: '100',
+      title: 'Tree view item',
+      key: '1',
+      icon: 'FolderOpenDoutone:antd',
       children: [
         {
-          title: 'parent 1-0',
-          key: '1001',
-          disabled: true,
+          title: 'Tree view item',
+          key: '1-1',
+          icon: 'FolderOpenDoutone:antd',
           children: [
             {
-              title: 'leaf 1-0-0',
-              key: '10010',
-              disableCheckbox: true,
-              isLeaf: true
+              title: 'Tree view item',
+              key: '1-1-1',
+              icon: 'FolderOpenDoutone:antd',
+              children: [
+                {
+                  title: 'Tree view item',
+                  key: '1-1-1-1',
+                  icon: 'FileText:antd',
+                  isLeaf: true
+                },
+                {
+                  title: 'Tree view item',
+                  key: '1-1-1-2',
+                  icon: 'FileText:antd',
+                  isLeaf: true
+                }
+              ]
             },
-            { title: 'leaf 1-0-1', key: '10011', isLeaf: true }
+            {
+              title: 'Tree view item',
+              key: '1-1-2',
+              icon: 'FileText:antd',
+              isLeaf: true
+            }
           ]
         },
         {
-          title: 'parent 1-1',
-          key: '1002',
+          title: 'Tree view item',
+          key: '1-2',
+          icon: 'FolderOpenDoutone:antd',
+          disabled: true,
           children: [
-            { title: 'leaf 1-1-0', key: '10020', isLeaf: true },
-            { title: 'leaf 1-1-1', key: '10021', isLeaf: true }
+            {
+              title: 'Tree view item',
+              key: '1-2-1',
+              icon: 'FileText:antd',
+              isLeaf: true
+            }
           ]
         }
       ]
     }
   ];
 
-  vtsClick(event: VtsFormatEmitEvent): void {
+  onEvent(event: VtsFormatEmitEvent): void {
     console.log(event);
-  }
-
-  vtsCheck(event: VtsFormatEmitEvent): void {
-    console.log(event);
-  }
-
-  // vtsSelectedKeys change
-  vtsSelect(keys: string[]): void {
-    console.log(keys, this.vtsTreeComponent.getSelectedNodeList());
-  }
-
-  ngAfterViewInit(): void {
-    // get node by key: '10011'
-    console.log(this.vtsTreeComponent.getTreeNodeByKey('10011'));
-    // use tree methods
-    console.log(
-      this.vtsTreeComponent.getTreeNodes(),
-      this.vtsTreeComponent.getCheckedNodeList(),
-      this.vtsTreeComponent.getSelectedNodeList(),
-      this.vtsTreeComponent.getExpandedNodeList()
-    );
+    console.log('selected', this.vtsTreeComponent.getSelectedNodeList());
+    console.log('expanded', this.vtsTreeComponent.getExpandedNodeList());
   }
 }

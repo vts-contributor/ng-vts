@@ -24,7 +24,7 @@ import {
   OnChangeType,
   OnTouchedType,
   VtsSafeAny,
-  VtsSizeLDSType
+  VtsSizeXLMSType
 } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
@@ -64,7 +64,7 @@ export class VtsRadioGroupComponent implements OnInit, ControlValueAccessor, OnD
   onTouched: OnTouchedType = () => {};
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() vtsButtonStyle: VtsRadioButtonStyle = 'outline';
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsName: string | null = null;
 
   dir: Direction = 'ltr';

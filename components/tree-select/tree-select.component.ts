@@ -50,9 +50,10 @@ import {
 import {
   BooleanInput,
   NgStyleInterface,
-  VtsSizeLDSType,
   OnChangeType,
-  OnTouchedType
+  OnTouchedType,
+  VtsSizeLMSType,
+  VtsSizeXLMSType
 } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, isNotNil } from '@ui-vts/ng-vts/core/util';
 import { VtsSelectSearchComponent } from '@ui-vts/ng-vts/select';
@@ -104,7 +105,9 @@ const TREE_SELECT_DEFAULT_CLASS = 'vts-select-dropdown vts-select-tree-dropdown'
           vtsNoAnimation
           vtsSelectMode
           vtsBlockNode
+          vtsSelectable
           [vtsData]="vtsNodes"
+          [vtsSize]="vtsTreeSize"
           [vtsMultiple]="vtsMultiple"
           [vtsSearchValue]="inputValue"
           [vtsHideUnMatched]="vtsHideUnMatched"
@@ -114,7 +117,7 @@ const TREE_SELECT_DEFAULT_CLASS = 'vts-select-dropdown vts-select-tree-dropdown'
           [vtsShowExpand]="vtsShowExpand"
           [vtsShowLine]="vtsShowLine"
           [vtsExpandedIcon]="vtsExpandedIcon"
-          [vtsExpandAll]="vtsDefaultExpandAll"
+          [vtsExpandAll]="vtsExpandAll"
           [vtsExpandedKeys]="expandedKeys"
           [vtsCheckedKeys]="vtsCheckable ? value : []"
           [vtsSelectedKeys]="!vtsCheckable ? value : []"
@@ -185,12 +188,17 @@ const TREE_SELECT_DEFAULT_CLASS = 'vts-select-dropdown vts-select-tree-dropdown'
         [label]="vtsDisplayWith(selectedNodes[0])"
       ></vts-select-item>
 
-      <vts-select-arrow *ngIf="!isMultiple"></vts-select-arrow>
+      <vts-select-arrow></vts-select-arrow>
 
       <vts-select-clear
         *ngIf="vtsAllowClear && !vtsDisabled && selectedNodes.length"
         (clear)="onClearSelection()"
       ></vts-select-clear>
+
+      <vts-select-multiple-count
+        *ngIf="isMultiple && !vtsDisabled && !!value?.length"
+        [count]="value.length"
+      ></vts-select-multiple-count>
     </div>
   `,
   providers: [
@@ -207,9 +215,11 @@ const TREE_SELECT_DEFAULT_CLASS = 'vts-select-dropdown vts-select-tree-dropdown'
     }
   ],
   host: {
+    '[class.vts-select-xl]': 'vtsSize==="xl"',
     '[class.vts-select-lg]': 'vtsSize==="lg"',
-    '[class.vts-select-rtl]': 'dir==="rtl"',
+    '[class.vts-select-md]': 'vtsSize==="md"',
     '[class.vts-select-sm]': 'vtsSize==="sm"',
+    '[class.vts-select-rtl]': 'dir==="rtl"',
     '[class.vts-select-disabled]': 'vtsDisabled',
     '[class.vts-select-single]': '!isMultiple',
     '[class.vts-select-show-arrow]': '!isMultiple',
@@ -239,7 +249,7 @@ export class VtsTreeSelectComponent
   static ngAcceptInputType_vtsDisabled: BooleanInput;
   static ngAcceptInputType_vtsAsyncData: BooleanInput;
   static ngAcceptInputType_vtsMultiple: BooleanInput;
-  static ngAcceptInputType_vtsDefaultExpandAll: BooleanInput;
+  static ngAcceptInputType_vtsExpandAll: BooleanInput;
   static ngAcceptInputType_vtsCheckStrictly: BooleanInput;
 
   @Input() vtsId: string | null = null;
@@ -257,7 +267,7 @@ export class VtsTreeSelectComponent
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() @InputBoolean() vtsAsyncData = false;
   @Input() @InputBoolean() vtsMultiple = false;
-  @Input() @InputBoolean() vtsDefaultExpandAll = false;
+  @Input() @InputBoolean() vtsExpandAll = false;
   @Input() @InputBoolean() vtsCheckStrictly = false;
   @Input() vtsVirtualItemSize = 28;
   @Input() vtsVirtualMaxBufferPx = 500;
@@ -270,7 +280,8 @@ export class VtsTreeSelectComponent
   @Input() vtsNoResult?: string;
   @Input() vtsNodes: Array<VtsTreeNode | VtsTreeNodeOptions> = [];
   @Input() vtsOpen = false;
-  @Input() @WithConfig() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsTreeSize: VtsSizeLMSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsPlaceHolder = '';
   @Input() vtsDropdownStyle: NgStyleInterface | null = null;
   @Input() vtsDropdownClassName?: string;

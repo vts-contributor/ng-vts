@@ -34,7 +34,7 @@ export const treeAccordionMotion: AnimationTriggerMetadata = trigger('treeAccord
         stagger(0, [
           animate(
             `150ms ${AnimationCurves.EASE_IN_OUT}`,
-            style({ height: 0, opacity: 0, 'padding-bottom': 0 })
+            style({ height: 0, minHeight: 0, opacity: 0, 'padding-bottom': 0 })
           )
         ])
       ],
@@ -48,6 +48,7 @@ export const treeAccordionMotion: AnimationTriggerMetadata = trigger('treeAccord
         style({
           overflow: 'hidden',
           height: 0,
+          minHeight: 0,
           opacity: 0,
           'padding-bottom': 0
         }),
@@ -57,6 +58,7 @@ export const treeAccordionMotion: AnimationTriggerMetadata = trigger('treeAccord
             style({
               overflow: 'hidden',
               height: '*',
+              minHeight: '*',
               opacity: '*',
               'padding-bottom': '*'
             })

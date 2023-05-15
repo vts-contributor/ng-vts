@@ -11,12 +11,6 @@ const PickerSuffix: IconDefinition = {
   type: 'vts-picker'
 };
 
-const SelectSuffix: IconDefinition = {
-  icon: `<svg width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.73167 0H0.268334C0.0444793 0 -0.0805157 0.236354 0.0581151 0.397711L3.78978 4.72481C3.89659 4.84867 4.10227 4.84867 4.21022 4.72481L7.94188 0.397711C8.08052 0.236354 7.95552 0 7.73167 0Z" fill="#73777A"/></svg>`,
-  name: `suffix`,
-  type: 'vts-select'
-};
-
 const Spin: IconDefinition = {
   icon: `
     <?xml version="1.0" encoding="utf-8"?>
@@ -55,10 +49,4 @@ const CodeUnexpand: IconDefinition = {
   type: 'demobox'
 };
 
-export const VTS_ICONS_USE: IconDefinition[] = [
-  PickerSuffix,
-  SelectSuffix,
-  Spin,
-  CodeExpand,
-  CodeUnexpand
-];
+export const VTS_ICONS_USE: IconDefinition[] = [PickerSuffix, Spin, CodeExpand, CodeUnexpand];

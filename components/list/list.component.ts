@@ -23,7 +23,7 @@ import {
   BooleanInput,
   VtsDirectionVHType,
   VtsSafeAny,
-  VtsSizeLDSType
+  VtsSizeXLMSType
 } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -143,7 +143,7 @@ export class VtsListComponent implements AfterContentInit, OnChanges, OnDestroy,
   @Input() @InputBoolean() vtsLoading = false;
   @Input() vtsLoadMore: TemplateRef<void> | null = null;
   @Input() vtsPagination?: TemplateRef<void>;
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() @InputBoolean() vtsSplit = true;
   @Input() vtsNoResult?: string | TemplateRef<void>;
 

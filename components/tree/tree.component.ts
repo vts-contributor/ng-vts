@@ -39,7 +39,7 @@ import {
   VtsTreeNodeKey,
   VtsTreeNodeOptions
 } from '@ui-vts/ng-vts/core/tree';
-import { BooleanInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, VtsSafeAny, VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -53,6 +53,13 @@ export function VtsTreeServiceFactory(
 }
 
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
+
+const SIZE: { [k in VtsSizeLMSType]: number } = {
+  sm: 32,
+  md: 40,
+  lg: 48
+};
+const DEFAULT_SIZE = SIZE.md;
 
 @Component({
   selector: 'vts-tree',
@@ -114,6 +121,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
         [isChecked]="treeNode.isChecked"
         [isHalfChecked]="treeNode.isHalfChecked"
         [isDisableCheckbox]="treeNode.isDisableCheckbox"
+        [isDisableExpand]="treeNode.isDisableExpand"
         [isSelectable]="treeNode.isSelectable"
         [canHide]="treeNode.canHide"
         [vtsTreeNode]="treeNode"
@@ -122,6 +130,7 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
         [vtsExpandedIcon]="vtsExpandedIcon"
         [vtsDraggable]="vtsDraggable"
         [vtsCheckable]="vtsCheckable"
+        [vtsSelectable]="vtsSelectable"
         [vtsShowExpand]="vtsShowExpand"
         [vtsAsyncData]="vtsAsyncData"
         [vtsSearchValue]="vtsSearchValue"
@@ -167,7 +176,13 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'tree';
     '[class.vts-tree-show-line]': `!vtsSelectMode && vtsShowLine`,
     '[class.vts-tree-icon-hide]': `!vtsSelectMode && !vtsShowIcon`,
     '[class.vts-tree-block-node]': `!vtsSelectMode && vtsBlockNode`,
-    '[class.draggable-tree]': `vtsDraggable`
+    '[class.draggable-tree]': `vtsDraggable`,
+    '[class.vts-tree-sm]': '!vtsSelectMode && vtsSize === "sm"',
+    '[class.vts-tree-md]': '!vtsSelectMode && vtsSize === "md"',
+    '[class.vts-tree-lg]': '!vtsSelectMode && vtsSize === "lg"',
+    '[class.vts-select-tree-sm]': 'vtsSelectMode && vtsSize === "sm"',
+    '[class.vts-select-tree-md]': 'vtsSelectMode && vtsSize === "md"',
+    '[class.vts-select-tree-lg]': 'vtsSelectMode && vtsSize === "lg"'
   }
 })
 export class VtsTreeComponent
@@ -178,36 +193,37 @@ export class VtsTreeComponent
 
   static ngAcceptInputType_vtsShowIcon: BooleanInput;
   static ngAcceptInputType_vtsHideUnMatched: BooleanInput;
-  static ngAcceptInputType_vtsBlockNode: BooleanInput;
   static ngAcceptInputType_vtsExpandAll: BooleanInput;
   static ngAcceptInputType_vtsSelectMode: BooleanInput;
   static ngAcceptInputType_vtsCheckStrictly: BooleanInput;
   static ngAcceptInputType_vtsShowExpand: BooleanInput;
   static ngAcceptInputType_vtsShowLine: BooleanInput;
   static ngAcceptInputType_vtsCheckable: BooleanInput;
+  static ngAcceptInputType_vtsSelectable: BooleanInput;
   static ngAcceptInputType_vtsAsyncData: BooleanInput;
   static ngAcceptInputType_vtsDraggable: BooleanInput;
   static ngAcceptInputType_vtsMultiple: BooleanInput;
 
-  @Input() @InputBoolean() @WithConfig() vtsShowIcon: boolean = false;
+  @Input() @InputBoolean() @WithConfig() vtsShowIcon: boolean = true;
   @Input() @InputBoolean() @WithConfig() vtsHideUnMatched: boolean = false;
-  @Input() @InputBoolean() @WithConfig() vtsBlockNode: boolean = false;
   @Input() @InputBoolean() vtsExpandAll = false;
   @Input() @InputBoolean() vtsSelectMode = false;
   @Input() @InputBoolean() vtsCheckStrictly = false;
   @Input() @InputBoolean() vtsShowExpand: boolean = true;
   @Input() @InputBoolean() vtsShowLine = false;
   @Input() @InputBoolean() vtsCheckable = false;
+  @Input() @InputBoolean() vtsSelectable = false;
   @Input() @InputBoolean() vtsAsyncData = false;
   @Input() @InputBoolean() vtsDraggable: boolean = false;
   @Input() @InputBoolean() vtsMultiple = false;
+  @Input() @WithConfig() vtsSize: VtsSizeLMSType = 'md';
   @Input() vtsExpandedIcon?: TemplateRef<{
     $implicit: VtsTreeNode;
     origin: VtsTreeNodeOptions;
   }>;
-  @Input() vtsVirtualItemSize = 28;
-  @Input() vtsVirtualMaxBufferPx = 500;
-  @Input() vtsVirtualMinBufferPx = 28;
+  @Input() vtsVirtualItemSize = DEFAULT_SIZE;
+  @Input() vtsVirtualMaxBufferPx = DEFAULT_SIZE * 10;
+  @Input() vtsVirtualMinBufferPx = DEFAULT_SIZE * 5;
   @Input() vtsVirtualHeight: string | null = null;
   @Input() vtsTreeTemplate?: TemplateRef<{
     $implicit: VtsTreeNode;
@@ -284,6 +300,7 @@ export class VtsTreeComponent
     let useDefaultExpandedKeys = false;
     let expandAll = false;
     const {
+      vtsSize,
       vtsData,
       vtsExpandedKeys,
       vtsSelectedKeys,
@@ -293,6 +310,13 @@ export class VtsTreeComponent
       vtsMultiple,
       vtsSearchValue
     } = changes;
+
+    if (vtsSize) {
+      const size = SIZE[vtsSize.currentValue as VtsSizeLMSType];
+      this.vtsVirtualItemSize = size;
+      this.vtsVirtualMinBufferPx = size * 5;
+      this.vtsVirtualMaxBufferPx = size * 10;
+    }
 
     if (vtsExpandAll) {
       useDefaultExpandedKeys = true;

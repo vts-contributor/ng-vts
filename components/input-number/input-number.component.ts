@@ -27,7 +27,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import {
   BooleanInput,
-  VtsSizeLDSType,
+  VtsSizeXLMSType,
   OnChangeType,
   OnTouchedType
 } from '@ui-vts/ng-vts/core/types';
@@ -119,7 +119,7 @@ export class VtsInputNumberComponent
   @Output() readonly vtsFocus = new EventEmitter();
   @ViewChild('inputElement', { static: true })
   inputElement!: ElementRef<HTMLInputElement>;
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsMin: number = -Infinity;
   @Input() vtsMax: number = Infinity;
   @Input() vtsParser = (value: string) =>

@@ -110,6 +110,10 @@ export class VtsTreeFlatDataSource<T, F, K = F> extends DataSource<F> {
     return this._data.getValue();
   }
 
+  getFlattenData(): F[] {
+    return this._flattenedData.getValue();
+  }
+
   connect(collectionViewer: CollectionViewer): Observable<F[]> {
     const changes = [
       collectionViewer.viewChange,
@@ -131,7 +135,8 @@ export class VtsTreeFlatDataSource<T, F, K = F> extends DataSource<F> {
   }
 
   private flatNodes(): void {
-    this._flattenedData.next(this._treeFlattener.flattenNodes(this.getData()));
-    this._treeControl.dataNodes = this._flattenedData.value;
+    const flatten = this._treeFlattener.flattenNodes(this.getData());
+    this._treeControl.dataNodes = flatten;
+    this._flattenedData.next(flatten);
   }
 }

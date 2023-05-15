@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { VtsSafeAny, VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
 
 export type VtsTableData =
   | VtsSafeAny
@@ -13,7 +13,7 @@ export type VtsTableData =
 export type VtsTableLayout = 'fixed' | 'auto';
 export type VtsTablePaginationPosition = 'top' | 'bottom' | 'both';
 export type VtsTablePaginationType = 'default' | 'small';
-export type VtsTableSize = 'sm' | 'md' | 'lg';
+export type VtsTableSize = VtsSizeLMSType;
 export type VtsTableFilterList = Array<{
   text: string;
   value: VtsSafeAny;

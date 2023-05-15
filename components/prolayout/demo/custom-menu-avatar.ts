@@ -1,76 +1,86 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
+import {
+  VtsAvatarMenu,
+  VtsAvatarUser,
+  VtsMenuItemProLayout,
+  VtsNotificationConfig,
+  VtsProlayoutService
+} from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-custom-menu-avatar',
   template: `
-    <vts-prolayout-container     
-      [vtsMenuHeader]="menuData" 
-      [vtsMenuSider]="menuData" 
-      [vtsAvatar]="avatar" 
-      [vtsLogoUrl]="logoUrl" 
-      [vtsBreadcrumbArray]="arrayMenuItem" 
-      [vtsFooterTemplate]="footerTemplate" 
+    <vts-prolayout-container
+      [vtsMenuHeader]="menuData"
+      [vtsMenuSider]="menuData"
+      [vtsAvatar]="avatar"
+      [vtsLogoUrl]="logoUrl"
+      [vtsBreadcrumbArray]="arrayMenuItem"
+      [vtsFooterTemplate]="footerTemplate"
       [vtsNotificationConfig]="vtsNotificationConfig"
       [vtsMenuAvatarTemplateRef]="menuAvatar"
-      [vtsMenuTemplate]="menuTemplate">
-        <ng-template #menuTemplate>          
-            <ul vts-menu>
-                <li vts-menu-item>1st menu item</li>
-                <li vts-menu-item>2nd menu item</li>
-                <li vts-menu-item vtsDisabled>disabled menu item</li>
-                <li vts-submenu vtsTitle="sub menu">
-                <ul>
-                    <li vts-menu-item>3rd menu item</li>
-                    <li vts-menu-item>4th menu item</li>
-                </ul>
-                </li>
-                <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
-                <ul>
-                    <li vts-menu-item>3rd menu item</li>
-                    <li vts-menu-item>4th menu item</li>
-                </ul>
-                </li>
-            </ul>             
-        </ng-template>
+      [vtsMenuTemplate]="menuTemplate"
+    >
+      <ng-template #menuTemplate>
+        <ul vts-menu>
+          <li vts-menu-item>1st menu item</li>
+          <li vts-menu-item>2nd menu item</li>
+          <li vts-menu-item vtsDisabled>disabled menu item</li>
+          <li vts-submenu vtsTitle="sub menu">
+            <ul>
+              <li vts-menu-item>3rd menu item</li>
+              <li vts-menu-item>4th menu item</li>
+            </ul>
+          </li>
+          <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
+            <ul>
+              <li vts-menu-item>3rd menu item</li>
+              <li vts-menu-item>4th menu item</li>
+            </ul>
+          </li>
+        </ul>
+      </ng-template>
     </vts-prolayout-container>
     <ng-template #footerTemplate>
-      <div (click)="openSettingDrawer()">Copyright by Viettel Solution - Government Solution Center Platform</div>
+      <div (click)="openSettingDrawer()">
+        Copyright by Viettel Solution - Government Solution Center Platform
+      </div>
     </ng-template>
     <ng-template #menuAvatar>
-        <ul vts-menu vtsSelectable>            
-            <li vts-menu-item [vtsSelected]="isOpenSettingDrawer" (click)="openSettingDrawer()">Open setting</li>
-        </ul>
+      <ul vts-menu vtsSelectable>
+        <li vts-menu-item [vtsSelected]="isOpenSettingDrawer" (click)="openSettingDrawer()">
+          Open setting
+        </li>
+      </ul>
     </ng-template>
   `,
   styles: [
-      `
-          .main-row {
-              overflow-x: hidden;    
-          }
+    `
+      .main-row {
+        overflow-x: hidden;
+      }
 
-          ::ng-deep .code-box {
-              height: 800px;
-          }
+      ::ng-deep .code-box {
+        height: 800px;
+      }
 
-          ::ng-deep .vts-setting-drawer-content .vts-drawer-body {
-            padding: 30px 64px;
-          }
-      `
+      ::ng-deep .vts-setting-drawer-content .vts-drawer-body {
+        padding: 30px 64px;
+      }
+    `
   ]
 })
 export class VtsDemoProlayoutCustomMenuAvatarComponent {
-
-  constructor(private service: VtsProlayoutService, private router: Router){
+  constructor(private service: VtsProlayoutService, private router: Router) {
     this.service.onChangeNotification(10);
     this.service.visiblePaneChange$.subscribe(visible => {
       this.vtsVisibleNotifyPane = visible;
-    })
+    });
     this.service.settingDrawerStateChange$.subscribe(visible => {
       this.isOpenSettingDrawer = visible;
-    })
+    });
   }
 
   menuData: VtsMenuItemProLayout[] = [
@@ -79,7 +89,10 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
       children: [
         {
           title: 'Child 1.1',
-          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', url: "" }],
+          children: [
+            { title: 'Child 1.1.1', url: '/components/prolayout/en' },
+            { title: 'Child 1.1.2', url: '' }
+          ]
         },
         { title: 'Child 1.2' }
       ]
@@ -117,7 +130,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
       url: ''
     }
   ];
-  logoUrl: string = "http://localhost/logo.svg";
+  logoUrl: string = 'http://localhost/logo.svg';
 
   arrayMenuItem: VtsBreadcrumbItem[] = [
     { label: 'Home', url: '', icon: 'HomeOutline' },
@@ -134,11 +147,11 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
 
   vtsVisibleNotifyPane: boolean = false;
   vtsNotificationConfig: VtsNotificationConfig = {
-    type: "menuContext",
+    type: 'menuContext',
     overflowCount: 99
-  }
+  };
 
-  close(){
+  close() {
     this.vtsVisibleNotifyPane = false;
   }
 
@@ -146,7 +159,7 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     this.router.navigateByUrl(item.url);
   }
 
-  openSettingDrawer(){
+  openSettingDrawer() {
     this.service.onChangeSettingDrawerState(true);
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { VtsFormatEmitEvent } from '@ui-vts/ng-vts/tree';
+import { VtsFormatEmitEvent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
 
 @Component({
   selector: 'vts-demo-tree-search',
@@ -12,10 +12,11 @@ import { VtsFormatEmitEvent } from '@ui-vts/ng-vts/tree';
     </ng-template>
     <vts-tree
       [vtsData]="nodes"
+      vtsExpandAll
       [vtsSearchValue]="searchValue"
-      (vtsClick)="vtsEvent($event)"
-      (vtsExpandChange)="vtsEvent($event)"
-      (vtsSearchValueChange)="vtsEvent($event)"
+      (vtsClick)="onEvent($event)"
+      (vtsExpandChange)="onEvent($event)"
+      (vtsSearchValueChange)="onEvent($event)"
     ></vts-tree>
   `,
   styles: [
@@ -29,53 +30,36 @@ import { VtsFormatEmitEvent } from '@ui-vts/ng-vts/tree';
 export class VtsDemoTreeSearchComponent {
   searchValue = '';
 
-  nodes = [
+  nodes: VtsTreeNodeOptions[] = [
     {
-      title: '0-0',
-      key: '0-0',
+      title: 'Folder 1',
+      key: '1',
       children: [
         {
-          title: '0-0-0',
-          key: '0-0-0',
+          title: 'Folder 1-1',
+          key: '1-1',
           children: [
-            { title: '0-0-0-0', key: '0-0-0-0', isLeaf: true },
-            { title: '0-0-0-1', key: '0-0-0-1', isLeaf: true },
-            { title: '0-0-0-2', key: '0-0-0-2', isLeaf: true }
+            {
+              title: 'Folder 1-1-1',
+              key: '1-1-1',
+              children: [
+                { title: 'File 1', key: '1-1-1-1', isLeaf: true },
+                { title: 'File 2', key: '1-1-1-2', isLeaf: true }
+              ]
+            },
+            { title: 'File 3', key: '1-1-2', isLeaf: true }
           ]
         },
         {
-          title: '0-0-1',
-          key: '0-0-1',
-          children: [
-            { title: '0-0-1-0', key: '0-0-1-0', isLeaf: true },
-            { title: '0-0-1-1', key: '0-0-1-1', isLeaf: true },
-            { title: '0-0-1-2', key: '0-0-1-2', isLeaf: true }
-          ]
-        },
-        {
-          title: '0-0-2',
-          key: '0-0-2',
-          isLeaf: true
+          title: 'Folder 1-2',
+          key: '1-2',
+          children: [{ title: 'File 4', key: '1-2-1', isLeaf: true }]
         }
       ]
-    },
-    {
-      title: '0-1',
-      key: '0-1',
-      children: [
-        { title: '0-1-0-0', key: '0-1-0-0', isLeaf: true },
-        { title: '0-1-0-1', key: '0-1-0-1', isLeaf: true },
-        { title: '0-1-0-2', key: '0-1-0-2', isLeaf: true }
-      ]
-    },
-    {
-      title: '0-2',
-      key: '0-2',
-      isLeaf: true
     }
   ];
 
-  vtsEvent(event: VtsFormatEmitEvent): void {
+  onEvent(event: VtsFormatEmitEvent): void {
     console.log(event);
   }
 }

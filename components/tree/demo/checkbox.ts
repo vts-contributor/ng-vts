@@ -1,43 +1,48 @@
-import { Component } from '@angular/core';
-import { VtsFormatEmitEvent } from '@ui-vts/ng-vts/tree';
+import { Component, ViewChild } from '@angular/core';
+import { VtsFormatEmitEvent, VtsTreeComponent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
 
 @Component({
-  selector: 'vts-demo-tree-draggable',
+  selector: 'vts-demo-tree-checkbox',
   template: `
     <vts-tree
+      #vtsTreeComponent
       [vtsData]="nodes"
       vtsShowIcon
       vtsExpandAll
-      vtsDraggable
-      (vtsOnDrop)="onEvent($event)"
+      vtsCheckable
+      (vtsClick)="onEvent($event)"
+      (vtsContextMenu)="onEvent($event)"
+      (vtsExpandChange)="onEvent($event)"
     ></vts-tree>
   `
 })
-export class VtsDemoTreeDraggableComponent {
-  nodes = [
+export class VtsDemoTreeCheckboxComponent {
+  @ViewChild('vtsTreeComponent', { static: false }) vtsTreeComponent!: VtsTreeComponent;
+
+  nodes: VtsTreeNodeOptions[] = [
     {
-      title: 'Tree view item 1',
+      title: 'Tree view item',
       key: '1',
       icon: 'FolderOpenDoutone:antd',
       children: [
         {
-          title: 'Tree view item 1',
+          title: 'Tree view item',
           key: '1-1',
           icon: 'FolderOpenDoutone:antd',
           children: [
             {
-              title: 'Tree view item 2',
+              title: 'Tree view item',
               key: '1-1-1',
               icon: 'FolderOpenDoutone:antd',
               children: [
                 {
-                  title: 'Tree view item 3',
+                  title: 'Tree view item',
                   key: '1-1-1-1',
                   icon: 'FileText:antd',
                   isLeaf: true
                 },
                 {
-                  title: 'Tree view item 4',
+                  title: 'Tree view item',
                   key: '1-1-1-2',
                   icon: 'FileText:antd',
                   isLeaf: true
@@ -45,7 +50,7 @@ export class VtsDemoTreeDraggableComponent {
               ]
             },
             {
-              title: 'Tree view item 5',
+              title: 'Tree view item',
               key: '1-1-2',
               icon: 'FileText:antd',
               isLeaf: true
@@ -53,7 +58,7 @@ export class VtsDemoTreeDraggableComponent {
           ]
         },
         {
-          title: 'Tree view item 6',
+          title: 'Tree view item',
           key: '1-2',
           icon: 'FolderOpenDoutone:antd',
           disabled: true,
@@ -72,5 +77,7 @@ export class VtsDemoTreeDraggableComponent {
 
   onEvent(event: VtsFormatEmitEvent): void {
     console.log(event);
+    console.log('selected', this.vtsTreeComponent.getSelectedNodeList());
+    console.log('expanded', this.vtsTreeComponent.getExpandedNodeList());
   }
 }

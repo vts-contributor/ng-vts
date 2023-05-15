@@ -11,7 +11,7 @@ import { NgModule } from '@angular/core';
 import { VtsNoAnimationModule } from '@ui-vts/ng-vts/core/no-animation';
 
 import { VtsTreeNodeCheckboxComponent } from './checkbox';
-import { VtsTreeNodeIndentLineDirective, VtsTreeNodeIndentsComponent } from './indent';
+import { VtsTreeNodeIndentsComponent } from './indent';
 import {
   VtsTreeNodeComponent,
   VtsTreeNodeDefDirective,
@@ -20,15 +20,11 @@ import {
 import { VtsTreeNodeOptionComponent } from './option';
 import { VtsTreeNodeOutletDirective } from './outlet';
 import { VtsTreeNodePaddingDirective } from './padding';
-import {
-  VtsTreeNodeNoopToggleDirective,
-  VtsTreeNodeToggleActiveIconDirective,
-  VtsTreeNodeToggleDirective,
-  VtsTreeNodeToggleRotateIconDirective
-} from './toggle';
+import { VtsTreeNodeToggleDirective } from './toggle';
 import { VtsTreeView } from './tree';
 import { VtsTreeViewComponent } from './tree-view';
 import { VtsTreeVirtualScrollViewComponent } from './tree-virtual-scroll-view';
+import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 
 const treeWithControlComponents = [
   VtsTreeView,
@@ -38,19 +34,15 @@ const treeWithControlComponents = [
   VtsTreeNodeComponent,
   VtsTreeNodeToggleDirective,
   VtsTreeNodePaddingDirective,
-  VtsTreeNodeToggleRotateIconDirective,
-  VtsTreeNodeToggleActiveIconDirective,
   VtsTreeNodeOptionComponent,
-  VtsTreeNodeNoopToggleDirective,
   VtsTreeNodeCheckboxComponent,
   VtsTreeNodeIndentsComponent,
   VtsTreeVirtualScrollViewComponent,
-  VtsTreeVirtualScrollNodeOutletDirective,
-  VtsTreeNodeIndentLineDirective
+  VtsTreeVirtualScrollNodeOutletDirective
 ];
 
 @NgModule({
-  imports: [BidiModule, CommonModule, VtsNoAnimationModule, ScrollingModule],
+  imports: [BidiModule, CommonModule, VtsNoAnimationModule, ScrollingModule, VtsIconModule],
   declarations: [treeWithControlComponents],
   exports: [treeWithControlComponents]
 })

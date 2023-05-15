@@ -73,7 +73,8 @@ import { VtsSelectComponent } from './select.component';
     VtsSelectClearComponent,
     VtsSelectItemComponent,
     VtsSelectPlaceholderComponent,
-    VtsSelectSearchComponent
+    VtsSelectSearchComponent,
+    VtsSelectMultipleCountComponent
   ]
 })
 export class VtsSelectModule {}

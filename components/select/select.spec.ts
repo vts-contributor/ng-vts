@@ -13,7 +13,7 @@ import {
 } from '@ui-vts/ng-vts/core/testing';
 import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { VtsIconTestModule } from '@ui-vts/ng-vts/icon/testing';
-import { VtsSelectComponent, VtsSelectSizeType } from './select.component';
+import { VtsSelectComponent, VtsSelectSize } from './select.component';
 import { VtsSelectModule } from './select.module';
 import {
   vtsCustomFilterFnType,
@@ -1298,7 +1298,7 @@ export class TestSelectTemplateDefaultComponent {
     children: VtsSelectItemInterface[];
   }> = [];
   listOfOption: VtsSelectItemInterface[] = [];
-  vtsSize: VtsSelectSizeType = 'md';
+  vtsSize: VtsSelectSize = 'md';
   vtsDropdownMatchSelectWidth = true;
   vtsPlaceHolder: string | TemplateRef<VtsSafeAny> | null = null;
   vtsDropdownRender: TemplateRef<VtsSafeAny> | null = null;
@@ -1401,7 +1401,7 @@ export class TestSelectTemplateMultipleComponent {
 })
 export class TestSelectTemplateTagsComponent {
   @ViewChild('tagTemplate') tagTemplate!: TemplateRef<VtsSafeAny>;
-  vtsSize: VtsSelectSizeType = 'md';
+  vtsSize: VtsSelectSize = 'md';
   vtsMaxTagCount = Infinity;
   value: VtsSafeAny[] = [];
   listOfOption: VtsSelectItemInterface[] = [];
@@ -1454,7 +1454,7 @@ export class TestSelectReactiveDefaultComponent {
   openChange = jasmine.createSpy('openChange');
   searchValueChange = jasmine.createSpy('searchValueChange');
   listOfOption: VtsSelectOptionInterface[] = [];
-  vtsSize: VtsSelectSizeType = 'md';
+  vtsSize: VtsSelectSize = 'md';
   vtsDropdownMatchSelectWidth = true;
   vtsPlaceHolder: string | TemplateRef<VtsSafeAny> | null = null;
   vtsDropdownRender: TemplateRef<VtsSafeAny> | null = null;
@@ -1542,7 +1542,7 @@ export class TestSelectReactiveMultipleComponent {
 })
 export class TestSelectReactiveTagsComponent {
   @ViewChild('tagTemplate') tagTemplate?: TemplateRef<VtsSafeAny>;
-  vtsSize: VtsSelectSizeType = 'md';
+  vtsSize: VtsSelectSize = 'md';
   vtsMaxTagCount = Infinity;
   value: VtsSafeAny[] = [];
   listOfOption: VtsSelectOptionInterface[] = [];

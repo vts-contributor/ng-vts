@@ -28,6 +28,7 @@ export interface VtsTreeNodeOptions {
   selectable?: boolean;
   disabled?: boolean;
   disableCheckbox?: boolean;
+  disableExpand?: boolean;
   expanded?: boolean;
   children?: VtsTreeNodeOptions[];
 
@@ -48,6 +49,7 @@ export class VtsTreeNode {
   private _isSelectable: boolean = false;
   private _isDisabled: boolean = false;
   private _isDisableCheckbox: boolean = false;
+  private _isDisableExpand: boolean = false;
   private _isExpanded: boolean = false;
   private _isHalfChecked: boolean = false;
   private _isSelected: boolean = false;
@@ -93,6 +95,7 @@ export class VtsTreeNode {
     this._isSelectable = option.disabled || option.selectable !== false;
     this._isDisabled = option.disabled || false;
     this._isDisableCheckbox = option.disableCheckbox || false;
+    this._isDisableExpand = option.disableExpand || false;
     this._isExpanded = option.isLeaf ? false : option.expanded || false;
     this._isHalfChecked = false;
     this._isSelected = (!option.disabled && option.selected) || false;
@@ -209,6 +212,15 @@ export class VtsTreeNode {
 
   set isDisableCheckbox(value: boolean) {
     this._isDisableCheckbox = value;
+    this.update();
+  }
+
+  get isDisableExpand(): boolean {
+    return this._isDisableExpand;
+  }
+
+  set isDisableExpand(value: boolean) {
+    this._isDisableExpand = value;
     this.update();
   }
 

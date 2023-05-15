@@ -40,7 +40,13 @@ import { slideMotion } from '@ui-vts/ng-vts/core/animation';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
 import { VtsNoAnimationDirective } from '@ui-vts/ng-vts/core/no-animation';
 import { reqAnimFrame } from '@ui-vts/ng-vts/core/polyfill';
-import { BooleanInput, VtsSafeAny, OnChangeType, OnTouchedType } from '@ui-vts/ng-vts/core/types';
+import {
+  BooleanInput,
+  VtsSafeAny,
+  OnChangeType,
+  OnTouchedType,
+  VtsSizeXLMSType
+} from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, isNotNil } from '@ui-vts/ng-vts/core/util';
 import { BehaviorSubject, combineLatest, merge, Subject } from 'rxjs';
 import { startWith, switchMap, takeUntil } from 'rxjs/operators';
@@ -66,8 +72,6 @@ const defaultFilterOption: VtsFilterOptionType = (
 };
 
 const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'select';
-
-export type VtsSelectSizeType = 'xl' | 'lg' | 'md' | 'sm';
 
 @Component({
   selector: 'vts-select',
@@ -200,7 +204,7 @@ export class VtsSelectComponent
   static ngAcceptInputType_vtsOpen: BooleanInput;
 
   @Input() vtsId: string | null = null;
-  @Input() vtsSize: VtsSelectSizeType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsOptionOverflowSize = 8;
   @Input() vtsDropdownClassName: string | null = null;
   @Input() vtsDropdownMatchSelectWidth = true;

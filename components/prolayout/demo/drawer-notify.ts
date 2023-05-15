@@ -1,24 +1,30 @@
 import { Component } from '@angular/core';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
+import {
+  VtsAvatarMenu,
+  VtsAvatarUser,
+  VtsMenuItemProLayout,
+  VtsNotificationConfig,
+  VtsProlayoutService
+} from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-drawer-notify',
   template: `
-    <vts-prolayout-container     
-      [vtsMenuHeader]="menuData" 
-      [vtsMenuSider]="menuData" 
-      [vtsAvatar]="avatar" 
-      [vtsAvatarMenu]="avatarMenu" 
-      [vtsLogoUrl]="logoUrl" 
-      [vtsBreadcrumbArray]="arrayMenuItem" 
-      [vtsFooterTemplate]="footerTemplate" 
-      [vtsVisibleNotifyPane]="vtsVisibleNotifyPane" 
-      [vtsNotificationConfig]="vtsNotificationConfig">
-    </vts-prolayout-container>
+    <vts-prolayout-container
+      [vtsMenuHeader]="menuData"
+      [vtsMenuSider]="menuData"
+      [vtsAvatar]="avatar"
+      [vtsAvatarMenu]="avatarMenu"
+      [vtsLogoUrl]="logoUrl"
+      [vtsBreadcrumbArray]="arrayMenuItem"
+      [vtsFooterTemplate]="footerTemplate"
+      [vtsVisibleNotifyPane]="vtsVisibleNotifyPane"
+      [vtsNotificationConfig]="vtsNotificationConfig"
+    ></vts-prolayout-container>
 
-    <vts-drawer      
-    [vtsClosable]="false"
+    <vts-drawer
+      [vtsClosable]="false"
       [vtsVisible]="vtsVisibleNotifyPane"
       vtsPlacement="right"
       vtsTitle="Basic Drawer"
@@ -31,30 +37,27 @@ import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConf
       </ng-container>
     </vts-drawer>
     <ng-template #footerTemplate>
-      <div>
-        Copyright by Viettel Solution - Government Solution Center Platform
-      </div>
+      <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
   `,
   styles: [
-      `
-          .main-row {
-              overflow-x: hidden;    
-          }
+    `
+      .main-row {
+        overflow-x: hidden;
+      }
 
-          ::ng-deep .code-box {
-              height: 800px;
-          }
-      `
+      ::ng-deep .code-box {
+        height: 800px;
+      }
+    `
   ]
 })
 export class VtsDemoProlayoutDrawerNotifyComponent {
-
-  constructor(private service: VtsProlayoutService){
+  constructor(private service: VtsProlayoutService) {
     this.service.onChangeNotification(10);
     this.service.visiblePaneChange$.subscribe(visible => {
       this.vtsVisibleNotifyPane = visible;
-    })
+    });
   }
 
   menuData: VtsMenuItemProLayout[] = [
@@ -63,10 +66,13 @@ export class VtsDemoProlayoutDrawerNotifyComponent {
       children: [
         {
           title: 'Child 1.1',
-          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', url: "" }]
+          children: [
+            { title: 'Child 1.1.1', url: '/components/prolayout/en' },
+            { title: 'Child 1.1.2', url: '' }
+          ]
         },
         { title: 'Child 1.2' }
-      ],
+      ]
       // isOpen: true
     },
     {
@@ -89,7 +95,7 @@ export class VtsDemoProlayoutDrawerNotifyComponent {
     size: 'md',
     name: 'Shiba inu',
     subname: 'Viettel Solution',
-    imgUrl: "http://localhost/avatar_design.svg"
+    imgUrl: 'http://localhost/avatar_design.svg'
   };
   avatarMenu: VtsAvatarMenu[] = [
     {
@@ -101,7 +107,7 @@ export class VtsDemoProlayoutDrawerNotifyComponent {
       url: ''
     }
   ];
-  logoUrl: string = "http://localhost/logo.svg";
+  logoUrl: string = 'http://localhost/logo.svg';
 
   arrayMenuItem: VtsBreadcrumbItem[] = [
     { label: 'Home', url: '', icon: 'HomeOutline' },
@@ -117,11 +123,11 @@ export class VtsDemoProlayoutDrawerNotifyComponent {
 
   vtsVisibleNotifyPane: boolean = false;
   vtsNotificationConfig: VtsNotificationConfig = {
-    type: "drawer",
+    type: 'drawer',
     overflowCount: 9
-  }
+  };
 
-  close(){
+  close() {
     this.vtsVisibleNotifyPane = false;
   }
 }
