@@ -3,7 +3,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { VtsSizeLMSType } from '../core/types';
 
 export type VtsMenuItemProLayout = {
   title: string;
@@ -24,7 +24,7 @@ export type VtsAvatarUser = {
   name?: string;
   subname?: string;
   imgUrl?: string;
-  size: VtsSizeLDSType;
+  size: VtsSizeLMSType;
 };
 
 export type VtsAvatarMenu = {
