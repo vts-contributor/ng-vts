@@ -13,6 +13,7 @@ import { VtsProlayoutService } from './pro-layout.service';
 import { VtsThemeColorType } from './pro-layout.types';
 import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'vts-setting-drawer',
@@ -66,11 +67,11 @@ export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
   ];
 
   isFixedHeader: boolean = false;
-  isFixedSider: boolean = true;
+  isFixedSider: boolean = false;
   isShowHeader: boolean = true;
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
-  useSplitMenu: boolean = false;
+  useSplitMenu: boolean = true;
   onDestroy$ = new Subject();
 
   @Output() vtsSetThemeColor: EventEmitter<string> = new EventEmitter<string>();
@@ -78,12 +79,14 @@ export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
     this.prolayoutService.fixedHeaderChange$.next(this.isFixedHeader);
-    this.prolayoutService.settingDrawerStateChange$.subscribe((visible: boolean) => {
-      if (visible) {
-        this.openDrawer();
-      }
-      this.cdr.detectChanges();
-    });
+    this.prolayoutService.settingDrawerStateChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((visible: boolean) => {
+        if (visible) {
+          this.openDrawer();
+        }
+        this.cdr.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {

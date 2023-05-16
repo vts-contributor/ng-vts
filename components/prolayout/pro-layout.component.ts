@@ -10,7 +10,9 @@ import {
   Input,
   ViewEncapsulation,
   TemplateRef,
-  OnDestroy
+  OnDestroy,
+  OnChanges,
+  SimpleChanges
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
 import { VtsBlockUIService } from './block-ui.service';
@@ -19,10 +21,12 @@ import {
   VtsAvatarMenu,
   VtsAvatarUser,
   VtsMenuItemProLayout,
-  VtsBlockUIConfig
+  VtsBlockUIConfig,
+  VtsVisibilityConfig
 } from './pro-layout.types';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'vts-prolayout-container',
@@ -45,7 +49,6 @@ import { Subscription } from 'rxjs';
       }
 
       .inner-content {
-        padding: 0 24px;
         min-height: 280px;
       }
 
@@ -55,7 +58,7 @@ import { Subscription } from 'rxjs';
     `
   ]
 })
-export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
+export class VtsProLayoutContainerComponent implements OnInit, OnDestroy, OnChanges {
   constructor(
     private elementRef: ElementRef,
     private prolayoutService: VtsProlayoutService,
@@ -71,14 +74,13 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
   themeColor: string = '#EE0033';
 
   isFixedHeader: boolean = false;
-  isFixedSider: boolean = true;
+  isFixedSider: boolean = false;
   isShowHeader: boolean = true;
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
   @Input() vtsMenuHeader: VtsMenuItemProLayout[] = [];
   @Input() vtsMenuSider: VtsMenuItemProLayout[] = [];
-  @Input() vtsHeaderTitle: string | TemplateRef<void> | null =
-    'GOVERNMENT SOLUTION CENTER PLATFORM';
+  @Input() vtsHeaderTitle: string | TemplateRef<void> | null = 'GOVERMENT SOLUTION CENTER PLATFORM';
   @Input() vtsAvatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
@@ -104,13 +106,14 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
     unlockText: 'Mở khóa'
   };
   @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
+  @Input() vtsVisibilityConfig: VtsVisibilityConfig = {
+    searchIcon: false,
+    fullScreen: true,
+    lockScreen: false,
+    notifyIcon: true
+  };
 
-  private fixedHeaderSubscription = Subscription.EMPTY;
-  private fixedSiderSubscription = Subscription.EMPTY;
-  private visibleHeaderSubscription = Subscription.EMPTY;
-  private visisbleSiderSubscription = Subscription.EMPTY;
-  private visibleFooterSubscription = Subscription.EMPTY;
-  private lockStateSubscription = Subscription.EMPTY;
+  private onDestroy$ = new Subject();
   isScreenLocked: boolean = false;
 
   onChangeVisiblityHeader(value: boolean) {
@@ -150,46 +153,56 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
     this.vtsMenuSider = [...menuSider];
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    const { vtsMenuHeader, vtsMenuSider } = changes;
+    if (vtsMenuHeader) {
+      this.prolayoutService.onChangeMenuHeader(this.vtsMenuHeader);
+    }
+    if (vtsMenuSider) {
+      this.prolayoutService.onChangeMenuSider(this.vtsMenuSider);
+    }
+  }
+
   ngOnInit(): void {
     // emit changes when receiving menu
     this.prolayoutService.onChangeMenuHeader(this.vtsMenuHeader);
     this.prolayoutService.onChangeMenuSider(this.vtsMenuSider);
 
     // on change ix fixed
-    this.fixedSiderSubscription = this.prolayoutService.fixedSiderChange$.subscribe(
-      (isFixed: boolean) => {
+    this.prolayoutService.fixedSiderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isFixed: boolean) => {
         this.isFixedSider = isFixed;
-      }
-    );
-    this.fixedHeaderSubscription = this.prolayoutService.fixedHeaderChange$.subscribe(
-      (isFixed: boolean) => {
+      });
+    this.prolayoutService.fixedHeaderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isFixed: boolean) => {
         this.isFixedHeader = isFixed;
-      }
-    );
+      });
 
     // onchange visibility
-    this.visibleHeaderSubscription = this.prolayoutService.visibilityHeaderChange$.subscribe(
-      (isShow: boolean) => {
+    this.prolayoutService.visibilityHeaderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isShow: boolean) => {
         this.onChangeVisiblityHeader(isShow);
-      }
-    );
-    this.visisbleSiderSubscription = this.prolayoutService.visibilitySiderChange$.subscribe(
-      (isShow: boolean) => {
+      });
+    this.prolayoutService.visibilitySiderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isShow: boolean) => {
         this.onChangeVisiblitySider(isShow);
-      }
-    );
-    this.visibleFooterSubscription = this.prolayoutService.visibilityFooterChange$.subscribe(
-      (isShow: boolean) => {
+      });
+    this.prolayoutService.visibilityFooterChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isShow: boolean) => {
         this.onChangeVisiblityFooter(isShow);
-      }
-    );
+      });
 
     // show/hide lock screen
-    this.lockStateSubscription = this.lockUiService.lockUIStateChange$.subscribe(
-      (isShow: boolean) => {
+    this.lockUiService.lockUIStateChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isShow: boolean) => {
         this.isScreenLocked = isShow;
-      }
-    );
+      });
     this.lockUiService.getLockState();
   }
 
@@ -197,11 +210,7 @@ export class VtsProLayoutContainerComponent implements OnInit, OnDestroy {
    * destroy all subscription of prolayout service
    */
   destroySubscriptions() {
-    this.fixedHeaderSubscription.unsubscribe();
-    this.fixedSiderSubscription.unsubscribe();
-    this.visibleFooterSubscription.unsubscribe();
-    this.visibleHeaderSubscription.unsubscribe();
-    this.visisbleSiderSubscription.unsubscribe();
-    this.lockStateSubscription.unsubscribe();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 }

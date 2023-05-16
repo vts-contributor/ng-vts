@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
 import {
   VtsAvatarMenu,
@@ -10,17 +9,16 @@ import {
 } from '@ui-vts/ng-vts/prolayout';
 
 @Component({
-  selector: 'vts-demo-prolayout-custom-menu-avatar',
+  selector: 'vts-demo-prolayout-basic',
   template: `
     <vts-prolayout-container
-      [vtsMenuHeader]="[]"
       [vtsMenuSider]="menuData"
       [vtsAvatar]="avatar"
+      [vtsAvatarMenu]="avatarMenu"
       [vtsLogoUrl]="logoUrl"
       [vtsBreadcrumbArray]="arrayMenuItem"
       [vtsFooterTemplate]="footerTemplate"
       [vtsNotificationConfig]="vtsNotificationConfig"
-      [vtsMenuAvatarTemplateRef]="menuAvatar"
       [vtsMenuTemplate]="menuTemplate"
     >
       <ng-template #menuTemplate>
@@ -44,16 +42,7 @@ import {
       </ng-template>
     </vts-prolayout-container>
     <ng-template #footerTemplate>
-      <div (click)="openSettingDrawer()">
-        Copyright by Viettel Solution - Government Solution Center Platform
-      </div>
-    </ng-template>
-    <ng-template #menuAvatar>
-      <ul vts-menu vtsSelectable>
-        <li vts-menu-item [vtsSelected]="isOpenSettingDrawer" (click)="openSettingDrawer()">
-          Open setting
-        </li>
-      </ul>
+      <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
   `,
   styles: [
@@ -65,28 +54,20 @@ import {
       ::ng-deep .code-box {
         height: 800px;
       }
-
-      ::ng-deep .vts-setting-drawer-content .vts-drawer-body {
-        padding: 30px 64px;
-      }
     `
   ]
 })
-export class VtsDemoProlayoutCustomMenuAvatarComponent {
-  constructor(private service: VtsProlayoutService, private router: Router) {
+export class VtsDemoProlayoutBasicComponent {
+  constructor(private service: VtsProlayoutService) {
     this.service.onChangeNotification(10);
     this.service.visiblePaneChange$.subscribe(visible => {
       this.vtsVisibleNotifyPane = visible;
-    });
-    this.service.settingDrawerStateChange$.subscribe(visible => {
-      this.isOpenSettingDrawer = visible;
     });
   }
 
   menuData: VtsMenuItemProLayout[] = [
     {
       title: 'Parent 1',
-      icon: 'Home:vts',
       children: [
         {
           title: 'Child 1.1',
@@ -97,11 +78,9 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
         },
         { title: 'Child 1.2' }
       ]
-      // isOpen: true
     },
     {
       title: 'Parent 2',
-      icon: 'LayerOutline:vts',
       children: [
         { title: 'Child 2.1', children: [{ title: 'Child 2.1.1' }, { title: 'Child 2.1.2' }] },
         { title: 'Child 2.2' }
@@ -109,7 +88,6 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     },
     {
       title: 'Parent 3',
-      icon: 'ViewWeekOutline:vts',
       children: [
         { title: 'Child 3.1', children: [{ title: 'Child 3.1.1' }, { title: 'Child 3.1.2' }] },
         { title: 'Child 3.2' }
@@ -120,8 +98,8 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
   avatar: VtsAvatarUser = {
     size: 'md',
     name: 'Shiba inu',
-    subname: 'Viettel Solution'
-    // imgUrl: 'http://localhost/avatar_design.svg'
+    subname: 'Viettel Solution',
+    imgUrl: 'http://localhost/avatar_design.svg'
   };
   avatarMenu: VtsAvatarMenu[] = [
     {
@@ -142,7 +120,6 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
     { label: 'Application 1' }
   ];
   isCollapsed = false;
-  isOpenSettingDrawer: boolean = false;
 
   toggleCollapsed() {
     this.isCollapsed = !this.isCollapsed;
@@ -156,13 +133,5 @@ export class VtsDemoProlayoutCustomMenuAvatarComponent {
 
   close() {
     this.vtsVisibleNotifyPane = false;
-  }
-
-  onClickAvatarMenuItem(item: VtsAvatarMenu): void {
-    this.router.navigateByUrl(item.url);
-  }
-
-  openSettingDrawer() {
-    this.service.onChangeSettingDrawerState(true);
   }
 }

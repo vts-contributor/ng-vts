@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, ElementRef, Renderer2 } from '@angular/core';
-import { Subscription, timer } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { VtsBlockUIService } from './block-ui.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { VtsBlockUIConfig } from './pro-layout.types';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'block-ui',
@@ -38,9 +39,7 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
     unlockText: 'Mở khóa'
   };
 
-  private lockStateSubscription = Subscription.EMPTY;
-  private visibleInputPassSubscription = Subscription.EMPTY;
-  private timerSubscription = Subscription.EMPTY;
+  private onDestroy$ = new Subject();
   /**
    * current hour, minute shown when ui is locked
    */
@@ -48,14 +47,14 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
   minute: string = '0';
 
   ngOnDestroy(): void {
-    this.lockStateSubscription.unsubscribe();
-    this.visibleInputPassSubscription.unsubscribe();
-    this.timerSubscription.unsubscribe();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   ngOnInit() {
-    this.lockStateSubscription = this.blockUIService.lockUIStateChange$.subscribe(
-      (isLocked: boolean) => {
+    this.blockUIService.lockUIStateChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isLocked: boolean) => {
         if (isLocked) {
           this.isShowInput = false;
           this.isLockOrUnlock = true;
@@ -64,10 +63,10 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
           this.isShowInput = false;
           this.isLockOrUnlock = false;
         }
-      }
-    );
-    this.visibleInputPassSubscription = this.blockUIService.showInputChange$.subscribe(
-      (isShow: boolean) => {
+      });
+    this.blockUIService.showInputChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isShow: boolean) => {
         this.isShowInput = isShow;
         if (isShow) {
           let modalTitle = this.isLockOrUnlock
@@ -80,18 +79,19 @@ export class VtsBlockUIComponent implements OnInit, OnDestroy {
           this.submitText = submitText ? submitText : '';
           this.form.reset();
         }
-      }
-    );
+      });
     // update time each minute
-    this.timerSubscription = timer(1000, 60000).subscribe(() => {
-      if (this.isLockOrUnlock) {
-        let minute = parseInt(this.minute) + 1;
-        if (minute >= 60) {
-          this.minute = this.numberToString(minute - 60);
-          this.hour = this.numberToString(parseInt(this.hour) + 1);
-        } else this.minute = this.numberToString(minute);
-      }
-    });
+    timer(1000, 60000)
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(() => {
+        if (this.isLockOrUnlock) {
+          let minute = parseInt(this.minute) + 1;
+          if (minute >= 60) {
+            this.minute = this.numberToString(minute - 60);
+            this.hour = this.numberToString(parseInt(this.hour) + 1);
+          } else this.minute = this.numberToString(minute);
+        }
+      });
   }
 
   showInput() {

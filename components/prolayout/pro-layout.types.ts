@@ -3,7 +3,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
+import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 
 export type VtsMenuItemProLayout = {
   title: string;
@@ -24,7 +24,7 @@ export type VtsAvatarUser = {
   name?: string;
   subname?: string;
   imgUrl?: string;
-  size: VtsSizeXLMSType;
+  size: VtsSizeLDSType;
 };
 
 export type VtsAvatarMenu = {
@@ -50,4 +50,11 @@ export type VtsBlockUIConfig = {
   cancelText?: string;
   locktext?: string;
   unlockText?: string;
+};
+
+export type VtsVisibilityConfig = {
+  searchIcon: boolean;
+  fullScreen: boolean;
+  lockScreen: boolean;
+  notifyIcon: boolean;
 };

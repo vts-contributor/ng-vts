@@ -16,6 +16,7 @@
   vtsPlacement="right"
   [vtsWrapClassName]="'vts-setting-drawer-content'"
   [vtsWidth]="600"
+  [vtsZIndex]="2000"
   (vtsOnClose)="closeDrawer()"
 >
   <ng-container *vtsDrawerContent>
@@ -107,7 +108,6 @@
       <h4 vts-typography vtsType="h4">Page style setting</h4>
     </div>
     <div vts-row vts-col vtsAlign="middle" vtsJustify="center">
-      <!-- <i vts-icon vtsType="Close:vts" (click)="closeDrawer()"></i> -->
     </div>
   </div>
   <div vts-row>
