@@ -19,8 +19,14 @@ import {
   Inject
 } from '@angular/core';
 import { VtsProlayoutService } from './pro-layout.service';
-import { Router } from "@angular/router";
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsVisibilityConfig } from './pro-layout.types';
+import { Router } from '@angular/router';
+import {
+  VtsAvatarMenu,
+  VtsAvatarUser,
+  VtsMenuItemProLayout,
+  VtsNotificationConfig,
+  VtsVisibilityConfig
+} from './pro-layout.types';
 import { Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { VtsBlockUIService } from './block-ui.service';
@@ -77,12 +83,12 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
   };
   showMenu: boolean = false;
   @Input() vtsAvatarMenu: VtsAvatarMenu[] = [];
-  @Input() vtsLogoUrl: string = "";
+  @Input() vtsLogoUrl: string = '';
   @Input() vtsMenuTemplate: TemplateRef<void> | null = null;
   @Input() vtsNotificationConfig: VtsNotificationConfig = {
-    type: "menuContext",
+    type: 'menuContext',
     overflowCount: 99
-  }
+  };
   @Input() vtsVisibleNotifyPane: boolean = false;
   @Input() vtsMenuAvatarTemplateRef: TemplateRef<void> | null = null;
   /**
@@ -99,8 +105,9 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     // receive menus from container
-    this.prolayoutService.menuHeaderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
-      (data: VtsMenuItemProLayout[]) => {
+    this.prolayoutService.menuHeaderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data: VtsMenuItemProLayout[]) => {
         this.vtsMenuData = data;
         let newMenuData: VtsMenuItemProLayout[] = [
           {
@@ -110,29 +117,29 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
           }
         ];
         this.displayMenuData = [...newMenuData];
-      }
-    );
+      });
 
     // on change ix fixed
-    this.prolayoutService.fixedSiderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
-      (isFixed: boolean) => {
+    this.prolayoutService.fixedSiderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isFixed: boolean) => {
         this.isFixedSider = isFixed;
         this.handleChangeFixedStatus(this.isFixedHeader, isFixed);
-      }
-    );
-    this.prolayoutService.fixedHeaderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
-      (isFixed: boolean) => {
+      });
+    this.prolayoutService.fixedHeaderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isFixed: boolean) => {
         this.isFixedHeader = isFixed;
         this.handleChangeFixedStatus(isFixed, this.isFixedSider);
         this.cdf.detectChanges();
-      }
-    );
+      });
 
     // onchange use split menu
-    this.prolayoutService.useSplitMenuChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
-      (isMenuSplitted: boolean) => {
+    this.prolayoutService.useSplitMenuChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isMenuSplitted: boolean) => {
         this.useSplitMenu = isMenuSplitted;
-        if(!isMenuSplitted){
+        if (!isMenuSplitted) {
           if (this.vtsTitle) {
             // add a wrapper item to create a menu button
             let newMenuData: VtsMenuItemProLayout[] = [
@@ -146,47 +153,49 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
           }
         }
         this.cdf.detectChanges();
-      }
-    );
+      });
 
     // on change collapsed sider
-    this.prolayoutService.collapSiderChange$.pipe(takeUntil(this.onDestroy$)).subscribe((isCollapsed: boolean) => {
-      this.isCollapsedSider = isCollapsed;
-    });
+    this.prolayoutService.collapSiderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isCollapsed: boolean) => {
+        this.isCollapsedSider = isCollapsed;
+      });
 
     // on change notification count
-    this.prolayoutService.notificationChange$.pipe(takeUntil(this.onDestroy$)).subscribe((count: number) => {
-      this.notificationCount = count;
-    });
+    this.prolayoutService.notificationChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((count: number) => {
+        this.notificationCount = count;
+      });
 
     // on change show sider
-    this.prolayoutService.visibilitySiderChange$.pipe(takeUntil(this.onDestroy$)).subscribe(
-      (isShow: boolean) => {
+    this.prolayoutService.visibilitySiderChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((isShow: boolean) => {
         this.isShowSider = isShow;
         this.cdf.detectChanges();
-      }
-    );
+      });
 
     // listen for changes in size of current window
-    this.breakpointService.observe(
-        [Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge]
-      ).pipe(takeUntil(this.onDestroy$)).subscribe((result) => {
-      const breakpoints = result.breakpoints;
-      if(breakpoints[Breakpoints.Small]){
-        this.windowSize = 'small';
-        this.isCollapsedSider = true;
-      }
-      else if(breakpoints[Breakpoints.Medium]){
-        this.windowSize = 'medium';
-        this.isCollapsedSider = true;
-      }
-      else if(breakpoints[Breakpoints.Large] || breakpoints[Breakpoints.XLarge]){
-        this.windowSize = 'large';
-        this.isCollapsedSider = false;
-      }
-      this.prolayoutService.onChangeCollapedSider(this.isCollapsedSider);
-      this.cdf.detectChanges();
-    })
+    this.breakpointService
+      .observe([Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(result => {
+        const breakpoints = result.breakpoints;
+        if (breakpoints[Breakpoints.Small]) {
+          this.windowSize = 'small';
+          this.isCollapsedSider = true;
+        } else if (breakpoints[Breakpoints.Medium]) {
+          this.windowSize = 'medium';
+          this.isCollapsedSider = true;
+        } else if (breakpoints[Breakpoints.Large] || breakpoints[Breakpoints.XLarge]) {
+          this.windowSize = 'large';
+          this.isCollapsedSider = false;
+        }
+        this.prolayoutService.onChangeCollapedSider(this.isCollapsedSider);
+        this.cdf.detectChanges();
+      });
   }
 
   /**
@@ -249,22 +258,20 @@ export class VtsHeaderComponent implements OnChanges, OnInit, OnDestroy {
     this.prolayoutService.onChangeCollapedSider(!this.isCollapsedSider);
   }
 
-  openNotificationPane(){
+  openNotificationPane() {
     this.prolayoutService.openNotificationPane(this.vtsNotificationConfig.type);
   }
 
-  toggleFullScreen(){    
-    if(this.isFullScreen){
+  toggleFullScreen() {
+    if (this.isFullScreen) {
       this.document.exitFullscreen();
-    }
-    else {
+    } else {
       this.document.documentElement.requestFullscreen();
     }
     this.isFullScreen = !this.isFullScreen;
   }
 
-  lockScreen(){
+  lockScreen() {
     this.lockUiService.showInputPassword();
   }
-
 }

@@ -4,10 +4,10 @@
  */
 
 const TimelineModes = ['left', 'alternate', 'right', 'custom'] as const;
-export type VtsTimelineMode = typeof TimelineModes[number];
+export type VtsTimelineMode = (typeof TimelineModes)[number];
 
 const TimelinePositions = ['left', 'right'] as const;
-export type VtsTimelinePosition = typeof TimelinePositions[number];
+export type VtsTimelinePosition = (typeof TimelinePositions)[number];
 
 export const TimelineTimeDefaultColors = ['red', 'blue', 'green', 'grey', 'gray'] as const;
-export type VtsTimelineItemColor = typeof TimelineTimeDefaultColors[number];
+export type VtsTimelineItemColor = (typeof TimelineTimeDefaultColors)[number];

@@ -1,62 +1,68 @@
 import { Component } from '@angular/core';
 import { VtsBreadcrumbItem } from '@ui-vts/ng-vts/breadcrumb';
-import { VtsAvatarMenu, VtsAvatarUser, VtsMenuItemProLayout, VtsNotificationConfig, VtsProlayoutService } from '@ui-vts/ng-vts/prolayout';
+import {
+  VtsAvatarMenu,
+  VtsAvatarUser,
+  VtsMenuItemProLayout,
+  VtsNotificationConfig,
+  VtsProlayoutService
+} from '@ui-vts/ng-vts/prolayout';
 
 @Component({
   selector: 'vts-demo-prolayout-basic',
   template: `
-    <vts-prolayout-container   
-      [vtsMenuSider]="menuData" 
-      [vtsAvatar]="avatar" 
-      [vtsAvatarMenu]="avatarMenu" 
-      [vtsLogoUrl]="logoUrl" 
-      [vtsBreadcrumbArray]="arrayMenuItem" 
-      [vtsFooterTemplate]="footerTemplate" 
+    <vts-prolayout-container
+      [vtsMenuSider]="menuData"
+      [vtsAvatar]="avatar"
+      [vtsAvatarMenu]="avatarMenu"
+      [vtsLogoUrl]="logoUrl"
+      [vtsBreadcrumbArray]="arrayMenuItem"
+      [vtsFooterTemplate]="footerTemplate"
       [vtsNotificationConfig]="vtsNotificationConfig"
-      [vtsMenuTemplate]="menuTemplate">
-        <ng-template #menuTemplate>          
-            <ul vts-menu>
-                <li vts-menu-item>1st menu item</li>
-                <li vts-menu-item>2nd menu item</li>
-                <li vts-menu-item vtsDisabled>disabled menu item</li>
-                <li vts-submenu vtsTitle="sub menu">
-                <ul>
-                    <li vts-menu-item>3rd menu item</li>
-                    <li vts-menu-item>4th menu item</li>
-                </ul>
-                </li>
-                <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
-                <ul>
-                    <li vts-menu-item>3rd menu item</li>
-                    <li vts-menu-item>4th menu item</li>
-                </ul>
-                </li>
-            </ul>             
-        </ng-template>
+      [vtsMenuTemplate]="menuTemplate"
+    >
+      <ng-template #menuTemplate>
+        <ul vts-menu>
+          <li vts-menu-item>1st menu item</li>
+          <li vts-menu-item>2nd menu item</li>
+          <li vts-menu-item vtsDisabled>disabled menu item</li>
+          <li vts-submenu vtsTitle="sub menu">
+            <ul>
+              <li vts-menu-item>3rd menu item</li>
+              <li vts-menu-item>4th menu item</li>
+            </ul>
+          </li>
+          <li vts-submenu vtsDisabled vtsTitle="disabled sub menu">
+            <ul>
+              <li vts-menu-item>3rd menu item</li>
+              <li vts-menu-item>4th menu item</li>
+            </ul>
+          </li>
+        </ul>
+      </ng-template>
     </vts-prolayout-container>
     <ng-template #footerTemplate>
       <div>Copyright by Viettel Solution - Government Solution Center Platform</div>
     </ng-template>
   `,
   styles: [
-      `
-          .main-row {
-              overflow-x: hidden;    
-          }
+    `
+      .main-row {
+        overflow-x: hidden;
+      }
 
-          ::ng-deep .code-box {
-              height: 800px;
-          }
-      `
+      ::ng-deep .code-box {
+        height: 800px;
+      }
+    `
   ]
 })
 export class VtsDemoProlayoutBasicComponent {
-
-  constructor(private service: VtsProlayoutService){
+  constructor(private service: VtsProlayoutService) {
     this.service.onChangeNotification(10);
     this.service.visiblePaneChange$.subscribe(visible => {
       this.vtsVisibleNotifyPane = visible;
-    })
+    });
   }
 
   menuData: VtsMenuItemProLayout[] = [
@@ -65,7 +71,10 @@ export class VtsDemoProlayoutBasicComponent {
       children: [
         {
           title: 'Child 1.1',
-          children: [{ title: 'Child 1.1.1', url: "/components/prolayout/en" }, { title: 'Child 1.1.2', url: "" }]
+          children: [
+            { title: 'Child 1.1.1', url: '/components/prolayout/en' },
+            { title: 'Child 1.1.2', url: '' }
+          ]
         },
         { title: 'Child 1.2' }
       ]
@@ -102,7 +111,7 @@ export class VtsDemoProlayoutBasicComponent {
       url: ''
     }
   ];
-  logoUrl: string = "http://localhost/logo.svg";
+  logoUrl: string = 'http://localhost/logo.svg';
 
   arrayMenuItem: VtsBreadcrumbItem[] = [
     { label: 'Home', url: '', icon: 'HomeOutline' },
@@ -118,11 +127,11 @@ export class VtsDemoProlayoutBasicComponent {
 
   vtsVisibleNotifyPane: boolean = false;
   vtsNotificationConfig: VtsNotificationConfig = {
-    type: "menuContext",
+    type: 'menuContext',
     overflowCount: 99
-  }
+  };
 
-  close(){
+  close() {
     this.vtsVisibleNotifyPane = false;
   }
 }
