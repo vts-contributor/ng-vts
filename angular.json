@@ -116,7 +116,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-vts-doc:build",
+            "browserTarget": "ng-vts-doc:build"
           },
           "configurations": {
             "production": {
@@ -173,7 +173,12 @@
             ],
             "styles": [
               "site/iframe/styles.less"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./node_modules"
+              ]
+            }
           },
           "configurations": {
             "production": {
