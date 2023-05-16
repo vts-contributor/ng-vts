@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { VtsMenuItemProLayout } from './pro-layout.types';
+import { VtsDrawerRef } from '@ui-vts/ng-vts/drawer';
+import { VtsMenuItemProLayout, VtsNotiPaneType } from './pro-layout.types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProlayoutService {
+export class VtsProlayoutService {
   fixedSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   fixedHeaderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
   visibilitySiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
@@ -19,6 +20,12 @@ export class ProlayoutService {
     VtsMenuItemProLayout[]
   >(1);
   collapSiderChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  notificationChange$: ReplaySubject<number> = new ReplaySubject<number>(1);
+  // notification pane visibility
+  visiblePaneChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  settingDrawerStateChange$: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+
+  drawerNotifyRef: VtsDrawerRef | null = null;
 
   onChangeFixedSider(isFixed: boolean): void {
     this.fixedSiderChange$.next(isFixed);
@@ -54,5 +61,23 @@ export class ProlayoutService {
 
   onChangeCollapedSider(isCollapsed: boolean): void {
     this.collapSiderChange$.next(isCollapsed);
+  }
+
+  onChangeNotification(count: number): void {
+    this.notificationChange$.next(count);
+  }
+
+  getDrawerNotifyRef(): VtsDrawerRef | null {
+    return this.drawerNotifyRef;
+  }
+
+  openNotificationPane(paneType: VtsNotiPaneType): void {
+    if (paneType === 'drawer') {
+      this.visiblePaneChange$.next(true);
+    }
+  }
+
+  onChangeSettingDrawerState(visible: boolean) {
+    this.settingDrawerStateChange$.next(visible);
   }
 }

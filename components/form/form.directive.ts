@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
-import { BooleanInput, InputObservable, VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, InputObservable, VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
@@ -47,7 +47,7 @@ export class VtsFormDirective implements OnChanges, OnDestroy, InputObservable {
   static ngAcceptInputType_vtsNoColon: BooleanInput;
   static ngAcceptInputType_vtsDisableAutoTips: BooleanInput;
 
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsLayout: VtsFormLayoutType = 'horizontal';
   @Input() @WithConfig() @InputBoolean() vtsNoColon: boolean = false;
   @Input() @WithConfig() vtsAutoTips: Record<string, Record<string, string>> = {};

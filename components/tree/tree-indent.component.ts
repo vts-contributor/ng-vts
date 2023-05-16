@@ -19,11 +19,13 @@ import {
     <span
       [class.vts-tree-indent-unit]="!vtsSelectMode"
       [class.vts-select-tree-indent-unit]="vtsSelectMode"
-      [class.vts-select-tree-indent-unit-start]="vtsSelectMode && vtsIsStart[i]"
-      [class.vts-tree-indent-unit-start]="!vtsSelectMode && vtsIsStart[i]"
-      [class.vts-select-tree-indent-unit-end]="vtsSelectMode && vtsIsEnd[i]"
-      [class.vts-tree-indent-unit-end]="!vtsSelectMode && vtsIsEnd[i]"
-      *ngFor="let _ of listOfUnit; let i = index"
+      [class.vts-select-tree-indent-unit-start]="vtsSelectMode && first"
+      [class.vts-tree-indent-unit-start]="!vtsSelectMode && first"
+      [class.vts-select-tree-indent-unit-end]="vtsSelectMode && last"
+      [class.vts-tree-indent-unit-end]="!vtsSelectMode && last"
+      [class.vts-select-tree-indent-unit-elimated]="vtsSelectMode && !last && vtsIsEnd[i + 1]"
+      [class.vts-tree-indent-unit-eliminated]="!vtsSelectMode && !last && vtsIsEnd[i + 1]"
+      *ngFor="let _ of listOfUnit; let i = index; let last = last; let first = first"
     ></span>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

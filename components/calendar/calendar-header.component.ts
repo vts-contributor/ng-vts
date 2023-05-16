@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { CandyDate } from '@ui-vts/ng-vts/core/time';
 import { DateHelperService, VtsI18nService as I18n } from '@ui-vts/ng-vts/i18n';
-import { VtsSelectSizeType } from '@ui-vts/ng-vts/select';
+import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -91,7 +91,7 @@ export class VtsCalendarHeaderComponent implements OnInit {
     return this.activeDate.getMonth();
   }
 
-  get size(): VtsSelectSizeType {
+  get size(): VtsSizeXLMSType {
     return this.fullscreen ? 'md' : 'sm';
   }
 

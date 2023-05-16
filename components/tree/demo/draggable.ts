@@ -4,73 +4,73 @@ import { VtsFormatEmitEvent } from '@ui-vts/ng-vts/tree';
 @Component({
   selector: 'vts-demo-tree-draggable',
   template: `
-    <vts-tree [vtsData]="nodes" vtsDraggable vtsBlockNode (vtsOnDrop)="vtsEvent($event)"></vts-tree>
+    <vts-tree
+      [vtsData]="nodes"
+      vtsShowIcon
+      vtsExpandAll
+      vtsDraggable
+      (vtsOnDrop)="onEvent($event)"
+    ></vts-tree>
   `
 })
 export class VtsDemoTreeDraggableComponent {
   nodes = [
     {
-      title: '0-0',
-      key: '00',
-      expanded: true,
+      title: 'Tree view item 1',
+      key: '1',
+      icon: 'FolderOpenDoutone:antd',
       children: [
         {
-          title: '0-0-0',
-          key: '000',
-          expanded: true,
+          title: 'Tree view item 1',
+          key: '1-1',
+          icon: 'FolderOpenDoutone:antd',
           children: [
-            { title: '0-0-0-0', key: '0000', isLeaf: true },
-            { title: '0-0-0-1', key: '0001', isLeaf: true },
-            { title: '0-0-0-2', key: '0002', isLeaf: true }
+            {
+              title: 'Tree view item 2',
+              key: '1-1-1',
+              icon: 'FolderOpenDoutone:antd',
+              children: [
+                {
+                  title: 'Tree view item 3',
+                  key: '1-1-1-1',
+                  icon: 'FileText:antd',
+                  isLeaf: true
+                },
+                {
+                  title: 'Tree view item 4',
+                  key: '1-1-1-2',
+                  icon: 'FileText:antd',
+                  isLeaf: true
+                }
+              ]
+            },
+            {
+              title: 'Tree view item 5',
+              key: '1-1-2',
+              icon: 'FileText:antd',
+              isLeaf: true
+            }
           ]
         },
         {
-          title: '0-0-1',
-          key: '001',
+          title: 'Tree view item 6',
+          key: '1-2',
+          icon: 'FolderOpenDoutone:antd',
+          disabled: true,
           children: [
-            { title: '0-0-1-0', key: '0010', isLeaf: true },
-            { title: '0-0-1-1', key: '0011', isLeaf: true },
-            { title: '0-0-1-2', key: '0012', isLeaf: true }
+            {
+              title: 'Tree view item',
+              key: '1-2-1',
+              icon: 'FileText:antd',
+              isLeaf: true
+            }
           ]
-        },
-        {
-          title: '0-0-2',
-          key: '002'
         }
       ]
-    },
-    {
-      title: '0-1',
-      key: '01',
-      children: [
-        {
-          title: '0-1-0',
-          key: '010',
-          children: [
-            { title: '0-1-0-0', key: '0100', isLeaf: true },
-            { title: '0-1-0-1', key: '0101', isLeaf: true },
-            { title: '0-1-0-2', key: '0102', isLeaf: true }
-          ]
-        },
-        {
-          title: '0-1-1',
-          key: '011',
-          children: [
-            { title: '0-1-1-0', key: '0110', isLeaf: true },
-            { title: '0-1-1-1', key: '0111', isLeaf: true },
-            { title: '0-1-1-2', key: '0112', isLeaf: true }
-          ]
-        }
-      ]
-    },
-    {
-      title: '0-2',
-      key: '02',
-      isLeaf: true
     }
   ];
 
-  vtsEvent(event: VtsFormatEmitEvent): void {
+  onEvent(event: VtsFormatEmitEvent): void {
     console.log(event);
   }
 }

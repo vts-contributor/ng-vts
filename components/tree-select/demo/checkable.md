@@ -1,15 +1,5 @@
 ---
-order: 3
+order: 2
 title:
-  zh-CN: 可勾选
-  en-US: Checkable
+  en-US: Multiple with Checkable
 ---
-
-## zh-CN
-
-使用勾选框实现多选功能。
-
-## en-US
-
-Multiple and checkable.
-

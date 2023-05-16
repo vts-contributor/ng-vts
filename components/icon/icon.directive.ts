@@ -14,7 +14,7 @@ import {
   Renderer2,
   SimpleChanges
 } from '@angular/core';
-import { hasType, IconDirective } from '@ui-vts/icons-angular';
+import { getNameAndType, hasType, IconDirective } from '@ui-vts/icons-angular';
 import { BooleanInput } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
@@ -114,6 +114,7 @@ export class VtsIconDirective
         this.setSVGData(svgOrRemove);
         this.handleSpin(svgOrRemove);
         this.handleRotate(svgOrRemove);
+        this.setType();
       }
     });
   }
@@ -140,10 +141,19 @@ export class VtsIconDirective
     }
     this.cacheClassName = `vtsicon-${this.iconName}`;
     this.renderer.addClass(this.el, this.cacheClassName);
+    const cls = this.el.classList;
+    cls.forEach(cl => {
+      if (cl.startsWith('vts-icon-type-')) this.renderer.removeClass(this.el, cl);
+    });
   }
 
   private setSVGData(svg: SVGElement): void {
     this.renderer.setAttribute(svg, 'data-icon', this.iconName as string);
     this.renderer.setAttribute(svg, 'aria-hidden', 'true');
+  }
+
+  private setType(): void {
+    const [_, type] = getNameAndType(this.iconName as string);
+    this.renderer.addClass(this.el, `vts-icon-type-${type}`);
   }
 }

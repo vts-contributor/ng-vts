@@ -8,7 +8,7 @@
   "allowedNonPeerDependencies": [
     "tslib", 
     "angular", 
-    "@ui-vts/theme", 
+    "@ui-vts/theme",
     "@ui-vts/icons-angular", 
     "apexcharts", 
     "date-fns", 

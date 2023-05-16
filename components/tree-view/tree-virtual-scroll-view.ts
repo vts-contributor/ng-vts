@@ -14,14 +14,20 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { warnDeprecation } from '@ui-vts/ng-vts/core/logger';
 
 import { VtsTreeVirtualNodeData } from './node';
 import { VtsTreeNodeOutletDirective } from './outlet';
 
 import { VtsTreeView } from './tree';
+import { VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
 
-const DEFAULT_SIZE = 28;
+const SIZE: { [k in VtsSizeLMSType]: number } = {
+  sm: 32,
+  md: 40,
+  lg: 48
+};
+
+const DEFAULT_SIZE = SIZE.md;
 
 @Component({
   selector: 'vts-tree-virtual-scroll-view',
@@ -49,24 +55,23 @@ const DEFAULT_SIZE = 28;
   ],
   host: {
     class: 'vts-tree',
-    '[class.vts-tree-block-node]': 'vtsDirectoryTree || vtsBlockNode',
-    '[class.vts-tree-directory]': 'vtsDirectoryTree',
+    '[class.vts-tree-sm]': 'vtsSize === "sm"',
+    '[class.vts-tree-md]': 'vtsSize === "md"',
+    '[class.vts-tree-lg]': 'vtsSize === "lg"',
+    '[class.vts-tree-show-line]': `vtsShowLine`,
     '[class.vts-tree-rtl]': `dir === 'rtl'`
   }
 })
-export class VtsTreeVirtualScrollViewComponent<T> extends VtsTreeView<T> implements OnChanges {
+export class VtsTreeVirtualScrollViewComponent<T, F>
+  extends VtsTreeView<T, F>
+  implements OnChanges
+{
   itemSize = DEFAULT_SIZE;
 
   @ViewChild(VtsTreeNodeOutletDirective, { static: true })
   readonly nodeOutlet!: VtsTreeNodeOutletDirective;
   @ViewChild(CdkVirtualScrollViewport, { static: true })
   readonly virtualScrollViewport!: CdkVirtualScrollViewport;
-
-  /**
-   * @deprecated use `vtsItemSize` instead
-   * @breaking-change 12.0.0
-   */
-  @Input() vtsNodeWidth = DEFAULT_SIZE;
 
   @Input() vtsItemSize = DEFAULT_SIZE;
   @Input() vtsMinBufferPx = DEFAULT_SIZE * 5;
@@ -93,16 +98,11 @@ export class VtsTreeVirtualScrollViewComponent<T> extends VtsTreeView<T> impleme
     };
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const { vtsNodeWidth, vtsItemSize } = changes;
-    if (vtsNodeWidth) {
-      warnDeprecation(
-        '`vtsNodeWidth` in vts-tree-virtual-scroll-view will be removed in 12.0.0, please use `vtsItemSize` instead.'
-      );
-      this.itemSize = vtsNodeWidth.currentValue;
-    }
-    if (vtsItemSize) {
-      this.itemSize = vtsItemSize.currentValue;
-    }
+  override ngOnChanges(changes: SimpleChanges): void {
+    const { vtsSize } = changes;
+    const size = SIZE[vtsSize.currentValue as VtsSizeLMSType];
+    this.itemSize = size;
+    this.vtsMinBufferPx = this.itemSize * 5;
+    this.vtsMaxBufferPx = this.itemSize * 10;
   }
 }

@@ -18,8 +18,8 @@
 </ng-container>
 
 <ng-template #menuChild>
-    <li vts-menu-item [vtsMatchRouterExact]="true" (click)="onClickAvatarMenuItem(vtsMenuItem)" vts-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="vtsMenuItem.title">
+    <li vts-menu-item [vtsSelected]="currentUrl == vtsMenuItem.url" vts-tooltip [vtsTooltipPlacement]="'right'" [vtsTooltipTitle]="vtsMenuItem.title" routerLink="{{ vtsMenuItem.url }}">
         <i vts-icon [vtsType]="vtsMenuItem.icon" *ngIf="vtsMenuItem.icon"></i>
-        {{vtsMenuItem.title}}
+		{{vtsMenuItem.title}}
     </li>
 </ng-template>

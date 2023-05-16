@@ -11,19 +11,25 @@ import {
   Directive,
   ElementRef,
   EmbeddedViewRef,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
-  Renderer2,
+  Output,
   SimpleChange,
   SimpleChanges,
   ViewContainerRef
 } from '@angular/core';
 
-import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 
 import { VtsTreeView } from './tree';
+import { VtsNodeBase } from './node-base';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
+import { getNextSibling, getParent, getPrevSibling } from './utils';
+import { VtsDestroyService } from '@ui-vts/ng-vts/core/services';
+import { takeUntil } from 'rxjs/operators';
 
 export interface VtsTreeVirtualNodeData<T> {
   data: T;
@@ -35,85 +41,112 @@ export interface VtsTreeVirtualNodeData<T> {
   selector: 'vts-tree-node:not([builtin])',
   exportAs: 'vtsTreeNode',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: CdkTreeNode, useExisting: VtsTreeNodeComponent }],
+  providers: [
+    { provide: CdkTreeNode, useExisting: VtsTreeNodeComponent },
+    { provide: VtsNodeBase, useExisting: VtsTreeNodeComponent },
+    VtsDestroyService
+  ],
   template: `
     <vts-tree-node-indents [indents]="indents" *ngIf="indents.length"></vts-tree-node-indents>
     <ng-content select="vts-tree-node-toggle, [vts-tree-node-toggle]"></ng-content>
-    <vts-tree-node-toggle
-      class="vts-tree-leaf-line-icon"
-      *ngIf="indents.length && isLeaf"
-      vtsTreeNodeNoopToggle
-    >
-      <span class="vts-tree-switcher-leaf-line"></span>
-    </vts-tree-node-toggle>
+
     <ng-content select="vts-tree-node-checkbox"></ng-content>
     <ng-content select="vts-tree-node-option"></ng-content>
     <ng-content></ng-content>
   `,
   host: {
     '[class.vts-tree-treenode-switcher-open]': 'isExpanded',
-    '[class.vts-tree-treenode-switcher-close]': '!isExpanded'
+    '[class.vts-tree-treenode-switcher-close]': '!isExpanded',
+    '[class.vts-tree-treenode-disabled]': 'vtsDisabled',
+    '[class.vts-tree-treenode-selected]': 'vtsSelected',
+    '[class.vts-tree-treenode-start]': `isFirst`,
+    '[class.vts-tree-treenode-end]': `isLast`,
+    '[class.vts-tree-treenode-end-of-expand]': `isEndOfExpand`,
+    '(click)': 'onClick($event)'
   }
 })
-export class VtsTreeNodeComponent<T> extends CdkTreeNode<T> implements OnDestroy, OnInit {
+export class VtsTreeNodeComponent<T, F> extends CdkTreeNode<T> implements OnDestroy, OnInit {
+  static ngAcceptInputType_vtsDisabled: BooleanInput;
+  static ngAcceptInputType_vtsSelected: BooleanInput;
+
+  @Input() @InputBoolean() vtsDisabled: boolean = false;
+  @Input() @InputBoolean() vtsSelected: boolean = false;
+  @Output() readonly vtsClick = new EventEmitter<MouseEvent>();
+
   indents: boolean[] = [];
-  disabled = false;
-  selected = false;
   isLeaf = false;
+  isFirst = false;
+  isLast = false;
+  isEndOfExpand = false;
 
   constructor(
     protected elementRef: ElementRef<HTMLElement>,
-    protected tree: VtsTreeView<T>,
-    private renderer: Renderer2,
-    private cdr: ChangeDetectorRef
+    protected tree: VtsTreeView<T, F>,
+    private cdr: ChangeDetectorRef,
+    private vtsDestroyService: VtsDestroyService
   ) {
     super(elementRef, tree);
     this._elementRef.nativeElement.classList.add('vts-tree-treenode');
   }
 
   override ngOnInit(): void {
-    this.isLeaf = !this.tree.treeControl.isExpandable(this.data);
+    this.renderChanged();
+    this.tree._reRenderNodes.pipe(takeUntil(this.vtsDestroyService)).subscribe(() => {
+      this.renderChanged();
+    });
+  }
+
+  onClick(e: MouseEvent): void {
+    if (!this.vtsDisabled) {
+      this.vtsClick.emit(e);
+    }
   }
 
   disable(): void {
-    this.disabled = true;
-    this.updateDisabledClass();
+    this.vtsDisabled = true;
   }
 
   enable(): void {
-    this.disabled = false;
-    this.updateDisabledClass();
+    this.vtsDisabled = false;
   }
 
   select(): void {
-    this.selected = true;
-    this.updateSelectedClass();
+    this.vtsSelected = true;
   }
 
   deselect(): void {
-    this.selected = false;
-    this.updateSelectedClass();
+    this.vtsSelected = false;
   }
 
-  setIndents(indents: boolean[]): void {
-    this.indents = indents;
+  private getIndents() {
+    const getLevel = this.tree.treeControl.getLevel;
+    const nodes = this.tree.treeControl.dataNodes;
+    let parent = getParent(nodes, this.data, getLevel);
+    let isEnds: boolean[] = [];
+    while (parent) {
+      isEnds.push(!getNextSibling(nodes, parent, getLevel));
+      parent = getParent(nodes, parent, getLevel);
+    }
+    return isEnds.reverse().map((_, i) => (i + 1 > isEnds.length - 1 ? false : isEnds[i + 1]));
+  }
+
+  buildIndents() {
+    if (this.tree.vtsShowLine) this.indents = this.getIndents();
+    else this.indents = [];
+  }
+
+  renderChanged() {
+    const getLevel = this.tree.treeControl.getLevel;
+    const nodes = this.tree.treeControl.dataNodes;
+    const parent = getParent(nodes, this.data, getLevel);
+    this.isFirst = !getPrevSibling(nodes, this.data, getLevel);
+    this.isLast = !getNextSibling(nodes, this.data, getLevel);
+    this.isLeaf = !this.tree.treeControl.isExpandable(this.data);
+    this.isEndOfExpand = parent
+      ? this.level > 1 && !getNextSibling(nodes, parent, getLevel)
+      : false;
+    this.buildIndents();
     this.cdr.markForCheck();
-  }
-
-  private updateSelectedClass(): void {
-    if (this.selected) {
-      this.renderer.addClass(this.elementRef.nativeElement, 'vts-tree-treenode-selected');
-    } else {
-      this.renderer.removeClass(this.elementRef.nativeElement, 'vts-tree-treenode-selected');
-    }
-  }
-
-  private updateDisabledClass(): void {
-    if (this.disabled) {
-      this.renderer.addClass(this.elementRef.nativeElement, 'vts-tree-treenode-disabled');
-    } else {
-      this.renderer.removeClass(this.elementRef.nativeElement, 'vts-tree-treenode-disabled');
-    }
   }
 }
 

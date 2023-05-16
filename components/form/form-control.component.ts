@@ -99,7 +99,7 @@ export class VtsFormControlComponent
 
   status: VtsFormControlStatusType = null;
   validateControl: AbstractControl | NgModel | null = null;
-  iconType: typeof iconTypeMap[keyof typeof iconTypeMap] | null = null;
+  iconType: (typeof iconTypeMap)[keyof typeof iconTypeMap] | null = null;
   innerTip: string | TemplateRef<{ $implicit: AbstractControl | NgModel }> | null = null;
 
   @ContentChild(NgControl, { static: false }) defaultValidateControl?:

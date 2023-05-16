@@ -1,14 +1,5 @@
 ---
-order: 6
+order: 4
 title:
-  zh-CN: 连接线
-  en-US: Tree With Line
+  en-US: Line
 ---
-
-## zh-CN
-
-带连接线的树。
-
-## en-US
-
-Tree With Line.

@@ -16,7 +16,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VtsConfigKey, VtsConfigService, WithConfig } from '@ui-vts/ng-vts/core/config';
-import { BooleanInput, NumberInput, VtsSafeAny, VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, NumberInput, VtsSafeAny, VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
 
 import { BehaviorSubject, ReplaySubject, Subject, timer } from 'rxjs';
@@ -64,7 +64,7 @@ export class VtsSpinComponent implements OnChanges, OnDestroy, OnInit {
   static ngAcceptInputType_vtsSpinning: BooleanInput;
 
   @Input() @WithConfig() vtsIndicator: TemplateRef<VtsSafeAny> | null = null;
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsTip: string | null = null;
   @Input() @InputNumber() vtsDelay = 0;
   @Input() @InputBoolean() vtsSimple = false;

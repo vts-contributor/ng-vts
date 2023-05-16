@@ -16,7 +16,7 @@ import {
   BooleanInput,
   OnChangeType,
   OnTouchedType,
-  VtsSizeLDSType
+  VtsSizeXLMSType
 } from '@ui-vts/ng-vts/core/types';
 import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 import { Subject } from 'rxjs';
@@ -129,7 +129,7 @@ export class VtsRangePickerMultipleComponent
   static ngAcceptInputType_vtsAutoOpen: BooleanInput | null | undefined;
 
   @Input() gutter: Number = 26;
-  @Input() vtsSize: VtsSizeLDSType = 'md';
+  @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsPlaceHolder: string[] = ['', ''];
   @Input() @InputBoolean() set disabled(value: boolean) {
     this.vtsDisabled = value;

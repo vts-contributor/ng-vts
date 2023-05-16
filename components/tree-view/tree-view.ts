@@ -39,13 +39,15 @@ import { VtsTreeView } from './tree';
   ],
   host: {
     class: 'vts-tree',
-    '[class.vts-tree-block-node]': 'vtsDirectoryTree || vtsBlockNode',
-    '[class.vts-tree-directory]': 'vtsDirectoryTree',
-    '[class.vts-tree-rtl]': `dir === 'rtl'`
+    '[class.vts-tree-rtl]': `dir === 'rtl'`,
+    '[class.vts-tree-sm]': 'vtsSize === "sm"',
+    '[class.vts-tree-md]': 'vtsSize === "md"',
+    '[class.vts-tree-lg]': 'vtsSize === "lg"',
+    '[class.vts-tree-show-line]': `vtsShowLine`
   },
   animations: [treeAccordionMotion]
 })
-export class VtsTreeViewComponent<T> extends VtsTreeView<T> implements AfterViewInit {
+export class VtsTreeViewComponent<T, F> extends VtsTreeView<T, F> implements AfterViewInit {
   @ViewChild(VtsTreeNodeOutletDirective, { static: true })
   nodeOutlet!: VtsTreeNodeOutletDirective;
   _afterViewInit = false;

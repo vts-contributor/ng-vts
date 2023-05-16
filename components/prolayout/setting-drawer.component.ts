@@ -5,11 +5,15 @@ import {
   EventEmitter,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  ElementRef
+  ElementRef,
+  OnDestroy,
+  ChangeDetectorRef
 } from '@angular/core';
-import { ProlayoutService } from './pro-layout.service';
+import { VtsProlayoutService } from './pro-layout.service';
 import { VtsThemeColorType } from './pro-layout.types';
 import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'vts-setting-drawer',
@@ -18,14 +22,17 @@ import { VtsThemeService, VtsTheme, VtsThemeItem } from '@ui-vts/theme/services'
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false
 })
-export class VtsSettingDrawerComponent implements OnInit {
+export class VtsSettingDrawerComponent implements OnInit, OnDestroy {
   constructor(
     private elementRef: ElementRef,
-    private prolayoutService: ProlayoutService,
-    private themeService: VtsThemeService
+    private prolayoutService: VtsProlayoutService,
+    private themeService: VtsThemeService,
+    private cdr: ChangeDetectorRef
   ) {
     this.elementRef.nativeElement.classList.add('vts-setting-drawer');
-    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => (this.allThemes = d));
+    this.themeService.allTheme$.subscribe((d: VtsThemeItem[]) => {
+      this.allThemes = d;
+    });
     this.themeService.theme$.subscribe((d: VtsTheme | null) => {
       this.currentTheme = d;
       this.isDarkMode = d === 'dark';
@@ -60,21 +67,36 @@ export class VtsSettingDrawerComponent implements OnInit {
   ];
 
   isFixedHeader: boolean = false;
-  isFixedSider: boolean = true;
+  isFixedSider: boolean = false;
   isShowHeader: boolean = true;
   isShowSider: boolean = true;
   isShowFooter: boolean = true;
-  useSplitMenu: boolean = false;
+  useSplitMenu: boolean = true;
+  onDestroy$ = new Subject();
 
   @Output() vtsSetThemeColor: EventEmitter<string> = new EventEmitter<string>();
 
   ngOnInit() {
     this.prolayoutService.fixedSiderChange$.next(this.isFixedSider);
     this.prolayoutService.fixedHeaderChange$.next(this.isFixedHeader);
+    this.prolayoutService.settingDrawerStateChange$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((visible: boolean) => {
+        if (visible) {
+          this.openDrawer();
+        }
+        this.cdr.detectChanges();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   closeDrawer() {
     this.open = false;
+    this.prolayoutService.onChangeSettingDrawerState(false);
   }
 
   openDrawer() {

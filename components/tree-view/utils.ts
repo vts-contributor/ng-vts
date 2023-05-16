@@ -44,3 +44,27 @@ export function getNextSibling<T>(
   }
   return null;
 }
+
+export function getPrevSibling<T>(
+  nodes: T[],
+  node: T,
+  getLevel: (dataNode: T) => number,
+  _index?: number
+): T | null {
+  let index = typeof _index !== 'undefined' ? _index : nodes.indexOf(node);
+  if (index < 0) {
+    return null;
+  }
+  const level = getLevel(node);
+
+  for (index--; index >= 0; index--) {
+    const prevLevel = getLevel(nodes[index]);
+    if (prevLevel < level) {
+      return null;
+    }
+    if (prevLevel === level) {
+      return nodes[index];
+    }
+  }
+  return null;
+}

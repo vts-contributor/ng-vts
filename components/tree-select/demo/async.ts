@@ -5,7 +5,7 @@ import { VtsFormatEmitEvent, VtsTreeNodeOptions } from '@ui-vts/ng-vts/tree';
   selector: 'vts-demo-tree-select-async',
   template: `
     <vts-tree-select
-      style="width: 250px"
+      style="width: 100%"
       vtsPlaceHolder="Please select"
       [vtsExpandedKeys]="expandKeys"
       [(ngModel)]="value"

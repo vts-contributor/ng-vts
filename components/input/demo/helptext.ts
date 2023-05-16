@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
   selector: 'vts-demo-input-helptext',
@@ -26,7 +26,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 })
 export class VtsDemoInputHelptextComponent implements OnInit {
   value?: string;
-  size: VtsSizeLDSType = 'md';
+  size: VtsSizeXLMSType = 'md';
 
   formGroup: UntypedFormGroup = new UntypedFormGroup({
     inputValue: new UntypedFormControl('')

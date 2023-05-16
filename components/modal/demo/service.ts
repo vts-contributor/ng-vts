@@ -135,7 +135,7 @@ export class VtsDemoModalServiceComponent {
       vtsFooter: [
         {
           label: 'Close',
-          shape: 'round',
+          shape: 'rounded',
           onClick: () => modal.destroy()
         },
         {
@@ -164,7 +164,7 @@ export class VtsDemoModalServiceComponent {
         },
         {
           label: 'async load',
-          type: 'dashed',
+          type: 'default',
           onClick: () => new Promise(resolve => setTimeout(resolve, 2000))
         }
       ]

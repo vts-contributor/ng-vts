@@ -2,5 +2,7 @@ import { VtsTreeModule } from '@ui-vts/ng-vts/tree';
 import { VtsIconModule } from '@ui-vts/ng-vts/icon';
 import { VtsDropDownModule } from '@ui-vts/ng-vts/dropdown';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsRadioModule } from '@ui-vts/ng-vts/radio';
+import { VtsSwitchModule } from '@ui-vts/ng-vts/switch';
 
-export const moduleList = [ VtsTreeModule, VtsIconModule, VtsDropDownModule, VtsInputModule ];
+export const moduleList = [VtsTreeModule, VtsIconModule, VtsDropDownModule, VtsInputModule, VtsRadioModule, VtsSwitchModule];

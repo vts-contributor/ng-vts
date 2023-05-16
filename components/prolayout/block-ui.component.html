@@ -1,0 +1,60 @@
+<div class="vts-block-ui-container"
+  *ngIf="isLockOrUnlock"
+  (click)="showInput()"
+>
+  <ng-container *ngTemplateOutlet="blockUIContent"></ng-container>
+</div>
+<vts-modal 
+  [(vtsVisible)]="isShowInput" 
+  [vtsTitle]="modalTitle" 
+  [vtsOkText]="submitText" 
+  [vtsCancelText]="vtsBlockUIConfig.cancelText"
+  (vtsOnOk)="submit()"
+  (vtsOnCancel)="hideInput()"
+  >
+  <form [vtsLayout]="'vertical'" vts-form [formGroup]="form">
+    <vts-form-item>
+      <vts-form-label vtsRequired>Nhập mật khẩu khóa màn hình:</vts-form-label>
+      <vts-form-control>
+        <vts-input-group [vtsSuffix]="suffixIcon">
+          <input
+            vts-input
+            formControlName="password"
+            [placeholder]="'Mật khẩu'"
+            [autofocus]="true"
+            [type]="inputType"
+            autocomplete="new-password"          
+          />
+        </vts-input-group>
+        <ng-template #suffixIcon>
+          <!-- show or hide password string -->
+          <i vts-icon vtsType="Eye:vts" class="cursor-pointer" *ngIf="inputType === 'password'; else typeText" (click)="onChangeInputType()"></i>
+          <ng-template #typeText>
+            <i vts-icon vtsType="EyeOff" class="cursor-pointer" (click)="onChangeInputType()"></i>
+          </ng-template>
+        </ng-template>
+      </vts-form-control>
+    </vts-form-item>
+  </form>
+</vts-modal>
+<!-- Content inside block ui container -->
+<ng-template #blockUIContent>
+  <div vts-row [vtsAlign]="'middle'" class="w-100">
+    <div vts-row class="w-100 main-row" [vtsAlign]="'middle'">
+      <div vts-col class="hour-circle">
+        {{ hour }}
+      </div>
+      <div vts-col [vtsFlex]="'auto'" class="lock-wrapper">
+        <div vts-row [vtsJustify]="'center'">
+          <i vts-icon vtsType="Lock:vts"></i>
+        </div>
+        <div vts-col vts-row [vtsJustify]="'center'">
+          Click to unlock
+        </div>
+      </div>
+      <div class="minute-circle">
+        {{ minute }}
+      </div>
+    </div>
+  </div>
+</ng-template>

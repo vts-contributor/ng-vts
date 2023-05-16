@@ -46,14 +46,14 @@ export class VtsTreeDropIndicatorComponent implements OnChanges {
     };
     switch (dropPosition) {
       case -1:
-        style.top = `${-3}px`;
+        style.top = `${-1}px`;
         break;
       case 1:
-        style.bottom = `${-3}px`;
+        style.bottom = `${-1}px`;
         break;
       case 0:
         // dropPosition === 0
-        style.bottom = `${-3}px`;
+        style.bottom = `${-1}px`;
         style[startPosition] = `${offset + 24}px`;
         break;
       default:

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
+import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
 
 @Component({
   selector: 'vts-demo-input-withicon',
@@ -55,7 +55,7 @@ import { VtsSizeLDSType } from '@ui-vts/ng-vts/core/types';
 })
 export class VtsDemoInputWithiconComponent implements OnInit {
   value?: string;
-  size: VtsSizeLDSType = 'md';
+  size: VtsSizeXLMSType = 'md';
 
   formGroup: UntypedFormGroup = new UntypedFormGroup({
     inputValue: new UntypedFormControl('', {
