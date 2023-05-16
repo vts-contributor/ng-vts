@@ -17,3 +17,4 @@ export * from './select-clear.component';
 export * from './select-arrow.component';
 export * from './select-placeholder.component';
 export * from './select.types';
+export * from './select-multiple-count.component';

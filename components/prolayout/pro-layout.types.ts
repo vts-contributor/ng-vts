@@ -3,7 +3,7 @@
  */
 
 import { TemplateRef } from '@angular/core';
-import { VtsSizeLMSType } from '../core/types';
+import { VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
 
 export type VtsMenuItemProLayout = {
   title: string;

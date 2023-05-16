@@ -19,7 +19,7 @@ import { VtsTreeVirtualNodeData } from './node';
 import { VtsTreeNodeOutletDirective } from './outlet';
 
 import { VtsTreeView } from './tree';
-import { VtsSizeLMSType } from '../core/types';
+import { VtsSizeLMSType } from '@ui-vts/ng-vts/core/types';
 
 const SIZE: { [k in VtsSizeLMSType]: number } = {
   sm: 32,
