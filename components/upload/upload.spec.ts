@@ -30,7 +30,7 @@ import {
   VtsUploadListType,
   VtsUploadTransformFileType,
   VtsUploadType,
-  UploadFilter,
+  VtsUploadFilter,
   ZipButtonOptions
 } from './interface';
 import { VtsUploadBtnComponent } from './upload-btn.component';
@@ -71,7 +71,7 @@ const PNGBIG = {
 class Item {
   children?: Item[];
 
-  constructor(public name: string) {}
+  constructor(public name: string) { }
 }
 
 describe('upload', () => {
@@ -679,16 +679,16 @@ describe('upload', () => {
       });
 
       describe('[vtsListType]', () => {
-        describe(`should be only allow type is picture or picture-card generate thumbnail`, () => {
-          it('with text', () => {
-            instance.vtsListType = 'text';
+        describe(`should be only allow type is gallery generate thumbnail`, () => {
+          it('with row', () => {
+            instance.vtsListType = 'row';
             fixture.detectChanges();
             pageObject.postSmall();
             fixture.detectChanges();
             expect(instance.comp.vtsFileList[0].thumbUrl).toBeUndefined();
           });
-          it('with picture', () => {
-            instance.vtsListType = 'picture';
+          it('with gallery', () => {
+            instance.vtsListType = 'gallery';
             fixture.detectChanges();
             pageObject.postSmall();
             fixture.detectChanges();
@@ -831,7 +831,7 @@ describe('upload', () => {
     });
 
     describe('[listType]', () => {
-      for (const type of ['text', 'picture', 'picture-card']) {
+      for (const type of ['row', 'gallery']) {
         it(`with [${type}]`, () => {
           instance.listType = type as VtsUploadListType;
           fixture.detectChanges();
@@ -985,7 +985,7 @@ describe('upload', () => {
       });
       it('#previewIsImage', fakeAsync(() => {
         instance.previewIsImage = () => true;
-        instance.listType = 'picture';
+        instance.listType = 'gallery';
         instance.items = [{}];
         fixture.detectChanges();
         tick();
@@ -998,7 +998,7 @@ describe('upload', () => {
         width = 1;
         height = 2;
 
-        onload(): void {}
+        onload(): void { }
 
         set src(_: string) {
           this.onload();
@@ -1007,7 +1007,7 @@ describe('upload', () => {
       it('should be generate thumb when is valid image data', fakeAsync(() => {
         spyOn(window as any, 'Image').and.returnValue(new MockImage());
 
-        instance.listType = 'picture';
+        instance.listType = 'gallery';
         instance.items = [
           {
             originFileObj: new File([''], '1.png', { type: 'image/' }),
@@ -1024,7 +1024,7 @@ describe('upload', () => {
         img.height = 1;
         spyOn(window as any, 'Image').and.returnValue(img);
 
-        instance.listType = 'picture';
+        instance.listType = 'gallery';
         instance.items = [
           {
             originFileObj: new File([''], '1.png', { type: 'image/' }),
@@ -1036,7 +1036,7 @@ describe('upload', () => {
         expect(instance.items[0].thumbUrl.length).toBeGreaterThan(1);
       }));
       it('should be ingore thumb when is invalid image data', () => {
-        instance.listType = 'picture';
+        instance.listType = 'gallery';
         instance.items = [
           {
             originFileObj: new File([''], '1.pdf', { type: 'pdf' }),
@@ -1048,7 +1048,7 @@ describe('upload', () => {
       });
       it('should be customize preview file', fakeAsync(() => {
         instance.previewFile = () => of('11');
-        instance.listType = 'picture';
+        instance.listType = 'gallery';
         instance.items = [
           {
             originFileObj: new File([''], '1.png', { type: 'image/' }),
@@ -1115,7 +1115,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: [FILE] },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1124,7 +1124,7 @@ describe('upload', () => {
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragover',
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1136,7 +1136,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1148,7 +1148,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1160,7 +1160,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1172,7 +1172,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1224,7 +1224,7 @@ describe('upload', () => {
               dataTransfer: {
                 items: [makeDataTransferItem(files)]
               },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1244,7 +1244,7 @@ describe('upload', () => {
               dataTransfer: {
                 items: [makeDataTransferItem(files)]
               },
-              preventDefault: () => {}
+              preventDefault: () => { }
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1273,7 +1273,7 @@ describe('upload', () => {
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           instance.comp.onFileDrop({
             type: 'dragover',
-            preventDefault: () => {}
+            preventDefault: () => { }
           } as any);
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
         });
@@ -1329,10 +1329,10 @@ describe('upload', () => {
           multiple: true,
           withCredentials: true,
           beforeUpload: () => true,
-          onStart: () => {},
-          onProgress: () => {},
-          onSuccess: () => {},
-          onError: () => {}
+          onStart: () => { },
+          onProgress: () => { },
+          onSuccess: () => { },
+          onError: () => { }
         } as ZipButtonOptions;
         http = injector.get(HttpTestingController);
       });
@@ -1396,7 +1396,7 @@ describe('upload', () => {
       }));
 
       it('should custom request', () => {
-        comp.options.customRequest = () => of(true).subscribe(() => {});
+        comp.options.customRequest = () => of(true).subscribe(() => { });
         spyOn<any>(comp.options, 'customRequest');
         comp.onChange(PNGSMALL as any);
         expect(comp.options.customRequest).toHaveBeenCalled();
@@ -1407,7 +1407,7 @@ describe('upload', () => {
         console.warn = jasmine
           .createSpy()
           .and.callFake((...res: string[]) => (warnMsg = res.join(' ')));
-        comp.options.customRequest = (() => {}) as any;
+        comp.options.customRequest = (() => { }) as any;
         comp.onChange(PNGSMALL as any);
         expect(warnMsg).toContain(`Must return Subscription type in '[vtsCustomRequest]' property`);
       });
@@ -1484,11 +1484,11 @@ class TestUploadComponent {
   };
   vtsCustomRequest: any;
   vtsData: any;
-  vtsFilter: UploadFilter[] = [];
+  vtsFilter: VtsUploadFilter[] = [];
   vtsFileList: VtsUploadFile[] | null = [];
   vtsDisabled = false;
   vtsHeaders: any = {};
-  vtsListType: VtsUploadListType = 'text';
+  vtsListType: VtsUploadListType = 'row';
   vtsMultiple = false;
   vtsName = 'file';
   vtsShowUploadList: boolean | VtsShowUploadList = true;
@@ -1539,7 +1539,7 @@ class TestUploadComponent {
 })
 class TestUploadListComponent {
   @ViewChild('list', { static: false }) comp!: VtsUploadListComponent;
-  listType: VtsUploadListType = 'picture-card';
+  listType: VtsUploadListType = 'gallery';
   items: any[] = [
     {
       uid: 1,
@@ -1590,7 +1590,7 @@ class TestUploadBtnComponent {
     openFileDialogOnClick: true,
     filters: [],
     customRequest: undefined,
-    onStart: () => {},
-    onError: () => {}
+    onStart: () => { },
+    onError: () => { }
   };
 }

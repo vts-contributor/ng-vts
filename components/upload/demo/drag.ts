@@ -9,21 +9,21 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
       vtsAccept=".png, .jpg, .jpeg, .svg"
       [vtsMultiple]="true"
       [vtsOpenFileDialogOnClick]="false"
-      vtsAction="http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/"
+      vtsAction="https://testapi.io/api/vtskit/upload"
       (vtsChange)="handleChange($event)"
       #container
     >
       <p class="vts-upload-drag-icon">
         <i vts-icon vtsType="UploadCloud"></i>
       </p>
-      <p class="text-hint">
+      <div class="text-hint">
         Kéo thả ảnh/video hoặc
         <a vts-button vtsType="link" (click)="container.openDialog()">Chọn file</a>
         để tải lên
-      </p>
-      <p class="text-hint">
+      </div>
+      <div class="text-hint">
         Chỉ cho phép file dạng .png, .jpg, .jpeg, .svg và dung lượng không quá 1Mb
-      </p>
+      </div>
     </vts-upload>
   `,
   styles: [
@@ -36,7 +36,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
   ]
 })
 export class VtsDemoUploadDragComponent {
-  constructor() {}
+  constructor() { }
 
   handleChange({ file }: VtsUploadChangeParam): void {
     console.log(file);

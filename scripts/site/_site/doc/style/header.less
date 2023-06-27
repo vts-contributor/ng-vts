@@ -2,7 +2,7 @@
 
 #header {
   position: fixed;
-  z-index: 10000;
+  z-index: 1000;
   max-width: 100%;
   background: @component-background;
   height: @header-height;
@@ -111,14 +111,14 @@
     display: none;
   }
 
-  > ul {
+  >ul {
     margin-bottom: 0;
     -webkit-overflow-scrolling: touch;
     display: flex;
     line-height: 25px;
     background: white;
 
-    > li {
+    >li {
       list-style-type: none;
       position: relative;
       margin-right: 30px;
@@ -128,7 +128,7 @@
       line-height: 25px;
       background: white;
 
-      > a {
+      >a {
         display: inline-block;
         text-align: center;
         padding: 0 15px;
@@ -195,8 +195,8 @@
   &.vts-menu-horizontal {
     border-bottom: none;
 
-    & > .vts-menu-item,
-    & > .vts-menu-submenu {
+    &>.vts-menu-item,
+    &>.vts-menu-submenu {
       min-width: 40px;
       height: @header-height;
       line-height: @header-height - @menu-item-border - 2px;
@@ -214,11 +214,11 @@
       margin: 0;
     }
 
-    & > .vts-menu-submenu-open {
+    &>.vts-menu-submenu-open {
       border-bottom: @menu-item-border solid transparent;
     }
 
-    & > .vts-menu-item-selected {
+    &>.vts-menu-item-selected {
       border-bottom: @menu-item-border solid transparent;
       font-weight: 600;
 
@@ -234,8 +234,8 @@
     }
   }
 
-  & > .vts-menu-item,
-  & > .vts-menu-submenu {
+  &>.vts-menu-item,
+  &>.vts-menu-submenu {
     text-align: center;
     margin: 0 32px;
   }
@@ -257,6 +257,7 @@
     padding: 0;
 
     #nav {
+
       .vts-menu-item,
       .vts-menu-submenu {
         text-align: left;
@@ -307,7 +308,7 @@
     }
   }
 
-  > * {
+  >* {
     flex: auto;
   }
 
@@ -396,12 +397,15 @@
     border-radius: 0;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
   }
+
   .vts-select-dropdown-menu {
     max-height: 200px;
   }
+
   .vts-select-dropdown-menu-item {
     border-radius: 0 !important;
   }
+
   .vts-component-decs {
     position: absolute;
     right: 16px;
@@ -485,7 +489,7 @@
       padding: 0 16px;
       font-weight: 500;
 
-      > i {
+      >i {
         display: none;
       }
 

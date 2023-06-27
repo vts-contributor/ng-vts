@@ -5,7 +5,7 @@ import { VtsUploadFile } from '@ui-vts/ng-vts/upload';
   selector: 'vts-demo-upload-default-file-list',
   template: `
     <vts-upload
-      vtsAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      vtsAction="https://testapi.io/api/vtskit/upload"
       [vtsFileList]="fileList"
     >
       <button vts-button>

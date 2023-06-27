@@ -10,12 +10,14 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
         <vts-form-control>
           <vts-upload
             #container
+            vtsBlock
             vtsAccept=".png, .jpg, .pdf"
             [vtsMultiple]="true"
-            vtsAction="http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/"
+            vtsAction="https://testapi.io/api/vtskit/upload"
+            [vtsOpenFileDialogOnClick]="false"
             (vtsChange)="handleChange($event)"
           >
-            <div vts-row>
+            <div class="container" vts-row>
               <input
                 (click)="container.openDialog()"
                 [(ngModel)]="inputValue"
@@ -32,8 +34,8 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
                 Browser
               </button>
             </div>
-            <p style="margin-top: 8px" class="text-hint">Format: png, jpg, pdf</p>
-            <p class="text-hint">Max size: 8Mb</p>
+            <div style="margin-top: 8px" class="text-hint">Format: png, jpg, pdf</div>
+            <div class="text-hint">Max size: 100Mb</div>
           </vts-upload>
         </vts-form-control>
       </vts-form-item>

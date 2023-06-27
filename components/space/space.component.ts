@@ -16,8 +16,8 @@ import {
   TemplateRef
 } from '@angular/core';
 import { VtsConfigKey, VtsConfigService } from '@ui-vts/ng-vts/core/config';
-import { BooleanInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
-import { InputBoolean } from '@ui-vts/ng-vts/core/util';
+import { BooleanInput, NumberInput, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
+import { InputBoolean, InputNumber } from '@ui-vts/ng-vts/core/util';
 
 import { Subject } from 'rxjs';
 import { VtsSpaceItemDirective } from './space-item.directive';
@@ -94,6 +94,8 @@ const PRESET_SPACE_SIZE: {
 })
 export class VtsSpaceComponent implements OnChanges, OnDestroy, AfterContentInit {
   static ngAcceptInputType_vtsWrap: BooleanInput;
+  static ngAcceptInputType_vtsPreset: NumberInput;
+  static ngAcceptInputType_vtsSize: NumberInput;
 
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
 
@@ -102,8 +104,8 @@ export class VtsSpaceComponent implements OnChanges, OnDestroy, AfterContentInit
   @Input() vtsJustify?: VtsSpaceJustify;
   @Input() vtsSplit: TemplateRef<{ $implicit: number }> | null = null;
   @Input() @InputBoolean() vtsWrap: boolean = false;
-  @Input() vtsSize?: number;
-  @Input() vtsPreset: string | number | undefined;
+  @Input() @InputNumber() vtsSize?: number;
+  @Input() @InputNumber() vtsPreset?: number;
 
   @ContentChildren(VtsSpaceItemDirective, { read: TemplateRef })
   items!: QueryList<TemplateRef<VtsSafeAny>>;
@@ -112,7 +114,7 @@ export class VtsSpaceComponent implements OnChanges, OnDestroy, AfterContentInit
   spaceSize: number = SPACE_SIZE.sm;
   private destroy$ = new Subject();
 
-  constructor(public vtsConfigService: VtsConfigService, private cdr: ChangeDetectorRef) {}
+  constructor(public vtsConfigService: VtsConfigService, private cdr: ChangeDetectorRef) { }
 
   private updateSpaceItems(): void {
     let numberSize: number;

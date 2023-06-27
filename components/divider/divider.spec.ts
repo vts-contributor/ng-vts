@@ -96,10 +96,10 @@ class TestDividerComponent {
   template: `
     <vts-divider vtsDashed [vtsText]="text">
       <ng-template #text>
-        <i vts-icon vtsType="plus"></i>
+        <i vts-icon vtsType="PlusOutline:antd"></i>
         Add
       </ng-template>
     </vts-divider>
   `
 })
-class TestDividerTextTemplateComponent {}
+class TestDividerTextTemplateComponent { }

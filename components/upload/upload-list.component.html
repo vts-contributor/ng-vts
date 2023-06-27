@@ -1,218 +1,110 @@
-<div *ngIf="list.length" class="vts-upload-list-title">
-  <span>Attachments ({{list.length}})</span>
+<div *ngIf="listTitle && list.length" class="vts-upload-list-title">
+  <span>{{listTitle}} ({{list.length}})</span>
 </div>
 
-<div *ngFor="let file of list" class="vts-upload-list-{{ listType }}-container">
-  <div
-    class="vts-upload-list-item vts-upload-list-item-{{
-      file.status
-    }} vts-upload-list-item-list-type-{{ listType }}"
-    [attr.data-key]="file.key"
-    @itemState
-    vts-tooltip
-  >
-    <ng-template #icon>
-      <div class="vts-upload-text-icon-placeholder"></div>
-      <!-- <ng-container [ngSwitch]="file.iconType">
-        <div
-          *ngSwitchCase="'uploading'"
-          class="vts-upload-list-item-thumbnail"
-          [class.vts-upload-list-item-file]="!file.isUploading"
-        >
-          <ng-template
-            [ngTemplateOutlet]="iconNode"
-            [ngTemplateOutletContext]="{ $implicit: file }"
-          ></ng-template>
-        </div>
-        <a
-          *ngSwitchCase="'thumbnail'"
-          class="vts-upload-list-item-thumbnail"
-          [class.vts-upload-list-item-file]="!file.isImageUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          [href]="file.url || file.thumbUrl"
-          (click)="handlePreview(file, $event)"
-        >
-          <img
-            *ngIf="file.isImageUrl; else noImageThumbTpl"
-            class="vts-upload-list-item-image"
-            [src]="file.thumbUrl || file.url"
-            [attr.alt]="file.name"
-          />
-        </a>
-        <div *ngSwitchDefault class="vts-upload-text-icon">
-          <ng-template
-            [ngTemplateOutlet]="iconNode"
-            [ngTemplateOutletContext]="{ $implicit: file }"
-          ></ng-template>
-        </div>
+<div class="vts-upload-list-{{ listType }}-container" @listAnimation>
+  <div *ngFor="let file of list;trackBy: fileTrackBy"
+    class="vts-upload-list-item vts-upload-list-item-{{ file.status }}" [attr.data-key]="file.key" @itemAnimation>
+    <ng-template [ngTemplateOutlet]="itemIcon" [ngTemplateOutletContext]="{ $implicit: file }"></ng-template>
+    <ng-container [ngSwitch]="listType">
+      <ng-container *ngSwitchCase="'row'">
+        <ng-container [ngTemplateOutlet]="rowItemDetail" [ngTemplateOutletContext]="{ $implicit: file }"></ng-container>
       </ng-container>
-      <ng-template #noImageThumbTpl>
-        <ng-template
-          [ngTemplateOutlet]="iconNode"
-          [ngTemplateOutletContext]="{ $implicit: file }"
-        ></ng-template>
-      </ng-template> -->
-    </ng-template>
-    <ng-template #iconNode let-file>
-      <ng-container *ngIf="!iconRender; else customIconRender">
-        <ng-container [ngSwitch]="listType">
-          <ng-container *ngSwitchCase="'picture'">
-            <ng-container *ngIf="file.isUploading; else iconNodeFileIcon">
-              <i vts-icon vtsType="Sync"></i>
-            </ng-container>
-          </ng-container>
-          <ng-container *ngSwitchCase="'picture-card'">
-            <ng-container *ngIf="file.isUploading; else iconNodeFileIcon">
-              {{ locale.uploading }}
-            </ng-container>
-          </ng-container>
-          <i *ngSwitchDefault vts-icon [vtsType]="file.isUploading ? 'Sync' : 'AttachFile'"></i>
-        </ng-container>
+      <ng-container *ngSwitchDefault>
+        <ng-container [ngTemplateOutlet]="galleryItemDetail"
+          [ngTemplateOutletContext]="{ $implicit: file }"></ng-container>
       </ng-container>
-      <ng-template
-        #customIconRender
-        [ngTemplateOutlet]="iconRender"
-        [ngTemplateOutletContext]="{ $implicit: file }"
-      ></ng-template>
-      <ng-template #iconNodeFileIcon>
-        <i vts-icon [vtsType]="file.isImageUrl ? 'picture' : 'file'"></i>
-      </ng-template>
-    </ng-template>
-    <ng-template #removeIcon>
-      <button
-        *ngIf="icons.showRemoveIcon"
-        type="button"
-        vts-button
-        vtsType="text"
-        vtsSize="sm"
-        (click)="handleRemove(file, $event)"
-        [attr.title]="locale.removeFile"
-        class="vts-upload-list-item-card-actions-btn"
-      >
-        <i vts-icon vtsType="Delete"></i>
-      </button>
-    </ng-template>
-    <ng-template #downloadIcon>
-      <button
-        *ngIf="file.showDownload"
-        type="button"
-        vts-button
-        vtsType="text"
-        vtsSize="sm"
-        (click)="handleDownload(file)"
-        [attr.title]="locale.downloadFile"
-        class="vts-upload-list-item-card-actions-btn"
-      >
-        <i vts-icon vtsType="Download"></i>
-      </button>
-    </ng-template>
-    <ng-template #downloadOrDelete>
-      <span
-        *ngIf="listType !== 'picture-card'"
-        class="vts-upload-list-item-card-actions {{ listType === 'picture' ? 'picture' : '' }}"
-      >
-        <ng-template [ngTemplateOutlet]="downloadIcon"></ng-template>
-        <ng-template [ngTemplateOutlet]="removeIcon"></ng-template>
-      </span>
-    </ng-template>
-    <ng-template #preview>
-      <a
-        *ngIf="file.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="vts-upload-list-item-name"
-        [attr.title]="file.name"
-        [href]="file.url"
-        [attr.download]="file.linkProps && file.linkProps.download"
-        (click)="handlePreview(file, $event)"
-      >
-        {{ file.name }}
-      </a>
-      <span
-        *ngIf="!file.url"
-        class="vts-upload-list-item-name"
-        [attr.title]="file.name"
-        (click)="handlePreview(file, $event)"
-      >
-        {{ file.name }}
-      </span>
-      <div *ngIf="file.isUploading" class="vts-upload-list-item-progress">
-        <vts-progress
-          [vtsPercent]="file.percent!"
-          vtsType="line"
-          [vtsShowInfo]="false"
-          [vtsStrokeWidth]="8"
-        ></vts-progress>
-      </div>
-      <ng-template [ngTemplateOutlet]="downloadOrDelete"></ng-template>
-    </ng-template>
-    
-    <ng-template #vtsPreview>
-      <div class="vts-upload-list-item-container">
-        <div class="vts-upload-list-item-title-row">
-          <span 
-            [class.vts-upload-list-item-name-uploaded]="file.status === 'done'" 
-            class="vts-upload-list-item-name">
-            {{ file.name }}
-          </span>
-
-          <i *ngIf="file.status === 'uploading'" (click)="handleRemove(file, $event)" class="vts-upload-list-item-icon vts-upload-list-item-remove-icon" vts-icon vtsType="Delete"></i>
-        </div>
-        <div *ngIf="file.isUploading" class="vts-upload-list-item-progress-row">
-          <vts-progress
-            [vtsPercent]="file.percent!"
-            vtsType="line"
-            [vtsShowInfo]="false"
-            [vtsStrokeWidth]="8"
-          ></vts-progress>
-        </div>
-        <div class="vts-upload-list-item-size-row">
-          <span *ngIf="file.isUploading" class="vts-upload-list-item-size">
-            {{ ((file.size || 0) * (file.percent || 0) / 100) | vtsFileSize }} of {{ file.size | vtsFileSize }} ({{file.percent! | number : '1.0-2'}}%)
-          </span>
-          <span *ngIf="!file.isUploading" class="vts-upload-list-item-size">
-            {{ file.size | vtsFileSize }}
-          </span>
-
-          <span *ngIf="file.status === 'error'" class="vts-upload-list-item-error">
-            {{ file.message }}
-          </span>
-        </div>
-      </div>
-    </ng-template>
-
-    <ng-template #iconOnDone>
-      <i (click)="handleEdit(file, $event)" class="vts-upload-list-item-icon vts-upload-list-item-edit-icon" vts-icon vtsType="Edit"></i>
-      <i (click)="handleRemove(file, $event)" class="vts-upload-list-item-icon vts-upload-list-item-remove-icon" vts-icon vtsType="Delete"></i>
-    </ng-template>
-
-    <div class="vts-upload-list-item-info">
-      <span class="vts-upload-span">
-        <ng-template [ngTemplateOutlet]="icon"></ng-template>
-        <ng-template [ngTemplateOutlet]="vtsPreview"></ng-template>
-        <ng-template *ngIf="file.status !== 'uploading'" [ngTemplateOutlet]="iconOnDone"></ng-template>
-      </span>
-    </div>
-    <span
-      *ngIf="listType === 'picture-card' && !file.isUploading"
-      class="vts-upload-list-item-actions"
-    >
-      <a
-        *ngIf="icons.showPreviewIcon"
-        [href]="file.url || file.thumbUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        [attr.title]="locale.previewFile"
-        [ngStyle]="!(file.url || file.thumbUrl) ? { opacity: 0.5, 'pointer-events': 'none' } : null"
-        (click)="handlePreview(file, $event)"
-      >
-        <i vts-icon vtsType="eye"></i>
-      </a>
-      <ng-container *ngIf="file.status === 'done'">
-        <ng-template [ngTemplateOutlet]="downloadIcon"></ng-template>
-      </ng-container>
-      <ng-template [ngTemplateOutlet]="removeIcon"></ng-template>
-    </span>
+    </ng-container>
+    <ng-template *ngIf="file.status !== 'uploading'" [ngTemplateOutlet]="actions"
+      [ngTemplateOutletContext]="{ $implicit: file }"></ng-template>
   </div>
 </div>
+
+<ng-template #itemIcon let-file>
+  <ng-container *ngIf="file.iconType == 'thumbnail'; else rowIcon">
+    <a *ngIf="file.status !== 'error'" class="vts-upload-list-item-thumbnail"
+      [class.vts-upload-list-item-file]="!file.isImageUrl" target="_blank" rel="noopener noreferrer"
+      [href]="file.url || file.thumbUrl" (click)="handlePreview(file, $event)">
+      <img *ngIf="file.isImageUrl" class="vts-upload-list-item-image" [src]="file.thumbUrl || file.url"
+        [attr.alt]="file.name" />
+    </a>
+  </ng-container>
+  <ng-template #rowIcon>
+    <div class="vts-upload-list-item-illustrate"></div>
+  </ng-template>
+</ng-template>
+
+<ng-template #rowItemDetail let-file>
+  <div class="vts-upload-list-item-info">
+    <div class="vts-upload-list-item-title-row">
+      <span [class.uploaded]="file.status === 'done'" class="name">
+        {{ file.name }}
+      </span>
+      <i *ngIf="file.status === 'uploading'" (click)="handleRemove(file, $event)"
+        class="vts-upload-action-icon vts-upload-action-icon-remove" vts-icon vtsType="Delete"></i>
+    </div>
+    <div *ngIf="file.isUploading" class="vts-upload-list-item-progress-row">
+      <vts-progress [vtsPercent]="file.percent!" vtsType="line" [vtsShowInfo]="false"
+        [vtsStrokeWidth]="8"></vts-progress>
+    </div>
+    <div class="vts-upload-list-item-description-row">
+      <span *ngIf="file.isUploading" class="vts-upload-list-item-size">
+        {{ ((file.size || 0) * (file.percent || 0) / 100) | vtsFileSize }} of {{ file.size | vtsFileSize }}
+        ({{file.percent! | number : '1.0-2'}}%)
+      </span>
+      <span *ngIf="!file.isUploading" class="size">
+        {{ file.size | vtsFileSize }}
+      </span>
+
+      <span *ngIf="file.status === 'error'" class="error">
+        {{ file.message }}
+      </span>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #galleryItemDetail let-file>
+  <ng-container *ngIf="file.isUploading; else done">
+    <div *ngIf="file.isUploading" class="vts-upload-list-item-progress-row">
+      <vts-progress [vtsPercent]="file.percent!" vtsType="line" [vtsShowInfo]="false"
+        [vtsStrokeWidth]="8"></vts-progress>
+      <span>
+        {{file.percent! | number : '1.0-2'}}%
+      </span>
+    </div>
+    <div class="vts-upload-list-item-backdrop" vts-tooltip [vtsTooltipTitle]="tooltipTpl">
+      <ng-template [ngTemplateOutlet]="actions" [ngTemplateOutletContext]="{ $implicit: file }"></ng-template>
+    </div>
+  </ng-container>
+  <ng-template #done>
+    <ng-container *ngIf="file.status == 'error'; else uploaded">
+      <div class="vts-upload-list-item-error-row">
+        <i vts-icon vtsType="ImageNotSupportedOutline:mat"></i>
+      </div>
+    </ng-container>
+    <div class="vts-upload-list-item-backdrop" vts-tooltip [vtsTooltipTitle]="tooltipTpl">
+      <ng-template #uploaded></ng-template>
+    </div>
+  </ng-template>
+
+  <ng-template #tooltipTpl>
+    <div>{{file.name}}</div>
+    <div *ngIf="file.status == 'error'">{{file.message}}</div>
+  </ng-template>
+</ng-template>
+
+<ng-template #actions let-file>
+  <vts-space vtsPreset="2" class="vts-upload-list-item-actions">
+    <ng-container *ngIf="file.status === 'error'">
+      <i *vtsSpaceItem (click)="handleRetry(file, $event)" class="vts-upload-action-icon vts-upload-action-icon-reup"
+        vts-icon vtsType="AutoRenew"></i>
+    </ng-container>
+    <ng-container *ngIf="!file.isUploading">
+      <i *vtsSpaceItem (click)="handleEdit(file, $event)" class="vts-upload-action-icon vts-upload-action-icon-edit"
+        vts-icon vtsType="Edit"></i>
+    </ng-container>
+    <i *vtsSpaceItem (click)="handleRemove(file, $event)" class="vts-upload-action-icon vts-upload-action-icon-remove"
+      vts-icon vtsType="Delete"></i>
+  </vts-space>
+</ng-template>

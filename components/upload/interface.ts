@@ -8,12 +8,12 @@ import { IndexableObject, VtsSafeAny } from '@ui-vts/ng-vts/core/types';
 import { Observable, Subscription } from 'rxjs';
 
 /** Status */
-export type UploadFileStatus = 'error' | 'success' | 'done' | 'uploading' | 'removed';
+export type VtsUploadFileStatus = 'error' | 'success' | 'done' | 'uploading' | 'removed';
 
 export type VtsUploadType = 'select' | 'drag';
 
 /** Built-in styles of the uploading list. */
-export type VtsUploadListType = 'text' | 'picture' | 'picture-card';
+export type VtsUploadListType = 'row' | 'gallery';
 
 export interface VtsUploadFile {
   uid: string;
@@ -23,7 +23,7 @@ export interface VtsUploadFile {
   lastModified?: string;
   lastModifiedDate?: Date;
   url?: string;
-  status?: UploadFileStatus;
+  status?: VtsUploadFileStatus;
   originFileObj?: File;
   percent?: number;
   thumbUrl?: string;
@@ -31,6 +31,7 @@ export interface VtsUploadFile {
   error?: VtsSafeAny;
   linkProps?: { download: string };
   type?: string;
+  rejectReason?: string
 
   [key: string]: VtsSafeAny;
 }
@@ -41,6 +42,11 @@ export interface VtsUploadChangeParam {
   event?: { percent: number };
   /** Callback type. */
   type?: string;
+}
+
+export interface VtsUploadAfterFilterChanges {
+  rejected: VtsUploadFile[]
+  list: VtsUploadFile[]
 }
 
 export interface VtsShowUploadList {
@@ -68,15 +74,16 @@ export interface ZipButtonOptions {
   name?: string;
   multiple?: boolean;
   withCredentials?: boolean;
-  filters?: UploadFilter[];
+  filters?: VtsUploadFilter[];
   transformFile?(file: VtsUploadFile): VtsUploadTransformFileType;
   onStart?(file: VtsUploadFile): void;
   onProgress?(e: VtsSafeAny, file: VtsUploadFile): void;
   onSuccess?(ret: VtsSafeAny, file: VtsUploadFile, xhr: VtsSafeAny): void;
   onError?(err: VtsSafeAny, file: VtsUploadFile): void;
+  afterFilter?(rejected: VtsUploadFile[], list: VtsUploadFile[]): void
 }
 
-export interface UploadFilter {
+export interface VtsUploadFilter {
   name: string;
   fn(fileList: VtsUploadFile[]): VtsUploadFile[] | Observable<VtsUploadFile[]>;
 }

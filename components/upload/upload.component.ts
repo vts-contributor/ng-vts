@@ -34,8 +34,9 @@ import {
   VtsUploadTransformFileType,
   VtsUploadType,
   VtsUploadXHRArgs,
-  UploadFilter,
-  ZipButtonOptions
+  VtsUploadFilter,
+  ZipButtonOptions,
+  VtsUploadAfterFilterChanges
 } from './interface';
 import { VtsUploadBtnComponent } from './upload-btn.component';
 import { VtsUploadListComponent } from './upload-list.component';
@@ -48,7 +49,7 @@ import { VtsUploadListComponent } from './upload-list.component';
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.vts-upload-picture-card-wrapper]': 'vtsListType === "picture-card"'
+    '[class.vts-upload-block]': 'vtsBlock'
   }
 })
 export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
@@ -61,6 +62,7 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
   static ngAcceptInputType_vtsShowUploadList: BooleanInput | VtsShowUploadList;
   static ngAcceptInputType_vtsShowButton: BooleanInput;
   static ngAcceptInputType_vtsWithCredentials: BooleanInput;
+  static ngAcceptInputType_vtsBlock: BooleanInput;
 
   private destroy$ = new Subject<void>();
   @ViewChild('uploadComp', { static: false })
@@ -82,20 +84,22 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
   @Input() vtsAccept?: string | string[];
   @Input() vtsAction?: string | ((file: VtsUploadFile) => string | Observable<string>);
   @Input() @InputBoolean() vtsDirectory = false;
-  @Input() @InputBoolean() vtsOpenFileDialogOnClick = false;
+  @Input() @InputBoolean() vtsOpenFileDialogOnClick = true;
   @Input() vtsBeforeUpload?: (
     file: VtsUploadFile,
     fileList: VtsUploadFile[]
   ) => boolean | Observable<boolean>;
   @Input() vtsCustomRequest?: (item: VtsUploadXHRArgs) => Subscription;
   @Input() vtsData?: {} | ((file: VtsUploadFile) => {} | Observable<{}>);
-  @Input() vtsFilter: UploadFilter[] = [];
+  @Input() vtsFilter: VtsUploadFilter[] = [];
   @Input() vtsFileList: VtsUploadFile[] = [];
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() vtsHeaders?: {} | ((file: VtsUploadFile) => {} | Observable<{}>);
-  @Input() vtsListType: VtsUploadListType = 'text';
+  @Input() vtsListType: VtsUploadListType = 'row';
   @Input() @InputBoolean() vtsMultiple = false;
+  @Input() @InputBoolean() vtsBlock = false;
   @Input() vtsName = 'file';
+  @Input() vtsListTitle?: string | null = 'Attachments'
 
   private _showUploadList: boolean | VtsShowUploadList = true;
 
@@ -127,6 +131,8 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
     VtsUploadFile[]
   >();
 
+  @Output() readonly vtsAfterFilter = new EventEmitter<VtsUploadAfterFilterChanges>();
+
   _btnOptions?: ZipButtonOptions;
 
   private zipOptions(): this {
@@ -138,7 +144,7 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
       };
     }
     // filters
-    const filters: UploadFilter[] = this.vtsFilter.slice();
+    const filters: VtsUploadFilter[] = this.vtsFilter.slice();
     if (
       this.vtsMultiple &&
       this.vtsLimit > 0 &&
@@ -166,6 +172,10 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
         fn: (fileList: VtsUploadFile[]) => fileList.filter(w => ~types.indexOf(w.type!))
       });
     }
+
+    // After filter
+    const afterFilter = (rejected: VtsUploadFile[], list: VtsUploadFile[]) => this.vtsAfterFilter.emit({ rejected, list })
+
     this._btnOptions = {
       disabled: this.vtsDisabled,
       accept: this.vtsAccept,
@@ -184,7 +194,8 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
       onStart: this.onStart,
       onProgress: this.onProgress,
       onSuccess: this.onSuccess,
-      onError: this.onError
+      onError: this.onError,
+      afterFilter
     };
     return this;
   }
@@ -195,7 +206,7 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
     private cdr: ChangeDetectorRef,
     private i18n: VtsI18nService,
     @Optional() private directionality: Directionality
-  ) {}
+  ) { }
 
   // #region upload
 
@@ -315,8 +326,8 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
       typeof this.vtsRemove === 'function'
         ? this.vtsRemove(file)
         : this.vtsRemove == null
-        ? true
-        : this.vtsRemove;
+          ? true
+          : this.vtsRemove;
     (fnRes instanceof Observable ? fnRes : of(fnRes))
       .pipe(filter((res: boolean) => res))
       .subscribe(() => {
@@ -335,6 +346,14 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
     const index = this.vtsFileList.indexOf(file);
     this.replaceIndex = index;
     this.openDialog();
+  };
+
+  onRetry = (file: VtsUploadFile): void => {
+    //@ts-ignore
+    const clone = new File([file], file.name)
+    const index = this.vtsFileList.indexOf(file);
+    this.replaceIndex = index;
+    this.uploadComp.uploadFiles([clone])
   };
 
   // #endregion

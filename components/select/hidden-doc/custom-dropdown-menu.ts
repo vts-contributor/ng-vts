@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
       <div class="container">
         <input type="text" vts-input #inputElement />
         <a class="add-item" (click)="addItem(inputElement)">
-          <i vts-icon vtsType="plus"></i>
+          <i vts-icon vtsType="PlusOutline:antd"></i>
           Add item
         </a>
       </div>

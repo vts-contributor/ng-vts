@@ -3,7 +3,7 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-import { animate, style, transition, trigger } from '@angular/animations';
+import { animate, animateChild, query, style, transition, trigger } from '@angular/animations';
 import { Direction } from '@angular/cdk/bidi';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
@@ -46,12 +46,20 @@ interface UploadListFile extends VtsUploadFile {
   exportAs: 'vtsUploadList',
   templateUrl: './upload-list.component.html',
   animations: [
-    trigger('itemState', [
-      transition(':enter', [
-        style({ height: '0', width: '0', opacity: 0 }),
-        animate(150, style({ height: '*', width: '*', opacity: 1 }))
+    trigger('listAnimation', [
+      transition('* => *', [
+        query('@*', animateChild()),
       ]),
-      transition(':leave', [animate(150, style({ height: '0', width: '0', opacity: 0 }))])
+    ]),
+    trigger('itemAnimation', [
+      transition(':enter', [
+        style({ height: '0', opacity: 0 }),
+        animate(300, style({ height: '*', opacity: 1 }))
+      ]),
+      transition(':leave', [
+        style({ height: '*', opacity: 0 }),
+        animate(100, style({ height: '0' }))
+      ])
     ])
   ],
   host: {
@@ -68,7 +76,7 @@ export class VtsUploadListComponent implements OnChanges {
   list: UploadListFile[] = [];
 
   private get showPic(): boolean {
-    return this.listType === 'picture' || this.listType === 'picture-card';
+    return this.listType === 'gallery'
   }
 
   @Input() locale: VtsSafeAny = {};
@@ -82,10 +90,12 @@ export class VtsUploadListComponent implements OnChanges {
   @Input() onRemove!: (file: VtsUploadFile) => void;
   @Input() onEdit!: (file: VtsUploadFile) => void;
   @Input() onDownload?: (file: VtsUploadFile) => void;
+  @Input() onRetry!: (file: VtsUploadFile) => void;
   @Input() previewFile?: (file: VtsUploadFile) => Observable<string>;
   @Input() previewIsImage?: (file: VtsUploadFile) => boolean;
   @Input() iconRender: VtsIconRenderTemplate | null = null;
   @Input() dir: Direction = 'ltr';
+  @Input() listTitle?: string | null
 
   private genErr(file: VtsUploadFile): string {
     if (file.response && typeof file.response === 'string') {
@@ -165,7 +175,7 @@ export class VtsUploadListComponent implements OnChanges {
 
           try {
             ctx!.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-          } catch {}
+          } catch { }
           const dataURL = canvas.toDataURL();
           this.doc.body.removeChild(canvas);
 
@@ -246,6 +256,14 @@ export class VtsUploadListComponent implements OnChanges {
     return;
   }
 
+  handleRetry(file: VtsUploadFile, e: Event): void {
+    e.preventDefault();
+    if (this.onRetry) {
+      this.onRetry(file);
+    }
+    return;
+  }
+
   handleDownload(file: VtsUploadFile): void {
     if (typeof this.onDownload === 'function') {
       this.onDownload(file);
@@ -263,7 +281,6 @@ export class VtsUploadListComponent implements OnChanges {
     private platform: Platform,
     private elementRef: ElementRef
   ) {
-    // TODO: move to host after View Engine deprecation
     this.elementRef.nativeElement.classList.add('vts-upload-list');
   }
 
@@ -275,5 +292,9 @@ export class VtsUploadListComponent implements OnChanges {
   ngOnChanges(): void {
     this.fixData();
     this.genThumb();
+  }
+
+  fileTrackBy(_idx: number, file: VtsUploadFile) {
+    return file.uid
   }
 }
