@@ -17,6 +17,7 @@ import { VtsFileSizeConvert } from './file-size-convert';
 import { VtsUploadBtnComponent } from './upload-btn.component';
 import { VtsUploadListComponent } from './upload-list.component';
 import { VtsUploadComponent } from './upload.component';
+import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { VtsUploadComponent } from './upload.component';
     VtsProgressModule,
     VtsI18nModule,
     VtsIconModule,
-    VtsButtonModule
+    VtsButtonModule,
+    VtsSpaceModule
   ],
   declarations: [
     VtsUploadComponent,
@@ -38,4 +40,4 @@ import { VtsUploadComponent } from './upload.component';
   ],
   exports: [VtsUploadComponent]
 })
-export class VtsUploadModule {}
+export class VtsUploadModule { }

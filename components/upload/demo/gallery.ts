@@ -11,66 +11,62 @@ function getBase64(file: File): Promise<string | ArrayBuffer | null> {
 }
 
 @Component({
-  selector: 'vts-demo-upload-picture-card',
+  selector: 'vts-demo-upload-gallery',
   template: `
     <div class="clearfix">
       <vts-upload
-        vtsAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        vtsListType="picture-card"
+      [vtsListTitle]="null"
+        vtsAction="https://testapi.io/api/vtskit/upload"
+        vtsListType="gallery"
         [(vtsFileList)]="fileList"
         [vtsShowButton]="fileList.length < 8"
         [vtsPreview]="handlePreview"
       >
-        <div>
-          <i vts-icon vtsType="plus"></i>
-          <div style="margin-top: 8px">Upload</div>
-        </div>
+        <button vts-button>
+          <i vts-icon vtsType="UploadCloud"></i>
+          Upload
+        </button>
       </vts-upload>
-      <vts-modal
-        [vtsVisible]="previewVisible"
-        [vtsContent]="modalContent"
-        [vtsFooter]="null"
-        (vtsOnCancel)="previewVisible = false"
-      >
-        <ng-template #modalContent>
-          <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
-        </ng-template>
-      </vts-modal>
     </div>
-  `
+  `,
+  styles: [`
+    button {
+      margin-top: 16px;
+    }
+  `]
 })
-export class VtsDemoUploadPictureCardComponent {
+export class VtsDemoUploadGalleryComponent {
   fileList: VtsUploadFile[] = [
     {
       uid: '-1',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      url: 'https://picsum.photos/200/200'
     },
     {
       uid: '-2',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      url: 'https://picsum.photos/200/200'
     },
     {
       uid: '-3',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      url: 'https://picsum.photos/200/200'
     },
     {
       uid: '-4',
       name: 'image.png',
       status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      url: 'https://picsum.photos/200/200'
     },
     {
       uid: '-xxx',
       percent: 50,
       name: 'image.png',
       status: 'uploading',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      url: 'https://picsum.photos/200/200'
     },
     {
       uid: '-5',

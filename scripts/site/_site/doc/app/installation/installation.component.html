@@ -8,10 +8,11 @@
 yarn install @ui-vts/ng-vts
 </code></pre>
 
-<h3>Theme:</h3>
-<b>Single theme usage:</b>
-<p>Import theme stylesheet (support LESS and CSS, use one):</p>
-<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Import one of themes provided:</span>
+        <h3>Theme:</h3>
+        <b>Single theme usage:</b>
+        <p>Import theme stylesheet (support LESS and CSS, use one):</p>
+        <pre class="language-typescript"
+            tabindex="0"><code class="language-typescript"><span class="token comment">// Import one of themes provided:</span>
 <span class="token comment">// Using CSS</span>
 @<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/ui-vts.css"</span><span class="token punctuation">;</span>       <span class="token comment">// Default theme</span>
 @<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/theme-dark.css"</span><span class="token punctuation">;</span>   <span class="token comment">// Import other theme by format 'theme-&lt;name&gt;.css'</span>
@@ -20,18 +21,18 @@ yarn install @ui-vts/ng-vts
 @<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/ui-vts.less"</span><span class="token punctuation">;</span>      <span class="token comment">// Default theme</span>
 @<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/theme-dark.less"</span><span class="token punctuation">;</span>  <span class="token comment">// Import other theme by format 'theme-&lt;name&gt;.less'</span></code></pre>
 
-<b>Multiple theme usage:</b>
-<p>Provide prebuilt themes of @ui-vts/theme or provide built stylesheets inside angular.json</p>
-<p>To provide themes of @ui-vts/theme</p>
-<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Provide prebuilt CSS inside assets</span>
+        <b>Multiple theme usage:</b>
+        <p>Provide prebuilt themes of @ui-vts/theme or provide built stylesheets inside angular.json</p>
+        <p>To provide themes of @ui-vts/theme</p>
+        <pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// Provide prebuilt CSS inside assets</span>
 <span class="token comment">// angular.json: projects &gt; architect &gt; (build | serve) &gt; options &gt; assets (Add an entry inside assets list) </span>
 <span class="token punctuation">&#123;</span>
     <span class="token string-property property">"glob"</span><span class="token operator">:</span> <span class="token string">"**/(*.css|*.woff|*.woff2)"</span><span class="token punctuation">,</span>
     <span class="token string-property property">"input"</span><span class="token operator">:</span> <span class="token string">"./node_modules/@ui-vts/theme/"</span><span class="token punctuation">,</span>
     <span class="token string-property property">"output"</span><span class="token operator">:</span> <span class="token string">"/assets/themes/"</span>
 <span class="token punctuation">&#125;</span></code></pre>
-<p>To provide built stylesheets:</p>
-<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// styles/default.less</span>
+        <p>To provide built stylesheets:</p>
+        <pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token comment">// styles/default.less</span>
 @<span class="token keyword">import</span> <span class="token string">"@ui-vts/theme/ui-vts.less"</span><span class="token punctuation">;</span>
 
 <span class="token comment">// styles/dark.less</span>
@@ -50,8 +51,8 @@ yarn install @ui-vts/ng-vts
         <span class="token string-property property">"inject"</span><span class="token operator">:</span> <span class="token boolean">false</span>
     <span class="token punctuation">&#125;</span>
 <span class="token punctuation">]</span></code></pre>
-<p>Provide theme service inside App Module</p>
-<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> VtsThemeModule<span class="token punctuation">,</span> VtsTheme <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@ui-vts/theme/services'</span>
+        <p>Provide theme service inside App Module</p>
+        <pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> VtsThemeModule<span class="token punctuation">,</span> VtsTheme <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@ui-vts/theme/services'</span>
 
 <span class="token decorator"><span class="token at operator">@</span><span class="token function">NgModule</span></span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
     declarations<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
@@ -75,8 +76,9 @@ yarn install @ui-vts/ng-vts
         <span class="token operator">...</span>
     <span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
-<p>Using service to fetch available themes and switching theme:</p>
-<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> VtsTheme<span class="token punctuation">,</span> VtsThemeItem<span class="token punctuation">,</span> VtsThemeService <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@ui-vts/theme/services'</span><span class="token punctuation">;</span>
+        <p>Using service to fetch available themes and switching theme:</p>
+        <pre class="language-typescript"
+            tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">&#123;</span> VtsTheme<span class="token punctuation">,</span> VtsThemeItem<span class="token punctuation">,</span> VtsThemeService <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@ui-vts/theme/services'</span><span class="token punctuation">;</span>
 
 <span class="token comment">// .ts</span>
 allThemes<span class="token operator">:</span> VtsThemeItem<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
@@ -101,8 +103,9 @@ currentTheme<span class="token operator">:</span> VtsTheme <span class="token op
         <span class="token punctuation">(</span>click<span class="token punctuation">)</span><span class="token operator">=</span><span class="token string">"onThemeChange(item)"</span>
     <span class="token operator">&gt;</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span> item<span class="token punctuation">.</span>theme <span class="token operator">|</span> titlecase <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token operator">&lt;</span><span class="token operator">/</span>li<span class="token operator">&gt;</span>
 <span class="token operator">&lt;</span><span class="token operator">/</span>ul<span class="token operator">&gt;</span></code></pre>
-<h3>Animation:</h3>
-<p>Import BrowserAnimationsModule or NoopAnimationsModule for some components which require transition animation:</p>
+        <h3>Animation:</h3>
+        <p>Import BrowserAnimationsModule or NoopAnimationsModule for some components which require transition
+            animation:</p>
         <pre class="language-typescript">
 <span class="token keyword">import</span> <span class="token punctuation">&#123;</span> BrowserAnimationsModule, NoopAnimationsModule <span class="token punctuation">&#125;</span> <span class="token keyword">from</span> <span class="token string">'@angular/platform-browser/animations'</span><span class="token punctuation">;</span>
 
@@ -116,7 +119,7 @@ currentTheme<span class="token operator">:</span> VtsTheme <span class="token op
     <span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
 
-<h3>Usage & Detail:</h3>
+        <h3>Usage & Detail:</h3>
         <p>Importing module relatively in project&#39;s feature modules and using components (Check component&#39;s
             document for more detail):</p>
         <pre class="language-typescript"><code>@<span class="token function">NgModule</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
@@ -127,261 +130,253 @@ currentTheme<span class="token operator">:</span> VtsTheme <span class="token op
     <span class="token punctuation">]</span>
 <span class="token punctuation">&#125;</span><span class="token punctuation">)</span></code></pre>
     </section>
-<h2>
-    <span>Examples</span>
-</h2>
-<div vts-row [vtsGutter]="[24, 24]">
-    <div class="example-container" vts-col [vtsLg]="12" [vtsSpan]="24">
-        <div class="example-cell">
-            <p class="example-cell-title">Donut chart</p>
-            <div class="example-cell-content">
-                <vts-donut-chart [vtsOptions]="donutChartOptions" [donutChartOptions]="extraDonutChartOptions"></vts-donut-chart>
+    <h2>
+        <span>Examples</span>
+    </h2>
+    <div vts-row [vtsGutter]="[24, 24]">
+        <div class="example-container" vts-col [vtsLg]="12" [vtsSpan]="24">
+            <div class="example-cell">
+                <p class="example-cell-title">Donut chart</p>
+                <div class="example-cell-content">
+                    <vts-donut-chart [vtsOptions]="donutChartOptions"
+                        [donutChartOptions]="extraDonutChartOptions"></vts-donut-chart>
+                </div>
+            </div>
+
+            <div class="example-cell">
+                <p class="example-cell-title">Vertical line chart</p>
+                <div class="example-cell-content">
+                    <vts-vertical-line-chart [vtsOptions]="veriticalLineChartOptions"></vts-vertical-line-chart>
+                </div>
+            </div>
+
+            <div class="example-cell">
+                <p class="example-cell-title">Vertical grouped chart</p>
+                <div class="example-cell-content">
+                    <vts-vertical-grouped-chart [vtsOptions]="verticalGroupChartOptions"></vts-vertical-grouped-chart>
+                </div>
+            </div>
+
+            <div class="example-cell">
+                <p class="example-cell-title">Base Control</p>
+                <div class="example-cell-content">
+                    <form [vtsSize]="vtsSize" [vtsLayout]="'vertical'" vts-form>
+                        <vts-form-item>
+                            <vts-form-label>Input Label<span class="require">*</span></vts-form-label>
+                            <vts-form-control vtsExtra="Help text is displayed here, up to 2 lines">
+                                <input vts-input name="input" [vtsSize]="vtsSize" placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Input Label<span class="require">*</span></vts-form-label>
+                            <vts-form-control>
+                                <input vts-input name="input" [vtsSize]="vtsSize" placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Label Name</vts-form-label>
+                            <vts-form-control>
+                                <vts-select name="select" [(ngModel)]="selectValue" vtsMode="multiple"
+                                    vtsPlaceHolder="Select" [vtsSize]="vtsSize" vtsShowSearch vtsAllowClear>
+                                    <vts-option *ngFor="let option of listOfOption" [vtsValue]="option.value"
+                                        [vtsLabel]="option.label"></vts-option>
+                                </vts-select>
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Label</vts-form-label>
+                            <vts-form-control>
+                                <textarea rows="4" placeholder="Textarea placeholder" vts-input></textarea>
+                            </vts-form-control>
+                        </vts-form-item>
+
+                        <vts-form-item>
+                            <vts-form-label>Slider</vts-form-label>
+                            <vts-form-control>
+                                <vts-slider [vtsMin]="0" [vtsMax]="500"></vts-slider>
+                            </vts-form-control>
+                        </vts-form-item>
+
+                        <vts-form-item>
+                            <vts-form-label>Upload</vts-form-label>
+                            <vts-form-control>
+                                <vts-upload #container vtsAccept=".png, .jpg, .pdf" [vtsMultiple]="true"
+                                    vtsAction="https://testapi.io/api/vtskit/upload">
+                                    <div vts-row>
+                                        <input (click)="container.openDialog()" vts-col vts-input name="input"
+                                            vtsFlex="1" />
+                                        <button (click)="container.openDialog()" style="width:100px; margin-left: -1px"
+                                            vts-button>Browser</button>
+                                    </div>
+                                    <p style="margin-top: 8px" class="text-hint">Format: png, jpg, pdf</p>
+                                    <p class="text-hint">Max size: 8Mb</p>
+                                </vts-upload>
+                            </vts-form-control>
+                        </vts-form-item>
+
+                        <vts-space [vtsSize]="20">
+                            <button *vtsSpaceItem vts-button [vtsSize]="vtsSize">Cancel</button>
+                            <button *vtsSpaceItem vts-button [vtsSize]="vtsSize" vtsType="primary">Submit</button>
+                        </vts-space>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <div class="example-cell">
-            <p class="example-cell-title">Vertical line chart</p>
-            <div class="example-cell-content">
-                <vts-vertical-line-chart [vtsOptions]="veriticalLineChartOptions"></vts-vertical-line-chart>
+        <div class="example-container" vts-col [vtsLg]="12" [vtsSpan]="24">
+            <div class="example-cell">
+                <p class="example-cell-title">Vertical bar chart</p>
+                <div class="example-cell-content">
+                    <vts-vertical-bar-chart [vtsOptions]="verticalBarChartOptions"></vts-vertical-bar-chart>
+                </div>
+            </div>
+
+            <div class="example-cell">
+                <p class="example-cell-title">Line chart</p>
+                <div class="example-cell-content">
+                    <vts-line-chart [vtsOptions]="lineChartOptions"></vts-line-chart>
+                </div>
+            </div>
+
+            <div class="example-cell">
+                <p class="example-cell-title">Textual HTML5 Inputs</p>
+                <div class="example-cell-content">
+                    <form [vtsSize]="vtsSize" [vtsLayout]="'vertical'" vts-form>
+                        <vts-form-item>
+                            <vts-form-label>Text</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="Artisanal Kale" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Search</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="How do i shoot web" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Email</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="bootstrap@example.com" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>URL</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="https://getbootstrap.com" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Telephone</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="1-(555)-555-5555" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Password</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="1234567890" type="password" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Number</vts-form-label>
+                            <vts-form-control>
+                                <input vts-input value="42" type="number" [vtsSize]="vtsSize"
+                                    placeholder="Medium Input" />
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Date</vts-form-label>
+                            <vts-form-control>
+                                <vts-date-picker vtsPlaceHolder="dd/MM/yyyy hh:mm:ss" vtsFormat="dd/MM/yyyy hh:mm:ss"
+                                    [vtsSize]="vtsSize" name="date1" [ngModel]="dateValue">
+                                </vts-date-picker>
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Month</vts-form-label>
+                            <vts-form-control>
+                                <vts-date-picker vtsMode="month" [vtsSize]="vtsSize" name="date2" [ngModel]="dateValue">
+                                </vts-date-picker>
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Week</vts-form-label>
+                            <vts-form-control>
+                                <vts-date-picker vtsMode="week" [vtsSize]="vtsSize" name="date3" [ngModel]="dateValue">
+                                </vts-date-picker>
+                            </vts-form-control>
+                        </vts-form-item>
+                        <vts-form-item>
+                            <vts-form-label>Time</vts-form-label>
+                            <vts-form-control>
+                                <vts-time-picker vtsPlaceHolder="hh:mm:ss" name="time1" [vtsSize]="vtsSize"
+                                    [(ngModel)]="dateValue">
+                                </vts-time-picker>
+                            </vts-form-control>
+                        </vts-form-item>
+
+                        <vts-space [vtsSize]="20">
+                            <button *vtsSpaceItem vts-button [vtsSize]="vtsSize">Cancel</button>
+                            <button *vtsSpaceItem vts-button [vtsSize]="vtsSize" vtsType="primary">Submit</button>
+                        </vts-space>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <div class="example-cell">
-            <p class="example-cell-title">Vertical grouped chart</p>
-            <div class="example-cell-content">
-                <vts-vertical-grouped-chart [vtsOptions]="verticalGroupChartOptions"></vts-vertical-grouped-chart>
-            </div>
-        </div>
-
-        <div class="example-cell">
-            <p class="example-cell-title">Base Control</p>
-            <div class="example-cell-content">
-                <form [vtsSize]="vtsSize" [vtsLayout]="'vertical'" vts-form>
-                    <vts-form-item>
-                        <vts-form-label>Input Label<span class="require">*</span></vts-form-label>
-                        <vts-form-control vtsExtra="Help text is displayed here, up to 2 lines">
-                            <input vts-input name="input" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Input Label<span class="require">*</span></vts-form-label>
-                        <vts-form-control>
-                            <input vts-input name="input" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Label Name</vts-form-label>
-                        <vts-form-control>
-                          <vts-select name="select" [(ngModel)]="selectValue" vtsMode="multiple" vtsPlaceHolder="Select" [vtsSize]="vtsSize" vtsShowSearch vtsAllowClear>
-                            <vts-option *ngFor="let option of listOfOption" [vtsValue]="option.value" [vtsLabel]="option.label"></vts-option>
-                          </vts-select>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Label</vts-form-label>
-                        <vts-form-control>
-                            <textarea rows="4" placeholder="Textarea placeholder" vts-input></textarea>
-                        </vts-form-control>
-                    </vts-form-item>
-
-                    <vts-form-item>
-                        <vts-form-label>Slider</vts-form-label>
-                        <vts-form-control>
-                            <vts-slider [vtsMin]="0" [vtsMax]="500"></vts-slider>
-                        </vts-form-control>
-                    </vts-form-item>
-
-                    <vts-form-item>
-                        <vts-form-label>Upload</vts-form-label>
-                        <vts-form-control>
-                            <vts-upload
-                                #container
-                                vtsAccept=".png, .jpg, .pdf"
-                                [vtsMultiple]="true"
-                                vtsAction="http://mock.com/castlemock/mock/rest/project/lxGcaI/application/iWIW1z/">
-                                <div vts-row>
-                                    <input (click)="container.openDialog()" vts-col vts-input name="input" vtsFlex="1"/>
-                                    <button (click)="container.openDialog()" style="width:100px; margin-left: -1px" vts-button>Browser</button>
-                                </div>
-                                <p style="margin-top: 8px" class="text-hint">Format: png, jpg, pdf</p>
-                                <p class="text-hint">Max size: 8Mb</p>
-                            </vts-upload>
-                        </vts-form-control>
-                    </vts-form-item>
-
-                    <vts-space [vtsSize]="20">
-                        <button *vtsSpaceItem vts-button [vtsSize]="vtsSize">Cancel</button>
-                        <button *vtsSpaceItem vts-button [vtsSize]="vtsSize" vtsType="primary">Submit</button>
-                    </vts-space>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="example-container" vts-col [vtsLg]="12" [vtsSpan]="24">
-        <div class="example-cell">
-            <p class="example-cell-title">Vertical bar chart</p>
-            <div class="example-cell-content">
-                <vts-vertical-bar-chart [vtsOptions]="verticalBarChartOptions"></vts-vertical-bar-chart>
-            </div>
-        </div>
-
-        <div class="example-cell">
-            <p class="example-cell-title">Line chart</p>
-            <div class="example-cell-content">
-                <vts-line-chart [vtsOptions]="lineChartOptions"></vts-line-chart>
-            </div>
-        </div>
-
-        <div class="example-cell">
-            <p class="example-cell-title">Textual HTML5 Inputs</p>
-            <div class="example-cell-content">
-                <form [vtsSize]="vtsSize" [vtsLayout]="'vertical'" vts-form>
-                    <vts-form-item>
-                        <vts-form-label>Text</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="Artisanal Kale" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Search</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="How do i shoot web" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Email</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="bootstrap@example.com" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>URL</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="https://getbootstrap.com" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Telephone</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="1-(555)-555-5555" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Password</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="1234567890" type="password" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Number</vts-form-label>
-                        <vts-form-control>
-                            <input vts-input value="42" type="number" [vtsSize]="vtsSize" placeholder="Medium Input"/>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Date</vts-form-label>
-                        <vts-form-control>
-                        <vts-date-picker 
-                                vtsPlaceHolder="dd/MM/yyyy hh:mm:ss" 
-                                vtsFormat="dd/MM/yyyy hh:mm:ss"
-                                [vtsSize]="vtsSize" 
-                                name="date1" 
-                                [ngModel]="dateValue">
-                            </vts-date-picker>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Month</vts-form-label>
-                        <vts-form-control>
-                            <vts-date-picker 
-                                vtsMode="month"
-                                [vtsSize]="vtsSize" 
-                                name="date2" 
-                                [ngModel]="dateValue">
-                            </vts-date-picker>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Week</vts-form-label>
-                        <vts-form-control>
-                            <vts-date-picker 
-                                vtsMode="week"
-                                [vtsSize]="vtsSize" 
-                                name="date3" 
-                                [ngModel]="dateValue">
-                            </vts-date-picker>
-                        </vts-form-control>
-                    </vts-form-item>
-                    <vts-form-item>
-                        <vts-form-label>Time</vts-form-label>
-                        <vts-form-control>
-                            <vts-time-picker 
-                                vtsPlaceHolder="hh:mm:ss" 
-                                name="time1" 
-                                [vtsSize]="vtsSize" 
-                                [(ngModel)]="dateValue">
-                            </vts-time-picker>
-                        </vts-form-control>
-                    </vts-form-item>
-
-                    <vts-space [vtsSize]="20">
-                        <button *vtsSpaceItem vts-button [vtsSize]="vtsSize">Cancel</button>
-                        <button *vtsSpaceItem vts-button [vtsSize]="vtsSize" vtsType="primary">Submit</button>
-                    </vts-space>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="example-container" vts-col [vtsSpan]="24">
-        <div class="example-cell">
-            <p class="example-cell-title">Table</p>
-            <div class="example-cell-content">
-                <vts-table 
-                    #basicTable 
-                    vtsShowPagination="true" 
-                    [vtsData]="tableData"
-                    [vtsPageSize]="pageSize"
-                    [vtsPageIndex]="pageIndex"
-                    >
-                    <thead>
-                        <tr>
-                            <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate" (vtsCheckedChange)="onAllChecked($event)"></th>
-                            <th vtsWidth="1%" vtsAlign="center">#</th>
-                            <th>Order ID</th>
-                            <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Country</th>
-                            <th>Company name</th>
-                            <th>Status</th>
-                            <th>Type</th>
-                            <th vtsWidth="1%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let data of basicTable.data; index as i">
-                            <td
-                                [vtsChecked]="setOfCheckedId.has(data.id)"
-                                (vtsCheckedChange)="onItemChecked(data.id, $event)"
-                            ></td>
-                            <td vtsAlign="center">{{ data.id }}</td>
-                            <td>{{ data.orderId }}</td>
-                            <td>{{ data.country }}</td>
-                            <td>{{ data.companyName }}</td>
-                            <td><div class="badge" [attr.type]="data.status">{{ data.status }}</div></td>
-                            <td><div class="prefix" [attr.type]="data.type">{{ data.type }}</div></td>
-                            <td class="actions" vtsWidth="1%">
-                                <vts-space [vtsSize]="20">
-                                    <i *vtsSpaceItem vts-icon vtsType="AddOutline"></i>
-                                    <i *vtsSpaceItem vts-icon vtsType="PencilOutline"></i>
-                                    <i *vtsSpaceItem vts-icon vtsType="DeleteOutlineOutline"></i>
-                                </vts-space>
-                            </td>
-                        </tr>
-                    </tbody>
-                </vts-table>
+        <div class="example-container" vts-col [vtsSpan]="24">
+            <div class="example-cell">
+                <p class="example-cell-title">Table</p>
+                <div class="example-cell-content">
+                    <vts-table #basicTable vtsShowPagination="true" [vtsData]="tableData" [vtsPageSize]="pageSize"
+                        [vtsPageIndex]="pageIndex">
+                        <thead>
+                            <tr>
+                                <th [vtsChecked]="checked" [vtsIndeterminate]="indeterminate"
+                                    (vtsCheckedChange)="onAllChecked($event)"></th>
+                                <th vtsWidth="1%" vtsAlign="center">#</th>
+                                <th>Order ID</th>
+                                <th [vtsSortDirections]="sortDirections" [vtsSortFn]="sortFn">Country</th>
+                                <th>Company name</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th vtsWidth="1%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of basicTable.data; index as i">
+                                <td [vtsChecked]="setOfCheckedId.has(data.id)"
+                                    (vtsCheckedChange)="onItemChecked(data.id, $event)"></td>
+                                <td vtsAlign="center">{{ data.id }}</td>
+                                <td>{{ data.orderId }}</td>
+                                <td>{{ data.country }}</td>
+                                <td>{{ data.companyName }}</td>
+                                <td>
+                                    <div class="badge" [attr.type]="data.status">{{ data.status }}</div>
+                                </td>
+                                <td>
+                                    <div class="prefix" [attr.type]="data.type">{{ data.type }}</div>
+                                </td>
+                                <td class="actions" vtsWidth="1%">
+                                    <vts-space [vtsSize]="20">
+                                        <i *vtsSpaceItem vts-icon vtsType="AddOutline"></i>
+                                        <i *vtsSpaceItem vts-icon vtsType="PencilOutline"></i>
+                                        <i *vtsSpaceItem vts-icon vtsType="DeleteOutlineOutline"></i>
+                                    </vts-space>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </vts-table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </article>

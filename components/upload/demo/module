@@ -4,12 +4,14 @@ import { VtsButtonModule } from '@ui-vts/ng-vts/button';
 import { VtsModalModule } from '@ui-vts/ng-vts/modal';
 import { VtsFormModule } from '@ui-vts/ng-vts/form';
 import { VtsInputModule } from '@ui-vts/ng-vts/input';
+import { VtsToastModule } from '@ui-vts/ng-vts/toast';
 
-export const moduleList = [ 
-    VtsUploadModule, 
-    VtsIconModule, 
-    VtsButtonModule, 
-    VtsModalModule, 
+export const moduleList = [
+    VtsUploadModule,
+    VtsIconModule,
+    VtsButtonModule,
+    VtsModalModule,
     VtsFormModule,
-    VtsInputModule
+    VtsInputModule,
+    VtsToastModule
 ];

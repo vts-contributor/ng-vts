@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
         <i vts-icon vtsType="minus"></i>
       </button>
       <button vts-button (click)="increase()">
-        <i vts-icon vtsType="plus"></i>
+        <i vts-icon vtsType="PlusOutline:antd"></i>
       </button>
     </vts-button-group>
   `,

@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 @Component({
   selector: 'vts-demo-upload-upload-manually',
   template: `
-    <vts-upload [(vtsFileList)]="fileList" [vtsBeforeUpload]="beforeUpload">
+    <vts-upload [vtsListTitle]="null" [(vtsFileList)]="fileList" [vtsBeforeUpload]="beforeUpload">
       <button vts-button>
         <i vts-icon vtsType="UploadCloud"></i>
         Select File
@@ -23,13 +23,18 @@ import { filter } from 'rxjs/operators';
     >
       {{ uploading ? 'Uploading' : 'Start Upload' }}
     </button>
-  `
+  `,
+  styles: [`
+    button {
+      margin-top: 16px;
+    }
+  `]
 })
 export class VtsDemoUploadUploadManuallyComponent {
   uploading = false;
   fileList: VtsUploadFile[] = [];
 
-  constructor(private http: HttpClient, private msg: VtsMessageService) {}
+  constructor(private http: HttpClient, private msg: VtsMessageService) { }
 
   beforeUpload = (file: VtsUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
@@ -46,7 +51,7 @@ export class VtsDemoUploadUploadManuallyComponent {
     // You can use any AJAX library you like
     const req = new HttpRequest(
       'POST',
-      'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+      'https://testapi.io/api/vtskit/upload',
       formData,
       {
         // reportProgress: true

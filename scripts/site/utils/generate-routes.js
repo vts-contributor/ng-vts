@@ -49,6 +49,7 @@ function generateNav(componentsDocMap) {
     'grid',
     'icon',
     'input',
+    'image',
     'layout',
     'menu',
     'modal',

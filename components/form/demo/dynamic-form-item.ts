@@ -38,7 +38,7 @@ import {
       <vts-form-item>
         <vts-form-control [vtsXs]="{ span: 24, offset: 0 }" [vtsSm]="{ span: 20, offset: 4 }">
           <button vts-button vtsType="default" class="add-button" (click)="addField($event)">
-            <i vts-icon vtsType="plus"></i>
+            <i vts-icon vtsType="PlusOutline:antd"></i>
             Add field
           </button>
         </vts-form-control>
@@ -122,7 +122,7 @@ export class VtsDemoFormDynamicFormItemComponent implements OnInit {
     console.log(this.validateForm.value);
   }
 
-  constructor(private fb: UntypedFormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({});
