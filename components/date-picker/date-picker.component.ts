@@ -324,6 +324,9 @@ export class VtsDatePickerComponent implements OnInit, OnChanges, OnDestroy, Con
         this.panelOpen = open;
         this.cdr.markForCheck();
       });
+
+    if (this.vtsOpen)
+      this.openChangeSubject.next(this.vtsOpen)
   }
 
   ngOnChanges(changes: SimpleChanges): void {

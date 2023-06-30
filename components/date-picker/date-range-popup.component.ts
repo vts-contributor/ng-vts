@@ -72,7 +72,7 @@ import { getTimeConfig, isAllowedDate, PREFIX_CLASS } from './util';
     </ng-container>
     <ng-template #singlePanel>
       <div
-        *ngIf="opened"
+        *ngIf="inline || opened"
         class="{{ prefixCls }}-panel-container {{ showWeek ? prefixCls + '-week-number' : '' }} {{
           hasTimePicker ? prefixCls + '-time' : ''
         }} {{ isRange ? prefixCls + '-range' : '' }}"
@@ -189,7 +189,7 @@ export class DateRangePopupComponent implements OnInit, OnChanges, OnDestroy {
     return this.showToday || this.hasTimePicker || !!this.extraFooter || !!this.ranges;
   }
 
-  constructor(public datePickerService: DatePickerService, public cdr: ChangeDetectorRef) {}
+  constructor(public datePickerService: DatePickerService, public cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.datePickerService.valueChange$.pipe(takeUntil(this.destroy$)).subscribe(() => {

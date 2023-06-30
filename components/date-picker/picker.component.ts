@@ -381,7 +381,7 @@ export class VtsPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
     if (this.inline) {
       return;
     }
-    if (!this.realOpenState && !this.disabled) {
+    if (!this.isOpenHandledByUser() && !this.realOpenState && !this.disabled) {
       this.updateInputWidthAndArrowLeft();
       this.overlayOpen = true;
       this.focus();
@@ -395,7 +395,7 @@ export class VtsPickerComponent implements OnInit, AfterViewInit, OnChanges, OnD
     if (this.inline) {
       return;
     }
-    if (this.realOpenState) {
+    if (!this.isOpenHandledByUser() && this.realOpenState) {
       this.overlayOpen = false;
       this.openChange.emit(false);
     }
