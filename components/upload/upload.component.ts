@@ -99,7 +99,7 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() vtsMultiple = false;
   @Input() @InputBoolean() vtsBlock = false;
   @Input() vtsName = 'file';
-  @Input() vtsListTitle?: string | null = 'Attachments'
+  @Input() vtsListTitle?: string | null = 'Attachments';
 
   private _showUploadList: boolean | VtsShowUploadList = true;
 
@@ -174,7 +174,8 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     // After filter
-    const afterFilter = (rejected: VtsUploadFile[], list: VtsUploadFile[]) => this.vtsAfterFilter.emit({ rejected, list })
+    const afterFilter = (rejected: VtsUploadFile[], list: VtsUploadFile[]) =>
+      this.vtsAfterFilter.emit({ rejected, list });
 
     this._btnOptions = {
       disabled: this.vtsDisabled,
@@ -206,7 +207,7 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
     private cdr: ChangeDetectorRef,
     private i18n: VtsI18nService,
     @Optional() private directionality: Directionality
-  ) { }
+  ) {}
 
   // #region upload
 
@@ -326,8 +327,8 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
       typeof this.vtsRemove === 'function'
         ? this.vtsRemove(file)
         : this.vtsRemove == null
-          ? true
-          : this.vtsRemove;
+        ? true
+        : this.vtsRemove;
     (fnRes instanceof Observable ? fnRes : of(fnRes))
       .pipe(filter((res: boolean) => res))
       .subscribe(() => {
@@ -350,10 +351,10 @@ export class VtsUploadComponent implements OnInit, OnChanges, OnDestroy {
 
   onRetry = (file: VtsUploadFile): void => {
     //@ts-ignore
-    const clone = new File([file], file.name)
+    const clone = new File([file], file.name);
     const index = this.vtsFileList.indexOf(file);
     this.replaceIndex = index;
-    this.uploadComp.uploadFiles([clone])
+    this.uploadComp.uploadFiles([clone]);
   };
 
   // #endregion

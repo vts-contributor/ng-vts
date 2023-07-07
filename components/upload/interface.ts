@@ -31,7 +31,7 @@ export interface VtsUploadFile {
   error?: VtsSafeAny;
   linkProps?: { download: string };
   type?: string;
-  rejectReason?: string
+  rejectReason?: string;
 
   [key: string]: VtsSafeAny;
 }
@@ -45,8 +45,8 @@ export interface VtsUploadChangeParam {
 }
 
 export interface VtsUploadAfterFilterChanges {
-  rejected: VtsUploadFile[]
-  list: VtsUploadFile[]
+  rejected: VtsUploadFile[];
+  list: VtsUploadFile[];
 }
 
 export interface VtsShowUploadList {
@@ -80,7 +80,7 @@ export interface ZipButtonOptions {
   onProgress?(e: VtsSafeAny, file: VtsUploadFile): void;
   onSuccess?(ret: VtsSafeAny, file: VtsUploadFile, xhr: VtsSafeAny): void;
   onError?(err: VtsSafeAny, file: VtsUploadFile): void;
-  afterFilter?(rejected: VtsUploadFile[], list: VtsUploadFile[]): void
+  afterFilter?(rejected: VtsUploadFile[], list: VtsUploadFile[]): void;
 }
 
 export interface VtsUploadFilter {

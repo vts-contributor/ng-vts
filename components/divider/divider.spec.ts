@@ -102,4 +102,4 @@ class TestDividerComponent {
     </vts-divider>
   `
 })
-class TestDividerTextTemplateComponent { }
+class TestDividerTextTemplateComponent {}

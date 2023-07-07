@@ -189,7 +189,7 @@ export class DateRangePopupComponent implements OnInit, OnChanges, OnDestroy {
     return this.showToday || this.hasTimePicker || !!this.extraFooter || !!this.ranges;
   }
 
-  constructor(public datePickerService: DatePickerService, public cdr: ChangeDetectorRef) { }
+  constructor(public datePickerService: DatePickerService, public cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.datePickerService.valueChange$.pipe(takeUntil(this.destroy$)).subscribe(() => {

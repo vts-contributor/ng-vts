@@ -122,7 +122,7 @@ export class VtsDemoFormDynamicFormItemComponent implements OnInit {
     console.log(this.validateForm.value);
   }
 
-  constructor(private fb: UntypedFormBuilder) { }
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({});

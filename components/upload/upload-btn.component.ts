@@ -163,7 +163,7 @@ export class VtsUploadBtnComponent implements OnDestroy {
 
   uploadFiles(fileList: FileList | File[]): void {
     let filters$: Observable<VtsUploadFile[]> = of(Array.prototype.slice.call(fileList));
-    const rejected: VtsUploadFile[] = []
+    const rejected: VtsUploadFile[] = [];
     if (this.options.filters) {
       this.options.filters.forEach(f => {
         filters$ = filters$.pipe(
@@ -172,14 +172,14 @@ export class VtsUploadBtnComponent implements OnDestroy {
             const obs = fnRes instanceof Observable ? fnRes : of(fnRes);
             obs.pipe(take(1)).subscribe(filtered => {
               if (filtered.length != list.length) {
-                const rejectedFiles = list.filter(file => !filtered.includes(file))
+                const rejectedFiles = list.filter(file => !filtered.includes(file));
                 rejectedFiles.forEach(file => {
-                  file.rejectReason = f.name
-                  rejected.push(file)
-                })
+                  file.rejectReason = f.name;
+                  rejected.push(file);
+                });
               }
-            })
-            return obs
+            });
+            return obs;
           })
         );
       });
@@ -190,11 +190,7 @@ export class VtsUploadBtnComponent implements OnDestroy {
           this.attachUid(file);
           this.upload(file, list);
         });
-        if (rejected.length && this.options.afterFilter)
-          this.options.afterFilter(
-            rejected,
-            list
-          )
+        if (rejected.length && this.options.afterFilter) this.options.afterFilter(rejected, list);
       },
       e => {
         warn(`Unhandled upload filter error`, e);
@@ -246,8 +242,8 @@ export class VtsUploadBtnComponent implements OnDestroy {
       withCredentials: opt.withCredentials,
       onProgress: opt.onProgress
         ? e => {
-          opt.onProgress!(e, file);
-        }
+            opt.onProgress!(e, file);
+          }
         : undefined,
       onSuccess: (ret, xhr) => {
         this.clean(uid);

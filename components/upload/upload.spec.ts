@@ -71,7 +71,7 @@ const PNGBIG = {
 class Item {
   children?: Item[];
 
-  constructor(public name: string) { }
+  constructor(public name: string) {}
 }
 
 describe('upload', () => {
@@ -998,7 +998,7 @@ describe('upload', () => {
         width = 1;
         height = 2;
 
-        onload(): void { }
+        onload(): void {}
 
         set src(_: string) {
           this.onload();
@@ -1115,7 +1115,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: [FILE] },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1124,7 +1124,7 @@ describe('upload', () => {
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
             instance.comp.onFileDrop({
               type: 'dragover',
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1136,7 +1136,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1148,7 +1148,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1160,7 +1160,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1172,7 +1172,7 @@ describe('upload', () => {
             instance.comp.onFileDrop({
               type: 'dragend',
               dataTransfer: { files: PNGSMALL.target.files },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1224,7 +1224,7 @@ describe('upload', () => {
               dataTransfer: {
                 items: [makeDataTransferItem(files)]
               },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).toHaveBeenCalled();
           });
@@ -1244,7 +1244,7 @@ describe('upload', () => {
               dataTransfer: {
                 items: [makeDataTransferItem(files)]
               },
-              preventDefault: () => { }
+              preventDefault: () => {}
             } as any);
             expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           });
@@ -1273,7 +1273,7 @@ describe('upload', () => {
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
           instance.comp.onFileDrop({
             type: 'dragover',
-            preventDefault: () => { }
+            preventDefault: () => {}
           } as any);
           expect(instance.comp.uploadFiles).not.toHaveBeenCalled();
         });
@@ -1329,10 +1329,10 @@ describe('upload', () => {
           multiple: true,
           withCredentials: true,
           beforeUpload: () => true,
-          onStart: () => { },
-          onProgress: () => { },
-          onSuccess: () => { },
-          onError: () => { }
+          onStart: () => {},
+          onProgress: () => {},
+          onSuccess: () => {},
+          onError: () => {}
         } as ZipButtonOptions;
         http = injector.get(HttpTestingController);
       });
@@ -1396,7 +1396,7 @@ describe('upload', () => {
       }));
 
       it('should custom request', () => {
-        comp.options.customRequest = () => of(true).subscribe(() => { });
+        comp.options.customRequest = () => of(true).subscribe(() => {});
         spyOn<any>(comp.options, 'customRequest');
         comp.onChange(PNGSMALL as any);
         expect(comp.options.customRequest).toHaveBeenCalled();
@@ -1407,7 +1407,7 @@ describe('upload', () => {
         console.warn = jasmine
           .createSpy()
           .and.callFake((...res: string[]) => (warnMsg = res.join(' ')));
-        comp.options.customRequest = (() => { }) as any;
+        comp.options.customRequest = (() => {}) as any;
         comp.onChange(PNGSMALL as any);
         expect(warnMsg).toContain(`Must return Subscription type in '[vtsCustomRequest]' property`);
       });
@@ -1590,7 +1590,7 @@ class TestUploadBtnComponent {
     openFileDialogOnClick: true,
     filters: [],
     customRequest: undefined,
-    onStart: () => { },
-    onError: () => { }
+    onStart: () => {},
+    onError: () => {}
   };
 }

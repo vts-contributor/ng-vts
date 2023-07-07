@@ -24,17 +24,19 @@ import { filter } from 'rxjs/operators';
       {{ uploading ? 'Uploading' : 'Start Upload' }}
     </button>
   `,
-  styles: [`
-    button {
-      margin-top: 16px;
-    }
-  `]
+  styles: [
+    `
+      button {
+        margin-top: 16px;
+      }
+    `
+  ]
 })
 export class VtsDemoUploadUploadManuallyComponent {
   uploading = false;
   fileList: VtsUploadFile[] = [];
 
-  constructor(private http: HttpClient, private msg: VtsMessageService) { }
+  constructor(private http: HttpClient, private msg: VtsMessageService) {}
 
   beforeUpload = (file: VtsUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
@@ -49,14 +51,9 @@ export class VtsDemoUploadUploadManuallyComponent {
     });
     this.uploading = true;
     // You can use any AJAX library you like
-    const req = new HttpRequest(
-      'POST',
-      'https://testapi.io/api/vtskit/upload',
-      formData,
-      {
-        // reportProgress: true
-      }
-    );
+    const req = new HttpRequest('POST', 'https://testapi.io/api/vtskit/upload', formData, {
+      // reportProgress: true
+    });
     this.http
       .request(req)
       .pipe(filter(e => e instanceof HttpResponse))

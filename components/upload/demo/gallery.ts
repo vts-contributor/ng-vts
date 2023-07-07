@@ -15,7 +15,7 @@ function getBase64(file: File): Promise<string | ArrayBuffer | null> {
   template: `
     <div class="clearfix">
       <vts-upload
-      [vtsListTitle]="null"
+        [vtsListTitle]="null"
         vtsAction="https://testapi.io/api/vtskit/upload"
         vtsListType="gallery"
         [(vtsFileList)]="fileList"
@@ -29,11 +29,13 @@ function getBase64(file: File): Promise<string | ArrayBuffer | null> {
       </vts-upload>
     </div>
   `,
-  styles: [`
-    button {
-      margin-top: 16px;
-    }
-  `]
+  styles: [
+    `
+      button {
+        margin-top: 16px;
+      }
+    `
+  ]
 })
 export class VtsDemoUploadGalleryComponent {
   fileList: VtsUploadFile[] = [

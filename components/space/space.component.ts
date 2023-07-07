@@ -114,7 +114,7 @@ export class VtsSpaceComponent implements OnChanges, OnDestroy, AfterContentInit
   spaceSize: number = SPACE_SIZE.sm;
   private destroy$ = new Subject();
 
-  constructor(public vtsConfigService: VtsConfigService, private cdr: ChangeDetectorRef) { }
+  constructor(public vtsConfigService: VtsConfigService, private cdr: ChangeDetectorRef) {}
 
   private updateSpaceItems(): void {
     let numberSize: number;

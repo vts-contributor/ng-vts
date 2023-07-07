@@ -40,4 +40,4 @@ import { VtsSpaceModule } from '@ui-vts/ng-vts/space';
   ],
   exports: [VtsUploadComponent]
 })
-export class VtsUploadModule { }
+export class VtsUploadModule {}

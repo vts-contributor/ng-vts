@@ -4,10 +4,7 @@ import { VtsUploadFile } from '@ui-vts/ng-vts/upload';
 @Component({
   selector: 'vts-demo-upload-default-file-list',
   template: `
-    <vts-upload
-      vtsAction="https://testapi.io/api/vtskit/upload"
-      [vtsFileList]="fileList"
-    >
+    <vts-upload vtsAction="https://testapi.io/api/vtskit/upload" [vtsFileList]="fileList">
       <button vts-button>
         <i vts-icon vtsType="UploadCloud"></i>
         Upload

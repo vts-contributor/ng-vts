@@ -189,7 +189,8 @@ const VTS_CONFIG_MODULE_NAME: VtsConfigKey = 'select';
   }
 })
 export class VtsSelectComponent
-  implements ControlValueAccessor, OnInit, OnDestroy, AfterContentInit, OnChanges {
+  implements ControlValueAccessor, OnInit, OnDestroy, AfterContentInit, OnChanges
+{
   readonly _vtsModuleName: VtsConfigKey = VTS_CONFIG_MODULE_NAME;
 
   static ngAcceptInputType_vtsAllowClear: BooleanInput;
@@ -292,8 +293,8 @@ export class VtsSelectComponent
   private value: VtsSafeAny | VtsSafeAny[];
   private destroy$ = new Subject();
   private _vtsShowArrow: boolean | undefined;
-  onChange: OnChangeType = () => { };
-  onTouched: OnTouchedType = () => { };
+  onChange: OnChangeType = () => {};
+  onTouched: OnTouchedType = () => {};
   dropDownPosition: 'top' | 'center' | 'bottom' = 'bottom';
   triggerWidth: number | null = null;
   listOfContainerItem: VtsSelectItemInterface[] = [];

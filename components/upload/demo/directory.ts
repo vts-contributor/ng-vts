@@ -11,4 +11,4 @@ import { Component } from '@angular/core';
     </vts-upload>
   `
 })
-export class VtsDemoUploadDirectoryComponent { }
+export class VtsDemoUploadDirectoryComponent {}

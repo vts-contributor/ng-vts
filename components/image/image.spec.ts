@@ -460,7 +460,7 @@ export class TestImagePreviewGroupComponent {
   @ViewChild(VtsImageGroupComponent) vtsImageGroup!: VtsImageGroupComponent;
   @ViewChild(VtsImageDirective) vtsImage!: VtsImageDirective;
 
-  constructor(private vtsImageService: VtsImageService) { }
+  constructor(private vtsImageService: VtsImageService) {}
 
   createUsingService(): void {
     this.previewRef = this.vtsImageService.preview(this.images, {
@@ -481,4 +481,4 @@ const TEST_COMPONENTS = [
   declarations: [...TEST_COMPONENTS],
   exports: [...TEST_COMPONENTS]
 })
-export class TestImageModule { }
+export class TestImageModule {}

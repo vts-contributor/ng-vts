@@ -32,4 +32,4 @@ import { Component } from '@angular/core';
     </div>
   `
 })
-export class VtsDemoDividerHorizontalComponent { }
+export class VtsDemoDividerHorizontalComponent {}

@@ -46,11 +46,7 @@ interface UploadListFile extends VtsUploadFile {
   exportAs: 'vtsUploadList',
   templateUrl: './upload-list.component.html',
   animations: [
-    trigger('listAnimation', [
-      transition('* => *', [
-        query('@*', animateChild()),
-      ]),
-    ]),
+    trigger('listAnimation', [transition('* => *', [query('@*', animateChild())])]),
     trigger('itemAnimation', [
       transition(':enter', [
         style({ height: '0', opacity: 0 }),
@@ -76,7 +72,7 @@ export class VtsUploadListComponent implements OnChanges {
   list: UploadListFile[] = [];
 
   private get showPic(): boolean {
-    return this.listType === 'gallery'
+    return this.listType === 'gallery';
   }
 
   @Input() locale: VtsSafeAny = {};
@@ -95,7 +91,7 @@ export class VtsUploadListComponent implements OnChanges {
   @Input() previewIsImage?: (file: VtsUploadFile) => boolean;
   @Input() iconRender: VtsIconRenderTemplate | null = null;
   @Input() dir: Direction = 'ltr';
-  @Input() listTitle?: string | null
+  @Input() listTitle?: string | null;
 
   private genErr(file: VtsUploadFile): string {
     if (file.response && typeof file.response === 'string') {
@@ -175,7 +171,7 @@ export class VtsUploadListComponent implements OnChanges {
 
           try {
             ctx!.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-          } catch { }
+          } catch {}
           const dataURL = canvas.toDataURL();
           this.doc.body.removeChild(canvas);
 
@@ -295,6 +291,6 @@ export class VtsUploadListComponent implements OnChanges {
   }
 
   fileTrackBy(_idx: number, file: VtsUploadFile) {
-    return file.uid
+    return file.uid;
   }
 }

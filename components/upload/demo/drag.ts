@@ -36,7 +36,7 @@ import { VtsUploadChangeParam } from '@ui-vts/ng-vts/upload';
   ]
 })
 export class VtsDemoUploadDragComponent {
-  constructor() { }
+  constructor() {}
 
   handleChange({ file }: VtsUploadChangeParam): void {
     console.log(file);
