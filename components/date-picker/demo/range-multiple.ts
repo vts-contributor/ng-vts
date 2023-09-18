@@ -31,7 +31,7 @@ import { VtsSizeXLMSType } from '@ui-vts/ng-vts/core/types';
             (ngModelChange)="print($event)"
             [vtsSize]="size"
             [vtsPlaceHolder]="placeholder"
-            [gutter]="iconGutter"
+            [vtsGutter]="iconGutter"
           ></vts-range-picker-multiple>
         </vts-form-control>
       </vts-form-item>

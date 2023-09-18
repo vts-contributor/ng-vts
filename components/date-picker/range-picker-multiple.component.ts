@@ -42,7 +42,7 @@ export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
           [ngModel]="startValue"
           (ngModelChange)="onStartValueChange($event)"
           [vtsDateRender]="tplRender"
-          [vtsDisabled]="disabled"
+          [vtsDisabled]="vtsDisabled"
           [vtsPlaceHolder]="vtsPlaceHolder[0]"
           [vtsShowTime]="vtsShowTime"
           vtsShowToday="false"
@@ -55,7 +55,7 @@ export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
       <div
         style="display: flex;align-items: center;justify-content: center"
         vts-col
-        [vtsFlex]="gutter + 'px'"
+        [vtsFlex]="vtsGutter + 'px'"
       >
         <i style="font-size: 10px" vts-icon vtsType="MinusDoutone"></i>
       </div>
@@ -68,7 +68,7 @@ export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
           [ngModel]="endValue"
           (ngModelChange)="onEndValueChange($event)"
           [vtsDateRender]="tplRender"
-          [vtsDisabled]="disabled"
+          [vtsDisabled]="vtsDisabled"
           [vtsPlaceHolder]="vtsPlaceHolder[1]"
           [vtsShowTime]="vtsShowTime"
           vtsShowToday="false"
@@ -106,8 +106,7 @@ export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
   ]
 })
 export class VtsRangePickerMultipleComponent
-  implements AfterViewInit, OnChanges, ControlValueAccessor
-{
+  implements AfterViewInit, OnChanges, ControlValueAccessor {
   destroy$ = new Subject();
 
   isRange = true;
@@ -128,7 +127,10 @@ export class VtsRangePickerMultipleComponent
   static ngAcceptInputType_vtsShowTime: BooleanInput | null | undefined;
   static ngAcceptInputType_vtsAutoOpen: BooleanInput | null | undefined;
 
-  @Input() gutter: Number = 26;
+  @Input() vtsGutter: Number = 26;
+  @Input() set gutter(value: Number) {
+    this.vtsGutter = value;
+  }
   @Input() vtsSize: VtsSizeXLMSType = 'md';
   @Input() vtsPlaceHolder: string[] = ['', ''];
   @Input() @InputBoolean() set disabled(value: boolean) {
@@ -200,6 +202,12 @@ export class VtsRangePickerMultipleComponent
 
   registerOnTouched(fn: OnTouchedType): void {
     this.onTouchedFn = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    console.log(isDisabled)
+    this.vtsDisabled = isDisabled;
+    this.cdr.markForCheck();
   }
 
   onStartValueChange(e: Date) {

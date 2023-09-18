@@ -9,10 +9,11 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { CandyDate, CompatibleValue } from '@ui-vts/ng-vts/core/time';
-import { OnChangeType, OnTouchedType } from '@ui-vts/ng-vts/core/types';
+import { BooleanInput, OnChangeType, OnTouchedType } from '@ui-vts/ng-vts/core/types';
 import { DateHelperService } from '@ui-vts/ng-vts/i18n';
 import { VtsDatePickerComponent, VtsPlacement } from './date-picker.component';
 import { DatePickerService } from './date-picker.service';
+import { InputBoolean } from '@ui-vts/ng-vts/core/util';
 
 export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
 
@@ -21,8 +22,12 @@ export type VtsDatePickerSizeType = 'xl' | 'lg' | 'md' | 'sm';
   exportAs: 'vtsRangePicker'
 })
 export class VtsRangePickerSingleComponent
-  implements OnChanges, ControlValueAccessor, AfterContentInit
-{
+  implements OnChanges, ControlValueAccessor, AfterContentInit {
+  static ngAcceptInputType_disabled: BooleanInput;
+  static ngAcceptInputType_vtsDisabled: BooleanInput;
+
+  @Input() @InputBoolean() vtsDisabled: boolean = false;
+
   isRange = true;
   isRangeSingleMode = true;
   format = 'dd/MM/yyyy';
@@ -80,6 +85,11 @@ export class VtsRangePickerSingleComponent
 
   registerOnTouched(fn: OnTouchedType): void {
     this.onTouchedFn = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.vtsDisabled = isDisabled;
+    this.cdr.markForCheck();
   }
 
   onCalendarChange(value: CompatibleValue): void {
