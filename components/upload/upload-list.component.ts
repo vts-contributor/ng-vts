@@ -92,6 +92,7 @@ export class VtsUploadListComponent implements OnChanges {
   @Input() iconRender: VtsIconRenderTemplate | null = null;
   @Input() dir: Direction = 'ltr';
   @Input() listTitle?: string | null;
+  @Input() disabled = false;
 
   private genErr(file: VtsUploadFile): string {
     if (file.response && typeof file.response === 'string') {
@@ -171,7 +172,7 @@ export class VtsUploadListComponent implements OnChanges {
 
           try {
             ctx!.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-          } catch {}
+          } catch { }
           const dataURL = canvas.toDataURL();
           this.doc.body.removeChild(canvas);
 

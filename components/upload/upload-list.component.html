@@ -95,7 +95,7 @@
 </ng-template>
 
 <ng-template #actions let-file>
-  <vts-space vtsPreset="2" class="vts-upload-list-item-actions">
+  <vts-space vtsPreset="2" class="vts-upload-list-item-actions" *ngIf="!disabled">
     <ng-container *ngIf="file.status === 'error'">
       <i *vtsSpaceItem (click)="handleRetry(file, $event)" class="vts-upload-action-icon vts-upload-action-icon-reup"
         vts-icon vtsType="AutoRenew"></i>

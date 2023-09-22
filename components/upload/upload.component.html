@@ -3,7 +3,7 @@
     [locale]="locale" [listType]="vtsListType" [items]="vtsFileList || []" [icons]="$any(vtsShowUploadList)"
     [iconRender]="vtsIconRender" [previewFile]="vtsPreviewFile" [previewIsImage]="vtsPreviewIsImage"
     [onPreview]="vtsPreview" [onRemove]="onRemove" [onEdit]="onEdit" [onRetry]="onRetry" [onDownload]="vtsDownload"
-    [dir]="dir" [listTitle]="vtsListTitle"></vts-upload-list>
+    [dir]="dir" [listTitle]="vtsListTitle" [disabled]="vtsDisabled"></vts-upload-list>
   <ng-container *ngIf="vtsFileListRender">
     <ng-container *ngTemplateOutlet="vtsFileListRender; context: { $implicit: vtsFileList }"></ng-container>
   </ng-container>
