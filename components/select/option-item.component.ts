@@ -31,6 +31,7 @@ import { VtsSelectModeType } from './select.types';
           (vtsCheckedChange)="innerCheckboxClick($event)"
           (click)="$event.stopPropagation()"
           vts-checkbox
+          [vtsDisabled]="disabled"
         >
           {{ label }}
         </label>

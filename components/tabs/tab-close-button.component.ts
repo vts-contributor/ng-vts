@@ -21,7 +21,7 @@ import { VtsSafeAny } from '@ui-vts/ng-vts/core/types';
   }
 })
 export class VtsTabCloseButtonComponent {
-  @Input() closeIcon: string | TemplateRef<VtsSafeAny> = 'close';
+  @Input() closeIcon: string | TemplateRef<VtsSafeAny> = 'Close:vts';
 
   constructor() {}
 }

@@ -87,7 +87,7 @@ export class VtsModalComponent<T = VtsSafeAny, R = VtsSafeAny>
   @Input() vtsClassName?: string;
   @Input() vtsStyle?: object;
   @Input() vtsTitle?: string | TemplateRef<{}>;
-  @Input() vtsCloseIcon: string | TemplateRef<void> = 'close';
+  @Input() vtsCloseIcon: string | TemplateRef<void> = 'Close:vts';
   @Input() vtsMaskStyle?: StyleObjectLike;
   @Input() vtsBodyStyle?: StyleObjectLike;
   @Input() vtsOkText?: string | null;

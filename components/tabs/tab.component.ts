@@ -54,7 +54,7 @@ export class VtsTabComponent implements OnChanges, OnDestroy {
 
   @Input() vtsTitle: string | TemplateRef<TabTemplateContext> = '';
   @Input() @InputBoolean() vtsClosable = false;
-  @Input() vtsCloseIcon: string | TemplateRef<VtsSafeAny> = 'close';
+  @Input() vtsCloseIcon: string | TemplateRef<VtsSafeAny> = 'Close:vts';
   @Input() @InputBoolean() vtsDisabled = false;
   @Input() @InputBoolean() vtsForceRender = false;
   @Output() readonly vtsSelect = new EventEmitter<void>();

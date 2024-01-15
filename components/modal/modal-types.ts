@@ -34,7 +34,7 @@ export class ModalOptions<T = VtsSafeAny, R = VtsSafeAny> {
   vtsKeyboard?: boolean = true;
   vtsZIndex?: number = 1000;
   vtsWidth?: number | string = 520;
-  vtsCloseIcon?: string | TemplateRef<void> = 'close';
+  vtsCloseIcon?: string | TemplateRef<void> = 'Close:vts';
   vtsOkType?: VtsButtonType = 'primary';
   vtsOkDanger?: boolean = false;
   vtsModalType?: ModalTypes = 'default';
